@@ -1,6 +1,0 @@
-com/vmlens/api/AllInterleavings.class
-com/vmlens/annotation/Stateless.class
-com/vmlens/annotation/Atomic.class
-com/vmlens/annotation/DoNotTrace.class
-com/vmlens/api/AllInterleavingsBuilder.class
-com/vmlens/annotation/Callback.class

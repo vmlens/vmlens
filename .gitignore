@@ -19,6 +19,9 @@
 *.tar.gz
 *.rar
 
+.cache-main
+.cache-tests
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
@@ -26,8 +29,11 @@ hs_err_pid*
 target/*
 /target/
 .settings/*
+/.settings/*
 .classpath
 .project
+
+
 
 lib/*
 _dist/*
