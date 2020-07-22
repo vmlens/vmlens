@@ -29,6 +29,6 @@ target/*
 .classpath
 .project
 
-com.anarsoft.plugin.sync.bug/lib/*
-interleave/_dist/*
-com.anarsoft.plugin.sync.bug/agent_lib/*
+lib/*
+_dist/*
+agent_lib/*
