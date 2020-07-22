@@ -1,0 +1,6 @@
+/home/thomas/git-repo/vmlens/api/src/main/java/com/vmlens/annotation/Stateless.java
+/home/thomas/git-repo/vmlens/api/src/main/java/com/vmlens/api/AllInterleavings.java
+/home/thomas/git-repo/vmlens/api/src/main/java/com/vmlens/annotation/Atomic.java
+/home/thomas/git-repo/vmlens/api/src/main/java/com/vmlens/api/AllInterleavingsBuilder.java
+/home/thomas/git-repo/vmlens/api/src/main/java/com/vmlens/annotation/Callback.java
+/home/thomas/git-repo/vmlens/api/src/main/java/com/vmlens/annotation/DoNotTrace.java

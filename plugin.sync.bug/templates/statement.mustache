@@ -1,0 +1,40 @@
+{{#isWaitpoint}}
+<div class="row text-right">  
+
+{{textIntern}}
+
+<div style=" top: 10px;  left: 20px; border: solid 1px red;  height: 100%;"></div>
+
+ </div> 
+{{/isWaitpoint}}  
+
+  
+{{^isWaitpoint}}  
+<div class="row text-left">  
+
+
+{{#spacerImage}}
+
+
+<img src="../{{{spacerImage}}}" />
+
+
+{{/spacerImage}}  
+  
+  
+  
+{{#imagePrefix}}
+
+
+<img src="../{{{imagePrefix}}}" />
+
+
+{{/imagePrefix}}  
+  
+<img src="../{{{image}}}" />
+{{{text}}}
+
+
+  
+ </div> 
+ {{/isWaitpoint}} 

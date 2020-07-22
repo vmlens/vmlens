@@ -1,0 +1,40 @@
+{{>header}}
+
+<!-- htmlParallizedGroups.mustache -->
+
+<div class="{{containerTyp}}">
+   
+ <table class="table table-striped" >
+  <tr>
+    <th>#</th>
+    <th>Result</th>
+    <th>Name</th>
+    <th>Count</th>
+   
+  </tr>
+
+{{#issues}}
+
+  <tr>
+    <td> <a   href="{{link}}" >  {{index}}  </a> </td>
+     <td>   <a   href="{{link}}" > <img src="{{{imagePath}}}" /> {{resultText}} </a> </td>
+     <td> <a   href="{{link}}" >{{{name}}}</a>  </td>
+ <!-- skipAtCompare -->      <td>  <a   href="{{link}}" >   {{count}} </a>  </td>
+  </tr>
+
+
+
+
+{{/issues}}
+ 
+ 
+ 
+ </table>   
+
+
+</div>
+
+
+
+
+{{>footer}}

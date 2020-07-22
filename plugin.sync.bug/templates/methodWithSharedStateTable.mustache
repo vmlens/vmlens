@@ -1,0 +1,65 @@
+<div class="row text-left">
+  
+  
+ <table class="table table-striped" >
+  <tr>
+    <th>Level</th>
+    <th>Method</th>
+    <th>Shared State</th>
+    <th>Thread Count</th>
+  </tr>
+  
+
+
+{{#issues}}
+
+{{#color}}<tr style=" background-color: {{color}} " >{{/color}}
+
+{{^color}}<tr>{{/color}}
+
+
+<td>{{group}}</td>
+
+<td>
+    {{#parentChildLink}}<a   href="{{parentChildLink}}" >{{{name}}}</a> {{/parentChildLink}}
+     {{^parentChildLink}}{{{name}}}{{/parentChildLink}}
+</td>
+
+
+
+ {{#textInsteadState}}
+ 
+  <td>
+{{#imagePath}} 
+    <img src="{{{imagePath}}}" />
+{{/imagePath}}
+
+ {{textInsteadState}}
+  </td>
+ {{/textInsteadState}}
+ 
+ 
+ 
+ {{^textInsteadState}}
+<td>
+     {{#memoryClusterLink}}<a   href="{{memoryClusterLink}}" >{{>state}}</a> {{/memoryClusterLink}}
+     {{^memoryClusterLink}}{{>state}}{{/memoryClusterLink}}
+</td>
+    
+ {{/textInsteadState}}
+ 
+   
+    
+<td>
+<!-- skipAtCompare -->  {{threadCount}}
+</td>    
+    
+   
+  </tr>
+
+{{/issues}}
+ 
+</table>   
+    
+     
+</div>

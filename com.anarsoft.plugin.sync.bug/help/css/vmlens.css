@@ -1,0 +1,42 @@
+.background_blue
+{
+	background-color: blue;
+}
+
+
+.image_align_right_at_md
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text_align_left_at_md 
+{
+	 text-align: center;
+}
+
+
+@media only screen and (min-width : 992px) {
+.image_align_right_at_md
+{
+	  float: right !important;
+}
+
+.text_align_left_at_md 
+{
+	 text-align: left;
+}
+
+
+}
+
+.vmlens_active
+{
+	 text-decoration: underline;
+	 color: blue;
+}
+
+
+
+

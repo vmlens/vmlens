@@ -1,0 +1,54 @@
+{{>header}}
+
+
+
+
+<div class="{{containerTyp}}">
+ 
+ <!--  {{#issues}}  -->
+ 
+  <div class="row text-left">
+  
+    <!-- {{#imagePath}}  -->
+    <img src="{{{imagePath}}}" />
+    <!-- {{/imagePath}}  -->
+    {{#hasLink}}<a   href="{{link}}" >{{name}}</a> {{/hasLink}}
+    {{^hasLink}}{{name}}{{/hasLink}}
+    
+     
+  </div>
+  
+ 
+  <!--  {{#children}}  -->
+  
+
+   <div class="row text-left">
+     <div class="col-sm-1"> </div>
+    <div class="col-sm-11 text-left">
+    
+    <!-- {{#imagePath}}  -->
+    <img src="{{{imagePath}}}" />
+    <!-- {{/imagePath}}  -->
+    {{#hasLink}}<a   href="{{link}}" >{{name}}</a> {{/hasLink}}
+    {{^hasLink}}{{name}}{{/hasLink}}
+    
+    </div>
+    </div>
+    
+   
+
+
+<!--  {{/children}}  -->
+ 
+ <!--  {{/issues}}  -->
+
+
+
+
+</div>
+
+
+
+
+
+{{>footer}}

@@ -1,0 +1,54 @@
+<svg id="f6a0a44d-313e-4456-be5c-55de2f81a930" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 362 362">
+  <defs>
+    <linearGradient id="1cedb44d-150e-4066-9bce-ad33b5239c2d" data-name="Unbenannter Verlauf 2" x1="101.72" y1="193.68" x2="131.24" y2="164.1" gradientTransform="matrix(0.69, 0, 0, -0.69, 1.39, 251.11)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d5f3ff"/>
+      <stop offset="1" stop-color="#fcffff"/>
+    </linearGradient>
+    <linearGradient id="b49f5d3c-b2e6-4e77-9de2-a43080e25b28" x1="234.87" y1="193.68" x2="264.4" y2="164.1" gradientTransform="matrix(0.69, 0, 0, -0.69, 6.79, 251.11)" xlink:href="#1cedb44d-150e-4066-9bce-ad33b5239c2d"/>
+    <linearGradient id="05131bbc-2ec9-4b10-9af2-f87468fcfc30" data-name="Unbenannter Verlauf 3" x1="236.9" y1="-964.54" x2="282.09" y2="-1009.73" gradientTransform="matrix(0.72, 0, 0, -0.72, 18.41, -480.09)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#986443"/>
+      <stop offset="1" stop-color="#994f1b"/>
+    </linearGradient>
+    <linearGradient id="4e655e50-d114-4833-9075-42815cbf4f54" data-name="Unbenannter Verlauf 4" x1="201.08" y1="-1006.88" x2="254.45" y2="-1058.99" gradientTransform="matrix(0.72, 0, 0, -0.72, 6.88, -480.09)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e4cf94"/>
+      <stop offset="0.32" stop-color="#ede0ba"/>
+      <stop offset="0.65" stop-color="#c1aa7e"/>
+      <stop offset="1" stop-color="#ad8865"/>
+    </linearGradient>
+    <linearGradient id="f091cc2a-ef86-41e3-b689-1311ffb4408a" data-name="Unbenannter Verlauf 5" x1="172.72" y1="-1071.25" x2="198.39" y2="-1091.64" gradientTransform="matrix(0.72, 0, 0, -0.72, 4, -480.09)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4d4d4d"/>
+      <stop offset="0.29" stop-color="#727272"/>
+      <stop offset="1" stop-color="#4d4d4d"/>
+    </linearGradient>
+  </defs>
+  <title>Zeichenfläche 1</title>
+  <g id="1dbd411f-f2a8-4b23-bc51-4e095ecdf4fb" data-name="layer1">
+    <g id="bf3bba00-42af-4bef-ac89-9ac6aefcd7d2" data-name="g8159">
+      <g id="d239dbe3-74e6-48ed-8861-78eb64e25420" data-name="g4106">
+        <path id="116472c3-82c3-4511-8372-2fb746014029" data-name="path4981-0" d="M110.27,111.07s5.69-7.81,23.6-7.81,23,6.94,23,6.94" style="fill: none;stroke: #324e6e;stroke-width: 18px"/>
+        <path id="173fa0e2-dbca-46a3-9b21-b43df3a57812" data-name="path4985-9" d="M58.12,110.68l7.26-7.59,47.1-49.27c11.51-10.74,29-12.12,29,23.63" style="fill: none;stroke: #324e6e;stroke-linecap: round;stroke-linejoin: round;stroke-width: 18px"/>
+        <path id="3c407b70-fde5-4305-bae1-d6bbe8ae9e5a" data-name="path4985-5-4" d="M180.92,123.47l56.61-59.22c11.51-10.74,29-12.12,29,23.63" style="fill: none;stroke: #324e6e;stroke-linecap: round;stroke-linejoin: round;stroke-width: 18px"/>
+        <path id="008ad502-8ea6-4a53-a01f-d0974249757a" data-name="path4150-8" d="M112.59,131.14a27.53,27.53,0,0,1-27.53,27.53h0a27.53,27.53,0,0,1-27.53-27.53h0a27.53,27.53,0,0,1,55.07,0Z" style="stroke: #324e6e;stroke-width: 20.141479969024658px;fill: url(#1cedb44d-150e-4066-9bce-ad33b5239c2d)"/>
+        <path id="edb97ee2-e3f7-46f6-832a-6d8d8fd0f748" data-name="path4150-4-8" d="M209.8,131.14a27.53,27.53,0,0,1-27.53,27.53h0a27.53,27.53,0,0,1-27.53-27.53h0a27.53,27.53,0,0,1,55.07,0Z" style="stroke: #324e6e;stroke-width: 20.141479969024658px;fill: url(#b49f5d3c-b2e6-4e77-9de2-a43080e25b28)"/>
+      </g>
+      <g id="44f4cb26-9d43-4e98-a7c9-2dac6c0926e1" data-name="layer1-7">
+        <path id="6502ae6e-19b3-4988-b7b5-b25274fdab9d" data-name="path5226-6-14-1-5-3" d="M304.77,167.8,191.32,280.7l-70.82,33.64,33.64-70.76L266.49,130.44c16.47,7.81,28.67,21,38.27,37.36Z" style="fill: none;stroke-linejoin: round;stroke-width: 18px;stroke: url(#05131bbc-2ec9-4b10-9af2-f87468fcfc30)"/>
+        <path id="495e7129-4c84-4411-8cdf-6fd9bda2931e" data-name="path5424-0" d="M266.69,130.48,154,243.55l12.16,11.75L282.09,140.2A74.69,74.69,0,0,0,266.69,130.48Z" style="fill: #ffcb72"/>
+        <path id="98b1d0b2-4bcd-4fa4-a242-31790bcbba51" data-name="path5226-6-14-1-5-2-8" d="M299.92,160.06,186,275.57l5.27,5.27L304.79,167.76C303.23,165.11,301.63,162.54,299.92,160.06Z" style="fill: #e5a856"/>
+        <path id="1d231925-6824-4a6b-8cfe-dfc466459bb8" data-name="path5226-6-14-1-5-2-7-1" d="M186.11,275.5l-20.08-20L282,140.26a94,94,0,0,1,17.91,19.83Z" style="fill: #fbbc67"/>
+        <g id="cbdf4f38-d53f-4449-956a-e66b5a315ffd" data-name="path5426-5" style="opacity: 0.5;isolation: isolate">
+          <line x1="165.98" y1="254.7" x2="281.89" y2="140.2" style="fill: none;stroke: #fff;stroke-width: 18px"/>
+        </g>
+        <path id="e042a03f-4d05-41f1-b14b-e70de1a957b1" data-name="path5006-17" d="M171.45,226.12l-17,17-18.24,38.1L154,297.86l-.41.81,38.1-18.24,9.73-9.73,2.43-25.94-35.26-2S170.26,233.11,171.45,226.12Z" style="fill: url(#4e655e50-d114-4833-9075-42815cbf4f54)"/>
+        <path id="ce801aee-1393-42b2-9af8-a329da0fd73b" data-name="path5006-1-1" d="M143.49,279.22a25.61,25.61,0,0,0-7.3,2l-15.81,33.23,33.23-15.81.41-.8c1.58-3.89,3.54-10.79-1.22-15.81a10.82,10.82,0,0,0-6.48-2.84,9.9,9.9,0,0,0-2.84,0Z" style="fill: url(#f091cc2a-ef86-41e3-b689-1311ffb4408a)"/>
+      </g>
+    </g>
+  </g>
+  <circle cx="181.4" cy="182.1" r="178.71" style="fill: none;stroke: #4198ff;stroke-miterlimit: 10;stroke-width: 0.49366660649285665px"/>
+  <g id="6daf6138-ccba-46df-b165-6e2d8a9a1326" data-name="layer1">
+    <g id="fa98e67a-8d67-47b4-94da-986726a1dc8e" data-name="g8472">
+      <rect id="191b455d-a113-41f4-aa31-8275d9302bff" data-name="rect4244" x="36.37" y="184.75" width="84" height="96" style="fill: #d8424f"/>
+      <path id="1e2328e9-56a4-47f0-9508-42ba372085a8" data-name="path4187" d="M51.37,206.13v9h6L71.62,232,57,250.38H51.37v9h21v-9h-1.5l7.5-10.12,7.5,10.13h-1.5v9h21v-9h-5.25l-15-18.75L99,215.13h6.37v-9h-21v9h.75l-6.75,8.63-6.75-8.62h.75v-9h-21Z" style="fill: #fff"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>vmlens Report</title>
+
+<!-- Bootstrap -->
+<link href="{{root}}css/bootstrap.css" rel="stylesheet">
+<link href="{{root}}css/report.css" rel="stylesheet">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+
+{{#showHeader}}
+
+<header class="navbar navbar-static-top">
+  <div class="container" style="padding-top: 10px">
+    <div class="navbar-header">
+	  </div>   	 
+   	   <ul class="nav navbar-nav navbar-right" style="padding-top: 10px">
+   	 	 {{#headerList}} 
+   	 	  <li {{#active}} class="active" {{/active}} > <a  href="{{root}}{{href}}" >{{name}}</a> </li>  
+   	 	 {{/headerList}}
+   	   </ul>	 
+	
+	</div>
+
+</header>
+
+{{/showHeader}}
+
+{{#title}}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1 class="text-center">
+ {{#titlePrefix}}
+ <strong style=" color: #cc0000;" >{{titlePrefix}}</strong>
+ {{/titlePrefix}}      
+      {{{title}}}</h1>
+    </div>
+  </div>
+  <hr>
+</div>
+{{/title}}

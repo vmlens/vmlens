@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.views">
+
+         <category
+            id="com.anarsoft.plugin.scala.view.viewCategory"
+            name="vmlens">
+      </category>
+
+       <view
+              category="com.anarsoft.plugin.scala.view.viewCategory"
+              class="com.anarsoft.plugin.view.wrapper.IssueViewWrapper"
+              icon="icons/eview16/logo_red.png"
+              id="com.anarsoft.plugin.scala.view.VMLensDataRaceView"
+              name="vmlens Issues"/>
+       <view
+             category="com.anarsoft.plugin.scala.view.viewCategory"
+             class="com.anarsoft.plugin.view.wrapper.MethodExplorerViewWrapper"
+             icon="icons/eview16/logo_yellow.png"
+             id="com.anarsoft.plugin.view.StackTraceViewWrapper"
+             name="vmlens Explorer"
+             restorable="true">
+       </view>
+    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="com.anarsoft.plugin.sync.bug.startup.OnStartup">
+      </startup>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="com.anarsoft.plugin.scala.view.VMLensDataRaceView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.views.ProblemView"
+               visible="true">
+         </view>
+         <view
+               id="com.anarsoft.plugin.view.StackTraceViewWrapper"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.jdt.ui.PackageExplorer"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+    
+
+
+    <extension point="org.eclipse.help.toc"> 
+       <toc file="help/toc.xml" primary="true" />
+   </extension>
+
+<extension
+          point="org.eclipse.debug.ui.launchShortcuts">
+
+       <shortcut
+             class="com.anarsoft.plugin.view.launch.VMLensJUnitLaunchShortcut"
+             icon="icons/eview16/logo_red.png"
+             id="com.anarsoft.plugin.view.launch.VMLensJUnitLaunchShortcut"
+             label="JUnit Test traced with vmlens"
+             modes="run">
+             
+        <contextualLaunch>
+<enablement>
+<with variable="selection">
+<count value="1"/>
+<iterate>
+<adapt type="org.eclipse.jdt.core.IJavaElement">
+<test property="org.eclipse.jdt.core.isInJavaProject"/>
+<test property="org.eclipse.jdt.core.hasTypeOnClasspath" value="junit.framework.Test"/>
+<test property="org.eclipse.jdt.junit.canLaunchAsJUnit" forcePluginActivation="true"/>
+</adapt>
+</iterate>
+</with>
+</enablement>
+</contextualLaunch>
+<configurationType id="org.eclipse.jdt.junit.launchconfig"></configurationType>
+   
+             
+             
+             
+       </shortcut>
+             
+             
+             
+             
+     
+    </extension>
+<extension
+      point="org.eclipse.equinox.http.registry.servlets">
+   <servlet
+         alias="/index.html"
+         class="com.anarsoft.plugin.view.servlet.ControlServlet"
+         load-on-startup="true">
+   </servlet>
+   <serviceSelector
+         filter="(other.info=com.vmlens)">
+   </serviceSelector>
+   <servlet
+         alias="/elements.html"
+         class="com.anarsoft.plugin.view.servlet.ControlServlet"
+         load-on-startup="true">
+   </servlet>
+   <servlet
+         alias="/issues/*"
+         class="com.anarsoft.plugin.view.servlet.ControlServlet"
+         load-on-startup="true">
+   </servlet>
+   <servlet
+         alias="/elements/*"
+         class="com.anarsoft.plugin.view.servlet.ControlServlet">
+   </servlet>
+   <servlet
+         alias="/issues.html"
+         class="com.anarsoft.plugin.view.servlet.ControlServlet"
+         load-on-startup="true">
+   </servlet>
+</extension>
+<extension
+      point="org.eclipse.equinox.http.registry.resources">
+   <serviceSelector
+         filter="(other.info=com.vmlens)">
+   </serviceSelector>
+   <resource
+         alias="/css/*"
+         base-name="/web_files/css">
+   </resource>
+   <resource
+         alias="/fonts/*"
+         base-name="/web_files/fonts">
+   </resource>
+   <resource
+         alias="/img/*"
+         base-name="/web_files/img">
+   </resource>
+   <resource
+         alias="/js/*"
+         base-name="/web_files/js">
+   </resource>
+</extension>
+<extension
+      point="org.eclipse.debug.core.launchConfigurationTypes">
+   <launchConfigurationType
+         delegate="com.anarsoft.plugin.scala.launch.ExternalLaunchConfigurationDelegate"
+         id="com.anarsoft.plugin.scala.launch.ExternalLaunchConfigurationDelegate"
+         modes="run"
+         name="vmlens All Applications"
+         public="true">
+   </launchConfigurationType>
+   <launchConfigurationType
+         delegate="com.anarsoft.plugin.scala.launch.JUnitWithVmlensLaunchConfigurationDelegate"
+         id="com.anarsoft.plugin.scala.launch.JUnitWithVmlensLaunchConfigurationDelegate"
+         modes="run"
+         name="vmlens JUnit"
+         sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+         sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
+   </launchConfigurationType>
+</extension>
+<extension
+      point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+   <launchConfigurationTabGroup
+         class="com.anarsoft.plugin.view.launch.ExternalLaunchTabGroup"
+         id="com.anarsoft.plugin.scala.launch.ExternalLaunchTabGroup"
+         type="com.anarsoft.plugin.scala.launch.ExternalLaunchConfigurationDelegate">
+   </launchConfigurationTabGroup>
+   <launchConfigurationTabGroup
+         class="com.anarsoft.plugin.view.launch.JUnitWithVmlensTabGroup"
+         id="com.anarsoft.plugin.scala.launch.JUnitWithVmlensTabGroup"
+         type="com.anarsoft.plugin.scala.launch.JUnitWithVmlensLaunchConfigurationDelegate">
+   </launchConfigurationTabGroup>
+</extension>
+<extension
+      point="org.eclipse.ui.importWizards">
+   <wizard
+         category="com.anarsoft.plugin.sync.bug.import.category.vmlens"
+         class="com.anarsoft.plugin.view.wizards.ImportAgenFiles"
+         id="com.anarsoft.plugin.view.wizards.ImportAgenFiles"
+         name="Agent files">
+   </wizard>
+   <category
+         id="com.anarsoft.plugin.sync.bug.import.category.vmlens"
+         name="vmlens">
+   </category>
+</extension>
+<extension
+      point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+   <launchConfigurationTypeImage
+         configTypeID="com.anarsoft.plugin.scala.launch.ExternalLaunchConfigurationDelegate"
+         icon="icons/eview16/logo_grey.png"
+         id="com.anarsoft.plugin.sync.bug.launchConfigurationTypeImage.ExternalLaunchConfigurationDelegate">
+   </launchConfigurationTypeImage>
+   <launchConfigurationTypeImage
+         configTypeID="com.anarsoft.plugin.scala.launch.JUnitWithVmlensLaunchConfigurationDelegate"
+         icon="icons/eview16/logo_red.png"
+         id="com.anarsoft.plugin.sync.bug.launchConfigurationTypeImage.JUnitWithVmlensLaunchConfigurationDelegate">
+   </launchConfigurationTypeImage>
+</extension>
+   
+   
+  
+   
+ 
+      
+
+
+</plugin>

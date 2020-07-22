@@ -1,0 +1,169 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+    	<modelVersion>4.0.0</modelVersion>
+    
+    
+   <parent>
+    <groupId>com.vmlens</groupId>
+    <artifactId>vmlens</artifactId>
+    <version>1.0.13</version>
+    <relativePath>../vmlens/pom.xml</relativePath>
+  </parent>
+	
+	<artifactId>trace-agent</artifactId>
+	
+	<packaging>jar</packaging>
+
+	<name>trace-agent</name>
+	 <url>https://github.com/vmlens/vlmens</url>   
+
+ <licenses>
+      <license>
+        <name>Apache License, Version 2.0</name>
+        <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+      </license>
+   </licenses>
+   
+   <organization>
+    <name>vmlens</name>
+    <url>https://www.vmlens.com</url>
+  </organization>
+   
+   
+    <developers>
+       <developer>
+         <name>Thomas Krieger</name>
+         <email>thomas.krieger@vmlens.com</email>
+         <organization>vmlens</organization>
+         <organizationUrl>https://www.vmlens.com</organizationUrl>
+      </developer>
+    </developers>
+    
+    <scm>
+         <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
+         <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
+         <url>git@github.com:vmlens/vlmens.git</url>
+    </scm>
+	
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>com.vmlens</groupId>
+      <artifactId>trace-agent-bootstrap</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+
+  </dependencies>
+
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+		
+    
+				</configuration>
+			</plugin>
+
+
+                  <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <target>
+            <jar destfile="target/agent.jar" >
+	    
+	    <manifest>
+	      <!-- Who is building this jar? -->
+	      <attribute name="Built-By" value="Thomas Krieger"/>
+	      <!-- Information about the program itself -->
+	      <attribute name="Implementation-Vendor" value="Anarsoft"/>
+	      <attribute name="Implementation-Title" value="VMLens Agent"/>
+	      <attribute name="Implementation-Version" value="${version}"/>
+	      <attribute name="Can-Retransform-Classes" value="true"/>
+	      <attribute name="Premain-Class" value="com.anarsoft.trace.agent.Agent"/>
+	    
+	      <attribute name="Boot-Class-Path" value="agent_bootstrap.jar"/>
+	      <!-- details -->
+	     
+	    	
+	    	
+	    </manifest>
+	  		  	
+	  	<fileset dir="target/classes"  />
+	  	
+	  </jar>             
+          
+          
+          
+          </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>       
+                        
+    <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>install</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>../interleave/_dist/agent_lib</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>target/</directory>
+                   <includes>
+                      <include>agent.jar</include>
+                  </includes>
+                </resource>
+              </resources>              
+            </configuration>            
+          </execution>
+        </executions>
+      </plugin>          
+
+
+
+		</plugins>
+
+	</build>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</project>

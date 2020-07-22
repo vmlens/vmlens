@@ -1,0 +1,33 @@
+<div class="row text-left">
+  
+  
+ <table class="table table-striped" >
+  <tr>
+    <th>Level</th>
+    <th>Method</th>
+  </tr>
+  
+
+
+{{#issues}}
+
+{{#color}}<tr style=" background-color: {{color}} " >{{/color}}
+
+{{^color}}<tr>{{/color}}
+
+
+
+   <td>{{group}}</td>
+   <td>
+    {{#parentChildLink}}<a   href="{{parentChildLink}}" >{{{name}}}</a> {{/parentChildLink}}
+     {{^parentChildLink}}{{{name}}}{{/parentChildLink}}
+   </td>
+
+  </tr>
+
+{{/issues}}
+ 
+</table>   
+    
+     
+</div>

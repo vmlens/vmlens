@@ -1,0 +1,71 @@
+{{>header}}
+
+ {{#issues}} 
+
+{{#parent}}
+
+<div class="{{containerTyp}}">
+ 
+ 
+   <div class="row">
+    <div>
+      <h2 class="text-left">{{name}}</h1>
+    </div>
+  </div>
+ 
+
+ 
+{{>parentTable}}
+  
+ 
+
+</div>
+
+{{/parent}}
+
+
+{{#child}}
+
+<div class="{{containerTyp}}">
+ 
+ 
+   <div class="row">
+    <div>
+      <h2 class="text-left">{{name}}</h2>
+    </div>
+  </div>
+ 
+
+ 
+{{>methodWithSharedStateTable}}
+  
+ 
+
+
+</div>
+
+
+{{/child}}
+
+
+
+
+{{#sharedState}}
+
+{{>sharedStateList}}
+
+
+{{/sharedState}}
+
+
+
+{{#threadList}}
+
+{{>threadList}}
+
+
+{{/threadList}}
+
+{{/issues}} 
+
+{{>footer}}
