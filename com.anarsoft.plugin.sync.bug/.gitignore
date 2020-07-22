@@ -33,3 +33,4 @@ target/*
 lib/*
 _dist/*
 agent_lib/*
+/bin/
