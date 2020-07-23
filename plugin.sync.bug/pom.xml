@@ -3,7 +3,7 @@
    <parent>
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.0.13</version>
+    <version>1.0.14</version>
     <relativePath>../vmlens/pom.xml</relativePath>
   </parent>
   
@@ -314,6 +314,28 @@
         </executions>
       </plugin>          
 
+                  <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>empty-javadoc-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>javadoc</classifier>
+                            <classesDirectory>${basedir}/javadoc</classesDirectory>
+                            <archive>
+                                <manifestEntries>
+                                    <Automatic-Module-Name>plugin.sync.bug</Automatic-Module-Name>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+</plugin>
       
       
       

@@ -6,7 +6,7 @@
    <parent>
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.0.13</version>
+    <version>1.0.14</version>
     <relativePath>../vmlens/pom.xml</relativePath>
   </parent>
 
@@ -79,7 +79,7 @@
    <dependency>
       <groupId>com.vmlens</groupId>
       <artifactId>plugin.sync.bug</artifactId>
-      <version>1.0.13</version>  
+      <version>${project.version}</version>  
     </dependency>
 
     
@@ -205,7 +205,27 @@
           </execution>
         </executions>
       </plugin>      
-
+ 
+      
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <executions>
+        <execution>
+          <id>attach-javadocs</id>
+          <goals>
+            <goal>jar</goal>
+          </goals>
+        </execution>
+      </executions>
+      
+                    <configuration>
+  
+          <excludePackageNames>*.internal.*</excludePackageNames>
+     
+        </configuration>
+      
+    </plugin> 
         
     </plugins>    
     

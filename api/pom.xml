@@ -5,7 +5,7 @@
     <parent>
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.0.13</version>
+    <version>1.0.14</version>
     <relativePath>../vmlens/pom.xml</relativePath>
   </parent>
   
@@ -64,19 +64,6 @@
         </configuration>
       </plugin>
      
-     
-       <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-source-plugin</artifactId>
-      <executions>
-        <execution>
-          <id>attach-sources</id>
-          <goals>
-            <goal>jar</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
      <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-javadoc-plugin</artifactId>
@@ -96,6 +83,7 @@
         </configuration>
       
     </plugin> 
+    
     </plugins>
  </build>
   
