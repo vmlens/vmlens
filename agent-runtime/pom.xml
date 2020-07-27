@@ -5,7 +5,7 @@
      <parent>
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.0.14</version>
+    <version>1.0.15</version>
     <relativePath>../vmlens/pom.xml</relativePath>
   </parent>
   

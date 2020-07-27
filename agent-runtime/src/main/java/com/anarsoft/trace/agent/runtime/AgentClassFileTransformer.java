@@ -663,10 +663,10 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 			}
 
 			
-			if(name.endsWith("WorkQueue"))
-			{
-				logTransformedClass(name, cw.toByteArray() );
-			}
+//			if(name.endsWith("WorkQueue"))
+//			{
+//				logTransformedClass(name, cw.toByteArray() );
+//			}
 			
 			
 			return cw.toByteArray();

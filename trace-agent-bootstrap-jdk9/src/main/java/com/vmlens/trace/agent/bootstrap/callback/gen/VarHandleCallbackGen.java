@@ -235,7 +235,7 @@ volatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_WRITE );
 }
 
 
-public static byte getAcquire​3 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static byte getAcquire3 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -248,7 +248,7 @@ return  result;
 }
 
 
-public static double getAcquire​8 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static double getAcquire8 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -261,7 +261,7 @@ return  result;
 }
 
 
-public static float getAcquire​6 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static float getAcquire6 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -274,7 +274,7 @@ return  result;
 }
 
 
-public static int getAcquire​5 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static int getAcquire5 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -287,7 +287,7 @@ return  result;
 }
 
 
-public static long getAcquire​7 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static long getAcquire7 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -300,7 +300,7 @@ return  result;
 }
 
 
-public static char getAcquire​2 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static char getAcquire2 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -313,7 +313,7 @@ return  result;
 }
 
 
-public static short getAcquire​4 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static short getAcquire4 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -326,7 +326,7 @@ return  result;
 }
 
 
-public static boolean getAcquire​1 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static boolean getAcquire1 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -339,7 +339,7 @@ return  result;
 }
 
 
-public static java.lang.Object getAcquire​10 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static java.lang.Object getAcquire10 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -352,7 +352,7 @@ return  result;
 }
 
 
-public static void getAcquire​0 ( VarHandle varHandle ,  Object obj, int methodId  )
+public static void getAcquire0 ( VarHandle varHandle ,  Object obj, int methodId  )
 {
 
 beforeVolatileAccess( varHandle , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2027,7 +2027,7 @@ volatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_WRITE );
 }
 
 
-public static byte getAcquire​3 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static byte getAcquire3 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2040,7 +2040,7 @@ return  result;
 }
 
 
-public static double getAcquire​8 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static double getAcquire8 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2053,7 +2053,7 @@ return  result;
 }
 
 
-public static float getAcquire​6 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static float getAcquire6 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2066,7 +2066,7 @@ return  result;
 }
 
 
-public static int getAcquire​5 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static int getAcquire5 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2079,7 +2079,7 @@ return  result;
 }
 
 
-public static long getAcquire​7 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static long getAcquire7 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2092,7 +2092,7 @@ return  result;
 }
 
 
-public static char getAcquire​2 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static char getAcquire2 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2105,7 +2105,7 @@ return  result;
 }
 
 
-public static short getAcquire​4 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static short getAcquire4 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2118,7 +2118,7 @@ return  result;
 }
 
 
-public static boolean getAcquire​1 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static boolean getAcquire1 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2131,7 +2131,7 @@ return  result;
 }
 
 
-public static java.lang.Object getAcquire​10 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static java.lang.Object getAcquire10 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );
@@ -2144,7 +2144,7 @@ return  result;
 }
 
 
-public static void getAcquire​0 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
+public static void getAcquire0 ( VarHandle varHandle ,  Object obj, int index , int methodId  )
 {
 
 beforeVolatileAccessArray( index , obj   , methodId , MemoryAccessType.IS_READ );

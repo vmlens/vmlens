@@ -4,7 +4,7 @@ package com.anarsoft.trace.agent;
 public class Version 
 {
 
-   public static final String LABEL = "1.0.14";
+   public static final String LABEL = "1.0.15";
 
 
 

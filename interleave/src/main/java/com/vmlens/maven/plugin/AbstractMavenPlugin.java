@@ -79,14 +79,7 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 			String source = (new ExtractAgentAndCheckLicence())
 					.extractAndCheckAndSetPropertiesInRunProperties(agentDirectory, mavenMojo);
 
-			 try {
-					File waitPointFile = new File(source + "/parallize.info");
-					Files.deleteIfExists(waitPointFile.toPath());
-
-				} catch (IOException exp) {
-					throw new MojoExecutionException("scheduling info could not be deleted", exp);
-				}
-			
+		
 			
 
 			if(  getMode() == Mode.state )

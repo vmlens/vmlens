@@ -16,8 +16,8 @@ public static  void add2TemplateList(TLinkedList<TemplateMethodDesc> templateMet
 	templateMethodDescList.add(new PolymorphicSignatureGet("getVolatile"));
 	templateMethodDescList.add(new PolymorphicSignatureSet("setVolatile"));
 	
-	templateMethodDescList.add(new PolymorphicSignatureGet("getAcquire​"));
-	templateMethodDescList.add(new PolymorphicSignatureSet("setRelease​"));
+	templateMethodDescList.add(new PolymorphicSignatureGet("getAcquire"));
+	templateMethodDescList.add(new PolymorphicSignatureSet("setRelease"));
 	
 	
 	
