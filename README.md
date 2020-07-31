@@ -66,9 +66,20 @@ public class TestUpdateWrong {
 
 ## Eclipse
 
-1. Start Eclipse
-2. Select Help>Install New Software…
-3. Work with: https://vmlens.com/download/site/
+<p>Install from marketplace:</p>
+<ol>
+	<li>Start Eclipse (version 4.4 or greater)</li>
+	<li><a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=825595" class="drag" title="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client">
+	<img style="display: inline;" class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png"
+	 alt="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client" /></a></li>
+</ol>
+<p>Or install directly from update site:</p>
+<ol>
+	<li>Start Eclipse</li>
+	<li>Select Help&gt;Install New Software…</li>
+	<li>Work with:<strong> https://vmlens.com/download/site/</strong></li>
+</ol>
+
 
 ## MAVEN
 
