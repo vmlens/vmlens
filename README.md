@@ -1,6 +1,8 @@
 # multi-threaded testing made easy
 
-<div><img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" align="left">  <h1>vmlens</h1></div>
+<p><img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" align="left"> </p>
+
+ <h1>vmlens</h1>
 
 ## It works
 
