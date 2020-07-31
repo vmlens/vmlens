@@ -1,8 +1,8 @@
 # multi-threaded testing made easy
 
-<p><img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" align="left"> </p>
+<img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" >
 
- <h1>vmlens</h1>
+# vmlens
 
 ## It works
 
@@ -95,9 +95,9 @@ public class TestUpdateWrong {
       ...
 </project>
 ```
+# License
 
-
-
+[Apache License 2.0](https://github.com/vmlens/vmlens/blob/master/LICENSE)
 
 
 
