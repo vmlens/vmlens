@@ -31,27 +31,27 @@ object FactoryLaunchTabInternal {
 
   def create(control: Composite, onViewChanged : () => Unit) = {
     control.setLayout(new GridLayout(1, true));
-    val groupCombo = SWTFactory.createGroup(control, "mode", 1, 1, 768);
-
-    val combo = new Combo(groupCombo, SWT.READ_ONLY);
-    combo.setItems("interleave", "state", "monitor");
-
-    combo.select(0);
-    
-    combo.addSelectionListener(new SelectionAdapter() {
-      override def widgetSelected(event: SelectionEvent) {
-           onViewChanged();
-      }
-    });
-    
+//    val groupCombo = SWTFactory.createGroup(control, "mode", 1, 1, 768);
+//
+//    val combo = new Combo(groupCombo, SWT.READ_ONLY);
+//    combo.setItems("interleave", "state", "monitor");
+//
+//    combo.select(0);
+//    
+//    combo.addSelectionListener(new SelectionAdapter() {
+//      override def widgetSelected(event: SelectionEvent) {
+//           onViewChanged();
+//      }
+//    });
+//    
     
 
     val listTrace         = createListEditor(control, "trace" , onViewChanged );
     val listDoNotTraceIn  = createListEditor(control, "do not trace" , onViewChanged);
     val excludeFromStackTrace         = createListEditor(control, "exclude from stacktrace" , onViewChanged );
     val suppress  = createListEditor(control, "suppress" , onViewChanged);
-    
-    new LaunchTabInternal( combo , listTrace ,  listDoNotTraceIn , excludeFromStackTrace ,  suppress);
+    // "interleave"
+    new LaunchTabInternal( listTrace ,  listDoNotTraceIn , excludeFromStackTrace ,  suppress);
   }
 
   def createButton(control: Composite, key: String) =

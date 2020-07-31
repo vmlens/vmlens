@@ -42,17 +42,17 @@ import com.anarsoft.trace.agent.runtime.util.AgentKeys
 
 class VMLensLaunchTab  extends AbstractLaunchConfigurationTab {
   
-    val modeName2Id = new HashMap[String,Int]
-    val id2ModeName = new HashMap[Int,String]
-    
-    
-    modeName2Id.put("interleave" , 0);
-    modeName2Id.put("state" , 1);
-    modeName2Id.put("monitor" , 2);
-  
-    id2ModeName.put(0 , "interleave" );
-    id2ModeName.put(1 , "state");
-    id2ModeName.put(2 , "monitor");
+//    val modeName2Id = new HashMap[String,Int]
+//    val id2ModeName = new HashMap[Int,String]
+//    
+//    
+//    modeName2Id.put("interleave" , 0);
+//    modeName2Id.put("state" , 1);
+//    modeName2Id.put("monitor" , 2);
+//  
+//    id2ModeName.put(0 , "interleave" );
+//    id2ModeName.put(1 , "state");
+//    id2ModeName.put(2 , "monitor");
     
     
     
@@ -149,8 +149,8 @@ class VMLensLaunchTab  extends AbstractLaunchConfigurationTab {
           
           case Some(tab) =>
             {
-                  val id = modeName2Id.get(mode).get;
-                   tab.combo.select(id);
+//                  val id = modeName2Id.get(mode).get;
+//                   tab.combo.select(id);
               
               
               fillList(trace , tab.listTrace  );
@@ -196,10 +196,10 @@ class VMLensLaunchTab  extends AbstractLaunchConfigurationTab {
           
           case Some(tab) =>
             {
-              val id = tab.combo.getSelectionIndex();
-              val mode = id2ModeName.get(id).get;
+//              val id = tab.combo.getSelectionIndex();
+//              val mode = id2ModeName.get(id).get;
               
-               conf.setAttribute(  AgentKeys.MODE , mode );
+               conf.setAttribute(  AgentKeys.MODE , "interleave" );
               
                setListValues(   AgentKeys.TRACE  , tab.listTrace , conf );
                setListValues(   AgentKeys.DO_NOT_TRACE_IN  , tab.listDoNotTraceIn , conf);
