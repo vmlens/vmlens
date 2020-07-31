@@ -73,7 +73,7 @@ public class TestUpdateWrong {
 	<img style="display: inline;" class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png"
 	 alt="Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client" /></a></li>
 </ol>
-<p>Or install directly from update site:</p>
+<p>Or install directly from the update site:</p>
 <ol>
 	<li>Start Eclipse</li>
 	<li>Select Help&gt;Install New Software…</li>
