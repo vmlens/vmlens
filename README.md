@@ -90,14 +90,26 @@ shows the last thread interleaving.  The above example test fails, and vmlens re
 	<li>Work with:<strong> https://vmlens.com/download/site/</strong></li>
 </ol>
 
+To use the class AllInterleavings you need to include the jar api-1.0.15.jar into your classpath. You can download this jar from [maven central here](https://search.maven.org/remotecontent?filepath=com/vmlens/api/1.0.15/api-1.0.15.jar).
+
+The usage of the eclipse plugin [is described here.](https://vmlens.com/help/manual/#run-eclipse)
+
 
 ## MAVEN
 
 ```XML
 <project>
- 
+<!-- to include the class AllInterleavings into the test class path.  -->	
+<dependency>
+  <groupId>com.vmlens</groupId>
+  <artifactId>api</artifactId>
+  <version>1.0.15</version>
+  <scope>test</scope>
+</dependency>	
+	
 <build>
   <plugins>
+<!-- to run the vmlens maven plugin during the maven test phase  -->	 
     <plugin>
     <groupId>com.vmlens</groupId>
     <artifactId>interleave</artifactId>
@@ -116,6 +128,9 @@ shows the last thread interleaving.  The above example test fails, and vmlens re
       ...
 </project>
 ```
+The usage of the maven plugin [is described here.](https://vmlens.com/help/manual/#maven-plugin-configuration-1)
+
+
 # Documentation
 
 * [JavaDoc](https://vmlens.com/apidocs/api/1.0/) 
