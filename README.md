@@ -97,6 +97,8 @@ The usage of the eclipse plugin [is described here.](https://vmlens.com/help/man
 
 ## MAVEN
 
+To use vmlens with maven, configure a plugin tag to tell maven that the vmlens plugin should be executed at the test phase. And include the jar com.vmlens.api as test dependency.
+
 ```XML
 <project>
 <!-- to include the class AllInterleavings into the test class path.  -->	
