@@ -118,7 +118,8 @@ shows the last thread interleaving.  The above example test fails, and vmlens re
 ```
 # Documentation
 
-[vmlens](https://vmlens.com) 
+* [JavaDoc](https://vmlens.com/apidocs/api/1.0/) 
+* [Manual](https://vmlens.com/help/manual/) 
 
 # Build
 
