@@ -74,24 +74,6 @@ object LoopDetectionAlgo {
 
     }
 
-//  def main(args: Array[String]) {
-//    val list = new ArrayList[Statement4LoopDetection]
-//    list.add(new Statement4LoopDetection(7))
-//    //    list.add(new Statement4LoopDetection(9))
-//    list.add(new Statement4LoopDetection(1))
-//    list.add(new Statement4LoopDetection(1))
-//    //    list.add(new Statement4LoopDetection(1))
-//    //    list.add(new Statement4LoopDetection(1))
-//    //   list.add(new Statement4LoopDetection(1))
-//    //    list.add(new Statement4LoopDetection(7))
-//    list.add(new Statement4LoopDetection(9))
-//
-//    val result = new ArrayList[StatementOrLoop]
-//
-//    detectLoop(list, result);
-//
-//    println(result);
-//
-//  }
+
 
 }

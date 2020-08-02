@@ -505,5 +505,6 @@ public class ClassTransformer extends ClassTransformerAbstract implements Opcode
 	}
 	
 	
+	
 
 }

@@ -87,6 +87,9 @@ public class WhileLoopActive implements WhileLoop {
 			isSecond = false;
 			interleaveFacade.secondRun();
 			int currentRunId = runId++;
+			
+			callbackStatePerThread.sendEvent.writeRunStartEventGen( CallbackState.slidingWindow, loopId, currentRunId);
+			
 			current =  new RunStateActive( interleaveFacade,this, loopId ,  currentRunId);
 			current.logic.startFirstThread(forThread.getId(), forThread);
 			return new RunEntity(current,allInterleavings);

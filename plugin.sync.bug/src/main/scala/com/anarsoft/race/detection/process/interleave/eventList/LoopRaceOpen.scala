@@ -4,6 +4,8 @@ import java.util.ArrayList
 import com.anarsoft.race.detection.process.interleave._
 import  com.anarsoft.race.detection.process.nonVolatileField.InterleaveEventNonVolatileAccess
 
+// 
+
 class LoopRaceOpen(val statementList : ArrayList[InterleaveEventStatement], val raceHasRead : Boolean, var count : Int,val runWithRace : Int)  extends LoopState with LoopOrRunEventVisitor[Unit] {
   
   def add(event : LoopWarningEvent)
@@ -13,11 +15,14 @@ class LoopRaceOpen(val statementList : ArrayList[InterleaveEventStatement], val 
   
   def add(event : LoopOrRunEvent)
   {
-    
+  
+     event.accept(this);
   }
   
   def add(event : InterleaveEventStatement)
   {
+
+    
     if( event.runId ==  runWithRace)
     {
       statementList.add(event);
@@ -57,7 +62,10 @@ class LoopRaceOpen(val statementList : ArrayList[InterleaveEventStatement], val 
   
   def visit(event : RunStartEvent)
   {
-    count= event.runId;
+  
+    
+    
+      count = Math.max( count , event.runId );
   }
   
   

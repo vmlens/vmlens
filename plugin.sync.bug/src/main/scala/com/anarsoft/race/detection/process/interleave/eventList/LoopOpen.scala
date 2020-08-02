@@ -27,6 +27,9 @@ class LoopOpen(val loopId: Int) extends LoopState {
   
   def add(event : LoopOrRunEvent)
   {
+    
+   
+    
     loopEventList.add(event);
   }
   
@@ -163,8 +166,7 @@ class LoopOpen(val loopId: Int) extends LoopState {
           prevoiusLastRunId= id;
            filterStatementList4OneId();
           
-        // LoopRaceOpen(val statementList : ArrayList[InterleaveEventStatement], val raceHasRead : Boolean, var count : Int,val runWithRace : Int)  extends LoopState with LoopOrRunEventVisitor[Unit]   
-           
+     
            
           new LoopRaceOpen(statementList, raceHasRead , maxCount ,  prevoiusLastRunId);
         }
