@@ -22,11 +22,12 @@ Using vmlens is easy.
 
 Surround your test with a while loop iterating over all thread interleavings using the class AllInterleaving. 
 
-# Example: Read-modify-write race condition
+# Example
 
-A read-modify-write race happens when reading, modifying, and writing consists, not of one but multiple atomic methods. In the example below get and put are atomic but the complete update method is not. vmlens executes all thread interleavings and reports the interleaving which led to the error. 
+The following example shows how to write multi-threaded tests with vmlens:
 
-```Java {.line-numbers}
+```Java
+import com.vmlens.api.AllInterleavings;
 public class TestUpdateWrong {
     public void update(ConcurrentHashMap<Integer, Integer> map) {
         Integer result = map.get(1);
@@ -40,6 +41,8 @@ public class TestUpdateWrong {
     public void testUpdate() throws InterruptedException {
         try (AllInterleavings allInterleavings = 
                 new AllInterleavings("TestUpdateWrong");) {
+	// surround the test with a while loop, iterationg over
+	// the class AllInterleavings
             while (allInterleavings.hasNext()) {
                 final ConcurrentHashMap<Integer, Integer> map = 
                         new ConcurrentHashMap<Integer, Integer>();
@@ -60,6 +63,14 @@ public class TestUpdateWrong {
     }
 }
 ```
+In your test method, you surround the code you want to test with a while loop iterating
+over the class AllInterleavings. 
+vmlens executes the block inside the while loop multiple times, for each thread interleaving once.
+If the test fails vmlens shows the thread interleaving which led to the failure. If the test succeeds vmlens 
+shows the last thread interleaving.  The above example test fails, and vmlens reports the interleaving which led to the failed assertion:
+
+
+
 <img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/img/readModifyWriteWithoutTitle.png">
 
 # Download
