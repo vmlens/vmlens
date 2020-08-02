@@ -56,8 +56,7 @@ public class TestUpdateWrong {
                 second.start();
                 first.join();
                 second.join();
-                assertEquals(2, 
-                        map.get(1).intValue());
+                assertEquals(2,map.get(1).intValue());
             }
         }
     }
