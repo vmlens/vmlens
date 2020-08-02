@@ -26,7 +26,7 @@ Surround your test with a while loop iterating over all thread interleavings usi
 
 A read-modify-write race happens when reading, modifying, and writing consists, not of one but multiple atomic methods. In the example below get and put are atomic but the complete update method is not. vmlens executes all thread interleavings and reports the interleaving which led to the error. 
 
-```Java
+```Java {.line-numbers}
 public class TestUpdateWrong {
     public void update(ConcurrentHashMap<Integer, Integer> map) {
         Integer result = map.get(1);
