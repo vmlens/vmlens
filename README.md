@@ -120,6 +120,31 @@ shows the last thread interleaving.  The above example test fails, and vmlens re
 
 [vmlens](https://vmlens.com) 
 
+# Build
+
+To build vmlens, go to vmlens and run
+```Shell
+mvn clean install
+```
+
+You need JDK 11 or higher and a toolchains.xml containing a tag for JDK 8.
+Example toolchains.xml:
+```XML
+<?xml version="1.0" encoding="UTF8"?>
+<toolchains>
+<!-- JDK toolchains -->
+  <toolchain>
+    <type>jdk</type>
+      <provides>
+        <version>1.8</version>
+        <vendor>sun</vendor>
+      </provides>
+      <configuration>
+        <jdkHome>/path/to/jdk/1.8</jdkHome>
+      </configuration>
+  </toolchain>
+</toolchains>
+```
 
 # License
 
