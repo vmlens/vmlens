@@ -68,9 +68,23 @@ shows the last thread interleaving.
 
 The above example test fails, and vmlens reports the interleaving which led to the failed assertion:
 
-
-
 <img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/img/readModifyWriteWithoutTitle.png">
+
+In maven, you can see this report by clicking on the link TestUpdateWrong in the file target/interleave/elements.html.
+In eclipse you can see the report by clicking on the link TestUpdateWrong in the view under Window -> Show View -> Other... -> vmlens -> vmlens Explorer.
+
+The maven reports are [described here](https://vmlens.com/help/manual/#maven-reports). The eclipse views are [described here](https://vmlens.com/help/manual/#the-report).
+
+
+## How to run the test
+You can run the test in eclipse using the vmlens run short cut for JUnit. Right click on the JUnit class -> Run As -> JUnit Test traced with vmlens.
+
+To run the test with maven put the vmlens interleave plugin in your maven pom.xml [as described here](https://vmlens.com/help/manual/#running-tests-maven).
+
+## Next steps
+
+[Read here more](https://vmlens.com/help/manual/#data_races_deadlocks) about how to use vmlens for testing multi-threaded software.
+
 
 # Download
 
