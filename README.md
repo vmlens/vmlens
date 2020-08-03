@@ -64,7 +64,9 @@ In your test method, you surround the code you want to test with a while loop it
 over the class AllInterleavings. 
 vmlens executes the block inside the while loop multiple times, for each thread interleaving once.
 If the test fails vmlens shows the thread interleaving which led to the failure. If the test succeeds vmlens 
-shows the last thread interleaving.  The above example test fails, and vmlens reports the interleaving which led to the failed assertion:
+shows the last thread interleaving.  
+
+The above example test fails, and vmlens reports the interleaving which led to the failed assertion:
 
 
 
