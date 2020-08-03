@@ -1,14 +1,12 @@
-# multi-threaded testing made easy
+# vmlens, multi-threaded testing made easy
 
 <img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" >
-
-# vmlens
 
 ## It works
 
 Running your tests with multiple threads does not work. Bugs depend on a specific thread interleaving, which is often impossible to reach by simply rerunning your test multiple times. And data races only occur on specific hardware architectures and JVMs.
 
-Therefore vmlens uses the Java Memory Model to execute all possible thread interleavings and to check for data races in the program flow.
+Therefore vmlens uses the Java Memory Model to execute all possible thread interleavings and to check for data races in the program flow. [This blog post](https://vmlens.com/articles/cp/java_memory_model_enables_tests/) describes how vmlens uses the Java Memory Model to test all thread interleavings.
 
 ## Even for complicated algorithms 
 
@@ -66,11 +64,27 @@ In your test method, you surround the code you want to test with a while loop it
 over the class AllInterleavings. 
 vmlens executes the block inside the while loop multiple times, for each thread interleaving once.
 If the test fails vmlens shows the thread interleaving which led to the failure. If the test succeeds vmlens 
-shows the last thread interleaving.  The above example test fails, and vmlens reports the interleaving which led to the failed assertion:
+shows the last thread interleaving.  
 
-
+The above example test fails, and vmlens reports the interleaving which led to the failed assertion:
 
 <img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/img/readModifyWriteWithoutTitle.png">
+
+In maven, you can see this report by clicking on the link TestUpdateWrong in the file target/interleave/elements.html.
+In eclipse you can see the report by clicking on the link TestUpdateWrong in the view under Window -> Show View -> Other... -> vmlens -> vmlens Explorer.
+
+The maven reports are [described here](https://vmlens.com/help/manual/#maven-reports). The eclipse views are [described here](https://vmlens.com/help/manual/#the-report).
+
+
+## How to run the test
+You can run the test in eclipse using the vmlens run short cut for JUnit. Right click on the JUnit class -> Run As -> JUnit Test traced with vmlens.
+
+To run the test with maven put the vmlens interleave plugin in your maven pom.xml [as described here](https://vmlens.com/help/manual/#running-tests-maven).
+
+## Next steps
+
+[Read here more](https://vmlens.com/help/manual/#data_races_deadlocks) about how to use vmlens for testing multi-threaded software.
+
 
 # Download
 
@@ -90,14 +104,28 @@ shows the last thread interleaving.  The above example test fails, and vmlens re
 	<li>Work with:<strong> https://vmlens.com/download/site/</strong></li>
 </ol>
 
+To use the class AllInterleavings you need to include the jar api-1.0.15.jar into your classpath. You can download this jar from [maven central here](https://search.maven.org/remotecontent?filepath=com/vmlens/api/1.0.15/api-1.0.15.jar).
+
+The usage of the eclipse plugin [is described here.](https://vmlens.com/help/manual/#run-eclipse)
+
 
 ## MAVEN
 
+To use vmlens with maven, configure a plugin tag to tell maven that the vmlens plugin should be executed at the test phase. And include the jar com.vmlens.api as test dependency.
+
 ```XML
 <project>
- 
+<!-- to include the class AllInterleavings into the test class path.  -->	
+<dependency>
+  <groupId>com.vmlens</groupId>
+  <artifactId>api</artifactId>
+  <version>1.0.15</version>
+  <scope>test</scope>
+</dependency>	
+	
 <build>
   <plugins>
+<!-- to run the vmlens maven plugin during the maven test phase  -->	 
     <plugin>
     <groupId>com.vmlens</groupId>
     <artifactId>interleave</artifactId>
@@ -116,9 +144,13 @@ shows the last thread interleaving.  The above example test fails, and vmlens re
       ...
 </project>
 ```
+The usage of the maven plugin [is described here.](https://vmlens.com/help/manual/#maven-plugin-configuration-1)
+
+
 # Documentation
 
-[vmlens](https://vmlens.com) 
+* [JavaDoc](https://vmlens.com/apidocs/api/1.0/) 
+* [Manual](https://vmlens.com/help/manual/) 
 
 # Build
 
