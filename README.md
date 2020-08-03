@@ -6,7 +6,7 @@
 
 Running your tests with multiple threads does not work. Bugs depend on a specific thread interleaving, which is often impossible to reach by simply rerunning your test multiple times. And data races only occur on specific hardware architectures and JVMs.
 
-Therefore vmlens uses the Java Memory Model to execute all possible thread interleavings and to check for data races in the program flow.
+Therefore vmlens uses the Java Memory Model to execute all possible thread interleavings and to check for data races in the program flow. [This blog post](https://vmlens.com/articles/cp/java_memory_model_enables_tests/) describes how vmlens uses the Java Memory Model to test all thread interleavings.
 
 ## Even for complicated algorithms 
 
