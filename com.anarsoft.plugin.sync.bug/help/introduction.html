@@ -17,9 +17,9 @@
     <div class="page-content">
       <div class="wrapper">
 
-  <h1><a href="#introduction" id="introduction"></a>Introduction</h1>
-<p>vmlens let you test if your application is thread-safe. Write your tests using your favorite test frameworks like JUnit or TestNG and let vmlens test all thread interleavings.</p>
-<p>In the following, you will see how to write such tests.</p>
+  <h1><a href="#why-vmlens" id="why-vmlens"></a>Why vmlens?</h1>
+<p>Running your tests with multiple threads does not work. Bugs depend on a specific thread interleaving, which is often impossible to reach by simply rerunning your test multiple times. And data races only occur on specific hardware architectures and JVMs.</p>
+<p>Therefore vmlens uses the Java Memory Model to execute all possible thread interleavings and to check for data races in the program flow. <a href="https://vmlens.com/articles/cp/java_memory_model_enables_tests/">This blog post</a> describes how vmlens uses the Java Memory Model to test all thread interleavings.</p>
 
 
       </div>

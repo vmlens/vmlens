@@ -32,22 +32,23 @@
 	<li>Select Help&gt;Install New Software…</li>
 	<li>Work with:<strong> https://vmlens.com/download/site/</strong></li>
 </ol>
+<p>To use the class AllInterleavings you need to include the jar api-1.0.15.jar into your classpath. You can download this jar <a href="https://search.maven.org/remotecontent?filepath=com/vmlens/api/1.0.15/api-1.0.15.jar">from maven central here.</a></p>
 <h2 id="run-eclipse">Running JUnit tests</h2>
 <p>To run a unit test use the junit vmlens shortcut:</p>
-<p><img   src="../../../img/help/manual/launch_short_cut.png" /></p>
+<p><img   src="img/help/manual/launch_short_cut.png" /></p>
 <p>The vmlens configuration for JUnit runs is <a href="#run-configuration">described here</a></p>
 <h2 id="all-other-applications">Running all other types of application</h2>
 <p>To run vmlens with another type of application, create a &quot;vmlens All Applications&quot; run configuration. Select Run -&gt; Run Configurations... from the main menu. And create a &quot;vmlens All Applications&quot; run configuration:</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/launch_types.png" /></p>
+<p><img style="max-width: 100%; height: auto;"  src=".img/help/manual/launch_types.png" /></p>
 <p>After pressing run vmlens shows you the following dialog:</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/run_all.png" /></p>
+<p><img style="max-width: 100%; height: auto;"  src="img/help/manual/run_all.png" /></p>
 <p>To run vmlens with an application on your local machine either inside or outside of eclipse add the vmlens agent string to the VM arguments of your application. To run on a remote machine export the agent files to a folder by pressing the export button.</p>
-<h2><a href="#running-on-a-remote-machine" id="running-on-a-remote-machine"></a>Running on a remote machine</h2>
+<h2 id="eclipse_running_remote">Running on a remote machine</h2>
 <p>Copy this folder to your remote machine and configure your application with an agent string pointing to the agent.jar in this folder:</p>
 <pre><code>-javaagent:&lt;Path of agent.jar&gt;/agent.jar
 </code></pre>
 <p>When you start your application the vmlens agent creates a folder vmlens in the working directory of your application. After you stopped your application the agent stops and you can import the folder vmlens in eclipse: Select File -&gt; Import... from the main menu and select the vmlens Agent files wizard as shown below:</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/select_import_wizard.png" /></p>
+<p><img style="max-width: 100%; height: auto;"  src="img/help/manual/select_import_wizard.png" /></p>
 <p>Now vmlens will analyze the execution trace of your application and open the vmlens perspective in eclipse showing you the results.</p>
 <p><strong>Please set the java heap size for eclipse in the eclipse.ini to a high enough value, for example -Xmx5g</strong></p>
 <h3><a href="#changing-the-path-of-the-vmlens-folder" id="changing-the-path-of-the-vmlens-folder"></a>Changing the path of the vmlens folder</h3>
@@ -55,106 +56,81 @@
 <pre><code>eventDir=./vmlens/
 </code></pre>
 <h2 id="run-configuration">Launch Configuration</h2>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/runConfig.png" /></p>
+<p><img style="max-width: 100%; height: auto;"  src="img/help/manual/runConfig.png" /></p>
 <p>In the run configuration you can configure the following properties:</p>
 <h4><a href="#trace" id="trace"></a>trace</h4>
-<p>Trace let you narrow the methods which get traced. If trace is configured vmlens will only search for data races inside methods matching the trace elements. Also when showing the stack trace
-where the data race was found vmlens will start at the first method matching a trace element. </p>
-<h4><a href="#donottrace" id="donottrace"></a>doNotTrace</h4>
+<p><p>Trace let you narrow the methods which get traced. If trace is configured vmlens will only search for data races inside methods matching the trace elements. Also when showing the stack trace where the data race was found vmlens will start at the first method matching a trace element.</p>
+</p>
+<h4><a href="#do-not-trace" id="do-not-trace"></a>do not trace</h4>
 <p>vmlens does not trace when inside a method which matches a pattern in this list.</p>
+<h4><a href="#exclude-from-stacktrace" id="exclude-from-stacktrace"></a>exclude from stacktrace</h4>
+<p>Methods matching the given pattern will not be shown in stack traces, for example in the stack trace for a deadlock or data race.</p>
+<h4><a href="#suppress" id="suppress"></a>suppress</h4>
+<p>A data race name matching this pattern, will not be shown in the issue view.</p>
 <h4><a href="#pattern-matching-guide" id="pattern-matching-guide"></a>Pattern matching guide</h4>
-<p>vmlens supports the ant directory pattern for method names. So you can use the following wild cards:
-
+<p><p>vmlens supports the ant directory pattern for method names. So you can use the following wild cards:</p>
 <ul  style="list-style-type:none;">
-
 <li>
 * Matches zero or more characters (not including the path separator .)
 </li>
 <li>
 ** Matches zero or more path segments.
 </li>
-
 <li>
 ? Matches one character (any character except the path separator .)
 </li>
-
-
 </ul>
-
-
-Examples:
-
+<p>Examples:</p>
 <ul >
-
 <li>
 com.vmlens.**   Matches all methods from classes in the package and sub-packages from com.vmlens
 </li>
 <li>
 com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test.TestAllRaces
 </li>
-
-
-</ul></p>
-<h2 id="the-report">The issues view</h2>
+</ul>
+</p>
+<h2 id="the-report">The views</h2>
+<h3><a href="#the-issues-view" id="the-issues-view"></a>The issues view</h3>
 <p>The issue report shows you all data races and deadlocks. Open the view you by going to Window -&gt; Show View -&gt; Other... -&gt; vmlens -&gt; vmlens Issues.</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/issuesEclipse.png" /></p>
-<p>The example report shows one data race, the symbol <img  src="../../../img/help/manual/error_co_readwrite_obj.png" /> and one deadlock, the symbol <img  src="../../../img/help/manual/error_co_monitor_obj.png" />.</p>
-<p>For the data race the view shows you the stack trace and thread name of the reading thread, the symbol  <img  src="../../../img/help/manual/read_obj.png" /> and for the writing thread, the symbol <img  src="../../../img/help/manual/write_obj.png" />.</p>
-<p>For the deadlock the view shows you the thread names of the two threads in the deadlock, the symbol <img  src="../../../img/help/manual/thread_and_monitor_obj.png" />,and the stack trace. The position in the stack trace in which a monitor was acquired is marked with the symbol <img  src="../../../img/help/manual/monitor_obj.png" />.</p>
-<h2><a href="#the-interleave-view" id="the-interleave-view"></a>The interleave view</h2>
+<p><img style="max-width: 100%; height: auto;"  src="img/help/manual/issuesEclipse.png" /></p>
+<p>The example report shows one data race, the symbol <img  src="img/help/manual/error_co_readwrite_obj.png" /> and one deadlock, the symbol <img  src="img/help/manual/error_co_monitor_obj.png" />.</p>
+<p>For the data race the view shows you the stack trace and thread name of the reading thread, the symbol  <img  src="img/help/manual/read_obj.png" /> and for the writing thread, the symbol <img  src="img/help/manual/write_obj.png" />.</p>
+<p>For the deadlock the view shows you the thread names of the two threads in the deadlock, the symbol <img  src="img/help/manual/thread_and_monitor_obj.png" />,and the stack trace. The position in the stack trace in which a monitor was acquired is marked with the symbol <img  src="img/help/manual/monitor_obj.png" />.</p>
+<h3><a href="#the-interleave-view" id="the-interleave-view"></a>The interleave view</h3>
 <p>The interleave report shows you the thread interleavings which led to an assertion error or to a data race. Open the view you by going to Window -&gt; Show View -&gt; Other... -&gt; vmlens -&gt; vmlens Explorer.</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/interleaveEclipse.png" /></p>
-<p>The above example report shows you the three potential outcomes of the interleave loop:
-
-$$text:interleaveResult$$
-
-
-By clicking on the successful interleave loop you see the last thread interleaving of this loop.
-By clicking on the interrupted loop you see the thread interleaving which led to the interrupt.
-And by clicking on the loop with a data race you see the thread interleaving which led to the data race.
-
-
-
-
-<img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/interleaveDetailAll.png" />
-
-
-The interleave detail report shows you one thread interleaving of an interleave loop. The report shows you all synchronization actions and data races in the order of occurrence. In the above example, first, a thread with thread id 13 wrote to the variable i which led to data race. After that, the same thread entered a synchronized block, and so on. 
-The following symbols are used in this report:
-
-The following symbols are used in this report:
-
+<p><img  style="max-width: 100%; height: auto;"  src="img/help/manual/interleaveEclipse.png" /></p>
+<p><p>The above example report shows you the three potential outcomes of the interleave loop:</p>
+<p><ul>
+<li>A successful loop, the symbol  <img   src="img/help/manual/testok.png" /></li>
+<li>An interrupted loop, the symbol  <img   src="img/help/manual/testerr.png" /> </li>
+<li>And a loop containing a data race, the symbol <img   src="img/help/manual/error_co_readwrite_obj.png" />.</li>
+</ul>
+</p>
+<p>By clicking on the successful interleave loop you see the last thread interleaving of this loop. By clicking on the interrupted loop you see the thread interleaving which led to the interrupt. And by clicking on the loop with a data race you see the thread interleaving which led to the data race.</p>
+<p><img class="helpPic"   src="img/help/manual/interleaveDetailAll.png" /></p>
+<p>The interleave detail report shows you one thread interleaving of an interleave loop. The report shows you all synchronization actions and data races in the order of occurrence. In the above example, first, a thread with thread id 13 wrote to the variable i which led to data race. After that, the same thread entered a synchronized block, and so on. The following symbols are used in this report:</p>
+<p>The following symbols are used in this report:</p>
 <ul  style="list-style-type:none;">
 <li>
-<img   src="../../../img/help/manual/error_co_write_obj.png" /> A write which led to a data race
+<img   src="img/help/manual/error_co_write_obj.png" /> A write which led to a data race
 </li>
 <li>
-<img   src="../../../img/help/manual/error_co_read_obj.png" /> A read which led to a data race
+<img   src="img/help/manual/error_co_read_obj.png" /> A read which led to a data race
 </li>
-
 <li>
-<img   src="../../../img/help/manual/write_obj.png" /> A write to a volatile field
+<img   src="img/help/manual/write_obj.png" /> A write to a volatile field
 </li>
-
-
 <li>
-<img   src="../../../img/help/manual/read_obj.png" /> A read to a volatile field
+<img   src="img/help/manual/read_obj.png" /> A read to a volatile field
 </li>
-
-
 <li>
-<img   src="../../../img/help/manual/lock_enter.png" /> A monitor or lock enter
+<img   src="img/help/manual/lock_enter.png" /> A monitor or lock enter
 </li>
-
-
 <li>
-<img   src="../../../img/help/manual/lock_exit.png" /> A monitor or lock exit
+<img   src="img/help/manual/lock_exit.png" /> A monitor or lock exit
 </li>
-
 </ul>
-
-
-
 </p>
 
 

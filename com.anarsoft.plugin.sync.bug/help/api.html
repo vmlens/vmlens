@@ -18,13 +18,13 @@
       <div class="wrapper">
 
   <h1><a href="#the-vmlens-classes-and-annotations" id="the-vmlens-classes-and-annotations"></a>The vmlens classes and annotations</h1>
-<p>vmlens provides one class and one annotation to define the behavior of vmlens. You can download those classes <a href="https://search.maven.org/remotecontent?filepath=com/vmlens/annotation/1.0.4/annotation-1.0.4.jar">from maven central</a>  or using the following dependency in your maven pom:</p>
+<p>vmlens provides one class and one annotation to define the behavior of vmlens. You can download those classes <a href="https://search.maven.org/remotecontent?filepath=com/vmlens/api/1.0.15/api-1.0.15.jar">from maven central</a>  or using the following dependency in your maven pom:</p>
 <p><pre class="brush: java">&lt;dependency&gt;
   &lt;groupId&gt;com.vmlens&lt;/groupId&gt;
-  &lt;artifactId&gt;annotation&lt;/artifactId&gt;
-  &lt;version&gt;1.0.4&lt;/version&gt;
+  &lt;artifactId&gt;api&lt;/artifactId&gt;
+  &lt;version&gt;1.0.15&lt;/version&gt;
 &lt;/dependency&gt;</pre></p>
-<p>These classes are licensed by the Apache License 2.0 license.</p>
+<p>The JavaDoc is <a href="https://vmlens.com/apidocs/api/1.0/">available here.</a></p>
 <h2><a href="#class-allinterleavings" id="class-allinterleavings"></a>Class AllInterleavings</h2>
 <p>The class com.vmlens.api.AllInterleavings let you test all thread interleavings for your test. Enclose your test in a while loop to iterate through all thread interleavings like in the following example:</p>
 <p><pre class="brush: java">import com.vmlens.api.AllInterleavings;

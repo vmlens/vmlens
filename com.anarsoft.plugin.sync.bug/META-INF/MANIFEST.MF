@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SyncBug
+Bundle-Name: vmlens
 Bundle-SymbolicName: com.anarsoft.plugin.sync.bug;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: com.anarsoft.plugin.sync.bug.Activator
-Bundle-Vendor: ANARSOFT
+Bundle-Vendor: vmlens.com
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.ide;bundle-version="3.6.2",

@@ -19,27 +19,23 @@
 
   <h1><a href="#the-vmlens-maven-plugin" id="the-vmlens-maven-plugin"></a>The vmlens maven plugin</h1>
 <h2 id="running-tests-maven">Installation and running tests</h2>
-<p>To use vmlens with maven, configure the following two tags in your pom.xml:</p>
-<ol>
-<li>a pluginRepository tag to tell maven to download the vmlens maven plugins from the URL https://vmlens.com/download</li>
-<li>a plugin tag to tell maven that the vmlens plugin should be executed at the test phase.</li>
-</ol>
-<p>The following example pom.xml shows you what to configure in your maven pom.xml to use use the vmlens interleave plugin.</p>
+<p>To use vmlens with maven, configure a plugin tag to tell maven that the vmlens plugin should be executed at the test phase. And include the jar com.vmlens.api as test dependency.</p>
 <p><pre class="brush: xml ">&lt;project&gt;
-      ...
-&lt;pluginRepositories&gt;
-  &lt;pluginRepository&gt;
-    &lt;id&gt;vmlens&lt;/id&gt;
-    &lt;url&gt;https://vmlens.com/download&lt;/url&gt;
-  &lt;/pluginRepository&gt;
-&lt;/pluginRepositories&gt;
-     ...  
+&lt;!-- to include the class AllInterleavings into the test class path.  --&gt;	
+&lt;dependency&gt;
+  &lt;groupId&gt;com.vmlens&lt;/groupId&gt;
+  &lt;artifactId&gt;api&lt;/artifactId&gt;
+  &lt;version&gt;1.0.15&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;	
+	
 &lt;build&gt;
   &lt;plugins&gt;
+&lt;!-- to run the vmlens maven plugin during the maven test phase  --&gt;	 
     &lt;plugin&gt;
     &lt;groupId&gt;com.vmlens&lt;/groupId&gt;
     &lt;artifactId&gt;interleave&lt;/artifactId&gt;
-    &lt;version&gt;1.0.12&lt;/version&gt;
+    &lt;version&gt;1.0.15&lt;/version&gt;
     &lt;executions&gt;
       &lt;execution&gt;
         &lt;goals&gt;
@@ -57,46 +53,36 @@
 <p>The vmlens interleave plugin is based on the maven surefire plugin. All configs which apply to the maven surefire plugin apply also to the interleave plugin, except the test fork configs.</p>
 <p>The following parameters are additions from the vmlens interleave plugin:</p>
 <h3><a href="#trace" id="trace"></a>trace</h3>
-<p>Trace let you narrow the methods which get traced. If trace is configured vmlens will only search for data races inside methods matching the trace elements. Also when showing the stack trace
-where the data race was found vmlens will start at the first method matching a trace element. </p>
+<p><p>Trace let you narrow the methods which get traced. If trace is configured vmlens will only search for data races inside methods matching the trace elements. Also when showing the stack trace where the data race was found vmlens will start at the first method matching a trace element.</p>
+</p>
 <p>The following example shows how to narrow the search and stack trace to methods from classes to the package com.vmlens.test.</p>
 <p><pre class="brush: java">&lt;trace&gt;
 	&lt;method&gt;com.vmlens.test.state.report.**&lt;/method&gt;
 &lt;/trace&gt;
 
 </pre></p>
-<p>vmlens supports the ant directory pattern for method names. So you can use the following wild cards:
-
+<p><p>vmlens supports the ant directory pattern for method names. So you can use the following wild cards:</p>
 <ul  style="list-style-type:none;">
-
 <li>
 * Matches zero or more characters (not including the path separator .)
 </li>
 <li>
 ** Matches zero or more path segments.
 </li>
-
 <li>
 ? Matches one character (any character except the path separator .)
 </li>
-
-
 </ul>
-
-
-Examples:
-
+<p>Examples:</p>
 <ul >
-
 <li>
 com.vmlens.**   Matches all methods from classes in the package and sub-packages from com.vmlens
 </li>
 <li>
 com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test.TestAllRaces
 </li>
-
-
-</ul></p>
+</ul>
+</p>
 <h3><a href="#suppress" id="suppress"></a>suppress</h3>
 <p>The suppress tag let you suppress data races. If a data race is suppressed it will no longer show in the issue report and the build will no longer fail because of this data race. The following example shows how to suppress a data race at the field</p>
 <p><pre class="brush: java">&lt;suppress&gt;
@@ -104,70 +90,51 @@ com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test
     &lt;race&gt;com.vmlens.test.race.TestAllRaces.count&lt;/race&gt;
 &lt;/suppress&gt;
 </pre></p>
-<h2 id="maven-interleave-report">The issues report</h2>
+<h2 id="maven-reports">The reports</h2>
+<h3><a href="#the-issues-report" id="the-issues-report"></a>The issues report</h3>
 <p>The issues report shows you all the issues found by vmlens. vmlens detects data races and deadlock by analyzing the execution trace of your test. The report is located in the file maven output folder target/interleave/issues.html.</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/deadlockRace.png" /></p>
-<p>The example report shows one data race, the symbol <img  src="../../../img/help/manual/error_co_readwrite_obj.png" /> and one deadlock, the symbol <img  src="../../../img/help/manual/error_co_monitor_obj.png" />. The data races happened at accessing the field example.TestDataRace.i .The deadlock happened between the method lockOneToLockTwo and lockTwoToLockOne. Click one of the links to see the stack traces of the data race or deadlock.</p>
+<p><img  class="helpPic"  src="img/help/manual/deadlockRace.png" /></p>
+<p>The example report shows one data race, the symbol <img  src="img/help/manual/error_co_readwrite_obj.png" /> and one deadlock, the symbol <img  src="img/help/manual/error_co_monitor_obj.png" />. The data races happened at accessing the field example.TestDataRace.i .The deadlock happened between the method lockOneToLockTwo and lockTwoToLockOne. Click one of the links to see the stack traces of the data race or deadlock.</p>
 <p>After clicking on the data race you see the following report:</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/dataRace.png" /></p>
-<p>This Html site shows you the stack trace and thread name of the reading thread, the symbol  <img  src="../../../img/help/manual/read_obj.png" /> and for the writing thread, the symbol <img  src="../../../img/help/manual/write_obj.png" />.</p>
+<p><img class="helpPic"  src="img/help/manual/dataRace.png" /></p>
+<p>This Html site shows you the stack trace and thread name of the reading thread, the symbol  <img  src="img/help/manual/read_obj.png" /> and for the writing thread, the symbol <img  src="img/help/manual/write_obj.png" />.</p>
 <p>After clicking on the deadlock you see the following report:</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/deadlock.png" /></p>
-<p>This report shows you the thread names of the two threads in the deadlock, the symbol <img  src="../../../img/help/manual/thread_and_monitor_obj.png" />,and the stack trace. The position in the stack trace in which a monitor was acquired is marked with the symbol <img  src="../../../img/help/manual/monitor_obj.png" />.</p>
-<h2><a href="#the-interleave-report" id="the-interleave-report"></a>The interleave report</h2>
+<p><img  class="helpPic"  src="img/help/manual/deadlock.png" /></p>
+<p>This report shows you the thread names of the two threads in the deadlock, the symbol <img  src="img/help/manual/thread_and_monitor_obj.png" />,and the stack trace. The position in the stack trace in which a monitor was acquired is marked with the symbol <img  src="img/help/manual/monitor_obj.png" />.</p>
+<h3><a href="#the-interleave-report" id="the-interleave-report"></a>The interleave report</h3>
 <p>The interleave report shows you the thread interleavings which led to an assertion error or to a data race. The report is located in the file maven output folder target/interleave/elements.html.</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/interleaveOverview.png" /></p>
-<p>The above example report shows you the three potential outcomes of the interleave loop:
-
-$$text:interleaveResult$$
-
-
-By clicking on the successful interleave loop you see the last thread interleaving of this loop.
-By clicking on the interrupted loop you see the thread interleaving which led to the interrupt.
-And by clicking on the loop with a data race you see the thread interleaving which led to the data race.
-
-
-
-
-<img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/interleaveDetailAll.png" />
-
-
-The interleave detail report shows you one thread interleaving of an interleave loop. The report shows you all synchronization actions and data races in the order of occurrence. In the above example, first, a thread with thread id 13 wrote to the variable i which led to data race. After that, the same thread entered a synchronized block, and so on. 
-The following symbols are used in this report:
-
-The following symbols are used in this report:
-
+<p><img  class="helpPic"  src="img/help/manual/interleaveOverview.png" /></p>
+<p><p>The above example report shows you the three potential outcomes of the interleave loop:</p>
+<p><ul>
+<li>A successful loop, the symbol  <img   src="img/help/manual/testok.png" /></li>
+<li>An interrupted loop, the symbol  <img   src="img/help/manual/testerr.png" /> </li>
+<li>And a loop containing a data race, the symbol <img   src="img/help/manual/error_co_readwrite_obj.png" />.</li>
+</ul>
+</p>
+<p>By clicking on the successful interleave loop you see the last thread interleaving of this loop. By clicking on the interrupted loop you see the thread interleaving which led to the interrupt. And by clicking on the loop with a data race you see the thread interleaving which led to the data race.</p>
+<p><img class="helpPic"   src="img/help/manual/interleaveDetailAll.png" /></p>
+<p>The interleave detail report shows you one thread interleaving of an interleave loop. The report shows you all synchronization actions and data races in the order of occurrence. In the above example, first, a thread with thread id 13 wrote to the variable i which led to data race. After that, the same thread entered a synchronized block, and so on. The following symbols are used in this report:</p>
+<p>The following symbols are used in this report:</p>
 <ul  style="list-style-type:none;">
 <li>
-<img   src="../../../img/help/manual/error_co_write_obj.png" /> A write which led to a data race
+<img   src="img/help/manual/error_co_write_obj.png" /> A write which led to a data race
 </li>
 <li>
-<img   src="../../../img/help/manual/error_co_read_obj.png" /> A read which led to a data race
+<img   src="img/help/manual/error_co_read_obj.png" /> A read which led to a data race
 </li>
-
 <li>
-<img   src="../../../img/help/manual/write_obj.png" /> A write to a volatile field
+<img   src="img/help/manual/write_obj.png" /> A write to a volatile field
 </li>
-
-
 <li>
-<img   src="../../../img/help/manual/read_obj.png" /> A read to a volatile field
+<img   src="img/help/manual/read_obj.png" /> A read to a volatile field
 </li>
-
-
 <li>
-<img   src="../../../img/help/manual/lock_enter.png" /> A monitor or lock enter
+<img   src="img/help/manual/lock_enter.png" /> A monitor or lock enter
 </li>
-
-
 <li>
-<img   src="../../../img/help/manual/lock_exit.png" /> A monitor or lock exit
+<img   src="img/help/manual/lock_exit.png" /> A monitor or lock exit
 </li>
-
 </ul>
-
-
-
 </p>
 
 

@@ -18,9 +18,18 @@
       <div class="wrapper">
 
   <h1><a href="#errors-and-warnings" id="errors-and-warnings"></a>Errors and warnings</h1>
-<h2 id="no-shared-state">No shared state</h2>
-<h2 id="no-accessed-monitors">No accessed monitors</h2>
 <h2 id="maximum-operation-count">Maximum operation count reached</h2>
+<p>This error happens when a thread executes more than the configured maximum of synchronization actions. This typical happens when the test contains a not terminating loop.</p>
+<p>You can set the maximum by using the method maximumSynchronizationActionsPerThread​ of the class AllInterleavingsBuilder. In the following example the value is set to 1000:</p>
+<p><pre class="brush: java">try (AllInterleavings testUpdate = AllInterleavings.
+		builder(&quot;TestShowSharedMemory&quot;).
+		maximumSynchronizationActionsPerThread​(1000).
+		build();)  {
+	while( testUpdate.hasNext()  ) {   
+			
+	}
+}</pre></p>
+<p>The default value is 2000. Set the maximum to -1 to never terminate a thread with this mechanism.</p>
 
 
       </div>

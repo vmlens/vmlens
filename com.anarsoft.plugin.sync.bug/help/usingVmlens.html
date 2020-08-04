@@ -18,98 +18,138 @@
       <div class="wrapper">
 
   <h1 id="interleave">Using vmlens</h1>
-<p>The following example shows a unique id generator and a test if the key generator is thread-safe. You can download the source code of the example project <a href="https://github.com/vmlens/tutorial-unit-test">from GitHub here</a>.</p>
-<p>Here is the class for the unique id generator:</p>
-<p><pre class="brush: java">public class UniqueId {
-	private long counter = 0;
-	public  long nextId() {	
-		return counter++;	
-	}
-}</pre></p>
-<p>The class UniqueId uses the field counter, line 2, to generate the unique ids. Every time a new id is requested the class  increments the counter using ++, line 4. And here is the test: <pre class="brush: java">import com.vmlens.api.AllInterleavings;
-public class TestUniqueId {
- long firstId;
- long secondId;
- @Test
- public void testUniqueId() throws InterruptedException {
-  try (AllInterleavings allInterleavings = 
-    new AllInterleavings(&quot;ConcurrencyTestUniqueId&quot;);) {
-    while (allInterleavings.hasNext()) {
-		firstId  = 0L;
-		secondId = 0L;
-		UniqueId uniqueId = new UniqueId();
-		Thread first = new Thread(() -&gt; {
-			firstId = uniqueId.nextId();
-		});
-		first.start();
-		secondId = uniqueId.nextId();
-		first.join();
-		assertTrue(firstId != secondId);
+<p>The following example shows how to write multi-threaded tests with vmlens. All examples are in <a href="https://github.com/vmlens/vmlens-examples">this GitHub project</a>:</p>
+<p><pre class="brush: java">import com.vmlens.api.AllInterleavings;
+public class TestUpdateWrong {
+    public void update(ConcurrentHashMap&lt;Integer, Integer&gt; map) {
+        Integer result = map.get(1);
+        if (result == null) {
+            map.put(1, 1);
+        } else {
+            map.put(1, result + 1);
+        }
     }
-  }
- }
+    @Test
+    public void testUpdate() throws InterruptedException {
+        try (AllInterleavings allInterleavings = 
+                new AllInterleavings(&quot;TestUpdateWrong&quot;);) {
+	// surround the test with a while loop, iterationg over
+	// the class AllInterleavings
+            while (allInterleavings.hasNext()) {
+                final ConcurrentHashMap&lt;Integer, Integer&gt; map = 
+                        new ConcurrentHashMap&lt;Integer, Integer&gt;();
+                Thread first = new Thread(() -&gt; {
+                    update(map);
+                });
+                Thread second = new Thread(() -&gt; {
+                    update(map);
+                });
+                first.start();
+                second.start();
+                first.join();
+                second.join();
+                assertEquals(2,map.get(1).intValue());
+            }
+        }
+    }
 }</pre></p>
-<p>The test consists of two threads calling the method nextId in parallel. The first thread is created in line 13 and started in line 16. The main thread calls the method nextId after the first thread was started. After we made sure that the first thread is finished using thread join we check the result of the test, line 19.</p>
-<p>To test all thread interleavings we put the complete test in a while loop iterating over all thread interleavings, line 9. Since the class AllInterleavings is auto closable we put it in a try block, lines 7 and 8.</p>
-<p>You can download the class com.vmlens.api.AllInterleavings <a href="https://search.maven.org/remotecontent?filepath=com/vmlens/annotation/1.0.4/annotation-1.0.4.jar">from maven central</a>  or using the following dependency in your maven pom:</p>
-<p><pre class="brush: java">&lt;dependency&gt;
-  &lt;groupId&gt;com.vmlens&lt;/groupId&gt;
-  &lt;artifactId&gt;annotation&lt;/artifactId&gt;
-  &lt;version&gt;1.0.4&lt;/version&gt;
-&lt;/dependency&gt;</pre></p>
+<p>In your test method, you surround the code you want to test with a while loop iterating over the class AllInterleavings. vmlens executes the block inside the while loop multiple times, for each thread interleaving once. If the test fails vmlens shows the thread interleaving which led to the failure. If the test succeeds vmlens shows the last thread interleaving.</p>
+<p>The above example test fails, and vmlens reports the interleaving which led to the failed assertion:</p>
+<p><img class="helpPic" src="img/help/readModifyWriteWithoutTitle.png"  /></p>
+<p>In maven, you can see this report by clicking on the link TestUpdateWrong in the file target/interleave/elements.html. In eclipse you can see the report by clicking on the link TestUpdateWrong in the view under Window -&gt; Show View -&gt; Other... -&gt; vmlens -&gt; vmlens Explorer.</p>
+<p>The maven reports are <a href="#maven-reports">described here</a>. The eclipse views are <a href="#the-report">described here</a>.</p>
 <h2><a href="#how-to-run-the-test" id="how-to-run-the-test"></a>How to run the test</h2>
 <p>You can run the test in eclipse using the vmlens run short cut for JUnit. Right click on the JUnit class -&gt; Run As -&gt; JUnit Test traced with vmlens.</p>
 <p>To run the test with maven put the vmlens interleave plugin in your maven pom.xml <a href="#running-tests-maven">as described here</a>.</p>
-<h2><a href="#data-races" id="data-races"></a>Data races</h2>
-<p>If you run the test you will get an error message that vmlens found  race conditions and/or deadlocks. If you are using maven the error message is in the maven log and leads to a build failure:</p>
-<pre>org.apache.maven.plugin.MojoFailureException: There are race conditions and/or deadlocks in the test run. 
-Please see /home/thomas/tutorials/tutorial-unit-test/target/interleave/issues.html for the details.</pre>
-<p>By opening the file issues.html from the above error message you see what issues were found by vmlens.</p>
-<p>I describe here the reports from the maven plugin. The eclipse views look similar, they are <a href="#the-report">described here</a>.</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/interleaveIssueOverview.png" /></p>
-<p>In this example, the issue is a data race. You can recognize data races by the symbol <img  src="../../../img/help/manual/error_co_readwrite_obj.png" />. Data races are detected by vmlens using an analysis of the traced synchronization statements and field accesses. The other type of issues that are detected by analyzing the traced synchronization blocks are deadlocks, the symbol <img  src="../../../img/help/manual/error_co_monitor_obj.png" />.</p>
-<p>A data race means that a thread might read a stale value since the access to the variable is not correctly synchronized. Click on the link of the data race to see the stack traces for this data race:</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/interleaveIssueDetail.png" /></p>
-<p>This Html site shows you the stack trace and thread name of the reading thread, the symbol  <img  src="../../../img/help/manual/read_obj.png" /> and for the writing thread, the symbol <img  src="../../../img/help/manual/write_obj.png" />.</p>
-<h2><a href="#the-interleave-report" id="the-interleave-report"></a>The interleave report</h2>
-<p>To fix the data race we make the field counter volatile:</p>
-<p><pre class="brush: java">public class UniqueIdVolatile {
-	private volatile long counter = 0;
-	public  long nextId() {
-		return counter++;	
-	}	
+<h2 id="data_races_deadlocks">Data races and deadlocks</h2>
+<p>vmlens analyses a trace of the  test run to detect data races and deadlocks. A data race happens when reading and writing to a shared variable is not correctly synchronized. A data race means that thread might read stale or inconsistent values.</p>
+<p>The following example shows a data race in an inconsistent synchronized test.</p>
+<p><pre class="brush: java">public class TestInconsistentSynchronized {
+	private static final Object LOCK_1 = new Object();
+	private static final Object LOCK_2 = new Object();
+	int i = 0;
+	@Test
+	public void test() throws InterruptedException {
+		try (AllInterleavings allInterleavings = 
+				new AllInterleavings
+				(&amp;quot;TestInconsistentSynchronized&amp;quot;);) {
+			while (allInterleavings.hasNext()) {
+				Thread first = new Thread(() -&amp;gt; {
+					synchronized (LOCK_1) {
+						i++;
+					}
+				});
+				Thread second = new Thread(() -&amp;gt; {
+					synchronized (LOCK_2) {
+						i++;
+					}
+				});
+				first.start();
+				second.start();
+
+				first.join();
+				second.join();
+			}
+		}
+	}
 }</pre></p>
-<p>Rerunning the test leads to the following assertion error:</p>
-<p><pre class="brush: java">java.lang.AssertionError: 
-	at org.junit.Assert.fail(Assert.java:91)
-	at org.junit.Assert.assertTrue(Assert.java:43)</pre></p>
-<p>So we fixed the data races, the issue in the report disappeared, but at the cost a race conditions. To see which thread interleaving led to the error we go to the interleave report. Open the file target/interleave/elements.html:</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/interleaveOverview.png" /></p>
-<p>This report shows you the result for the three thread interleaving loops used in this example. The report for the test using a normal field, the report for TestUniqueId, for the successful test TestUniqueIdSynchronized which is described below and for the failing test using a volatile field which we want to investigate.</p>
-<p>The above example report shows you the three potential outcomes of the interleave loop: <ul>
-<li>A successful loop, the symbol  <img   src="../../../img/help/manual/testok.png" /></li>
-<li>An interrupted loop, the symbol  <img   src="../../../img/help/manual/testerr.png" /> </li>
-<li>And a loop containing a data race, the symbol <img   src="../../../img/help/manual/error_co_readwrite_obj.png" />.</li>
-</ul></p>
-<p>Click on the link for the report from TestUniqueIdVolatile to see which interleaving led to the error:</p>
-<p><img style="max-width: 100%; height: auto;"  src="../../../img/help/manual/interleaveDetail.png" /></p>
-<p>Since the ++ operation is not atomic there exist thread interleavings in which one thread overwrites the result of the other thread. One such interleaving is shown, both threads first read the value and after that update the value. Which leads to duplicate keys.</p>
-<p>To fix this race condition we use a lock by adding the synchronize statement at the method nextId:</p>
-<p><pre class="brush: java">public class UniqueIdSynchronized {
-	private long counter = 0;
-	public  synchronized long nextId() {
-		return counter++;	
-	}	
+<p>For the above test, vmlens reports the interleaving which led to the data race:</p>
+<p><img class="helpPic" src="img/help/dataRace.png"  /></p>
+<p>In maven, you can see this report by clicking on the link TestUpdateWrong in the file target/interleave/elements.html. In eclipse you can see the report by clicking on the link TestUpdateWrong in the view under Window -&gt; Show View -&gt; Other... -&gt; vmlens -&gt; vmlens Explorer.</p>
+<p>The maven reports are <a href="#maven-reports">described here</a>. The eclipse views are <a href="#the-report">described here</a>.</p>
+<p>To detect a deadlock during a test run both threads need to request the locks at the exact same time. To make deadlock detection timing independent, vmlens analysis the order in which the threads request the locks. If this order contains a cycle vmlens has found a deadlock.</p>
+<p><pre class="brush: java">public class TestUpdateRecursive {
+	private final ConcurrentHashMap&amp;lt;Integer, Integer&amp;gt; 
+		map = new ConcurrentHashMap&amp;lt;Integer, Integer&amp;gt;();
+	public TestUpdateRecursive() {
+		map.put(1, 1);
+		map.put(2, 2);
+	}
+	public void update12() {
+		map.compute(1, (key, value) -&amp;gt; {
+			map.compute(2, (k, v) -&amp;gt; {
+				return 2;
+			});
+			return 2;
+		});
+	}
+	public void update21() {
+		map.compute(2, (key, value) -&amp;gt; {
+			map.compute(1, (k, v) -&amp;gt; {
+				return 2;
+			});
+			return 2;
+		});
+	}
+	@Test
+	public void testUpdate() throws InterruptedException {
+		try (AllInterleavings allInterleavings = 
+				 new AllInterleavings(&amp;quot;TestUpdateRecursive&amp;quot;);) {
+			while (allInterleavings.hasNext()) {
+				Thread first = new Thread(() -&amp;gt; {
+					update12();
+				});
+				Thread second = new Thread(() -&amp;gt; {
+					update21();
+				});
+				first.start();
+				first.join();
+
+				second.start();
+				second.join();
+			}
+		}
+	}
 }</pre></p>
-<p>Now the test succeeds. No data race and no race condition. Our method nextId is now thread-safe.</p>
-<h2><a href="#summary" id="summary"></a>Summary</h2>
-<p>To write a test if your method is thread-safe do the following:</p>
+<p>For the above test vmlens generates the following report:</p>
+<p><img class="helpPic" src="img/help/deadlock.png"  /></p>
+<p>In maven, you can see this report by opening the file target/interleave/issues.html. In eclipse you can see the report by opening the view under Window -&gt; Show View -&gt; Other... -&gt; vmlens -&gt; vmlens Issues.</p>
+<p>The maven reports are <a href="#maven-reports">described here</a>. The eclipse views are <a href="#the-report">described here</a>.</p>
+<h2><a href="#tips-for-writing-multi-threaded-tests" id="tips-for-writing-multi-threaded-tests"></a>Tips for writing multi-threaded tests</h2>
+<p>When writing multi-threaded tests using vmlens you should follow the following tips:</p>
 <ol>
-<li>Write a test which calls your method from multiple threads in parallel</li>
-<li>Check the result when you are sure that only one thread is still running.</li>
-<li>Surround the complete test by a while loop iterating over all thread interleavings.</li>
-<li>Check the issues report, to see if any data races or deadlocks have occurred.</li>
-<li>If an assertion failed, look at the interleave report to see which thread interleaving let to the error.</li>
+<li>Make your tests repeatable: vmlens executes the code inside the while loop multiple times. So your code inside the while loop must be repeatable.</li>
+<li>Use few threads: There is no need to use many threads to make the chances higher to execute a specific thread interleaving. Since vmlens executes all thread interleavingfs it is often better to use only a small amount of threads.</li>
 </ol>
 
 

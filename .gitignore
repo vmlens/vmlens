@@ -38,3 +38,6 @@ target/*
 lib/*
 _dist/*
 agent_lib/*
+
+.DS_Store
+._.DS_Store
