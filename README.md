@@ -153,7 +153,7 @@ Post an issue in our [issue tracker](https://github.com/vmlens/vmlens/issues/new
 
 # Stay in touch
 
-Follow [@ThomasKrieger](https://twitter.com/-thomaskrieger_) and [join our mailing list](https://groups.google.com/forum/#!forum/vmlens-mailing-list).
+Follow [@ThomasKrieger](https://twitter.com/_thomaskrieger_) and [join our mailing list](https://groups.google.com/forum/#!forum/vmlens-mailing-list).
 
 # Build
 
