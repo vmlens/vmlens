@@ -2,17 +2,11 @@
 
 <img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" >
 
-## It works
+## Why vmlens
 
 Running your tests with multiple threads does not work. Bugs depend on a specific thread interleaving, which is often impossible to reach by simply rerunning your test multiple times. And data races only occur on specific hardware architectures and JVMs.
 
 Therefore vmlens uses the Java Memory Model to execute all possible thread interleavings and to check for data races in the program flow. [This blog post](https://vmlens.com/articles/cp/java_memory_model_enables_tests/) describes how vmlens uses the Java Memory Model to test all thread interleavings.
-
-## Even for complicated algorithms 
-
-To test the put method of the class ConcurrentHashMap using two threads takes 353 iterations and less than 3 seconds on my Intel i5 3,40 GHz 4 core CPU.
-
-And by using the @atomic annotation we can build complicated algorithms out of smaller pieces.
 
 ## Easy to use
 
