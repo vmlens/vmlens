@@ -2,7 +2,7 @@
 
 <img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" >
 
-## Why vmlens
+# Why vmlens?
 
 Running your tests with multiple threads does not work. Bugs depend on a specific thread interleaving, which is often impossible to reach by simply rerunning your test multiple times. And data races only occur on specific hardware architectures and JVMs.
 
@@ -145,6 +145,15 @@ The usage of the maven plugin [is described here.](https://vmlens.com/help/manua
 
 * [JavaDoc](https://vmlens.com/apidocs/api/1.0/) 
 * [Manual](https://vmlens.com/help/manual/) 
+
+# Support
+
+Post an issue in our [issue tracker](https://github.com/vmlens/vmlens/issues/new) or send a message to our [mailing list](https://groups.google.com/forum/#!forum/vmlens-mailing-list).
+
+
+# Stay in touch
+
+Follow [@ThomasKrieger](https://twitter.com/-thomaskrieger_) and [join our mailing list](https://groups.google.com/forum/#!forum/vmlens-mailing-list).
 
 # Build
 
