@@ -1,4 +1,4 @@
-# vmlens, testing multi-threaded applications on the JVM made easy
+# vmlens, unit testing multi-threaded applications on the JVM made easy
 
 <img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" >
 
