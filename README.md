@@ -1,4 +1,4 @@
-# vmlens, multi-threaded testing made easy
+# vmlens, unit-testing multi-threaded applications on the JVM made easy
 
 <img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" >
 
@@ -77,7 +77,7 @@ To run the test with maven put the vmlens interleave plugin in your maven pom.xm
 
 ## Next steps
 
-[Read here more](https://vmlens.com/help/manual/#data_races_deadlocks) about how to use vmlens for testing multi-threaded software.
+[Read here more](https://vmlens.com/help/manual/#data_races_deadlocks) about how to use vmlens for testing multi-threaded software. And download and run [the example tests.](https://github.com/vmlens/vmlens-examples)
 
 
 # Download
