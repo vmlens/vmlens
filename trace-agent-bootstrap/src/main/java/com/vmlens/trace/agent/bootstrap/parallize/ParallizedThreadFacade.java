@@ -1,9 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.parallize;
 
 
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
+
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.event.gen.MethodAtomicEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.AtomicMethodEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.AtomicMethodExit;
@@ -234,7 +235,7 @@ private boolean execOp()
 			return;
 		}
 		
-		
+			
 		 if( execOp())
 		 {
 			 byte hasCallbackFlag = Constants.FALSE;
@@ -247,7 +248,7 @@ private boolean execOp()
 			 
 			 
 			
-			 if(sendAsInterleaveEvent(Object.class)  )
+			 if(sendAsInterleaveEvent(MethodAtomicEnterEventGen.class)  )
 			 {
 				 int slidingWindowId =  CallbackState.slidingWindow;   //  loopId, runId, runPosition
 				  callbackStatePerThread.sendEvent.writeMethodAtomicEnterEventGen(slidingWindowId, methodId , callbackStatePerThread.methodCount , hasCallbackFlag , loopId() ,  runId()  ,   runPosition());
@@ -282,7 +283,7 @@ private boolean execOp()
 			 {
 				 hasCallbackFlag = Constants.TRUE;
 			 }
-			 if(sendAsInterleaveEvent(Object.class)  )
+			 if(sendAsInterleaveEvent(MethodAtomicEnterEventGen.class)  )
 			 {	 
 		 int slidingWindowId =  CallbackState.slidingWindow;   //  loopId, runId, runPosition
 		  callbackStatePerThread.sendEvent.writeMethodAtomicExitEventGen(slidingWindowId, methodId , callbackStatePerThread.methodCount , hasCallbackFlag , loopId() ,  runId()  ,   runPosition());
@@ -313,7 +314,7 @@ private boolean execOp()
 		 {
 			 callbackCount++;
 		
-			 if(sendAsInterleaveEvent(Object.class)  )
+			 if(sendAsInterleaveEvent(MethodAtomicEnterEventGen.class)  )
 			 {
 		 int slidingWindowId =  CallbackState.slidingWindow;
 		  callbackStatePerThread.sendEvent.writeMethodCallbackEnterEventGen(slidingWindowId , callbackStatePerThread.methodCount ,  loopId() ,  runId()  ,   runPosition());
@@ -336,7 +337,7 @@ private boolean execOp()
 		 {
 			 callbackCount--;
 	
-			 if(sendAsInterleaveEvent(Object.class)  )
+			 if(sendAsInterleaveEvent(MethodAtomicEnterEventGen.class)  )
 			 {
 		 int slidingWindowId =  CallbackState.slidingWindow;
 		  callbackStatePerThread.sendEvent.writeMethodCallbackExitEventGen(slidingWindowId , callbackStatePerThread.methodCount ,  loopId() ,  runId()  ,   runPosition());

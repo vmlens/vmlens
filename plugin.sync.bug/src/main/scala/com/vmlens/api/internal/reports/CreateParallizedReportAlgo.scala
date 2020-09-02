@@ -237,6 +237,7 @@ class CreateParallizedReportAlgo {
     {
       val e = iter.next();
       
+      
       if( e.threadId != threadId )
       {
         atomicCall=0;

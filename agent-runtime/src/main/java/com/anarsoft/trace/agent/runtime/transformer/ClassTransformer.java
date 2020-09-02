@@ -419,8 +419,7 @@ public class ClassTransformer extends ClassTransformerAbstract implements Opcode
 
 		if (isAtomic != null) {
 
-			
-			
+		
 			
 			int atomicId = AtomicClassRepo.getId4AtomicClass(removeInnerClassName(className));
 

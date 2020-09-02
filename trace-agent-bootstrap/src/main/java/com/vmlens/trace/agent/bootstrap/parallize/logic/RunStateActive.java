@@ -7,6 +7,8 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.event.gen.LockEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.gen.LockExitEventGen;
+import com.vmlens.trace.agent.bootstrap.event.gen.MethodAtomicEnterEventGen;
+import com.vmlens.trace.agent.bootstrap.event.gen.MethodAtomicExitEventGen;
 import com.vmlens.trace.agent.bootstrap.interleave.InterleaveFacade;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
@@ -263,6 +265,8 @@ public class RunStateActive implements RunState {
 	public boolean sendAsInterleaveEvent(int doNotInterleave, int doNotInterleaveFromLock , Class cl) {
 		
 		boolean okFromDoNotInterleave = false;
+	
+		
 		
 		if(  doNotInterleave <= 0)
 		{
@@ -284,6 +288,13 @@ public class RunStateActive implements RunState {
 		
 		if( okFromDoNotInterleave )
 		{
+			
+			if(cl == MethodAtomicEnterEventGen.class || cl == MethodAtomicExitEventGen.class  )
+			{
+				return true;
+			}
+			
+			
 			if( doNotInterleaveFromLock  <= 0 )
 			{
 				return okFromMultiThreaded;
