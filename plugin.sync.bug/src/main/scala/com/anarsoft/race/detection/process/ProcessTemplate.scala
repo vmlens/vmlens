@@ -237,7 +237,7 @@ abstract class ProcessTemplate[RESULT,MAIN_CONTEXT <: ContextProcessTemplate](va
 
           try {
             
-             logger.debug("maxSlidingWindowId " + maxSlidingWindowId );
+             logger.trace("maxSlidingWindowId " + maxSlidingWindowId );
             
               createAndExecutePipeline(eventDir, executorService, listForFinally, maxSlidingWindowId,progressMonitor: ProgressMonitor);
            

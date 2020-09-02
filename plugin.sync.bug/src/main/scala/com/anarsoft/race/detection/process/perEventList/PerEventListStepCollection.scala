@@ -15,6 +15,8 @@ import com.anarsoft.race.detection.process.scheduler.ConfigSchedulerEvents
 import com.anarsoft.race.detection.process.arrayId.ContextSetArrayOrdinal
 import com.anarsoft.race.detection.process.nonVolatileField.ArrayAccessEvent
 
+
+
 class PerEventListStepCollection( ) {
   
   val buildMethodOrdinalAggregate  = new StepProcessPerEventListCollectionWithName[ContextNonVolatileFields](classOf[ContextNonVolatileFields], "buildMethodOrdinalAggregate");
@@ -59,7 +61,12 @@ class PerEventListStepCollection( ) {
    
 //   val transferSortable =  new StepProcessPerEventListCollection[ContextSetSortable](classOf[ContextSetSortable]) 
   
+ 
+    
+ 
   
+  
+    
 }
 
 object PerEventListStepCollection

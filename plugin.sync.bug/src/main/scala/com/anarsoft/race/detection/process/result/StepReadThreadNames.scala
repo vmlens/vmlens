@@ -122,7 +122,7 @@ class StepReadThreadNames(val eventDir : String)  extends SingleStep[ContextRead
       }
       
       
-      logger.debug("thread.count " + id2ThreadName.size);
+      logger.trace("thread.count " + id2ThreadName.size);
            
       
       context.threadNames = new ThreadNames(id2ThreadName,mappedThreadId2ThreadId,shortThreadId2ThreadId,threadId2ThreadOrdinal, ordinal)

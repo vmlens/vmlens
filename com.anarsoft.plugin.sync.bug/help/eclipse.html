@@ -39,7 +39,7 @@
 <p>The vmlens configuration for JUnit runs is <a href="#run-configuration">described here</a></p>
 <h2 id="all-other-applications">Running all other types of application</h2>
 <p>To run vmlens with another type of application, create a &quot;vmlens All Applications&quot; run configuration. Select Run -&gt; Run Configurations... from the main menu. And create a &quot;vmlens All Applications&quot; run configuration:</p>
-<p><img style="max-width: 100%; height: auto;"  src=".img/help/manual/launch_types.png" /></p>
+<p><img style="max-width: 100%; height: auto;"  src="img/help/manual/launch_types.png" /></p>
 <p>After pressing run vmlens shows you the following dialog:</p>
 <p><img style="max-width: 100%; height: auto;"  src="img/help/manual/run_all.png" /></p>
 <p>To run vmlens with an application on your local machine either inside or outside of eclipse add the vmlens agent string to the VM arguments of your application. To run on a remote machine export the agent files to a folder by pressing the export button.</p>
@@ -97,7 +97,7 @@ com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test
 <p>The example report shows one data race, the symbol <img  src="img/help/manual/error_co_readwrite_obj.png" /> and one deadlock, the symbol <img  src="img/help/manual/error_co_monitor_obj.png" />.</p>
 <p>For the data race the view shows you the stack trace and thread name of the reading thread, the symbol  <img  src="img/help/manual/read_obj.png" /> and for the writing thread, the symbol <img  src="img/help/manual/write_obj.png" />.</p>
 <p>For the deadlock the view shows you the thread names of the two threads in the deadlock, the symbol <img  src="img/help/manual/thread_and_monitor_obj.png" />,and the stack trace. The position in the stack trace in which a monitor was acquired is marked with the symbol <img  src="img/help/manual/monitor_obj.png" />.</p>
-<h3><a href="#the-interleave-view" id="the-interleave-view"></a>The interleave view</h3>
+<h3 id="eclipse-interleave-view">The interleave view</h3>
 <p>The interleave report shows you the thread interleavings which led to an assertion error or to a data race. Open the view you by going to Window -&gt; Show View -&gt; Other... -&gt; vmlens -&gt; vmlens Explorer.</p>
 <p><img  style="max-width: 100%; height: auto;"  src="img/help/manual/interleaveEclipse.png" /></p>
 <p><p>The above example report shows you the three potential outcomes of the interleave loop:</p>
@@ -108,7 +108,9 @@ com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test
 </ul>
 </p>
 <p>By clicking on the successful interleave loop you see the last thread interleaving of this loop. By clicking on the interrupted loop you see the thread interleaving which led to the interrupt. And by clicking on the loop with a data race you see the thread interleaving which led to the data race.</p>
-<p><img class="helpPic"   src="img/help/manual/interleaveDetailAll.png" /></p>
+</p>
+<h3 id="eclipse-interleave-detail-view">The interleave detail report</h3>
+<p><p><img class="helpPic"   src="img/help/manual/interleaveDetailAll.png" /></p>
 <p>The interleave detail report shows you one thread interleaving of an interleave loop. The report shows you all synchronization actions and data races in the order of occurrence. In the above example, first, a thread with thread id 13 wrote to the variable i which led to data race. After that, the same thread entered a synchronized block, and so on. The following symbols are used in this report:</p>
 <p>The following symbols are used in this report:</p>
 <ul  style="list-style-type:none;">
@@ -132,6 +134,9 @@ com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test
 </li>
 </ul>
 </p>
+<h3 id="eclipse-interleave-stack-trace-view">The stack trace report</h3>
+<p>The stack trace report shows the stack trace of a method call:</p>
+<p><img  class="helpPic"  src="img/help/manual/stackTrace.png" /></p>
 
 
       </div>

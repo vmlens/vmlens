@@ -26,7 +26,7 @@ class MonitorReadCallback(val context : ContextMonitor,pipeline : ProcessPipelin
   
    def onEvent( event : MonitorEvent)
    {
-        logger.debug("" + event);
+        logger.trace("" + event);
      
        context.monitorEventList.add(event);
        

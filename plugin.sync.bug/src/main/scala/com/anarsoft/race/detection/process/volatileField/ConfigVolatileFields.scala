@@ -7,6 +7,8 @@ import com.anarsoft.race.detection.process.field.PerEventListBuildFieldIdMap;
 import com.anarsoft.race.detection.process.syncAction.PerEventCallbackSyncPoint
 import com.anarsoft.race.detection.process.perEventList.PerEventListStepCollection
 import com.anarsoft.race.detection.process.setMonitorInfo.PerEventListSetMonitorInfo
+import java.util.ArrayList
+
 
 object ConfigVolatileFields {
   
@@ -15,6 +17,9 @@ object ConfigVolatileFields {
   def getStaticVolatileFields(context : ContextVolatileField) = context.volatileAccessEventStatic;
   def getArrayVolatileFields(context : ContextVolatileField) =  context.volatileAccessArrayEventList;
 
+
+  
+  
   
   
   
@@ -46,8 +51,7 @@ object ConfigVolatileFields {
     
     perEventListSteps.prozessSyncPointLists.processPerEventListCollection.append(PerEventCallbackSyncPoint( getArrayVolatileFields , VolatileArrayAccessId(-1L , -1) ))
 
-    
-    
+   
  
     
   }

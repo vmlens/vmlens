@@ -244,7 +244,7 @@ class ProcessPipeline[B] {
         {
           if( count < 16 )
           {
-            logger.debug( elem._1 + " " + DurationFormatUtils.formatDurationHMS(  elem._2)   )
+            logger.trace( elem._1 + " " + DurationFormatUtils.formatDurationHMS(  elem._2)   )
           }
           
           count = count + 1;
@@ -265,7 +265,7 @@ class ProcessPipeline[B] {
         {
           if( count < 8 )
           {
-            logger.debug( elem._1 + " "  + elem._2  )
+            logger.trace( elem._1 + " "  + elem._2  )
           }
           
           count = count + 1;

@@ -84,7 +84,7 @@ class DescriptionRepositoryBuilderMethondAndFields (val methodOrdinal2MethodMode
    
      val model =  new FieldModelFromClassDesc( currentClassName : String,  name : String,   desc : String,   access : Int);
     
-     logger.debug(id + " " +  model);
+     logger.trace(id + " " +  model);
       
      arrayAndFieldOrdinalMap.setFieldModelFromClassDesc(id,model)
     

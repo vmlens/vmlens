@@ -11,6 +11,9 @@ import com.anarsoft.plugin.sync.bug._;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import com.anarsoft.plugin.view.factory._;
 import com.anarsoft.plugin.view.internalView.InternalView
+import org.eclipse.ui.PlatformUI
+import org.eclipse.swt._;
+
 
 abstract class ViewPartTemplate extends ViewPart {
 
@@ -19,7 +22,11 @@ abstract class ViewPartTemplate extends ViewPart {
 
   final def createPartControl(parent: Composite) {
 
- 
+
+    
+   
+    
+  
 
     parentComposite = parent;
 

@@ -34,7 +34,7 @@ object IconRepository {
 	
 
   
-  
+   val HELP = singleIcon("icons/obj16/help.png");
  
   
   val EXPAND_ALL = singleIcon("icons/elcl16/expandall.gif");

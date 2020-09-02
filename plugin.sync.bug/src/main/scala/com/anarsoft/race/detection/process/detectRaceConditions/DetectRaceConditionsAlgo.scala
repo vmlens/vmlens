@@ -97,7 +97,7 @@ class DetectRaceConditionsAlgo[ID_PER_OBJECT, EVENT <: EventDetectRaceConditions
 
     val race = new RaceConditionFoundException(event, position.element);
 
-    logger.debug("race for " + event + " " + position.element);
+    logger.trace("race for " + event + " " + position.element);
 
     context.interleaveEventList.addRace(race);
     context.raceExceptionSet.add(race)

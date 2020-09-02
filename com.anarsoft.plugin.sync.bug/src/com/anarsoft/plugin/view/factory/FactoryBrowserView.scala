@@ -29,7 +29,7 @@ import org.eclipse.jface.action.Action;
 import com.anarsoft.integration.TextRepository
 import com.vmlens.api.internal.IconRepository
 import com.vmlens.api.Icon
-
+import org.eclipse.ui.PlatformUI
 /*
  * https://www.eclipse.org/articles/Article-SWT-browser-widget/browser.html
  */
@@ -71,6 +71,11 @@ object FactoryBrowserView {
       
       
     val  browser = new Browser(parent, SWT.NONE);
+    
+    
+     PlatformUI.getWorkbench().getHelpSystem().setHelp(browser,
+       Activator.PLUGIN_ID + ".vmlens_view");
+    
      browser.setUrl( data.url);
      
      

@@ -53,45 +53,7 @@ class PartialOrderPerSlidingWindowId(val higherLowerThreadId2SyncPointMap: HashM
    
    
    
-//  def isLeftBeforeRightTransetive(left: WithStatementPosition, right: WithStatementPosition) =
-//    {
-//     
-//     logger.debug("isLeftBeforeRightTransetive");
-//     
-//      val elementList = new ArrayBuffer[Tuple2[HigherLowerThreadId, ThreadMapEntry]]
-//
-//      for (elem <- higherLowerThreadId2SyncPointMap) {
-//        if (elem._1.higherId == right.threadId || elem._1.lowerId == right.threadId) {
-//          elementList.append(elem)
-//        }
-//      }
-//
-//      var isBefore = false;
-//      var iter = elementList.iterator
-//
-//      while (iter.hasNext && !isBefore) {
-//        val current = iter.next()
-//        current._2.getHighestLeft(current._1, right) match {
-//          case None =>
-//            {
-//
-//            }
-//          case Some(highestLeft) =>
-//            {
-//              
-//                logger.debug("isLeftBeforeRightTransetive " + highestLeft + " " + right);
-//              
-//              if (isLeftBeforeRight(left, highestLeft)) {
-//                isBefore = true;
-//              }
-//            }
-//        }
-//      }
-//      isBefore;
-//    
-//  
-//    
-//    }
+
   
    def isLeftBeforeRightTransetive(left: WithStatementPosition, right: WithStatementPosition) =
    {
@@ -112,7 +74,7 @@ class PartialOrderPerSlidingWindowId(val higherLowerThreadId2SyncPointMap: HashM
 
         case Some(x) =>
           {
-            logger.debug("" + right.threadId);
+            logger.trace("" + right.threadId);
             x.isLeftBeforeRight(key, left, right.programCounter);
 
           }

@@ -111,7 +111,7 @@ class PerEventCallbackSyncPoint[UNIQUE_ID](
     
     previousList = newPrevoiusList;
     
-    logger.debug("addPrevoiusEvents list.size() "  + list.size());
+    logger.trace("addPrevoiusEvents list.size() "  + list.size());
     
     list;
     

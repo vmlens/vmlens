@@ -28,7 +28,7 @@ class PerEventCallbackDetectRaceConditions[ID_PER_OBJECT, EVENT <: EventDetectRa
       val current = iter.next();
 
   
-      logger.debug("" + current);
+      logger.trace("" + current);
       
       if( algo._1 == current.idPerMemoryLocation )
       {

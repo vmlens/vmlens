@@ -162,6 +162,14 @@
   border: 2px solid #4198ff;
 }
 
+.blogPicWithoutBorder {
+  width: 100%;
+  height: auto;
+  margin-right : auto;
+  margin-left : auto;
+  min-width : 300px;
+}
+
 
 
 .firstPic {
@@ -329,6 +337,22 @@ top: 65px;
 	 text-align: center;
 }
 
+.vmlensButtonRed
+{
+	border-color: #cc0000;  
+	background-color: #cc0000;  
+	color: white;
+	
+}
+
+
+
+.vmlensButtonRed:hover, .vmlensButtonBlue:focus, .vmlensButtonBlue:active, .vmlensButtonBlue.active
+{
+    background-color: #002d63;
+    border-color: #cc0000;  
+    color: white;
+}
 
 .vmlensButtonBlue
 {

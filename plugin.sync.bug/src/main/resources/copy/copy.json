@@ -114,6 +114,11 @@
           "name":"method_exit.png"
         },
         {
+          "path":"copy/mvnHtmlReport/img/help.png",
+          "dir":"img",
+          "name":"help.png"
+        },
+        {
           "path":"copy/mvnHtmlReport/img/package_obj.png",
           "dir":"img",
           "name":"package_obj.png"

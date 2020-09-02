@@ -45,7 +45,7 @@ class FieldReadCallback(val context : ContextNonVolatileFields,pipeline : Proces
       
        event.slidingWindowId = currentReadSlidingWindowId;
        
-       logger.debug("" + event);
+       logger.trace("" + event);
        
        context.addNonVolatileField(event);
       

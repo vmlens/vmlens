@@ -46,11 +46,16 @@ object SaveIconToFile {
     IconRepository.foreachIcon ( x =>  
       {
         
-        println(x);
+        
         
         
         if( x.isObj() )
         {
+          
+          
+          println(x);
+          
+          
                val imageLoader = new ImageLoader();
 
    imageLoader.data = Array.ofDim[ImageData](1);

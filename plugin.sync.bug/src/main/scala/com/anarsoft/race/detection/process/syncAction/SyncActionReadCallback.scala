@@ -43,7 +43,7 @@ class SyncActionReadCallback(val context : ContextProcessSyncAction,val pipeline
   
    def onEvent( event : SyncAction)
    {
-      logger.debug("" + event);
+      logger.trace("" + event);
        event.accept(visitor);
    }
   

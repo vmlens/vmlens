@@ -37,14 +37,18 @@ object $_scalate_$header_mustache {
         $_scalate_$_context << ( "</ul>\t \n\t\n\t</div>\n\n</header>\n\n" )
       }
       $_scope_1.section("title") { $_scope_5 =>
-        $_scalate_$_context << ( "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-6 col-md-offset-3\">\n      <h1 class=\"text-center\">\n " )
+        $_scalate_$_context << ( "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-6 col-md-offset-3\">\n  <div class=\"text-center\">    <h1   style=\"display: inline;\"  >\n " )
         $_scope_5.section("titlePrefix") { $_scope_6 =>
           $_scalate_$_context << ( "<strong style=\" color: #cc0000;\" >" )
           $_scope_6.renderVariable("titlePrefix", false)
           $_scalate_$_context << ( "</strong>\n " )
         }
         $_scope_5.renderVariable("title", true)
-        $_scalate_$_context << ( "</h1>\n    </div>\n  </div>\n  <hr>\n</div>\n" )
+        $_scalate_$_context << ( "  </h1>\n    \t<a href =\"" )
+        $_scope_5.renderVariable("helpLink", false)
+        $_scalate_$_context << ( "\"><img  src=\"" )
+        $_scope_5.renderVariable("root", false)
+        $_scalate_$_context << ( "img/help.png\" />Help</a>   </span>  </div>  \n    </div>\n  </div>\n  <hr>\n</div>\n" )
       }
     }
   }

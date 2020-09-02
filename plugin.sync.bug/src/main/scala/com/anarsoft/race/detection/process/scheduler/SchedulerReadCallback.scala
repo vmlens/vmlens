@@ -3,10 +3,13 @@ package com.anarsoft.race.detection.process.scheduler
 import com.anarsoft.race.detection.process.read._;
 import com.anarsoft.race.detection.process.gen._;
 import java.util.ArrayList
-
+import com.typesafe.scalalogging.Logger
 
 
 class SchedulerReadCallback(val context : ContextSchedulerRead )  extends ReadCallback[SchedulerEvent]  with SchedulerVisitor   {
+  
+    val logger = Logger(classOf[SchedulerReadCallback])
+  
   
   def onEvent(event: SchedulerEvent)
   {
@@ -52,6 +55,8 @@ def visit( in :  RunEndEventGen)
 def visit( in :  MethodAtomicEnterEventGen)
 {
   
+  logger.trace(in.toString());
+  
   
   in.methodOrdinal =
    context.methodId2Ordinal.getOrAddOrdinal( in.methodId )
@@ -66,7 +71,7 @@ def visit( in :  MethodAtomicEnterEventGen)
 
 def visit( in :  MethodAtomicExitEventGen)
 {
-  
+   logger.trace(in.toString());
   
     in.methodOrdinal =
    context.methodId2Ordinal.getOrAddOrdinal( in.methodId )

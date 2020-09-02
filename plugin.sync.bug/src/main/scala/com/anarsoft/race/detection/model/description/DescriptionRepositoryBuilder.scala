@@ -109,7 +109,7 @@ abstract class  DescriptionRepositoryBuilder extends DescVisitor  {
       
       currentClassModel = new ClassModel( source , isThreadSafe , isStateLess , except,replaceSlahWithDot(superName) , interfaces.map( x =>   replaceSlahWithDot(x)));
       
-      logger.debug("" +  currentClassModel);
+      logger.trace("" +  currentClassModel);
       
       
     }
@@ -118,7 +118,7 @@ abstract class  DescriptionRepositoryBuilder extends DescVisitor  {
    def addMethodModel(methodId : Int, model : MethodModelFromTrace)
    {
      
-     logger.debug("methodId:" + methodId + ","  +  model);
+     logger.trace("methodId:" + methodId + ","  +  model);
      
      methodId2Ordinal.getOrdinal(methodId)  match
      {

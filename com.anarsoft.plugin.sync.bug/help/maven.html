@@ -91,28 +91,23 @@ com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test
 &lt;/suppress&gt;
 </pre></p>
 <h2 id="maven-reports">The reports</h2>
-<h3><a href="#the-issues-report" id="the-issues-report"></a>The issues report</h3>
+<h3 id="maven-issues">The issues report</h3>
 <p>The issues report shows you all the issues found by vmlens. vmlens detects data races and deadlock by analyzing the execution trace of your test. The report is located in the file maven output folder target/interleave/issues.html.</p>
 <p><img  class="helpPic"  src="img/help/manual/deadlockRace.png" /></p>
 <p>The example report shows one data race, the symbol <img  src="img/help/manual/error_co_readwrite_obj.png" /> and one deadlock, the symbol <img  src="img/help/manual/error_co_monitor_obj.png" />. The data races happened at accessing the field example.TestDataRace.i .The deadlock happened between the method lockOneToLockTwo and lockTwoToLockOne. Click one of the links to see the stack traces of the data race or deadlock.</p>
+<h3 id="maven-data-race">The data race report</h3>
 <p>After clicking on the data race you see the following report:</p>
 <p><img class="helpPic"  src="img/help/manual/dataRace.png" /></p>
 <p>This Html site shows you the stack trace and thread name of the reading thread, the symbol  <img  src="img/help/manual/read_obj.png" /> and for the writing thread, the symbol <img  src="img/help/manual/write_obj.png" />.</p>
+<h3 id="maven-deadlock">The deadlock report</h3>
 <p>After clicking on the deadlock you see the following report:</p>
 <p><img  class="helpPic"  src="img/help/manual/deadlock.png" /></p>
 <p>This report shows you the thread names of the two threads in the deadlock, the symbol <img  src="img/help/manual/thread_and_monitor_obj.png" />,and the stack trace. The position in the stack trace in which a monitor was acquired is marked with the symbol <img  src="img/help/manual/monitor_obj.png" />.</p>
-<h3><a href="#the-interleave-report" id="the-interleave-report"></a>The interleave report</h3>
+<h3 id="maven-interleave-report">The interleave report</h3>
 <p>The interleave report shows you the thread interleavings which led to an assertion error or to a data race. The report is located in the file maven output folder target/interleave/elements.html.</p>
 <p><img  class="helpPic"  src="img/help/manual/interleaveOverview.png" /></p>
-<p><p>The above example report shows you the three potential outcomes of the interleave loop:</p>
-<p><ul>
-<li>A successful loop, the symbol  <img   src="img/help/manual/testok.png" /></li>
-<li>An interrupted loop, the symbol  <img   src="img/help/manual/testerr.png" /> </li>
-<li>And a loop containing a data race, the symbol <img   src="img/help/manual/error_co_readwrite_obj.png" />.</li>
-</ul>
-</p>
-<p>By clicking on the successful interleave loop you see the last thread interleaving of this loop. By clicking on the interrupted loop you see the thread interleaving which led to the interrupt. And by clicking on the loop with a data race you see the thread interleaving which led to the data race.</p>
-<p><img class="helpPic"   src="img/help/manual/interleaveDetailAll.png" /></p>
+<h3 id="maven-interleave-detail-report">The interleave detail report</h3>
+<p><p><img class="helpPic"   src="img/help/manual/interleaveDetailAll.png" /></p>
 <p>The interleave detail report shows you one thread interleaving of an interleave loop. The report shows you all synchronization actions and data races in the order of occurrence. In the above example, first, a thread with thread id 13 wrote to the variable i which led to data race. After that, the same thread entered a synchronized block, and so on. The following symbols are used in this report:</p>
 <p>The following symbols are used in this report:</p>
 <ul  style="list-style-type:none;">
@@ -136,6 +131,9 @@ com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test
 </li>
 </ul>
 </p>
+<h3 id="maven-interleave-stack-trace-report">The stack trace report</h3>
+<p>The stack trace report shows the stack trace of a method call:</p>
+<p><img  class="helpPic"  src="img/help/manual/stackTrace.png" /></p>
 
 
       </div>
