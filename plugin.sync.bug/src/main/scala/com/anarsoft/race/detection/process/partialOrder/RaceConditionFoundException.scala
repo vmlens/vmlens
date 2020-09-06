@@ -12,4 +12,8 @@ class RaceConditionFoundException(val read : EventWrapperDetectRaceConditions , 
  
   def getName(fieldAndArrayFacade : FieldAndArrayPerMethodFacade,stackTraceGraph : StackTraceGraph) = fieldAndArrayFacade.getQualifiedFieldName(read.getLocationInClass(),stackTraceGraph)
   
+  
+  def getFirstMethodName(stackTraceGraph : StackTraceGraph) = stackTraceGraph.getMethodModelForStackTraceNodeOrdinal(new StackTraceOrdinal(read.stackTraceOrdinal)).getFullNameWithoutBracket();
+  def getSecondMethodName(stackTraceGraph : StackTraceGraph) = stackTraceGraph.getMethodModelForStackTraceNodeOrdinal(new StackTraceOrdinal(write.stackTraceOrdinal)).getFullNameWithoutBracket();
+  
 }

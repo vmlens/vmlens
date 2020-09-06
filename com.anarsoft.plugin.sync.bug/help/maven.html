@@ -52,6 +52,41 @@
 <h2><a href="#maven-plugin-configuration" id="maven-plugin-configuration"></a>maven plugin configuration</h2>
 <p>The vmlens interleave plugin is based on the maven surefire plugin. All configs which apply to the maven surefire plugin apply also to the interleave plugin, except the test fork configs.</p>
 <p>The following parameters are additions from the vmlens interleave plugin:</p>
+<h3><a href="#donottrace" id="donottrace"></a>doNotTrace</h3>
+<p>The doNotTrace let you exclude methods from tracing through vmlens. A method matching the doNotTrace tag and all methods called by this method will not be traced by vmlens. In the following example the method <code>om.<wbr>vmlens.<wbr>test.<wbr>TestMethod.<wbr>signal</code> and all methods of the class <code>com.<wbr>vmlens.<wbr>test.<wbr>TestMavenDoNotTrace</code> will not be traced:</p>
+<p><pre class="brush: java">&lt;doNotTrace&gt;
+	&lt;method&gt;com.vmlens.test.TestMethod.signal&lt;/method&gt;
+	&lt;method&gt;com.vmlens.test.TestMavenDoNotTrace.*&lt;/method&gt;
+&lt;/doNotTrace&gt;</pre></p>
+<p><p>vmlens supports the ant directory pattern for method names. So you can use the following wild cards:</p>
+<ul  style="list-style-type:none;">
+<li>
+* Matches zero or more characters (not including the path separator .)
+</li>
+<li>
+** Matches zero or more path segments.
+</li>
+<li>
+? Matches one character (any character except the path separator .)
+</li>
+</ul>
+<p>Examples:</p>
+<ul >
+<li>
+com.vmlens.**   Matches all methods from classes in the package and sub-packages from com.vmlens
+</li>
+<li>
+com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test.TestAllRaces
+</li>
+</ul>
+</p>
+<h3><a href="#suppress" id="suppress"></a>suppress</h3>
+<p>The suppress tag let you suppress data races. If a data race is suppressed it will no longer show in the issue report and the build will no longer fail because of this data race. The following example shows how to suppress a data race at the field <code>com.<wbr>vmlens.<wbr>test.<wbr>race.<wbr>TestAllRaces.<wbr>count</code> and at the array <code>com.vmlens.test.race.ArrayElement[]</code>.</p>
+<p><pre class="brush: java">&lt;suppress&gt;
+    &lt;race&gt;com.vmlens.test.race.TestAllRaces.count&lt;/race&gt;
+	&lt;race&gt;com.vmlens.test.race.ArrayElement[]&lt;/race&gt;
+&lt;/suppress&gt;
+</pre></p>
 <h3><a href="#trace" id="trace"></a>trace</h3>
 <p><p>Trace let you narrow the methods which get traced. If trace is configured vmlens will only search for data races inside methods matching the trace elements. Also when showing the stack trace where the data race was found vmlens will start at the first method matching a trace element.</p>
 </p>
@@ -83,13 +118,6 @@ com.vmlens.test.TestAllRaces.*  Matches all methods in the class com.vmlens.test
 </li>
 </ul>
 </p>
-<h3><a href="#suppress" id="suppress"></a>suppress</h3>
-<p>The suppress tag let you suppress data races. If a data race is suppressed it will no longer show in the issue report and the build will no longer fail because of this data race. The following example shows how to suppress a data race at the field</p>
-<p><pre class="brush: java">&lt;suppress&gt;
-	&lt;race&gt;Array@com.vmlens.test.race.TestAllRaces.update&lt;/race&gt;
-    &lt;race&gt;com.vmlens.test.race.TestAllRaces.count&lt;/race&gt;
-&lt;/suppress&gt;
-</pre></p>
 <h2 id="maven-reports">The reports</h2>
 <h3 id="maven-issues">The issues report</h3>
 <p>The issues report shows you all the issues found by vmlens. vmlens detects data races and deadlock by analyzing the execution trace of your test. The report is located in the file maven output folder target/interleave/issues.html.</p>
