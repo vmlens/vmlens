@@ -49,26 +49,7 @@ object ReportFacade {
   
   
   
-  
-  def save2File(modelFacade : ModelFacadeMonitor, reportDir : File) =
-  {
-//       val viewData =  TransformModel2View.transformMonitor(modelFacade);      
-//       View2X.save2File(viewData , reportDir , "templates/htmlSharedMonitor.mustache" , "templates/htmlSharedMonitorDetail.mustache" , "Accessed Monitors" , "monitor.html" , "Issues");
-       callOffline.templateMonitor(modelFacade, reportDir);
  
-  }
-  
-  
-  
-  
-  def save2File(modelFacade : ModelFacadeState, reportDir : File)
-  {
-//       val viewData =  TransformModel2View.transformState(modelFacade);       
-//       View2X.save2File(viewData , reportDir ,  "templates/htmlSharedState.mustache" , "templates/htmlSharedStateDetail.mustache" , "Shared State" , "state.html" , "Issues");
-    
-      callOffline.templateState(modelFacade, reportDir);
-    
-  }
   
   
     def save2File(modelFacade : ModelFacadeAll, reportDir : File)
@@ -81,10 +62,7 @@ object ReportFacade {
     
     
     
-    def createOnlineMap(modelFacade : ModelFacadeState) =
-    {
-      callOnline.templateState(modelFacade, new File(""));
-    }
+  
     
     
     
@@ -102,28 +80,8 @@ object ReportFacade {
     }
     
     
-     def createReportData4Plugin(modelFacade : ModelFacadeState) =
-    {
-       val viewData =  TransformModel2View.transformState(modelFacade);   
-       
-       val onlineData =     callOnline.templateState(modelFacade, new File(""));
-       
-       
-       new ReportData4Plugin( Right( "issues.html" ) , "elements.html" ,onlineData );
-       
-    }
-     
-      def createReportData4Plugin(modelFacade : ModelFacadeMonitor) =
-    {
-       val viewData =  TransformModel2View.transformMonitor(modelFacade);   
-       
-       val onlineData =     callOnline.templateMonitor(modelFacade, new File("") );
-       
-       
-       new ReportData4Plugin( Left( viewData.issues ) , "elements.html" ,onlineData );
-       
-    }
-    
+   
+   
     
     
     def createExceptionReport4Plugin(throwable : Throwable) =

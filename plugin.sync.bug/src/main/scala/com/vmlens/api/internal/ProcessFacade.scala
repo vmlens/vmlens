@@ -7,8 +7,6 @@ import com.vmlens.api.internal.reports.ReportFacade
 import java.io._;
 import java.util.Properties
 import com.vmlens.trace.agent.bootstrap.mode.ModeNames
-import com.anarsoft.race.detection.process.mode.monitor.ProcessMonitor
-import com.anarsoft.race.detection.process.mode.state.ProcessSharedState
 import scala.collection.mutable.HashMap
 import com.vmlens.api.internal.reports.HtmlProviderStaticSite
 import com.anarsoft.trace.agent.runtime.process.PluginController
@@ -55,26 +53,11 @@ object ProcessFacade {
        
       val mode = properties.getProperty("vmlens.mode")
       
-      if( ModeNames.MONITOR.equals(mode) )
-      {
-        Left( (new ProcessMonitor(new ProzessConfigProd())).prozess(eventDir, maxSlidingWindowId) )
-    
-           
-         
-      }
-      else  if( ModeNames.STATE.equals(mode) )
-      {
-       
-        Left(   (new ProcessSharedState(new ProzessConfigProd())).prozess(eventDir, maxSlidingWindowId) )
-    
-         
-      }
-      else
-      {
+     
          val readAndProcessEvents =  new ReadAndProcessEvents(new ProzessConfigProd() , PropertyTransformer.createConfigValues(new PropetyContainer2Properties(properties)));
         Left(  readAndProcessEvents.prozess(eventDir,maxSlidingWindowId) )
       
-      }
+      
             
 	   
      }
@@ -127,29 +110,11 @@ object ProcessFacade {
        
       val mode = properties.getProperty("vmlens.mode")
       
-      if( ModeNames.MONITOR.equals(mode) )
-      {
-
-    // Some(new File("memoryAccess"))
-         val modelFacade = (new ProcessMonitor(new  ProzessConfigProd())).prozess(eventDir, maxSlidingWindowId)
-    
-           ReportFacade.createReportData4Plugin(modelFacade);
-         
-      }
-      else  if( ModeNames.STATE.equals(mode) )
-      {
-          
-    // Some(new File("memoryAccess"))
-         val modelFacade = (new ProcessSharedState( new ProzessConfigProd())).prozess(eventDir, maxSlidingWindowId)
-    
-           ReportFacade.createReportData4Plugin(modelFacade);
-      }
-      else
-      {
+     
          val readAndProcessEvents = new ReadAndProcessEvents(new ProzessConfigProd() , PropertyTransformer.createConfigValues(new PropetyContainer2Properties(properties)));
        val runResult = readAndProcessEvents.prozess(eventDir,maxSlidingWindowId)
        ReportFacade.createReportData4Plugin(runResult);
-      }
+      
             
 	   
      }

@@ -27,22 +27,7 @@ object TransformModel2View {
     
     
     
-  
-  def transformState(modelFacade : ModelFacadeState) =
-  {
-    
-    val seq = modelFacade.notStateless.map(  x => new ReportElementNotStateless(x, modelFacade) )
-    
-      new ViewResult(  seq.sortBy(  x => x.name  ) , modelFacade.sharedStateCollection.toSeq.map(  x =>  
-         new ReportMethodWithSharedState(x,modelFacade , false) ).sorted.take(200)  );
-  }
-  
-  
-  def transformMonitor(modelFacade : ModelFacadeMonitor) =
-  {
-    new ViewResult( createIssues4Monitor(modelFacade).toList.sortBy(  x => x.name  )  ,  modelFacade.sharedStateCollection.toSeq.map(  x =>  
-         new ReportMethodWithMonitor(x,modelFacade , false ) ).sorted.take(200) );
-  }
+ 
   
   
   def transformAll(modelFacade :  ModelFacadeAll) =

@@ -19,16 +19,12 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.surefire.suite.RunResult;
 
 import com.anarsoft.config.MavenMojo;
-import com.vmlens.api.callback.APICallbackSharedImpl;
-import com.vmlens.api.callback.APICallbackSharedRegressionTest;
-import com.vmlens.api.callback.APICallbackSharedRegressionTestLive;
 import com.vmlens.api.callback.ApiCallbackCheckEvents;
 import com.vmlens.api.callback.ApiCallbackParallize;
 import com.vmlens.api.callback.ApiCallbackRegressionTest;
 import com.vmlens.api.callback.ExtractAgentAndCheckLicence;
 import com.vmlens.api.callback.IssuesFoundException;
 import com.vmlens.api.callback.APICallback;
-import com.vmlens.api.callback.APICallbackShared;
 import com.vmlens.api.internal.reports.ReportFacade$;
 import com.anarsoft.config.DefaultValues;
 
@@ -82,18 +78,9 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 		
 			
 
-			if(  getMode() == Mode.state )
-			{
-				processShared(source,mavenMojo,true);
-			}
-			else if(   getMode()  == Mode.monitor )
-			{
-				processShared(source,mavenMojo,false);
-			}
-			else
-			{
+		
 				processAll(source,mavenMojo);
-			}
+			
 			
 		} catch (IssuesFoundException issuesFoundException) {
 			if (isTestFailureIgnore()) {
@@ -200,44 +187,7 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 		}
 	}
 
-	private void processShared(String source, MavenMojo mavenMojo,boolean isState) throws MojoFailureException, MojoExecutionException , IssuesFoundException
-	{
-		
-		super.execute();	
-		
-		if(noTestRun(source,mavenMojo))
-		{
-			return;
-		}
-		
-		
-		
-		APICallbackShared apiCallbackShared = new APICallbackSharedImpl();
-		
-		 if (callbackType == 2) {
-			 apiCallbackShared = new APICallbackSharedRegressionTest(true);
-		}
-		 else  if (callbackType == 3) {
-		 
-			 apiCallbackShared = new APICallbackSharedRegressionTest(false);
-		 }
-		 else  if (callbackType == 4) {
-			 
-			 apiCallbackShared = new APICallbackSharedRegressionTestLive();
-		 }
-		
-		
-		if(isState)
-		{
-			apiCallbackShared.prozessState(source, mavenMojo, new MavenProgressMonitor(getLog()));
-		}
-		else
-		{
-			apiCallbackShared.prozessMonitor(source, mavenMojo, new MavenProgressMonitor(getLog()));
-		}
-		
-		
-	}
+	
 
 	
 	protected abstract Mode getMode();

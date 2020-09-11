@@ -20,9 +20,11 @@ class StepBuildFieldAndArrayFacade extends SingleStep[ContextFieldAndArrayFacade
     val arrayOrdinal2Model : Array[ArrayModel]
      */
     
-    context.fieldAndArrayFacade =
+      context.fieldAndArrayFacade =
      new FieldAndArrayPerMethodFacade( 
-         context.arrayAndFieldOrdinalMap.fieldOrdinal2FieldModelDesc , context.arrayAndFieldOrdinalMap.arrayAggregateId2Ordinal , context.arrayAndFieldOrdinalMap.arrayOrdinal2Model , Array.ofDim[String](0));
+         context.arrayAndFieldOrdinalMap.fieldOrdinal2FieldModelDesc , context.arrayAndFieldOrdinalMap.arrayAggregateId2Ordinal , context.arrayAndFieldOrdinalMap.arrayOrdinal2Model , context.classId2Name );
+
+    
      
   }
   

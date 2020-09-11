@@ -8,7 +8,7 @@ import com.anarsoft.race.detection.process.SortArrayList;
 
 
 
-class StepProzessMethodEvents(val additionalOpOnParallizedMethodEnter : ( ParallizedMethodEnterEvent , ContextMethodData ) => Unit, val   additionalOpOnMethodInParallizeBlock : (MethodEvent , Int,ContextMethodData) => Unit ) extends SingleStep[ContextMethodData] {
+class StepProzessMethodEvents( ) extends SingleStep[ContextMethodData] {
   
   
   
@@ -103,7 +103,7 @@ class StepProzessMethodEvents(val additionalOpOnParallizedMethodEnter : ( Parall
      
       
   
-        currentBuilder.visit(current, currentMethodFlow , context.stackTraceTree,context.methodId2Ordinal , context , additionalOpOnParallizedMethodEnter, additionalOpOnMethodInParallizeBlock);
+        currentBuilder.visit(current, currentMethodFlow , context.stackTraceTree,context.methodId2Ordinal , context );
       
       
       

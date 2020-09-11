@@ -116,7 +116,7 @@ class StackTraceForestPerThreadBuilder(val threadOrdinal : Int,val threadOrdinal
   
    
    def visit(event : MethodEvent,methodFlow : MethodFlowBlock , stackTraceTree : StackTraceTree ,methodId2Ordinal :  ModelKey2OrdinalMap[Int] ,
-       context : ContextMethodData ,  additionalOpOnParallizedMethodEnter : ( ParallizedMethodEnterEvent , ContextMethodData ) => Unit , additionalOpOnMethodInParallizeBlock : (MethodEvent , Int , ContextMethodData) => Unit )
+       context : ContextMethodData )
    {
      
  
@@ -136,7 +136,7 @@ class StackTraceForestPerThreadBuilder(val threadOrdinal : Int,val threadOrdinal
                      parallizedMethodEnterEvent.methodOrdinal =  methodId2Ordinal.getOrAddOrdinal(  event.methodId() );
                      
                      
-                   additionalOpOnParallizedMethodEnter( parallizedMethodEnterEvent  , context);
+          
                     
                     
                   }
@@ -210,20 +210,20 @@ class StackTraceForestPerThreadBuilder(val threadOrdinal : Int,val threadOrdinal
                    add2StatementListAndMethodFlow( stackTraceOrdinalAndMethodId ,stackTraceOrdinalAndMethodId ,  event , methodFlow    );
                   stack.push(  stackTraceOrdinalAndMethodId );
                  
-                currentParallizeId match
-                {
-                  case None =>
-                    {
-                      
-                    }
-                 
-                  case Some(x) =>
-                    {
-                      additionalOpOnMethodInParallizeBlock( event , x , context );
-                    }
-                  
-                  
-                }
+//                currentParallizeId match
+//                {
+//                  case None =>
+//                    {
+//                      
+//                    }
+//                 
+//                  case Some(x) =>
+//                    {
+//                      additionalOpOnMethodInParallizeBlock( event , x , context );
+//                    }
+//                  
+//                  
+//                }
                   
                   
                   
@@ -234,21 +234,21 @@ class StackTraceForestPerThreadBuilder(val threadOrdinal : Int,val threadOrdinal
      }
      else
      {
-           currentParallizeId match
-                {
-                  case None =>
-                    {
-                      
-                    }
-                 
-                  case Some(x) =>
-                    {
-                      additionalOpOnMethodInParallizeBlock( event , x , context );
-                    }
-                  
-                  
-                }
-      
+//           currentParallizeId match
+//                {
+//                  case None =>
+//                    {
+//                      
+//                    }
+//                 
+//                  case Some(x) =>
+//                    {
+//                      additionalOpOnMethodInParallizeBlock( event , x , context );
+//                    }
+//                  
+//                  
+//                }
+//      
        
        
         if( stack.isEmpty )

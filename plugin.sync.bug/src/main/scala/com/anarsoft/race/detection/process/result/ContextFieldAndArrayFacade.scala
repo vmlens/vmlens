@@ -7,8 +7,10 @@ import com.anarsoft.race.detection.model.field.ArrayAndFieldOrdinalMap;
 
 trait ContextFieldAndArrayFacade {
   
-    
+    def classId2Name : Array[String] ; 
    def arrayAndFieldOrdinalMap : ArrayAndFieldOrdinalMap;  
    var fieldAndArrayFacade : FieldAndArrayPerMethodFacade = null; 
+   
+   
   
 }
