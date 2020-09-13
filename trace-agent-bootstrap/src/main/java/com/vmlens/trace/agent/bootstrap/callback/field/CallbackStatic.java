@@ -202,7 +202,7 @@ public class CallbackStatic {
 					  
 					   public boolean execute(Access4State object)
 					   {
-							callbackStatePerThread.sendEvent.writeStateEventStaticFieldInitialGen(slidingWindowId,staticState4ModeState.lastThreadId , fieldId, object.methodId, object.methodNumber, object.operation  ,object.slidingWindowId );
+							//callbackStatePerThread.sendEvent.writeStateEventStaticFieldInitialGen(slidingWindowId,staticState4ModeState.lastThreadId , fieldId, object.methodId, object.methodNumber, object.operation  ,object.slidingWindowId );
 						   
 						   return true;
 					   }
@@ -214,7 +214,7 @@ public class CallbackStatic {
 				   
 				   
 				   
-				   callbackStatePerThread.sendEvent.writeStateEventStaticFieldGen(slidingWindowId, fieldId, methodId , callbackStatePerThread.methodCount, operation );
+				//   callbackStatePerThread.sendEvent.writeStateEventStaticFieldGen(slidingWindowId, fieldId, methodId , callbackStatePerThread.methodCount, operation );
 				   
 				   
 				   
@@ -223,7 +223,7 @@ public class CallbackStatic {
 			}
 			
 			
-			   callbackStatePerThread.sendEvent.writeStateEventStaticFieldGen(slidingWindowId, fieldId, methodId , callbackStatePerThread.methodCount, operation );
+			 //  callbackStatePerThread.sendEvent.writeStateEventStaticFieldGen(slidingWindowId, fieldId, methodId , callbackStatePerThread.methodCount, operation );
 			
 			
 		}

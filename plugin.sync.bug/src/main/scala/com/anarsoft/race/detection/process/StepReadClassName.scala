@@ -1,4 +1,5 @@
-package com.anarsoft.race.detection.process.state
+package com.anarsoft.race.detection.process
+
 
 import com.anarsoft.race.detection.process.workflow.SingleStep
 import java.io._;
@@ -77,3 +78,4 @@ class StepReadClassName(val eventDir : String)  extends SingleStep[ContextClassN
     
   }
 }
+

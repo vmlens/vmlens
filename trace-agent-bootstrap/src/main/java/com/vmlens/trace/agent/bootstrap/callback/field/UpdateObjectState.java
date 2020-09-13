@@ -291,15 +291,15 @@ public class UpdateObjectState {
 
 	public void sendStateEvent4Object(int slidingWindowId, int classOrFieldId, long id, int methodId, int operation,
 			CallbackStatePerThread callbackStatePerThread) {
-		callbackStatePerThread.sendEvent.writeStateEventFieldGen(slidingWindowId, classOrFieldId, methodId,
-				callbackStatePerThread.methodCount, operation, id);
+//		callbackStatePerThread.sendEvent.writeStateEventFieldGen(slidingWindowId, classOrFieldId, methodId,
+//				callbackStatePerThread.methodCount, operation, id);
 	}
 
 	public void sendStateEventInitial4Object(int currentSlidingWindowId, int classOrFieldId, long id, long lastThreadId,
 			int methodId, int methodCount, int operation, int slidingWindowIdAtAccess,
 			CallbackStatePerThread callbackStatePerThread) {
-		callbackStatePerThread.sendEvent.writeStateEventFieldInitialGen(currentSlidingWindowId, lastThreadId,
-				classOrFieldId, methodId, methodCount, operation, id, slidingWindowIdAtAccess);
+//		callbackStatePerThread.sendEvent.writeStateEventFieldInitialGen(currentSlidingWindowId, lastThreadId,
+//				classOrFieldId, methodId, methodCount, operation, id, slidingWindowIdAtAccess);
 
 	}
 

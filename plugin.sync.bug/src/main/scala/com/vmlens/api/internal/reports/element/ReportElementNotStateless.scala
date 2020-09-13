@@ -2,7 +2,7 @@ package com.vmlens.api.internal.reports.element
 
 import com.anarsoft.race.detection.model.result._;
 import com.vmlens.api.internal.reports._;
-import com.anarsoft.race.detection.process.sharedState._;
+
 
 class ReportElementNotStateless(val element : NotStateless, val modelFacade : ModelFacadeState)  extends ReportElement  with ReportWithName  {
   

@@ -32,7 +32,6 @@ import com.anarsoft.race.detection.process.detectDeadlocks.StepFindPotentialDead
 import com.anarsoft.race.detection.process.detectDeadlocks.StepBuildPotentialDeadlockWithParentMonitorIds
 import com.anarsoft.race.detection.process.detectDeadlocks.StepCheckPotentialDeadlocks
 import com.anarsoft.race.detection.process.perEventList.PerEventListStepCollection
-import com.anarsoft.race.detection.process.sharedState.StepCreateSharedState
 import com.anarsoft.race.detection.process.facade.StepCreateFieldAndArrayPerStackTraceFacade
 import java.io.File
 import com.vmlens.maven.plugin.Extended
@@ -43,7 +42,6 @@ import com.anarsoft.race.detection.process.scheduler._
 import com.anarsoft.race.detection.process.partialOrder.ContextCreatePartialOrder
 import com.anarsoft.race.detection.process.interleave._
 import com.anarsoft.config.ConfigValues
-import com.anarsoft.race.detection.process.state.StepReadClassName
 import com.anarsoft.trace.agent.runtime.process.PluginController
 import com.anarsoft.trace.agent.runtime.process.AgentController
 import com.typesafe.scalalogging.Logger

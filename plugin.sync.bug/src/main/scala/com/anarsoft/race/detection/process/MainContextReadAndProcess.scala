@@ -7,7 +7,6 @@ import com.anarsoft.race.detection.process.syncAction._;
 import com.anarsoft.race.detection.process.field._;
 import com.anarsoft.race.detection.process.aggregate.ContextBuildAggregate
 import com.anarsoft.race.detection.process.facade.ContextFacade
-import  com.anarsoft.race.detection.process.state.ContextClassName
 
 /**
  * 

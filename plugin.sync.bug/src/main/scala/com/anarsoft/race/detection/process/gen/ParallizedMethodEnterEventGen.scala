@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
 import com.anarsoft.race.detection.process.directMemory._;
 import com.anarsoft.race.detection.process.scheduler._
 import com.anarsoft.race.detection.process.interleave._;
-import com.anarsoft.race.detection.process.state._
+
 
 class ParallizedMethodEnterEventGen (
   val threadId  : Long

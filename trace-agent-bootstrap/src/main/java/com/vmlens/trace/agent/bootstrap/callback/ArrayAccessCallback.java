@@ -147,8 +147,8 @@ public class ArrayAccessCallback {
 			
 			int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
 			
-			callbackStatePerThread.sendEvent.writeStateEventArrayGen(slidingWindowId,
-					methodId, position, callbackStatePerThread.methodCount, operation, state.id,arrayClassId);
+//			callbackStatePerThread.sendEvent.writeStateEventArrayGen(slidingWindowId,
+//					methodId, position, callbackStatePerThread.methodCount, operation, state.id,arrayClassId);
 			
 			
 		}

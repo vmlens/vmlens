@@ -9,7 +9,7 @@ import com.anarsoft.race.detection.process.volatileField.ConfigVolatileFields
 import com.anarsoft.race.detection.process.nonVolatileField.ConfigNonVolatileFields
 import com.anarsoft.race.detection.process.monitor.ConfigMonitor
 import com.anarsoft.race.detection.process.setMonitorInfo.ContextSetMonitorInfo
-import com.anarsoft.race.detection.process.state._;
+
 import com.anarsoft.race.detection.process.nonVolatileField.ContextNonVolatileFields
 import com.anarsoft.race.detection.process.scheduler.ConfigSchedulerEvents
 import com.anarsoft.race.detection.process.arrayId.ContextSetArrayOrdinal
@@ -24,13 +24,13 @@ class PerEventListStepCollection( ) {
 //  val newBuildMethodOrdinalAggregate  = new StepProcessPerEventListCollectionWithName[ContextBuildMethodOrdinalAggregate](classOf[ContextBuildMethodOrdinalAggregate], "newBuildMethodOrdinalAggregate");
   
   
-  val buildStackTraceOrdinalAggregate  = new StepProcessPerEventListCollectionWithName[ContextBuildStackTraceOrdinal4State](classOf[ContextBuildStackTraceOrdinal4State], "buildStackTraceOrdinalAggregate")
+  //val buildStackTraceOrdinalAggregate  = new StepProcessPerEventListCollectionWithName[ContextBuildStackTraceOrdinal4State](classOf[ContextBuildStackTraceOrdinal4State], "buildStackTraceOrdinalAggregate")
   
   
   val setStacktraceOrdinal =  new StepProcessPerEventListCollection[ContextSetStacktraceOrdinal](classOf[ContextSetStacktraceOrdinal]) 
   
   
-  val setStacktraceOrdinal4OwnerOfState =  new StepProcessPerEventListCollection[ContextSetStacktraceOrdinal4OwnerOfState](classOf[ContextSetStacktraceOrdinal4OwnerOfState]) 
+  //val setStacktraceOrdinal4OwnerOfState =  new StepProcessPerEventListCollection[ContextSetStacktraceOrdinal4OwnerOfState](classOf[ContextSetStacktraceOrdinal4OwnerOfState]) 
   
   
   //val  checkOwner4State = new StepProcessPerEventListCollection[ContextCheckOwner4State](classOf[ContextCheckOwner4State]) 
@@ -57,7 +57,7 @@ class PerEventListStepCollection( ) {
    
    val setArrayOrdinalInterleave =  new StepProcessPerEventListCollection[ContextSetArrayOrdinal[ArrayAccessEvent]](classOf[ContextSetArrayOrdinal[ArrayAccessEvent]]) 
    
-    val setArrayOrdinalState =  new StepProcessPerEventListCollection[ContextSetArrayOrdinal[StateEventArray]](classOf[ContextSetArrayOrdinal[StateEventArray]]) 
+   // val setArrayOrdinalState =  new StepProcessPerEventListCollection[ContextSetArrayOrdinal[StateEventArray]](classOf[ContextSetArrayOrdinal[StateEventArray]]) 
    
 //   val transferSortable =  new StepProcessPerEventListCollection[ContextSetSortable](classOf[ContextSetSortable]) 
   
@@ -90,16 +90,6 @@ object PerEventListStepCollection
   
   
  
-  def create4State() =
-  {
-        val perEventListSteps = new PerEventListStepCollection();
-    
-      ConfigState.initializePerEventListSteps(perEventListSteps);
-
-    
-    perEventListSteps;
-  }
-//  
   
   
   

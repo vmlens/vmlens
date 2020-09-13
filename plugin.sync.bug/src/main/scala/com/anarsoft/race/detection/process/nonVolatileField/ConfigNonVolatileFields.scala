@@ -7,7 +7,6 @@ import com.anarsoft.race.detection.process.field.PerEventListBuildFieldIdMap;
 import com.anarsoft.race.detection.process.detectRaceConditions._
 import com.anarsoft.race.detection.process.perEventList.PerEventListStepCollection
 import com.anarsoft.race.detection.process.setMonitorInfo.PerEventListSetMonitorInfo
-import com.anarsoft.race.detection.process.setStacktraceOrdinal.PerEventListSetStacktraceOrdinal4OwnerOfState
 import scala.collection.mutable.ArrayBuffer
 import com.anarsoft.race.detection.model.result._;
 import  com.anarsoft.race.detection.process.arrayId.PerEventCallbackSetArrayOrdinal

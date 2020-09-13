@@ -8,7 +8,6 @@ import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
 import com.anarsoft.race.detection.process.monitor.MonitorEvent
 import com.anarsoft.race.detection.process.directMemory._;
 import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.state._
 
 class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
 {

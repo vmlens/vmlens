@@ -159,38 +159,6 @@ public class SendEventDoNotSend  implements SendEvent{
 
 
 
-	@Override
-	public void writeStateEventFieldGen(int slidingWindowId, int classId, int methodId, int methodCounter,
-			int operation, long objectHashCode) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void writeStateEventFieldInitialGen(int slidingWindowId, long threadIdAtEvent, int classId, int methodId,
-			int methodCounter, int operation, long objectHashCode, int slidingWindowIdAtEvent) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void writeStateEventStaticFieldGen(int slidingWindowId, int fieldId, int methodId, int methodCounter,
-			int operation) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void writeStateEventStaticFieldInitialGen(int slidingWindowId, long threadIdAtEvent, int fieldId,
-			int methodId, int methodCounter, int operation, int slidingWindowIdAtEvent) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 
 	@Override
@@ -217,12 +185,7 @@ public class SendEventDoNotSend  implements SendEvent{
 	}
 
 
-	@Override
-	public void writeStateEventArrayGen(int slidingWindowId, int methodId, int position, int methodCounter,
-			int operation, long objectHashCode, int classId) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 
 	
@@ -555,49 +518,6 @@ public class SendEventDoNotSend  implements SendEvent{
 		
 	}
 
-
-	@Override
-	public void writeWithoutInterleaveStateEventFieldGen(int slidingWindowId, int classId, int methodId,
-			int methodCounter, int operation, long objectHashCode) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void writeWithoutInterleaveStateEventFieldInitialGen(int slidingWindowId, long threadIdAtEvent, int classId,
-			int methodId, int methodCounter, int operation, long objectHashCode, int slidingWindowIdAtEvent) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void writeWithoutInterleaveStateEventStaticFieldGen(int slidingWindowId, int fieldId, int methodId,
-			int methodCounter, int operation) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void writeWithoutInterleaveStateEventStaticFieldInitialGen(int slidingWindowId, long threadIdAtEvent,
-			int fieldId, int methodId, int methodCounter, int operation, int slidingWindowIdAtEvent) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void writeWithoutInterleaveStateEventArrayGen(int slidingWindowId, int methodId, int position,
-			int methodCounter, int operation, long objectHashCode, int classId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	
 
 
 	
