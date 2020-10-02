@@ -4,12 +4,12 @@ import java.util.concurrent.ConcurrentHashMap
 import java.io.PrintWriter
 
 
-class ResultHtmlOnline extends ReportFactory with HtmlProvider {
+class ResultHtmlOnline extends ReportFactory[ContextReport] with HtmlProvider {
   
-   val path2View = new ConcurrentHashMap[String,Either[ViewProvider,ReportView]]
+   val path2View = new ConcurrentHashMap[String,Either[ViewProvider[ContextReport],ReportView[ContextReport]]]
   
   
-   def addView(link : String ,viewProvider : ViewProvider)
+   def addView(link : String ,viewProvider : ViewProvider[ContextReport])
    {
      
      

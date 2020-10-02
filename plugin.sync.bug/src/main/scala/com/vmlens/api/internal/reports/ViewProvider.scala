@@ -3,7 +3,7 @@ package com.vmlens.api.internal.reports
 
 // val create : ( String , String ) =>  ReportView 
 
-class ViewProvider( val templateName : String,val fileName : String,val viewData : ViewData ) {
+class ViewProvider[CONTEXT <: ContextReportAbstract]( val templateName : String,val fileName : String,val viewData : ViewData[CONTEXT] ) {
  
   
   def view() = 

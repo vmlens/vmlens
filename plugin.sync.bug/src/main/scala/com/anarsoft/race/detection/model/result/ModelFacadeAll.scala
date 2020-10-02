@@ -17,7 +17,7 @@ class ModelFacadeAll( val stackTraceGraph : StackTraceGraph,
     val deadlocks : HashSet[Deadlock],
     val loopId2Result : LoopId2Result,
     val agentLog : ArrayBuffer[String]
-) extends ModelFacade
+)
 {
   
   

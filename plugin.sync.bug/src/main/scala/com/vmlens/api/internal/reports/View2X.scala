@@ -10,7 +10,7 @@ object View2X {
   // val titleIndex: String, val titleElements: String, val fileNameElements : String
   
   
-  def addViews( viewResult : ViewResult[ReportElement] , reportBuilderHtmlFile : ReportFactory , context : ContextReport , elementTemplate : String, elementDetailTemplate : String ,
+  def addViews( viewResult : ViewResult[ReportElement[ContextReport]] , reportBuilderHtmlFile : ReportFactory[ContextReport] , context : ContextReport , elementTemplate : String, elementDetailTemplate : String ,
       elementTitle : String, titleIndex : String, noElementsTemplate : String)
   {
     
@@ -58,9 +58,9 @@ object View2X {
   
   
   
-  def save2File(viewResult : ViewResult[ReportElement], reportDir : File, elementTemplate : String, elementDetailTemplate : String , elementTitle : String ,  noElementsTemplate : String)
+  def save2File(viewResult : ViewResult[ReportElement[ContextReport]], reportDir : File, elementTemplate : String, elementDetailTemplate : String , elementTitle : String ,  noElementsTemplate : String)
   {
-     val reportBuilderHtmlFile = new ResultHtmlFiles(reportDir );
+     val reportBuilderHtmlFile = new ResultHtmlFiles[ContextReport](reportDir );
      val contextReportBuilder = new ContextReportBuilder(reportBuilderHtmlFile,elementDetailTemplate,"Issues" ,elementTitle );
      val context = contextReportBuilder.createContext(true,true,false);
       
@@ -72,7 +72,7 @@ object View2X {
   }
   
   
-  def createOnlineMap(viewResult : ViewResult[ReportElement], elementTemplate : String, elementDetailTemplate : String , elementTitle : String ,  noElementsTemplate : String ) =
+  def createOnlineMap(viewResult : ViewResult[ReportElement[ContextReport]], elementTemplate : String, elementDetailTemplate : String , elementTitle : String ,  noElementsTemplate : String ) =
   {
         val resultHtmlOnline = new ResultHtmlOnline();
         val contextReportBuilder = new ContextReportBuilder(resultHtmlOnline,elementDetailTemplate,"Issues" ,elementTitle  );

@@ -96,7 +96,7 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
 
       addEventProcessingSteps(eventDir, readMethodEvents, processPipeline, maxSlidingWindowId);
 
-      addStepsBeforeStackTraceGraph(processPipeline);
+     
 
       processPipeline.step(new StepCreateStackTraceGraph())
 
@@ -106,7 +106,17 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
 
       processPipeline.step(new StepReadAgentLog(eventDir, prozessConfig));
 
-      addEndSteps(eventDir, processPipeline);
+      processPipeline.step(new StepProcessInterleaveEventListAfterRead());
+
+    processPipeline.step(new StepReadClassName(eventDir));
+
+    processPipeline.step(new StepReadDescription(eventDir));
+
+
+     processPipeline.step(new StepBuildFieldAndArrayFacade());
+  
+
+    processPipeline.step(new StepCreateModelFacade(configValues));
 
       processPipeline;
 
@@ -252,25 +262,8 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
 
   }
 
-  def addStepsBeforeStackTraceGraph(processPipeline: ProcessPipeline[MainContextReadAndProcess]) {
-
-  }
-
-  def addEndSteps(eventDir: String, processPipeline: ProcessPipeline[MainContextReadAndProcess]) {
-
-    processPipeline.step(new StepProcessInterleaveEventListAfterRead());
-
-    processPipeline.step(new StepReadClassName(eventDir));
-
-    processPipeline.step(new StepReadDescription(eventDir));
-
-
-     processPipeline.step(new StepBuildFieldAndArrayFacade());
+ 
   
-
-    processPipeline.step(new StepCreateModelFacade(configValues));
-
-  }
 
   def readAndProzessSyncActionAndMonitorEvents(perEventListSteps: PerEventListStepCollection, processPipeline: ProcessPipeline[MainContextReadAndProcess]) =
     {
@@ -278,11 +271,7 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
       val compositeStep = new CompositeStep[ContextReadAndProzessSyncActionAndMonitorEvents]("readAndProzessSyncActionAndMonitorEvents", processPipeline);
 
       compositeStep.step(new StepCreateNewPartialOrderBuilder4SlidingWindowId());
-      //     processPipeline.step(new WrappedStep(new StepCreateStream[MonitorEvent,ContextMonitorData]((x, c) => c.monitorEventStreams = x, new MonitorDeSerializer() ,
-      //          "monitor_", "monitorStatistic_", eventDir ,executorService ,  listForFinally , maxSlidingWindowId, 1) , classOf[ContextMonitorData]));
-
-      //     compositeStep.step(new StepReadEvents[DirectMemoryEvent, ContextReadDirectMemory](x => x.directMemoryEventStreams, (c) => new DirectMemoryReadCallback(c)));
-      compositeStep.step(new StepReadEvents[SyncAction, ContextProcessSyncAction](x => x.syncActionStreams, (c) => new SyncActionReadCallback(c, processPipeline)));
+         compositeStep.step(new StepReadEvents[SyncAction, ContextProcessSyncAction](x => x.syncActionStreams, (c) => new SyncActionReadCallback(c, processPipeline)));
       compositeStep.step(new StepReadEvents[MonitorEvent, ContextMonitor](x => x.monitorEventStreams, (c) => new MonitorReadCallback(c, processPipeline)));
 
       compositeStep.step(perEventListSteps.setArrayOrdinalInterleave);
@@ -290,16 +279,13 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
       compositeStep.step(perEventListSteps.setStacktraceOrdinal);
       compositeStep.step(perEventListSteps.buildMethodOrdinalAggregate);
 
-      //compositeStep.step(perEventListSteps.newBuildMethodOrdinalAggregate);
-
-      //  compositeStep.step(perEventListSteps.buildStackTraceOrdinalAggregate);
 
       compositeStep.step(new StepCreateMonitorRelation())
       compositeStep.step(new StepFindPotentialDeadlocks())
       compositeStep.step(new StepBuildPotentialDeadlockWithParentMonitorIds())
       compositeStep.step(new StepCheckPotentialDeadlocks())
 
-      compositeStep.step(perEventListSteps.setMonitorInfo4Volatile);
+
 
       prozessConfig.checkLocksStep() match {
         case None =>
@@ -342,11 +328,21 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
 
       processPipeline.step(new StepProcessInterleaveEventListDuringRead());
 
-      // processPipeline.step(new StepPrintPartialOrder());
+
+      additionalMethodAndFields( processPipeline);
+      
 
       processPipeline;
     }
 
+  
+  def additionalMethodAndFields( processPipeline : ProcessPipeline[ContextReadMethodAndField])
+  {
+    
+    
+  }
+  
+  
   def createAndExecutePipeline(eventDir: String, executorService: ExecutorService, listForFinally: HashMap[Object, ToBeClosed], maxSlidingWindowId: Int, progressMonitor: ProgressMonitor) =
     {
       val pipeline = createPipeline(eventDir, executorService, listForFinally, maxSlidingWindowId);

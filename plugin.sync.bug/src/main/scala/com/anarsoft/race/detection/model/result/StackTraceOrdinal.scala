@@ -10,7 +10,7 @@ case class StackTraceOrdinal ( val ordinal : Int )  {
       m.getFullName();
   }
    
-  def nameWithBoldName(viewTyp : ModelFacade) =
+  def nameWithBoldName(viewTyp : ModelFacadeAll) =
   {
     val m=   viewTyp.stackTraceGraph.getMethodModelForStackTraceNodeOrdinal(this);
       m.getFullNameWithBoldName();

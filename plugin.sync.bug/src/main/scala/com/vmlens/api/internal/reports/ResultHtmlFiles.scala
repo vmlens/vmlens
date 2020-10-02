@@ -5,9 +5,9 @@ import java.io._;
 import scala.collection.mutable.HashSet
 import com.anarsoft.integration.CopyFiles
 
-class ResultHtmlFiles(val reportDir : File ) extends ReportFactory  {
+class ResultHtmlFiles[CONTEXT <: ContextReportAbstract](val reportDir : File ) extends ReportFactory[CONTEXT]  {
   
-  val viewStack = new Stack[ViewProvider];
+  val viewStack = new Stack[ViewProvider[CONTEXT]];
   val alreadyCreatedPrefix = new HashSet[String] 
   
   
@@ -16,7 +16,7 @@ class ResultHtmlFiles(val reportDir : File ) extends ReportFactory  {
   
   
   
-  def addView(link: String,viewProvider : ViewProvider)
+  def addView(link: String,viewProvider : ViewProvider[CONTEXT])
   {
     viewStack.push(viewProvider)
     

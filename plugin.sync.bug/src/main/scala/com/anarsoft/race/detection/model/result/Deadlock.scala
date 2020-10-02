@@ -8,7 +8,7 @@ import java.util.LinkedList
 
 
 
-case class Deadlock(val first : DeadlockPart, val second :  DeadlockPart)  extends   Equals with IssueModelElement  with IssueModelElementMonitor  {
+case class Deadlock(val first : DeadlockPart, val second :  DeadlockPart)  extends   Equals with IssueModelElement  {
   
   
    def titlePrefix() = "Deadlock:";
@@ -18,10 +18,7 @@ case class Deadlock(val first : DeadlockPart, val second :  DeadlockPart)  exten
       first.methodName(modelFacade) + "<->"  + second.methodName(modelFacade)
    }
   
-   def name(modelFacade : ModelFacadeMonitor)  =
-   {
-      first.methodName(modelFacade) + "<->"  + second.methodName(modelFacade)
-   }
+ 
    
    
     
@@ -30,22 +27,7 @@ case class Deadlock(val first : DeadlockPart, val second :  DeadlockPart)  exten
      
   def icon(modelFacade : ModelFacadeAll)  = IconRepository.DEADLOCK;
   
-  def icon(modelFacade : ModelFacadeMonitor)  = IconRepository.DEADLOCK;
-  
-  
-   def children( modelFacade : ModelFacadeMonitor)   =
-   {
-       val list = new ArrayBuffer[IssuePartElement]();
-
-       
-    
-       list.append(   first  );
-       list.append(   second );
-    
-
-          list;
-   }
-  
+ 
   
   
   def children( modelFacade : ModelFacadeAll)   =
@@ -87,13 +69,13 @@ case class Deadlock(val first : DeadlockPart, val second :  DeadlockPart)  exten
    def searchData(modelFacade : ModelFacadeAll) = None;
    
    
-    def searchData(modelFacade : ModelFacadeMonitor) = None;
+
     
   
    def title4Yaml(position : Int) = None;
   
    
-  def name4Yaml( modelFacade : ModelFacadeMonitor) =   "- deadlock: " + name(modelFacade);
+ 
    
   def name4Yaml( modelFacade : ModelFacadeAll) =   "- deadlock: " + name(modelFacade);
 }

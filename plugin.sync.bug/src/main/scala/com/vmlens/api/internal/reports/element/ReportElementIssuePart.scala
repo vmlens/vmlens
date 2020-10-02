@@ -7,7 +7,7 @@ import com.vmlens.api.internal.reports._
 
 
 
-class ReportElementIssuePart(val element : IssuePartElement, val modelFacade : ModelFacade) extends ReportElement  {
+class ReportElementIssuePart(val element : IssuePartElement, val modelFacade : ModelFacadeAll) extends ReportElement[ContextReport]  {
   
   
 

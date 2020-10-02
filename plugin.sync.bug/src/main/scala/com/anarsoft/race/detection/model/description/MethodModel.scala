@@ -37,8 +37,8 @@ trait MethodModel {
  
  def getLineNumber() : String;
  
- def isThreadSafe : Boolean;  
- def isStateless : Boolean;
+// def isThreadSafe : Boolean;  
+// def isStateless : Boolean;
  def except : Array[String];
  
  

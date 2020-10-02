@@ -2,7 +2,7 @@ package com.vmlens.api.internal.reports
 
 import com.vmlens.api.internal.reports.element.ReportText
 
-class LinkProvider(val prefix : String, val templateName : String, val context : ReportFactory) {
+class LinkProvider(val prefix : String, val templateName : String, val context : ReportFactory[ContextReport]) {
   
   
    context.addPrefix(prefix)
@@ -12,7 +12,7 @@ class LinkProvider(val prefix : String, val templateName : String, val context :
     
   
    
-   def createLink4Template( viewData : ViewData, rootOption : Option[String], useThisTemplateName : String) =
+   def createLink4Template( viewData : ViewData[ContextReport], rootOption : Option[String], useThisTemplateName : String) =
    {
      
        LOCK.synchronized
@@ -50,7 +50,7 @@ class LinkProvider(val prefix : String, val templateName : String, val context :
   
   
   
-    def createLink(  viewData : ViewData, rootOption : Option[String]) : Option[String]  =
+    def createLink(  viewData : ViewData[ContextReport], rootOption : Option[String]) : Option[String]  =
     {
       createLink4Template(viewData , rootOption , templateName);
     }

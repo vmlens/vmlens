@@ -15,40 +15,13 @@ object TransformModel2View {
       
   }
     
-    
-  def createIssues4Monitor( modelFacade : ModelFacadeMonitor  ) =
-  {
-      
-  modelFacade.deadlocks.map(   x =>   new ReportElementIssueMonitor( x , modelFacade ) )  
-    
-    
-    
-  }  
-    
-    
-    
- 
-  
   
   def transformAll(modelFacade :  ModelFacadeAll) =
   {
-    //  sortIssueList(
-    
+  
     val seq =   (modelFacade.races ++ modelFacade.deadlocks).toSeq;
   
-    
-   
-//      val  parallizedGroupList =   CreateParallizedReportAlgo.transform(modelFacade);
-      
-//     val lastRunList =  new ArrayBuffer[ReportElementLastRunAndCount]
-//      
-//      for(elem <- parallizeId2LastRun)
-//      {
-//        lastRunList.append( new ReportElementLastRunAndCount( runCount , elem. ) )
-//      }
-      
-    //  lastRunList.sortBy( x =>  x.sortBy()  )
-    
+ 
     val issues =   seq.map(  x =>   new ReportElementIssue(x,modelFacade ) ).sortBy( x => x.name   );
     
     var index = 0;

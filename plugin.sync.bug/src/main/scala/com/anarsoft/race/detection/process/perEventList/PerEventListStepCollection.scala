@@ -47,7 +47,7 @@ class PerEventListStepCollection( ) {
   val setMonitorInfo4NonVolatile =  new StepProcessPerEventListCollection[ContextSetMonitorInfo](classOf[ContextSetMonitorInfo]) 
   
   
-  val setMonitorInfo4Volatile =  new StepProcessPerEventListCollection[ContextSetMonitorInfo](classOf[ContextSetMonitorInfo]) 
+ // val setMonitorInfo4Volatile =  new StepProcessPerEventListCollection[ContextSetMonitorInfo](classOf[ContextSetMonitorInfo]) 
    
   
   

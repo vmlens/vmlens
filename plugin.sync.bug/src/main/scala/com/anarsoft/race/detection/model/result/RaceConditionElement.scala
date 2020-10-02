@@ -13,24 +13,24 @@ class RaceConditionElement(  val locationInClass : LocationInClass, val stackTra
 {
   
   
-   def searchData(modelFacade : ModelFacade) = None;
+   def searchData(ModelFacadeAll : ModelFacadeAll) = None;
   
-  def name(modelFacade : ModelFacade) =   modelFacade.threadNames.id2ThreadName.get(threadId).get  //getQualifiedFieldName(viewTyp.modelFacade.stackTraceGraph);
+  def name(ModelFacadeAll : ModelFacadeAll) =   ModelFacadeAll.threadNames.id2ThreadName.get(threadId).get  //getQualifiedFieldName(viewTyp.ModelFacadeAll.stackTraceGraph);
 
-    def nameWithHtml( modelFacade : ModelFacade) = "<!-- skipAtCompare --> " + name(modelFacade);
+    def nameWithHtml( ModelFacadeAll : ModelFacadeAll) = "<!-- skipAtCompare --> " + name(ModelFacadeAll);
 
-  def icon(modelFacade : ModelFacade)  = {
+  def icon(ModelFacadeAll : ModelFacadeAll)  = {
     
             IconRepository.getIconForOperation(  new  MemoryAccessType (operation))
   }
   
   
-    def children( modelFacade : ModelFacade)       =
+    def children( ModelFacadeAll : ModelFacadeAll)       =
   {
          val list = new ArrayBuffer[IssuePartElement]();
      
     
-     modelFacade.stackTraceGraph.formHereToRoot(stackTraceOrdinal ,
+     ModelFacadeAll.stackTraceGraph.formHereToRoot(stackTraceOrdinal ,
           
        s =>
          {
@@ -55,7 +55,7 @@ class RaceConditionElement(  val locationInClass : LocationInClass, val stackTra
     
     
     
-     def name4Yaml( modelFacade : ModelFacade) = "thread: " +  name(modelFacade);
+     def name4Yaml( ModelFacadeAll : ModelFacadeAll) = "thread: " +  name(ModelFacadeAll);
      def title4Yaml(position : Int) = Some(
          
      MemoryAccessType.getYaml(operation)

@@ -5,19 +5,19 @@ import com.vmlens.api.Icon
 
 trait IssuePartElement {
  
-  def nameWithHtml( modelFacade : ModelFacade) : String;
+  def nameWithHtml( ModelFacadeAll : ModelFacadeAll) : String;
   
-  def name( modelFacade : ModelFacade) : String;
-  def icon(modelFacade : ModelFacade)  : Icon;
+  def name( ModelFacadeAll : ModelFacadeAll) : String;
+  def icon(ModelFacadeAll : ModelFacadeAll)  : Icon;
   
-  def children( modelFacade : ModelFacade)        : Seq[IssuePartElement];
+  def children( ModelFacadeAll : ModelFacadeAll)        : Seq[IssuePartElement];
   
   
-  def name4Yaml( modelFacade : ModelFacade) : String;
+  def name4Yaml( ModelFacadeAll : ModelFacadeAll) : String;
   def title4Yaml(position : Int) : Option[String]
   
   
   
-    def searchData(modelFacade : ModelFacade) : Option[SearchData]
+    def searchData(ModelFacadeAll : ModelFacadeAll) : Option[SearchData]
   
 }

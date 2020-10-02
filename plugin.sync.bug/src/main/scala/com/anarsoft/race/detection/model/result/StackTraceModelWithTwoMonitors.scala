@@ -7,12 +7,12 @@ import org.apache.commons.lang.StringEscapeUtils
 
 class StackTraceModelWithTwoMonitors(val ordinal : StackTraceOrdinal,val parentMonitorId : Int,val childMonitorId : Int ) extends StackTraceModelAbstract {
   
-   def nameInternal(viewTyp : ModelFacade) = "<<" + parentMonitorId + " -> " + childMonitorId + ">> " + ordinal.name(viewTyp.stackTraceGraph) ;
+   def nameInternal(viewTyp : ModelFacadeAll) = "<<" + parentMonitorId + " -> " + childMonitorId + ">> " + ordinal.name(viewTyp.stackTraceGraph) ;
 
-  def icon(modelFacade : ModelFacade)  = IconRepository.MONITOR;
+  def icon(ModelFacadeAll : ModelFacadeAll)  = IconRepository.MONITOR;
   
-  def children( modelFacade : ModelFacade)  = Nil;
+  def children( ModelFacadeAll : ModelFacadeAll)  = Nil;
   
-  def nameWithHtmlInternal(viewTyp : ModelFacade) =  StringEscapeUtils.escapeHtml( "<<" + parentMonitorId + " -> " + childMonitorId + ">> " ) + ordinal.nameWithBoldName(viewTyp)  ; 
+  def nameWithHtmlInternal(viewTyp : ModelFacadeAll) =  StringEscapeUtils.escapeHtml( "<<" + parentMonitorId + " -> " + childMonitorId + ">> " ) + ordinal.nameWithBoldName(viewTyp)  ; 
 
 }

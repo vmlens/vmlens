@@ -57,8 +57,7 @@ class StackTraceElementModel(
     def getNameWithDescription()  =  methodName;
     
     
-     def isThreadSafe  = false;
- def isStateless = false;
+
  def except  = Array.ofDim[String](0);
     
     

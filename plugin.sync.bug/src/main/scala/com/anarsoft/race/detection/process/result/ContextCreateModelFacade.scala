@@ -10,7 +10,6 @@ import com.anarsoft.race.detection.model._;
 import com.anarsoft.race.detection.model.graph._;
 import com.anarsoft.race.detection.process.partialOrder.RaceConditionFoundException
 import java.util.ArrayList
-import com.anarsoft.race.detection.model.result.MethodWithSharedState
 import com.anarsoft.race.detection.process.nonVolatileField.NonVolatileFieldId
 
 //import com.anarsoft.race.detection.model.parallize.normalized.ParallizeIdAndStatementList

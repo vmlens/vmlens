@@ -71,8 +71,7 @@ case class MethodModelFromTrace( val methodName : String,
      def isStatic() =  ( access & Opcodes.ACC_STATIC  ) == Opcodes.ACC_STATIC
     
      
-      def isThreadSafe =   classModel.isThreadSafe;
- def isStateless  =   classModel.isStateless
+
  def except  =   classModel.except
   
  

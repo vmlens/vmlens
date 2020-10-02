@@ -8,7 +8,7 @@ import scala.collection.mutable.HashMap
 
 abstract class CallView2X[RESULT] {
   
-  def call(viewResult : ViewResult[ReportElement], reportDir : File, elementTemplate : String, elementDetailTemplate : String , elementTitle : String, noElementsTemplate : String ) : RESULT;
+  def call(viewResult : ViewResult[ReportElement[ContextReport]], reportDir : File, elementTemplate : String, elementDetailTemplate : String , elementTitle : String, noElementsTemplate : String ) : RESULT;
   
   
   def templateAll(modelFacade : ModelFacadeAll, reportDir : File) =

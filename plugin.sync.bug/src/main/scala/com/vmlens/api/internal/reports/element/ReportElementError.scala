@@ -4,7 +4,7 @@ import com.vmlens.api.internal.reports._
 import scala.collection.mutable.ArrayBuffer
 
 
-class ReportElementError(val exception : Throwable) extends ReportElement  {
+class ReportElementError(val exception : Throwable) extends ReportElement[ContextReport]  {
   
   
   def name() = exception.toString();

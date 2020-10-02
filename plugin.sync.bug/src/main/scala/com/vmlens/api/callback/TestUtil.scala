@@ -2,8 +2,9 @@ package com.vmlens.api.callback
 
 import java.io._;
 import org.apache.commons.io._;
-import  com.anarsoft.race.detection.model.result.ModelFacade
 import com.anarsoft.config.MavenMojo
+import com.anarsoft.race.detection.model.result.ModelFacadeAll
+
 
 object TestUtil {
   
@@ -17,7 +18,7 @@ object TestUtil {
   
     
     
-    def printAgentLog(modelFacade : ModelFacade)
+    def printAgentLog(modelFacade : ModelFacadeAll)
     {
       for( m <- modelFacade.agentLog )
       {

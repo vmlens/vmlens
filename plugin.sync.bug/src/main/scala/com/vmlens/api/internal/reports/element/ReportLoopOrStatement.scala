@@ -5,7 +5,7 @@ import com.anarsoft.race.detection.process.interleave.InterleaveEventStatement
 import com.anarsoft.race.detection.process.interleave.StatementLoop
 import com.anarsoft.race.detection.model.result.ModelFacadeAll
 
-class ReportLoopOrStatement(val loop : Option[ReportLoop] , val statement : Option[ReportStatementBlock]) extends ReportElement {
+class ReportLoopOrStatement(val loop : Option[ReportLoop] , val statement : Option[ReportStatementBlock]) extends ReportElement[ContextReport] {
   
     def initialize( contextReport : ContextReport ) 
     {

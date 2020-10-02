@@ -5,7 +5,7 @@ import com.vmlens.api.internal.reports.ReportElement
 
 
 
-class  ReportElementList(val name : String, val issues : Seq[ReportElement]) extends ReportElement  {
+class  ReportElementList(val name : String, val issues : Seq[ReportElement[ContextReport]]) extends ReportElement[ContextReport]  {
   
   
   def hasElements() = ! issues.isEmpty

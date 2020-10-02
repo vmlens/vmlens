@@ -18,10 +18,10 @@ import io.Codec
 object CompileTemplateFiles {
   
   
-  def compileAll(pathPrefix : String)
+  def compileAll(pathPrefix : String, srcDir : String )
   {
   
-    val dir = new File( pathPrefix + "templates" );
+    val dir = new File( pathPrefix + "templates");
     
     
     for( file <- dir.listFiles() )
@@ -32,7 +32,7 @@ object CompileTemplateFiles {
         
         val classFile = temp.charAt(0).toUpper + temp.substring(1);
         
-        compile(pathPrefix , file , classFile);
+        compile(pathPrefix , file , classFile , srcDir );
         
       }
     }
@@ -43,7 +43,7 @@ object CompileTemplateFiles {
   
   
   
-  def compile( pathPrefix : String , templateFile : File, classFile : String )
+  def compile( pathPrefix : String , templateFile : File, classFile : String , srcDir : String )
   {
     val templateIndex = new FileInputStream(  templateFile );
        val templateTextIndex  = IOUtils.toString(templateIndex)
@@ -57,8 +57,8 @@ object CompileTemplateFiles {
        val code =   engine.generateScala(new StringTemplateSource( "templates/" + templateFile.getName , templateTextIndex ))
    
        
-       val path = pathPrefix + "src/main/scala/com/vmlens/api/internal/reports/gen/";
-       
+       val path = pathPrefix + srcDir; // "src/main/scala/com/vmlens/api/internal/reports/gen/";
+      
        
        val writer = new PrintStream(path + classFile);
        
@@ -68,13 +68,13 @@ object CompileTemplateFiles {
   }
   
   
-  def main( args : Array[String])
-  {
-     
-//       compile( "" ,  "templates/htmlIndex.mustache"  , "HtmlIndex.scala");
-//        compile( "", "templates/htmlIssue.mustache"  , "HtmlIssue.scala");
-    compileAll("");
-  }
+//  def main( args : Array[String])
+//  {
+//     
+////       compile( "" ,  "templates/htmlIndex.mustache"  , "HtmlIndex.scala");
+////        compile( "", "templates/htmlIssue.mustache"  , "HtmlIssue.scala");
+//    compileAll("");
+//  }
   
   
 }

@@ -4,21 +4,21 @@ abstract class StackTraceModelAbstract extends IssuePartElement  {
  
    def  ordinal : StackTraceOrdinal;
   
-    def name(viewTyp : ModelFacade)  = nameInternal(viewTyp) + ordinal.lineNumber(viewTyp.stackTraceGraph);
+    def name(viewTyp : ModelFacadeAll)  = nameInternal(viewTyp) + ordinal.lineNumber(viewTyp.stackTraceGraph);
     
-     def nameWithHtml(viewTyp : ModelFacade)  = nameWithHtmlInternal(viewTyp) + ordinal.lineNumber(viewTyp.stackTraceGraph);
+     def nameWithHtml(viewTyp : ModelFacadeAll)  = nameWithHtmlInternal(viewTyp) + ordinal.lineNumber(viewTyp.stackTraceGraph);
     
-     def nameWithHtmlInternal(viewTyp : ModelFacade) : String
+     def nameWithHtmlInternal(viewTyp : ModelFacadeAll) : String
    
-     def nameInternal(viewTyp : ModelFacade)  : String;
+     def nameInternal(viewTyp : ModelFacadeAll)  : String;
   
-    def searchData(modelFacade : ModelFacade)  =
+    def searchData(ModelFacadeAll : ModelFacadeAll)  =
     {
-      modelFacade.stackTraceGraph.getMethodModelForStackTraceNodeOrdinal(ordinal).searchData();
+      ModelFacadeAll.stackTraceGraph.getMethodModelForStackTraceNodeOrdinal(ordinal).searchData();
     }
     
     
-       def name4Yaml( modelFacade : ModelFacade) =   "- " + name(modelFacade);
+       def name4Yaml( ModelFacadeAll : ModelFacadeAll) =   "- " + name(ModelFacadeAll);
      def title4Yaml(position : Int) = None;
     
   

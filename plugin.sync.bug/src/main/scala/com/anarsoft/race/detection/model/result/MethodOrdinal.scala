@@ -14,7 +14,7 @@ import com.vmlens.api.MethodDescription
 
 class MethodOrdinal(val ordinal : Int) extends Equals   {
 
-  def fullName(viewTyp : ModelFacade) = 
+  def fullName(viewTyp : ModelFacadeAll) = 
     {
        val model = viewTyp.stackTraceGraph.getMethodModelForOrdinal(ordinal); 
        

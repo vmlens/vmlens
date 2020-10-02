@@ -1,6 +1,6 @@
 package com.vmlens.api.internal.reports
 
-class ContextReportBuilder(val reportBuilder : ReportFactory,val sharedDetailTemplate : String, val titleIndex: String, val titleElements: String) {
+class ContextReportBuilder(val reportBuilder : ReportFactory[ContextReport],val sharedDetailTemplate : String, val titleIndex: String, val titleElements: String) {
   
   val fileNameElements = "elements.html";
   

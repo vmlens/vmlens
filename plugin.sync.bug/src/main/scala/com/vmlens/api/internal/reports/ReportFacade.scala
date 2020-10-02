@@ -26,7 +26,7 @@ object ReportFacade {
   
   val callOffline = new CallView2X[Unit]()
   {
-    def  call(viewResult : ViewResult[ReportElement], reportDir : File, elementTemplate : String, elementDetailTemplate : String , elementTitle : String, noElementsTemplate : String) =
+    def  call(viewResult : ViewResult[ReportElement[ContextReport]], reportDir : File, elementTemplate : String, elementDetailTemplate : String , elementTitle : String, noElementsTemplate : String) =
     {
        View2X.save2File( viewResult, reportDir , elementTemplate, elementDetailTemplate, elementTitle  , noElementsTemplate )
     }
@@ -37,7 +37,7 @@ object ReportFacade {
   
   val callOnline = new  CallView2X[ResultHtmlOnline]()
   {
-    def  call(viewResult : ViewResult[ReportElement], reportDir : File, elementTemplate : String, elementDetailTemplate : String , elementTitle : String, noElementsTemplate : String) =
+    def  call(viewResult : ViewResult[ReportElement[ContextReport]], reportDir : File, elementTemplate : String, elementDetailTemplate : String , elementTitle : String, noElementsTemplate : String) =
     {
       // (viewResult : ViewResult[ReportElement], elementTemplate : String, elementDetailTemplate : String , elementTitle : String , elementFileName : String , titleIndex : String) 
       
@@ -91,7 +91,7 @@ object ReportFacade {
             val context = contextReportBuilder.createContext(true,false,true);
            
             
-         val issues = new ArrayBuffer[ReportElement]   
+         val issues = new ArrayBuffer[ReportElement[ContextReport]]   
             
          issues.append( new ReportElementError(throwable) );
             

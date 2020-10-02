@@ -10,14 +10,14 @@ import com.vmlens.api.internal._
 case class DeadlockPart( val parent : StackTraceOrdinalAndMonitor , val child : StackTraceOrdinalAndMonitor,val threadId : Long) extends  IssuePartElement 
 {
   
-     def searchData(modelFacade : ModelFacade) = None;
+     def searchData(ModelFacadeAll : ModelFacadeAll) = None;
   
   
      def showDetailsInOverview() = false;
   
-  def methodName(modelFacade : ModelFacade) = parent.ordinal.name(modelFacade.stackTraceGraph);
+  def methodName(ModelFacadeAll : ModelFacadeAll) = parent.ordinal.name(ModelFacadeAll.stackTraceGraph);
   
-//   def getMonitorName(modelFacade : ModelFacade) = MonitorAccess.getName(modelFacade, parent.monitorAggregateOrdinal);
+//   def getMonitorName(ModelFacadeAll : ModelFacadeAll) = MonitorAccess.getName(ModelFacadeAll, parent.monitorAggregateOrdinal);
 //  
 //  def getMethodNameAndPosition(stackTraceGraph : StackTraceGraph,monitorFacade : MonitorFacade) = 
 //    MonitorAccess.getMethodNameAndPosition(stackTraceGraph, monitorFacade,  parent.monitorAggregateOrdinal)
@@ -26,20 +26,20 @@ case class DeadlockPart( val parent : StackTraceOrdinalAndMonitor , val child : 
  
    
   
-   def name(modelFacade : ModelFacade) = 
-   modelFacade.threadNames.getThreadName(threadId)
+   def name(ModelFacadeAll : ModelFacadeAll) = 
+   ModelFacadeAll.threadNames.getThreadName(threadId)
  
-     def nameWithHtml( modelFacade : ModelFacade) = "<!-- skipAtCompare --> " + name(modelFacade);
+     def nameWithHtml( ModelFacadeAll : ModelFacadeAll) = "<!-- skipAtCompare --> " + name(ModelFacadeAll);
    
    
-  def icon(modelFacade : ModelFacade)  = IconRepository.MONITOR_IN_THREAD
+  def icon(ModelFacadeAll : ModelFacadeAll)  = IconRepository.MONITOR_IN_THREAD
   
-  def children( modelFacade : ModelFacade)       =
+  def children( ModelFacadeAll : ModelFacadeAll)       =
   {
          val list = new ArrayBuffer[IssuePartElement]();
      
     
-     modelFacade.stackTraceGraph.formHereToRoot(child.ordinal ,
+     ModelFacadeAll.stackTraceGraph.formHereToRoot(child.ordinal ,
           
        s =>
          {
@@ -73,7 +73,7 @@ case class DeadlockPart( val parent : StackTraceOrdinalAndMonitor , val child : 
    
    
     
-     def name4Yaml( modelFacade : ModelFacade) = "thread: " +  name(modelFacade);
+     def name4Yaml( ModelFacadeAll : ModelFacadeAll) = "thread: " +  name(ModelFacadeAll);
      def title4Yaml(position : Int) = Some(
          
        if( position == 0  )

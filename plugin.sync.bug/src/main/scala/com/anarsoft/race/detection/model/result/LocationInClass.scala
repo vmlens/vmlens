@@ -12,7 +12,7 @@ abstract sealed class LocationInClass {
   def isStatic   : Boolean;
   
   
-  def toSharedState( modelFacade : ModelFacadeState , aggregateId : Int ) : Option[SharedState];
+ 
   
   
    def getNameWithBold(facade : FieldAndArrayPerMethodFacade,stackTraceGraph : StackTraceGraph)  : String;
@@ -110,25 +110,6 @@ case class FieldInClass(val ordinal : Int, val isVolatile : Boolean, val isStati
   
   
   
-  def toSharedState( modelFacade : ModelFacadeState , aggregateId : Int)=  
-    {
-    
-     val fieldModel = modelFacade.fieldAndArrayFacade.fieldOrdinal2FieldModelDesc(ordinal);
-    
-    if( fieldModel == null )
-    {
-      None;
-    }
-    else
-    {
-       Some(SharedStateFieldAccess(   fieldModel , isVolatile , isStatic , Set(aggregateId)));
-    }
-    
-    
-    
-   
-    }
-  
   
   
   
@@ -189,33 +170,7 @@ case class ArrayInClass(val arrayLocationId : Int,val classOrdinal : Int) extend
   
   
   
-  
-    def toSharedState( modelFacade : ModelFacadeState , aggregateId : Int)=  
-    {
-      val model = modelFacade.fieldAndArrayFacade.getArrayModel(arrayLocationId)
-      val method = model.getMinMethodOrdinalAndPosition(modelFacade.stackTraceGraph);
-      
-      method match
-      {
-        case None =>
-          {
-            None
-          }
-        
-        case Some(x) =>
-          {
-             Some( SharedStateArrayAccess(    modelFacade.fieldAndArrayFacade.getClassName(classOrdinal)  ,   
-               modelFacade.fieldAndArrayFacade.getClassName(classOrdinal)   ,  Set(aggregateId)) );
-          }
-        
-        
-        
-      }
-      
-      
-      
-    }
-  
+
   
   
   
@@ -288,8 +243,6 @@ case class ClassAccess(val ordinal : Int ) extends LocationInClass
    def isVolatile = false;
   def isStatic   = false;
   
-  
-    def toSharedState( modelFacade : ModelFacadeState , aggregateId : Int)=   Some(new SharedStateClassAccess(   modelFacade.fieldAndArrayFacade.getClassName(ordinal)  ,  Set(aggregateId)))
   
 
 }

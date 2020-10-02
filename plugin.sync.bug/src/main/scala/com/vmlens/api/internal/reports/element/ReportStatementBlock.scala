@@ -12,7 +12,7 @@ val atomicMethod : Option[ReportAtomicMethod] , val callbackMethod : Option[Repo
  */
 
 
-class ReportStatementBlock(val element : InterleaveEventStatement, val modelFacade : ModelFacadeAll ,val context : ContextLastRun) extends ReportElement {
+class ReportStatementBlock(val element : InterleaveEventStatement, val modelFacade : ModelFacadeAll ,val context : ContextLastRun) extends ReportElement[ContextReport] {
   
   
    def objectId  = element.objectId

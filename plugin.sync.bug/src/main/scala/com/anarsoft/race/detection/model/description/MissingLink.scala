@@ -38,8 +38,7 @@ class MissingLink extends MethodModel {
     
     
     
- def isThreadSafe  = false;
- def isStateless = false;
+
  def except  = Array.ofDim[String](0);
     
     

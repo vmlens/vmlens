@@ -6,13 +6,13 @@ import org.apache.commons.lang.StringEscapeUtils
 
 class StackTraceModelWithOneMonitor(val ordinal : StackTraceOrdinal,val monitorId : Int )  extends StackTraceModelAbstract  {
   
-    def nameInternal(viewTyp : ModelFacade) = "<<" + monitorId + ">> " +  ordinal.name(viewTyp.stackTraceGraph) ;
+    def nameInternal(viewTyp : ModelFacadeAll) = "<<" + monitorId + ">> " +  ordinal.name(viewTyp.stackTraceGraph) ;
 
-  def icon(modelFacade : ModelFacade)  = IconRepository.MONITOR;
+  def icon(ModelFacadeAll : ModelFacadeAll)  = IconRepository.MONITOR;
   
-  def children( modelFacade : ModelFacade)  = Nil;
+  def children( ModelFacadeAll : ModelFacadeAll)  = Nil;
   
    
-  def nameWithHtmlInternal(viewTyp : ModelFacade) = StringEscapeUtils.escapeHtml( "<<" + monitorId + ">> " ) + ordinal.nameWithBoldName(viewTyp)  ;
+  def nameWithHtmlInternal(viewTyp : ModelFacadeAll) = StringEscapeUtils.escapeHtml( "<<" + monitorId + ">> " ) + ordinal.nameWithBoldName(viewTyp)  ;
 
 }

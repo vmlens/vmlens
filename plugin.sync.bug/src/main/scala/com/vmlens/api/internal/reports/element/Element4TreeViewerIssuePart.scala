@@ -8,21 +8,21 @@ import scala.collection.mutable.ArrayBuffer
 
 
 
-class Element4TreeViewerIssuePart(val element : IssuePartElement,val parent :  Element4TreeViewer , val modelFacade : ModelFacade)  extends  Element4TreeViewer
+class Element4TreeViewerIssuePart(val element : IssuePartElement,val parent :  Element4TreeViewer , val ModelFacadeAll : ModelFacadeAll)  extends  Element4TreeViewer
 {
   
-   def getChildrens()  =  null; // element.children(modelFacade).map(  x =>  new Element4TreeViewerIssuePart(x,this,modelFacade)   ).toArray[Object]
+   def getChildrens()  =  null; // element.children(ModelFacadeAll).map(  x =>  new Element4TreeViewerIssuePart(x,this,ModelFacadeAll)   ).toArray[Object]
   
 
    
-  def hasChildren() =  false; //  ! element.children(modelFacade).isEmpty
+  def hasChildren() =  false; //  ! element.children(ModelFacadeAll).isEmpty
     
   
   
   
   def getParent() = parent;
  
-  def getText() =  element.name(modelFacade)
+  def getText() =  element.name(ModelFacadeAll)
  
   
   /**
@@ -31,22 +31,22 @@ class Element4TreeViewerIssuePart(val element : IssuePartElement,val parent :  E
    * 
    */
   
-  def getIcon() = element.icon(modelFacade)
+  def getIcon() = element.icon(ModelFacadeAll)
   
   
-  def searchData() = element.searchData(modelFacade);
+  def searchData() = element.searchData(ModelFacadeAll);
   
   
   def children4Yaml() =
    {
      
-      element.children(modelFacade) .map(  x =>   new Element4TreeViewerIssuePart(x , this ,  modelFacade )   )
+      element.children(ModelFacadeAll) .map(  x =>   new Element4TreeViewerIssuePart(x , this ,  ModelFacadeAll )   )
      
      
    }
    
   
-         def name4Yaml() =    element.name4Yaml(modelFacade) 
+         def name4Yaml() =    element.name4Yaml(ModelFacadeAll) 
   
        
        def title4Yaml(position : Int) =    element.title4Yaml(position) 

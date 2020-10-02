@@ -7,7 +7,7 @@ import com.anarsoft.race.detection.model.result._
 import com.vmlens.api.internal.IconRepository
 
 
-class ReportMethodCallOrRace(val event : MethodCallOrRace, val modelFacade : ModelFacadeAll , val  space : Int) extends ReportElement {
+class ReportMethodCallOrRace(val event : MethodCallOrRace, val modelFacade : ModelFacadeAll , val  space : Int) extends ReportElement[ContextReport] {
   
    def name() = event.name(modelFacade)
  

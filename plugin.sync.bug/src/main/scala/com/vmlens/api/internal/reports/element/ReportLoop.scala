@@ -6,7 +6,7 @@ import scala.collection.mutable.ArrayBuffer
 import com.anarsoft.race.detection.process.interleave.StatementLoop
 
 
-class ReportLoop(val loopCount : Int, val  list : List[ReportStatementBlockInLoop]) extends ReportElement  {
+class ReportLoop(val loopCount : Int, val  list : List[ReportStatementBlockInLoop]) extends ReportElement[ContextReport]  {
   
   
    def trStyle() = 

@@ -10,11 +10,11 @@ import com.vmlens.api.Icon
 import com.vmlens.api.internal.IconRepository
 
 
-trait ReportElement {
+trait ReportElement[CONTEXT] {
   
   
 
-  def initialize( contextReport : ContextReport );
+  def initialize( contextReport : CONTEXT );
   def imagePath(icon: Icon) = IconRepository.imagePath(icon);
   
   

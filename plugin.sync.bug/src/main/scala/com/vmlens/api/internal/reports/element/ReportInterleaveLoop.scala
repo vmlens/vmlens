@@ -7,7 +7,7 @@ import com.vmlens.api.internal.reports._
 import com.vmlens.api.MemoryAccessType
 import com.vmlens.api.internal.reports.CreateParallizedReportAlgo
 
-class ReportInterleaveLoop(val nameInternal: String, val result: LoopResult, val modelFacade: ModelFacadeAll) extends ReportElement {
+class ReportInterleaveLoop(val nameInternal: String, val result: LoopResult, val modelFacade: ModelFacadeAll) extends ReportElement[ContextReport] {
 
   def name = Model2View.makeBreakable(nameInternal)
   
