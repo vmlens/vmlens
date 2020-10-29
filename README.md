@@ -98,7 +98,7 @@ To run the test with maven put the vmlens interleave plugin in your maven pom.xm
 	<li>Work with:<strong> https://vmlens.com/download/site/</strong></li>
 </ol>
 
-To use the class AllInterleavings you need to include the jar api-1.0.15.jar into your classpath. You can download this jar from [maven central here](https://search.maven.org/remotecontent?filepath=com/vmlens/api/1.0.15/api-1.0.15.jar).
+To use the class AllInterleavings you need to include the jar api-1.1.0.jar into your classpath. You can download this jar from [maven central here](https://search.maven.org/remotecontent?filepath=com/vmlens/api/1.1.0/api-1.1.0.jar).
 
 The usage of the eclipse plugin [is described here.](https://vmlens.com/help/manual/#run-eclipse)
 
@@ -113,7 +113,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
 <dependency>
   <groupId>com.vmlens</groupId>
   <artifactId>api</artifactId>
-  <version>1.0.15</version>
+  <version>1.1.0</version>
   <scope>test</scope>
 </dependency>	
 	
@@ -123,7 +123,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
     <plugin>
     <groupId>com.vmlens</groupId>
     <artifactId>interleave</artifactId>
-    <version>1.0.15</version>
+    <version>1.1.0</version>
     <executions>
       <execution>
         <goals>
