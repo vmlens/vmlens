@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallize.operation.Operation;
 
 
 

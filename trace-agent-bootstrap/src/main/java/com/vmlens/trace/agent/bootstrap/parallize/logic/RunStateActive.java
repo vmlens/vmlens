@@ -16,7 +16,6 @@ import com.vmlens.trace.agent.bootstrap.parallize.FutureTask2ThreadId;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeSingelton;
 import com.vmlens.trace.agent.bootstrap.parallize.logicState.BeginNewThreadResult;
-import com.vmlens.trace.agent.bootstrap.parallize.operation.Operation;
 
 public class RunStateActive implements RunState {
 

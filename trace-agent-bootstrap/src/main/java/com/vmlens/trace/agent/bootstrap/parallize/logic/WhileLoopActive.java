@@ -3,16 +3,11 @@ package com.vmlens.trace.agent.bootstrap.parallize.logic;
 
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
-import com.vmlens.trace.agent.bootstrap.event.AgentLogEvent;
 import com.vmlens.trace.agent.bootstrap.event.NewSlidingWindowId;
 import com.vmlens.trace.agent.bootstrap.event.WhileLoopNameEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.InterleaveFacade;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
-import com.vmlens.trace.agent.bootstrap.parallize.logicState.DecisionQueue;
-import com.vmlens.trace.agent.bootstrap.parallize.logicState.DecisionStack;
 import com.vmlens.trace.agent.bootstrap.util.LoopResultStatusCodes;
 
 import gnu.trove.set.hash.TIntHashSet;

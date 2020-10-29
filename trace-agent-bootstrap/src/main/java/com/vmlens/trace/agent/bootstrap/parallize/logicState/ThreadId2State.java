@@ -9,8 +9,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.ThreadJoin;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
-import com.vmlens.trace.agent.bootstrap.parallize.operation.Operation;
-
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.map.hash.TIntLongHashMap;
 import gnu.trove.map.hash.TLongIntHashMap;
@@ -313,12 +311,7 @@ public class ThreadId2State {
 
 	}
 
-	public Decision getExisting(long threadId, Operation operation) {
-		if (!map.contains(threadId)) {
-			return null;
-		}
-		return map.get(threadId).loopDetection.getExisting(operation, size());
-	}
+
 
 	int activeThreadCount() {
 		return map.size();
@@ -373,14 +366,7 @@ public class ThreadId2State {
 		}
 	}
 
-	public void setDecision4Loop(long threadId, Operation operation, Decision decision) {
-		if (!map.contains(threadId)) {
-			return;
-		}
 
-		map.get(threadId).loopDetection.setDecision(operation, decision);
-
-	}
 
 	void setTimeout(long activeThreadId) {
 		// TODO Auto-generated method stub

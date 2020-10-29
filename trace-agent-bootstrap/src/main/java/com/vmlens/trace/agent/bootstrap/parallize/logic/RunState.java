@@ -4,7 +4,6 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
 import com.vmlens.trace.agent.bootstrap.parallize.logicState.BeginNewThreadResult;
-import com.vmlens.trace.agent.bootstrap.parallize.operation.Operation;
 
 public interface RunState {
 

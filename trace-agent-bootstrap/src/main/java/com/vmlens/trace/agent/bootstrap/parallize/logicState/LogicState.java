@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.parallize.logicState;
 
 
 import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallize.operation.Operation;
 
 
 

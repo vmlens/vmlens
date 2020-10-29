@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.parallize.logicState;
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallize.operation.Operation;
 
 public class LogicStateManyThreads extends LogicStateProcessing {
 

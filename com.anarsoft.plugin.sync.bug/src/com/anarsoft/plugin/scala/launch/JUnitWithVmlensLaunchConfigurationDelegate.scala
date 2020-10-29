@@ -34,15 +34,11 @@ import com.vmlens.api.internal.reports.CreateParallizedReportAlgo
 import scala.collection.mutable.HashMap
 import org.eclipse.jdt.junit.JUnitCore
 
-
 class JUnitWithVmlensLaunchConfigurationDelegate extends JUnitLaunchConfigurationDelegate {
 
   def showResult(data: ReportData4Plugin) {
     Activator.plugin.viewManager.update(data);
   }
-
- 
- 
 
   override def launch(configuration: ILaunchConfiguration, mode: String, launch: ILaunch, monitor: IProgressMonitor) {
 
@@ -63,87 +59,48 @@ class JUnitWithVmlensLaunchConfigurationDelegate extends JUnitLaunchConfiguratio
     val waitPointFile = new File(source + "/parallize.info");
     Files.deleteIfExists(waitPointFile.toPath());
 
-
     var currentLaunch = launch;
-    
+
     val errorTestRunListener = new ErrorTestRunListener();
-    
+
     JUnitCore.addTestRunListener(errorTestRunListener)
-    
 
-    
-      val processDataAndResult = new ProcessDataAndResult()
-      EclipsePluginController.queue.put(processDataAndResult);
+    val processDataAndResult = new ProcessDataAndResult()
+    EclipsePluginController.queue.put(processDataAndResult);
 
-      val junitLaunchDelegate = new JUnitLaunchConfigurationDelegate();
+    val junitLaunchDelegate = new JUnitLaunchConfigurationDelegate();
 
-      processDataAndResult.waitTillReceived();
+    processDataAndResult.waitTillReceived();
 
-      junitLaunchDelegate.launch(copy, mode, currentLaunch, monitor);
+    junitLaunchDelegate.launch(copy, mode, currentLaunch, monitor);
 
-      //super.launch(  copy , mode, launch, monitor);
+    //super.launch(  copy , mode, launch, monitor);
 
-      
+    processDataAndResult.result.take() match {
+      case Left(modelFacade) =>
+        {
 
-      processDataAndResult.result.take() match {
-        case Left(modelFacade) =>
-          {
-            modelFacade match {
-              case m: ModelFacadeMonitor =>
-                {
-                  showResult(ReportFacade.createReportData4Plugin(m));
-                
-                }
+          showResult(ReportFacade.createReportData4Plugin(modelFacade));
 
-              case m: ModelFacadeState =>
-                {
-                  showResult(ReportFacade.createReportData4Plugin(m));
-                 
-                }
+        }
 
-              case m: ModelFacadeAll =>
-                {
-             
+      case Right(exp) =>
+        {
+          showResult(ReportFacade.createExceptionReport4Plugin(exp));
 
-                 
-//                  if (m.hasIssues()   ||  errorTestRunListener.hasErrors  ) {
-//                    showResult(ReportFacade.createReportData4Plugin(m));
-//          
-//                  } else {
-                 
-                      showResult(ReportFacade.createReportData4Plugin(m));
-                     
-                    
+        }
 
-                  
+    }
 
-                }
+    errorTestRunListener.hasErrors = false;
 
-            }
-          }
+    currentLaunch = new Launch(configuration, mode, launch.getSourceLocator);
 
-        case Right(exp) =>
-          {
-            showResult(ReportFacade.createExceptionReport4Plugin(exp));
-    
-          }
+    Activator.plugin.debug("launchCreated " + currentLaunch)
 
-      }
-   
-        
-        errorTestRunListener.hasErrors = false;
-        
-        
-        currentLaunch = new Launch(configuration, mode, launch.getSourceLocator);
+    DebugPlugin.getDefault().getLaunchManager().addLaunch(currentLaunch)
 
-        Activator.plugin.debug("launchCreated " + currentLaunch)
-
-        DebugPlugin.getDefault().getLaunchManager().addLaunch(currentLaunch)
-      
-
-    
-    
-       JUnitCore.removeTestRunListener(errorTestRunListener)
+    JUnitCore.removeTestRunListener(errorTestRunListener)
 
   }
 
