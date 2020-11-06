@@ -10,7 +10,7 @@ import com.anarsoft.race.detection.process.setStacktraceOrdinal.EventSetStacktra
 import com.anarsoft.race.detection.model.result._
 import com.vmlens.api.internal.reports.element._;
 import  com.anarsoft.race.detection.model.method.StackTraceOrdinalAndMethodId
-import com.vmlens.api.internal.IconRepository
+
 
 trait MonitorEvent extends SyncPointGeneric[Int] with Event4MonitorRelation with EventSetStacktraceOrdinal   {
  
@@ -49,15 +49,7 @@ def setStackTraceOrdinal(in: StackTraceOrdinalAndMethodId)
   
   
   
-   def icon()  = 
-        if(isMonitorEnter())
-        {
-           IconRepository.MONITOR_ENTER
-        }
-        else
-        {
-          IconRepository.MONITOR_EXIT
-        }
+   
         
   
    /*

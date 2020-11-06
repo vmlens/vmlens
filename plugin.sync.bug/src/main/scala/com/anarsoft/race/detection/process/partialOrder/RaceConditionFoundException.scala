@@ -7,6 +7,13 @@ import com.anarsoft.race.detection.process.detectRaceConditions._
 class RaceConditionFoundException(val read : EventWrapperDetectRaceConditions , val write : EventWrapperDetectRaceConditions) extends Exception{
  
   
+   def take()
+   {
+     read.raceTaken = true;
+     write.raceTaken = true;
+   }
+  
+  
   override def toString() = read + " \n" + write;
   
  

@@ -19,5 +19,5 @@ trait ContextSchedulerRead {
     def interleaveEventList : InterleaveEventList;
     var schedulerEventStreams  :  StreamAndStreamStatistic[SchedulerEvent]  = null;
   
-  
+   
 }

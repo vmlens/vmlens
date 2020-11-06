@@ -18,6 +18,7 @@ import com.anarsoft.race.detection.process.monitor.ContextMonitor
 import com.anarsoft.race.detection.process.partialOrder.ContextCreatePartialOrder
 import com.anarsoft.race.detection.process.interleave.InterleaveEventList
 
+
 trait ContextProcessSyncAction extends ContextVolatileField  with ContextMonitor  with ContextCreatePartialOrder {
   
   
@@ -38,7 +39,7 @@ trait ContextProcessSyncAction extends ContextVolatileField  with ContextMonitor
     var volatileAccessEventStatic : ArrayList[VolatileAccessEventStatic] = null; 
     
     
-   
+  
     def methodFlow : MethodFlow;
     def stackTraceTree : StackTraceTree; 
     def threadNames : ThreadNames;

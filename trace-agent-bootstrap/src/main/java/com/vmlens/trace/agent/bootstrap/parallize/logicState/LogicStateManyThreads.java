@@ -21,9 +21,9 @@ public class LogicStateManyThreads extends LogicStateProcessing {
 	@Override
 	public LogicState calculateActive(ThreadId2State threadId2State, long currentTime, long forThreadId,int runId) {
 		
-		if( !  threadId2State.isActive(activeThreadId) )
+		if( !  threadId2State.isActive(activeThreadId, this , runId) )
 		{
-				AgentLogCallback.logTimeoutWarning(threadId2State , this , runId );
+			
 			
 				
 				threadId2State.setTimeout( activeThreadId );
@@ -67,7 +67,7 @@ public class LogicStateManyThreads extends LogicStateProcessing {
 
 	@Override
 	public String toString() {
-		return "LogicStateNotWaiting [activeThreadId=" + activeThreadId + ", lastUpdated=" + lastUpdated + "]";
+		return "LogicStateManyThreads [activeThreadId=" + activeThreadId + ", lastUpdated=" + lastUpdated + "]";
 	}
 
 	@Override

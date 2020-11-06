@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallize.logic;
 
 import com.vmlens.api.AllInterleavings;
+import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
@@ -21,15 +22,20 @@ public class RunEntity {
 		this.allInterleavings = allInterleavings;
 	}
 
-	public void stop(CallbackStatePerThread callbackStatePerThread) {
+	public void stop(CallbackStatePerThread callbackStatePerThread,WhileLoop whileLoop) {
 		
-		runState.stop(callbackStatePerThread);
+		if( whileLoop.loopId() ==  runState.loopId())
+		{
+			runState.stop(callbackStatePerThread);
+			
 		
+			
+			runState.sendStopEvent(callbackStatePerThread);
+			
+			runState= new RunStateStopped();
+		}
 		
-		
-		runState.sendStopEvent(callbackStatePerThread);
-		
-		runState= new RunStateStopped();
+	
 		
 	}
 

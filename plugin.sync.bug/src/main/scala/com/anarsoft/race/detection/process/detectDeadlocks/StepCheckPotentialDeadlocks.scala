@@ -24,7 +24,7 @@ class StepCheckPotentialDeadlocks extends   SingleStep[ContextDetectDeadlocks] {
        
        if(  currentAlgo.higherMonitor !=  current.potentialDeadlockAsKey.higherMonitorId ||  currentAlgo.lowerMonitor !=  current.potentialDeadlockAsKey.lowerMonitorId   )
        {
-             currentAlgo.addDeadlocks2Set(context.deadlocks);
+             currentAlgo.addDeadlocks2Set(context.deadlocks, context.deadlockFilter);
              currentAlgo = new  CheckPotentialDeadlocksAlgo( current.potentialDeadlockAsKey.higherMonitorId  ,  current.potentialDeadlockAsKey.lowerMonitorId  )
        }
       
@@ -36,7 +36,7 @@ class StepCheckPotentialDeadlocks extends   SingleStep[ContextDetectDeadlocks] {
        
      }
     
-  currentAlgo.addDeadlocks2Set(context.deadlocks);
+  currentAlgo.addDeadlocks2Set(context.deadlocks, context.deadlockFilter );
      }
      
     

@@ -2,11 +2,16 @@ package com.anarsoft.race.detection.process.monitor
 
 import  com.anarsoft.race.detection.process.interleave.InterleaveEventStatement
 import com.anarsoft.race.detection.process.interleave.StatementVisitor
+import com.vmlens.api.internal.IconRepository
+
 
 trait MonitorExitEventInterleave extends MonitorExitEvent with InterleaveEventStatement {
   
       def objectId = Some("<" +  monitorId  + ">");   
   
+      def icon()  =  IconRepository.MONITOR_EXIT
+      
+      
    def  raceAt()  = None;
        def isSame(InterleaveEventStatement :  InterleaveEventStatement)  = false;
        

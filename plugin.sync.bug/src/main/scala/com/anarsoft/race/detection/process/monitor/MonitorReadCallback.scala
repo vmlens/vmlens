@@ -28,13 +28,13 @@ class MonitorReadCallback(val context : ContextMonitor,pipeline : ProcessPipelin
    {
         logger.trace("" + event);
      
+       
+        
+        
        context.monitorEventList.add(event);
        
        
-       if( event.isInstanceOf[InterleaveEventStatement] && context.interleaveEventList != null)
-       {
-         context.interleaveEventList.add( event.asInstanceOf[InterleaveEventStatement]  );
-       }
+    
        
        
    }

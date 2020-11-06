@@ -26,7 +26,7 @@ case class LoopResultError( val list : ArrayList[InterleaveEventStatement],val c
 }
 
 
-case class LoopResultRace( val list : ArrayList[InterleaveEventStatement] , val raceHasRead : Boolean,var count : Int) extends LoopResult {
+case class LoopResultRace( val list : ArrayList[InterleaveEventStatement] , val raceHasRead : Boolean,val count : Int) extends LoopResult {
    def toDisplayText()  = "Data Race";
    
     def icon = { if(raceHasRead)
@@ -40,6 +40,24 @@ case class LoopResultRace( val list : ArrayList[InterleaveEventStatement] , val 
     }
    
 }
+
+
+
+
+case class LoopResultDeadlock( val list : ArrayList[InterleaveEventStatement],val count : Int) extends LoopResult {
+   def toDisplayText()  = "Deadlock";
+   
+    def icon =
+              IconRepository.DEADLOCK
+          
+    
+   
+}
+
+
+
+
+
 /*
  * 	public static final int OK = 0;
 	public static final int MAXIMUM_RUN_COUNT_REACHED = 1;

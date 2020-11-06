@@ -8,6 +8,9 @@ public class ParallizeCallback {
 
 	public static void beforeThreadJoin(Thread toBeJoined)
 	{
+		
+		AgentLogCallback.log("beforeThreadJoin");
+		
 		try {
 
 			CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();

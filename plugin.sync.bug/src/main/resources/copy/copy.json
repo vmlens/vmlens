@@ -19,6 +19,11 @@
           "name":"volatile_co_static_co_readwrite_obj.png"
         },
         {
+          "path":"copy/mvnHtmlReport/img/error_co_ownsmonitor_ovr_monitor_obj.png",
+          "dir":"img",
+          "name":"error_co_ownsmonitor_ovr_monitor_obj.png"
+        },
+        {
           "path":"copy/mvnHtmlReport/img/testerr.png",
           "dir":"img",
           "name":"testerr.png"

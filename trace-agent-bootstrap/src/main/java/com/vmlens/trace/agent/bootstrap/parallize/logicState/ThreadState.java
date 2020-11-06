@@ -32,10 +32,13 @@ public class ThreadState {
 
 	@Override
 	public String toString() {
-		return "ThreadState [timesReturnedForEndOfActiveThreadIndex=" + timesReturnedForEndOfActiveThreadIndex + ", thread=" + thread
-				+ ", activated=" + activated + ", addedCount=" + addedCount + "]";
+		return "ThreadState [index=" + index + ", timesReturnedForEndOfActiveThreadIndex="
+				+ timesReturnedForEndOfActiveThreadIndex + ", thread=" + thread + ", operationCount=" + operationCount
+				+ ", position=" + position + ", activated=" + activated + ", joinWithThreadId=" + joinWithThreadId
+				+ ", addedCount=" + addedCount + "]";
 	}
-	
-	
+
+
+
 	
 }

@@ -1,12 +1,15 @@
 package com.anarsoft.race.detection.process.nonVolatileField
 
 import com.anarsoft.race.detection.process.workflow.SingleStep
+
+import scala.collection.mutable.HashSet
+import  com.anarsoft.race.detection.model.result.StackTraceOrdinalAndMonitor
 import java.util.ArrayList;
 import com.anarsoft.race.detection.process.interleave.InterleaveEventList
 
 class StepAddNonVolatileFields2InterleaveList  extends SingleStep[ContextAddNonVolatileFields2InterleaveList]  {
   
-   def apply2List( list : ArrayList[_], interleaveEventList : InterleaveEventList )
+   def apply2List( list : ArrayList[_], interleaveEventList : InterleaveEventList)
    {
      if( list != null && interleaveEventList != null )
      {

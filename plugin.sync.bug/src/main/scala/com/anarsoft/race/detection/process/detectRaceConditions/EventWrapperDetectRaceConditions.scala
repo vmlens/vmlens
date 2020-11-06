@@ -29,6 +29,9 @@ trait EventWrapperDetectRaceConditions extends WithStatementPosition with WithLo
    def methodCounter : Int;
    var isRace = false;
    
+   
+   var raceTaken = false;
+   
    // nur gesetzt wenn race condition
    var stacktraceOrdinal2MonitorId : HashMap[Int,Int] = null;
       var underMonitorArray : Array[MonitorIdBlockIdStackTraceOrdinal] =  null ;

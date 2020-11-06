@@ -20,7 +20,8 @@ trait InterleaveEventNonVolatileAccess extends InterleaveEventStatement {
   def threadId : Long;
   
   def showSharedMemory  : Boolean;
-    
+   
+  def raceTaken : Boolean;
   
   
 //  

@@ -249,9 +249,12 @@ public class ThreadId2State {
 
 	}
 
-	boolean isActive(long threadId) {
+	boolean isActive(long threadId, LogicStateProcessing logicStateProcessing , int runId) {
 		ThreadState state = map.get(threadId);
 		if (state == null) {
+			
+			AgentLogCallback.logTimeoutWarning(this , logicStateProcessing , runId );
+			
 			return false;
 		}
 		if (!state.activated) {
@@ -300,12 +303,16 @@ public class ThreadId2State {
 					AgentLogCallback.log( "joinWithThreadId "+   threadId+ " " + +state.joinWithThreadId );
 				}
 				
-				return true;
+				return true;	
 			}
+		
 			
-			
+			// the3se case does not get logged, since it is expected
+			return false;
 			
 		}
+		
+		AgentLogCallback.logTimeoutWarning(this , logicStateProcessing , runId );
 		
 		return false;
 

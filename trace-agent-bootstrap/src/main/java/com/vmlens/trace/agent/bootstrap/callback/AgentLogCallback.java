@@ -109,11 +109,6 @@ public class AgentLogCallback {
 	public static void logTimeoutWarning(ThreadId2State threadId2State,LogicState logicState,int runId)
 	{
 		
-		// ich starte mit runId = 1
-		if( runId == 1 )
-		{
-			return;
-		}
 		
 		if(ENABLE_EXCEPTION_LOGGING)
 		{

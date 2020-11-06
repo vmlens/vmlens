@@ -17,6 +17,9 @@ import com.anarsoft.race.detection.process.nonVolatileField.NonVolatileFieldId
 trait ContextCreateModelFacade {
   
   
+   var filteredRaces :  HashSet[RaceCondition] = null;
+  
+  
    var modelFacade : ModelFacadeAll = null;
   
    def loopId2Result : LoopId2Result;

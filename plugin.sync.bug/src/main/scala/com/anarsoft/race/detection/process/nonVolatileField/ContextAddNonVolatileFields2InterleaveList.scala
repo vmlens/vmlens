@@ -10,4 +10,6 @@ trait ContextAddNonVolatileFields2InterleaveList {
   def nonVolatileFieldAccessEventStatic : ArrayList[NonVolatileFieldAccessEventStatic] ;
   
     def  interleaveEventList : InterleaveEventList;
+    
+
 }

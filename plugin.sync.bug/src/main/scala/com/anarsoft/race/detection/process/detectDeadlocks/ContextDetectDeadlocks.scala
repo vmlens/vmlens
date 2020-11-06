@@ -1,5 +1,7 @@
 package com.anarsoft.race.detection.process.detectDeadlocks
 
+import  com.anarsoft.race.detection.model.result.StackTraceOrdinalAndMonitor
+
 import java.util.ArrayList
 import  com.anarsoft.race.detection.process.monitorRelation._
 import scala.collection.mutable.HashMap
@@ -17,7 +19,7 @@ trait ContextDetectDeadlocks {
   var potentialDeadlockMap  : ThreadId2PotentialDeadlock = null;
   
   var deadlocks : HashSet[Deadlock] = null;
-  
+  var deadlockFilter : HashSet[StackTraceOrdinalAndMonitor] = null;
   
   
    def monitorRelationList : ArrayList[MonitorRelation];
@@ -29,6 +31,8 @@ trait ContextDetectDeadlocks {
    def initializeContextDetectDeadlocks()
    {
      threadId2MonitorStack4DetectDeadlocks = new HashMap[Long,Stack[Event4MonitorRelationEnter]]();
+     
+      deadlockFilter = new HashSet[StackTraceOrdinalAndMonitor]
      deadlocks = new  HashSet[Deadlock]();
    }
    

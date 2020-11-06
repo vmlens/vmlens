@@ -106,7 +106,7 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
 
       processPipeline.step(new StepReadAgentLog(eventDir, prozessConfig));
 
-      processPipeline.step(new StepProcessInterleaveEventListAfterRead());
+ 
 
     processPipeline.step(new StepReadClassName(eventDir));
 
@@ -115,8 +115,11 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
 
      processPipeline.step(new StepBuildFieldAndArrayFacade());
   
+     processPipeline.step(new StepFilterRaceConditions(configValues));
+     
+      processPipeline.step(new StepProcessInterleaveEventListAfterRead());
 
-    processPipeline.step(new StepCreateModelFacade(configValues));
+      processPipeline.step(new StepCreateModelFacade());
 
       processPipeline;
 
@@ -274,6 +277,9 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
          compositeStep.step(new StepReadEvents[SyncAction, ContextProcessSyncAction](x => x.syncActionStreams, (c) => new SyncActionReadCallback(c, processPipeline)));
       compositeStep.step(new StepReadEvents[MonitorEvent, ContextMonitor](x => x.monitorEventStreams, (c) => new MonitorReadCallback(c, processPipeline)));
 
+    
+      
+      
       compositeStep.step(perEventListSteps.setArrayOrdinalInterleave);
       compositeStep.step(perEventListSteps.setFieldOrdinal);
       compositeStep.step(perEventListSteps.setStacktraceOrdinal);
@@ -285,7 +291,7 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
       compositeStep.step(new StepBuildPotentialDeadlockWithParentMonitorIds())
       compositeStep.step(new StepCheckPotentialDeadlocks())
 
-
+   
 
       prozessConfig.checkLocksStep() match {
         case None =>
@@ -298,6 +304,8 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
           }
 
       }
+      
+        compositeStep.step(new StepAddMonitorEvents2InterleaveList());
 
       compositeStep.step(perEventListSteps.prozessSyncPointLists);
       compositeStep.step(new StepProzessThreadStoppedEvent());
@@ -326,6 +334,12 @@ class ReadAndProcessEvents(prozessConfig: ProzessConfig, val configValues: Confi
       processPipeline.step(perEventListSteps.detectRaceConditions);
       processPipeline.step(perEventListSteps.setMonitorInfo4NonVolatile);
 
+      
+      
+   
+      
+      
+      
       processPipeline.step(new StepProcessInterleaveEventListDuringRead());
 
 

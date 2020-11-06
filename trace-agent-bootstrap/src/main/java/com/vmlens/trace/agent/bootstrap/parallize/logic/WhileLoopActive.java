@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.parallize.logic;
 
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
+import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.event.NewSlidingWindowId;
@@ -16,7 +17,7 @@ public class WhileLoopActive implements WhileLoop {
 
 	private final InterleaveFacade interleaveFacade = new InterleaveFacade();
 	private final int loopId;
-	private  int runId = 1;
+	private  int runId = 0;
 	private RunStateActive current;
 	private boolean isFirst = true;
 	private boolean isSecond = true;
@@ -25,7 +26,10 @@ public class WhileLoopActive implements WhileLoop {
 	public final AllInterleavings allInterleavings;
 	
 	
-
+	public int loopId()
+	{
+		return loopId;
+	}
 	
 	
 	public WhileLoopActive(int loopId,AllInterleavings allInterleavings) {
@@ -96,7 +100,7 @@ public class WhileLoopActive implements WhileLoop {
 		{
 			if( allInterleavings.maximumRuns > 0  )
 			{
-				if( runId >  allInterleavings.maximumRuns )
+				if( runId >=  allInterleavings.maximumRuns )
 				{
 					callbackStatePerThread.sendEvent.writeLoopEndEventGen( CallbackState.slidingWindow, loopId , LoopResultStatusCodes.MAXIMUM_RUN_COUNT_REACHED);
 					return null;
@@ -134,6 +138,8 @@ public class WhileLoopActive implements WhileLoop {
 		else
 		{
 		
+			
+			
 			callbackStatePerThread.sendEvent.writeLoopEndEventGen( CallbackState.slidingWindow, loopId, LoopResultStatusCodes.OK);
 			return null;
 		}

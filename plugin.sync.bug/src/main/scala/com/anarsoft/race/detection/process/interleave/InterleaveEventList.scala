@@ -1,110 +1,92 @@
 package com.anarsoft.race.detection.process.interleave
 
-
 import java.util.ArrayList
 import com.anarsoft.race.detection.process.partialOrder.RaceConditionFoundException
 import com.anarsoft.race.detection.process.SortArrayList
 import scala.collection.mutable.HashMap
-import com.anarsoft.race.detection.process.interleave.eventList.LoopStateHolder
+import scala.collection.mutable.HashSet
 import com.vmlens.api._
-import  com.anarsoft.race.detection.process.nonVolatileField.InterleaveEventNonVolatileAccess
+import com.anarsoft.race.detection.process.nonVolatileField.InterleaveEventNonVolatileAccess
+import com.anarsoft.race.detection.process.interleave.loopAlgo.LoopId2LoopInfo
+import  com.anarsoft.race.detection.model.result.StackTraceOrdinalAndMonitor
 /*
- * StepProcessInterleaveEventListDuringRead
- * StepProcessInterleaveEventListAfterRead
- * 
+
+				2 Stufen:
+						1) während prozessierung: unprocessedInterleaveEventStatements -> potentialInterleaveEventStatements wenn closed
+								nach processed
+
+						2) am ende der interleave prozessierung + filtern der races möglich: 		potentialInterleaveEventStatements -> beforeRaceFilter
+
+
+
+
+
+
+ *
  */
 
-class InterleaveEventList  {
-  
-  val loopId2LoopStateHolder = new HashMap[Int,LoopStateHolder]
-  
-  
-  def add(event : LoopWarningEvent)
-  {
+class InterleaveEventList {
+
+  var unprocessedInterleaveEventStatements = new ArrayList[InterleaveEventStatement]()
+  val potentialInterleaveEventStatements = new ArrayList[InterleaveEventStatement]()
+  val loopId2LoopInfo = new LoopId2LoopInfo();
+
+  def add(event: LoopWarningEvent) {
+
+    loopId2LoopInfo.add(event);
+  }
+
+  def add(event: LoopOrRunEvent) {
     
-    
-    loopId2LoopStateHolder.getOrElseUpdate(event.loopId, LoopStateHolder(event.loopId)).add(event);
+    loopId2LoopInfo.add(event);
+
+  }
+
+  def add(event: InterleaveEventStatement) {
+    loopId2LoopInfo.add(event);
+    unprocessedInterleaveEventStatements.add(event);
+
+  }
+  
+   def addMonitorEvent(event: InterleaveEventStatement,  deadlockFilter : HashSet[StackTraceOrdinalAndMonitor] ) {
+    loopId2LoopInfo.addMonitorEvent(event,  deadlockFilter : HashSet[StackTraceOrdinalAndMonitor]);
+    unprocessedInterleaveEventStatements.add(event);
+
   }
   
   
-  
-  def add(event : LoopOrRunEvent)
-  { 
-    loopId2LoopStateHolder.getOrElseUpdate(event.loopId, LoopStateHolder(event.loopId)).add(event);
-  }
-  
-  def add(event : InterleaveEventStatement)
-  {
-   
-    
-     loopId2LoopStateHolder.getOrElseUpdate(event.loopId, LoopStateHolder(event.loopId)).add(event);
-  }
   
 
-  
-  
-  def processListDuringRead()
-  {
+  def processListDuringRead() {
 
-    for( elem <- loopId2LoopStateHolder )
-    {
-      elem._2.processAtSlingWingowIdEnd();
-    }
-         
-       
+    unprocessedInterleaveEventStatements = loopId2LoopInfo.processBeforeNewSlidingWindowId(unprocessedInterleaveEventStatements, potentialInterleaveEventStatements);
+    
   }
-  
-  
-  
-  def stopProcessing() =
-  {
-     val id2Result = new   HashMap[Int,LoopResult]
-     
-      for( elem <- loopId2LoopStateHolder )
-      {
-        id2Result.put( elem._1 , elem._2.stopProcessing() );
-      }
-     
-     id2Result;
-       
+
+  def stopProcessing() ={
+    
+    processListDuringRead()
+    loopId2LoopInfo.stopProcessing(unprocessedInterleaveEventStatements,potentialInterleaveEventStatements);
   }
-  
-  
- /*
-  *   val readEvent  = race.read;
+    
+
+  def addRace(race: RaceConditionFoundException) {
+
+    val readEvent = race.read;
     var writeEvent = race.write;
-    
-    if( readEvent.isInstanceOf[InterleaveEventStatement] && writeEvent.isInstanceOf[InterleaveEventStatement])
-    {
-      add(readEvent.asInstanceOf[InterleaveEventStatement]  );
-      add(writeEvent.asInstanceOf[InterleaveEventStatement]  );
-  */
- 
-  
-  
-  
-  def addRace(race : RaceConditionFoundException)
-  {
 
-    val readEvent  = race.read;
-    var writeEvent = race.write;
-    
-    if( readEvent.isInstanceOf[InterleaveEventNonVolatileAccess] && writeEvent.isInstanceOf[InterleaveEventNonVolatileAccess])
-    {
-      
-      val hasRead =   MemoryAccessType.containsRead(readEvent.operation | writeEvent.operation);
-      
-      
+    if (readEvent.isInstanceOf[InterleaveEventNonVolatileAccess] && writeEvent.isInstanceOf[InterleaveEventNonVolatileAccess]) {
+
+      val hasRead = MemoryAccessType.containsRead(readEvent.operation | writeEvent.operation);
+
       val r = readEvent.asInstanceOf[InterleaveEventNonVolatileAccess];
       val w = writeEvent.asInstanceOf[InterleaveEventNonVolatileAccess]
-      
-       loopId2LoopStateHolder.getOrElseUpdate(r.loopId, LoopStateHolder(r.loopId)).addRace(r,w,hasRead);
-      
-      
-   
+
+      loopId2LoopInfo.addRace(r);
+
+      unprocessedInterleaveEventStatements.add(r);
+      unprocessedInterleaveEventStatements.add(w);
     }
   }
 
-  
-  
 }

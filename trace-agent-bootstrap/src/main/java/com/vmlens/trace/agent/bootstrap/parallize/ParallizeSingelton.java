@@ -90,7 +90,7 @@ public class ParallizeSingelton {
 		currentLoop = getOrCreateWhileLoop(obj);
 
 		if (currentRun != null) {
-			currentRun.stop(callbackStatePerThread);
+			currentRun.stop(callbackStatePerThread,currentLoop);
 		}
 
 		currentRun = currentLoop.createNextRun(callbackStatePerThread, Thread.currentThread());
@@ -102,7 +102,7 @@ public class ParallizeSingelton {
 			return true;
 		} else {
 			callbackStatePerThread.parallizedThread = null;
-			currentLoop = new WhileLoopStopped();
+			currentLoop = new WhileLoopStopped(currentLoop.loopId());
 			object2InterleaveMultipleRuns.put(obj, currentLoop);
 
 			return false;
@@ -156,7 +156,6 @@ public class ParallizeSingelton {
 
 	public static void close(CallbackStatePerThread callbackStatePerThread, Object obj) {
 		
-		
 		callbackStatePerThread.stackTraceBasedDoNotTrace++;
 		try {
 			synchronized (SINGLE_LOCK) {
@@ -164,7 +163,7 @@ public class ParallizeSingelton {
 				if (temp != null) {
 					
 					callbackStatePerThread.parallizedThread = null;
-					currentLoop = new WhileLoopStopped();
+					currentLoop = new WhileLoopStopped(currentLoop.loopId());
 					object2InterleaveMultipleRuns.put(obj, currentLoop);
 				}
 
