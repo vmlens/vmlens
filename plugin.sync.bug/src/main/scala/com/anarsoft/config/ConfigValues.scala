@@ -27,7 +27,7 @@ trait ConfigValues {
   def getDisableTimeoutWarningCheck() : Boolean;
   
   
-  def getParallelize() : List[String];
+
   
   
 }

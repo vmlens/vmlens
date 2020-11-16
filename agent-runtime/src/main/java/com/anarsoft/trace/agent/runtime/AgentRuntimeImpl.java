@@ -164,8 +164,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 					FilterBuilder.createExcludeFilter(properties.getProperty(AgentKeys.EXCLUDE_FROM_TRACE)),
 					FilterBuilder.createExcludeFilter(properties.getProperty(AgentKeys.DO_NOT_TRACE_IN)),
 					FilterBuilder.createOnlyWhenSetFilter(properties.getProperty(AgentKeys.DO_NOT_TRACE_IN)),
-					FilterBuilder.createOnlyWhenSetFilter(properties.getProperty(AgentKeys.TRACE)), mode,
-					properties.getProperty(AgentKeys.PARALLELIZE));
+					FilterBuilder.createOnlyWhenSetFilter(properties.getProperty(AgentKeys.TRACE)), mode);
 
 			// LinkedNode<EventSink<Event,Object>> serializeEventNode = new
 			// LinkedNode<EventSink<Event,Object>>(new WriteEvent2File(outputFileName) );

@@ -3,8 +3,6 @@ package com.vmlens.maven.plugin;
 import static org.apache.maven.plugin.surefire.SurefireHelper.reportExecution;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,15 +16,14 @@ import org.apache.maven.plugin.surefire.SurefireReportParameters;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.surefire.suite.RunResult;
 
+import com.anarsoft.config.DefaultValues;
 import com.anarsoft.config.MavenMojo;
-import com.vmlens.api.callback.ApiCallbackCheckEvents;
+import com.vmlens.api.callback.APICallback;
 import com.vmlens.api.callback.ApiCallbackParallize;
 import com.vmlens.api.callback.ApiCallbackRegressionTest;
 import com.vmlens.api.callback.ExtractAgentAndCheckLicence;
 import com.vmlens.api.callback.IssuesFoundException;
-import com.vmlens.api.callback.APICallback;
 import com.vmlens.api.internal.reports.ReportFacade$;
-import com.anarsoft.config.DefaultValues;
 
 public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implements SurefireReportParameters {
 
@@ -38,57 +35,45 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 
-		if(this.skipTests)
-		{
+		if (this.skipTests) {
 			return;
 		}
-		
-		
-		
-		
-	
 
 		try {
-		
-		try {
 
-			agentDirectory.mkdirs();
-			getReportsDirectory().mkdirs();
-			
-			FileUtils.deleteQuietly(new File(agentDirectory.getAbsoluteFile() + "/vmlens" ));
-			
+			try {
 
-			String testDirectory = null;
+				agentDirectory.mkdirs();
+				getReportsDirectory().mkdirs();
 
-			for (Object obj : this.getProject().getTestResources()) {
-				Resource r = (Resource) obj;
-				testDirectory = r.getDirectory();
+				FileUtils.deleteQuietly(new File(agentDirectory.getAbsoluteFile() + "/vmlens"));
 
-				if (regresssionTestFolder != null) {
-					testDirectory = testDirectory + "/" + regresssionTestFolder;
+				String testDirectory = null;
+
+				for (Object obj : this.getProject().getTestResources()) {
+					Resource r = (Resource) obj;
+					testDirectory = r.getDirectory();
+
+					if (regresssionTestFolder != null) {
+						testDirectory = testDirectory + "/" + regresssionTestFolder;
+					}
+
 				}
 
+				MavenMojo mavenMojo = new MavenMojoImpl(this, testDirectory);
+
+				String source = (new ExtractAgentAndCheckLicence())
+						.extractAndCheckAndSetPropertiesInRunProperties(agentDirectory, mavenMojo);
+
+				processAll(source, mavenMojo);
+
+			} catch (IssuesFoundException issuesFoundException) {
+				if (isTestFailureIgnore()) {
+					getLog().error(issuesFoundException.getMessage());
+				} else {
+					throw new MojoFailureException(issuesFoundException.getMessage());
+				}
 			}
-
-			MavenMojo mavenMojo = new MavenMojoImpl(this, testDirectory);
-
-			String source = (new ExtractAgentAndCheckLicence())
-					.extractAndCheckAndSetPropertiesInRunProperties(agentDirectory, mavenMojo);
-
-		
-			
-
-		
-				processAll(source,mavenMojo);
-			
-			
-		} catch (IssuesFoundException issuesFoundException) {
-			if (isTestFailureIgnore()) {
-				getLog().error(issuesFoundException.getMessage());
-			} else {
-				throw new MojoFailureException(issuesFoundException.getMessage());
-			}
-		}
 
 		} catch (Throwable e) {
 			getLog().error(e);
@@ -98,50 +83,37 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 		}
 
 	}
-	
-	private boolean noTestRun(String source, MavenMojo mavenMojo)
-	{
+
+	private boolean noTestRun(String source, MavenMojo mavenMojo) {
 		File eventDir = new File(source);
-		
-		if(  eventDir.exists() )
-		{
-			if( eventDir.listFiles().length > 0 )  
-			{
+
+		if (eventDir.exists()) {
+			if (eventDir.listFiles().length > 0) {
 				return false;
 			}
-			
-			
-			
+
 		}
-		
+
 		ReportFacade$.MODULE$.saveNoTestToRunReport2File(mavenMojo.getReportDir());
-		
-		
+
 		return true;
-		
-		
-		
+
 	}
-	
-	
 
-	private void processAll(String source, MavenMojo mavenMojo) throws MojoFailureException, MojoExecutionException , IssuesFoundException{
-		
-	
+	private void processAll(String source, MavenMojo mavenMojo)
+			throws MojoFailureException, MojoExecutionException, IssuesFoundException {
 
-		// getLog().info( "callbackType " + callbackType );
 
 		if (callback == null) {
 
 			if (callbackType == 1) {
 				callback = new ApiCallbackParallize();
 			} else if (callbackType == 2) {
-				callback = new ApiCallbackRegressionTest(true,false);
+				callback = new ApiCallbackRegressionTest(true, false);
 			} else if (callbackType == 3) {
-				callback = new ApiCallbackRegressionTest(false,false);
-			} else if(callbackType == 4)
-			{
-				callback = new ApiCallbackRegressionTest(true,true);
+				callback = new ApiCallbackRegressionTest(false, false);
+			} else if (callbackType == 4) {
+				callback = new ApiCallbackRegressionTest(true, true);
 			}
 
 			if (callback != null) {
@@ -149,102 +121,89 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 
 				boolean run = true;
 
-				
+				while (run) {
 
-					while (run) {
+					try {
 
-						try {
+						super.execute();
+
+						if (noTestRun(source, mavenMojo)) {
+							return;
+						}
+						
+						if(!deadlockAndDataRaceDetection) {
 							
-								super.execute();	
-
-								if(noTestRun(source,mavenMojo))
-								{
-									return;
-								}
-								
-								
+							ReportFacade$.MODULE$.saveDeadlockAndDataRaceDetectionFalse(mavenMojo.getReportDir());
 							
-							run = callback.prozess(source, mavenMojo, new MavenProgressMonitor(getLog()));
+							return;
+						}
+						
 
-						} catch (MojoFailureException exp) {
-							callback.prozessTestError(source, mavenMojo, new MavenProgressMonitor(getLog()));
+						run = callback.prozess(source, mavenMojo, new MavenProgressMonitor(getLog()));
 
-							run = false;
+					} catch (MojoFailureException exp) {
+						callback.prozessTestError(source, mavenMojo, new MavenProgressMonitor(getLog()));
 
-							if (callback.ignoreTestErrors()) {
+						run = false;
 
-								getLog().info(exp);
-							} else {
-								throw exp;
-							}
+						if (callback.ignoreTestErrors()) {
 
+							getLog().info(exp);
+						} else {
+							throw exp;
 						}
 
 					}
-				
+
+				}
 
 			}
 		}
 	}
 
-	
-
-	
 	protected abstract Mode getMode();
-	
-	
-	
+
 	// For Test
 
 	@Parameter(defaultValue = "1")
-	 int callbackType;
+	int callbackType;
 
 	@Parameter(defaultValue = "")
 	private String regresssionTestFolder;
 
-	
 	@Parameter
-	 boolean agentLog;
+	boolean agentLog;
 
-	
 	@Parameter
-	 boolean agentLogPerformance;
-	
-	
+	boolean agentLogPerformance;
+
 	@Parameter
-	 boolean disableAgentExceptionLog;
-	
+	boolean disableAgentExceptionLog;
 
 	@Parameter
 	boolean disableTimeoutCheck;
-	
+
 	@Parameter
 	boolean disableTimeoutWarningCheck;
-	
-	
+
 	// For Prod
 
-	protected abstract DefaultValues  defaults();
-	
-	
+	protected abstract DefaultValues defaults();
 
 	@Parameter
-	List<String> trace      = defaults().getOnlyTraceIn();
+	List<String> trace = defaults().getOnlyTraceIn();
 
 	@Parameter
-	List<String> doNotTrace =  defaults().getDoNotTraceIn();
+	List<String> doNotTrace = defaults().getDoNotTraceIn();
 
 	@Parameter
-	List<String> excludeFromStackTrace =  defaults().getExcludeFromTrace();
-	
-	
+	List<String> excludeFromStackTrace = defaults().getExcludeFromTrace();
+
 	@Parameter
 	List<String> suppress;
-	
-	@Parameter
-	List<String> parallelize;
-	
 
+	@Parameter(defaultValue = "true")
+	boolean deadlockAndDataRaceDetection;
 
 	@Parameter(defaultValue = "${project.build.directory}/vmlens-agent")
 	private File agentDirectory;
@@ -292,7 +251,6 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 	/**
 	 * Base directory where all reports are written to.
 	 */
-
 
 	@SuppressWarnings("checkstyle:linelength")
 	/**
@@ -700,8 +658,6 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 	public void setClassesDirectory(File classesDirectory) {
 		this.classesDirectory = classesDirectory;
 	}
-
-	
 
 	public String getTest() {
 		return test;

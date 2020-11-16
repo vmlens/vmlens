@@ -109,14 +109,25 @@ object ReportFacade {
     
     
     
-    
-    
+    def saveDeadlockAndDataRaceDetectionFalse(reportDir : File){
+      
+         saveStaticHtml(reportDir , "deadlockAndDataRaceDetectionFalse.mustache");
+      
+    }
     
     
     def saveNoTestToRunReport2File(reportDir : File)
     {
       
-      val noTestResults =  new HtmlProviderStaticSiteWithHeader("templates/htmlNoTestToRun.mustache");
+    // htmlNoTestToRun.mustache
+      saveStaticHtml(reportDir , "htmlNoTestToRun.mustache");
+      
+    }
+    
+    
+    
+    def saveStaticHtml( reportDir : File , templateName : String  ) {
+       val noTestResults =  new HtmlProviderStaticSiteWithHeader("templates/" + templateName);
       
     copyImgCssFiles( reportDir);
     
@@ -130,12 +141,10 @@ object ReportFacade {
      
     
      printStream.close();
-     
-     
-    // noTestResults.write2Stream(path, printStream)
-      
-      
+
     }
+    
+    
     
     def copyImgCssFiles(reportDir : File)
     {

@@ -20,14 +20,14 @@ public class FilterList {
 	private final FilterState excludeThroughDoNotTraceIn;
 	public final FilterWithAnnotations doNotTraceIn;
 
-	private final THashSet<Object> parallelizedMethods = new THashSet<Object>();
+
 
 	public final FilterState onlyTraceIn;
 
 	public final AgentMode agentMode;
 
 	public FilterList(FilterState excludeFromTrace, FilterState excludeThroughDoNotTraceIn, FilterState doNotTraceIn,
-			FilterState onlyTraceIn, AgentMode agentMode, String parallelizedProperty) {
+			FilterState onlyTraceIn, AgentMode agentMode) {
 		super();
 		this.excludeFromTrace = excludeFromTrace;
 		this.excludeThroughDoNotTraceIn = excludeThroughDoNotTraceIn;
@@ -36,54 +36,14 @@ public class FilterList {
 
 		this.agentMode = agentMode;
 
-		if (parallelizedProperty != null) {
-			String token = parallelizedProperty;
-
-			int index = token.indexOf(';');
-
-			while (index > 0) {
-
-				String filter = token.substring(0, index);
-				parallelizedMethods.add(filter.replace('.', '/'));
-
-				token = token.substring(index + 1);
-				index = token.indexOf(';');
-
-			}
-
-			if (token.length() > 0) {
-				parallelizedMethods.add(token.replace('.', '/'));
-			}
-		}
+	
 
 	}
 
-	// public boolean traceMethod(String owner)
-	// {
-	//
-	// return excludeFromTrace.take(owner) &&
-	// excludeThroughDoNotTraceIn.take(owner);
-	//
-	// }
-	
-	public boolean parallelize(String name)
-	{
-		return parallelizedMethods.contains(name);
-	}
-	
 	
 
 	public boolean changeClass(String name) {
 		
-//		if(   name.startsWith("sun/reflect"))
-//		{
-//			return false;
-//		}
-		
-//		if(   name.startsWith("org/apache/cassandra/db/commitlog/CommitLog"))
-//		{
-//			return false;
-//		}
 		if(   name.startsWith("java/util/concurrent/CompletableFuture"))
 		{
 			return false;

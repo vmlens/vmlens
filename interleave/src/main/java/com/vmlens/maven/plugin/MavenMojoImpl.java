@@ -76,18 +76,6 @@ public class MavenMojoImpl implements  MavenMojo {
 	}
 
 
-
-	
-
-
-
-	@Override
-	public List<String> getParallelize() {
-		return vmlensPlugin.parallelize;
-	}
-
-
-
 	
 
 

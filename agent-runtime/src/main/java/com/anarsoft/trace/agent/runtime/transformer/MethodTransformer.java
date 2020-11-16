@@ -220,11 +220,6 @@ public class MethodTransformer extends MethodTransformerAbstract {
 	}
 	
 	
-	private boolean  parallelize() 
-	{
-		return filterList.parallelize(  className + "/" + name );
-	}
-	
 	
 	
 
@@ -286,18 +281,6 @@ public class MethodTransformer extends MethodTransformerAbstract {
 			}
 		}
 
-//		if( this.methodLockType.callCallbacck() )
-//		{
-//			this.mv.visitLdcInsn(Integer.valueOf(getMethodId()));
-//			this.mv.visitMethodInsn(INVOKESTATIC, this.CALLBACK_CLASS_METHOD_ENTER,  this.methodLockType.methodName() +  "Exit", "(I)V");
-//		}
-//		
-//		
-		/*
-		 * das muss nach traceSynchronization stehen, siehe test test-regression-maven
-		 * testCounterSynchronized
-		 * 
-		 */
 
 		if (this.classIsAtomic != null) {
 			this.mv.visitLdcInsn(Integer.valueOf(classIsAtomic.id()));
@@ -476,12 +459,7 @@ public class MethodTransformer extends MethodTransformerAbstract {
 				"taskMethodEnter", "()V");
 	}
 
-    if( parallelize() )
-	{
-		this.mv.visitMethodInsn(INVOKESTATIC,
-				CALLBACK_CLASS_METHOD_ENTER,
-				"parallelizeEnter", "()V");
-	}
+  
     
     
   }

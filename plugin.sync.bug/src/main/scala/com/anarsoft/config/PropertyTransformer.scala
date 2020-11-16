@@ -45,7 +45,7 @@ object PropertyTransformer {
       
        properties.put(AGENT_LOG_EXCEPTION, config.getAgentExceptionLog().toString());
      
-     properties.put(PARALLELIZE, listToString (config.getParallelize()));
+   //  properties.put(PARALLELIZE, listToString (config.getParallelize()));
         
      
      

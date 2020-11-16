@@ -11,15 +11,12 @@ public class AgentKeys {
 	public static final String  AGENT_LOG = "vmlens.agentLog";
 	public static final String  AGENT_LOG_PERFORMANCE = "vmlens.agentLogPerformance";
 	public static final String  AGENT_LOG_EXCEPTION = "vmlens.agentLogException";
-//	public static final String  MAXIMUM_RUN_COUNT = "vmlens.maximumRunCount";
-//	    
-//	    
-//	public static final String  MAXIMUM_OPERATION_COUNT = "vmlens.maximumOperationCount";  
-	public static final String  PARALLELIZE = "vmlens.parallelize";
+ 
+
 	public static final String  EXCLUDE_FROM_TRACE = "vmlens.excludeFromStackTrace";
 	
 	
-	public static final String[] ALL =  {MODE  , DO_NOT_TRACE_IN , TRACE , SUPPRESS , PARALLELIZE, EXCLUDE_FROM_TRACE};
+	public static final String[] ALL =  {MODE  , DO_NOT_TRACE_IN , TRACE , SUPPRESS , EXCLUDE_FROM_TRACE};
 	
 	  
 	
