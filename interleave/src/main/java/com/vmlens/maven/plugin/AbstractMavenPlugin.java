@@ -103,7 +103,6 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 	private void processAll(String source, MavenMojo mavenMojo)
 			throws MojoFailureException, MojoExecutionException, IssuesFoundException {
 
-
 		if (callback == null) {
 
 			if (callbackType == 1) {
@@ -130,19 +129,25 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 						if (noTestRun(source, mavenMojo)) {
 							return;
 						}
-						
-						if(!deadlockAndDataRaceDetection) {
-							
+
+						if (!deadlockAndDataRaceDetection) {
+
 							ReportFacade$.MODULE$.saveDeadlockAndDataRaceDetectionFalse(mavenMojo.getReportDir());
-							
+
 							return;
 						}
-						
 
 						run = callback.prozess(source, mavenMojo, new MavenProgressMonitor(getLog()));
 
 					} catch (MojoFailureException exp) {
-						callback.prozessTestError(source, mavenMojo, new MavenProgressMonitor(getLog()));
+
+						if (!deadlockAndDataRaceDetection) {
+
+							ReportFacade$.MODULE$.saveDeadlockAndDataRaceDetectionFalse(mavenMojo.getReportDir());
+
+						} else {
+							callback.prozessTestError(source, mavenMojo, new MavenProgressMonitor(getLog()));
+						}
 
 						run = false;
 

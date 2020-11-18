@@ -3,7 +3,7 @@
    <parent>
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <relativePath>../vmlens/pom.xml</relativePath>
   </parent>
   
@@ -46,6 +46,7 @@
 	
 
   <properties>
+      	<asm.version>7.3.1</asm.version>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
     <encoding>UTF-8</encoding>
@@ -73,7 +74,11 @@
     <version>24.1-jre</version>
 </dependency>
     
-      
+              <dependency>
+    <groupId>org.ow2.asm</groupId>
+    <artifactId>asm</artifactId>
+    <version>${asm.version}</version>
+	</dependency> 
     
     
     
