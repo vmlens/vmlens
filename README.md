@@ -113,7 +113,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
 <dependency>
   <groupId>com.vmlens</groupId>
   <artifactId>api</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.2</version>
   <scope>test</scope>
 </dependency>	
 	
@@ -123,7 +123,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
     <plugin>
     <groupId>com.vmlens</groupId>
     <artifactId>interleave</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.2</version>
     <executions>
       <execution>
         <goals>
