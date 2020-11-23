@@ -32,7 +32,7 @@ object PropertyTransformer {
      
   
      
-     properties.put(MODE, config.getMode());
+  
      properties.put(DO_NOT_TRACE_IN, listToString (config.getDoNotTraceIn()));
      properties.put(TRACE, listToString (config.getOnlyTraceIn()));
      

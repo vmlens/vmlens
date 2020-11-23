@@ -3,6 +3,9 @@ package com.vmlens.maven.plugin;
 import static org.apache.maven.plugin.surefire.SurefireHelper.reportExecution;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +30,10 @@ import com.vmlens.api.internal.reports.ReportFacade$;
 
 public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implements SurefireReportParameters {
 
+	
+	
+	
+	
 	private APICallback callback = null;
 
 	protected boolean hasExecutedBefore() {
@@ -166,7 +173,7 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 		}
 	}
 
-	protected abstract Mode getMode();
+
 
 	// For Test
 
@@ -227,7 +234,7 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 			additionalArgs = super.getArgLine();
 		}
 
-		return "-javaagent:\"" + agentDirectory.getAbsolutePath() + "/agent.jar\" " + additionalArgs;
+		return "-javaagent:\"" + agentDirectory.getAbsolutePath() + "/agent.jar\" "  + additionalArgs;
 
 		// return
 		// "-javaagent:/home/thomas/git-repo/workspace/com.anarsoft.plugin.sync.bug/agent_lib/agent.jar=/home/thomas/git-repo/workspace/com.anarsoft.plugin.sync.bug.test/agent_properties/run.properties";

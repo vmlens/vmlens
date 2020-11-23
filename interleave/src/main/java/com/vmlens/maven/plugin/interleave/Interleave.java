@@ -25,11 +25,6 @@ import com.vmlens.maven.plugin.Mode;
 @Mojo(name = "test", defaultPhase = LifecyclePhase.TEST, threadSafe = false, requiresDependencyResolution = ResolutionScope.TEST)
 public class Interleave extends AbstractMavenPlugin {
 
-	@Override
-	protected Mode getMode() {
-
-		return Mode.interleave;
-	}
 
 	
 	

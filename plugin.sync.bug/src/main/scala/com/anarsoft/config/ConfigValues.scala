@@ -12,7 +12,7 @@ trait ConfigValues {
 	def getExcludeFromTrace() : List[String];
 	
   
-  def getMode() : String;
+ 
   
   
   def getAgentLog() : Boolean;

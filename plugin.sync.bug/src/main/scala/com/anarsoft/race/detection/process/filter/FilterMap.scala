@@ -24,6 +24,12 @@ class FilterMap () {
        "java.util.LinkedHashMap.values",
        "java.util.LinkedHashMap.keySet",
        "java.util.LinkedHashMap.entrySet",
+       
+       "java.util.TreeMap.navigableKeySet",
+       "java.util.TreeMap.keySet",
+       "java.util.TreeMap.entrySet",
+       "java.util.TreeMap.values",
+       
        "java.util.Collections$UnmodifiableMap.keySet",
        "java.util.Collections$UnmodifiableMap.entrySet",
        "java.util.Collections$UnmodifiableMap.values",

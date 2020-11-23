@@ -21,11 +21,6 @@ public class MavenMojoImpl implements  MavenMojo {
 
 	
 	
-	public String getMode()
-	{
-		return vmlensPlugin.getMode().name();
-	}
-	
 	
 	
 	
