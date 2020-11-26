@@ -8,8 +8,9 @@
 
 // Apply the java-library plugin to add support for Java Library
 plugins {
-    id 'java-gradle-plugin'
+      id 'java-gradle-plugin'
       id 'maven-publish'
+      id 'com.gradle.plugin-publish' version '0.12.0'
 }
 
 apply plugin: 'java-library'
@@ -28,22 +29,46 @@ group="com.vmlens"
 
 
 
+pluginBundle {
+    website = 'https://vmlens.com' 
+    vcsUrl = 'https://github.com/vmlens/vmlens' 
+    tags = ['interleave']     
+}
+
+
+
+
 dependencies {
 
     implementation 'com.google.guava:guava:23.0'
-
-
     api 'com.vmlens:interleave:' + version
-
-    // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
 
 gradlePlugin {
     plugins {
-        simplePlugin {
+        interleavePlugin {
             id = 'com.vmlens.interleave'
+            displayName = 'Concurrent unit tests' 
+            description = 'unit-testing multi-threaded applications on the JVM made easy' 
             implementationClass = 'com.vmlens.InterleavePlugin'
         }
     }
 }
+
+
+
+
+publishing {
+    repositories {
+        maven {
+            name = 'localPluginRepository'
+            url = "$buildDir/repo"
+        }
+    }
+}
+
+
+
+
+

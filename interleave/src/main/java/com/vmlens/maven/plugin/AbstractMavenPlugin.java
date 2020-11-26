@@ -91,7 +91,7 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
 
 	}
 
-	private boolean noTestRun(String source, MavenMojo mavenMojo) {
+	public static  boolean noTestRun(String source, MavenMojo mavenMojo) {
 		File eventDir = new File(source);
 
 		if (eventDir.exists()) {

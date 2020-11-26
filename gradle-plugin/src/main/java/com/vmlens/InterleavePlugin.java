@@ -34,72 +34,7 @@ public class InterleavePlugin implements Plugin<Project> {
 				test.shouldRunAfter("test");
 				
 
-				test.doFirst(new Action() {
-
-					@Override
-					public void execute(Object a) {
-
-						InterleaveTask intern = (InterleaveTask) a;
-
-						intern.agentDirectory.mkdirs();
-						intern.reportDirectory.mkdirs();
-						
-					
-
-						FileUtils.deleteQuietly(new File(intern.agentDirectory.getAbsoluteFile() + "/vmlens"));
-
-						MavenMojo mavenMojo = new MavenMojoForGradle(intern);
-
-						intern.source = (new ExtractAgentAndCheckLicence())
-								.extractAndCheckAndSetPropertiesInRunProperties(intern.agentDirectory, mavenMojo);
-						
-						intern.jvmArgs( "-javaagent:" + 	intern.agentDirectory.getAbsolutePath() + "/agent.jar" );
-
-					}
-
-				}
-
-				);
-				
-				
-				test.doLast(new Action() {
-
-					@Override
-					public void execute(Object a) {
-
-						InterleaveTask intern = (InterleaveTask) a;
-
-					
-					
-				
-
-						MavenMojo mavenMojo = new MavenMojoForGradle(intern);
-
-						if (!intern.deadlockAndDataRaceDetection) {
-
-							ReportFacade$.MODULE$.saveDeadlockAndDataRaceDetectionFalse(mavenMojo.getReportDir());
-
-							return;
-						}
-
-						 try {
-							new ApiCallbackParallize().prozess(intern.source, mavenMojo, new GradleProgressMonitor(intern.getLogger()));
-						} catch (IssuesFoundException e) {
-						
-							throw new GradleScriptException(e.getMessage() , e);
-							
-						}
-
-					}
-
-				}
-
-				);
-				
-				
-
 			}
-
 		});
 
 	}

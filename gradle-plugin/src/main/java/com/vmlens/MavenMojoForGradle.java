@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import com.anarsoft.config.MavenMojo;
+import com.vmlens.maven.plugin.Mode;
 
 public class MavenMojoForGradle implements MavenMojo {
 
@@ -76,5 +77,7 @@ public class MavenMojoForGradle implements MavenMojo {
 	public String getTestDir() {
 		return null;
 	}
+
+	
 
 }
