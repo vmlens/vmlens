@@ -86,7 +86,7 @@ public class LogicStateNewThreadStarted extends LogicState {
 	}
 
 	@Override
-	LogicState threadEnded(long threadId, ThreadId2State threadId2State, long time) {
+	LogicState threadEnded(long threadId ,ThreadId2State threadId2State, long time) {
 		return this;
 	}
 

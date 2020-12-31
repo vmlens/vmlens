@@ -8,6 +8,9 @@
  <topic label="The maven plugin" href="help/maven.html"/>
 
 
+ <topic label="The gradle plugin" href="help/gradle.html"/>
+
+
  <topic label="The eclipse plugin" href="help/eclipse.html"/>
 
 

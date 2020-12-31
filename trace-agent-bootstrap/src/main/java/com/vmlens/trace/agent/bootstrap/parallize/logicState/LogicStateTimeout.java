@@ -44,5 +44,20 @@ public class LogicStateTimeout extends LogicStateProcessing {
 		
 		return currentlyActive == threadId;
 	}
+	
+
+	@Override
+	LogicState afterOperation(ThreadId2State threadId2State, long threadId, long time) {
+		
+		if( threadId2State.isSingleThreaded()  )
+		{
+			return new LogicStateSingleThread();
+		}
+		
+		
+		return    this;
+	}
+
+	
 
 }

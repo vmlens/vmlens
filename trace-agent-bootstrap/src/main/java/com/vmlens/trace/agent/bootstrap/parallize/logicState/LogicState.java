@@ -37,7 +37,7 @@ public abstract class LogicState {
 	
 	
 	abstract LogicState afterOperation(ThreadId2State threadId2State , long threadId,  long time);
-	abstract LogicState threadEnded(long threadId,ThreadId2State threadId2State,long time);
+	abstract LogicState threadEnded(long threadId , ThreadId2State threadId2State,long time);
     abstract LogicState startNewThread(long threadId);
     
     

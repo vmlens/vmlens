@@ -1,17 +1,25 @@
 package com.anarsoft.config
 
-import collection.JavaConverters._
+import java.util.LinkedList
 
 
 class DefaultValues {
   
-  def getOnlyTraceIn()  = List[String]().asJava
-	def getDoNotTraceIn() = List[String]().asJava
+  def getOnlyTraceIn()  = new LinkedList[String]; //  List[String]().asJava
+	def getDoNotTraceIn() = new LinkedList[String];
   
 	
 	
-  	def getExcludeFromTrace() = List("org.junit.**" , "junit.framework.**" ,"sun.reflect.**" , "java.lang.reflect.**" ).asJava
-
-  
+  	def getExcludeFromTrace() =
+  	{
+  	   val list = new LinkedList[String];
+  	   list.add("org.junit.**");
+  	   list.add("junit.framework.**");
+  	   list.add("sun.reflect.**");
+  	   list.add("java.lang.reflect.**");
+  	   
+  	   list;
+  	}
+  	  
   
 }

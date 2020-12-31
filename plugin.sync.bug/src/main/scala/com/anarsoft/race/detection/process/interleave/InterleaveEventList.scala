@@ -9,6 +9,7 @@ import com.vmlens.api._
 import com.anarsoft.race.detection.process.nonVolatileField.InterleaveEventNonVolatileAccess
 import com.anarsoft.race.detection.process.interleave.loopAlgo.LoopId2LoopInfo
 import  com.anarsoft.race.detection.model.result.StackTraceOrdinalAndMonitor
+import com.typesafe.scalalogging.Logger
 /*
 
 				2 Stufen:
@@ -27,6 +28,9 @@ import  com.anarsoft.race.detection.model.result.StackTraceOrdinalAndMonitor
 
 class InterleaveEventList {
 
+  
+       val logger = Logger(classOf[InterleaveEventList])
+  
   var unprocessedInterleaveEventStatements = new ArrayList[InterleaveEventStatement]()
   val potentialInterleaveEventStatements = new ArrayList[InterleaveEventStatement]()
   val loopId2LoopInfo = new LoopId2LoopInfo();
@@ -43,6 +47,9 @@ class InterleaveEventList {
   }
 
   def add(event: InterleaveEventStatement) {
+    
+    logger.trace("" + event);
+    
     loopId2LoopInfo.add(event);
     unprocessedInterleaveEventStatements.add(event);
 

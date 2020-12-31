@@ -116,7 +116,7 @@ public class AgentLogCallback {
 		
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		
-		callbackStatePerThread.queueCollection.putDirect( new AgentLogEvent("WARNING_TIMEOUT: for " + runId +createTimeoutMessage(threadId2State,logicState)  ));
+		callbackStatePerThread.queueCollection.putDirect( new AgentLogEvent("WARNING_TIMEOUT: for runId: " + runId +createTimeoutMessage(threadId2State,logicState)  ));
 		
 		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
 		

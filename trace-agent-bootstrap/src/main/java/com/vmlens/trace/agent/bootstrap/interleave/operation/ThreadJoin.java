@@ -2,10 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.operation;
 
 import com.vmlens.trace.agent.bootstrap.interleave.MonitorInfo;
 import com.vmlens.trace.agent.bootstrap.interleave.MonitorLockEnterStack;
-import com.vmlens.trace.agent.bootstrap.interleave.normalized.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.PositionAndOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.normalized.PotentialOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationList;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationMap;
 
@@ -14,14 +12,7 @@ import gnu.trove.set.hash.TIntHashSet;
 
 public class ThreadJoin implements OperationTyp {
 
-//	public final int mainThreadIndex;
-//	public final int joinedThreadIndex;
-//	public ThreadJoin(int mainThreadIndex, int joinedThreadIndex) {
-//		super();
-//		this.mainThreadIndex = mainThreadIndex;
-//		this.joinedThreadIndex = joinedThreadIndex;
-//	}
-	
+
 	public final long waitingThreadId;
 	public final long joinedThreadId;
 	

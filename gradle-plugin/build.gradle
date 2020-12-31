@@ -63,7 +63,8 @@ publishing {
     repositories {
         maven {
             name = 'localPluginRepository'
-            url = "$buildDir/repo"
+            url = "~/pluginRepo"
+            
         }
     }
 }

@@ -43,18 +43,6 @@ public abstract class LogicStateProcessing extends LogicState {
 
 
 
-	@Override
-	LogicState afterOperation(ThreadId2State threadId2State, long threadId, long time) {
-		
-		if( threadId2State.isSingleThreaded()  )
-		{
-			return new LogicStateSingleThread();
-		}
-		
-		
-		return    new LogicStateManyThreads(threadId2State.getActiveThreadId4AfterOperation(threadId) , time);
-	}
-
 	
 
 }

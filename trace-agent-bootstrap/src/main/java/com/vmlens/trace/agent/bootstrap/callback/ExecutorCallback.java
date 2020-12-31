@@ -13,6 +13,7 @@ import java.util.concurrent.FutureTask;
 
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeSingelton;
+import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.Task;
 import com.vmlens.trace.agent.bootstrap.parallize.FutureTask2ThreadId;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeCallback;
@@ -159,28 +160,7 @@ public class ExecutorCallback {
 	}
 	
 	
-//	public static Method findMethod(Object obj)
-//	{
-//		Class current = obj.getClass();
-//		
-//		while( current != null )
-//		{
-//			try {
-//				return current.getDeclaredMethod("exec");
-//			} catch (NoSuchMethodException e) {
-//				current = current.getSuperclass();
-//			} catch (SecurityException e) {
-//				
-//				e.printStackTrace();
-//				return null;
-//			}
-//		}
-//		
-//		
-//		System.err.println( "not found for "  + obj.getClass());
-//		
-//		throw new RuntimeException();
-//	}
+
 	
 	
 	
@@ -200,16 +180,20 @@ public class ExecutorCallback {
 		 
 		 CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		 
-		 int temp = callbackStatePerThread.doNotInterleave;
-		 callbackStatePerThread.doNotInterleave = 0;
+//		 int temp = callbackStatePerThread.doNotInterleave;
+//		 callbackStatePerThread.doNotInterleave = 0;
 		 
-	     ParallizeFacade.callableFromTaskMethodEnter(callbackStatePerThread);
+			int atomicId = AtomicClassRepo.getId4AtomicClass("java/util/concurrent/FutureTask");
+		 ParallizeCallback.callbackMethodEnter(atomicId);
+		 
 		 try {
 			return  callable.call(); 
 		 }
 		 finally {
-				   ParallizeFacade.callableFromTaskMethodExit(callbackStatePerThread);
-					callbackStatePerThread.doNotInterleave = temp;
+			 
+			 ParallizeCallback.callbackMethodExit();
+//				   ParallizeFacade.callableFromTaskMethodExit(callbackStatePerThread);
+//					callbackStatePerThread.doNotInterleave = temp;
 				
 		 }
 	 }
@@ -227,32 +211,43 @@ public class ExecutorCallback {
 		 
 		
 		 
-		 if(runnable instanceof FutureTask)
-		 {
-			 callbackStatePerThread.doNotInterleave++;
-		 }
-		 else
-		 {
-			 callbackStatePerThread.doNotInterleave = 0;
-		 }
+		
+	
+		callbackStatePerThread.doNotInterleave = 0;
+		 
 		 
 		
 		 
 		 ParallizeSingelton.beginThreadMethodEnter(callbackStatePerThread,new RunnableOrThreadWrapper(runnable));
 		 try {
+			 
+			 if(runnable instanceof FutureTask)
+			 {
+				int atomicId = AtomicClassRepo.getId4AtomicClass("java/util/concurrent/FutureTask");
+				MethodCallback.atomicMethodEnterWithCallback(atomicId, methodId);
+			 }
+			 
+			 
 			 runnable.run(); 
+			 
+
+		
+			 
 		 }
 		 finally {
+			 
+			 if(runnable instanceof FutureTask)
+			 {
+				int atomicId = AtomicClassRepo.getId4AtomicClass("java/util/concurrent/FutureTask");
+				MethodCallback.atomicMethodExitWithCallback(atomicId, methodId);
+			 }
+			 
+			 
 				ParallizeFacade.beginThreadMethodExit(callbackStatePerThread);
 				
-				 if(runnable instanceof FutureTask)
-				 {
-					 callbackStatePerThread.doNotInterleave--;
-				 }
-				 else
-				 {
+				
 					callbackStatePerThread.doNotInterleave = temp;
-				 }
+				 
 				
 				
 			

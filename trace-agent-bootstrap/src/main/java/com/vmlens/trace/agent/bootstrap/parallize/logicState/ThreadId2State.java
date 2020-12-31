@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallize.logicState;
 
 import java.io.PrintWriter;
 import java.lang.Thread.State;
+import java.util.Iterator;
 
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.InterleaveFacade;
@@ -9,6 +10,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.ThreadJoin;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
+
+import gnu.trove.iterator.TIntLongIterator;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.map.hash.TIntLongHashMap;
 import gnu.trove.map.hash.TLongIntHashMap;
@@ -69,7 +72,19 @@ public class ThreadId2State {
 		int result = interleaveFacade.activeThreadIndex();
 
 		if (result == -1) {
-			return index2ThreadId.get(0);
+			
+			if(index2ThreadId.contains(0))
+			{ 
+				return index2ThreadId.get(0);
+			}
+			
+			
+			TIntLongIterator it = index2ThreadId.iterator();
+			
+		    it.advance();	
+		
+			return it.value();
+		
 		} else {
 			
 			if(! index2ThreadId.contains(result))
@@ -116,19 +131,7 @@ public class ThreadId2State {
 		
 		
 	
-//		 
-//			if( ! map.contains(forThreadId) )
-//			{
-//				AgentLogCallback.logException(new Exception("not there " + forThreadId));
-//				return getActiveThreadId4ThreadEnded();
-//			}
-//		 
-//		 
-//		return forThreadId;
-//		
-//		
-//	}
-//	else {
+
 	
 		ThreadState  threadState = map.get(forThreadId);
 		
