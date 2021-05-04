@@ -119,6 +119,8 @@
                     <configuration>
   
           <excludePackageNames>*.internal.*</excludePackageNames>
+          
+            <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
      
         </configuration>
       

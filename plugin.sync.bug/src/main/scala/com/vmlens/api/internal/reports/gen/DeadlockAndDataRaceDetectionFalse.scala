@@ -16,7 +16,7 @@ object $_scalate_$deadlockAndDataRaceDetectionFalse_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n<div class=\"container\">\n \n<h1 class=\"text-center\">deadlockAndDataRaceDetection was false</h1>  \n\n</div>\n\n<div class=\"container\">\n<div class=\"row text-left\">\n\n<p>\nThe tag <code>deadlockAndDataRaceDetection</code> in the maven pom.xml was set to false. To enable\ndeadlock, data race detection, and report generation set this tag to true.\n\n</p>\n\n</div>\n</div>\n\n\n\n\n\n\n\n" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n<div class=\"container\">\r\n \r\n<h1 class=\"text-center\">deadlockAndDataRaceDetection was false</h1>  \r\n\r\n</div>\r\n\r\n<div class=\"container\">\r\n<div class=\"row text-left\">\r\n\r\n<p>\r\nThe tag <code>deadlockAndDataRaceDetection</code> in the maven pom.xml was set to false. To enable\r\ndeadlock, data race detection, and report generation set this tag to true.\r\n\r\n</p>\r\n\r\n</div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
     }
   }

@@ -16,11 +16,11 @@ object $_scalate_$htmlNothingInterleaved_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n<div class=\"" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n<div class=\"" )
       $_scope_1.renderVariable("containerTyp", false)
-      $_scalate_$_context << ( "\">\n \n<p>vmlens let you test all thread interleavings for your tests. <a href=\"" )
+      $_scalate_$_context << ( "\">\r\n \r\n<p>vmlens let you test all thread interleavings for your tests. <a href=\"" )
       $_scope_1.renderVariable("apacheRoot", false)
-      $_scalate_$_context << ( "/help/manual/#interleave\">Read here more</a> about why, when and how to test all thread interleavings.</p> \n \n \n \n </div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "/help/manual/#interleave\">Read here more</a> about why, when and how to test all thread interleavings.</p> \r\n \r\n \r\n \r\n </div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
     }
   }

@@ -15,27 +15,27 @@ object $_scalate_$footer_mustache {
       import _root_.org.fusesource.scalate.mustache._
       
       val $_scope_1 = Scope($_scalate_$_context)
-      $_scalate_$_context << ( "\n" )
+      $_scalate_$_context << ( "\r\n" )
       $_scope_1.section("hasWarnings") { $_scope_2 =>
-        $_scalate_$_context << ( "<div class=\"container\" style=\"margin-top : 100px;\">\n\n<div class=\"alert alert-warning\" role=\"alert\">\n\n" )
+        $_scalate_$_context << ( "<div class=\"container\" style=\"margin-top : 100px;\">\r\n\r\n<div class=\"alert alert-warning\" role=\"alert\">\r\n\r\n" )
         $_scope_2.section("warnings") { $_scope_3 =>
           $_scope_3.renderVariable("name", true)
-          $_scalate_$_context << ( "\n" )
+          $_scalate_$_context << ( "\r\n" )
         }
-        $_scalate_$_context << ( "</div>\n</div>\n" )
+        $_scalate_$_context << ( "</div>\r\n</div>\r\n" )
       }
       $_scope_1.section("showHeader") { $_scope_4 =>
-        $_scalate_$_context << ( "<footer class=\"navbar navbar-static-bottom\">\n<div class=\"container-fluid\" style=\"margin-top : 100px;\">\n \n\t <div class=\"container\">\n\t<div class=\"row\">\n   \n    \n <!-- skipAtCompare -->    <p class=\"navbar-text navbar-right\"  >Created by <a href=\"https://vmlens.com/\" class=\"navbar-link\">vmlens " )
+        $_scalate_$_context << ( "<footer class=\"navbar navbar-static-bottom\">\r\n<div class=\"container-fluid\" style=\"margin-top : 100px;\">\r\n \r\n\t <div class=\"container\">\r\n\t<div class=\"row\">\r\n   \r\n    \r\n <!-- skipAtCompare -->    <p class=\"navbar-text navbar-right\"  >Created by <a href=\"https://vmlens.com/\" class=\"navbar-link\">vmlens " )
         $_scope_4.renderVariable("vmlensVersion", false)
-        $_scalate_$_context << ( "</a></p>\n    \n    </div>\n  </div>\t\n</div>\n\t\n\n\t\n</footer>\n\n" )
+        $_scalate_$_context << ( "</a></p>\r\n    \r\n    </div>\r\n  </div>\t\r\n</div>\r\n\t\r\n\r\n\t\r\n</footer>\r\n\r\n" )
       }
-      $_scalate_$_context << ( "<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> \n<script src=\"" )
+      $_scalate_$_context << ( "<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> \r\n<script src=\"" )
       $_scope_1.renderVariable("root", false)
-      $_scalate_$_context << ( "js/jquery-1.11.3.min.js\"></script>\n\n<!-- Include all compiled plugins (below), or include individual files as needed --> \n<script src=\"" )
+      $_scalate_$_context << ( "js/jquery-1.11.3.min.js\"></script>\r\n\r\n<!-- Include all compiled plugins (below), or include individual files as needed --> \r\n<script src=\"" )
       $_scope_1.renderVariable("root", false)
-      $_scalate_$_context << ( "js/bootstrap.js\"></script>\n<script src=\"" )
+      $_scalate_$_context << ( "js/bootstrap.js\"></script>\r\n<script src=\"" )
       $_scope_1.renderVariable("root", false)
-      $_scalate_$_context << ( "js/report.js\"></script>\n\n</body>\n</html>" )
+      $_scalate_$_context << ( "js/report.js\"></script>\r\n\r\n</body>\r\n</html>" )
     }
   }
 }

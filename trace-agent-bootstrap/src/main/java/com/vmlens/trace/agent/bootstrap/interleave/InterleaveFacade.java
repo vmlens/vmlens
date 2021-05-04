@@ -13,6 +13,22 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import gnu.trove.list.linked.TLinkedList;
 
+
+/**
+ * 
+ * entry point
+ * 
+ * 
+ * logic for secondRun:
+ * 
+ * 
+ * 
+ * 
+ * @author thomas
+ *
+ */
+
+
 public class InterleaveFacade {
 
 	
@@ -145,7 +161,7 @@ public class InterleaveFacade {
 	}
 	
 	
-	/**
+	/*
 	 * 
 	 * aus actual list neue normalized list erzeugen und mit allNormalizedLists vergleichen
 	 *  		-> wenn nicht vorhanden zu openNormalizedLists hinzufügen
@@ -276,14 +292,7 @@ public class InterleaveFacade {
 
 
 
-//	public void onLockEnterExit(int index) {
-//		
-//		if(startedThreadCount > 0)
-//		{
-//			actualList.onLockEnterExit(index);
-//		}
-//		
-//	}
+
 
 
 	

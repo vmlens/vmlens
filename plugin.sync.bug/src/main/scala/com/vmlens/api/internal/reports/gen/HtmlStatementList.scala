@@ -16,17 +16,17 @@ object $_scalate_$htmlStatementList_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n<div class=\"" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n<div class=\"" )
       $_scope_1.renderVariable("containerTyp", false)
-      $_scalate_$_context << ( "\">\n \n\n\n \n \n" )
+      $_scalate_$_context << ( "\">\r\n \r\n\r\n\r\n \r\n \r\n" )
       $_scope_1.section("issues") { $_scope_2 =>
-        $_scalate_$_context << ( "<div class=\"row text-left\">  \n  \n\n" )
+        $_scalate_$_context << ( "<div class=\"row text-left\">  \r\n  \r\n\r\n" )
         $_scope_2.renderVariable("name", false)
-        $_scalate_$_context << ( "\n\n\n  \n </div> \n\n\n\n  \n  \n    \n" )
+        $_scalate_$_context << ( "\r\n\r\n\r\n  \r\n </div> \r\n\r\n\r\n\r\n  \r\n  \r\n    \r\n" )
       }
-      $_scalate_$_context << ( "</div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "</div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
-      $_scalate_$_context << ( "\n\n\n\n\n" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n\r\n\r\n" )
     }
   }
 }

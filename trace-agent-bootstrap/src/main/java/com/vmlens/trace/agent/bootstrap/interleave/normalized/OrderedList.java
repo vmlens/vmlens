@@ -194,7 +194,7 @@ public class OrderedList implements TLinkable<OrderedList> {
 	
 	
 
-	/**
+	/*
 	 * 
 	 * kann null zurückliefern wenn keine liste erzeugt werden konnte
 	 * 

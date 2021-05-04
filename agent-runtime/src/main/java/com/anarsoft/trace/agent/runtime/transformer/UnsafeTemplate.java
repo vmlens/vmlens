@@ -7,7 +7,7 @@ import org.objectweb.asm.Opcodes;
 
 
 
-/**
+/*
  * 
  * 	// mv.visitMethodInsn(opcode, owner, name, desc);
 		 if(  opcode == INVOKEVIRTUAL && owner.equals("sun/misc/Unsafe") && name.equals( "compareAndSwapObject")

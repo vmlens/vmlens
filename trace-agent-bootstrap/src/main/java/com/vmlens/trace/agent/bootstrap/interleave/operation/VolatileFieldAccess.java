@@ -57,7 +57,6 @@ public class VolatileFieldAccess implements  OperationTyp {
 	public boolean createsSyncRelation(OperationTyp other) {
 		
 		
-		
 		if( other instanceof  VolatileFieldAccess)
 		{	
 			

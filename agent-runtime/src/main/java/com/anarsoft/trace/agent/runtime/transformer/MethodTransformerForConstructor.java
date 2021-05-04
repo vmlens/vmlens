@@ -12,7 +12,7 @@ import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
 import com.anarsoft.trace.agent.runtime.transformer.template.ApplyMethodTemplate;
 import com.anarsoft.trace.agent.runtime.transformer.template.TemplateMethodDesc;
 
-/**
+/*
  * Für Constructoren wird aktuell nor monitor enter und exit getraced
  * 
  * 

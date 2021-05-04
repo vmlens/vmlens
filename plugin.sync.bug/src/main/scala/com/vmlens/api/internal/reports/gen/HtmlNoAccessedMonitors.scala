@@ -16,11 +16,11 @@ object $_scalate_$htmlNoAccessedMonitors_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n<div class=\"" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n<div class=\"" )
       $_scope_1.renderVariable("containerTyp", false)
-      $_scalate_$_context << ( "\">\n \n<p>No monitor information available. <a href=\"" )
+      $_scalate_$_context << ( "\">\r\n \r\n<p>No monitor information available. <a href=\"" )
       $_scope_1.renderVariable("apacheRoot", false)
-      $_scalate_$_context << ( "/help/manual/#no-accessed-monitors\">See  here</a> for more information and possible solutions.</p> \n \n \n \n </div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "/help/manual/#no-accessed-monitors\">See  here</a> for more information and possible solutions.</p> \r\n \r\n \r\n \r\n </div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
     }
   }

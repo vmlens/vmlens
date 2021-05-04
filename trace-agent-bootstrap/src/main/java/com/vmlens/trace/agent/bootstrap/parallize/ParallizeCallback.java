@@ -28,12 +28,7 @@ public class ParallizeCallback {
 	
 	
 	
-	/**
-	 * 
-	 * 
-	 * @param toBeJoined
-	 * @param millis
-	 */
+
 
 	public static void afterThreadJoin(Thread toBeJoined, long millis) {
 

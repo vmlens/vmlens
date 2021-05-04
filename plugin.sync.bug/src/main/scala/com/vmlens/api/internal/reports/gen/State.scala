@@ -16,16 +16,16 @@ object $_scalate_$state_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.section("hasState") { $_scope_2 =>
-        $_scalate_$_context << ( "<ul>\n" )
+        $_scalate_$_context << ( "<ul>\r\n" )
         $_scope_2.section("state") { $_scope_3 =>
           $_scalate_$_context << ( "<li>" )
           $_scope_3.renderVariable("name", true)
-          $_scalate_$_context << ( "</li>\n" )
+          $_scalate_$_context << ( "</li>\r\n" )
         }
-        $_scalate_$_context << ( "</ul>\n\n" )
+        $_scalate_$_context << ( "</ul>\r\n\r\n" )
       }
       $_scope_1.invertedSection("hasState") { $_scope_4 =>
-        $_scalate_$_context << ( "None\n" )
+        $_scalate_$_context << ( "None\r\n" )
       }
     }
   }

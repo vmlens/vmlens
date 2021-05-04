@@ -16,11 +16,11 @@ object $_scalate_$htmlBuyOrAnswer_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n<div class=\"container-fluid\">\n \n \n <p>Your license has expired. Buy a new license <a href=\"" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n<div class=\"container-fluid\">\r\n \r\n \r\n <p>Your license has expired. Buy a new license <a href=\"" )
       $_scope_1.renderVariable("apacheRoot", false)
       $_scalate_$_context << ( "/pricing/\">license here...</a> Or extend your trial license by answering the following  <a href=\"" )
       $_scope_1.renderVariable("apacheRoot", false)
-      $_scalate_$_context << ( "/extend-licence/\">three questions...</a></p>\n \n\n \n \n </div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "/extend-licence/\">three questions...</a></p>\r\n \r\n\r\n \r\n \r\n </div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
     }
   }

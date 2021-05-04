@@ -16,29 +16,29 @@ object $_scalate_$htmlSharedMonitorDetail_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n " )
+      $_scalate_$_context << ( "\r\n\r\n " )
       $_scope_1.section("issues") { $_scope_2 =>
         $_scope_2.section("parent") { $_scope_3 =>
           $_scalate_$_context << ( "<div class=\"" )
           $_scope_3.renderVariable("containerTyp", false)
-          $_scalate_$_context << ( "\">\n \n \n   <div class=\"row\">\n    <div>\n      <h2 class=\"text-left\">" )
+          $_scalate_$_context << ( "\">\r\n \r\n \r\n   <div class=\"row\">\r\n    <div>\r\n      <h2 class=\"text-left\">" )
           $_scope_3.renderVariable("name", false)
-          $_scalate_$_context << ( "</h1>\n    </div>\n  </div>\n \n\n \n" )
+          $_scalate_$_context << ( "</h1>\r\n    </div>\r\n  </div>\r\n \r\n\r\n \r\n" )
           $_scope_3.partial("parentTableWithMonitor")
-          $_scalate_$_context << ( "\n  \n \n\n</div>\n\n" )
+          $_scalate_$_context << ( "\r\n  \r\n \r\n\r\n</div>\r\n\r\n" )
         }
         $_scope_2.section("child") { $_scope_4 =>
           $_scalate_$_context << ( "<div class=\"" )
           $_scope_4.renderVariable("containerTyp", false)
-          $_scalate_$_context << ( "\">\n \n \n   <div class=\"row\">\n    <div>\n      <h2 class=\"text-left\">" )
+          $_scalate_$_context << ( "\">\r\n \r\n \r\n   <div class=\"row\">\r\n    <div>\r\n      <h2 class=\"text-left\">" )
           $_scope_4.renderVariable("name", false)
-          $_scalate_$_context << ( "</h2>\n    </div>\n  </div>\n \n\n \n" )
+          $_scalate_$_context << ( "</h2>\r\n    </div>\r\n  </div>\r\n \r\n\r\n \r\n" )
           $_scope_4.partial("methodWithMonitorTable")
-          $_scalate_$_context << ( "\n  \n \n\n\n</div>\n\n\n" )
+          $_scalate_$_context << ( "\r\n  \r\n \r\n\r\n\r\n</div>\r\n\r\n\r\n" )
         }
         $_scope_2.section("threadList") { $_scope_5 =>
           $_scope_5.partial("threadList")
-          $_scalate_$_context << ( "\n\n\n" )
+          $_scalate_$_context << ( "\r\n\r\n\r\n" )
         }
       }
       $_scope_1.partial("footer")

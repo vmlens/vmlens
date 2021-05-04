@@ -161,8 +161,10 @@
       </executions>
       
                     <configuration>
-  
+  <source>1.6</source>
           <excludePackageNames>*.internal.*</excludePackageNames>
+     
+       <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
      
         </configuration>
       

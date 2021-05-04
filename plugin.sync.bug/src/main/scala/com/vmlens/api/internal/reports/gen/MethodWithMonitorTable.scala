@@ -15,7 +15,7 @@ object $_scalate_$methodWithMonitorTable_mustache {
       import _root_.org.fusesource.scalate.mustache._
       
       val $_scope_1 = Scope($_scalate_$_context)
-      $_scalate_$_context << ( "<div class=\"row text-left\">\n  \n  \n <table class=\"table table-striped\" >\n  <tr>\n    <th>Level</th>\n    <th>Method</th>\n     <th>Contains Monitors?</th>\n    <th>Called Methods Contains Monitors?</th>\n    <th>Thread Count</th>\n  </tr>\n  \n\n\n" )
+      $_scalate_$_context << ( "<div class=\"row text-left\">\r\n  \r\n  \r\n <table class=\"table table-striped\" >\r\n  <tr>\r\n    <th>Level</th>\r\n    <th>Method</th>\r\n     <th>Contains Monitors?</th>\r\n    <th>Called Methods Contains Monitors?</th>\r\n    <th>Thread Count</th>\r\n  </tr>\r\n  \r\n\r\n\r\n" )
       $_scope_1.section("issues") { $_scope_2 =>
         $_scope_2.section("color") { $_scope_3 =>
           $_scalate_$_context << ( "<tr style=\" background-color: " )
@@ -27,7 +27,7 @@ object $_scalate_$methodWithMonitorTable_mustache {
         }
         $_scalate_$_context << ( "<td>" )
         $_scope_2.renderVariable("group", false)
-        $_scalate_$_context << ( "</td>\n \n<td>\n    " )
+        $_scalate_$_context << ( "</td>\r\n \r\n<td>\r\n    " )
         $_scope_2.section("parentChildLink") { $_scope_5 =>
           $_scalate_$_context << ( "<a   href=\"" )
           $_scope_5.renderVariable("parentChildLink", false)
@@ -38,34 +38,34 @@ object $_scalate_$methodWithMonitorTable_mustache {
         $_scope_2.invertedSection("parentChildLink") { $_scope_6 =>
           $_scope_6.renderVariable("name", true)
         }
-        $_scalate_$_context << ( "</td> \n \n \n " )
+        $_scalate_$_context << ( "</td> \r\n \r\n \r\n " )
         $_scope_2.section("textInsteadState") { $_scope_7 =>
-          $_scalate_$_context << ( "<td colspan=\"2\" >\n " )
+          $_scalate_$_context << ( "<td colspan=\"2\" >\r\n " )
           $_scope_7.renderVariable("textInsteadState", false)
-          $_scalate_$_context << ( "\n  </td>\n " )
+          $_scalate_$_context << ( "\r\n  </td>\r\n " )
         }
         $_scope_2.invertedSection("textInsteadState") { $_scope_8 =>
-          $_scalate_$_context << ( "<td>\n" )
+          $_scalate_$_context << ( "<td>\r\n" )
           $_scope_8.section("methodContainsMonitor") { $_scope_9 =>
-            $_scalate_$_context << ( "<strong>Yes</strong>\n" )
+            $_scalate_$_context << ( "<strong>Yes</strong>\r\n" )
           }
           $_scope_8.invertedSection("methodContainsMonitor") { $_scope_10 =>
-            $_scalate_$_context << ( "No\n" )
+            $_scalate_$_context << ( "No\r\n" )
           }
-          $_scalate_$_context << ( "</td>\n \n <td>\n " )
+          $_scalate_$_context << ( "</td>\r\n \r\n <td>\r\n " )
           $_scope_8.section("calledMethodContainsMonitor") { $_scope_11 =>
-            $_scalate_$_context << ( "<strong>Yes</strong>\n" )
+            $_scalate_$_context << ( "<strong>Yes</strong>\r\n" )
           }
           $_scope_8.invertedSection("calledMethodContainsMonitor") { $_scope_12 =>
-            $_scalate_$_context << ( "No\n" )
+            $_scalate_$_context << ( "No\r\n" )
           }
-          $_scalate_$_context << ( "</td>   \n  \n " )
+          $_scalate_$_context << ( "</td>   \r\n  \r\n " )
         }
-        $_scalate_$_context << ( "<td>\n" )
+        $_scalate_$_context << ( "<td>\r\n" )
         $_scope_2.renderVariable("threadCount", false)
-        $_scalate_$_context << ( "\n</td>    \n    \n   \n  </tr>\n\n" )
+        $_scalate_$_context << ( "\r\n</td>    \r\n    \r\n   \r\n  </tr>\r\n\r\n" )
       }
-      $_scalate_$_context << ( "</table>   \n    \n     \n</div>" )
+      $_scalate_$_context << ( "</table>   \r\n    \r\n     \r\n</div>" )
     }
   }
 }

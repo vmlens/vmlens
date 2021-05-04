@@ -16,9 +16,9 @@ object $_scalate_$noParallelize_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n\n<div class=\"" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n\r\n<div class=\"" )
       $_scope_1.renderVariable("containerTyp", false)
-      $_scalate_$_context << ( "\">\n \n<p>No memory accesses were parallelized. To parallelize the memory access configure the classes or methods in which the memory access should be parallelized in your maven configuration. For example:</p>\n<pre class=\"brush: xml\">\n&lt;parallelize&gt;\n   &lt;method&gt;com.regression.pattern.TestPatternMonitor.c()&lt;/method&gt;\n   &lt;method&gt;com.regression.pattern.TestPatternFields.testAddOne()&lt;/method&gt;\n&lt;/parallelize&gt;\n</pre>\n\n</div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "\">\r\n \r\n<p>No memory accesses were parallelized. To parallelize the memory access configure the classes or methods in which the memory access should be parallelized in your maven configuration. For example:</p>\r\n<pre class=\"brush: xml\">\r\n&lt;parallelize&gt;\r\n   &lt;method&gt;com.regression.pattern.TestPatternMonitor.c()&lt;/method&gt;\r\n   &lt;method&gt;com.regression.pattern.TestPatternFields.testAddOne()&lt;/method&gt;\r\n&lt;/parallelize&gt;\r\n</pre>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
     }
   }

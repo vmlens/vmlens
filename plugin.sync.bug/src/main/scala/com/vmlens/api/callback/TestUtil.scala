@@ -11,8 +11,8 @@ object TestUtil {
     def log4StabilityTest(source: String, mavenMojo: MavenMojo) {
 
   //  if (System.getProperty("stabilityTest") != null && System.getProperty("stabilityTest").equals("true")) {
-      FileUtils.copyDirectoryToDirectory(mavenMojo.getReportDir(), new File("/tmp/stabilityTest/report" + "/"));
-      FileUtils.copyDirectoryToDirectory(new File(source), new File("/tmp/stabilityTest/event" +  "/"));
+      FileUtils.copyDirectoryToDirectory(mavenMojo.getReportDir(), new File("C:/TEMP/stabilityTest/report" + "/"));
+      FileUtils.copyDirectoryToDirectory(new File(source), new File("C:/TEMP/stabilityTest/event" +  "/"));
   //  }
   }
   
@@ -29,17 +29,17 @@ object TestUtil {
     
     def writeAgentRun( mavenMojo: MavenMojo)
     {
-      new File( "/tmp/agentRun" ).createNewFile();
+      new File( "C:/TEMP/agentRun" ).createNewFile();
     }
     
     
     def deleteAgentRun()
     {
-          new File( "/tmp/agentRun" ).delete();
+          new File( "C:/TEMP/agentRun" ).delete();
     }
     
   
-    def agentWasRun() =    new File("/tmp/agentRun" ).exists();
+    def agentWasRun() =    new File("C:/TEMP/agentRun" ).exists();
       
     
     

@@ -107,7 +107,7 @@ public class CallbackState {
     }
     
     
-	/**
+	/*
 	 * 
 	 * Im Tomcat werden meine schönen callback states
 	 * weggeworfen. Daher werden sie hier gecached
@@ -188,7 +188,7 @@ public class CallbackState {
 	
 
 	
-	/**
+	/*
 	 * 
 	 * SlidingWindow < 1 (default wert 0) heißt nicht tracen.
 	 * 
@@ -204,7 +204,7 @@ public class CallbackState {
 	}
 	
 	
-	/**
+	/*
 	 * Der shutdown hook setzt slidingWindow auf -1
 	 * @return
 	 */

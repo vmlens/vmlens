@@ -16,33 +16,33 @@ object $_scalate_$htmlIndex_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n<!-- htmlIndex.mustache -->\n\n<div class=\"" )
+      $_scalate_$_context << ( "\r\n\r\n<!-- htmlIndex.mustache -->\r\n\r\n<div class=\"" )
       $_scope_1.renderVariable("containerTyp", false)
-      $_scalate_$_context << ( "\">\n \n" )
+      $_scalate_$_context << ( "\">\r\n \r\n" )
       $_scope_1.section("issues") { $_scope_2 =>
-        $_scalate_$_context << ( "<div class=\"row text-left\">\n\n" )
+        $_scalate_$_context << ( "<div class=\"row text-left\">\r\n\r\n" )
         $_scope_2.renderVariable("index", false)
-        $_scalate_$_context << ( "\n\n    <a   href=\"" )
+        $_scalate_$_context << ( "\r\n\r\n    <a   href=\"" )
         $_scope_2.renderVariable("link", false)
-        $_scalate_$_context << ( "\" >\n" )
+        $_scalate_$_context << ( "\" >\r\n" )
         $_scope_2.section("imagePath") { $_scope_3 =>
           $_scalate_$_context << ( "<img src=\"" )
           $_scope_3.renderVariable("imagePath", true)
-          $_scalate_$_context << ( "\" />\n" )
+          $_scalate_$_context << ( "\" />\r\n" )
         }
         $_scope_2.renderVariable("breakableName", true)
-        $_scalate_$_context << ( "</a>\n  </div>\n  \n  \n  " )
+        $_scalate_$_context << ( "</a>\r\n  </div>\r\n  \r\n  \r\n  " )
         $_scope_2.section("children") { $_scope_4 =>
-          $_scalate_$_context << ( "<div class=\"row text-left\">\n     <div class=\"col-sm-1\"> </div>\n     <div class=\"col-sm-11 text-left\">\n        <a   href=\"" )
+          $_scalate_$_context << ( "<div class=\"row text-left\">\r\n     <div class=\"col-sm-1\"> </div>\r\n     <div class=\"col-sm-11 text-left\">\r\n        <a   href=\"" )
           $_scope_4.renderVariable("link", false)
           $_scalate_$_context << ( "\"   style=\" font-size: 14px;\"  >" )
           $_scope_4.renderVariable("breakableName", true)
-          $_scalate_$_context << ( "</a> \n       </div>\n    </div>\n  \n " )
+          $_scalate_$_context << ( "</a> \r\n       </div>\r\n    </div>\r\n  \r\n " )
         }
       }
-      $_scalate_$_context << ( "</div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "</div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
-      $_scalate_$_context << ( "\n" )
+      $_scalate_$_context << ( "\r\n" )
     }
   }
 }

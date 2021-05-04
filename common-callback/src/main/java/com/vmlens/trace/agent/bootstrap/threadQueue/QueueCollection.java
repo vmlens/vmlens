@@ -71,7 +71,7 @@ public class QueueCollection {
 	
 	
 
-	/**
+	/*
 	 * haupt methode
 	 * 	
 	 * 

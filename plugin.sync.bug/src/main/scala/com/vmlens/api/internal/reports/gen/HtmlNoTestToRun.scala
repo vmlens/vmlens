@@ -16,9 +16,9 @@ object $_scalate_$htmlNoTestToRun_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n<div class=\"" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n<div class=\"" )
       $_scope_1.renderVariable("containerTyp", false)
-      $_scalate_$_context << ( "\">\n \n<h1 class=\"text-center\">No tests to run.</h1>  \n\n\n\n\n</div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "\">\r\n \r\n<h1 class=\"text-center\">No tests to run.</h1>  \r\n\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
     }
   }

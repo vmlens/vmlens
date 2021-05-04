@@ -17,15 +17,15 @@ object $_scalate_$threadList_mustache {
       val $_scope_1 = Scope($_scalate_$_context)
       $_scalate_$_context << ( "<div class=\"" )
       $_scope_1.renderVariable("containerTyp", false)
-      $_scalate_$_context << ( "\">\n \n \n   <div class=\"row\">\n    <div>\n      <h2 class=\"text-left\">" )
+      $_scalate_$_context << ( "\">\r\n \r\n \r\n   <div class=\"row\">\r\n    <div>\r\n      <h2 class=\"text-left\">" )
       $_scope_1.renderVariable("name", false)
-      $_scalate_$_context << ( "</h2>\n    </div>\n  </div>\n \n\n\n" )
+      $_scalate_$_context << ( "</h2>\r\n    </div>\r\n  </div>\r\n \r\n\r\n\r\n" )
       $_scope_1.section("issues") { $_scope_2 =>
-        $_scalate_$_context << ( "<div class=\"row text-left\"> \n\n<img src=\"../" )
+        $_scalate_$_context << ( "<div class=\"row text-left\"> \r\n\r\n<img src=\"../" )
         $_scope_2.renderVariable("image", true)
         $_scalate_$_context << ( "\" />" )
         $_scope_2.renderVariable("name", false)
-        $_scalate_$_context << ( "\n\n\n </div>\n\n" )
+        $_scalate_$_context << ( "\r\n\r\n\r\n </div>\r\n\r\n" )
       }
       $_scalate_$_context << ( "</div>" )
     }

@@ -16,9 +16,9 @@ object $_scalate_$htmlBuy_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n<div class=\"container-fluid\">\n \n<p>Your license has expired. Buy a new <a href=\"" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n<div class=\"container-fluid\">\r\n \r\n<p>Your license has expired. Buy a new <a href=\"" )
       $_scope_1.renderVariable("apacheRoot", false)
-      $_scalate_$_context << ( "/pricing/\">license here...</a> Or contact me under thomas.krieger@vmlens.com, if you need more time testing vmlens.</p>\n \n \n </div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "/pricing/\">license here...</a> Or contact me under thomas.krieger@vmlens.com, if you need more time testing vmlens.</p>\r\n \r\n \r\n </div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
     }
   }

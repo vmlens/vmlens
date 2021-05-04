@@ -16,18 +16,18 @@ object $_scalate_$htmlMemoryMonitorAccessDetail_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n\n\n\n<div class=\"" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n\r\n\r\n\r\n<div class=\"" )
       $_scope_1.renderVariable("containerTyp", false)
-      $_scalate_$_context << ( "\">\n \n <!--  " )
+      $_scalate_$_context << ( "\">\r\n \r\n <!--  " )
       $_scope_1.section("issues") { $_scope_2 =>
-        $_scalate_$_context << ( "-->\n \n  <div class=\"row text-left\">\n  \n    <!-- " )
+        $_scalate_$_context << ( "-->\r\n \r\n  <div class=\"row text-left\">\r\n  \r\n    <!-- " )
         $_scope_2.section("imagePath") { $_scope_3 =>
-          $_scalate_$_context << ( "-->\n    <img src=\"" )
+          $_scalate_$_context << ( "-->\r\n    <img src=\"" )
           $_scope_3.renderVariable("root", false)
           $_scope_3.renderVariable("imagePath", true)
-          $_scalate_$_context << ( "\" />\n    <!-- " )
+          $_scalate_$_context << ( "\" />\r\n    <!-- " )
         }
-        $_scalate_$_context << ( "-->\n    " )
+        $_scalate_$_context << ( "-->\r\n    " )
         $_scope_2.section("hasLink") { $_scope_4 =>
           $_scalate_$_context << ( "<a   href=\"" )
           $_scope_4.renderVariable("root", false)
@@ -39,16 +39,16 @@ object $_scalate_$htmlMemoryMonitorAccessDetail_mustache {
         $_scope_2.invertedSection("hasLink") { $_scope_5 =>
           $_scope_5.renderVariable("name", false)
         }
-        $_scalate_$_context << ( "</div>\n  \n \n  <!--  " )
+        $_scalate_$_context << ( "</div>\r\n  \r\n \r\n  <!--  " )
         $_scope_2.section("children") { $_scope_6 =>
-          $_scalate_$_context << ( "-->\n  \n\n   <div class=\"row text-left\">\n     <div class=\"col-sm-1\"> </div>\n    <div class=\"col-sm-11 text-left\">\n    <!-- " )
+          $_scalate_$_context << ( "-->\r\n  \r\n\r\n   <div class=\"row text-left\">\r\n     <div class=\"col-sm-1\"> </div>\r\n    <div class=\"col-sm-11 text-left\">\r\n    <!-- " )
           $_scope_6.section("imagePath") { $_scope_7 =>
-            $_scalate_$_context << ( "-->\n    <img src=\"" )
+            $_scalate_$_context << ( "-->\r\n    <img src=\"" )
             $_scope_7.renderVariable("root", false)
             $_scope_7.renderVariable("imagePath", true)
-            $_scalate_$_context << ( "\" />\n    <!-- " )
+            $_scalate_$_context << ( "\" />\r\n    <!-- " )
           }
-          $_scalate_$_context << ( "-->\n     " )
+          $_scalate_$_context << ( "-->\r\n     " )
           $_scope_6.section("hasLink") { $_scope_8 =>
             $_scalate_$_context << ( "<a   href=\"" )
             $_scope_8.renderVariable("root", false)
@@ -60,16 +60,16 @@ object $_scalate_$htmlMemoryMonitorAccessDetail_mustache {
           $_scope_6.invertedSection("hasLink") { $_scope_9 =>
             $_scope_9.renderVariable("name", false)
           }
-          $_scalate_$_context << ( "</div>\n  </div>\n  \n   <!--  " )
+          $_scalate_$_context << ( "</div>\r\n  </div>\r\n  \r\n   <!--  " )
           $_scope_6.section("children") { $_scope_10 =>
-            $_scalate_$_context << ( "-->\n  \n    <div class=\"row text-left\">\n     <div class=\"text-justify col-sm-2\"> </div>\n    <div class=\"col-sm-10 text-left\"  >\n    <!-- " )
+            $_scalate_$_context << ( "-->\r\n  \r\n    <div class=\"row text-left\">\r\n     <div class=\"text-justify col-sm-2\"> </div>\r\n    <div class=\"col-sm-10 text-left\"  >\r\n    <!-- " )
             $_scope_10.section("imagePath") { $_scope_11 =>
-              $_scalate_$_context << ( "-->\n    <img src=\"" )
+              $_scalate_$_context << ( "-->\r\n    <img src=\"" )
               $_scope_11.renderVariable("root", false)
               $_scope_11.renderVariable("imagePath", true)
-              $_scalate_$_context << ( "\" />\n    <!-- " )
+              $_scalate_$_context << ( "\" />\r\n    <!-- " )
             }
-            $_scalate_$_context << ( "-->\n     " )
+            $_scalate_$_context << ( "-->\r\n     " )
             $_scope_10.section("hasLink") { $_scope_12 =>
               $_scalate_$_context << ( "<a   href=\"" )
               $_scope_12.renderVariable("root", false)
@@ -81,13 +81,13 @@ object $_scalate_$htmlMemoryMonitorAccessDetail_mustache {
             $_scope_10.invertedSection("hasLink") { $_scope_13 =>
               $_scope_13.renderVariable("name", false)
             }
-            $_scalate_$_context << ( "</div>\n  </div>\n  \n  \n\n  \n \n\n<!--  " )
+            $_scalate_$_context << ( "</div>\r\n  </div>\r\n  \r\n  \r\n\r\n  \r\n \r\n\r\n<!--  " )
           }
-          $_scalate_$_context << ( "-->\n\n<!--  " )
+          $_scalate_$_context << ( "-->\r\n\r\n<!--  " )
         }
-        $_scalate_$_context << ( "-->\n \n \n \n \n \n \n \n \n \n  <!--  " )
+        $_scalate_$_context << ( "-->\r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n  <!--  " )
       }
-      $_scalate_$_context << ( "-->\n\n</div>\n\n\n\n\n" )
+      $_scalate_$_context << ( "-->\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n" )
       $_scope_1.partial("footer")
     }
   }

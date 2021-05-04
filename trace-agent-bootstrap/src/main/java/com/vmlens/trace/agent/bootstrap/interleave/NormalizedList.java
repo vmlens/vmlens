@@ -23,7 +23,7 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.set.hash.TIntHashSet;
 
 
-/**
+/*
  * 
  * aus der thread list müssen wir eine map von Operation -> Position erzeugen
  * 
@@ -157,9 +157,7 @@ public class NormalizedList {
 				 
 			
 			}
-			
-			
-			
+				
 			
 			access.operation.execute(monitorStack, exclusiveStack , sharedStack);
 				
@@ -175,21 +173,6 @@ public class NormalizedList {
 			 threadIndex2Position2MonitorArray[currentIndex][i] =  new MonitorState(monitorArray, exclusiveArray ,sharedArray );
 		 }
 	 
-		
-//		if(ParallizeFacade.ENABLE_LOGGING)
-//		 {
-//			 for(int x = 0 ; x < maxPositionPerThread.length ; x++)
-//			 {
-//				 for(int y = 0 ; y < maxPositionPerThread[x] ; y++)
-//				 {
-//					 
-//					 AgentLogCallback.log(x + " " + y + " " +  threadIndex2Position2MonitorArray[x][y] );
-//				 }
-//				 
-//				 
-//			 }
-//		 }
-		 
 		 
 		 
 		return new NormalizedList(operation2PositionList,maxPositionPerThread,threadIndex2Position2MonitorArray);
@@ -312,13 +295,6 @@ public class NormalizedList {
 	}
  
 	
-	/*
-	 * 	Normalized 	 -> Relation Map
-	Relation Map ->	Order
-	Order		 -> Graph
-	Topolical Sort ->  Unmögliche  Schritte erkennen prozess schritte (https://en.wikipedia.org/wiki/Topological_sorting)
-	prozess schritte prüfen locks ob verlauf möglich ist
-	 */
 	
 	
 	

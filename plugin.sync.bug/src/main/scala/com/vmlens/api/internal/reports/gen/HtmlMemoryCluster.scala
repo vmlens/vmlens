@@ -16,21 +16,21 @@ object $_scalate_$htmlMemoryCluster_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n\n\n" )
+      $_scalate_$_context << ( "\r\n\r\n\r\n\r\n" )
       $_scope_1.section("issues") { $_scope_2 =>
-        $_scalate_$_context << ( "<div class=\"row\">\n    <div class=\"col-md-6 col-md-offset-3\">\n      <h1 class=\"text-center\">Cluster " )
+        $_scalate_$_context << ( "<div class=\"row\">\r\n    <div class=\"col-md-6 col-md-offset-3\">\r\n      <h1 class=\"text-center\">Cluster " )
         $_scope_2.renderVariable("number", false)
-        $_scalate_$_context << ( "</h1>\n    </div>\n  </div>\n\n\n <div class=\"" )
+        $_scalate_$_context << ( "</h1>\r\n    </div>\r\n  </div>\r\n\r\n\r\n <div class=\"" )
         $_scope_2.renderVariable("containerTyp", false)
-        $_scalate_$_context << ( "\">\n\n<div class=\"row\">\n      <h3 >Shared State Accessed From:</h3>\n</div>\n\n\n " )
+        $_scalate_$_context << ( "\">\r\n\r\n<div class=\"row\">\r\n      <h3 >Shared State Accessed From:</h3>\r\n</div>\r\n\r\n\r\n " )
         $_scope_2.partial("parentTable")
-        $_scalate_$_context << ( "\n\n\n\n<div class=\"row\">\n  \n\n\n\n<div class=\"row\">\n      <h3 >Shared State</h3>\n</div>\n\n\n <ul class=\"list-group\">\n\n" )
+        $_scalate_$_context << ( "\r\n\r\n\r\n\r\n<div class=\"row\">\r\n  \r\n\r\n\r\n\r\n<div class=\"row\">\r\n      <h3 >Shared State</h3>\r\n</div>\r\n\r\n\r\n <ul class=\"list-group\">\r\n\r\n" )
         $_scope_2.section("memory") { $_scope_3 =>
           $_scalate_$_context << ( "<li class=\"list-group-item\">" )
           $_scope_3.renderVariable("name", false)
-          $_scalate_$_context << ( "</li>\n" )
+          $_scalate_$_context << ( "</li>\r\n" )
         }
-        $_scalate_$_context << ( "</ul>   \n  \n  \n</div>\n\n\n\n</div>\n\n\n" )
+        $_scalate_$_context << ( "</ul>   \r\n  \r\n  \r\n</div>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n" )
       }
       $_scope_1.partial("footer")
     }

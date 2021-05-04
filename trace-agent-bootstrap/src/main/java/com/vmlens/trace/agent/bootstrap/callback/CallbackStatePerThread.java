@@ -72,7 +72,7 @@ public class CallbackStatePerThread {
     //public int stackTraceBasedDoNotTraceField;
     
     
-    /**
+    /*
      * 
      * wenn innerhal anarsoft soll nichts getracet werden
      * 
@@ -293,7 +293,7 @@ public class CallbackStatePerThread {
 	 }
 	  
 	 
-	 /**
+	 /*
 	  * 
 	  * Note: stackTraceBasedDoNotTrace is used for filtering class loading.  Nicht entfernen ansonsten laeuft vmlens zu lange.
 	  * 

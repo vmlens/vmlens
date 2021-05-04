@@ -11,32 +11,6 @@ public class LockStatementCallback {
 
 	public static final AnarsoftWeakHashMap<LockIdAndOrder> objectToOrder =
 		    new AnarsoftWeakHashMap<LockIdAndOrder>();
-
-
-	
-
-
-//	protected static void pruneKeys() {
-//
-//		Reference reference  = referenceQueue.poll();
-//		while( reference != null )
-//		{
-//			objectToOrder.remove(reference);
-//			reference  = referenceQueue.poll();
-//		}
-//
-//	}
-
-
-	/*
-	 * 0 aqcuire/release
-	 * 1 fullyRelease acquireQueued
-	 * 2 setExclusiveOwnerThread
-	 * 3 tryAcquire
-	 * 4 stamped lock
-	 * 
-	 */
-	
 	
 	
 	
@@ -113,7 +87,7 @@ public class LockStatementCallback {
 
 	
 	
-	/**
+	/*
 	 *     a negative value on failure; zero if acquisition in shared mode succeeded but no subsequent shared-mode acquire can succeed; and a positive value if acquisition in shared mode succeeded and subsequent shared-mode acquires might also succeed, in which case a subsequent waiting thread must check availability. (Support for three different return values enables this method to be used in contexts where acquires only sometimes act exclusively.) Upon success, this object has been acquired.
 	 * @param result
 	 * @param in

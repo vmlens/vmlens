@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.threadQueue;
 
-/**
+/*
  * 
  * reader thread
  * 		state: idle -> stopped
@@ -43,7 +43,7 @@ public class PerThreadQueue {
 	}
 	
 	
-	/**
+	/*
 	 * 
 	 *     wenn null
 	 *     		

@@ -39,7 +39,7 @@ pluginBundle {
 
 
 dependencies {
-
+    api gradleApi()
     implementation 'com.google.guava:guava:23.0'
     api 'com.vmlens:interleave:' + version
     testImplementation 'junit:junit:4.12'
@@ -49,7 +49,7 @@ gradlePlugin {
     plugins {
         interleavePlugin {
             id = 'com.vmlens.interleave'
-            displayName = 'Concurrent unit tests' 
+         
             description = 'unit-testing multi-threaded applications on the JVM made easy' 
             implementationClass = 'com.vmlens.InterleavePlugin'
         }

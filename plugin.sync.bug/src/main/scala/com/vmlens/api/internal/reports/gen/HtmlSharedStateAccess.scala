@@ -16,22 +16,22 @@ object $_scalate_$htmlSharedStateAccess_mustache {
       
       val $_scope_1 = Scope($_scalate_$_context)
       $_scope_1.partial("header")
-      $_scalate_$_context << ( "\n\n " )
+      $_scalate_$_context << ( "\r\n\r\n " )
       $_scope_1.section("issues") { $_scope_2 =>
         $_scope_2.section("access") { $_scope_3 =>
           $_scalate_$_context << ( "<div class=\"" )
           $_scope_3.renderVariable("containerTyp", false)
-          $_scalate_$_context << ( "\">\n \n \n   <div class=\"row\">\n    <div>\n      <h2 class=\"text-left\">" )
+          $_scalate_$_context << ( "\">\r\n \r\n \r\n   <div class=\"row\">\r\n    <div>\r\n      <h2 class=\"text-left\">" )
           $_scope_3.renderVariable("name", false)
-          $_scalate_$_context << ( "</h1>\n    </div>\n  </div>\n \n\n \n" )
+          $_scalate_$_context << ( "</h1>\r\n    </div>\r\n  </div>\r\n \r\n\r\n \r\n" )
           $_scope_3.partial("parentTable")
-          $_scalate_$_context << ( "\n  \n \n\n</div>\n\n" )
+          $_scalate_$_context << ( "\r\n  \r\n \r\n\r\n</div>\r\n\r\n" )
         }
         $_scope_2.section("detail") { $_scope_4 =>
           $_scope_4.partial("sharedStateList")
-          $_scalate_$_context << ( "\n\n\n" )
+          $_scalate_$_context << ( "\r\n\r\n\r\n" )
         }
-        $_scalate_$_context << ( "\u00b4\n" )
+        $_scalate_$_context << ( "\u00b4\r\n" )
       }
       $_scope_1.partial("footer")
     }
