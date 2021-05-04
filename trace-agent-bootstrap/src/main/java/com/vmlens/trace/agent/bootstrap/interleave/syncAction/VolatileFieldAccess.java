@@ -1,8 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.interleave.syncAction;
 
-import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
+import static com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.TLinkableForPotentialOrder.linked;
 
-public class VolatileFieldAccess extends SyncAction {
+import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
+import com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrderFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrderListFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrderSingle;
+import static com.vmlens.trace.agent.bootstrap.interleave.syncAction.TLinkableForPotentialOrderFactory.linked;
+import gnu.trove.list.linked.TLinkedList;
+
+public class VolatileFieldAccess extends SyncAction implements PotentialOrderFactory {
 	
 	 static final int MIN_OPERATION = 3;
 	
@@ -30,7 +38,7 @@ public class VolatileFieldAccess extends SyncAction {
 		}
 			
 		
-		return text + threadIndex;
+		return text + threadIndex + "_" + position;
 		
 	}
 
@@ -51,20 +59,36 @@ public class VolatileFieldAccess extends SyncAction {
 
 
 	@Override
-	public boolean createsSyncRelation(SyncAction other) {
+	public void addPotentialOrderFactory(CreatePotentialOrderFactoryContext context,
+			TLinkedList<TLinkableForPotentialOrderFactory> list) {
+		list.add(linked(this));
+		
+	}
+
+
+
+	@Override
+	public void addPotentialOrder(PotentialOrderFactory other, PotentialOrderListFactory orderList) {
 		if( other instanceof  VolatileFieldAccess)
 		{	
 			if(((VolatileFieldAccess) other).threadIndex == threadIndex) {
-				return false;
+				return;
 			}
 			
 			
-			return  (operation | ((VolatileFieldAccess) other).operation ) >= MIN_OPERATION;
+			if(  (operation | ((VolatileFieldAccess) other).operation ) >= MIN_OPERATION) {
+				orderList.addPotential( linked( new PotentialOrderSingle(  new LeftBeforeRight(this ,(VolatileFieldAccess) other ) , 
+						new LeftBeforeRight((VolatileFieldAccess) other ,this )) )) ;
+			}
 		}
 		else
 		{
-			return false;
+			return;
 		}
 	}
+		
+	
+
+
 
 }

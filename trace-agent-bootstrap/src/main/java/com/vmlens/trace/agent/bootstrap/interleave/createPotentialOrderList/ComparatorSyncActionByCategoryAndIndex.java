@@ -15,8 +15,19 @@ public class ComparatorSyncActionByCategoryAndIndex implements Comparator<TLinka
 			return Integer.compare(o1.syncAction.category(), o2.syncAction.category());
 		}
 		
+		if(o1.syncAction.id() !=  o2.syncAction.id())
+		{
+			return  Integer.compare(o1.syncAction.id(), o2.syncAction.id());
+		}
 		
-		return  Integer.compare(o1.syncAction.id(), o2.syncAction.id());
+		
+		if(o1.syncAction.threadIndex !=  o2.syncAction.threadIndex)
+		{
+			return  Integer.compare(o1.syncAction.threadIndex, o2.syncAction.threadIndex);
+		}
+		
+		
+		return  Integer.compare(o1.syncAction.position, o2.syncAction.position);
 	}
 
 }

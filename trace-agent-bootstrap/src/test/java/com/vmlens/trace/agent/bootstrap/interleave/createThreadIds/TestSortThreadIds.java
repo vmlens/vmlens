@@ -39,7 +39,7 @@ public class TestSortThreadIds {
 			
 		TLinkableForSyncAction[] result = new SortThreadIds().sort(partialOrder, TWO_THREADS);
 		
-	    assertEquals(  "[R_0, R_1, W_0, W_1]" ,    Arrays.toString(	result) );
+	    assertEquals(  "[R_0_0, R_1_0, W_0_1, W_1_1]" ,    Arrays.toString(	result) );
 		
 	}
 	
@@ -60,7 +60,7 @@ public class TestSortThreadIds {
 			
         TLinkableForSyncAction[] result = new SortThreadIds().sort(partialOrder, TWO_THREADS);
 		
-	    assertEquals(  "[R_0, W_0, R_1, W_1]" ,    Arrays.toString(	result ) );
+	    assertEquals(  "[R_0_0, W_0_1, R_1_0, W_1_1]" ,    Arrays.toString(	result ) );
 		
 	}
 	
@@ -105,7 +105,7 @@ public class TestSortThreadIds {
 			
 		  TLinkableForSyncAction[]  result = new SortThreadIds().sort(partialOrder, THREE_THREADS);
 		
-		  assertEquals(  "[R_0, W_0, R_2, W_2, R_1, W_1]" ,    Arrays.toString(	result ) );
+		  assertEquals(  "[R_0_0, W_0_1, R_2_0, W_2_1, R_1_0, W_1_1]" ,    Arrays.toString(	result ) );
 		
 	}
 	

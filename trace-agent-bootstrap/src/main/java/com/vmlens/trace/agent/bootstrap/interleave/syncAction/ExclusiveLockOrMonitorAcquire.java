@@ -1,5 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.syncAction;
 
-public class MonitorAcquire {
+public class ExclusiveLockOrMonitorAcquire {
 
 }

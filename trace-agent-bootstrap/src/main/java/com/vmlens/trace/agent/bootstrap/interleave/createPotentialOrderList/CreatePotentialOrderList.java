@@ -1,10 +1,18 @@
 package com.vmlens.trace.agent.bootstrap.interleave.createPotentialOrderList;
 
+import static com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.TLinkableForPotentialOrder.linked;
+
 import java.util.Arrays;
 
 import com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrderListFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrderSingle;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.TLinkableForPotentialOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.syncAction.CreatePotentialOrderFactoryContext;
+import com.vmlens.trace.agent.bootstrap.interleave.syncAction.SyncAction;
+import com.vmlens.trace.agent.bootstrap.interleave.syncAction.TLinkableForPotentialOrderFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.syncAction.TLinkableForSyncAction;
-import static com.vmlens.trace.agent.bootstrap.interleave.createPotentialOrderList.TLinkableForPotentialOrder.linked;
+
 import gnu.trove.list.linked.TLinkedList;
 
 /**
@@ -30,12 +38,12 @@ import gnu.trove.list.linked.TLinkedList;
  * callback
  * 
  * 
- * algo:
- * 		sort
- * 		if same category and id 
- *           all combinations
- * 		
- * 		remove from potential order list,  sort and if higher than 2 do not add to new list
+ * algorithm:
+ * 	1) sort
+ * 	2) search for deadlocks
+ *  3) add found deadlocks to context
+ *  4) create PotentialOrderFactory list
+ *  5) create Potential orders through PotentialOrderFactory list. 
  * 
  */
 
@@ -43,33 +51,52 @@ import gnu.trove.list.linked.TLinkedList;
 public class CreatePotentialOrderList {
 	
 	
-	public  TLinkableForPotentialOrder[] create(TLinkableForSyncAction[] syncActions) {
+	public  PotentialOrderListFactory create(TLinkableForSyncAction[] syncActions) {
 		Arrays.sort( syncActions , new ComparatorSyncActionByCategoryAndIndex()  );
 		
-		TLinkedList<TLinkableForPotentialOrder> result = new TLinkedList<TLinkableForPotentialOrder>();
+		TLinkedList<TLinkableForPotentialOrderFactory> factoryList = new TLinkedList<TLinkableForPotentialOrderFactory>();
+		CreatePotentialOrderFactoryContext context = new CreatePotentialOrderFactoryContext();
 		
-		for( int start = 0 ; start < syncActions.length; start++ ) {
-			addForSyncAction(start, syncActions, result);
+		int currentCategory = SyncAction.UNDEFINED_CATEGORY;
+		int currentId = SyncAction.UNDEFINED_ID;
+		
+		
+		for( int i = 0 ; i < syncActions.length; i++ ) {
+		
+			if(  syncActions[i].syncAction.category() !=   currentCategory ||  
+					syncActions[i].syncAction.id() !=   currentId ) {
+				context.reset();
+			
+			    currentId       =  syncActions[i].syncAction.id();
+			    currentCategory = syncActions[i].syncAction.category();
+			
+			}
+			
+			syncActions[i].syncAction.addPotentialOrderFactory(context, factoryList);
+			
 		}
 		
 		
-		return result.toArray(new TLinkableForPotentialOrder[0]);
+		TLinkableForPotentialOrderFactory[] factoryArray = factoryList.toArray(new TLinkableForPotentialOrderFactory[0]);
+		PotentialOrderListFactory result = new PotentialOrderListFactory();
+		
+		for( int start = 0 ; start < factoryArray.length; start++ ) {
+			addForSyncAction(start, factoryArray, result);
+		}
+		
+		
+		return result;
 	}
 	
 	
-	private void addForSyncAction(int start,TLinkableForSyncAction[] syncActions,TLinkedList<TLinkableForPotentialOrder> result  ) {
-		for( int i = start + 1 ;   i <syncActions.length; i++ ) {
-			if(  syncActions[start].syncAction.category() !=    syncActions[i].syncAction.category() ||  
-					syncActions[start].syncAction.id() !=    syncActions[i].syncAction.id() ) {
+	private void addForSyncAction(int start,TLinkableForPotentialOrderFactory[] factoryArray,PotentialOrderListFactory result  ) {
+		for( int i = start + 1 ;   i <factoryArray.length; i++ ) {
+			if(  factoryArray[start].factory.category() !=    factoryArray[i].factory.category() ||  
+					factoryArray[start].factory.id() !=    factoryArray[i].factory.id() ) {
 				return;
 			}
 			
-			if(   syncActions[start].syncAction.createsSyncRelation(syncActions[i].syncAction)  ) {
-				result.add( linked( new PotentialOrderSingle(  new LeftBeforeRight(syncActions[start].syncAction ,syncActions[i].syncAction ) , 
-						new LeftBeforeRight(syncActions[i].syncAction ,syncActions[start].syncAction )) )) ;
-			}
-			
-			
+			factoryArray[start].factory.addPotentialOrder(factoryArray[i].factory  , result  );	
 			
 		}
 			

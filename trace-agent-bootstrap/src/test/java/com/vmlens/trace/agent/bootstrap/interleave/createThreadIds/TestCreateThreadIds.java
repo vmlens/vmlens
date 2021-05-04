@@ -12,8 +12,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import com.vmlens.trace.agent.bootstrap.interleave.createPotentialOrderList.PotentialOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.createPotentialOrderList.PotentialOrderSingle;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrderSingle;
 import com.vmlens.trace.agent.bootstrap.interleave.syncAction.TLinkableForSyncAction;
 
 public class TestCreateThreadIds {
@@ -39,9 +39,9 @@ public class TestCreateThreadIds {
 		
 		assertEquals(3 , count);
 		Set<String> expected = new HashSet<String>();
-		expected.add("[R_0, W_0, R_1, W_1]");
-		expected.add("[R_0, R_1, W_0, W_1]");
-		expected.add("[R_1, W_1, R_0, W_0]");
+		expected.add("[R_0_0, W_0_1, R_1_0, W_1_1]");
+		expected.add("[R_0_0, R_1_0, W_0_1, W_1_1]");
+		expected.add("[R_1_0, W_1_1, R_0_0, W_0_1]");
 		
 		assertEquals( expected , result );
 	} 

@@ -1,10 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.interleave.syncAction;
 
+import gnu.trove.list.linked.TLinkedList;
+
 public abstract class SyncAction {
 
+	
+	public static final int UNDEFINED_CATEGORY = -1;
+	public static final int UNDEFINED_ID = -1;
+	
 	public static final int VOLATILE_FIELD = 0;
-	
-	
 	
 	
 	public final int threadIndex;
@@ -46,6 +50,10 @@ public abstract class SyncAction {
 	
 	public abstract int category();
 	public abstract int id();
-	public abstract boolean createsSyncRelation( SyncAction other );
+	
+	
+	public abstract void addPotentialOrderFactory(CreatePotentialOrderFactoryContext context,TLinkedList<TLinkableForPotentialOrderFactory> list);
+	
+	
 	
 }

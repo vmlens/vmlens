@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.createThreadIds;
 
 import java.util.Arrays;
 
-import com.vmlens.trace.agent.bootstrap.interleave.createPotentialOrderList.PotentialOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.PotentialOrderIndex.PotentialOrderIndexState;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.syncAction.TLinkableForSyncAction;
 
 import gnu.trove.list.linked.TLinkedList;

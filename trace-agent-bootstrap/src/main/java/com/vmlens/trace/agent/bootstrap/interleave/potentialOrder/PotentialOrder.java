@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.createPotentialOrderList;
+package com.vmlens.trace.agent.bootstrap.interleave.potentialOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.TLinkableForLeftBeforeRight;
 

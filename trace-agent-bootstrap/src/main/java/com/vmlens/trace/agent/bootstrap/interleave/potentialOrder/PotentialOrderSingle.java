@@ -1,7 +1,8 @@
-package com.vmlens.trace.agent.bootstrap.interleave.createPotentialOrderList;
+package com.vmlens.trace.agent.bootstrap.interleave.potentialOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.TLinkableForLeftBeforeRight;
+
 import static com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.TLinkableForLeftBeforeRight.linked;
 
 
@@ -39,6 +40,37 @@ public class PotentialOrderSingle extends PotentialOrder  {
 	@Override
 	public String toString() {
 		return "(" + optionA + ")|(" + optionB + ")";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((optionA == null) ? 0 : optionA.hashCode());
+		result = prime * result + ((optionB == null) ? 0 : optionB.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PotentialOrderSingle other = (PotentialOrderSingle) obj;
+		if (optionA == null) {
+			if (other.optionA != null)
+				return false;
+		} else if (!optionA.equals(other.optionA))
+			return false;
+		if (optionB == null) {
+			if (other.optionB != null)
+				return false;
+		} else if (!optionB.equals(other.optionB))
+			return false;
+		return true;
 	}
 	
 	
