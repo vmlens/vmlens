@@ -23,7 +23,7 @@ public class SortThreadIds {
 	 * first element of the list. at each insert if LEFT_COMES_AFTER check if
 	 * prevoius elements with different thread index all are before the new element
 	 * 
-	 * index -> element in array addAt -> start of the list, or element after
+	 * index - element in array addAt - start of the list, or element after
 	 * current added
 	 * 
 	 */

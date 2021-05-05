@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.PotentialOrderIndex.PotentialOrderIndexState;
 import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.PotentialOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.TLinkableForPotentialOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.syncAction.TLinkableForSyncAction;
 
 import gnu.trove.list.linked.TLinkedList;
@@ -31,11 +32,11 @@ public class CreateThreadIds {
 	private static final SortThreadIds SORT_THREAD_IDS = new SortThreadIds(); 
 	
 	private final  TLinkableForSyncAction[] syncActions;
-	private final PotentialOrder[] potentialOrderArray;
+	private final TLinkableForPotentialOrder[] potentialOrderArray;
 	private final PotentialOrderIndex index;
 	private  TLinkableForSyncAction[] next;
 	
-	public CreateThreadIds(TLinkableForSyncAction[] syncActions,PotentialOrder[] potentialOrderArray) {
+	public CreateThreadIds(TLinkableForSyncAction[] syncActions,TLinkableForPotentialOrder[] potentialOrderArray) {
 		super();
 		this.syncActions = syncActions;
 		this.potentialOrderArray = potentialOrderArray;
@@ -53,7 +54,7 @@ public class CreateThreadIds {
 			
 			for(int i = 0 ; i < potentialOrderArray.length ; i++ ) 	{
 				
-				potentialOrderArray[i].add(leftBeforeRightList, currentIndex.isSet(i));  
+				potentialOrderArray[i].potentialOrder.add(leftBeforeRightList, currentIndex.isSet(i));  
 				
 			}
 			
@@ -77,12 +78,6 @@ public class CreateThreadIds {
 		return temp;
 	}
 
-
-	@Override
-	public int hashCode() {
-		
-		return Arrays.hashCode(potentialOrderArray);
-	}
 
 
 	@Override

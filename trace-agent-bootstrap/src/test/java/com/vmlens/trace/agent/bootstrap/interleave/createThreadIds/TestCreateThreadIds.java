@@ -5,7 +5,8 @@ import static com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.TestPa
 import static com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.TestPartialOrder.WRITE_THREAD_0;
 import static com.vmlens.trace.agent.bootstrap.interleave.createThreadIds.TestPartialOrder.WRITE_THREAD_1;
 import static org.junit.Assert.assertEquals;
-
+import static com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.TLinkableForPotentialOrder.linked;
+import com.vmlens.trace.agent.bootstrap.interleave.potentialOrder.TLinkableForPotentialOrder;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +19,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.syncAction.TLinkableForSyncAc
 
 public class TestCreateThreadIds {
 	
-	final PotentialOrder[] potentialOrderArray = new PotentialOrder[] { new PotentialOrderSingle( new LeftBeforeRight(READ_THREAD_0,WRITE_THREAD_1) ,  new LeftBeforeRight(WRITE_THREAD_1,READ_THREAD_0)) ,
-			new  PotentialOrderSingle(new LeftBeforeRight( WRITE_THREAD_0 , READ_THREAD_1    ) , new LeftBeforeRight(   READ_THREAD_1 , WRITE_THREAD_0   ) )  };
+	final TLinkableForPotentialOrder[] potentialOrderArray = new TLinkableForPotentialOrder[] { linked(new PotentialOrderSingle( new LeftBeforeRight(READ_THREAD_0,WRITE_THREAD_1) , new LeftBeforeRight(WRITE_THREAD_1,READ_THREAD_0))) ,
+			 linked(new  PotentialOrderSingle(new LeftBeforeRight( WRITE_THREAD_0 , READ_THREAD_1    ) , new LeftBeforeRight(   READ_THREAD_1 , WRITE_THREAD_0   ) ))  };
 	
 	@Test
 	public void testVolatileReadWrite() {
@@ -51,13 +52,12 @@ public class TestCreateThreadIds {
 	{
 		CreateThreadIds firstCreateThreadIds = new CreateThreadIds(TestSortThreadIds.TWO_THREADS,potentialOrderArray);
 		
-		 PotentialOrder[] secondPotentialOrderArray = new PotentialOrder[] { new PotentialOrderSingle( new LeftBeforeRight(READ_THREAD_0,WRITE_THREAD_1) ,  new LeftBeforeRight(WRITE_THREAD_1, READ_THREAD_0)  ) ,
-					new  PotentialOrderSingle(new LeftBeforeRight( WRITE_THREAD_0 , READ_THREAD_1    ), new LeftBeforeRight(  READ_THREAD_1  , WRITE_THREAD_0  ) )  };
+		TLinkableForPotentialOrder[] secondPotentialOrderArray = new TLinkableForPotentialOrder[] { linked( new PotentialOrderSingle( new LeftBeforeRight(READ_THREAD_0,WRITE_THREAD_1) ,  new LeftBeforeRight(WRITE_THREAD_1, READ_THREAD_0)  )) ,
+				linked( new  PotentialOrderSingle(new LeftBeforeRight( WRITE_THREAD_0 , READ_THREAD_1    ), new LeftBeforeRight(  READ_THREAD_1  , WRITE_THREAD_0  )) )  };
 		
 		CreateThreadIds secondCreateThreadIds = new CreateThreadIds(TestSortThreadIds.TWO_THREADS,secondPotentialOrderArray);
 		
 		assertEquals( firstCreateThreadIds , secondCreateThreadIds  );
-		assertEquals( firstCreateThreadIds.hashCode() , secondCreateThreadIds.hashCode()  );
 		
 	}
 	

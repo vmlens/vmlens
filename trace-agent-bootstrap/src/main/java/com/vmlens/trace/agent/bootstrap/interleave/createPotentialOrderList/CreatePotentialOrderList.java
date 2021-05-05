@@ -18,24 +18,26 @@ import gnu.trove.list.linked.TLinkedList;
 /**
  * 
  * volatile fields
- * 				read/write/atomice
+ * 		read/write/atomic
+ * 		read - write generates relation between read and write
  * 
  * 
- * locks/monitor
- * 			 
- * 
- * 
- * 
- * deadlocks
- * 		extra, does not apply to all monitor/lock operations
- *      -> depends on the other monitors flow, additional
- * 
- * 
+ * exclusive locks/monitor
+ * 		release before acquire for both locks	 
  * 
  * atomic
  * 
  * 
  * callback
+ * 
+ * 
+ * deadlocks
+ * 		extra, does not apply to all monitor/lock operations
+ *      depends on the other monitors flow, additional
+ * 
+ * 
+ * 
+ * 
  * 
  * 
  * algorithm:
@@ -51,7 +53,10 @@ import gnu.trove.list.linked.TLinkedList;
 public class CreatePotentialOrderList {
 	
 	
-	public  PotentialOrderListFactory create(TLinkableForSyncAction[] syncActions) {
+	public  PotentialOrderListFactory create(TLinkableForSyncAction[] doNoChange) {
+		
+		TLinkableForSyncAction[] syncActions = doNoChange.clone();
+		
 		Arrays.sort( syncActions , new ComparatorSyncActionByCategoryAndIndex()  );
 		
 		TLinkedList<TLinkableForPotentialOrderFactory> factoryList = new TLinkedList<TLinkableForPotentialOrderFactory>();

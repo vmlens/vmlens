@@ -14,7 +14,27 @@ public class TLinkableForPotentialOrder  implements  TLinkable<TLinkableForPoten
 	
 
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TLinkableForPotentialOrder other = (TLinkableForPotentialOrder) obj;
+		if (potentialOrder == null) {
+			if (other.potentialOrder != null)
+				return false;
+		} else if (!potentialOrder.equals(other.potentialOrder))
+			return false;
+		return true;
+	}
+
+
+
+
+
 	@Override
 	public String toString() {
 		return potentialOrder.toString();
