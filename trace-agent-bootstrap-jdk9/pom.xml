@@ -96,29 +96,13 @@
                   <pattern>gnu</pattern>
                   <shadedPattern>com.vmlens.shaded.gnu</shadedPattern>
                 </relocation>
-                
-               
-<!--                 <relocation> -->
-<!--                   <pattern>com.vmlens.concurrent.collections</pattern> -->
-<!--                   <shadedPattern>com.vmlens.shaded.concurrent.collections</shadedPattern> -->
-<!--                 </relocation> -->
-                
-                
-                
-                
+
                  <relocation>
                   <pattern>org.jctools</pattern>
                   <shadedPattern>com.vmlens.shaded.org.jctools</shadedPattern>
-                </relocation> 
-                
-            
-                
-                
-                
+                </relocation>
               </relocations>
-              
-              
-              
+
             </configuration>
           </execution>
         </executions>

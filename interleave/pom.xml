@@ -1,252 +1,248 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion> 
-    
-   <parent>
-    <groupId>com.vmlens</groupId>
-    <artifactId>vmlens</artifactId>
-    <version>1.1.6</version>
-    <relativePath>../vmlens/pom.xml</relativePath>
-  </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>interleave</artifactId>
+    <parent>
+        <groupId>com.vmlens</groupId>
+        <artifactId>vmlens</artifactId>
+        <version>1.1.6</version>
+        <relativePath>../vmlens/pom.xml</relativePath>
+    </parent>
 
-  <packaging>maven-plugin</packaging>
+    <artifactId>interleave</artifactId>
 
-  <name>interleave</name>
+    <packaging>maven-plugin</packaging>
 
-  <url>https://github.com/vmlens/vlmens</url>   
+    <name>interleave</name>
 
- <licenses>
-      <license>
-        <name>Apache License, Version 2.0</name>
-        <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        <distribution>repo</distribution>
-      </license>
-   </licenses>
-   
-   <organization>
-    <name>vmlens</name>
-    <url>https://www.vmlens.com</url>
-  </organization>
-   
-   
+    <url>https://github.com/vmlens/vlmens</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>vmlens</name>
+        <url>https://www.vmlens.com</url>
+    </organization>
+
+
     <developers>
-       <developer>
-         <name>Thomas Krieger</name>
-         <email>thomas.krieger@vmlens.com</email>
-         <organization>vmlens</organization>
-         <organizationUrl>https://www.vmlens.com</organizationUrl>
-      </developer>
+        <developer>
+            <name>Thomas Krieger</name>
+            <email>thomas.krieger@vmlens.com</email>
+            <organization>vmlens</organization>
+            <organizationUrl>https://www.vmlens.com</organizationUrl>
+        </developer>
     </developers>
-    
+
     <scm>
-         <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
-         <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
-         <url>git@github.com:vmlens/vlmens.git</url>
+        <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
+        <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
+        <url>git@github.com:vmlens/vlmens.git</url>
     </scm>
-	
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-      <version>2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.plugin-tools</groupId>
-      <artifactId>maven-plugin-annotations</artifactId>
-      <version>3.5.1</version>
-       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-utils</artifactId>
-      <version>3.0.8</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
-      <scope>test</scope>
-    </dependency>
-    
-   <dependency>
-      <groupId>com.vmlens</groupId>
-      <artifactId>plugin.sync.bug</artifactId>
-      <version>${project.version}</version>  
-    </dependency>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-    
-    
-<dependency>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>2.20</version>
-</dependency>
-    
-    
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
 
-  <build>
-    <pluginManagement>
-  
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <goalPrefix>interleave</goalPrefix>
-          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-        </configuration>
-        <executions>
-              <execution>
-                        <id>default-descriptor</id>
-                        <phase>process-classes</phase>
+        <dependency>
+            <groupId>com.vmlens</groupId>
+            <artifactId>plugin.sync.bug</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.20</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>3.5.1</version>
+                    <configuration>
+                        <goalPrefix>interleave</goalPrefix>
+                        <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-descriptor</id>
+                            <phase>process-classes</phase>
+                            <goals>
+                                <goal>descriptor</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>help-goal</id>
+                            <goals>
+                                <goal>helpmojo</goal>
+                            </goals>
+                        </execution>
+
+                    </executions>
+                </plugin>
+
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.8.2</version>
+
+                </plugin>
+
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.5.1</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
+                </plugin>
+
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-plugin-plugin</artifactId>
+                                        <versionRange>[3.2,)</versionRange>
+                                        <goals>
+                                            <goal>descriptor</goal>
+                                            <goal>helpmojo</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+
+            </plugins>
+
+        </pluginManagement>
+
+        <resources>
+            <resource>
+                <directory>_dist</directory>
+            </resource>
+        </resources>
+
+
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>install</phase>
                         <goals>
-                            <goal>descriptor</goal>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>../com.anarsoft.plugin.sync.bug/agent_lib</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>_dist/agent_lib/</directory>
+
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
-          <execution>
-            <id>help-goal</id>
-            <goals>
-              <goal>helpmojo</goal>
-            </goals>
-          </execution>
-      
-        </executions>
-      </plugin>
-   
-   
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>3.8.2</version>
-        
-      </plugin>
-   
-    
-    
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
+                </executions>
 
-    <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-    <plugin>
-    	<groupId>org.eclipse.m2e</groupId>
-    	<artifactId>lifecycle-mapping</artifactId>
-    	<version>1.0.0</version>
-    	<configuration>
-    		<lifecycleMappingMetadata>
-    			<pluginExecutions>
-    				<pluginExecution>
-    					<pluginExecutionFilter>
-    						<groupId>org.apache.maven.plugins</groupId>
-    						<artifactId>maven-plugin-plugin</artifactId>
-    						<versionRange>[3.2,)</versionRange>
-    						<goals>
-    							<goal>descriptor</goal>
-    							<goal>helpmojo</goal>
-    						</goals>
-    					</pluginExecutionFilter>
-    					<action>
-    						<ignore></ignore>
-    					</action>
-    				</pluginExecution>
-    			</pluginExecutions>
-    		</lifecycleMappingMetadata>
-    	</configuration>
-    </plugin>
+                <configuration>
 
-    </plugins>
-    
-      </pluginManagement>
-    
-    <resources>
-            <resource>
-              <directory>_dist</directory>
-      </resource>
-    </resources>
-      
+                    <excludePackageNames>*.internal.*</excludePackageNames>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                </configuration>
 
-    <plugins>
-        
-     <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>install</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>../com.anarsoft.plugin.sync.bug/agent_lib</outputDirectory>
-              <resources>          
-                <resource>
-                  <directory>_dist/agent_lib/</directory>
-                   
-                </resource>
-              </resources>              
-            </configuration>            
-          </execution>
-        </executions>
-      </plugin>      
- 
-      
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-javadoc-plugin</artifactId>
-      <executions>
-        <execution>
-          <id>attach-javadocs</id>
-          <goals>
-            <goal>jar</goal>
-          </goals>
-        </execution>
-      </executions>
-      
-                    <configuration>
-  
-          <excludePackageNames>*.internal.*</excludePackageNames>
-         <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-        </configuration>
-      
-    </plugin> 
-        
-    </plugins>    
-    
-    
-      
-  </build>
-  
-   <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.5.1</version>        
-           <configuration>
-          <goalPrefix>interleave</goalPrefix>
-          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-        </configuration>
-        
-        
-      </plugin>
-    </plugins>
-  </reporting>    
+            </plugin>
+
+        </plugins>
+
+
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <goalPrefix>interleave</goalPrefix>
+                    <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                </configuration>
+
+
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>

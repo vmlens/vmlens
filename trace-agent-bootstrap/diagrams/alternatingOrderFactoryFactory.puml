@@ -1,0 +1,12 @@
+@startuml
+
+start
+
+:buildSyncActionUnderLock;
+:filterFreeSyncActions;
+:buildSyncActionBlocksForDeadlock;
+:buildSyncActionBlocks;
+
+stop
+
+@enduml

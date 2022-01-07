@@ -1,171 +1,153 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-     <parent>
-    <groupId>com.vmlens</groupId>
-    <artifactId>vmlens</artifactId>
-    <version>1.1.6</version>
-    <relativePath>../vmlens/pom.xml</relativePath>
-  </parent>
-  
-  
+    <parent>
+        <groupId>com.vmlens</groupId>
+        <artifactId>vmlens</artifactId>
+        <version>1.1.6</version>
+        <relativePath>../vmlens/pom.xml</relativePath>
+    </parent>
 
-  <artifactId>agent-runtime</artifactId>
-  <name>agent-runtime</name>
-  <url>https://github.com/vmlens/vlmens</url>   
 
- <licenses>
-      <license>
-        <name>Apache License, Version 2.0</name>
-        <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        <distribution>repo</distribution>
-      </license>
-   </licenses>
-   
-   <organization>
-    <name>vmlens</name>
-    <url>https://www.vmlens.com</url>
-  </organization>
-   
-   
+    <artifactId>agent-runtime</artifactId>
+    <name>agent-runtime</name>
+    <url>https://github.com/vmlens/vlmens</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>vmlens</name>
+        <url>https://www.vmlens.com</url>
+    </organization>
+
     <developers>
-       <developer>
-         <name>Thomas Krieger</name>
-         <email>thomas.krieger@vmlens.com</email>
-         <organization>vmlens</organization>
-         <organizationUrl>https://www.vmlens.com</organizationUrl>
-      </developer>
+        <developer>
+            <name>Thomas Krieger</name>
+            <email>thomas.krieger@vmlens.com</email>
+            <organization>vmlens</organization>
+            <organizationUrl>https://www.vmlens.com</organizationUrl>
+        </developer>
     </developers>
-    
+
     <scm>
-         <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
-         <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
-         <url>git@github.com:vmlens/vlmens.git</url>
+        <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
+        <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
+        <url>git@github.com:vmlens/vlmens.git</url>
     </scm>
-	
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.vmlens</groupId>
-      <artifactId>trace-agent-bootstrap-jdk9</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-    
-   <dependency>
-    <groupId>com.vmlens</groupId>
-    <artifactId>common-transform</artifactId>
-     <version>${project.version}</version>
-</dependency>
-    
-  </dependencies>
-  
-  
- 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-		
-		
-		<plugin>
-        <!-- NOTE: We don't need a groupId specification because the group is
-             org.apache.maven.plugins ...which is assumed by default.
-         -->
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-           <finalName>agent_runtime</finalName> 
-  		   <appendAssemblyId>false</appendAssemblyId>
-          
-          
-        </configuration>
-        
-        <executions>
-          <execution>
-            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-            <phase>package</phase> <!-- bind to the packaging phase -->
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-        
-      </plugin>
-		
-      
-        <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.1.2</version>
-        <executions>
-          <execution>
-            <id>copy-installed</id>
-            <phase>install</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>${project.groupId}</groupId>
-                  <artifactId>${project.artifactId}</artifactId>
-                  <version>${project.version}</version>
-                  <type>${project.packaging}</type>
-                  <destFileName>agent_runtime.jar</destFileName>
-                </artifactItem>
-              </artifactItems>
-              <outputDirectory>../interleave/_dist/agent_lib</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      
-       <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-javadoc-plugin</artifactId>
-      <executions>
-        <execution>
-          <id>attach-javadocs</id>
-          <goals>
-            <goal>jar</goal>
-          </goals>
-        </execution>
-      </executions>
-      
-                    <configuration>
-    <source>1.6</source>
-          <excludePackageNames>*.internal.*</excludePackageNames>
-         <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-        </configuration>
-      
-    </plugin> 
-      
-		
-      </plugins>
-	</build> 
-  
-  
-  
-  
-  
-  
-  
-  
+    <dependencies>
+        <dependency>
+            <groupId>com.vmlens</groupId>
+            <artifactId>trace-agent-bootstrap-jdk9</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.vmlens</groupId>
+            <artifactId>common-transform</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <!-- NOTE: We don't need a groupId specification because the group is
+                     org.apache.maven.plugins ...which is assumed by default.
+                 -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>agent_runtime</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+
+
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-installed</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>${project.packaging}</type>
+                                    <destFileName>agent_runtime.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>../interleave/_dist/agent_lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>1.7</source>
+                    <excludePackageNames>*.internal.*</excludePackageNames>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

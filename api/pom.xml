@@ -1,97 +1,81 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
-    <groupId>com.vmlens</groupId>
-    <artifactId>vmlens</artifactId>
-    <version>1.1.6</version>
-    <relativePath>../vmlens/pom.xml</relativePath>
-  </parent>
-  
-  <artifactId>api</artifactId>
-  <packaging>jar</packaging>
+        <groupId>com.vmlens</groupId>
+        <artifactId>vmlens</artifactId>
+        <version>1.1.6</version>
+        <relativePath>../vmlens/pom.xml</relativePath>
+    </parent>
 
-  <name>api</name>
-  <url>https://github.com/vmlens/vlmens</url>
-  <description>api to control vmlens</description>
-	
+    <artifactId>api</artifactId>
+    <packaging>jar</packaging>
+
+    <name>api</name>
+    <url>https://github.com/vmlens/vlmens</url>
+    <description>api to control vmlens</description>
+
     <licenses>
-      <license>
-        <name>Apache License, Version 2.0</name>
-        <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        <distribution>repo</distribution>
-      </license>
-   </licenses>
-   
-   <organization>
-    <name>vmlens</name>
-    <url>https://www.vmlens.com</url>
-  </organization>
-   
-   
-    <developers>
-       <developer>
-         <name>Thomas Krieger</name>
-         <email>thomas.krieger@vmlens.com</email>
-         <organization>vmlens</organization>
-         <organizationUrl>https://www.vmlens.com</organizationUrl>
-      </developer>
-    </developers>
-    
-    <scm>
-         <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
-         <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
-         <url>git@github.com:vmlens/vlmens.git</url>
-    </scm>
-	
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-	
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-  
-  <build>		
- <plugins>
-     
-           <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-     
-     <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-javadoc-plugin</artifactId>
-      <executions>
-        <execution>
-          <id>attach-javadocs</id>
-          <goals>
-            <goal>jar</goal>
-          </goals>
-        </execution>
-      </executions>
-      
-                    <configuration>
-  
-          <excludePackageNames>*.internal.*</excludePackageNames>
-     
-     <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-        </configuration>
-      
-    </plugin> 
-    
-    </plugins>
- </build>
-  
-  
-  
-  
-  
-  
-  
+    <organization>
+        <name>vmlens</name>
+        <url>https://www.vmlens.com</url>
+    </organization>
+
+
+    <developers>
+        <developer>
+            <name>Thomas Krieger</name>
+            <email>thomas.krieger@vmlens.com</email>
+            <organization>vmlens</organization>
+            <organizationUrl>https://www.vmlens.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
+        <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
+        <url>git@github.com:vmlens/vlmens.git</url>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludePackageNames>*.internal.*</excludePackageNames>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

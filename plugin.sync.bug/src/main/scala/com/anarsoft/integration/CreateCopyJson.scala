@@ -1,9 +1,10 @@
 package com.anarsoft.integration
 
-import java.io._;
+import java.io._
 import scala.collection.mutable.ArrayBuffer
-import net.liftweb.json._;
+import net.liftweb.json._
 import net.liftweb.json.Extraction._
+import net.liftweb.json.JsonAST.render
 
 
 object CreateCopyJson {
@@ -38,7 +39,7 @@ object CreateCopyJson {
     
     
     
-   stream.println( pretty(render(decompose(copyDescription)))  );
+   stream.println(render(decompose(copyDescription))  );
     stream.close();
     
   }

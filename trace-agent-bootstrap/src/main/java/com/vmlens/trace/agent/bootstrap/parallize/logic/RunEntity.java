@@ -55,14 +55,7 @@ public class RunEntity {
 		return runState.isAtomicActivated(atomicId);
 	}
 	
-	
-	
-//	public void afterFieldAccess(CallbackStatePerThread callbackStatePerThread, int fieldId, int operation) {
-//		runState.afterFieldAccess(callbackStatePerThread, fieldId, operation);
-//	}
 
-	
-	
 	
 	public void afterThreadStart(CallbackStatePerThread callbackStatePerThread) {
 		runState.afterThreadStart(callbackStatePerThread);

@@ -5,8 +5,6 @@ import java.lang.reflect.Constructor;
 import gnu.trove.list.TLinkable;
 
 
-
-
 class InternalPerThreadQueue implements TLinkable<InternalPerThreadQueue> {
 
 	 final static int IDLE = 0;
@@ -16,22 +14,14 @@ class InternalPerThreadQueue implements TLinkable<InternalPerThreadQueue> {
 	
 	private InternalPerThreadQueue previous;
 	private InternalPerThreadQueue next;
-	
-	
+
     final int forSlidingWindowId;
-	
     volatile int state = IDLE;
-	
 	private static final long stateOffset;
 	
 	int index;
 	Object[] array;
-	
-	
-	
-	
-	
-	
+
 	private static final sun.misc.Unsafe UNSAFE;
 	
 	   

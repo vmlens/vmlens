@@ -1,17 +1,14 @@
 package com.vmlens.api.internal.reports.element
 
-import com.anarsoft.race.detection.process.interleave._
 import com.anarsoft.race.detection.model.result._
-import com.vmlens.api.internal.reports._
-
-import com.vmlens.api.MemoryAccessType
-import com.vmlens.api.internal.reports.CreateParallizedReportAlgo
+import com.anarsoft.race.detection.process.interleave._
+import com.vmlens.api.internal.reports.{CreateParallizedReportAlgo, _}
 
 class ReportInterleaveLoop(val nameInternal: String, val result: LoopResult, val modelFacade: ModelFacadeAll) extends ReportElement[ContextReport] {
 
   def name = Model2View.makeBreakable(nameInternal)
-  
-  
+
+
   def resultText() = result.toDisplayText();
 
   def count = result.count;
@@ -22,13 +19,11 @@ class ReportInterleaveLoop(val nameInternal: String, val result: LoopResult, val
 
   def imagePath = "img/" + result.icon.getName() + ".png"
 
- 
-  
-  
+
   def initialize(contextReport: ContextReport) {
     link = contextReport.elementDetailLink.createLink(
 
-      new ViewData((new CreateParallizedReportAlgo()).transformStatementEventList(result.list, modelFacade), Nil, nameInternal, None, "../", contextReport), None);
+      new ViewData((new CreateParallizedReportAlgo()).transformStatementEventList(result.list, modelFacade).toSeq, Nil, nameInternal, None, "../", contextReport), None);
 
   }
 

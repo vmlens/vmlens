@@ -1,61 +1,54 @@
 package com.anarsoft.race.detection.process.result
 
-import com.anarsoft.race.detection.model.result._;
-import com.anarsoft.race.detection.model.description.ThreadNames;
-import scala.collection.mutable.HashSet;
-import com.anarsoft.integration._;
-import scala.collection.mutable.HashMap;
-import scala.collection.mutable.ArrayBuffer
-import com.anarsoft.race.detection.process.workflow.SingleStep
-import com.anarsoft.race.detection.process.filter.FilterMap
-import com.anarsoft.race.detection.process.detectRaceConditions.EventWrapperDetectRaceConditions
-import com.anarsoft.race.detection.process.partialOrder.RaceConditionFoundException
-import com.vmlens.api.MethodDescription
 import com.anarsoft.config.ConfigValues
-import collection.JavaConverters._
+import com.anarsoft.race.detection.model.result._
+import com.anarsoft.race.detection.process.detectRaceConditions.EventWrapperDetectRaceConditions
+import com.anarsoft.race.detection.process.filter.FilterMap
+import com.anarsoft.race.detection.process.partialOrder.RaceConditionFoundException
+import com.anarsoft.race.detection.process.workflow.SingleStep
 import com.anarsoft.trace.agent.runtime.util.AntPatternMatcher
+import scala.collection.JavaConverters._
+import scala.collection.mutable.{ArrayBuffer, HashMap, HashSet}
 
-class StepFilterRaceConditions (val configValues: ConfigValues) extends SingleStep[ContextCreateModelFacade] {
-  
-   def getRaceFilterList() =
-    {
-      if (configValues.getSuppressIssues() == null) {
-        Nil;
-      } else {
-        configValues.getSuppressIssues().asScala
-      }
+class StepFilterRaceConditions(val configValues: ConfigValues) extends SingleStep[ContextCreateModelFacade] {
+
+  def getRaceFilterList() = {
+    if (configValues.getSuppressIssues() == null) {
+      Nil;
+    } else {
+      configValues.getSuppressIssues().asScala
     }
+  }
 
-  def take(name: String, firstMethodName: String, secondMethodName: String, filter: Seq[String]) =
-    {
+  def take(name: String, firstMethodName: String, secondMethodName: String, filter: scala.collection.Seq[String]) = {
 
-      val matcher = new AntPatternMatcher();
-      var take = true;
+    val matcher = new AntPatternMatcher();
+    var take = true;
 
-      for (x <- filter) {
+    for (x <- filter) {
 
-        if (x.contains('@')) {
-          val filterArray = x.split("@");
-          if (matcher.`match`(filterArray(0), name)) {
-            if (matcher.`match`(filterArray(1), secondMethodName)) {
-              take = false;
-            }
-            if (matcher.`match`(filterArray(1), firstMethodName)) {
-              take = false;
-            }
-
-          }
-
-        } else {
-          if (matcher.`match`(x, name)) {
+      if (x.contains('@')) {
+        val filterArray = x.split("@");
+        if (matcher.`match`(filterArray(0), name)) {
+          if (matcher.`match`(filterArray(1), secondMethodName)) {
             take = false;
           }
+          if (matcher.`match`(filterArray(1), firstMethodName)) {
+            take = false;
+          }
+
         }
 
+      } else {
+        if (matcher.`match`(x, name)) {
+          take = false;
+        }
       }
 
-      take
     }
+
+    take
+  }
 
   def execute(contextModelFacade: ContextCreateModelFacade) {
 
@@ -81,7 +74,7 @@ class StepFilterRaceConditions (val configValues: ConfigValues) extends SingleSt
       }
     }
 
-    contextModelFacade. filteredRaces = new HashSet[RaceCondition]();
+    contextModelFacade.filteredRaces = new HashSet[RaceCondition]();
 
     for (elem <- key2Race) {
       val toBeAdded = new ArrayBuffer[RaceConditionFoundException]
@@ -109,20 +102,15 @@ class StepFilterRaceConditions (val configValues: ConfigValues) extends SingleSt
     }
 
 
-
-
   }
 
-  def createRaceConditionElement(event: EventWrapperDetectRaceConditions) =
-    {
-      new RaceConditionElement(event.getLocationInClass(), StackTraceOrdinal(event.stackTraceOrdinal), event.operation, event.threadId, event.stacktraceOrdinal2MonitorId);
-    }
+  def createRaceConditionElement(event: EventWrapperDetectRaceConditions) = {
+    new RaceConditionElement(event.getLocationInClass(), StackTraceOrdinal(event.stackTraceOrdinal), event.operation, event.threadId, event.stacktraceOrdinal2MonitorId);
+  }
 
-  def createRace(race: RaceConditionFoundException, countOfOther: Int) =
-    {
-      new RaceCondition(createRaceConditionElement(race.read), createRaceConditionElement(race.write), countOfOther)
-    }
-  
-  
-  
+  def createRace(race: RaceConditionFoundException, countOfOther: Int) = {
+    new RaceCondition(createRaceConditionElement(race.read), createRaceConditionElement(race.write), countOfOther)
+  }
+
+
 }

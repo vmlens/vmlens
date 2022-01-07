@@ -32,8 +32,8 @@ target/*
 */.settings/*
 .classpath
 .project
-
-
+*/.idea/*
+*.iml
 
 lib/*
 _dist/*

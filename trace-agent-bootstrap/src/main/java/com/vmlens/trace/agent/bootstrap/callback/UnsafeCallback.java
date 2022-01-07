@@ -31,19 +31,19 @@ public class UnsafeCallback {
 	{
 	
 		 SynchronizedStatementCallback.monitorExit(in,methodId,-3);
-		 unsafe.monitorExit(in);
+	//	 unsafe.monitorExit(in);
 		 
 	}
 	
 	public static void monitorEnter(sun.misc.Unsafe unsafe, Object in, int methodId )
 	{
-		 unsafe.monitorEnter(in);
+	//	 unsafe.monitorEnter(in);
 		 SynchronizedStatementCallback.monitorEnter(in,methodId,-2);
 	}
 	
 	public static boolean tryMonitorEnter(sun.misc.Unsafe unsafe, Object in, int methodId )
 	{
-		 boolean success = unsafe.tryMonitorEnter(in);
+		 boolean success = true; //unsafe.tryMonitorEnter(in);
 		 
 		 if( success )
 		 {
