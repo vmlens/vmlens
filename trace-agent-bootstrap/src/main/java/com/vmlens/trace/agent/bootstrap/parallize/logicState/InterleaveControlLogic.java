@@ -58,28 +58,19 @@ public class InterleaveControlLogic {
 	public void afterOperation(long threadId, OperationTyp operation, long time) {
 		
 		   int operationCount = threadId2State.incrementOperationCount(threadId);
-		 
-		
-		
-		  
-		
-		    if(maximum_operation_per_thread_count > 0 &&   operationCount >maximum_operation_per_thread_count)
+
+
+		if(maximum_operation_per_thread_count > 0 &&   operationCount >maximum_operation_per_thread_count)
 		    {
 		    	hasNotTerminatingLoop = true;
 		    	throw new RuntimeException(operationCount  + " operations executedin the AllInterleavings instance + " +  runStateActive.whileLoopActive.allInterleavings.name +   ". This is more than the currently configured maximum. See https://vmlens.com/help/manual/#maximum-operation-count "
 		    			+ "for more information and possible solutions." 
 		    			 );
 		    }
-		    
-		    
 		
 			threadId2State.after(threadId , operation);
 			LogicState temp = logicState.afterOperation(threadId2State, threadId, time);
 			logicState = temp;
-	
-		
-		
-		
 	}
 
 

@@ -129,21 +129,17 @@ public abstract class RunLogicAbstract {
 
 	 void afterOperation(long threadId , OperationTyp operation) {
 		
-			try {	
-				
-					interleaveControlLogic.afterOperation(threadId, operation, System.currentTimeMillis());
-					notifyMonitor();
-					
-					waitTillActive(threadId);
-					
-					
-				
-				} catch (InterruptedException e) {
-					if (ParallizeFacade.ENABLE_LOGGING ) {
-						AgentLogCallback.log("afterOperation interrupt " + threadId + " " + operation);
-					}
-					
-					Thread.currentThread().interrupt();
+			try {
+				interleaveControlLogic.afterOperation(threadId, operation, System.currentTimeMillis());
+				notifyMonitor();
+				waitTillActive(threadId);
+
+			} catch (InterruptedException e) {
+				if (ParallizeFacade.ENABLE_LOGGING) {
+					AgentLogCallback.log("afterOperation interrupt " + threadId + " " + operation);
+				}
+
+				Thread.currentThread().interrupt();
 					
 				}
 		
