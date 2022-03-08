@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder
 
 import com.vmlens.test.TestLogger
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.Dsl.{ao, o, p}
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.FixedAndAlternatingOrder
-import com.vmlens.trace.agent.bootstrap.interleave.domain.{AlternatingOrderElement, LeftBeforeRight}
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.is

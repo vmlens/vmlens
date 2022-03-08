@@ -5,7 +5,9 @@ import java.nio.ByteBuffer;
 
 public interface SendEvent {
 	
-void writeFieldAccessEventGen (int slidingWindowId
+
+
+   void writeFieldAccessEventGen (int slidingWindowId
 , int     programCounter
 , int     fieldId
 , int     methodCounter
@@ -15,7 +17,10 @@ void writeFieldAccessEventGen (int slidingWindowId
 , long     objectHashCode
 );
 
-void writeWithoutInterleaveFieldAccessEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveFieldAccessEventGen (int slidingWindowId
 , int     programCounter
 , int     fieldId
 , int     methodCounter
@@ -25,7 +30,18 @@ void writeWithoutInterleaveFieldAccessEventGen (int slidingWindowId
 , long     objectHashCode
 );
 
-void writeFieldAccessEventStaticGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeFieldAccessEventStaticGen (int slidingWindowId
 , int     programCounter
 , int     fieldId
 , int     methodCounter
@@ -34,7 +50,10 @@ void writeFieldAccessEventStaticGen (int slidingWindowId
 , boolean     stackTraceIncomplete
 );
 
-void writeWithoutInterleaveFieldAccessEventStaticGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveFieldAccessEventStaticGen (int slidingWindowId
 , int     programCounter
 , int     fieldId
 , int     methodCounter
@@ -43,7 +62,18 @@ void writeWithoutInterleaveFieldAccessEventStaticGen (int slidingWindowId
 , boolean     stackTraceIncomplete
 );
 
-void writeArrayAccessEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeArrayAccessEventGen (int slidingWindowId
 , int     programCounter
 , int     fieldId
 , int     methodCounter
@@ -55,7 +85,10 @@ void writeArrayAccessEventGen (int slidingWindowId
 , int     classId
 );
 
-void writeWithoutInterleaveArrayAccessEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveArrayAccessEventGen (int slidingWindowId
 , int     programCounter
 , int     fieldId
 , int     methodCounter
@@ -67,7 +100,18 @@ void writeWithoutInterleaveArrayAccessEventGen (int slidingWindowId
 , int     classId
 );
 
-void writeVolatileAccessEventStaticGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeVolatileAccessEventStaticGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     fieldId
@@ -76,7 +120,10 @@ void writeVolatileAccessEventStaticGen (int slidingWindowId
 , boolean     isWrite
 );
 
-void writeWithoutInterleaveVolatileAccessEventStaticGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveVolatileAccessEventStaticGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     fieldId
@@ -85,7 +132,18 @@ void writeWithoutInterleaveVolatileAccessEventStaticGen (int slidingWindowId
 , boolean     isWrite
 );
 
-void writeVolatileAccessEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeVolatileAccessEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     fieldId
@@ -95,7 +153,10 @@ void writeVolatileAccessEventGen (int slidingWindowId
 , long     objectHashCode
 );
 
-void writeWithoutInterleaveVolatileAccessEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveVolatileAccessEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     fieldId
@@ -105,7 +166,18 @@ void writeWithoutInterleaveVolatileAccessEventGen (int slidingWindowId
 , long     objectHashCode
 );
 
-void writeVolatileArrayAccessEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeVolatileArrayAccessEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , long     index
@@ -115,7 +187,10 @@ void writeVolatileArrayAccessEventGen (int slidingWindowId
 , long     objectHashCode
 );
 
-void writeWithoutInterleaveVolatileArrayAccessEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveVolatileArrayAccessEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , long     index
@@ -125,7 +200,18 @@ void writeWithoutInterleaveVolatileArrayAccessEventGen (int slidingWindowId
 , long     objectHashCode
 );
 
-void writeVolatileDirectMemoryEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeVolatileDirectMemoryEventGen (int slidingWindowId
 , int     programCounter
 , int     methodCounter
 , long     objectHashCode
@@ -133,7 +219,10 @@ void writeVolatileDirectMemoryEventGen (int slidingWindowId
 , int     order
 );
 
-void writeWithoutInterleaveVolatileDirectMemoryEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveVolatileDirectMemoryEventGen (int slidingWindowId
 , int     programCounter
 , int     methodCounter
 , long     objectHashCode
@@ -141,7 +230,12 @@ void writeWithoutInterleaveVolatileDirectMemoryEventGen (int slidingWindowId
 , int     order
 );
 
-void writeLockEnterEventGen (int slidingWindowId
+
+
+
+
+
+   void writeLockEnterEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -150,7 +244,10 @@ void writeLockEnterEventGen (int slidingWindowId
 , int     lockTyp
 );
 
-void writeWithoutInterleaveLockEnterEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveLockEnterEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -159,7 +256,18 @@ void writeWithoutInterleaveLockEnterEventGen (int slidingWindowId
 , int     lockTyp
 );
 
-void writeLockExitEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeLockExitEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -168,7 +276,10 @@ void writeLockExitEventGen (int slidingWindowId
 , int     lockTyp
 );
 
-void writeWithoutInterleaveLockExitEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveLockExitEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -177,7 +288,18 @@ void writeWithoutInterleaveLockExitEventGen (int slidingWindowId
 , int     lockTyp
 );
 
-void writeStampedLockEnterEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeStampedLockEnterEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -187,7 +309,10 @@ void writeStampedLockEnterEventGen (int slidingWindowId
 , int     stampedLockMethodId
 );
 
-void writeWithoutInterleaveStampedLockEnterEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveStampedLockEnterEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -197,7 +322,18 @@ void writeWithoutInterleaveStampedLockEnterEventGen (int slidingWindowId
 , int     stampedLockMethodId
 );
 
-void writeStampedLockExitEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeStampedLockExitEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -207,7 +343,10 @@ void writeStampedLockExitEventGen (int slidingWindowId
 , int     stampedLockMethodId
 );
 
-void writeWithoutInterleaveStampedLockExitEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveStampedLockExitEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -217,7 +356,18 @@ void writeWithoutInterleaveStampedLockExitEventGen (int slidingWindowId
 , int     stampedLockMethodId
 );
 
-void writeMonitorEnterEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+   void writeMonitorEnterEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -226,7 +376,10 @@ void writeMonitorEnterEventGen (int slidingWindowId
 , int     position
 );
 
-void writeWithoutInterleaveMonitorEnterEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMonitorEnterEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -235,7 +388,12 @@ void writeWithoutInterleaveMonitorEnterEventGen (int slidingWindowId
 , int     position
 );
 
-void writeMonitorExitEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMonitorExitEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -244,7 +402,10 @@ void writeMonitorExitEventGen (int slidingWindowId
 , int     position
 );
 
-void writeWithoutInterleaveMonitorExitEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMonitorExitEventGen (int slidingWindowId
 , int     programCounter
 , int     order
 , int     monitorId
@@ -253,121 +414,218 @@ void writeWithoutInterleaveMonitorExitEventGen (int slidingWindowId
 , int     position
 );
 
-void writeMethodEnterEventGen (int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   void writeMethodEnterEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 );
 
-void writeWithoutInterleaveMethodEnterEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodEnterEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 );
 
-void writeMethodExitEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodExitEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 );
 
-void writeWithoutInterleaveMethodExitEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodExitEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 );
 
-void writeParallizedMethodEnterEventGen (int slidingWindowId
+
+
+
+
+
+   void writeParallizedMethodEnterEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 , int     parallizeId
 );
 
-void writeWithoutInterleaveParallizedMethodEnterEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveParallizedMethodEnterEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 , int     parallizeId
 );
 
-void writeParallizedMethodExitEventGen (int slidingWindowId
+
+
+
+
+
+   void writeParallizedMethodExitEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 );
 
-void writeWithoutInterleaveParallizedMethodExitEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveParallizedMethodExitEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 );
 
-void writeMethodEnterSmallThreadIdEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodEnterSmallThreadIdEventGen (int slidingWindowId
 , byte     smallThreadId
 , int     methodId
 , int     methodCounter
 );
 
-void writeWithoutInterleaveMethodEnterSmallThreadIdEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodEnterSmallThreadIdEventGen (int slidingWindowId
 , byte     smallThreadId
 , int     methodId
 , int     methodCounter
 );
 
-void writeMethodExitSmallThreadIdEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodExitSmallThreadIdEventGen (int slidingWindowId
 , byte     smallThreadId
 , int     methodId
 , int     methodCounter
 );
 
-void writeWithoutInterleaveMethodExitSmallThreadIdEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodExitSmallThreadIdEventGen (int slidingWindowId
 , byte     smallThreadId
 , int     methodId
 , int     methodCounter
 );
 
-void writeMethodEnterShortThreadIdEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodEnterShortThreadIdEventGen (int slidingWindowId
 , short     shortThreadId
 , int     methodId
 , int     methodCounter
 );
 
-void writeWithoutInterleaveMethodEnterShortThreadIdEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodEnterShortThreadIdEventGen (int slidingWindowId
 , short     shortThreadId
 , int     methodId
 , int     methodCounter
 );
 
-void writeMethodExitShortThreadIdEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodExitShortThreadIdEventGen (int slidingWindowId
 , short     shortThreadId
 , int     methodId
 , int     methodCounter
 );
 
-void writeWithoutInterleaveMethodExitShortThreadIdEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodExitShortThreadIdEventGen (int slidingWindowId
 , short     shortThreadId
 , int     methodId
 , int     methodCounter
 );
 
-void writeThreadBeginEventGen (int slidingWindowId
+
+
+
+
+
+   void writeThreadBeginEventGen (int slidingWindowId
 , long     startedThreadId
 , int     programCounter
 , int     methodCounter
 );
 
-void writeWithoutInterleaveThreadBeginEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveThreadBeginEventGen (int slidingWindowId
 , long     startedThreadId
 , int     programCounter
 , int     methodCounter
 );
 
-void writeThreadStoppedEventGen (int slidingWindowId
+
+
+
+
+
+   void writeThreadStoppedEventGen (int slidingWindowId
 , long     stoppedThreadId
 , int     programCounter
 , int     methodCounter
 );
 
-void writeWithoutInterleaveThreadStoppedEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveThreadStoppedEventGen (int slidingWindowId
 , long     stoppedThreadId
 , int     programCounter
 , int     methodCounter
 );
 
-void writeMethodAtomicEnterEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodAtomicEnterEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 , byte     hasCallback
@@ -376,7 +634,10 @@ void writeMethodAtomicEnterEventGen (int slidingWindowId
 , int     runPosition
 );
 
-void writeWithoutInterleaveMethodAtomicEnterEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodAtomicEnterEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 , byte     hasCallback
@@ -385,7 +646,12 @@ void writeWithoutInterleaveMethodAtomicEnterEventGen (int slidingWindowId
 , int     runPosition
 );
 
-void writeMethodAtomicExitEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodAtomicExitEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 , byte     hasCallback
@@ -394,7 +660,10 @@ void writeMethodAtomicExitEventGen (int slidingWindowId
 , int     runPosition
 );
 
-void writeWithoutInterleaveMethodAtomicExitEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodAtomicExitEventGen (int slidingWindowId
 , int     methodId
 , int     methodCounter
 , byte     hasCallback
@@ -403,80 +672,141 @@ void writeWithoutInterleaveMethodAtomicExitEventGen (int slidingWindowId
 , int     runPosition
 );
 
-void writeMethodCallbackEnterEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodCallbackEnterEventGen (int slidingWindowId
 , int     methodCounter
 , int     loopId
 , int     runId
 , int     runPosition
 );
 
-void writeWithoutInterleaveMethodCallbackEnterEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodCallbackEnterEventGen (int slidingWindowId
 , int     methodCounter
 , int     loopId
 , int     runId
 , int     runPosition
 );
 
-void writeMethodCallbackExitEventGen (int slidingWindowId
+
+
+
+
+
+   void writeMethodCallbackExitEventGen (int slidingWindowId
 , int     methodCounter
 , int     loopId
 , int     runId
 , int     runPosition
 );
 
-void writeWithoutInterleaveMethodCallbackExitEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveMethodCallbackExitEventGen (int slidingWindowId
 , int     methodCounter
 , int     loopId
 , int     runId
 , int     runPosition
 );
 
-void writeLoopStartEventGen (int slidingWindowId
+
+
+
+
+
+   void writeLoopStartEventGen (int slidingWindowId
 , int     loopId
 );
 
-void writeWithoutInterleaveLoopStartEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveLoopStartEventGen (int slidingWindowId
 , int     loopId
 );
 
-void writeLoopEndEventGen (int slidingWindowId
+
+
+
+
+
+   void writeLoopEndEventGen (int slidingWindowId
 , int     loopId
 , int     status
 );
 
-void writeWithoutInterleaveLoopEndEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveLoopEndEventGen (int slidingWindowId
 , int     loopId
 , int     status
 );
 
-void writeRunStartEventGen (int slidingWindowId
+
+
+
+
+
+   void writeRunStartEventGen (int slidingWindowId
 , int     loopId
 , int     runId
 );
 
-void writeWithoutInterleaveRunStartEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveRunStartEventGen (int slidingWindowId
 , int     loopId
 , int     runId
 );
 
-void writeRunEndEventGen (int slidingWindowId
+
+
+
+
+
+   void writeRunEndEventGen (int slidingWindowId
 , int     loopId
 , int     runId
 );
 
-void writeWithoutInterleaveRunEndEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveRunEndEventGen (int slidingWindowId
 , int     loopId
 , int     runId
 );
 
-void writeLoopWarningEventGen (int slidingWindowId
+
+
+
+
+
+   void writeLoopWarningEventGen (int slidingWindowId
 , int     loopId
 , int     runId
 );
 
-void writeWithoutInterleaveLoopWarningEventGen (int slidingWindowId
+
+
+
+   void writeWithoutInterleaveLoopWarningEventGen (int slidingWindowId
 , int     loopId
 , int     runId
 );
 
+
+
+
+	
+	
 }

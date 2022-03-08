@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.EventFactory;
-import com.vmlens.trace.agent.bootstrap.threadQueue.QueueCollection;
+
+import static com.vmlens.trace.agent.bootstrap.event.gen.AbstractSendEvent.ID_Method;
 
 public class SendEventForSmallThreadId extends SendEventImpl {
 

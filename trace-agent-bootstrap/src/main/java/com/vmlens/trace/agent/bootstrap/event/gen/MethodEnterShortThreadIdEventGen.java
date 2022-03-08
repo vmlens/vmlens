@@ -1,14 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithSlidingWindow;
+
 import java.nio.ByteBuffer;
-import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class MethodEnterShortThreadIdEventGen  implements RuntimeEvent 
 {
 
 
-  
     public int getSlidingWindowId()
     {
       return slidingWindowId;
@@ -18,23 +19,30 @@ public class MethodEnterShortThreadIdEventGen  implements RuntimeEvent
    private final int slidingWindowId;
   
 
-     public final     short     shortThreadId;
-      public final     int     methodId;
-      public final     int     methodCounter;
-      public  MethodEnterShortThreadIdEventGen(
+   public final     short     shortThreadId;
+   public final     int     methodId;
+   public final     int     methodCounter;
+
+
+
+public  MethodEnterShortThreadIdEventGen(
 int slidingWindowId 
-,   short     shortThreadId
-,   int     methodId
-,   int     methodCounter
-)
+  ,   short     shortThreadId
+  ,   int     methodId
+  ,   int     methodCounter
+ )
  {
 
    this.slidingWindowId = slidingWindowId;
 
-   this.shortThreadId   =  shortThreadId;
-   this.methodId   =  methodId;
-   this.methodCounter   =  methodCounter;
-   }
+      this.shortThreadId   =  shortThreadId;
+      this.methodId   =  methodId;
+      this.methodCounter   =  methodCounter;
+     
+ 
+  
+  
+ }
  
 
  
@@ -45,9 +53,14 @@ public void serialize(StreamRepository streamRepository) throws Exception
 
  buffer.put( (byte)  32 );
    
- buffer.putShort( shortThreadId ); ;
- buffer.putInt( methodId ); ;
- buffer.putInt( methodCounter ); ;
+     buffer.putShort( shortThreadId ); ;
+     buffer.putInt( methodId ); ;
+     buffer.putInt( methodCounter ); ;
+
+
+
+
+
 }
 
 
@@ -58,9 +71,14 @@ public void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper
 
  buffer.put( (byte)  32 );
    
- buffer.putShort( shortThreadId ); ;
- buffer.putInt( methodId ); ;
- buffer.putInt( methodCounter ); ;
+     buffer.putShort( shortThreadId ); ;
+     buffer.putInt( methodId ); ;
+     buffer.putInt( methodCounter ); ;
+
+
+
+
+
 }
 
 

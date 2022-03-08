@@ -1,0 +1,39 @@
+{{>templates/header}}
+
+ {{#issues}} 
+
+{{#access}}
+
+<div class="{{containerTyp}}">
+ 
+ 
+   <div class="row">
+    <div>
+      <h2 class="text-left">{{name}}</h1>
+    </div>
+  </div>
+ 
+
+ 
+{{>parentTable}}
+  
+ 
+
+</div>
+
+{{/access}}
+
+
+
+{{#detail}}
+
+{{>sharedStateList}}
+
+
+{{/detail}}
+
+
+´
+{{/issues}} 
+
+{{>templates/footer}}

@@ -2,12 +2,9 @@ package com.vmlens.trace.agent.bootstrap.interleave.normalized;
 
 
 
-import java.util.Iterator;
-
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import gnu.trove.list.linked.TLinkedList;
-import gnu.trove.set.hash.THashSet;
 
 public class RelationArray {
 

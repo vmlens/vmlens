@@ -6,6 +6,7 @@ import com.vmlens.api.internal.reports.{CreateParallizedReportAlgo, _}
 
 class ReportInterleaveLoop(val nameInternal: String, val result: LoopResult, val modelFacade: ModelFacadeAll) extends ReportElement[ContextReport] {
 
+
   def name = Model2View.makeBreakable(nameInternal)
 
 
@@ -15,7 +16,7 @@ class ReportInterleaveLoop(val nameInternal: String, val result: LoopResult, val
 
   var index = 0;
 
-  var link: Option[String] = None;
+  var link: String = "";
 
   def imagePath = "img/" + result.icon.getName() + ".png"
 

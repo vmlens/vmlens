@@ -1,12 +1,9 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
 
-
-import org.objectweb.asm.Label;
+import com.anarsoft.trace.agent.runtime.AgentClassFileTransformer;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-
-import com.anarsoft.trace.agent.runtime.AgentClassFileTransformer;
 
 public class MethodTransformerThreadJoin  extends MethodVisitor implements Opcodes {
 

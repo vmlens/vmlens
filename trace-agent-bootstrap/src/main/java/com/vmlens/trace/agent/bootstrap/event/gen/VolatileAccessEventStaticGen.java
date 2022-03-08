@@ -2,13 +2,11 @@ package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class VolatileAccessEventStaticGen  implements RuntimeEvent 
 {
 
 
-  
     public int getSlidingWindowId()
     {
       return slidingWindowId;
@@ -18,35 +16,42 @@ public class VolatileAccessEventStaticGen  implements RuntimeEvent
    private final int slidingWindowId;
   
 
-     public final     long     threadId;
-      public final     int     programCounter;
-      public final     int     order;
-      public final     int     fieldId;
-      public final     int     methodCounter;
-      public final     int     methodId;
-      public final     boolean     isWrite;
-      public  VolatileAccessEventStaticGen(
+   public final     long     threadId;
+   public final     int     programCounter;
+   public final     int     order;
+   public final     int     fieldId;
+   public final     int     methodCounter;
+   public final     int     methodId;
+   public final     boolean     isWrite;
+
+
+
+public  VolatileAccessEventStaticGen(
 int slidingWindowId 
-,   long     threadId
-,   int     programCounter
-,   int     order
-,   int     fieldId
-,   int     methodCounter
-,   int     methodId
-,   boolean     isWrite
-)
+  ,   long     threadId
+  ,   int     programCounter
+  ,   int     order
+  ,   int     fieldId
+  ,   int     methodCounter
+  ,   int     methodId
+  ,   boolean     isWrite
+ )
  {
 
    this.slidingWindowId = slidingWindowId;
 
-   this.threadId   =  threadId;
-   this.programCounter   =  programCounter;
-   this.order   =  order;
-   this.fieldId   =  fieldId;
-   this.methodCounter   =  methodCounter;
-   this.methodId   =  methodId;
-   this.isWrite   =  isWrite;
-   }
+      this.threadId   =  threadId;
+      this.programCounter   =  programCounter;
+      this.order   =  order;
+      this.fieldId   =  fieldId;
+      this.methodCounter   =  methodCounter;
+      this.methodId   =  methodId;
+      this.isWrite   =  isWrite;
+     
+ 
+  
+  
+ }
  
 
  
@@ -57,13 +62,18 @@ public void serialize(StreamRepository streamRepository) throws Exception
 
  buffer.put( (byte)  7 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( programCounter ); ;
- buffer.putInt( order ); ;
- buffer.putInt( fieldId ); ;
- buffer.putInt( methodCounter ); ;
- buffer.putInt( methodId ); ;
- buffer.put( (byte) ( isWrite ? 1 : 0 ) );;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( programCounter ); ;
+     buffer.putInt( order ); ;
+     buffer.putInt( fieldId ); ;
+     buffer.putInt( methodCounter ); ;
+     buffer.putInt( methodId ); ;
+     buffer.put( (byte) ( isWrite ? 1 : 0 ) );;
+
+
+
+
+
 }
 
 
@@ -74,13 +84,18 @@ public void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper
 
  buffer.put( (byte)  7 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( programCounter ); ;
- buffer.putInt( order ); ;
- buffer.putInt( fieldId ); ;
- buffer.putInt( methodCounter ); ;
- buffer.putInt( methodId ); ;
- buffer.put( (byte) ( isWrite ? 1 : 0 ) );;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( programCounter ); ;
+     buffer.putInt( order ); ;
+     buffer.putInt( fieldId ); ;
+     buffer.putInt( methodCounter ); ;
+     buffer.putInt( methodId ); ;
+     buffer.put( (byte) ( isWrite ? 1 : 0 ) );;
+
+
+
+
+
 }
 
 

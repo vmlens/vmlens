@@ -1,22 +1,17 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
 
-
-
-import gnu.trove.iterator.TLongObjectIterator;
-import gnu.trove.map.hash.TLongObjectHashMap;
-import gnu.trove.set.hash.TIntHashSet;
-import gnu.trove.set.hash.TLongHashSet;
-
-import java.util.Set;
-
 import com.vmlens.trace.agent.bootstrap.event.NewSlidingWindowId;
-import com.vmlens.trace.agent.bootstrap.event.WhileLoopNameEvent;
 import com.vmlens.trace.agent.bootstrap.mode.AgentMode;
 import com.vmlens.trace.agent.bootstrap.mode.AgentModeInterleave;
 import com.vmlens.trace.agent.bootstrap.threadQueue.InternalPerThreadQueueFactory;
 import com.vmlens.trace.agent.bootstrap.threadQueue.QueueFacade;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
+import gnu.trove.iterator.TLongObjectIterator;
+import gnu.trove.map.hash.TLongObjectHashMap;
+import gnu.trove.set.hash.TLongHashSet;
+
+import java.util.Set;
 
 
 public class CallbackState {

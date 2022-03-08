@@ -15,17 +15,28 @@ import com.anarsoft.race.detection.process.interleave._;
 
 class ParallizedMethodEnterEventGen (
   val threadId  : Long
+
+
 ,  val methodId  : Int
+
+
 ,  val methodCounter  : Int
+
+
 ,  val parallizeId  : Int
+
+
+
+
 )    extends ParallizedMethodEnterEvent  
 {
 override def toString() = {
   var text =  "ParallizedMethodEnterEventGen" 
-text = text + ", threadId:" +  threadId 
-text = text + ", methodId:" +  methodId 
-text = text + ", methodCounter:" +  methodCounter 
-text = text + ", parallizeId:" +  parallizeId 
+  text = text + ", threadId:" +  threadId 
+  text = text + ", methodId:" +  methodId 
+  text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", parallizeId:" +  parallizeId 
+
 text;
 
 }
@@ -48,27 +59,31 @@ visitor.visit(this);
     other match {
       case that: ParallizedMethodEnterEventGen => 
         {
-           if( threadId != that.threadId )
+            
+             if( threadId != that.threadId )
              {
                false;
              }
              else
-           if( methodId != that.methodId )
+            
+             if( methodId != that.methodId )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           if( parallizeId != that.parallizeId )
+            
+             if( parallizeId != that.parallizeId )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -88,19 +103,27 @@ object  ParallizedMethodEnterEventGen
    {
      val result = new ParallizedMethodEnterEventGen (
      
-        
+           
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -113,11 +136,15 @@ object  ParallizedMethodEnterEventGen
    {
      val result = new ParallizedMethodEnterEventGen (
      
-         data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        );
+            data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -143,35 +170,39 @@ class SortOrigParallizedMethodEnterEventGen extends Comparator[ParallizedMethodE
 {
     def	compare(o1 :  ParallizedMethodEnterEventGen,  o2 : ParallizedMethodEnterEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        if( o1.parallizeId != o2.parallizeId )
+        
+          if( o1.parallizeId != o2.parallizeId )
           {
              java.lang.Integer.compare( o1.parallizeId , o2.parallizeId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -186,35 +217,39 @@ class SortParallizedMethodEnterEventGen extends Comparator[ParallizedMethodEnter
 {
     def	compare(o1 :  ParallizedMethodEnterEventGen,  o2 : ParallizedMethodEnterEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        if( o1.parallizeId != o2.parallizeId )
+        
+          if( o1.parallizeId != o2.parallizeId )
           {
              java.lang.Integer.compare( o1.parallizeId , o2.parallizeId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

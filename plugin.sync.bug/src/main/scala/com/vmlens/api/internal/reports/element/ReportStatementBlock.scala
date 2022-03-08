@@ -17,7 +17,7 @@ val atomicMethod : Option[ReportAtomicMethod] , val callbackMethod : Option[Repo
 class ReportStatementBlock(val element: InterleaveEventStatement, val modelFacade: ModelFacadeAll, val context: ContextLastRun) extends ReportElement[ContextReport] {
 
 
-  def objectId = element.objectId
+  def objectId = element.objectId.getOrElse("")
 
   def operation = element.operationText(modelFacade)
 
@@ -48,7 +48,7 @@ class ReportStatementBlock(val element: InterleaveEventStatement, val modelFacad
 
   def name() = "ReportParallizedStatementBlock";
 
-  var link: Option[String] = None;
+  var link: String = "";
 
 
   def initialize(contextReport: ContextReport) {

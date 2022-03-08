@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.normalized;
 
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
-import com.vmlens.trace.agent.bootstrap.interleave.operation.VolatileFieldAccess;
 
 import gnu.trove.list.TLinkable;
 

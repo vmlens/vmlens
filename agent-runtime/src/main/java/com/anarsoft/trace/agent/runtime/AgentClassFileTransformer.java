@@ -1,32 +1,21 @@
 package com.anarsoft.trace.agent.runtime;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
-import java.security.ProtectionDomain;
-
+import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
+import com.anarsoft.trace.agent.runtime.transformer.*;
+import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
+import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
+import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 
-import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
-import com.anarsoft.trace.agent.runtime.transformer.ClassTransformer;
-import com.anarsoft.trace.agent.runtime.transformer.ClassTransformerTraceClassLoader;
-import com.anarsoft.trace.agent.runtime.transformer.ClassTransformerTraceClassThread;
-import com.anarsoft.trace.agent.runtime.transformer.ClassTransformerTraceMethod;
-import com.anarsoft.trace.agent.runtime.transformer.ClassTransformerTraceVmlensApi;
-import com.anarsoft.trace.agent.runtime.transformer.FactoryMethodTransformer;
-import com.anarsoft.trace.agent.runtime.transformer.FactoryMethodTransformerMethodEnterNoArg;
-import com.anarsoft.trace.agent.runtime.transformer.FactoryMethodTransformerMethodEnterObjectArg;
-import com.anarsoft.trace.agent.runtime.transformer.FactoryMethodTransformerMethodExit;
-import com.anarsoft.trace.agent.runtime.transformer.FactoryMethodTransformerMethodExitWithReturnBoolean;
-import com.anarsoft.trace.agent.runtime.transformer.FactoryMethodTransformerMethodExitWithReturnInt;
-import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
-import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.lang.instrument.ClassFileTransformer;
+import java.lang.instrument.IllegalClassFormatException;
+import java.security.ProtectionDomain;
 
 /**
  * Memory consistency effects: As with other concurrent collections, actions in
@@ -158,6 +147,13 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 				// name.startsWith("sun/util") ||
 				name.startsWith("sun/reflect/GeneratedMethodAccessor")
 				|| name.startsWith("java/util/concurrent/locks/LockSupport") || // für backpressure
+				name.startsWith("sun/reflect/annotation/AnnotationParser") ||
+				/*
+					fatal error: Illegal class file encountered. Try running with -Xverify:all in method parseAnnotation2
+					https://gitlab.ow2.org/asm/asm/-/issues/317876
+ 				*/
+
+
 				name.startsWith("sun/nio/ch/FileChannelImpl") ||
 
 				/**

@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.domain.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.domain.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -16,66 +16,32 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.l;
 
 public class CreateCalculatedRunForOrder {
 
-    private static class SortPerThread {
-        int length;
-        final LeftBeforeRight[] perThreadArray;
 
-        public SortPerThread(int length) {
-            this.length = length;
-            perThreadArray = new LeftBeforeRight[length];
-        }
-
-        boolean hasRelation(Position position) {
-            for (int i = 0; i < length; i++) {
-                if (perThreadArray[i] != null) {
-                    if (perThreadArray[i].left.threadIndex == position.threadIndex &&
-                            position.positionInThread <= perThreadArray[i].left.positionInThread) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-    }
-
-    private final SortPerThread[] array;
     private final int[] length;
+    private final TLinkedList<TLinkableWrapper<LeftBeforeRight>> order;
 
-    public CreateCalculatedRunForOrder(LeftBeforeRight[] order, int[] length) {
-        this.length = length;
-        array = new SortPerThread[length.length];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = new SortPerThread(length[i]);
-        }
-
-        for (LeftBeforeRight current : order) {
-            array[current.right.threadIndex].perThreadArray[current.right.positionInThread] = current;
-        }
-
-    }
-
-    private Position getElementForIndex(int index) {
-        SortPerThread current = array[index];
-        if (current.length == 0) {
-            return null;
-        }
-        if (current.perThreadArray[current.length - 1] != null) {
-            return current.perThreadArray[current.length - 1].right;
-        } else {
-            return new Position(index, current.length - 1);
-        }
+    public CreateCalculatedRunForOrder(TLinkedList<TLinkableWrapper<LeftBeforeRight>> order, int[] length) {
+        this.length = length.clone();
+        this.order = order;
     }
 
     private void take(Position position) {
-        array[position.threadIndex].length--;
+        length[position.threadIndex]--;
+        Iterator<TLinkableWrapper<LeftBeforeRight>> iterator = order.iterator();
+        while (iterator.hasNext()) {
+            TLinkableWrapper<LeftBeforeRight> current = iterator.next();
+            if(current.element.right.equals(position) ) {
+                iterator.remove();
+            }
+        }
+        
     }
 
     private boolean isFree(Position position) {
-        for (int i = 0; i < array.length; i++) {
-            if (i != position.threadIndex) {
-                if (array[i].hasRelation(position)) {
-                    return false;
-                }
+        for(TLinkableWrapper<LeftBeforeRight> leftBeforeRight : order) {
+            if( position.threadIndex == leftBeforeRight.element.left.threadIndex &&
+                    position.positionInThread <= leftBeforeRight.element.left.positionInThread) {
+                return false;
             }
         }
         return true;
@@ -86,7 +52,7 @@ public class CreateCalculatedRunForOrder {
         while (true) {
             Position nextElement = null;
             boolean elementsStillThere = false;
-            for (int i = 0; i < array.length; i++) {
+            for (int i = 0; i < length.length; i++) {
                 Position current = getElementForIndex(i);
                 if (current != null) {
                     elementsStillThere = true;
@@ -105,6 +71,14 @@ public class CreateCalculatedRunForOrder {
             }
             result.add(l(nextElement));
         }
+    }
+
+    private Position getElementForIndex(int i) {
+        if( length[i] == 0  ) {
+            return null;
+        }
+        return new Position(i, length[i] -1);
+        
     }
 
     private TLinkedList<TLinkableWrapper<Position>> reverse(TLinkedList<TLinkableWrapper<Position>> list) {

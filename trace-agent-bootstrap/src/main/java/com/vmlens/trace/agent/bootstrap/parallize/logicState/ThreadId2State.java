@@ -2,14 +2,13 @@ package com.vmlens.trace.agent.bootstrap.parallize.logicState;
 
 import java.io.PrintWriter;
 import java.lang.Thread.State;
-import java.util.Iterator;
 
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
+import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.interleave.InterleaveFacade;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.ThreadJoin;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 
 import gnu.trove.iterator.TIntLongIterator;
 import gnu.trove.iterator.TLongObjectIterator;

@@ -1,7 +1,5 @@
 package com.vmlens.api.internal.reports
 
-import com.vmlens.api.internal.reports.element.ReportText
-
 class LinkProvider(val prefix : String, val templateName : String, val context : ReportFactory[ContextReport]) {
   
   
@@ -32,13 +30,13 @@ class LinkProvider(val prefix : String, val templateName : String, val context :
       {
         case None =>
           {
-            Some(linkText);
+            linkText;
 
           }
           
         case Some(x) =>
           {
-             Some(viewData.root + linkText);
+             viewData.root + linkText;
           }
          
       }  
@@ -50,7 +48,7 @@ class LinkProvider(val prefix : String, val templateName : String, val context :
   
   
   
-    def createLink(  viewData : ViewData[ContextReport], rootOption : Option[String]) : Option[String]  =
+    def createLink(  viewData : ViewData[ContextReport], rootOption : Option[String])  =
     {
       createLink4Template(viewData , rootOption , templateName);
     }

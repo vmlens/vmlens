@@ -46,8 +46,6 @@ class PartialOrderPerSlidingWindowId(val higherLowerThreadId2SyncPointMap: HashM
          {
            x;
          }
-       
-       
      }
    }
    

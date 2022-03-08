@@ -1,11 +1,10 @@
 package com.vmlens.api.internal.reports.element
 
-import com.vmlens.api._
 import com.anarsoft.race.detection.model.result._
-import com.vmlens.api.internal.IconRepository
 import com.vmlens.api.internal.reports._
 import scala.collection.mutable.ArrayBuffer
 import com.anarsoft.race.detection.model.result.IssueModelElement
+import scala.collection.JavaConverters._
 
 class ReportElementIssue(val element: IssueModelElement, val modelFacade: ModelFacadeAll) extends ReportElement[ContextReport] with Element4TreeViewer {
 
@@ -28,14 +27,14 @@ class ReportElementIssue(val element: IssueModelElement, val modelFacade: ModelF
           index = index + 1;
         }
 
-        result.toSeq;
+        result.toSeq.asJava;
       } else {
-        Nil;
+        Nil.asJava;
       }
 
     }
 
-  var link: Option[String] = None;
+  var link: String = "";
   def imagePath =
     {
 
@@ -53,29 +52,16 @@ class ReportElementIssue(val element: IssueModelElement, val modelFacade: ModelF
 
   def initialize(contextReport: ContextReport) {
 
-    //  ViewData(val elements : Seq[ReportElement], val warnings : Seq[ReportText],val name : String,val root : String,val context : ContextReport)
-
     link = contextReport.issueDetailLinks.createLink(
-
       new ViewData(element.children(modelFacade).map(x => new ReportElementIssuePart(x, modelFacade)), Nil, name, Some(element.titlePrefix()), "../", contextReport), None);
 
-    //
-    //          link = contextReport.issueLinks.createLink(  ( templateName ,  linkText ) =>   {
-    //             val linkedElements=   element.children(modelFacade).map(  x =>  new ReportElementStackTrace(x,modelFacade)   );
-    //             new ReportView( linkedElements , Nil ,   name   ,linkText   ,  templateName ,"../" , contextReport  );
-    //          }
-    //          );
-    //
-    //       }
   }
 
   // for yaml start
 
   def children4Yaml() =
     {
-
       element.children(modelFacade).map(x => new Element4TreeViewerIssuePart(x, this, modelFacade))
-
     }
 
   def name4Yaml() = element.name4Yaml(modelFacade)

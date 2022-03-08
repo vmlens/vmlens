@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.MonitorLockEnterStack;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationList;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationMap;
-
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
 
@@ -39,7 +38,7 @@ public class AtomicMethodEnter implements  OperationTyp  {
 
 	@Override
 	public void addPotentialRelation(RelationList orderList, Position position, OperationTyp operation,
-			Position position2) {
+                                     Position position2) {
 		// TODO Auto-generated method stub
 		
 	}

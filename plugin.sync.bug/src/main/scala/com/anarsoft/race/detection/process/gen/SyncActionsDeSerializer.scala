@@ -21,11 +21,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
         
        val id = buffer.get();
        
+       
        if( id == 7 )
        {
           VolatileAccessEventStaticGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 8 )
        {
@@ -33,11 +35,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 9 )
        {
           VolatileAccessEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 10 )
        {
@@ -45,11 +49,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 11 )
        {
           VolatileArrayAccessEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 12 )
        {
@@ -57,11 +63,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 14 )
        {
           LockEnterEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 15 )
        {
@@ -69,11 +77,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 16 )
        {
           LockExitEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 17 )
        {
@@ -81,11 +91,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 18 )
        {
           StampedLockEnterEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 19 )
        {
@@ -93,11 +105,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 20 )
        {
           StampedLockExitEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 21 )
        {
@@ -105,11 +119,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 34 )
        {
           ThreadBeginEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 35 )
        {
@@ -130,11 +146,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
         
        val id = buffer.get();
        
+       
        if( id == 7 )
        {
           VolatileAccessEventStaticGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 8 )
        {
@@ -142,11 +160,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 9 )
        {
           VolatileAccessEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 10 )
        {
@@ -154,11 +174,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 11 )
        {
           VolatileArrayAccessEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 12 )
        {
@@ -166,11 +188,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 14 )
        {
           LockEnterEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 15 )
        {
@@ -178,11 +202,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 16 )
        {
           LockExitEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 17 )
        {
@@ -190,11 +216,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 18 )
        {
           StampedLockEnterEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 19 )
        {
@@ -202,11 +230,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 20 )
        {
           StampedLockExitEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 21 )
        {
@@ -214,11 +244,13 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
        }
        else
        
+       
        if( id == 34 )
        {
           ThreadBeginEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 35 )
        {

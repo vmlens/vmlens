@@ -1,26 +1,26 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
-import com.vmlens.trace.agent.bootstrap.interleave.actualAccess.Comparator4ActualAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.actualAccess.Comparator4LockAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.actualAccess.LockAccess;
-import com.vmlens.trace.agent.bootstrap.interleave.normalized.*;
+import com.vmlens.trace.agent.bootstrap.interleave.normalized.NormalizedAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.normalized.NormalizedThread;
+import com.vmlens.trace.agent.bootstrap.interleave.normalized.PositionAndOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationMap;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.util.IntStack;
-
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.iterator.hash.TObjectHashIterator;
-import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.set.hash.TIntHashSet;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 
 /*
@@ -37,9 +37,9 @@ import gnu.trove.set.hash.TIntHashSet;
 public class NormalizedList {
 	
 	
-	static NormalizedList create(NormalizedThread[]  threadList,TLinkedList<LockAccess> lockList )
+	static NormalizedList create(NormalizedThread[]  threadList, TLinkedList<LockAccess> lockList )
 	{
-		THashMap<ThreadIndexAndOperation,TLinkedList<PositionAndOperation>> operation2PositionList = 
+		THashMap<ThreadIndexAndOperation,TLinkedList<PositionAndOperation>> operation2PositionList =
 				new THashMap<ThreadIndexAndOperation,TLinkedList<PositionAndOperation>> ();
 	
 		int[] maxPositionPerThread = new int[threadList.length];
@@ -71,7 +71,7 @@ public class NormalizedList {
 					
 				}
 				
-				positionList.add(  new PositionAndOperation(new Position(threadIndex,position), element.operationTyp));
+				//positionList.add(  new PositionAndOperation(new Position(threadIndex,position), element.operationTyp));
 				
 				if( positionList.size() > ParallizeFacade.MAX_OPERATION_LIST_SIZE   )
 				{	

@@ -9,6 +9,7 @@ public  class UnsafeCallbackJDK8Gen  {
 
 
 
+
 public static  int getAndAddInt(sun.misc.Unsafe unsafe, Object in , long offset , int a, int methodId)
 	{
 
@@ -18,6 +19,7 @@ public static  int getAndAddInt(sun.misc.Unsafe unsafe, Object in , long offset 
 		
 		return result;
 	}
+
 
 public static  long getAndAddLong(sun.misc.Unsafe unsafe, Object in , long offset , long a, int methodId)
 	{
@@ -29,6 +31,10 @@ public static  long getAndAddLong(sun.misc.Unsafe unsafe, Object in , long offse
 		return result;
 	}
 
+
+
+
+
 public static  int getAndSetInt(sun.misc.Unsafe unsafe, Object in , long offset , int a, int methodId)
 	{
 
@@ -38,6 +44,7 @@ public static  int getAndSetInt(sun.misc.Unsafe unsafe, Object in , long offset 
 		
 		return result;
 	}
+
 
 public static  long getAndSetLong(sun.misc.Unsafe unsafe, Object in , long offset , long a, int methodId)
 	{
@@ -49,6 +56,7 @@ public static  long getAndSetLong(sun.misc.Unsafe unsafe, Object in , long offse
 		return result;
 	}
 
+
 public static  java.lang.Object getAndSetObject(sun.misc.Unsafe unsafe, Object in , long offset , java.lang.Object a, int methodId)
 	{
 
@@ -58,6 +66,13 @@ public static  java.lang.Object getAndSetObject(sun.misc.Unsafe unsafe, Object i
 		
 		return result;
 	}
+
+
+
+
+
+
+
 
 }
 

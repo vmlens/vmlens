@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.state.LockIdAndOrder;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 
 
 public class LockStatementCallback {

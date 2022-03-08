@@ -4,20 +4,22 @@ import com.vmlens.api.internal.reports._
 import com.anarsoft.race.detection.model.result._
 import scala.collection.mutable.ArrayBuffer
 import com.anarsoft.race.detection.process.interleave.StatementLoop
+import scala.collection.JavaConverters._
+
+class ReportLoop(val loopCount : Int, val  listInternal : List[ReportStatementBlockInLoop]) extends ReportElement[ContextReport]  {
+  
+  def list() = listInternal.asJava
 
 
-class ReportLoop(val loopCount : Int, val  list : List[ReportStatementBlockInLoop]) extends ReportElement[ContextReport]  {
-  
-  
    def trStyle() = 
    {
-     if( list.isEmpty )
+     if( listInternal.isEmpty )
      {
-       None;
+       "";
      }
      else
      {
-     list(0).trStyle();
+       listInternal(0).trStyle().getOrElse("");
      }
      
      
@@ -29,7 +31,7 @@ class ReportLoop(val loopCount : Int, val  list : List[ReportStatementBlockInLoo
   {
    // " rowspan=\""   + list.length +   "\" 
 
-     " rowspan=\""   + list.length +   "\"  style=\"border-top-style:solid;border-top-color:black;border-top-width:2px;border-bottom-style:solid  \" ";
+     " rowspan=\""   + listInternal.length +   "\"  style=\"border-top-style:solid;border-top-color:black;border-top-width:2px;border-bottom-style:solid  \" ";
     
    //   " style=\"border-top-style: solid; border-bottom-style:solid  \" ";
     
@@ -37,7 +39,7 @@ class ReportLoop(val loopCount : Int, val  list : List[ReportStatementBlockInLoo
    
    def initialize( contextReport : ContextReport) 
        {
-     list.foreach(x => x.initialize(contextReport))
+         listInternal.foreach(x => x.initialize(contextReport))
      
        
        }

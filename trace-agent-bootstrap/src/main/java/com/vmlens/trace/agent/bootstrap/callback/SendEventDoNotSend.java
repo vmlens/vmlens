@@ -1,10 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
 
-
 import com.vmlens.trace.agent.bootstrap.event.gen.SendEvent;
 
-public class SendEventDoNotSend  implements SendEvent{
+public class SendEventDoNotSend  implements SendEvent {
 
 	public SendEventDoNotSend() {
 		super();

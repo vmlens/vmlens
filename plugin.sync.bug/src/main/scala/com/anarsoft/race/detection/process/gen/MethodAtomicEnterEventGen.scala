@@ -1,37 +1,47 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
 import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class MethodAtomicEnterEventGen (
   val threadId  : Long
+
+
 ,  val methodId  : Int
+
+
 ,  val methodCounter  : Int
+
+
 ,  val hasCallback  : Byte
+
+
 ,  val loopId  : Int
+
+
 ,  val runId  : Int
+
+
 ,  val runPosition  : Int
+
+
+
+
 )    extends MethodAtomicEnterEvent  
 {
 override def toString() = {
   var text =  "MethodAtomicEnterEventGen" 
-text = text + ", threadId:" +  threadId 
-text = text + ", methodId:" +  methodId 
-text = text + ", methodCounter:" +  methodCounter 
-text = text + ", hasCallback:" +  hasCallback 
-text = text + ", loopId:" +  loopId 
-text = text + ", runId:" +  runId 
-text = text + ", runPosition:" +  runPosition 
+  text = text + ", threadId:" +  threadId 
+  text = text + ", methodId:" +  methodId 
+  text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", hasCallback:" +  hasCallback 
+  text = text + ", loopId:" +  loopId 
+  text = text + ", runId:" +  runId 
+  text = text + ", runPosition:" +  runPosition 
+
 text;
 
 }
@@ -54,42 +64,49 @@ visitor.visit(this);
     other match {
       case that: MethodAtomicEnterEventGen => 
         {
-           if( threadId != that.threadId )
+            
+             if( threadId != that.threadId )
              {
                false;
              }
              else
-           if( methodId != that.methodId )
+            
+             if( methodId != that.methodId )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           if( hasCallback != that.hasCallback )
+            
+             if( hasCallback != that.hasCallback )
              {
                false;
              }
              else
-           if( loopId != that.loopId )
+            
+             if( loopId != that.loopId )
              {
                false;
              }
              else
-           if( runId != that.runId )
+            
+             if( runId != that.runId )
              {
                false;
              }
              else
-           if( runPosition != that.runPosition )
+            
+             if( runPosition != that.runPosition )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -109,28 +126,39 @@ object  MethodAtomicEnterEventGen
    {
      val result = new MethodAtomicEnterEventGen (
      
-        
+           
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.get()
-            , 
+                data.get()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -143,14 +171,18 @@ object  MethodAtomicEnterEventGen
    {
      val result = new MethodAtomicEnterEventGen (
      
-         data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.get()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        );
+            data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.get()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -176,28 +208,31 @@ class SortOrigMethodAtomicEnterEventGen extends Comparator[MethodAtomicEnterEven
 {
     def	compare(o1 :  MethodAtomicEnterEventGen,  o2 : MethodAtomicEnterEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -212,28 +247,31 @@ class SortMethodAtomicEnterEventGen extends Comparator[MethodAtomicEnterEventGen
 {
     def	compare(o1 :  MethodAtomicEnterEventGen,  o2 : MethodAtomicEnterEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

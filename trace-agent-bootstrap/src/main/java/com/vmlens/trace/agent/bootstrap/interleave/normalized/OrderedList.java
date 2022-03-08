@@ -1,12 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.normalized;
 
-import java.util.Arrays;
-import java.util.Iterator;
-
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.CommandList;
 import com.vmlens.trace.agent.bootstrap.interleave.MonitorState;
-import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationList.StackNodeRelation;
 import com.vmlens.trace.agent.bootstrap.util.ObjectStack;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.iterator.TIntIterator;
@@ -15,18 +10,20 @@ import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.set.hash.TIntHashSet;
 
+import java.util.Iterator;
+
 public class OrderedList implements TLinkable<OrderedList> {
 
 	private OrderedList next;
 	private OrderedList previous;
 
 	private final int[] maxPositionPerThread;
-	private final StackNodeRelation stackNode;
+	private final RelationList.StackNodeRelation stackNode;
 	private final int position;
 	private final RelationArray relationArray;
 
-	public OrderedList(int[] maxPositionPerThread, StackNodeRelation stackNode, RelationArray relationArray,
-			int position) {
+	public OrderedList(int[] maxPositionPerThread, RelationList.StackNodeRelation stackNode, RelationArray relationArray,
+                       int position) {
 		super();
 		this.maxPositionPerThread = maxPositionPerThread;
 		this.stackNode = stackNode;

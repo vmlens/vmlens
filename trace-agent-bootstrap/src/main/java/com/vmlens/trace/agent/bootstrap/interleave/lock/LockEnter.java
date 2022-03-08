@@ -4,8 +4,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.MonitorLockEnterStack;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.Position;
 import com.vmlens.trace.agent.bootstrap.util.IntStack;
 
-import gnu.trove.list.linked.TIntLinkedList;
-
 public class LockEnter implements LockOperation {
 	
 	private final boolean isShared;
@@ -37,7 +35,7 @@ public class LockEnter implements LockOperation {
 	public void add2Stack(MonitorLockEnterStack monitorLockEnterStack, int threadIndex, int positionInThread) {
 		if( ! isShared )
 		{
-			monitorLockEnterStack.lock.push( new Position(threadIndex,positionInThread) );	
+			monitorLockEnterStack.lock.push( new Position(threadIndex,positionInThread) );
 		}
 		
 	

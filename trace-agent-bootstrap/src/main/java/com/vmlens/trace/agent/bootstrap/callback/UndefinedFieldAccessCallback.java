@@ -5,11 +5,9 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.FieldIdAndTyp;
 import com.vmlens.trace.agent.bootstrap.FieldTyp;
 import com.vmlens.trace.agent.bootstrap.UndefinedFieldRepository;
-import com.vmlens.trace.agent.bootstrap.UnknownIdElement;
 import com.vmlens.trace.agent.bootstrap.callback.field.CallbackObject;
 import com.vmlens.trace.agent.bootstrap.callback.field.CallbackStatic;
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.event.AgentLogEvent;
 
 
 public class UndefinedFieldAccessCallback {

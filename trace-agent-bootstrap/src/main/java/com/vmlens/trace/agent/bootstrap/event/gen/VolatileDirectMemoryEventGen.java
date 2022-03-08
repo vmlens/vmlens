@@ -2,13 +2,11 @@ package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class VolatileDirectMemoryEventGen  implements RuntimeEvent 
 {
 
 
-  
     public int getSlidingWindowId()
     {
       return slidingWindowId;
@@ -18,32 +16,39 @@ public class VolatileDirectMemoryEventGen  implements RuntimeEvent
    private final int slidingWindowId;
   
 
-     public final     long     threadId;
-      public final     int     programCounter;
-      public final     int     methodCounter;
-      public final     long     objectHashCode;
-      public final     int     operation;
-      public final     int     order;
-      public  VolatileDirectMemoryEventGen(
+   public final     long     threadId;
+   public final     int     programCounter;
+   public final     int     methodCounter;
+   public final     long     objectHashCode;
+   public final     int     operation;
+   public final     int     order;
+
+
+
+public  VolatileDirectMemoryEventGen(
 int slidingWindowId 
-,   long     threadId
-,   int     programCounter
-,   int     methodCounter
-,   long     objectHashCode
-,   int     operation
-,   int     order
-)
+  ,   long     threadId
+  ,   int     programCounter
+  ,   int     methodCounter
+  ,   long     objectHashCode
+  ,   int     operation
+  ,   int     order
+ )
  {
 
    this.slidingWindowId = slidingWindowId;
 
-   this.threadId   =  threadId;
-   this.programCounter   =  programCounter;
-   this.methodCounter   =  methodCounter;
-   this.objectHashCode   =  objectHashCode;
-   this.operation   =  operation;
-   this.order   =  order;
-   }
+      this.threadId   =  threadId;
+      this.programCounter   =  programCounter;
+      this.methodCounter   =  methodCounter;
+      this.objectHashCode   =  objectHashCode;
+      this.operation   =  operation;
+      this.order   =  order;
+     
+ 
+  
+  
+ }
  
 
  
@@ -54,12 +59,17 @@ public void serialize(StreamRepository streamRepository) throws Exception
 
  buffer.put( (byte)  13 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( programCounter ); ;
- buffer.putInt( methodCounter ); ;
-  buffer.putLong( objectHashCode );  ;
- buffer.putInt( operation ); ;
- buffer.putInt( order ); ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( programCounter ); ;
+     buffer.putInt( methodCounter ); ;
+      buffer.putLong( objectHashCode );  ;
+     buffer.putInt( operation ); ;
+     buffer.putInt( order ); ;
+
+
+
+
+
 }
 
 
@@ -70,12 +80,17 @@ public void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper
 
  buffer.put( (byte)  13 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( programCounter ); ;
- buffer.putInt( methodCounter ); ;
-  buffer.putLong( objectHashCode );  ;
- buffer.putInt( operation ); ;
- buffer.putInt( order ); ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( programCounter ); ;
+     buffer.putInt( methodCounter ); ;
+      buffer.putLong( objectHashCode );  ;
+     buffer.putInt( operation ); ;
+     buffer.putInt( order ); ;
+
+
+
+
+
 }
 
 

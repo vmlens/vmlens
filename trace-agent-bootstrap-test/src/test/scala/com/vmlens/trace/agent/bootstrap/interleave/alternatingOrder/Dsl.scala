@@ -1,7 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder
 
-import com.vmlens.trace.agent.bootstrap.interleave.domain.{AlternatingOrderElement, Position}
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement
+import com.vmlens.trace.agent.bootstrap.interleave.{LeftBeforeRight, Position}
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper
+import gnu.trove.list.linked.TLinkedList
 
 object Dsl {
 
@@ -21,6 +23,22 @@ object Dsl {
 
   def p(threadIndex: Int, positionInThread: Int) = {
     new Position(threadIndex, positionInThread);
+  }
+
+  def lp(threadIndex: Int, positionInThread: Int) = {
+    new TLinkableWrapper(new Position(threadIndex, positionInThread));
+  }
+
+  def l(left: Position, right: Position) = {
+    new LeftBeforeRight(left, right);
+  }
+
+  def order(leftBeforeRight: LeftBeforeRight*) = {
+    val order = new TLinkedList[TLinkableWrapper[LeftBeforeRight]]();
+    for( elem <-  leftBeforeRight ) {
+      order.add( new TLinkableWrapper(elem));
+    }
+    order;
   }
 
 

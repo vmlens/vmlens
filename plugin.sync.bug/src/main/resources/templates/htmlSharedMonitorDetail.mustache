@@ -1,0 +1,61 @@
+{{>templates/header.mustache}}
+
+ {{#issues}} 
+
+{{#parent}}
+
+<div class="{{containerTyp}}">
+ 
+ 
+   <div class="row">
+    <div>
+      <h2 class="text-left">{{name}}</h1>
+    </div>
+  </div>
+ 
+
+ 
+{{>parentTableWithMonitor}}
+  
+ 
+
+</div>
+
+{{/parent}}
+
+
+{{#child}}
+
+<div class="{{containerTyp}}">
+ 
+ 
+   <div class="row">
+    <div>
+      <h2 class="text-left">{{name}}</h2>
+    </div>
+  </div>
+ 
+
+ 
+{{>methodWithMonitorTable}}
+  
+ 
+
+
+</div>
+
+
+{{/child}}
+
+
+
+{{#threadList}}
+
+{{>threadList}}
+
+
+{{/threadList}}
+
+{{/issues}} 
+
+{{>templates/footer}}

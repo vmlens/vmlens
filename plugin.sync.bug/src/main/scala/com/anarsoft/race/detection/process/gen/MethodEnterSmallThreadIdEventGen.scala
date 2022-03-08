@@ -1,29 +1,31 @@
 package com.anarsoft.race.detection.process.gen;
 
 import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class MethodEnterSmallThreadIdEventGen (
   val smallThreadId  : Byte
+
+
 ,  val methodId  : Int
+
+
 ,  val methodCounter  : Int
+
+
+
+
 )    extends ApplyMethodEventVisitor  
 {
 override def toString() = {
   var text =  "MethodEnterSmallThreadIdEventGen" 
-text = text + ", smallThreadId:" +  smallThreadId 
-text = text + ", methodId:" +  methodId 
-text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", smallThreadId:" +  smallThreadId 
+  text = text + ", methodId:" +  methodId 
+  text = text + ", methodCounter:" +  methodCounter 
+
 text;
 
 }
@@ -46,22 +48,25 @@ visitor.visit(this);
     other match {
       case that: MethodEnterSmallThreadIdEventGen => 
         {
-           if( smallThreadId != that.smallThreadId )
+            
+             if( smallThreadId != that.smallThreadId )
              {
                false;
              }
              else
-           if( methodId != that.methodId )
+            
+             if( methodId != that.methodId )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -81,16 +86,23 @@ object  MethodEnterSmallThreadIdEventGen
    {
      val result = new MethodEnterSmallThreadIdEventGen (
      
-        
+           
             
-            data.get()
-            , 
+                data.get()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -103,10 +115,14 @@ object  MethodEnterSmallThreadIdEventGen
    {
      val result = new MethodEnterSmallThreadIdEventGen (
      
-         data.get()
-        ,  data.getInt()
-        ,  data.getInt()
-        );
+            data.get()
+          ,  data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -132,21 +148,23 @@ class SortOrigMethodEnterSmallThreadIdEventGen extends Comparator[MethodEnterSma
 {
     def	compare(o1 :  MethodEnterSmallThreadIdEventGen,  o2 : MethodEnterSmallThreadIdEventGen ) =
     {
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -161,21 +179,23 @@ class SortMethodEnterSmallThreadIdEventGen extends Comparator[MethodEnterSmallTh
 {
     def	compare(o1 :  MethodEnterSmallThreadIdEventGen,  o2 : MethodEnterSmallThreadIdEventGen ) =
     {
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

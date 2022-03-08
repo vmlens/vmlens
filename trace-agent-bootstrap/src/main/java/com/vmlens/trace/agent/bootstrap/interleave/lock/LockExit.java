@@ -1,10 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.lock;
 
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.MonitorLockEnterStack;
 import com.vmlens.trace.agent.bootstrap.util.IntStack;
-
-import gnu.trove.list.linked.TIntLinkedList;
 
 public class LockExit implements LockOperation {
 	

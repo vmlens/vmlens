@@ -9,13 +9,13 @@ import com.vmlens.trace.agent.bootstrap.event.gen.LockEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.gen.LockExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodAtomicEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodAtomicExitEventGen;
-import com.vmlens.trace.agent.bootstrap.interleave.InterleaveFacade;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
 import com.vmlens.trace.agent.bootstrap.parallize.FutureTask2ThreadId;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeSingelton;
 import com.vmlens.trace.agent.bootstrap.parallize.logicState.BeginNewThreadResult;
+import com.vmlens.trace.agent.bootstrap.interleave.InterleaveFacade;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
 
 public class RunStateActive implements RunState {
 

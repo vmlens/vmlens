@@ -1,11 +1,6 @@
 package com.vmlens.api.internal.reports
 
-import com.anarsoft.race.detection.model.result._
-import java.io._;
-import  com.vmlens.api._;
-import com.vmlens.api.internal.reports.element._
 import org.apache.commons.lang.StringEscapeUtils
-import scala.collection.mutable.ArrayBuffer
 
 object Model2View
 {
@@ -73,7 +68,7 @@ object Model2View
 //    
 //    
 //    
-//    def create[RESULT](modelFacade : ModelFacadeAll ,  factory : Model2ViewResultFactory[RESULT] , reportElementLastRunAndCountList : Seq[ReportElementLastRunAndCount] ) =
+//    def create[RESULT](modelFacade : ModelFacadeAll ,  facade : Model2ViewResultFactory[RESULT] , reportElementLastRunAndCountList : Seq[ReportElementLastRunAndCount] ) =
 //    {
 //      
 //    
@@ -86,7 +81,7 @@ object Model2View
 //      
 //       val seq = sortIssueList( modelFacade ,  (modelFacade.races ++ modelFacade.deadlocks).toSeq);
 //       
-//       factory.createResult( seq.map(  x =>   new ReportElementIssue(x,modelFacade ) ).sortBy( x => x.name   )  ,reportElementLastRunAndCountList  )
+//       facade.createResult( seq.map(  x =>   new ReportElementIssue(x,modelFacade ) ).sortBy( x => x.name   )  ,reportElementLastRunAndCountList  )
 //       
 //       
 //    }

@@ -1,14 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithSlidingWindow;
+
 import java.nio.ByteBuffer;
-import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class MethodCallbackExitEventGen  implements RuntimeEvent 
 {
 
 
-  
     public int getSlidingWindowId()
     {
       return slidingWindowId;
@@ -18,29 +19,36 @@ public class MethodCallbackExitEventGen  implements RuntimeEvent
    private final int slidingWindowId;
   
 
-     public final     long     threadId;
-      public final     int     methodCounter;
-      public final     int     loopId;
-      public final     int     runId;
-      public final     int     runPosition;
-      public  MethodCallbackExitEventGen(
+   public final     long     threadId;
+   public final     int     methodCounter;
+   public final     int     loopId;
+   public final     int     runId;
+   public final     int     runPosition;
+
+
+
+public  MethodCallbackExitEventGen(
 int slidingWindowId 
-,   long     threadId
-,   int     methodCounter
-,   int     loopId
-,   int     runId
-,   int     runPosition
-)
+  ,   long     threadId
+  ,   int     methodCounter
+  ,   int     loopId
+  ,   int     runId
+  ,   int     runPosition
+ )
  {
 
    this.slidingWindowId = slidingWindowId;
 
-   this.threadId   =  threadId;
-   this.methodCounter   =  methodCounter;
-   this.loopId   =  loopId;
-   this.runId   =  runId;
-   this.runPosition   =  runPosition;
-   }
+      this.threadId   =  threadId;
+      this.methodCounter   =  methodCounter;
+      this.loopId   =  loopId;
+      this.runId   =  runId;
+      this.runPosition   =  runPosition;
+     
+ 
+  
+  
+ }
  
 
  
@@ -51,11 +59,16 @@ public void serialize(StreamRepository streamRepository) throws Exception
 
  buffer.put( (byte)  39 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( methodCounter ); ;
- buffer.putInt( loopId ); ;
- buffer.putInt( runId ); ;
- buffer.putInt( runPosition ); ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( methodCounter ); ;
+     buffer.putInt( loopId ); ;
+     buffer.putInt( runId ); ;
+     buffer.putInt( runPosition ); ;
+
+
+
+
+
 }
 
 
@@ -66,11 +79,16 @@ public void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper
 
  buffer.put( (byte)  39 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( methodCounter ); ;
- buffer.putInt( loopId ); ;
- buffer.putInt( runId ); ;
- buffer.putInt( runPosition ); ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( methodCounter ); ;
+     buffer.putInt( loopId ); ;
+     buffer.putInt( runId ); ;
+     buffer.putInt( runPosition ); ;
+
+
+
+
+
 }
 
 

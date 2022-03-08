@@ -1,17 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.interleave.normalized;
 
 import java.util.BitSet;
-import java.util.Iterator;
 
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.CommandList;
 import com.vmlens.trace.agent.bootstrap.interleave.MonitorState;
-import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationList.StackNodeRelation;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.util.ObjectStack;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
-import gnu.trove.list.TLinkable;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.set.hash.THashSet;
 import gnu.trove.set.hash.TIntHashSet;

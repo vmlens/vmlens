@@ -15,33 +15,60 @@ import com.anarsoft.race.detection.process.interleave._;
 
 class VolatileAccessEventStaticGenInterleave (
   val threadId  : Long
+
+
 ,  val programCounter  : Int
+
+
 ,  val order  : Int
+
+
 ,  val fieldId  : Int
+
+
 ,  val methodCounter  : Int
+
+
+
+
 ,  var stackTraceOrdinal  : Int
+
+
 ,  var slidingWindowId  : Int
 ,  val methodId  : Int
+
+
 ,  val isWrite  : Boolean
+
+
 ,  val loopId  : Int
+
+
 ,  val runId  : Int
+
+
 ,  val runPosition  : Int
+
+
+
+
 )    extends VolatileAccessEventStaticInterleave  
 {
 override def toString() = {
   var text =  "VolatileAccessEventStaticGenInterleave" 
-text = text + ", threadId:" +  threadId 
-text = text + ", programCounter:" +  programCounter 
-text = text + ", order:" +  order 
-text = text + ", fieldId:" +  fieldId 
-text = text + ", methodCounter:" +  methodCounter 
-text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
-text = text + ", slidingWindowId:" +  slidingWindowId 
-text = text + ", methodId:" +  methodId 
-text = text + ", isWrite:" +  isWrite 
-text = text + ", loopId:" +  loopId 
-text = text + ", runId:" +  runId 
-text = text + ", runPosition:" +  runPosition 
+  text = text + ", threadId:" +  threadId 
+  text = text + ", programCounter:" +  programCounter 
+  text = text + ", order:" +  order 
+  text = text + ", fieldId:" +  fieldId 
+  text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
+  text = text + ", slidingWindowId:" +  slidingWindowId 
+  text = text + ", methodId:" +  methodId 
+  text = text + ", isWrite:" +  isWrite 
+  text = text + ", loopId:" +  loopId 
+  text = text + ", runId:" +  runId 
+  text = text + ", runPosition:" +  runPosition 
+
 text;
 
 }
@@ -64,67 +91,79 @@ visitor.visit(this);
     other match {
       case that: VolatileAccessEventStaticGenInterleave => 
         {
-           if( threadId != that.threadId )
+            
+             if( threadId != that.threadId )
              {
                false;
              }
              else
-           if( programCounter != that.programCounter )
+            
+             if( programCounter != that.programCounter )
              {
                false;
              }
              else
-           if( order != that.order )
+            
+             if( order != that.order )
              {
                false;
              }
              else
-           if( fieldId != that.fieldId )
+            
+             if( fieldId != that.fieldId )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           if( stackTraceOrdinal != that.stackTraceOrdinal )
+            
+             if( stackTraceOrdinal != that.stackTraceOrdinal )
              {
                false;
              }
              else
-           if( slidingWindowId != that.slidingWindowId )
+            
+             if( slidingWindowId != that.slidingWindowId )
              {
                false;
              }
              else
-           if( methodId != that.methodId )
+            
+             if( methodId != that.methodId )
              {
                false;
              }
              else
-           if( isWrite != that.isWrite )
+            
+             if( isWrite != that.isWrite )
              {
                false;
              }
              else
-           if( loopId != that.loopId )
+            
+             if( loopId != that.loopId )
              {
                false;
              }
              else
-           if( runId != that.runId )
+            
+             if( runId != that.runId )
              {
                false;
              }
              else
-           if( runPosition != that.runPosition )
+            
+             if( runPosition != that.runPosition )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -144,43 +183,59 @@ object  VolatileAccessEventStaticGenInterleave
    {
      val result = new VolatileAccessEventStaticGenInterleave (
      
-        
+           
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            0
-            , 
+                0
+           
+          , 
             
-            0
-            , 
+                0
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-            , 
+                if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -193,19 +248,23 @@ object  VolatileAccessEventStaticGenInterleave
    {
      val result = new VolatileAccessEventStaticGenInterleave (
      
-         data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        );
+            data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -231,63 +290,71 @@ class SortOrigVolatileAccessEventStaticGenInterleave extends Comparator[Volatile
 {
     def	compare(o1 :  VolatileAccessEventStaticGenInterleave,  o2 : VolatileAccessEventStaticGenInterleave ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.fieldId != o2.fieldId )
+        
+          if( o1.fieldId != o2.fieldId )
           {
              java.lang.Integer.compare( o1.fieldId , o2.fieldId  )
           }
           else
           
         
-        if( o1.order != o2.order )
+        
+          if( o1.order != o2.order )
           {
              java.lang.Integer.compare( o1.order , o2.order  )
           }
           else
           
         
-        if( o1.isWrite != o2.isWrite )
+        
+          if( o1.isWrite != o2.isWrite )
           {
              java.lang.Boolean.compare( o1.isWrite , o2.isWrite  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
+        
+          if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
           {
              java.lang.Integer.compare( o1.stackTraceOrdinal , o2.stackTraceOrdinal  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -302,63 +369,71 @@ class SortVolatileAccessEventStaticGenInterleave extends Comparator[VolatileAcce
 {
     def	compare(o1 :  VolatileAccessEventStaticGenInterleave,  o2 : VolatileAccessEventStaticGenInterleave ) =
     {
-        if( o1.fieldId != o2.fieldId )
+        
+          if( o1.fieldId != o2.fieldId )
           {
              java.lang.Integer.compare( o1.fieldId , o2.fieldId  )
           }
           else
           
         
-        if( o1.order != o2.order )
+        
+          if( o1.order != o2.order )
           {
              java.lang.Integer.compare( o1.order , o2.order  )
           }
           else
           
         
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.isWrite != o2.isWrite )
+        
+          if( o1.isWrite != o2.isWrite )
           {
              java.lang.Boolean.compare( o1.isWrite , o2.isWrite  )
           }
           else
           
         
-        if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
+        
+          if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
           {
              java.lang.Integer.compare( o1.stackTraceOrdinal , o2.stackTraceOrdinal  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

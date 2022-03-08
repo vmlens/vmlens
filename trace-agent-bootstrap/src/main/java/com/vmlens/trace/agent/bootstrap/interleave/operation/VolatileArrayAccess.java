@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.MonitorLockEnterStack;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.PositionAndOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.normalized.PotentialOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.PotentialOrderSingle;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationList;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.RelationMap;
@@ -35,7 +34,7 @@ public class VolatileArrayAccess  implements  OperationTyp  {
 	}
 
 	@Override
-	public void fill(RelationMap relationMap, Position position,TIntHashSet takeMonitorIds) {
+	public void fill(RelationMap relationMap, Position position, TIntHashSet takeMonitorIds) {
 	TLinkedList<PositionAndOperation> list = relationMap.volatileArrayAccess.get( index );
 		
 		if( list == null )
@@ -104,8 +103,8 @@ public class VolatileArrayAccess  implements  OperationTyp  {
 	}
 	@Override
 	public void addPotentialRelation(RelationList orderList, Position a, OperationTyp operation,
-			Position b) {
-		orderList.addPotentialOrder(new PotentialOrderSingle (new LeftBeforeRight(a, b) ,new LeftBeforeRight(b, a)  ));
+                                     Position b) {
+		orderList.addPotentialOrder(new PotentialOrderSingle(new LeftBeforeRight(a, b) ,new LeftBeforeRight(b, a)  ));
 		
 	}
 	

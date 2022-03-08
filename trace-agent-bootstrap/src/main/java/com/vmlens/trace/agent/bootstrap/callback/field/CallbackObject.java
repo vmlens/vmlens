@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.OffsetAndClassName;
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;

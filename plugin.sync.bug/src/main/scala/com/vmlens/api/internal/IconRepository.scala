@@ -1,12 +1,8 @@
 package com.vmlens.api.internal
 
-import scala.collection.mutable.ArrayBuffer;
-import  com.vmlens.api._;
-import org.fusesource.scalate.ssp.ElseFragment
-import scala.collection.mutable.HashSet
-import com.vmlens.api.SingleIcon
-import com.vmlens.api.Icon
-import com.vmlens.api.CompositeIcon
+import com.vmlens.api._
+
+import scala.collection.mutable.{ArrayBuffer, HashSet}
 
 
 object IconRepository {

@@ -1,16 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
+import com.vmlens.trace.agent.bootstrap.event.AgentLogEvent;
+import com.vmlens.trace.agent.bootstrap.parallize.ParallizeSingelton;
+import com.vmlens.trace.agent.bootstrap.parallize.logicState.LogicState;
+import com.vmlens.trace.agent.bootstrap.parallize.logicState.ThreadId2State;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
-import com.vmlens.trace.agent.bootstrap.event.AgentLogEvent;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeSingelton;
-import com.vmlens.trace.agent.bootstrap.parallize.logicState.InterleaveControlLogic;
-import com.vmlens.trace.agent.bootstrap.parallize.logicState.LogicState;
-import com.vmlens.trace.agent.bootstrap.parallize.logicState.ThreadId2State;
 
 public class AgentLogCallback {
 

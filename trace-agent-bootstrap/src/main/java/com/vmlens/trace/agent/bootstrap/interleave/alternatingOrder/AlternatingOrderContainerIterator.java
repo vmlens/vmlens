@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.domain.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.domain.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -13,13 +13,15 @@ public class AlternatingOrderContainerIterator {
 
     public AlternatingOrderContainerIterator(AlternatingOrderContainer container) {
         this.container = container;
-        this.alternatingOrderIterator = new AlternatingOrderIterator(container.optionalAlternatingOrderElements);
+        this.alternatingOrderIterator = new AlternatingOrderIterator(container.fixedOrders,
+                container.optionalAlternatingOrderElements);
     }
 
     public boolean hasNext() {
         while (next == null && alternatingOrderIterator.hasNext()) {
-            LeftBeforeRight[] order = alternatingOrderIterator.next();
-            TLinkedList<TLinkableWrapper<Position>> orderedPositions = new CreateCalculatedRunForOrder(order, container.length).create();
+            TLinkedList<TLinkableWrapper<LeftBeforeRight>> order = alternatingOrderIterator.next();
+            TLinkedList<TLinkableWrapper<Position>> orderedPositions =
+                    new CreateCalculatedRunForOrder(order, container.length).create();
             if(orderedPositions != null ) {
                 next = new CalculatedRun(orderedPositions);
             }

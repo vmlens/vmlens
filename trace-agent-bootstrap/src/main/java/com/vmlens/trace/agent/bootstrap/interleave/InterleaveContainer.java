@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingO
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainerIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.AlternatingOrderFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.domain.SyncActionAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockFactory;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -36,7 +36,7 @@ public class InterleaveContainer {
         this.logger = logger;
     }
 
-    public boolean addActualRun(TLinkedList<TLinkableWrapper<SyncActionAndPosition>> run) {
+    public boolean addActualRun(TLinkedList<TLinkableWrapper<BlockFactory>> run) {
         AlternatingOrderContainer factory = new AlternatingOrderFactory(logger).create(run);
         boolean found = false;
         for (TLinkableWrapper<AlternatingOrderContainer> elem : allAlternativeOrderFactoryList) {

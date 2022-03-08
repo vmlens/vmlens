@@ -1,13 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder
 
 import com.vmlens.test.SameList
-import com.vmlens.trace.agent.bootstrap.interleave.domain.Position.p
-import com.vmlens.trace.agent.bootstrap.interleave.domain.{LeftBeforeRight, Position}
+import com.vmlens.trace.agent.bootstrap.interleave.Position
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CreateCalculatedRunForOrder
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper
 import gnu.trove.list.linked.TLinkedList
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.nullValue
 import org.junit.Test
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.Dsl.{ao, l, lp, order, p}
 
 class TestCreateCalculatedRunForOrder {
 
@@ -31,7 +32,7 @@ class TestCreateCalculatedRunForOrder {
     expected.add(lp(0, 2));
 
 
-    val create = new CreateCalculatedRunForOrder(Array.ofDim(0), Array(3, 1));
+    val create = new CreateCalculatedRunForOrder(order(), Array(3, 1));
     val result = create.create();
 
     assertThat(result, new SameList(expected));
@@ -46,8 +47,8 @@ class TestCreateCalculatedRunForOrder {
     expected.add(lp(0, 2));
     expected.add(lp(1, 0));
 
-    val leftBeforeRight = new LeftBeforeRight(p(0, 2), p(1, 0));
-    val create = new CreateCalculatedRunForOrder(Array(leftBeforeRight), Array(3, 1));
+    val create = new CreateCalculatedRunForOrder( order(l(p(0, 2), p(1, 0)))
+      , Array(3, 1));
     val result = create.create();
 
     assertThat(result, new SameList(expected));
@@ -56,8 +57,8 @@ class TestCreateCalculatedRunForOrder {
   @Test
   def testCycle() = {
     val create = new CreateCalculatedRunForOrder(
-      Array(new LeftBeforeRight(p(0, 2), p(1, 0)),
-        new LeftBeforeRight(p(1, 2), p(0, 0))
+      order(l(p(0, 2), p(1, 0)),
+       l(p(1, 2), p(0, 0))
       )
       , Array(3, 3));
     val result = create.create();
@@ -68,4 +69,21 @@ class TestCreateCalculatedRunForOrder {
   def lp(index: Int, position: Int) = {
     new TLinkableWrapper(new Position(index, position));
   }
+
+
+  @Test
+  def testOrderAtSamePosition(): Unit = {
+    val create = new CreateCalculatedRunForOrder(
+      order(l(p(0,1),p(1,0)),
+        l(p(1,2),p(2,0)),
+        l(p(0,0),p(1,1)),
+        l(p(1,0),p(2,0)),
+        l(p(0,0),p(2,1)))
+      , Array(2, 3 , 2));
+    val result = create.create();
+
+    println(result);
+  }
+
+
 }

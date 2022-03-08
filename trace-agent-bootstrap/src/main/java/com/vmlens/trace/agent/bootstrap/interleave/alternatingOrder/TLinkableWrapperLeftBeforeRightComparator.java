@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.domain.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import java.util.Comparator;

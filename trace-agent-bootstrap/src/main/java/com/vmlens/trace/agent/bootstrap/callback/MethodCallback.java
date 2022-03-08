@@ -1,16 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import java.lang.reflect.Field;
-
-import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
 import com.vmlens.trace.agent.bootstrap.event.StackTraceEvent;
-import com.vmlens.trace.agent.bootstrap.event.ThreadNameEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.LockEnterOrExit;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeSingelton;
 import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
-
-import gnu.trove.map.hash.TIntObjectHashMap;
 
 
 public class MethodCallback {

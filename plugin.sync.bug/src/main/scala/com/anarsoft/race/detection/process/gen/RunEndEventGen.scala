@@ -15,13 +15,20 @@ import com.anarsoft.race.detection.process.interleave._;
 
 class RunEndEventGen (
   val loopId  : Int
+
+
 ,  val runId  : Int
+
+
+
+
 )    extends RunEndEvent  
 {
 override def toString() = {
   var text =  "RunEndEventGen" 
-text = text + ", loopId:" +  loopId 
-text = text + ", runId:" +  runId 
+  text = text + ", loopId:" +  loopId 
+  text = text + ", runId:" +  runId 
+
 text;
 
 }
@@ -44,17 +51,19 @@ visitor.visit(this);
     other match {
       case that: RunEndEventGen => 
         {
-           if( loopId != that.loopId )
+            
+             if( loopId != that.loopId )
              {
                false;
              }
              else
-           if( runId != that.runId )
+            
+             if( runId != that.runId )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -74,13 +83,19 @@ object  RunEndEventGen
    {
      val result = new RunEndEventGen (
      
-        
+           
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -93,9 +108,13 @@ object  RunEndEventGen
    {
      val result = new RunEndEventGen (
      
-         data.getInt()
-        ,  data.getInt()
-        );
+            data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -121,7 +140,7 @@ class SortOrigRunEndEventGen extends Comparator[RunEndEventGen]
 {
     def	compare(o1 :  RunEndEventGen,  o2 : RunEndEventGen ) =
     {
-        {
+          {
             0;
           }
     
@@ -136,7 +155,7 @@ class SortRunEndEventGen extends Comparator[RunEndEventGen]
 {
     def	compare(o1 :  RunEndEventGen,  o2 : RunEndEventGen ) =
     {
-        {
+          {
             0;
           }
     

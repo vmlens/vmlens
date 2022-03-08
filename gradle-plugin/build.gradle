@@ -23,20 +23,18 @@ repositories {
        jcenter()
 }
 
-
 group="com.vmlens"
 
-
-
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
 
 pluginBundle {
     website = 'https://vmlens.com' 
     vcsUrl = 'https://github.com/vmlens/vmlens' 
     tags = ['interleave']     
 }
-
-
-
 
 dependencies {
     api gradleApi()
@@ -57,19 +55,14 @@ gradlePlugin {
 }
 
 
-
-
 publishing {
     repositories {
         maven {
             name = 'localPluginRepository'
-            url = "~/pluginRepo"
+            url = "C:/Users/thoma/pluginRepo"
             
         }
     }
 }
-
-
-
 
 

@@ -1,13 +1,9 @@
 package com.anarsoft.race.detection.process.gen;
 
+import com.anarsoft.race.detection.process.directMemory._
+import com.anarsoft.race.detection.process.read._
+
 import java.nio.ByteBuffer
-import com.anarsoft.race.detection.process.read._;
-import com.anarsoft.race.detection.process.nonVolatileField.ApplyFieldEventVisitor
-import com.anarsoft.race.detection.process.syncAction.SyncAction
-import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
-import com.anarsoft.race.detection.process.monitor.MonitorEvent
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
 
 class DirectMemoryDeSerializer   extends ReadStrategy[DirectMemoryEvent]
 {
@@ -20,6 +16,7 @@ class DirectMemoryDeSerializer   extends ReadStrategy[DirectMemoryEvent]
     {
         
        val id = buffer.get();
+       
        
        if( id == 13 )
        {
@@ -39,6 +36,7 @@ class DirectMemoryDeSerializer   extends ReadStrategy[DirectMemoryEvent]
     {
         
        val id = buffer.get();
+       
        
        if( id == 13 )
        {

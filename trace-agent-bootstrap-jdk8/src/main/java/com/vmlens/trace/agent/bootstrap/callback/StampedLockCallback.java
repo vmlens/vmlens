@@ -1,18 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.locks.StampedLock;
 
 import com.vmlens.trace.agent.bootstrap.callback.state.LockIdAndOrder;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
-import com.vmlens.trace.agent.bootstrap.callback.state.LockIdAndOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.LockEnterOrExit;

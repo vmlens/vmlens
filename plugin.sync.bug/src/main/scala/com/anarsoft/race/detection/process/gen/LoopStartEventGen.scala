@@ -1,25 +1,23 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+import com.anarsoft.race.detection.process.interleave._
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class LoopStartEventGen (
   val loopId  : Int
+
+
+
+
 )    extends LoopStartEvent  
 {
 override def toString() = {
   var text =  "LoopStartEventGen" 
-text = text + ", loopId:" +  loopId 
+  text = text + ", loopId:" +  loopId 
+
 text;
 
 }
@@ -42,12 +40,13 @@ visitor.visit(this);
     other match {
       case that: LoopStartEventGen => 
         {
-           if( loopId != that.loopId )
+            
+             if( loopId != that.loopId )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -67,10 +66,15 @@ object  LoopStartEventGen
    {
      val result = new LoopStartEventGen (
      
-        
+           
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -83,8 +87,12 @@ object  LoopStartEventGen
    {
      val result = new LoopStartEventGen (
      
-         data.getInt()
-        );
+            data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -110,7 +118,7 @@ class SortOrigLoopStartEventGen extends Comparator[LoopStartEventGen]
 {
     def	compare(o1 :  LoopStartEventGen,  o2 : LoopStartEventGen ) =
     {
-        {
+          {
             0;
           }
     
@@ -125,7 +133,7 @@ class SortLoopStartEventGen extends Comparator[LoopStartEventGen]
 {
     def	compare(o1 :  LoopStartEventGen,  o2 : LoopStartEventGen ) =
     {
-        {
+          {
             0;
           }
     

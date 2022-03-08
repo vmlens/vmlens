@@ -15,29 +15,52 @@ import com.anarsoft.race.detection.process.interleave._;
 
 class VolatileArrayAccessEventGen (
   val threadId  : Long
+
+
 ,  val programCounter  : Int
+
+
 ,  val order  : Int
+
+
 ,  val index  : Long
+
+
 ,  val methodCounter  : Int
+
+
+
+
 ,  var stackTraceOrdinal  : Int
+
+
 ,  var slidingWindowId  : Int
 ,  val methodId  : Int
+
+
 ,  val operation  : Int
+
+
 ,  val objectHashCode  : Long
+
+
+
+
 )    extends VolatileArrayAccessEvent  
 {
 override def toString() = {
   var text =  "VolatileArrayAccessEventGen" 
-text = text + ", threadId:" +  threadId 
-text = text + ", programCounter:" +  programCounter 
-text = text + ", order:" +  order 
-text = text + ", index:" +  index 
-text = text + ", methodCounter:" +  methodCounter 
-text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
-text = text + ", slidingWindowId:" +  slidingWindowId 
-text = text + ", methodId:" +  methodId 
-text = text + ", operation:" +  operation 
-text = text + ", objectHashCode:" +  objectHashCode 
+  text = text + ", threadId:" +  threadId 
+  text = text + ", programCounter:" +  programCounter 
+  text = text + ", order:" +  order 
+  text = text + ", index:" +  index 
+  text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
+  text = text + ", slidingWindowId:" +  slidingWindowId 
+  text = text + ", methodId:" +  methodId 
+  text = text + ", operation:" +  operation 
+  text = text + ", objectHashCode:" +  objectHashCode 
+
 text;
 
 }
@@ -60,57 +83,67 @@ visitor.visit(this);
     other match {
       case that: VolatileArrayAccessEventGen => 
         {
-           if( threadId != that.threadId )
+            
+             if( threadId != that.threadId )
              {
                false;
              }
              else
-           if( programCounter != that.programCounter )
+            
+             if( programCounter != that.programCounter )
              {
                false;
              }
              else
-           if( order != that.order )
+            
+             if( order != that.order )
              {
                false;
              }
              else
-           if( index != that.index )
+            
+             if( index != that.index )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           if( stackTraceOrdinal != that.stackTraceOrdinal )
+            
+             if( stackTraceOrdinal != that.stackTraceOrdinal )
              {
                false;
              }
              else
-           if( slidingWindowId != that.slidingWindowId )
+            
+             if( slidingWindowId != that.slidingWindowId )
              {
                false;
              }
              else
-           if( methodId != that.methodId )
+            
+             if( methodId != that.methodId )
              {
                false;
              }
              else
-           if( operation != that.operation )
+            
+             if( operation != that.operation )
              {
                false;
              }
              else
-           if( objectHashCode != that.objectHashCode )
+            
+             if( objectHashCode != that.objectHashCode )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -130,37 +163,51 @@ object  VolatileArrayAccessEventGen
    {
      val result = new VolatileArrayAccessEventGen (
      
-        
+           
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            0
-            , 
+                0
+           
+          , 
             
-            0
-            , 
+                0
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getLong()
-            );
+                data.getLong()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -173,17 +220,21 @@ object  VolatileArrayAccessEventGen
    {
      val result = new VolatileArrayAccessEventGen (
      
-         data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getLong()
-        );
+            data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getLong()
+     
+     
+     
+     
+     );
      
      
      
@@ -209,70 +260,79 @@ class SortOrigVolatileArrayAccessEventGen extends Comparator[VolatileArrayAccess
 {
     def	compare(o1 :  VolatileArrayAccessEventGen,  o2 : VolatileArrayAccessEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.index != o2.index )
+        
+          if( o1.index != o2.index )
           {
              java.lang.Long.compare( o1.index , o2.index  )
           }
           else
           
         
-        if( o1.order != o2.order )
+        
+          if( o1.order != o2.order )
           {
              java.lang.Integer.compare( o1.order , o2.order  )
           }
           else
           
         
-        if( o1.operation != o2.operation )
+        
+          if( o1.operation != o2.operation )
           {
              java.lang.Integer.compare( o1.operation , o2.operation  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        if( o1.objectHashCode != o2.objectHashCode )
+        
+          if( o1.objectHashCode != o2.objectHashCode )
           {
              java.lang.Long.compare( o1.objectHashCode , o2.objectHashCode  )
           }
           else
           
         
-        if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
+        
+          if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
           {
              java.lang.Integer.compare( o1.stackTraceOrdinal , o2.stackTraceOrdinal  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -287,70 +347,79 @@ class SortVolatileArrayAccessEventGen extends Comparator[VolatileArrayAccessEven
 {
     def	compare(o1 :  VolatileArrayAccessEventGen,  o2 : VolatileArrayAccessEventGen ) =
     {
-        if( o1.objectHashCode != o2.objectHashCode )
+        
+          if( o1.objectHashCode != o2.objectHashCode )
           {
              java.lang.Long.compare( o1.objectHashCode , o2.objectHashCode  )
           }
           else
           
         
-        if( o1.index != o2.index )
+        
+          if( o1.index != o2.index )
           {
              java.lang.Long.compare( o1.index , o2.index  )
           }
           else
           
         
-        if( o1.order != o2.order )
+        
+          if( o1.order != o2.order )
           {
              java.lang.Integer.compare( o1.order , o2.order  )
           }
           else
           
         
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.operation != o2.operation )
+        
+          if( o1.operation != o2.operation )
           {
              java.lang.Integer.compare( o1.operation , o2.operation  )
           }
           else
           
         
-        if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
+        
+          if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
           {
              java.lang.Integer.compare( o1.stackTraceOrdinal , o2.stackTraceOrdinal  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

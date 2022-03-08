@@ -1,27 +1,27 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+import com.anarsoft.race.detection.process.interleave._
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class LoopEndEventGen (
   val loopId  : Int
+
+
 ,  val status  : Int
+
+
+
+
 )    extends LoopEndEvent  
 {
 override def toString() = {
   var text =  "LoopEndEventGen" 
-text = text + ", loopId:" +  loopId 
-text = text + ", status:" +  status 
+  text = text + ", loopId:" +  loopId 
+  text = text + ", status:" +  status 
+
 text;
 
 }
@@ -44,17 +44,19 @@ visitor.visit(this);
     other match {
       case that: LoopEndEventGen => 
         {
-           if( loopId != that.loopId )
+            
+             if( loopId != that.loopId )
              {
                false;
              }
              else
-           if( status != that.status )
+            
+             if( status != that.status )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -74,13 +76,19 @@ object  LoopEndEventGen
    {
      val result = new LoopEndEventGen (
      
-        
+           
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -93,9 +101,13 @@ object  LoopEndEventGen
    {
      val result = new LoopEndEventGen (
      
-         data.getInt()
-        ,  data.getInt()
-        );
+            data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -121,7 +133,7 @@ class SortOrigLoopEndEventGen extends Comparator[LoopEndEventGen]
 {
     def	compare(o1 :  LoopEndEventGen,  o2 : LoopEndEventGen ) =
     {
-        {
+          {
             0;
           }
     
@@ -136,7 +148,7 @@ class SortLoopEndEventGen extends Comparator[LoopEndEventGen]
 {
     def	compare(o1 :  LoopEndEventGen,  o2 : LoopEndEventGen ) =
     {
-        {
+          {
             0;
           }
     

@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.parallize.logic;
 
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.event.NewSlidingWindowId;

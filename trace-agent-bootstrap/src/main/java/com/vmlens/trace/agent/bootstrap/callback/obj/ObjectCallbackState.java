@@ -4,10 +4,8 @@ import com.vmlens.trace.agent.bootstrap.callback.AnarsoftWeakHashMap;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.callback.field.CallbackObject;
-import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateHolder;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 
 public class ObjectCallbackState {
 

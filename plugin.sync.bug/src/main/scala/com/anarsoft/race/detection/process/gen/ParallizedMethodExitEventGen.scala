@@ -15,15 +15,24 @@ import com.anarsoft.race.detection.process.interleave._;
 
 class ParallizedMethodExitEventGen (
   val threadId  : Long
+
+
 ,  val methodId  : Int
+
+
 ,  val methodCounter  : Int
+
+
+
+
 )    extends ParallizedMethodExitEvent 
 {
 override def toString() = {
   var text =  "ParallizedMethodExitEventGen" 
-text = text + ", threadId:" +  threadId 
-text = text + ", methodId:" +  methodId 
-text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", threadId:" +  threadId 
+  text = text + ", methodId:" +  methodId 
+  text = text + ", methodCounter:" +  methodCounter 
+
 text;
 
 }
@@ -46,22 +55,25 @@ visitor.visit(this);
     other match {
       case that: ParallizedMethodExitEventGen => 
         {
-           if( threadId != that.threadId )
+            
+             if( threadId != that.threadId )
              {
                false;
              }
              else
-           if( methodId != that.methodId )
+            
+             if( methodId != that.methodId )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -81,16 +93,23 @@ object  ParallizedMethodExitEventGen
    {
      val result = new ParallizedMethodExitEventGen (
      
-        
+           
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -103,10 +122,14 @@ object  ParallizedMethodExitEventGen
    {
      val result = new ParallizedMethodExitEventGen (
      
-         data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        );
+            data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -132,28 +155,31 @@ class SortOrigParallizedMethodExitEventGen extends Comparator[ParallizedMethodEx
 {
     def	compare(o1 :  ParallizedMethodExitEventGen,  o2 : ParallizedMethodExitEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -168,28 +194,31 @@ class SortParallizedMethodExitEventGen extends Comparator[ParallizedMethodExitEv
 {
     def	compare(o1 :  ParallizedMethodExitEventGen,  o2 : ParallizedMethodExitEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.methodId != o2.methodId )
+        
+          if( o1.methodId != o2.methodId )
           {
              java.lang.Integer.compare( o1.methodId , o2.methodId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

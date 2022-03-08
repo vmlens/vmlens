@@ -4,8 +4,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.MonitorLockEnterStack;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.Position;
 import com.vmlens.trace.agent.bootstrap.util.IntStack;
 
-import gnu.trove.list.linked.TIntLinkedList;
-
 public class MonitorEnter implements LockOperation  {
 
 	private final int monitorId;

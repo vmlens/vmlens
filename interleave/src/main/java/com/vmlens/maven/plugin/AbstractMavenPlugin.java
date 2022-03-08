@@ -221,8 +221,9 @@ public abstract class AbstractMavenPlugin extends AbstractSurefireMojo implement
         if (super.getArgLine() != null) {
             additionalArgs = super.getArgLine();
         }
+        // -Xverify:all
 
-        return "-javaagent:\"" + agentDirectory.getAbsolutePath() + "/agent.jar\" " + additionalArgs;
+        return "-javaagent:\"" + agentDirectory.getAbsolutePath() + "/agent.jar\"  " + additionalArgs;
 
         // return
         // "-javaagent:/home/thomas/git-repo/workspace/com.anarsoft.plugin.sync.bug/agent_lib/agent.jar=/home/thomas/git-repo/workspace/com.anarsoft.plugin.sync.bug.test/agent_properties/run.properties";

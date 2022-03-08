@@ -60,7 +60,7 @@ class TestOneVolatileField {
     var count = 0;
     while (sut.hasNext) {
       val current = sut.next();
-      println(current)
+      result.add(current.toString())
       count = count + 1;
     }
     assertThat(count,is(3))

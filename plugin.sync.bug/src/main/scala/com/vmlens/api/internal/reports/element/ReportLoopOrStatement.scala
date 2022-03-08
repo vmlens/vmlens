@@ -5,12 +5,17 @@ import com.anarsoft.race.detection.process.interleave.InterleaveEventStatement
 import com.anarsoft.race.detection.process.interleave.StatementLoop
 import com.anarsoft.race.detection.model.result.ModelFacadeAll
 
-class ReportLoopOrStatement(val loop : Option[ReportLoop] , val statement : Option[ReportStatementBlock]) extends ReportElement[ContextReport] {
-  
-    def initialize( contextReport : ContextReport ) 
+class ReportLoopOrStatement(val loopInternal : Option[ReportLoop] , val statementInternal : Option[ReportStatementBlock]) extends ReportElement[ContextReport] {
+
+  def loop = loopInternal.getOrElse(null)
+
+  def statement =  statementInternal.getOrElse(null)
+
+
+  def initialize( contextReport : ContextReport )
     {
-      loop.foreach( x => x.initialize(contextReport) )
-      statement.foreach( x => x.initialize(contextReport) )
+      loopInternal.foreach( x => x.initialize(contextReport) )
+      statementInternal.foreach( x => x.initialize(contextReport) )
     }
     
     

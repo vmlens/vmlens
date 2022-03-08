@@ -1,14 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithSlidingWindow;
+
 import java.nio.ByteBuffer;
-import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class ParallizedMethodEnterEventGen  implements RuntimeEvent 
 {
 
 
-  
     public int getSlidingWindowId()
     {
       return slidingWindowId;
@@ -18,26 +19,33 @@ public class ParallizedMethodEnterEventGen  implements RuntimeEvent
    private final int slidingWindowId;
   
 
-     public final     long     threadId;
-      public final     int     methodId;
-      public final     int     methodCounter;
-      public final     int     parallizeId;
-      public  ParallizedMethodEnterEventGen(
+   public final     long     threadId;
+   public final     int     methodId;
+   public final     int     methodCounter;
+   public final     int     parallizeId;
+
+
+
+public  ParallizedMethodEnterEventGen(
 int slidingWindowId 
-,   long     threadId
-,   int     methodId
-,   int     methodCounter
-,   int     parallizeId
-)
+  ,   long     threadId
+  ,   int     methodId
+  ,   int     methodCounter
+  ,   int     parallizeId
+ )
  {
 
    this.slidingWindowId = slidingWindowId;
 
-   this.threadId   =  threadId;
-   this.methodId   =  methodId;
-   this.methodCounter   =  methodCounter;
-   this.parallizeId   =  parallizeId;
-   }
+      this.threadId   =  threadId;
+      this.methodId   =  methodId;
+      this.methodCounter   =  methodCounter;
+      this.parallizeId   =  parallizeId;
+     
+ 
+  
+  
+ }
  
 
  
@@ -48,10 +56,15 @@ public void serialize(StreamRepository streamRepository) throws Exception
 
  buffer.put( (byte)  28 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( methodId ); ;
- buffer.putInt( methodCounter ); ;
- buffer.putInt( parallizeId ); ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( methodId ); ;
+     buffer.putInt( methodCounter ); ;
+     buffer.putInt( parallizeId ); ;
+
+
+
+
+
 }
 
 
@@ -62,10 +75,15 @@ public void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper
 
  buffer.put( (byte)  28 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( methodId ); ;
- buffer.putInt( methodCounter ); ;
- buffer.putInt( parallizeId ); ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( methodId ); ;
+     buffer.putInt( methodCounter ); ;
+     buffer.putInt( parallizeId ); ;
+
+
+
+
+
 }
 
 

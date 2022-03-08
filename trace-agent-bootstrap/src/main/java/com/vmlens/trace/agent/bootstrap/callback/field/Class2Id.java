@@ -2,9 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
-import com.vmlens.trace.agent.bootstrap.event.AgentLogEvent;
 import com.vmlens.trace.agent.bootstrap.event.ClassNameEvent;
-
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 public class Class2Id {

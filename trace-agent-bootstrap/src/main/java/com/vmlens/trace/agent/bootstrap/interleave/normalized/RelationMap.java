@@ -1,18 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.interleave.normalized;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 
-import com.vmlens.trace.agent.bootstrap.interleave.operation.VolatileFieldAccess;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.MonitorPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.MonitorState;
-import com.vmlens.trace.agent.bootstrap.interleave.actualAccess.Comparator4LockAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.ThreadJoin;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.ThreadStarted;
-import gnu.trove.map.hash.THashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;

@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
-import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 import gnu.trove.set.hash.TLongHashSet;
 

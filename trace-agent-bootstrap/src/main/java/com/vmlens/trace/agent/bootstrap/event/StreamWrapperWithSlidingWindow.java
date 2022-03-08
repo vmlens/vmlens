@@ -5,10 +5,8 @@ package com.vmlens.trace.agent.bootstrap.event;
 import java.io.*;
 
 import java.nio.*;
-import java.nio.channels.Channel;
 import java.nio.channels.FileChannel;
 
-import gnu.trove.list.TLinkable;
 import gnu.trove.list.linked.TLinkedList;
 
 public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper  {

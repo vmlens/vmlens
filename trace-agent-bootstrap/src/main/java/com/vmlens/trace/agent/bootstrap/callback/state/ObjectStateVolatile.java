@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.callback.field.UpdateObjectState;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
 
 public class ObjectStateVolatile extends ObjectStateAbstractMultiThreaded {
 	private  FieldId2Element<ObjectIdAndOrder> fieldId2Order;

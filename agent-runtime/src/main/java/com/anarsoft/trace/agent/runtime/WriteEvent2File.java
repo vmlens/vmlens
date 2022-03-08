@@ -7,7 +7,6 @@ import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
-import com.anarsoft.trace.agent.runtime.process.TimeValues;
 import com.vmlens.trace.agent.bootstrap.event.NewSlidingWindowId;
 
 

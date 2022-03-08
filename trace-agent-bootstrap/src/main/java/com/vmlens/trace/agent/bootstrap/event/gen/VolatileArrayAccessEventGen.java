@@ -2,13 +2,11 @@ package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class VolatileArrayAccessEventGen  implements RuntimeEvent 
 {
 
 
-  
     public int getSlidingWindowId()
     {
       return slidingWindowId;
@@ -18,38 +16,45 @@ public class VolatileArrayAccessEventGen  implements RuntimeEvent
    private final int slidingWindowId;
   
 
-     public final     long     threadId;
-      public final     int     programCounter;
-      public final     int     order;
-      public final     long     index;
-      public final     int     methodCounter;
-      public final     int     methodId;
-      public final     int     operation;
-      public final     long     objectHashCode;
-      public  VolatileArrayAccessEventGen(
+   public final     long     threadId;
+   public final     int     programCounter;
+   public final     int     order;
+   public final     long     index;
+   public final     int     methodCounter;
+   public final     int     methodId;
+   public final     int     operation;
+   public final     long     objectHashCode;
+
+
+
+public  VolatileArrayAccessEventGen(
 int slidingWindowId 
-,   long     threadId
-,   int     programCounter
-,   int     order
-,   long     index
-,   int     methodCounter
-,   int     methodId
-,   int     operation
-,   long     objectHashCode
-)
+  ,   long     threadId
+  ,   int     programCounter
+  ,   int     order
+  ,   long     index
+  ,   int     methodCounter
+  ,   int     methodId
+  ,   int     operation
+  ,   long     objectHashCode
+ )
  {
 
    this.slidingWindowId = slidingWindowId;
 
-   this.threadId   =  threadId;
-   this.programCounter   =  programCounter;
-   this.order   =  order;
-   this.index   =  index;
-   this.methodCounter   =  methodCounter;
-   this.methodId   =  methodId;
-   this.operation   =  operation;
-   this.objectHashCode   =  objectHashCode;
-   }
+      this.threadId   =  threadId;
+      this.programCounter   =  programCounter;
+      this.order   =  order;
+      this.index   =  index;
+      this.methodCounter   =  methodCounter;
+      this.methodId   =  methodId;
+      this.operation   =  operation;
+      this.objectHashCode   =  objectHashCode;
+     
+ 
+  
+  
+ }
  
 
  
@@ -60,14 +65,19 @@ public void serialize(StreamRepository streamRepository) throws Exception
 
  buffer.put( (byte)  11 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( programCounter ); ;
- buffer.putInt( order ); ;
-  buffer.putLong( index );  ;
- buffer.putInt( methodCounter ); ;
- buffer.putInt( methodId ); ;
- buffer.putInt( operation ); ;
-  buffer.putLong( objectHashCode );  ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( programCounter ); ;
+     buffer.putInt( order ); ;
+      buffer.putLong( index );  ;
+     buffer.putInt( methodCounter ); ;
+     buffer.putInt( methodId ); ;
+     buffer.putInt( operation ); ;
+      buffer.putLong( objectHashCode );  ;
+
+
+
+
+
 }
 
 
@@ -78,14 +88,19 @@ public void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper
 
  buffer.put( (byte)  11 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( programCounter ); ;
- buffer.putInt( order ); ;
-  buffer.putLong( index );  ;
- buffer.putInt( methodCounter ); ;
- buffer.putInt( methodId ); ;
- buffer.putInt( operation ); ;
-  buffer.putLong( objectHashCode );  ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( programCounter ); ;
+     buffer.putInt( order ); ;
+      buffer.putLong( index );  ;
+     buffer.putInt( methodCounter ); ;
+     buffer.putInt( methodId ); ;
+     buffer.putInt( operation ); ;
+      buffer.putLong( objectHashCode );  ;
+
+
+
+
+
 }
 
 

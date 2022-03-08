@@ -4,7 +4,6 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.event.gen.AbstractSendEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizedThreadFacade;
-import com.vmlens.trace.agent.bootstrap.threadQueue.QueueCollection;
 
 public class SendEventImpl extends AbstractSendEvent implements SendEvent {
 

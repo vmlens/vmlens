@@ -1,13 +1,9 @@
 package com.anarsoft.race.detection.process.gen;
 
-import java.nio.ByteBuffer
-import com.anarsoft.race.detection.process.read._;
-import com.anarsoft.race.detection.process.nonVolatileField.ApplyFieldEventVisitor
-import com.anarsoft.race.detection.process.syncAction.SyncAction
-import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
 import com.anarsoft.race.detection.process.monitor.MonitorEvent
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.read._
+
+import java.nio.ByteBuffer
 
 class MonitorDeSerializer   extends ReadStrategy[MonitorEvent]
 {
@@ -21,11 +17,13 @@ class MonitorDeSerializer   extends ReadStrategy[MonitorEvent]
         
        val id = buffer.get();
        
+       
        if( id == 22 )
        {
           MonitorEnterEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 23 )
        {
@@ -33,11 +31,13 @@ class MonitorDeSerializer   extends ReadStrategy[MonitorEvent]
        }
        else
        
+       
        if( id == 24 )
        {
           MonitorEnterEventGenInterleave.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 25 )
        {
@@ -58,11 +58,13 @@ class MonitorDeSerializer   extends ReadStrategy[MonitorEvent]
         
        val id = buffer.get();
        
+       
        if( id == 22 )
        {
           MonitorEnterEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 23 )
        {
@@ -70,11 +72,13 @@ class MonitorDeSerializer   extends ReadStrategy[MonitorEvent]
        }
        else
        
+       
        if( id == 24 )
        {
           MonitorEnterEventGenInterleave.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 25 )
        {

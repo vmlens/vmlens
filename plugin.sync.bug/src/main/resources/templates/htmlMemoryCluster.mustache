@@ -1,0 +1,59 @@
+{{>templates/header.mustache}}
+
+
+
+{{#issues}}
+
+
+   <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1 class="text-center">Cluster {{number}}</h1>
+    </div>
+  </div>
+
+
+ <div class="{{containerTyp}}">
+
+<div class="row">
+      <h3 >Shared State Accessed From:</h3>
+</div>
+
+
+ {{>parentTable}}
+
+
+
+<div class="row">
+  
+
+
+
+<div class="row">
+      <h3 >Shared State</h3>
+</div>
+
+
+ <ul class="list-group">
+
+{{#memory}}  
+  <li class="list-group-item">{{name}}</li>
+{{/memory}}
+
+
+</ul>   
+  
+  
+</div>
+
+
+
+</div>
+
+
+{{/issues}}
+ 
+  
+    
+
+
+{{>templates/footer}}

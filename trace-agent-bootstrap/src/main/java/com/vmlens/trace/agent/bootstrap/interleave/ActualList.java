@@ -1,20 +1,18 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
 
-import java.util.Arrays;
-
 import com.vmlens.trace.agent.bootstrap.interleave.actualAccess.ActualAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.actualAccess.Comparator4ActualAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.actualAccess.LockAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.NormalizedAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.normalized.NormalizedThread;
-import com.vmlens.trace.agent.bootstrap.interleave.normalized.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
-
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+
+import java.util.Arrays;
 
 
 public class ActualList {

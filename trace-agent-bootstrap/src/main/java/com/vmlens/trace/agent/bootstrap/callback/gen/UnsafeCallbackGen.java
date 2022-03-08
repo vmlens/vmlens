@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 public  class UnsafeCallbackGen  {
 	
 
+
 public static void putByteVolatile(sun.misc.Unsafe unsafe, Object in , long offset , byte a, int methodId)
 	{
 
@@ -13,6 +14,7 @@ public static void putByteVolatile(sun.misc.Unsafe unsafe, Object in , long offs
 		 
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
 
 public static void putDoubleVolatile(sun.misc.Unsafe unsafe, Object in , long offset , double a, int methodId)
 	{
@@ -22,6 +24,7 @@ public static void putDoubleVolatile(sun.misc.Unsafe unsafe, Object in , long of
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putFloatVolatile(sun.misc.Unsafe unsafe, Object in , long offset , float a, int methodId)
 	{
 
@@ -29,6 +32,7 @@ public static void putFloatVolatile(sun.misc.Unsafe unsafe, Object in , long off
 		 
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
 
 public static void putIntVolatile(sun.misc.Unsafe unsafe, Object in , long offset , int a, int methodId)
 	{
@@ -38,6 +42,7 @@ public static void putIntVolatile(sun.misc.Unsafe unsafe, Object in , long offse
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putLongVolatile(sun.misc.Unsafe unsafe, Object in , long offset , long a, int methodId)
 	{
 
@@ -45,6 +50,7 @@ public static void putLongVolatile(sun.misc.Unsafe unsafe, Object in , long offs
 		 
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
 
 public static void putCharVolatile(sun.misc.Unsafe unsafe, Object in , long offset , char a, int methodId)
 	{
@@ -54,6 +60,7 @@ public static void putCharVolatile(sun.misc.Unsafe unsafe, Object in , long offs
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putShortVolatile(sun.misc.Unsafe unsafe, Object in , long offset , short a, int methodId)
 	{
 
@@ -61,6 +68,7 @@ public static void putShortVolatile(sun.misc.Unsafe unsafe, Object in , long off
 		 
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
 
 public static void putBooleanVolatile(sun.misc.Unsafe unsafe, Object in , long offset , boolean a, int methodId)
 	{
@@ -70,6 +78,7 @@ public static void putBooleanVolatile(sun.misc.Unsafe unsafe, Object in , long o
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putObjectVolatile(sun.misc.Unsafe unsafe, Object in , long offset , java.lang.Object a, int methodId)
 	{
 
@@ -77,6 +86,15 @@ public static void putObjectVolatile(sun.misc.Unsafe unsafe, Object in , long of
 		 
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
+
+
+
+
+
+
+
+
 
 public static void putOrderedInt(sun.misc.Unsafe unsafe, Object in , long offset , int a, int methodId)
 	{
@@ -86,6 +104,7 @@ public static void putOrderedInt(sun.misc.Unsafe unsafe, Object in , long offset
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putOrderedLong(sun.misc.Unsafe unsafe, Object in , long offset , long a, int methodId)
 	{
 
@@ -94,6 +113,7 @@ public static void putOrderedLong(sun.misc.Unsafe unsafe, Object in , long offse
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putOrderedObject(sun.misc.Unsafe unsafe, Object in , long offset , java.lang.Object a, int methodId)
 	{
 
@@ -101,6 +121,9 @@ public static void putOrderedObject(sun.misc.Unsafe unsafe, Object in , long off
 		 
 			CallbackObject.volatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
+
+
 
 public static boolean compareAndSwapInt(sun.misc.Unsafe unsafe, Object in , long offset , int a, int b, int methodId)
 	{
@@ -115,6 +138,7 @@ public static boolean compareAndSwapInt(sun.misc.Unsafe unsafe, Object in , long
 		return result;
 	}
 
+
 public static boolean compareAndSwapLong(sun.misc.Unsafe unsafe, Object in , long offset , long a, long b, int methodId)
 	{
 	
@@ -127,6 +151,7 @@ public static boolean compareAndSwapLong(sun.misc.Unsafe unsafe, Object in , lon
 		
 		return result;
 	}
+
 
 public static boolean compareAndSwapObject(sun.misc.Unsafe unsafe, Object in , long offset , java.lang.Object a, java.lang.Object b, int methodId)
 	{
@@ -141,7 +166,10 @@ public static boolean compareAndSwapObject(sun.misc.Unsafe unsafe, Object in , l
 		return result;
 	}
 
-public static byte getByteVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+
+
+	public static byte getByteVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		byte result =  unsafe.getByteVolatile (in, offset);
@@ -151,7 +179,8 @@ public static byte getByteVolatile(sun.misc.Unsafe unsafe, Object in , long offs
 		return result;
 	}
 
-public static double getDoubleVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static double getDoubleVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		double result =  unsafe.getDoubleVolatile (in, offset);
@@ -161,7 +190,8 @@ public static double getDoubleVolatile(sun.misc.Unsafe unsafe, Object in , long 
 		return result;
 	}
 
-public static float getFloatVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static float getFloatVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		float result =  unsafe.getFloatVolatile (in, offset);
@@ -171,7 +201,8 @@ public static float getFloatVolatile(sun.misc.Unsafe unsafe, Object in , long of
 		return result;
 	}
 
-public static int getIntVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static int getIntVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		int result =  unsafe.getIntVolatile (in, offset);
@@ -181,7 +212,8 @@ public static int getIntVolatile(sun.misc.Unsafe unsafe, Object in , long offset
 		return result;
 	}
 
-public static long getLongVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static long getLongVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		long result =  unsafe.getLongVolatile (in, offset);
@@ -191,7 +223,8 @@ public static long getLongVolatile(sun.misc.Unsafe unsafe, Object in , long offs
 		return result;
 	}
 
-public static char getCharVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static char getCharVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		char result =  unsafe.getCharVolatile (in, offset);
@@ -201,7 +234,8 @@ public static char getCharVolatile(sun.misc.Unsafe unsafe, Object in , long offs
 		return result;
 	}
 
-public static short getShortVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static short getShortVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		short result =  unsafe.getShortVolatile (in, offset);
@@ -211,7 +245,8 @@ public static short getShortVolatile(sun.misc.Unsafe unsafe, Object in , long of
 		return result;
 	}
 
-public static boolean getBooleanVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static boolean getBooleanVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		boolean result =  unsafe.getBooleanVolatile (in, offset);
@@ -221,7 +256,8 @@ public static boolean getBooleanVolatile(sun.misc.Unsafe unsafe, Object in , lon
 		return result;
 	}
 
-public static java.lang.Object getObjectVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static java.lang.Object getObjectVolatile(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		java.lang.Object result =  unsafe.getObjectVolatile (in, offset);
@@ -231,7 +267,11 @@ public static java.lang.Object getObjectVolatile(sun.misc.Unsafe unsafe, Object 
 		return result;
 	}
 
-public static byte getByte(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+
+
+
+	public static byte getByte(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		byte result =  unsafe.getByte (in, offset);
@@ -241,7 +281,8 @@ public static byte getByte(sun.misc.Unsafe unsafe, Object in , long offset, int 
 		return result;
 	}
 
-public static double getDouble(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static double getDouble(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		double result =  unsafe.getDouble (in, offset);
@@ -251,7 +292,8 @@ public static double getDouble(sun.misc.Unsafe unsafe, Object in , long offset, 
 		return result;
 	}
 
-public static float getFloat(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static float getFloat(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		float result =  unsafe.getFloat (in, offset);
@@ -261,7 +303,8 @@ public static float getFloat(sun.misc.Unsafe unsafe, Object in , long offset, in
 		return result;
 	}
 
-public static int getInt(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static int getInt(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		int result =  unsafe.getInt (in, offset);
@@ -271,7 +314,8 @@ public static int getInt(sun.misc.Unsafe unsafe, Object in , long offset, int me
 		return result;
 	}
 
-public static long getLong(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static long getLong(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		long result =  unsafe.getLong (in, offset);
@@ -281,7 +325,8 @@ public static long getLong(sun.misc.Unsafe unsafe, Object in , long offset, int 
 		return result;
 	}
 
-public static char getChar(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static char getChar(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		char result =  unsafe.getChar (in, offset);
@@ -291,7 +336,8 @@ public static char getChar(sun.misc.Unsafe unsafe, Object in , long offset, int 
 		return result;
 	}
 
-public static short getShort(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static short getShort(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		short result =  unsafe.getShort (in, offset);
@@ -301,7 +347,8 @@ public static short getShort(sun.misc.Unsafe unsafe, Object in , long offset, in
 		return result;
 	}
 
-public static boolean getBoolean(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static boolean getBoolean(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		boolean result =  unsafe.getBoolean (in, offset);
@@ -311,7 +358,8 @@ public static boolean getBoolean(sun.misc.Unsafe unsafe, Object in , long offset
 		return result;
 	}
 
-public static java.lang.Object getObject(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
+
+	public static java.lang.Object getObject(sun.misc.Unsafe unsafe, Object in , long offset, int methodId )
 	{
 
 		java.lang.Object result =  unsafe.getObject (in, offset);
@@ -321,6 +369,9 @@ public static java.lang.Object getObject(sun.misc.Unsafe unsafe, Object in , lon
 		return result;
 	}
 
+		
+		
+
 public static void putByte(sun.misc.Unsafe unsafe, Object in , long offset , byte a, int methodId)
 	{
 
@@ -328,6 +379,7 @@ public static void putByte(sun.misc.Unsafe unsafe, Object in , long offset , byt
 		 
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
 
 public static void putDouble(sun.misc.Unsafe unsafe, Object in , long offset , double a, int methodId)
 	{
@@ -337,6 +389,7 @@ public static void putDouble(sun.misc.Unsafe unsafe, Object in , long offset , d
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putFloat(sun.misc.Unsafe unsafe, Object in , long offset , float a, int methodId)
 	{
 
@@ -344,6 +397,7 @@ public static void putFloat(sun.misc.Unsafe unsafe, Object in , long offset , fl
 		 
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
 
 public static void putInt(sun.misc.Unsafe unsafe, Object in , long offset , int a, int methodId)
 	{
@@ -353,6 +407,7 @@ public static void putInt(sun.misc.Unsafe unsafe, Object in , long offset , int 
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putLong(sun.misc.Unsafe unsafe, Object in , long offset , long a, int methodId)
 	{
 
@@ -360,6 +415,7 @@ public static void putLong(sun.misc.Unsafe unsafe, Object in , long offset , lon
 		 
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
 
 public static void putChar(sun.misc.Unsafe unsafe, Object in , long offset , char a, int methodId)
 	{
@@ -369,6 +425,7 @@ public static void putChar(sun.misc.Unsafe unsafe, Object in , long offset , cha
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putShort(sun.misc.Unsafe unsafe, Object in , long offset , short a, int methodId)
 	{
 
@@ -376,6 +433,7 @@ public static void putShort(sun.misc.Unsafe unsafe, Object in , long offset , sh
 		 
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
+
 
 public static void putBoolean(sun.misc.Unsafe unsafe, Object in , long offset , boolean a, int methodId)
 	{
@@ -385,6 +443,7 @@ public static void putBoolean(sun.misc.Unsafe unsafe, Object in , long offset , 
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+
 public static void putObject(sun.misc.Unsafe unsafe, Object in , long offset , java.lang.Object a, int methodId)
 	{
 
@@ -393,5 +452,15 @@ public static void putObject(sun.misc.Unsafe unsafe, Object in , long offset , j
 			CallbackObject.nonVolatileAccessWithOffset(in, unsafe , offset , methodId ,  MemoryAccessType.IS_WRITE);
 	}
 
+		
+		
+		
+		
+		
+		
+		
+		
+ 
+	
 }
 

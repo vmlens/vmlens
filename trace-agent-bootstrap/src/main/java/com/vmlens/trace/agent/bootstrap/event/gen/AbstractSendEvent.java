@@ -1,13 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import com.vmlens.trace.agent.bootstrap.event.*;
-import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.callback.QueueCollectionWrapper;
-import com.vmlens.trace.agent.bootstrap.parallize.*;
+import com.vmlens.trace.agent.bootstrap.parallize.ParallizedThreadFacade;
 
 public abstract class AbstractSendEvent implements SendEvent {
-	
-	
+
 	public static final int ID_Field		= 0;
 	public static final int ID_SyncActions 	= 1;
 	public static final int ID_Monitor 		= 2;
@@ -23,7 +20,10 @@ public abstract class AbstractSendEvent implements SendEvent {
 	protected abstract ParallizedThreadFacade getParallizedThreadFacade();
 	
 	
-public void writeFieldAccessEventGen (final int slidingWindowId
+
+
+
+   public void writeFieldAccessEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     fieldId
 , final  int     methodCounter
@@ -33,6 +33,8 @@ public void writeFieldAccessEventGen (final int slidingWindowId
 , final  long     objectHashCode
 )
 {
+
+
 
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
@@ -41,23 +43,41 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_Field , 
 EventFactory.createFieldAccessEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 fieldId
+
 ,  
+
 methodCounter
+
 ,  
+
 operation
+
 ,  
+
 methodId
+
 ,  
+
 stackTraceIncomplete
+
 ,  
+
 objectHashCode
-, parallizedThreadFacade.showNonVolatileMemoryAccess()
+
+
+ , parallizedThreadFacade.showNonVolatileMemoryAccess()
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -72,22 +92,38 @@ else
 					
 							
 							EventFactory.createFieldAccessEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 fieldId
+
+
 ,  
 methodCounter
+
+
 ,  
 operation
+
+
 ,  
 methodId
+
+
 ,  
 stackTraceIncomplete
+
+
 ,  
 objectHashCode
+
+
 ) , slidingWindowId
 );
 
@@ -96,7 +132,14 @@ objectHashCode
 
 }
 
-public void writeFieldAccessEventStaticGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeFieldAccessEventStaticGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     fieldId
 , final  int     methodCounter
@@ -105,6 +148,8 @@ public void writeFieldAccessEventStaticGen (final int slidingWindowId
 , final  boolean     stackTraceIncomplete
 )
 {
+
+
 
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
@@ -113,21 +158,37 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_Field , 
 EventFactory.createFieldAccessEventStaticGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 fieldId
+
 ,  
+
 methodCounter
+
 ,  
+
 operation
+
 ,  
+
 methodId
+
 ,  
+
 stackTraceIncomplete
-, parallizedThreadFacade.showNonVolatileMemoryAccess()
+
+
+ , parallizedThreadFacade.showNonVolatileMemoryAccess()
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -142,20 +203,34 @@ else
 					
 							
 							EventFactory.createFieldAccessEventStaticGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 fieldId
+
+
 ,  
 methodCounter
+
+
 ,  
 operation
+
+
 ,  
 methodId
+
+
 ,  
 stackTraceIncomplete
+
+
 ) , slidingWindowId
 );
 
@@ -164,7 +239,14 @@ stackTraceIncomplete
 
 }
 
-public void writeArrayAccessEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeArrayAccessEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     fieldId
 , final  int     methodCounter
@@ -177,6 +259,8 @@ public void writeArrayAccessEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(ArrayAccessEventGen.class) )
@@ -184,27 +268,49 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_Field , 
 EventFactory.createArrayAccessEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 fieldId
+
 ,  
+
 methodCounter
+
 ,  
+
 operation
+
 ,  
+
 methodId
+
 ,  
+
 stackTraceIncomplete
+
 ,  
+
 objectHashCode
+
 ,  
+
 position
+
 ,  
+
 classId
-, parallizedThreadFacade.showNonVolatileMemoryAccess()
+
+
+ , parallizedThreadFacade.showNonVolatileMemoryAccess()
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -219,26 +325,46 @@ else
 					
 							
 							EventFactory.createArrayAccessEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 fieldId
+
+
 ,  
 methodCounter
+
+
 ,  
 operation
+
+
 ,  
 methodId
+
+
 ,  
 stackTraceIncomplete
+
+
 ,  
 objectHashCode
+
+
 ,  
 position
+
+
 ,  
 classId
+
+
 ) , slidingWindowId
 );
 
@@ -247,7 +373,14 @@ classId
 
 }
 
-public void writeVolatileAccessEventStaticGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeVolatileAccessEventStaticGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     fieldId
@@ -257,6 +390,8 @@ public void writeVolatileAccessEventStaticGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(VolatileAccessEventStaticGen.class) )
@@ -264,20 +399,36 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_SyncActions , 
 EventFactory.createVolatileAccessEventStaticGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 fieldId
+
 ,  
+
 methodCounter
+
 ,  
+
 methodId
+
 ,  
+
 isWrite
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -292,20 +443,34 @@ else
 					
 							
 							EventFactory.createVolatileAccessEventStaticGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 fieldId
+
+
 ,  
 methodCounter
+
+
 ,  
 methodId
+
+
 ,  
 isWrite
+
+
 ) , slidingWindowId
 );
 
@@ -314,7 +479,14 @@ isWrite
 
 }
 
-public void writeVolatileAccessEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeVolatileAccessEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     fieldId
@@ -325,6 +497,8 @@ public void writeVolatileAccessEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(VolatileAccessEventGen.class) )
@@ -332,22 +506,40 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_SyncActions , 
 EventFactory.createVolatileAccessEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 fieldId
+
 ,  
+
 methodCounter
+
 ,  
+
 methodId
+
 ,  
+
 operation
+
 ,  
+
 objectHashCode
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -362,22 +554,38 @@ else
 					
 							
 							EventFactory.createVolatileAccessEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 fieldId
+
+
 ,  
 methodCounter
+
+
 ,  
 methodId
+
+
 ,  
 operation
+
+
 ,  
 objectHashCode
+
+
 ) , slidingWindowId
 );
 
@@ -386,7 +594,14 @@ objectHashCode
 
 }
 
-public void writeVolatileArrayAccessEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeVolatileArrayAccessEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  long     index
@@ -397,6 +612,8 @@ public void writeVolatileArrayAccessEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(VolatileArrayAccessEventGen.class) )
@@ -404,22 +621,40 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_SyncActions , 
 EventFactory.createVolatileArrayAccessEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 index
+
 ,  
+
 methodCounter
+
 ,  
+
 methodId
+
 ,  
+
 operation
+
 ,  
+
 objectHashCode
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -434,22 +669,38 @@ else
 					
 							
 							EventFactory.createVolatileArrayAccessEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 index
+
+
 ,  
 methodCounter
+
+
 ,  
 methodId
+
+
 ,  
 operation
+
+
 ,  
 objectHashCode
+
+
 ) , slidingWindowId
 );
 
@@ -458,7 +709,14 @@ objectHashCode
 
 }
 
-public void writeVolatileDirectMemoryEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeVolatileDirectMemoryEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     methodCounter
 , final  long     objectHashCode
@@ -472,18 +730,30 @@ public void writeVolatileDirectMemoryEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createVolatileDirectMemoryEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 methodCounter
+
+
 ,  
 objectHashCode
+
+
 ,  
 operation
+
+
 ,  
 order
+
+
 ) , slidingWindowId
 );
 
@@ -492,7 +762,11 @@ order
 
 }
 
-public void writeLockEnterEventGen (final int slidingWindowId
+
+
+
+
+   public void writeLockEnterEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -502,6 +776,8 @@ public void writeLockEnterEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(LockEnterEventGen.class) )
@@ -509,20 +785,36 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_SyncActions , 
 EventFactory.createLockEnterEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 monitorId
+
 ,  
+
 methodCounter
+
 ,  
+
 isShared
+
 ,  
+
 lockTyp
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -537,20 +829,34 @@ else
 					
 							
 							EventFactory.createLockEnterEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 monitorId
+
+
 ,  
 methodCounter
+
+
 ,  
 isShared
+
+
 ,  
 lockTyp
+
+
 ) , slidingWindowId
 );
 
@@ -559,7 +865,14 @@ lockTyp
 
 }
 
-public void writeLockExitEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeLockExitEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -569,6 +882,8 @@ public void writeLockExitEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(LockExitEventGen.class) )
@@ -576,20 +891,36 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_SyncActions , 
 EventFactory.createLockExitEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 monitorId
+
 ,  
+
 methodCounter
+
 ,  
+
 isShared
+
 ,  
+
 lockTyp
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -604,20 +935,34 @@ else
 					
 							
 							EventFactory.createLockExitEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 monitorId
+
+
 ,  
 methodCounter
+
+
 ,  
 isShared
+
+
 ,  
 lockTyp
+
+
 ) , slidingWindowId
 );
 
@@ -626,7 +971,14 @@ lockTyp
 
 }
 
-public void writeStampedLockEnterEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeStampedLockEnterEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -637,6 +989,8 @@ public void writeStampedLockEnterEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(StampedLockEnterEventGen.class) )
@@ -644,22 +998,40 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_SyncActions , 
 EventFactory.createStampedLockEnterEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 monitorId
+
 ,  
+
 methodCounter
+
 ,  
+
 isShared
+
 ,  
+
 lockTyp
+
 ,  
+
 stampedLockMethodId
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -674,22 +1046,38 @@ else
 					
 							
 							EventFactory.createStampedLockEnterEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 monitorId
+
+
 ,  
 methodCounter
+
+
 ,  
 isShared
+
+
 ,  
 lockTyp
+
+
 ,  
 stampedLockMethodId
+
+
 ) , slidingWindowId
 );
 
@@ -698,7 +1086,14 @@ stampedLockMethodId
 
 }
 
-public void writeStampedLockExitEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeStampedLockExitEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -709,6 +1104,8 @@ public void writeStampedLockExitEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(StampedLockExitEventGen.class) )
@@ -716,22 +1113,40 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_SyncActions , 
 EventFactory.createStampedLockExitEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 monitorId
+
 ,  
+
 methodCounter
+
 ,  
+
 isShared
+
 ,  
+
 lockTyp
+
 ,  
+
 stampedLockMethodId
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -746,22 +1161,38 @@ else
 					
 							
 							EventFactory.createStampedLockExitEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 monitorId
+
+
 ,  
 methodCounter
+
+
 ,  
 isShared
+
+
 ,  
 lockTyp
+
+
 ,  
 stampedLockMethodId
+
+
 ) , slidingWindowId
 );
 
@@ -770,7 +1201,14 @@ stampedLockMethodId
 
 }
 
-public void writeMonitorEnterEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeMonitorEnterEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -780,6 +1218,8 @@ public void writeMonitorEnterEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(MonitorEnterEventGen.class) )
@@ -787,20 +1227,36 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_Monitor , 
 EventFactory.createMonitorEnterEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 monitorId
+
 ,  
+
 methodCounter
+
 ,  
+
 methodId
+
 ,  
+
 position
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -815,20 +1271,34 @@ else
 					
 							
 							EventFactory.createMonitorEnterEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 monitorId
+
+
 ,  
 methodCounter
+
+
 ,  
 methodId
+
+
 ,  
 position
+
+
 ) , slidingWindowId
 );
 
@@ -837,7 +1307,11 @@ position
 
 }
 
-public void writeMonitorExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMonitorExitEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -847,6 +1321,8 @@ public void writeMonitorExitEventGen (final int slidingWindowId
 )
 {
 
+
+
 ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
 if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(MonitorExitEventGen.class) )
@@ -854,20 +1330,36 @@ if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEven
 
  getQueueCollection().put( ID_Monitor , 
 EventFactory.createMonitorExitEventGenInterleave ( slidingWindowId
- ,  
+,  
+
 threadId()
+
 ,  
+
 programCounter
+
 ,  
+
 order
+
 ,  
+
 monitorId
+
 ,  
+
 methodCounter
+
 ,  
+
 methodId
+
 ,  
+
 position
+
+
+
 , parallizedThreadFacade.loopId()
 ,  parallizedThreadFacade.runId()
 ,  parallizedThreadFacade.runPosition()
@@ -882,20 +1374,34 @@ else
 					
 							
 							EventFactory.createMonitorExitEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 programCounter
+
+
 ,  
 order
+
+
 ,  
 monitorId
+
+
 ,  
 methodCounter
+
+
 ,  
 methodId
+
+
 ,  
 position
+
+
 ) , slidingWindowId
 );
 
@@ -904,7 +1410,17 @@ position
 
 }
 
-public void writeMethodEnterEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+   public void writeMethodEnterEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 )
@@ -915,12 +1431,18 @@ public void writeMethodEnterEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodEnterEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -929,7 +1451,11 @@ methodCounter
 
 }
 
-public void writeMethodExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodExitEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 )
@@ -940,12 +1466,18 @@ public void writeMethodExitEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodExitEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -954,7 +1486,11 @@ methodCounter
 
 }
 
-public void writeParallizedMethodEnterEventGen (final int slidingWindowId
+
+
+
+
+   public void writeParallizedMethodEnterEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 , final  int     parallizeId
@@ -966,14 +1502,22 @@ public void writeParallizedMethodEnterEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createParallizedMethodEnterEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ,  
 parallizeId
+
+
 ) , slidingWindowId
 );
 
@@ -982,7 +1526,11 @@ parallizeId
 
 }
 
-public void writeParallizedMethodExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeParallizedMethodExitEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 )
@@ -993,12 +1541,18 @@ public void writeParallizedMethodExitEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createParallizedMethodExitEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1007,7 +1561,11 @@ methodCounter
 
 }
 
-public void writeMethodEnterSmallThreadIdEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodEnterSmallThreadIdEventGen (final int slidingWindowId
 , final  byte     smallThreadId
 , final  int     methodId
 , final  int     methodCounter
@@ -1019,12 +1577,18 @@ public void writeMethodEnterSmallThreadIdEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodEnterSmallThreadIdEventGen ( slidingWindowId
- ,  
+,  
 smallThreadId
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1033,7 +1597,11 @@ methodCounter
 
 }
 
-public void writeMethodExitSmallThreadIdEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodExitSmallThreadIdEventGen (final int slidingWindowId
 , final  byte     smallThreadId
 , final  int     methodId
 , final  int     methodCounter
@@ -1045,12 +1613,18 @@ public void writeMethodExitSmallThreadIdEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodExitSmallThreadIdEventGen ( slidingWindowId
- ,  
+,  
 smallThreadId
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1059,7 +1633,11 @@ methodCounter
 
 }
 
-public void writeMethodEnterShortThreadIdEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodEnterShortThreadIdEventGen (final int slidingWindowId
 , final  short     shortThreadId
 , final  int     methodId
 , final  int     methodCounter
@@ -1071,12 +1649,18 @@ public void writeMethodEnterShortThreadIdEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodEnterShortThreadIdEventGen ( slidingWindowId
- ,  
+,  
 shortThreadId
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1085,7 +1669,11 @@ methodCounter
 
 }
 
-public void writeMethodExitShortThreadIdEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodExitShortThreadIdEventGen (final int slidingWindowId
 , final  short     shortThreadId
 , final  int     methodId
 , final  int     methodCounter
@@ -1097,12 +1685,18 @@ public void writeMethodExitShortThreadIdEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodExitShortThreadIdEventGen ( slidingWindowId
- ,  
+,  
 shortThreadId
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1111,7 +1705,11 @@ methodCounter
 
 }
 
-public void writeThreadBeginEventGen (final int slidingWindowId
+
+
+
+
+   public void writeThreadBeginEventGen (final int slidingWindowId
 , final  long     startedThreadId
 , final  int     programCounter
 , final  int     methodCounter
@@ -1123,14 +1721,22 @@ public void writeThreadBeginEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createThreadBeginEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 startedThreadId
+
+
 ,  
 programCounter
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1139,7 +1745,11 @@ methodCounter
 
 }
 
-public void writeThreadStoppedEventGen (final int slidingWindowId
+
+
+
+
+   public void writeThreadStoppedEventGen (final int slidingWindowId
 , final  long     stoppedThreadId
 , final  int     programCounter
 , final  int     methodCounter
@@ -1151,14 +1761,22 @@ public void writeThreadStoppedEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createThreadStoppedEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 stoppedThreadId
+
+
 ,  
 programCounter
+
+
 ,  
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1167,7 +1785,11 @@ methodCounter
 
 }
 
-public void writeMethodAtomicEnterEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodAtomicEnterEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 , final  byte     hasCallback
@@ -1182,20 +1804,34 @@ public void writeMethodAtomicEnterEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodAtomicEnterEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ,  
 hasCallback
+
+
 ,  
 loopId
+
+
 ,  
 runId
+
+
 ,  
 runPosition
+
+
 ) , slidingWindowId
 );
 
@@ -1204,7 +1840,11 @@ runPosition
 
 }
 
-public void writeMethodAtomicExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodAtomicExitEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 , final  byte     hasCallback
@@ -1219,20 +1859,34 @@ public void writeMethodAtomicExitEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodAtomicExitEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 methodId
+
+
 ,  
 methodCounter
+
+
 ,  
 hasCallback
+
+
 ,  
 loopId
+
+
 ,  
 runId
+
+
 ,  
 runPosition
+
+
 ) , slidingWindowId
 );
 
@@ -1241,7 +1895,11 @@ runPosition
 
 }
 
-public void writeMethodCallbackEnterEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodCallbackEnterEventGen (final int slidingWindowId
 , final  int     methodCounter
 , final  int     loopId
 , final  int     runId
@@ -1254,16 +1912,26 @@ public void writeMethodCallbackEnterEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodCallbackEnterEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 methodCounter
+
+
 ,  
 loopId
+
+
 ,  
 runId
+
+
 ,  
 runPosition
+
+
 ) , slidingWindowId
 );
 
@@ -1272,7 +1940,11 @@ runPosition
 
 }
 
-public void writeMethodCallbackExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeMethodCallbackExitEventGen (final int slidingWindowId
 , final  int     methodCounter
 , final  int     loopId
 , final  int     runId
@@ -1285,16 +1957,26 @@ public void writeMethodCallbackExitEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodCallbackExitEventGen ( slidingWindowId
- ,  
+,  
 threadId()
+
+
 ,  
 methodCounter
+
+
 ,  
 loopId
+
+
 ,  
 runId
+
+
 ,  
 runPosition
+
+
 ) , slidingWindowId
 );
 
@@ -1303,7 +1985,11 @@ runPosition
 
 }
 
-public void writeLoopStartEventGen (final int slidingWindowId
+
+
+
+
+   public void writeLoopStartEventGen (final int slidingWindowId
 , final  int     loopId
 )
 {
@@ -1313,8 +1999,10 @@ public void writeLoopStartEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createLoopStartEventGen ( slidingWindowId
- ,  
+,  
 loopId
+
+
 ) , slidingWindowId
 );
 
@@ -1323,7 +2011,11 @@ loopId
 
 }
 
-public void writeLoopEndEventGen (final int slidingWindowId
+
+
+
+
+   public void writeLoopEndEventGen (final int slidingWindowId
 , final  int     loopId
 , final  int     status
 )
@@ -1334,10 +2026,14 @@ public void writeLoopEndEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createLoopEndEventGen ( slidingWindowId
- ,  
+,  
 loopId
+
+
 ,  
 status
+
+
 ) , slidingWindowId
 );
 
@@ -1346,7 +2042,11 @@ status
 
 }
 
-public void writeRunStartEventGen (final int slidingWindowId
+
+
+
+
+   public void writeRunStartEventGen (final int slidingWindowId
 , final  int     loopId
 , final  int     runId
 )
@@ -1357,10 +2057,14 @@ public void writeRunStartEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createRunStartEventGen ( slidingWindowId
- ,  
+,  
 loopId
+
+
 ,  
 runId
+
+
 ) , slidingWindowId
 );
 
@@ -1369,7 +2073,11 @@ runId
 
 }
 
-public void writeRunEndEventGen (final int slidingWindowId
+
+
+
+
+   public void writeRunEndEventGen (final int slidingWindowId
 , final  int     loopId
 , final  int     runId
 )
@@ -1380,10 +2088,14 @@ public void writeRunEndEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createRunEndEventGen ( slidingWindowId
- ,  
+,  
 loopId
+
+
 ,  
 runId
+
+
 ) , slidingWindowId
 );
 
@@ -1392,7 +2104,11 @@ runId
 
 }
 
-public void writeLoopWarningEventGen (final int slidingWindowId
+
+
+
+
+   public void writeLoopWarningEventGen (final int slidingWindowId
 , final  int     loopId
 , final  int     runId
 )
@@ -1403,10 +2119,14 @@ public void writeLoopWarningEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createLoopWarningEventGen ( slidingWindowId
- ,  
+,  
 loopId
+
+
 ,  
 runId
+
+
 ) , slidingWindowId
 );
 
@@ -1415,7 +2135,25 @@ runId
 
 }
 
-public void writeWithoutInterleaveFieldAccessEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveFieldAccessEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     fieldId
 , final  int     methodCounter
@@ -1431,22 +2169,46 @@ public void writeWithoutInterleaveFieldAccessEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createFieldAccessEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 fieldId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 operation
+
+
 ,  
+
 methodId
+
+
 ,  
+
 stackTraceIncomplete
+
+
 ,  
+
 objectHashCode
+
+
 ) , slidingWindowId
 );
 
@@ -1455,7 +2217,14 @@ objectHashCode
 
 }
 
-public void writeWithoutInterleaveFieldAccessEventStaticGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveFieldAccessEventStaticGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     fieldId
 , final  int     methodCounter
@@ -1470,20 +2239,41 @@ public void writeWithoutInterleaveFieldAccessEventStaticGen (final int slidingWi
 					
 							
 							EventFactory.createFieldAccessEventStaticGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 fieldId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 operation
+
+
 ,  
+
 methodId
+
+
 ,  
+
 stackTraceIncomplete
+
+
 ) , slidingWindowId
 );
 
@@ -1492,7 +2282,14 @@ stackTraceIncomplete
 
 }
 
-public void writeWithoutInterleaveArrayAccessEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveArrayAccessEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     fieldId
 , final  int     methodCounter
@@ -1510,26 +2307,56 @@ public void writeWithoutInterleaveArrayAccessEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createArrayAccessEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 fieldId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 operation
+
+
 ,  
+
 methodId
+
+
 ,  
+
 stackTraceIncomplete
+
+
 ,  
+
 objectHashCode
+
+
 ,  
+
 position
+
+
 ,  
+
 classId
+
+
 ) , slidingWindowId
 );
 
@@ -1538,7 +2365,14 @@ classId
 
 }
 
-public void writeWithoutInterleaveVolatileAccessEventStaticGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveVolatileAccessEventStaticGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     fieldId
@@ -1553,20 +2387,41 @@ public void writeWithoutInterleaveVolatileAccessEventStaticGen (final int slidin
 					
 							
 							EventFactory.createVolatileAccessEventStaticGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 fieldId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 methodId
+
+
 ,  
+
 isWrite
+
+
 ) , slidingWindowId
 );
 
@@ -1575,7 +2430,14 @@ isWrite
 
 }
 
-public void writeWithoutInterleaveVolatileAccessEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveVolatileAccessEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     fieldId
@@ -1591,22 +2453,46 @@ public void writeWithoutInterleaveVolatileAccessEventGen (final int slidingWindo
 					
 							
 							EventFactory.createVolatileAccessEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 fieldId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 methodId
+
+
 ,  
+
 operation
+
+
 ,  
+
 objectHashCode
+
+
 ) , slidingWindowId
 );
 
@@ -1615,7 +2501,14 @@ objectHashCode
 
 }
 
-public void writeWithoutInterleaveVolatileArrayAccessEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveVolatileArrayAccessEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  long     index
@@ -1631,22 +2524,46 @@ public void writeWithoutInterleaveVolatileArrayAccessEventGen (final int sliding
 					
 							
 							EventFactory.createVolatileArrayAccessEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 index
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 methodId
+
+
 ,  
+
 operation
+
+
 ,  
+
 objectHashCode
+
+
 ) , slidingWindowId
 );
 
@@ -1655,7 +2572,14 @@ objectHashCode
 
 }
 
-public void writeWithoutInterleaveVolatileDirectMemoryEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveVolatileDirectMemoryEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     methodCounter
 , final  long     objectHashCode
@@ -1669,18 +2593,36 @@ public void writeWithoutInterleaveVolatileDirectMemoryEventGen (final int slidin
 					
 							
 							EventFactory.createVolatileDirectMemoryEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 objectHashCode
+
+
 ,  
+
 operation
+
+
 ,  
+
 order
+
+
 ) , slidingWindowId
 );
 
@@ -1689,7 +2631,11 @@ order
 
 }
 
-public void writeWithoutInterleaveLockEnterEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveLockEnterEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -1704,20 +2650,41 @@ public void writeWithoutInterleaveLockEnterEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createLockEnterEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 monitorId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 isShared
+
+
 ,  
+
 lockTyp
+
+
 ) , slidingWindowId
 );
 
@@ -1726,7 +2693,14 @@ lockTyp
 
 }
 
-public void writeWithoutInterleaveLockExitEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveLockExitEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -1741,20 +2715,41 @@ public void writeWithoutInterleaveLockExitEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createLockExitEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 monitorId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 isShared
+
+
 ,  
+
 lockTyp
+
+
 ) , slidingWindowId
 );
 
@@ -1763,7 +2758,14 @@ lockTyp
 
 }
 
-public void writeWithoutInterleaveStampedLockEnterEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveStampedLockEnterEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -1779,22 +2781,46 @@ public void writeWithoutInterleaveStampedLockEnterEventGen (final int slidingWin
 					
 							
 							EventFactory.createStampedLockEnterEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 monitorId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 isShared
+
+
 ,  
+
 lockTyp
+
+
 ,  
+
 stampedLockMethodId
+
+
 ) , slidingWindowId
 );
 
@@ -1803,7 +2829,14 @@ stampedLockMethodId
 
 }
 
-public void writeWithoutInterleaveStampedLockExitEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveStampedLockExitEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -1819,22 +2852,46 @@ public void writeWithoutInterleaveStampedLockExitEventGen (final int slidingWind
 					
 							
 							EventFactory.createStampedLockExitEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 monitorId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 isShared
+
+
 ,  
+
 lockTyp
+
+
 ,  
+
 stampedLockMethodId
+
+
 ) , slidingWindowId
 );
 
@@ -1843,7 +2900,14 @@ stampedLockMethodId
 
 }
 
-public void writeWithoutInterleaveMonitorEnterEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveMonitorEnterEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -1858,20 +2922,41 @@ public void writeWithoutInterleaveMonitorEnterEventGen (final int slidingWindowI
 					
 							
 							EventFactory.createMonitorEnterEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 monitorId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 methodId
+
+
 ,  
+
 position
+
+
 ) , slidingWindowId
 );
 
@@ -1880,7 +2965,11 @@ position
 
 }
 
-public void writeWithoutInterleaveMonitorExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMonitorExitEventGen (final int slidingWindowId
 , final  int     programCounter
 , final  int     order
 , final  int     monitorId
@@ -1895,20 +2984,41 @@ public void writeWithoutInterleaveMonitorExitEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMonitorExitEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 order
+
+
 ,  
+
 monitorId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 methodId
+
+
 ,  
+
 position
+
+
 ) , slidingWindowId
 );
 
@@ -1917,7 +3027,17 @@ position
 
 }
 
-public void writeWithoutInterleaveMethodEnterEventGen (final int slidingWindowId
+
+
+
+
+
+
+
+
+
+
+   public void writeWithoutInterleaveMethodEnterEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 )
@@ -1928,12 +3048,21 @@ public void writeWithoutInterleaveMethodEnterEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodEnterEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1942,7 +3071,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveMethodExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodExitEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 )
@@ -1953,12 +3086,21 @@ public void writeWithoutInterleaveMethodExitEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createMethodExitEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -1967,7 +3109,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveParallizedMethodEnterEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveParallizedMethodEnterEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 , final  int     parallizeId
@@ -1979,14 +3125,26 @@ public void writeWithoutInterleaveParallizedMethodEnterEventGen (final int slidi
 					
 							
 							EventFactory.createParallizedMethodEnterEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 parallizeId
+
+
 ) , slidingWindowId
 );
 
@@ -1995,7 +3153,11 @@ parallizeId
 
 }
 
-public void writeWithoutInterleaveParallizedMethodExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveParallizedMethodExitEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 )
@@ -2006,12 +3168,21 @@ public void writeWithoutInterleaveParallizedMethodExitEventGen (final int slidin
 					
 							
 							EventFactory.createParallizedMethodExitEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -2020,7 +3191,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveMethodEnterSmallThreadIdEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodEnterSmallThreadIdEventGen (final int slidingWindowId
 , final  byte     smallThreadId
 , final  int     methodId
 , final  int     methodCounter
@@ -2032,12 +3207,21 @@ public void writeWithoutInterleaveMethodEnterSmallThreadIdEventGen (final int sl
 					
 							
 							EventFactory.createMethodEnterSmallThreadIdEventGen ( slidingWindowId
- ,  
+,  
+
 smallThreadId
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -2046,7 +3230,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveMethodExitSmallThreadIdEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodExitSmallThreadIdEventGen (final int slidingWindowId
 , final  byte     smallThreadId
 , final  int     methodId
 , final  int     methodCounter
@@ -2058,12 +3246,21 @@ public void writeWithoutInterleaveMethodExitSmallThreadIdEventGen (final int sli
 					
 							
 							EventFactory.createMethodExitSmallThreadIdEventGen ( slidingWindowId
- ,  
+,  
+
 smallThreadId
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -2072,7 +3269,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveMethodEnterShortThreadIdEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodEnterShortThreadIdEventGen (final int slidingWindowId
 , final  short     shortThreadId
 , final  int     methodId
 , final  int     methodCounter
@@ -2084,12 +3285,21 @@ public void writeWithoutInterleaveMethodEnterShortThreadIdEventGen (final int sl
 					
 							
 							EventFactory.createMethodEnterShortThreadIdEventGen ( slidingWindowId
- ,  
+,  
+
 shortThreadId
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -2098,7 +3308,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveMethodExitShortThreadIdEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodExitShortThreadIdEventGen (final int slidingWindowId
 , final  short     shortThreadId
 , final  int     methodId
 , final  int     methodCounter
@@ -2110,12 +3324,21 @@ public void writeWithoutInterleaveMethodExitShortThreadIdEventGen (final int sli
 					
 							
 							EventFactory.createMethodExitShortThreadIdEventGen ( slidingWindowId
- ,  
+,  
+
 shortThreadId
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -2124,7 +3347,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveThreadBeginEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveThreadBeginEventGen (final int slidingWindowId
 , final  long     startedThreadId
 , final  int     programCounter
 , final  int     methodCounter
@@ -2136,14 +3363,26 @@ public void writeWithoutInterleaveThreadBeginEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createThreadBeginEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 startedThreadId
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -2152,7 +3391,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveThreadStoppedEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveThreadStoppedEventGen (final int slidingWindowId
 , final  long     stoppedThreadId
 , final  int     programCounter
 , final  int     methodCounter
@@ -2164,14 +3407,26 @@ public void writeWithoutInterleaveThreadStoppedEventGen (final int slidingWindow
 					
 							
 							EventFactory.createThreadStoppedEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 stoppedThreadId
+
+
 ,  
+
 programCounter
+
+
 ,  
+
 methodCounter
+
+
 ) , slidingWindowId
 );
 
@@ -2180,7 +3435,11 @@ methodCounter
 
 }
 
-public void writeWithoutInterleaveMethodAtomicEnterEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodAtomicEnterEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 , final  byte     hasCallback
@@ -2195,20 +3454,41 @@ public void writeWithoutInterleaveMethodAtomicEnterEventGen (final int slidingWi
 					
 							
 							EventFactory.createMethodAtomicEnterEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 hasCallback
+
+
 ,  
+
 loopId
+
+
 ,  
+
 runId
+
+
 ,  
+
 runPosition
+
+
 ) , slidingWindowId
 );
 
@@ -2217,7 +3497,11 @@ runPosition
 
 }
 
-public void writeWithoutInterleaveMethodAtomicExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodAtomicExitEventGen (final int slidingWindowId
 , final  int     methodId
 , final  int     methodCounter
 , final  byte     hasCallback
@@ -2232,20 +3516,41 @@ public void writeWithoutInterleaveMethodAtomicExitEventGen (final int slidingWin
 					
 							
 							EventFactory.createMethodAtomicExitEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 methodId
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 hasCallback
+
+
 ,  
+
 loopId
+
+
 ,  
+
 runId
+
+
 ,  
+
 runPosition
+
+
 ) , slidingWindowId
 );
 
@@ -2254,7 +3559,11 @@ runPosition
 
 }
 
-public void writeWithoutInterleaveMethodCallbackEnterEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodCallbackEnterEventGen (final int slidingWindowId
 , final  int     methodCounter
 , final  int     loopId
 , final  int     runId
@@ -2267,16 +3576,31 @@ public void writeWithoutInterleaveMethodCallbackEnterEventGen (final int sliding
 					
 							
 							EventFactory.createMethodCallbackEnterEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 loopId
+
+
 ,  
+
 runId
+
+
 ,  
+
 runPosition
+
+
 ) , slidingWindowId
 );
 
@@ -2285,7 +3609,11 @@ runPosition
 
 }
 
-public void writeWithoutInterleaveMethodCallbackExitEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveMethodCallbackExitEventGen (final int slidingWindowId
 , final  int     methodCounter
 , final  int     loopId
 , final  int     runId
@@ -2298,16 +3626,31 @@ public void writeWithoutInterleaveMethodCallbackExitEventGen (final int slidingW
 					
 							
 							EventFactory.createMethodCallbackExitEventGen ( slidingWindowId
- ,  
+,  
+
 threadId()
+
+
 ,  
+
 methodCounter
+
+
 ,  
+
 loopId
+
+
 ,  
+
 runId
+
+
 ,  
+
 runPosition
+
+
 ) , slidingWindowId
 );
 
@@ -2316,7 +3659,11 @@ runPosition
 
 }
 
-public void writeWithoutInterleaveLoopStartEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveLoopStartEventGen (final int slidingWindowId
 , final  int     loopId
 )
 {
@@ -2326,8 +3673,11 @@ public void writeWithoutInterleaveLoopStartEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createLoopStartEventGen ( slidingWindowId
- ,  
+,  
+
 loopId
+
+
 ) , slidingWindowId
 );
 
@@ -2336,7 +3686,11 @@ loopId
 
 }
 
-public void writeWithoutInterleaveLoopEndEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveLoopEndEventGen (final int slidingWindowId
 , final  int     loopId
 , final  int     status
 )
@@ -2347,10 +3701,16 @@ public void writeWithoutInterleaveLoopEndEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createLoopEndEventGen ( slidingWindowId
- ,  
-loopId
 ,  
+
+loopId
+
+
+,  
+
 status
+
+
 ) , slidingWindowId
 );
 
@@ -2359,7 +3719,11 @@ status
 
 }
 
-public void writeWithoutInterleaveRunStartEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveRunStartEventGen (final int slidingWindowId
 , final  int     loopId
 , final  int     runId
 )
@@ -2370,10 +3734,16 @@ public void writeWithoutInterleaveRunStartEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createRunStartEventGen ( slidingWindowId
- ,  
-loopId
 ,  
+
+loopId
+
+
+,  
+
 runId
+
+
 ) , slidingWindowId
 );
 
@@ -2382,7 +3752,11 @@ runId
 
 }
 
-public void writeWithoutInterleaveRunEndEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveRunEndEventGen (final int slidingWindowId
 , final  int     loopId
 , final  int     runId
 )
@@ -2393,10 +3767,16 @@ public void writeWithoutInterleaveRunEndEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createRunEndEventGen ( slidingWindowId
- ,  
-loopId
 ,  
+
+loopId
+
+
+,  
+
 runId
+
+
 ) , slidingWindowId
 );
 
@@ -2405,7 +3785,11 @@ runId
 
 }
 
-public void writeWithoutInterleaveLoopWarningEventGen (final int slidingWindowId
+
+
+
+
+   public void writeWithoutInterleaveLoopWarningEventGen (final int slidingWindowId
 , final  int     loopId
 , final  int     runId
 )
@@ -2416,10 +3800,16 @@ public void writeWithoutInterleaveLoopWarningEventGen (final int slidingWindowId
 					
 							
 							EventFactory.createLoopWarningEventGen ( slidingWindowId
- ,  
-loopId
 ,  
+
+loopId
+
+
+,  
+
 runId
+
+
 ) , slidingWindowId
 );
 
@@ -2428,4 +3818,7 @@ runId
 
 }
 
+
+
+	
 }

@@ -15,23 +15,40 @@ import com.anarsoft.race.detection.process.interleave._;
 
 class VolatileDirectMemoryEventGen (
   val threadId  : Long
+
+
 ,  val programCounter  : Int
+
+
 ,  val methodCounter  : Int
+
+
 ,  val objectHashCode  : Long
+
+
+
+
 ,  var stackTraceOrdinal  : Int
 ,  val operation  : Int
+
+
 ,  val order  : Int
+
+
+
+
 )    extends DirectMemoryEvent  
 {
 override def toString() = {
   var text =  "VolatileDirectMemoryEventGen" 
-text = text + ", threadId:" +  threadId 
-text = text + ", programCounter:" +  programCounter 
-text = text + ", methodCounter:" +  methodCounter 
-text = text + ", objectHashCode:" +  objectHashCode 
-text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
-text = text + ", operation:" +  operation 
-text = text + ", order:" +  order 
+  text = text + ", threadId:" +  threadId 
+  text = text + ", programCounter:" +  programCounter 
+  text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", objectHashCode:" +  objectHashCode 
+  text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
+  text = text + ", operation:" +  operation 
+  text = text + ", order:" +  order 
+
 text;
 
 }
@@ -54,42 +71,49 @@ visitor.visit(this);
     other match {
       case that: VolatileDirectMemoryEventGen => 
         {
-           if( threadId != that.threadId )
+            
+             if( threadId != that.threadId )
              {
                false;
              }
              else
-           if( programCounter != that.programCounter )
+            
+             if( programCounter != that.programCounter )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           if( objectHashCode != that.objectHashCode )
+            
+             if( objectHashCode != that.objectHashCode )
              {
                false;
              }
              else
-           if( stackTraceOrdinal != that.stackTraceOrdinal )
+            
+             if( stackTraceOrdinal != that.stackTraceOrdinal )
              {
                false;
              }
              else
-           if( operation != that.operation )
+            
+             if( operation != that.operation )
              {
                false;
              }
              else
-           if( order != that.order )
+            
+             if( order != that.order )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -109,28 +133,39 @@ object  VolatileDirectMemoryEventGen
    {
      val result = new VolatileDirectMemoryEventGen (
      
-        
+           
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            0
-            , 
+                0
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -143,14 +178,18 @@ object  VolatileDirectMemoryEventGen
    {
      val result = new VolatileDirectMemoryEventGen (
      
-         data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        );
+            data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -176,56 +215,63 @@ class SortOrigVolatileDirectMemoryEventGen extends Comparator[VolatileDirectMemo
 {
     def	compare(o1 :  VolatileDirectMemoryEventGen,  o2 : VolatileDirectMemoryEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.order != o2.order )
+        
+          if( o1.order != o2.order )
           {
              java.lang.Integer.compare( o1.order , o2.order  )
           }
           else
           
         
-        if( o1.operation != o2.operation )
+        
+          if( o1.operation != o2.operation )
           {
              java.lang.Integer.compare( o1.operation , o2.operation  )
           }
           else
           
         
-        if( o1.objectHashCode != o2.objectHashCode )
+        
+          if( o1.objectHashCode != o2.objectHashCode )
           {
              java.lang.Long.compare( o1.objectHashCode , o2.objectHashCode  )
           }
           else
           
         
-        if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
+        
+          if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
           {
              java.lang.Integer.compare( o1.stackTraceOrdinal , o2.stackTraceOrdinal  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -240,56 +286,63 @@ class SortVolatileDirectMemoryEventGen extends Comparator[VolatileDirectMemoryEv
 {
     def	compare(o1 :  VolatileDirectMemoryEventGen,  o2 : VolatileDirectMemoryEventGen ) =
     {
-        if( o1.objectHashCode != o2.objectHashCode )
+        
+          if( o1.objectHashCode != o2.objectHashCode )
           {
              java.lang.Long.compare( o1.objectHashCode , o2.objectHashCode  )
           }
           else
           
         
-        if( o1.order != o2.order )
+        
+          if( o1.order != o2.order )
           {
              java.lang.Integer.compare( o1.order , o2.order  )
           }
           else
           
         
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.operation != o2.operation )
+        
+          if( o1.operation != o2.operation )
           {
              java.lang.Integer.compare( o1.operation , o2.operation  )
           }
           else
           
         
-        if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
+        
+          if( o1.stackTraceOrdinal != o2.stackTraceOrdinal )
           {
              java.lang.Integer.compare( o1.stackTraceOrdinal , o2.stackTraceOrdinal  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

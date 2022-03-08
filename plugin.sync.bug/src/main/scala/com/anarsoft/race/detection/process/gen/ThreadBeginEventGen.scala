@@ -15,17 +15,28 @@ import com.anarsoft.race.detection.process.interleave._;
 
 class ThreadBeginEventGen (
   val threadId  : Long
+
+
 ,  val startedThreadId  : Long
+
+
 ,  val programCounter  : Int
+
+
 ,  val methodCounter  : Int
+
+
+
+
 )    extends SyncAction 
 {
 override def toString() = {
   var text =  "ThreadBeginEventGen" 
-text = text + ", threadId:" +  threadId 
-text = text + ", startedThreadId:" +  startedThreadId 
-text = text + ", programCounter:" +  programCounter 
-text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", threadId:" +  threadId 
+  text = text + ", startedThreadId:" +  startedThreadId 
+  text = text + ", programCounter:" +  programCounter 
+  text = text + ", methodCounter:" +  methodCounter 
+
 text;
 
 }
@@ -48,27 +59,31 @@ visitor.visit(this);
     other match {
       case that: ThreadBeginEventGen => 
         {
-           if( threadId != that.threadId )
+            
+             if( threadId != that.threadId )
              {
                false;
              }
              else
-           if( startedThreadId != that.startedThreadId )
+            
+             if( startedThreadId != that.startedThreadId )
              {
                false;
              }
              else
-           if( programCounter != that.programCounter )
+            
+             if( programCounter != that.programCounter )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -88,19 +103,27 @@ object  ThreadBeginEventGen
    {
      val result = new ThreadBeginEventGen (
      
-        
+           
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -113,11 +136,15 @@ object  ThreadBeginEventGen
    {
      val result = new ThreadBeginEventGen (
      
-         data.getLong()
-        ,  data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        );
+            data.getLong()
+          ,  data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -143,35 +170,39 @@ class SortOrigThreadBeginEventGen extends Comparator[ThreadBeginEventGen]
 {
     def	compare(o1 :  ThreadBeginEventGen,  o2 : ThreadBeginEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.startedThreadId != o2.startedThreadId )
+        
+          if( o1.startedThreadId != o2.startedThreadId )
           {
              java.lang.Long.compare( o1.startedThreadId , o2.startedThreadId  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -186,35 +217,39 @@ class SortThreadBeginEventGen extends Comparator[ThreadBeginEventGen]
 {
     def	compare(o1 :  ThreadBeginEventGen,  o2 : ThreadBeginEventGen ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.startedThreadId != o2.startedThreadId )
+        
+          if( o1.startedThreadId != o2.startedThreadId )
           {
              java.lang.Long.compare( o1.startedThreadId , o2.startedThreadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

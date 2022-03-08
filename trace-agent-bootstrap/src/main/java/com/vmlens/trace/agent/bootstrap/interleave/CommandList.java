@@ -1,18 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
 
-
-
-import java.util.Arrays;
-
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.OperationTyp;
 import com.vmlens.trace.agent.bootstrap.interleave.operation.VolatileFieldAccess;
-
 import gnu.trove.list.TLinkable;
-import gnu.trove.set.hash.THashSet;
 import gnu.trove.set.hash.TIntHashSet;
-import com.vmlens.trace.agent.bootstrap.interleave.normalized.Position;
+
+import java.util.Arrays;
 
 
 public class CommandList implements TLinkable<CommandList> {
@@ -25,7 +19,7 @@ public class CommandList implements TLinkable<CommandList> {
 			
 		 
 	
-		 if( actualAccess instanceof VolatileFieldAccess )
+		 if( actualAccess instanceof VolatileFieldAccess)
 		 {
 			 VolatileFieldAccess volatileFieldAccess =  (VolatileFieldAccess)actualAccess;
 			 

@@ -10,8 +10,8 @@ import com.vmlens.trace.agent.bootstrap.util.ObjectStack;
 public class MonitorLockEnterStack {
 
 	
-	public final ObjectStack<Position> monitor = new 	ObjectStack<Position>();
-	public final ObjectStack<Position> atomic = new 	ObjectStack<Position>();
-	public final ObjectStack<Position> lock = new 	ObjectStack<Position>();
-	public final ObjectStack<Position> sharedLock = new 	ObjectStack<Position>();
+	public final ObjectStack<com.vmlens.trace.agent.bootstrap.interleave.normalized.Position> monitor = new 	ObjectStack<com.vmlens.trace.agent.bootstrap.interleave.normalized.Position>();
+	public final ObjectStack<com.vmlens.trace.agent.bootstrap.interleave.normalized.Position> atomic = new 	ObjectStack<com.vmlens.trace.agent.bootstrap.interleave.normalized.Position>();
+	public final ObjectStack<com.vmlens.trace.agent.bootstrap.interleave.normalized.Position> lock = new 	ObjectStack<com.vmlens.trace.agent.bootstrap.interleave.normalized.Position>();
+	public final ObjectStack<com.vmlens.trace.agent.bootstrap.interleave.normalized.Position> sharedLock = new 	ObjectStack<Position>();
 }

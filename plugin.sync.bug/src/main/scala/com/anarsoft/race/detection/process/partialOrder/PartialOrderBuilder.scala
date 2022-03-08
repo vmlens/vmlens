@@ -17,7 +17,7 @@ class PartialOrderBuilder {
   
   
    
-  
+
     def leftComesBeforeRight(left : WithStatementPosition, right : WithStatementPosition)
    { 
      val key = HigherLowerThreadId(left.threadId , right.threadId); 
@@ -38,34 +38,20 @@ class PartialOrderBuilder {
       {
         e._2.removeNonContinuousSyncPoints();
       }
-      
-      
     }
-  
-  
-  
+
   def create() =
   {
     
-    val temp = higherLowerThreadId2SyncPointMap.asInstanceOf[HashMap[HigherLowerThreadId,Object]]
-    
-  
+    val temp = new HashMap[HigherLowerThreadId,ThreadMapEntryFixed]
     val keys = higherLowerThreadId2SyncPointMap.keySet.iterator
     
     while( keys.hasNext )
     {
       val current = keys.next();
-      
       temp.put( current , higherLowerThreadId2SyncPointMap.get(current).get.toFixed() );
-      
     }
-    
-    
-    new PartialOrderPerSlidingWindowId(temp.asInstanceOf[HashMap[HigherLowerThreadId,ThreadMapEntryFixed]]);
+    new PartialOrderPerSlidingWindowId(temp);
   }
-  
-  
-  
-  
-  
+
 }

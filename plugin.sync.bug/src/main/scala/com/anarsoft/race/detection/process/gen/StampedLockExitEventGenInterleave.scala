@@ -15,31 +15,56 @@ import com.anarsoft.race.detection.process.interleave._;
 
 class StampedLockExitEventGenInterleave (
   val threadId  : Long
+
+
 ,  val programCounter  : Int
+
+
 ,  val order  : Int
+
+
 ,  val monitorId  : Int
+
+
 ,  val methodCounter  : Int
+
+
 ,  val isShared  : Boolean
+
+
 ,  val lockTyp  : Int
+
+
 ,  val stampedLockMethodId  : Int
+
+
 ,  val loopId  : Int
+
+
 ,  val runId  : Int
+
+
 ,  val runPosition  : Int
+
+
+
+
 )    extends StampedLockExitInterleave 
 {
 override def toString() = {
   var text =  "StampedLockExitEventGenInterleave" 
-text = text + ", threadId:" +  threadId 
-text = text + ", programCounter:" +  programCounter 
-text = text + ", order:" +  order 
-text = text + ", monitorId:" +  monitorId 
-text = text + ", methodCounter:" +  methodCounter 
-text = text + ", isShared:" +  isShared 
-text = text + ", lockTyp:" +  lockTyp 
-text = text + ", stampedLockMethodId:" +  stampedLockMethodId 
-text = text + ", loopId:" +  loopId 
-text = text + ", runId:" +  runId 
-text = text + ", runPosition:" +  runPosition 
+  text = text + ", threadId:" +  threadId 
+  text = text + ", programCounter:" +  programCounter 
+  text = text + ", order:" +  order 
+  text = text + ", monitorId:" +  monitorId 
+  text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", isShared:" +  isShared 
+  text = text + ", lockTyp:" +  lockTyp 
+  text = text + ", stampedLockMethodId:" +  stampedLockMethodId 
+  text = text + ", loopId:" +  loopId 
+  text = text + ", runId:" +  runId 
+  text = text + ", runPosition:" +  runPosition 
+
 text;
 
 }
@@ -62,62 +87,73 @@ visitor.visit(this);
     other match {
       case that: StampedLockExitEventGenInterleave => 
         {
-           if( threadId != that.threadId )
+            
+             if( threadId != that.threadId )
              {
                false;
              }
              else
-           if( programCounter != that.programCounter )
+            
+             if( programCounter != that.programCounter )
              {
                false;
              }
              else
-           if( order != that.order )
+            
+             if( order != that.order )
              {
                false;
              }
              else
-           if( monitorId != that.monitorId )
+            
+             if( monitorId != that.monitorId )
              {
                false;
              }
              else
-           if( methodCounter != that.methodCounter )
+            
+             if( methodCounter != that.methodCounter )
              {
                false;
              }
              else
-           if( isShared != that.isShared )
+            
+             if( isShared != that.isShared )
              {
                false;
              }
              else
-           if( lockTyp != that.lockTyp )
+            
+             if( lockTyp != that.lockTyp )
              {
                false;
              }
              else
-           if( stampedLockMethodId != that.stampedLockMethodId )
+            
+             if( stampedLockMethodId != that.stampedLockMethodId )
              {
                false;
              }
              else
-           if( loopId != that.loopId )
+            
+             if( loopId != that.loopId )
              {
                false;
              }
              else
-           if( runId != that.runId )
+            
+             if( runId != that.runId )
              {
                false;
              }
              else
-           if( runPosition != that.runPosition )
+            
+             if( runPosition != that.runPosition )
              {
                false;
              }
              else
-           true;
+             true;
         }
 
 
@@ -137,40 +173,55 @@ object  StampedLockExitEventGenInterleave
    {
      val result = new StampedLockExitEventGenInterleave (
      
-        
+           
             
-            data.getLong()
-            , 
+                data.getLong()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-            , 
+                if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            , 
+                data.getInt()
+           
+          , 
             
-            data.getInt()
-            );
+                data.getInt()
+           
+     
+     
+     
+     
+     );
      
      
      
@@ -183,18 +234,22 @@ object  StampedLockExitEventGenInterleave
    {
      val result = new StampedLockExitEventGenInterleave (
      
-         data.getLong()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        ,  data.getInt()
-        );
+            data.getLong()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+          ,  data.getInt()
+     
+     
+     
+     
+     );
      
      
      
@@ -220,49 +275,55 @@ class SortOrigStampedLockExitEventGenInterleave extends Comparator[StampedLockEx
 {
     def	compare(o1 :  StampedLockExitEventGenInterleave,  o2 : StampedLockExitEventGenInterleave ) =
     {
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.order != o2.order )
+        
+          if( o1.order != o2.order )
           {
              java.lang.Integer.compare( o1.order , o2.order  )
           }
           else
           
         
-        if( o1.monitorId != o2.monitorId )
+        
+          if( o1.monitorId != o2.monitorId )
           {
              java.lang.Integer.compare( o1.monitorId , o2.monitorId  )
           }
           else
           
         
-        if( o1.isShared != o2.isShared )
+        
+          if( o1.isShared != o2.isShared )
           {
              java.lang.Boolean.compare( o1.isShared , o2.isShared  )
           }
           else
           
         
-        {
+          {
             0;
           }
     
@@ -277,49 +338,55 @@ class SortStampedLockExitEventGenInterleave extends Comparator[StampedLockExitEv
 {
     def	compare(o1 :  StampedLockExitEventGenInterleave,  o2 : StampedLockExitEventGenInterleave ) =
     {
-        if( o1.order != o2.order )
+        
+          if( o1.order != o2.order )
           {
              java.lang.Integer.compare( o1.order , o2.order  )
           }
           else
           
         
-        if( o1.threadId != o2.threadId )
+        
+          if( o1.threadId != o2.threadId )
           {
              java.lang.Long.compare( o1.threadId , o2.threadId  )
           }
           else
           
         
-        if( o1.programCounter != o2.programCounter )
+        
+          if( o1.programCounter != o2.programCounter )
           {
              java.lang.Integer.compare( o1.programCounter , o2.programCounter  )
           }
           else
           
         
-        if( o1.monitorId != o2.monitorId )
+        
+          if( o1.monitorId != o2.monitorId )
           {
              java.lang.Integer.compare( o1.monitorId , o2.monitorId  )
           }
           else
           
         
-        if( o1.isShared != o2.isShared )
+        
+          if( o1.isShared != o2.isShared )
           {
              java.lang.Boolean.compare( o1.isShared , o2.isShared  )
           }
           else
           
         
-        if( o1.methodCounter != o2.methodCounter )
+        
+          if( o1.methodCounter != o2.methodCounter )
           {
              java.lang.Integer.compare( o1.methodCounter , o2.methodCounter  )
           }
           else
           
         
-        {
+          {
             0;
           }
     

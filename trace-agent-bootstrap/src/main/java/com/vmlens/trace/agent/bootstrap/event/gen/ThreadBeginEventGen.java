@@ -2,13 +2,11 @@ package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class ThreadBeginEventGen  implements RuntimeEvent 
 {
 
 
-  
     public int getSlidingWindowId()
     {
       return slidingWindowId;
@@ -18,26 +16,33 @@ public class ThreadBeginEventGen  implements RuntimeEvent
    private final int slidingWindowId;
   
 
-     public final     long     threadId;
-      public final     long     startedThreadId;
-      public final     int     programCounter;
-      public final     int     methodCounter;
-      public  ThreadBeginEventGen(
+   public final     long     threadId;
+   public final     long     startedThreadId;
+   public final     int     programCounter;
+   public final     int     methodCounter;
+
+
+
+public  ThreadBeginEventGen(
 int slidingWindowId 
-,   long     threadId
-,   long     startedThreadId
-,   int     programCounter
-,   int     methodCounter
-)
+  ,   long     threadId
+  ,   long     startedThreadId
+  ,   int     programCounter
+  ,   int     methodCounter
+ )
  {
 
    this.slidingWindowId = slidingWindowId;
 
-   this.threadId   =  threadId;
-   this.startedThreadId   =  startedThreadId;
-   this.programCounter   =  programCounter;
-   this.methodCounter   =  methodCounter;
-   }
+      this.threadId   =  threadId;
+      this.startedThreadId   =  startedThreadId;
+      this.programCounter   =  programCounter;
+      this.methodCounter   =  methodCounter;
+     
+ 
+  
+  
+ }
  
 
  
@@ -48,10 +53,15 @@ public void serialize(StreamRepository streamRepository) throws Exception
 
  buffer.put( (byte)  34 );
    
-  buffer.putLong( threadId );  ;
-  buffer.putLong( startedThreadId );  ;
- buffer.putInt( programCounter ); ;
- buffer.putInt( methodCounter ); ;
+      buffer.putLong( threadId );  ;
+      buffer.putLong( startedThreadId );  ;
+     buffer.putInt( programCounter ); ;
+     buffer.putInt( methodCounter ); ;
+
+
+
+
+
 }
 
 
@@ -62,10 +72,15 @@ public void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper
 
  buffer.put( (byte)  34 );
    
-  buffer.putLong( threadId );  ;
-  buffer.putLong( startedThreadId );  ;
- buffer.putInt( programCounter ); ;
- buffer.putInt( methodCounter ); ;
+      buffer.putLong( threadId );  ;
+      buffer.putLong( startedThreadId );  ;
+     buffer.putInt( programCounter ); ;
+     buffer.putInt( methodCounter ); ;
+
+
+
+
+
 }
 
 

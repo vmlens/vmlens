@@ -21,11 +21,13 @@ class SchedulerDeSerializer   extends ReadStrategy[SchedulerEvent]
         
        val id = buffer.get();
        
+       
        if( id == 36 )
        {
           MethodAtomicEnterEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 37 )
        {
@@ -33,11 +35,13 @@ class SchedulerDeSerializer   extends ReadStrategy[SchedulerEvent]
        }
        else
        
+       
        if( id == 38 )
        {
           MethodCallbackEnterEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 39 )
        {
@@ -45,11 +49,13 @@ class SchedulerDeSerializer   extends ReadStrategy[SchedulerEvent]
        }
        else
        
+       
        if( id == 40 )
        {
           LoopStartEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 41 )
        {
@@ -57,17 +63,20 @@ class SchedulerDeSerializer   extends ReadStrategy[SchedulerEvent]
        }
        else
        
+       
        if( id == 42 )
        {
           RunStartEventGen.applyFromJavaEvent( buffer   );
        }
        else
        
+       
        if( id == 43 )
        {
           RunEndEventGen.applyFromJavaEvent( buffer   );
        }
        else
+       
        
        if( id == 44 )
        {
@@ -88,11 +97,13 @@ class SchedulerDeSerializer   extends ReadStrategy[SchedulerEvent]
         
        val id = buffer.get();
        
+       
        if( id == 36 )
        {
           MethodAtomicEnterEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 37 )
        {
@@ -100,11 +111,13 @@ class SchedulerDeSerializer   extends ReadStrategy[SchedulerEvent]
        }
        else
        
+       
        if( id == 38 )
        {
           MethodCallbackEnterEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 39 )
        {
@@ -112,11 +125,13 @@ class SchedulerDeSerializer   extends ReadStrategy[SchedulerEvent]
        }
        else
        
+       
        if( id == 40 )
        {
           LoopStartEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 41 )
        {
@@ -124,17 +139,20 @@ class SchedulerDeSerializer   extends ReadStrategy[SchedulerEvent]
        }
        else
        
+       
        if( id == 42 )
        {
           RunStartEventGen.applyFromScalaEvent( buffer   );
        }
        else
        
+       
        if( id == 43 )
        {
           RunEndEventGen.applyFromScalaEvent( buffer   );
        }
        else
+       
        
        if( id == 44 )
        {

@@ -2,13 +2,11 @@ package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class ParallizedMethodExitEventGen  implements RuntimeEvent 
 {
 
 
-  
     public int getSlidingWindowId()
     {
       return slidingWindowId;
@@ -18,23 +16,30 @@ public class ParallizedMethodExitEventGen  implements RuntimeEvent
    private final int slidingWindowId;
   
 
-     public final     long     threadId;
-      public final     int     methodId;
-      public final     int     methodCounter;
-      public  ParallizedMethodExitEventGen(
+   public final     long     threadId;
+   public final     int     methodId;
+   public final     int     methodCounter;
+
+
+
+public  ParallizedMethodExitEventGen(
 int slidingWindowId 
-,   long     threadId
-,   int     methodId
-,   int     methodCounter
-)
+  ,   long     threadId
+  ,   int     methodId
+  ,   int     methodCounter
+ )
  {
 
    this.slidingWindowId = slidingWindowId;
 
-   this.threadId   =  threadId;
-   this.methodId   =  methodId;
-   this.methodCounter   =  methodCounter;
-   }
+      this.threadId   =  threadId;
+      this.methodId   =  methodId;
+      this.methodCounter   =  methodCounter;
+     
+ 
+  
+  
+ }
  
 
  
@@ -45,9 +50,14 @@ public void serialize(StreamRepository streamRepository) throws Exception
 
  buffer.put( (byte)  29 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( methodId ); ;
- buffer.putInt( methodCounter ); ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( methodId ); ;
+     buffer.putInt( methodCounter ); ;
+
+
+
+
+
 }
 
 
@@ -58,9 +68,14 @@ public void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper
 
  buffer.put( (byte)  29 );
    
-  buffer.putLong( threadId );  ;
- buffer.putInt( methodId ); ;
- buffer.putInt( methodCounter ); ;
+      buffer.putLong( threadId );  ;
+     buffer.putInt( methodId ); ;
+     buffer.putInt( methodCounter ); ;
+
+
+
+
+
 }
 
 

@@ -1,21 +1,19 @@
 package com.vmlens.trace.agent.bootstrap.interleave.dsl
 
-import com.vmlens.trace.agent.bootstrap.interleave.domain.{Position, SyncActionAndPosition, SyncAction}
+import com.vmlens.trace.agent.bootstrap.interleave.Position
+import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockFactory
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper
 import gnu.trove.list.linked.TLinkedList
 
 import scala.collection.mutable.ArrayBuffer
 
-class ThreadModel(val threadIndex : Int,val syncActionModelList : Seq[SyncActionModel] ) {
+class ThreadModel(val syncActionModelList : Seq[ParallelizeOperationModel] ) {
 
-  def add(result: TLinkedList[TLinkableWrapper[SyncActionAndPosition]]) = {
-    val intermediate = new  ArrayBuffer[SyncAction]
-    for( model <- syncActionModelList ) {
-      model.add(intermediate);
-    }
+  def add(threadIndex : Int, result: TLinkedList[TLinkableWrapper[BlockFactory]]) = {
+   
     var position = 0;
-    for( fromRun <-  intermediate ) {
-      result.add(new TLinkableWrapper(new SyncActionAndPosition(2,new Position(threadIndex,position) , fromRun)))
+    for( fromRun <-  syncActionModelList ) {
+      result.add(new TLinkableWrapper(fromRun.create(2,new Position(threadIndex,position))))
       position = position + 1;
     }
 
