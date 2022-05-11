@@ -34,6 +34,7 @@ target/*
 .project
 */.idea/*
 *.iml
+.idea/*
 
 lib/*
 _dist/*
