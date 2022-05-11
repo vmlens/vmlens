@@ -12,11 +12,11 @@ import java.util.Arrays;
  */
 
 
-public class AlternatingOrderContainerImpl {
+public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
     private final Logger logger;
     final TLinkableWrapper<AlternatingOrderElement>[] optionalAlternatingOrderElements;
-    final  TLinkableWrapper<LeftBeforeRight>[] fixedOrders;
+    final TLinkableWrapper<LeftBeforeRight>[] fixedOrders;
     final int[] length;
 
     static void sort(TLinkableWrapper<AlternatingOrderElement>[] unsorted) {
@@ -27,8 +27,8 @@ public class AlternatingOrderContainerImpl {
         Arrays.sort(unsorted, new TLinkableWrapperLeftBeforeRightComparator());
     }
 
-    public AlternatingOrderContainerImpl(Logger logger, FixedAndAlternatingOrder fixedAndAlternatingOrder,
-                                         int[] length) {
+    public AlternatingOrderContainer(Logger logger, FixedAndAlternatingOrder fixedAndAlternatingOrder,
+                                     int[] length) {
         sortFixed(fixedAndAlternatingOrder.fixedOrder);
         sort(fixedAndAlternatingOrder.alternatingOrder);
         this.logger = logger;
@@ -65,7 +65,7 @@ public class AlternatingOrderContainerImpl {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AlternatingOrderContainerImpl that = (AlternatingOrderContainerImpl) o;
+        AlternatingOrderContainer that = (AlternatingOrderContainer) o;
 
         if (!Arrays.equals(optionalAlternatingOrderElements, that.optionalAlternatingOrderElements)) return false;
        return Arrays.equals(fixedOrders, that.fixedOrders);

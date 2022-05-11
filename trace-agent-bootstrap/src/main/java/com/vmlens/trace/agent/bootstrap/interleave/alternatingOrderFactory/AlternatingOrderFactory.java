@@ -46,7 +46,7 @@ public class AlternatingOrderFactory {
     }
 
     // Fixme sortieren und per thread context
-    // Fixme nach blockfactory verschieben
+    // Fixme nach blockfactory verschieben als BlockFactoryCollection
     private FixedAndAlternatingOrder createSyncActionBlocks
             (TLinkedList<TLinkableWrapper<BlockFactory>> actualRun) {
         BlockListCollection blockListCollection = new BlockListCollection();

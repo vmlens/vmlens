@@ -1,7 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.interleave
 
 import com.vmlens.test.TestLogger
-import com.vmlens.trace.agent.bootstrap.interleave.dsl.Dsl._
+import com.vmlens.trace.agent.bootstrap.interleave.dsl.Dsl.*
+import com.vmlens.trace.agent.bootstrap.interleave.facade.InterleaveContainer
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.{contains, hasItem, hasItems}
 import org.hamcrest.CoreMatchers.is

@@ -18,10 +18,41 @@ public class AllInterleavingsRun {
         this.runId = runId;
     }
 
-    AllInterleavingsRun advance() {}
+    boolean advance() {
+        synchronized (MONITOR) {
+            return runState.advance();
+        }
+    }
 
-    void close() {}
+    void close() {
+        synchronized (MONITOR) {
+            runState.close();
+        }
+    }
 
-    void after(Command command) { }
+    /*
+    				interleaveControlLogic.afterOperation(threadId, operation, System.currentTimeMillis());
+				notifyMonitor();
+				waitTillActive(threadId);
+
+				 @Override
+    protected void waitTillActive(long threadId) throws InterruptedException {
+
+        long startedWaiting = System.currentTimeMillis();
+
+        while (interleaveControlLogic.needs2Wait(threadId, System.currentTimeMillis())) {
+            ParallizeSingelton.SINGLE_LOCK.wait(10);
+            if (System.currentTimeMillis() > startedWaiting + InterleaveControlLogic.TIMEOUT + 2000) {
+                AgentLogCallback.logTimeout(interleaveControlLogic.threadId2State, interleaveControlLogic.logicState);
+                return;
+            }
+        }
+    }
+
+     */
+
+    void after(Command command, long threadId) {
+
+    }
 
 }

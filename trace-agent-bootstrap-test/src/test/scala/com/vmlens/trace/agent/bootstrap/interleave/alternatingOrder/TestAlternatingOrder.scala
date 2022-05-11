@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder
 
 import com.vmlens.test.TestLogger
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer
+import AlternatingOrderContainer
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.Dsl.{ao, o, p}
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper

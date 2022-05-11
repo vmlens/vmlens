@@ -5,7 +5,9 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-public class AlternatingOrderContainerIterator {
+import java.util.Iterator;
+
+public class AlternatingOrderContainerIterator implements Iterator<CalculatedRun> {
 
     private final AlternatingOrderContainer container;
     private final AlternatingOrderIterator alternatingOrderIterator;
@@ -36,6 +38,11 @@ public class AlternatingOrderContainerIterator {
         CalculatedRun temp = next;
         next = null;
         return temp;
+    }
+
+    @Override
+    public void remove() {
+        throw new RuntimeException("Not implemented");
     }
 
 }

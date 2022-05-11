@@ -1,13 +1,13 @@
-package com.vmlens.trace.agent.bootstrap.interleave;
+package com.vmlens.trace.agent.bootstrap.interleave.facade;
 
 import com.vmlens.trace.agent.bootstrap.Logger;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainerIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.AlternatingOrderFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockFactory;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
+
+import java.util.Iterator;
 
 /**
  * Responsible for storing all AlternativeOrderFactory and the current AlternativeOrderContainer
@@ -21,33 +21,32 @@ import gnu.trove.list.linked.TLinkedList;
  * next CalculatedRun
  * hasNext
  * <p>
- * Fixme test über mocks
  */
 public class InterleaveContainer {
 
     private final Logger logger;
-    private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> alternativeOrderFactoryQueue =
-            new TLinkedList<TLinkableWrapper<AlternatingOrderContainer>>();
-    private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> allAlternativeOrderFactoryList =
-            new TLinkedList<TLinkableWrapper<AlternatingOrderContainer>>();
-    private AlternatingOrderContainerIterator currentAlternatingOrder;
+    private final TLinkedList<TLinkableWrapper<Iterable<CalculatedRun>>> alternativeOrderFactoryQueue =
+            new TLinkedList<TLinkableWrapper<Iterable<CalculatedRun>>>();
+    private final TLinkedList<TLinkableWrapper<Iterable<CalculatedRun>>> allAlternativeOrderFactoryList =
+            new TLinkedList<TLinkableWrapper<Iterable<CalculatedRun>>>();
+    private Iterator<CalculatedRun> currentAlternatingOrder;
 
     public InterleaveContainer(Logger logger) {
         this.logger = logger;
     }
 
     public boolean addActualRun(TLinkedList<TLinkableWrapper<BlockFactory>> run) {
-        AlternatingOrderContainer factory = new AlternatingOrderFactory(logger).create(run);
+        Iterable<CalculatedRun> factory = create(run);
         boolean found = false;
-        for (TLinkableWrapper<AlternatingOrderContainer> elem : allAlternativeOrderFactoryList) {
+        for (TLinkableWrapper<Iterable<CalculatedRun>> elem : allAlternativeOrderFactoryList) {
             if (elem.element.equals(factory)) {
                 found = true;
                 break;
             }
         }
         if (!found) {
-            allAlternativeOrderFactoryList.add(new TLinkableWrapper<AlternatingOrderContainer>(factory));
-            alternativeOrderFactoryQueue.addFirst(new TLinkableWrapper<AlternatingOrderContainer>(factory));
+            allAlternativeOrderFactoryList.add(new TLinkableWrapper<Iterable<CalculatedRun>>(factory));
+            alternativeOrderFactoryQueue.addFirst(new TLinkableWrapper<Iterable<CalculatedRun>>(factory));
             return true;
         }
         return false;
@@ -67,6 +66,11 @@ public class InterleaveContainer {
 
     public CalculatedRun next() {
         return currentAlternatingOrder.next();
+    }
+
+    // To make mocking of Iterable<CalculatedRun> easier
+    protected Iterable<CalculatedRun> create(TLinkedList<TLinkableWrapper<BlockFactory>> run) {
+        return new AlternatingOrderFactory(logger).create(run);
     }
 
 }
