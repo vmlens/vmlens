@@ -26,7 +26,8 @@ public class RunStateMachine {
     void after(Command command, long threadId) {
     }
 
-    boolean needsToWait(long threadId) {
+    public boolean needsToWait(long threadId) {
+        return false;
     }
 
     void timeout() {

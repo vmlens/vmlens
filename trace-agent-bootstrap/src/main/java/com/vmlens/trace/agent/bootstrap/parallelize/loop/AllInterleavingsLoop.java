@@ -9,12 +9,14 @@ import com.vmlens.trace.agent.bootstrap.parallelize.command.Command;
 
 public class AllInterleavingsLoop {
     private final AllInterleavings allInterleavings;
+    private final AllInterleavingsRunFactory allInterleavingsRunFactory;
     private final int loopId;
-    private int maxRunId;
 
     private volatile AllInterleavingsRun currentRun;
 
-    public AllInterleavingsLoop(AllInterleavings allInterleavings, int loopId) {
+
+    public AllInterleavingsLoop(AllInterleavingsRunFactory allInterleavingsRunFactory, AllInterleavings allInterleavings, int loopId) {
+        this.allInterleavingsRunFactory = allInterleavingsRunFactory;
         this.allInterleavings = allInterleavings;
         this.loopId = loopId;
     }
@@ -26,7 +28,7 @@ public class AllInterleavingsLoop {
         }
         boolean advance = temp.advance();
         if (advance) {
-            currentRun = new AllInterleavingsRun(maxRunId++); // Fixme Thread Safety
+            currentRun = allInterleavingsRunFactory.create();
             return true;
         }
 
@@ -51,7 +53,7 @@ public class AllInterleavingsLoop {
     }
 
     public boolean waitsForThreadStart() {
-
+        return false;
     }
 
 

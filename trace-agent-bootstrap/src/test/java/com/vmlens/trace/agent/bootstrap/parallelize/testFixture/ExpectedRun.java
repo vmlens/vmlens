@@ -10,9 +10,18 @@ public class ExpectedRun {
         this.threadIndices = threadIndices;
     }
 
-    public static ExpectedRun expected(int... indices) {
+    public static ExpectedRun run(int... indices) {
         return new ExpectedRun(indices);
     }
 
+    public Long[] toThreadIds(ThreadIndexToThreadId threadIndexToThreadId) {
+        Long[] result = new Long[threadIndices.length];
+        int i = 0;
+        for (int threadIndex : threadIndices) {
+            result[i] = threadIndexToThreadId.threadId(threadIndex);
+            i++;
+        }
+        return result;
+    }
 
 }

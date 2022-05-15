@@ -1,5 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.testFixture;
 
-public interface GivenRunVisitor {
+public interface SyncActionVisitor {
     void visit(VolatileFieldModel volatileFieldModel);
 }
