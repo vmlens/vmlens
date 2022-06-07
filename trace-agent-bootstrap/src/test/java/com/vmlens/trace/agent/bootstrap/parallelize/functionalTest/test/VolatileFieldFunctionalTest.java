@@ -1,5 +1,6 @@
-package com.vmlens.trace.agent.bootstrap.parallelize.functionalTest;
+package com.vmlens.trace.agent.bootstrap.parallelize.functionalTest.test;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.functionalTest.util.ParallelizeFunctionalTest;
 import com.vmlens.trace.agent.bootstrap.parallelize.testFixture.VolatileFieldTestConfig;
 import org.junit.Test;
 

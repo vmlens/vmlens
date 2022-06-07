@@ -1,10 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runState;
 
-import com.vmlens.trace.agent.bootstrap.interleave.InterleaveFacade;
-import com.vmlens.trace.agent.bootstrap.parallelize.command.Command;
+import com.vmlens.trace.agent.bootstrap.parallelize.command.ParallelizeCommand;
 
 public interface RunState {
-    void after(InterleaveFacade interleaveFacade, Command command, long threadId);
+    RunState after(ParallelizeCommand parallelizeCommand);
+
+    RunState timeout();
 
     boolean needsToWait(long threadId);
+
 }

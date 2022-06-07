@@ -1,4 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.command;
 
-public class DirectSyncActionCommand {
+public enum ExecuteResult {
+
+    Running;
+
 }

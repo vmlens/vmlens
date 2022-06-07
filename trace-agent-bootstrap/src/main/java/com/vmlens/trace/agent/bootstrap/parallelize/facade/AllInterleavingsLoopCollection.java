@@ -1,8 +1,8 @@
-package com.vmlens.trace.agent.bootstrap.parallelize;
+package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.api.AllInterleavings;
-import com.vmlens.trace.agent.bootstrap.parallelize.loop.AllInterleavingsLoop;
-import com.vmlens.trace.agent.bootstrap.parallelize.loop.AllInterleavingsRunFactory;
+import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.AllInterleavingsLoop;
+import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.SynchronizationWrapperForRunFactory;
 import gnu.trove.map.hash.THashMap;
 
 /**
@@ -13,18 +13,18 @@ public class AllInterleavingsLoopCollection {
 
     private final THashMap<AllInterleavings, AllInterleavingsLoop> object2InterleaveMultipleRuns = new THashMap<AllInterleavings, AllInterleavingsLoop>();
     private final Object MONITOR = new Object();
-    private final AllInterleavingsRunFactory allInterleavingsRunFactory;
+    private final SynchronizationWrapperForRunFactory synchronizationWrapperForRunFactory;
     private int maxLoopId = 0;
 
-    public AllInterleavingsLoopCollection(AllInterleavingsRunFactory allInterleavingsRunFactory) {
-        this.allInterleavingsRunFactory = allInterleavingsRunFactory;
+    public AllInterleavingsLoopCollection(SynchronizationWrapperForRunFactory synchronizationWrapperForRunFactory) {
+        this.synchronizationWrapperForRunFactory = synchronizationWrapperForRunFactory;
     }
 
     AllInterleavingsLoop getOrCreate(AllInterleavings allInterleavings) {
         synchronized (MONITOR) {
             AllInterleavingsLoop loop = object2InterleaveMultipleRuns.get(allInterleavings);
             if (loop == null) {
-                loop = new AllInterleavingsLoop(allInterleavingsRunFactory, allInterleavings, maxLoopId);
+                loop = new AllInterleavingsLoop(synchronizationWrapperForRunFactory, allInterleavings, maxLoopId);
                 maxLoopId++;
                 object2InterleaveMultipleRuns.put(allInterleavings, loop);
             }

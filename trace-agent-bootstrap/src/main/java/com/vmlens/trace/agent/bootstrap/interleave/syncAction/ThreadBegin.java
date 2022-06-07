@@ -1,12 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.syncAction;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.SyncAction;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.*;
 import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockListCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BuildBlockListContext;
+import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.SyncAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -46,10 +46,10 @@ public class ThreadBegin implements EitherPart<ThreadBegin,ThreadStart>, SyncAct
     }
 
     @Override
-    public void createBlock(Position position, int activeThreadCount, BuildBlockListContext buildBlockListContext,
+    public void createBlock(Position position, boolean moreThanOneThread, BuildBlockListContext buildBlockListContext,
                             BlockListCollection blockListCollection) {
-        OrderElementFactoryAndPosition<Either<ThreadBegin,ThreadStart>> sap = new OrderElementFactoryAndPosition(activeThreadCount ,
-                position , left(this));
+        OrderElementFactoryAndPosition<Either<ThreadBegin, ThreadStart>> sap = new OrderElementFactoryAndPosition(moreThanOneThread,
+                position, left(this));
         blockListCollection.threadStartAndBegin.add(new SingleElementBlock(sap));
     }
 }

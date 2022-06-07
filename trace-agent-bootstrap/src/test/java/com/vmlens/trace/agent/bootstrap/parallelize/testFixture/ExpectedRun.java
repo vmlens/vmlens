@@ -14,14 +14,5 @@ public class ExpectedRun {
         return new ExpectedRun(indices);
     }
 
-    public Long[] toThreadIds(ThreadIndexToThreadId threadIndexToThreadId) {
-        Long[] result = new Long[threadIndices.length];
-        int i = 0;
-        for (int threadIndex : threadIndices) {
-            result[i] = threadIndexToThreadId.threadId(threadIndex);
-            i++;
-        }
-        return result;
-    }
 
 }

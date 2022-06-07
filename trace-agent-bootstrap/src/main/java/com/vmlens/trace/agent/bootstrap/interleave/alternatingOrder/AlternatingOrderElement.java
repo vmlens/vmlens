@@ -11,14 +11,20 @@ public class AlternatingOrderElement {
     }
 
     public AlternatingOrderElement(LeftBeforeRight leftBeforeRight) {
-        this.leftBeforeRight = leftBeforeRight;
+        if (leftBeforeRight.left.threadIndex < leftBeforeRight.right.threadIndex) {
+            this.leftBeforeRight = leftBeforeRight;
+        } else {
+            this.leftBeforeRight = leftBeforeRight.inverse();
+        }
+
+
     }
 
     public LeftBeforeRight getOrder(boolean original) {
         if(original) {
             return leftBeforeRight;
         } else {
-            return new LeftBeforeRight(leftBeforeRight.right , leftBeforeRight.left);
+            return leftBeforeRight.inverse();
         }
     }
 
@@ -38,6 +44,6 @@ public class AlternatingOrderElement {
 
     @Override
     public String toString() {
-        return "ao" + leftBeforeRight.toString() ;
+        return "alternatingOrder" + leftBeforeRight.toString();
     }
 }

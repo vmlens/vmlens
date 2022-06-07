@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
-    private final Logger logger;
+    final Logger logger;
     final TLinkableWrapper<AlternatingOrderElement>[] optionalAlternatingOrderElements;
     final TLinkableWrapper<LeftBeforeRight>[] fixedOrders;
     final int[] length;
@@ -35,7 +35,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         this.fixedOrders = fixedAndAlternatingOrder.fixedOrder;
         this.optionalAlternatingOrderElements = fixedAndAlternatingOrder.alternatingOrder;
         this.length = length;
-        if (logger.isOrderEnabled()) {
+        if (logger.isInterleaveDebug()) {
             boolean isFirst = true;
             String result = "";
             for (TLinkableWrapper<LeftBeforeRight> element : fixedOrders) {
@@ -52,7 +52,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
                 isFirst = false;
                 result += element.element.toString();
             }
-            logger.order(result);
+            logger.interleaveDebug(AlternatingOrderContainer.class, result);
         }
     }
 

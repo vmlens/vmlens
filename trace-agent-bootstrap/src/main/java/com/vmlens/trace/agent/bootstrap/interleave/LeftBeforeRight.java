@@ -13,6 +13,10 @@ public class LeftBeforeRight implements Comparable<LeftBeforeRight> {
         this.right = right;
     }
 
+    public LeftBeforeRight inverse() {
+        return new LeftBeforeRight(right, left);
+    }
+
     @Override
     public String toString() {
         return "(" + left.toString() + "," + right.toString() + ")";

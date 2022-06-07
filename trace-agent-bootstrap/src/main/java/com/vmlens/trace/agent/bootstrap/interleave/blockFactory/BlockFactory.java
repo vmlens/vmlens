@@ -8,18 +8,18 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 public  class BlockFactory {
 
     public final Position position;
-    private final int activeThreadCount;
+    private final boolean moreThanOneThread;
     private final SyncAction syncAction;
 
 
-    public BlockFactory(Position position, int activeThreadCount, SyncAction syncAction) {
+    public BlockFactory(Position position, boolean moreThanOneThread, SyncAction syncAction) {
         this.position = position;
-        this.activeThreadCount = activeThreadCount;
+        this.moreThanOneThread = moreThanOneThread;
         this.syncAction = syncAction;
     }
 
     public void createBlock(BuildBlockListContext buildBlockListContext, BlockListCollection blockListCollection) {
-        syncAction.createBlock(position,activeThreadCount,buildBlockListContext,blockListCollection);
+        syncAction.createBlock(position, moreThanOneThread, buildBlockListContext, blockListCollection);
     }
 
     

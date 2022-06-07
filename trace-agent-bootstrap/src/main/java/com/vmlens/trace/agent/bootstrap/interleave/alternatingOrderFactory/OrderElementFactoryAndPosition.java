@@ -6,11 +6,11 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 public final class OrderElementFactoryAndPosition<T> {
 
     public final Position position;
-    public final int activeThreadCount;
+    public final boolean moreThanOneThread;
     public final T orderElementFactory;
 
-    public OrderElementFactoryAndPosition(int activeThreadCount, Position position, T orderElementFactory) {
-        this.activeThreadCount = activeThreadCount;
+    public OrderElementFactoryAndPosition(boolean moreThanOneThread, Position position, T orderElementFactory) {
+        this.moreThanOneThread = moreThanOneThread;
         this.position = position;
         this.orderElementFactory = orderElementFactory;
     }

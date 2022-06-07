@@ -1,32 +1,38 @@
 package com.vmlens.trace.agent.bootstrap;
 
-
+/**
+ * we log pro high level module/package
+ * info -> input and outout of the module or if event based the main events
+ * debug -> internals of the module or if event based all events
+ * <p>
+ *  ToDo Debug Config
+ */
 public abstract class Logger {
 
-	private final boolean orderEnabled;
+	private final LoggerConfig config;
 
-	public Logger(boolean orderEnabled) {
-		this.orderEnabled = orderEnabled;
+
+	public Logger(LoggerConfig config) {
+		this.config = config;
 	}
 
-	public boolean isOrderEnabled() {
-		return orderEnabled;
+	public boolean isInterleaveDebug() {
+		return config.interleave.logDebug;
 	}
 
-	public void order(String order) {
-		if(orderEnabled) {
-			logOrder(order);
+	public void interleaveDebug(Class inClass, String message) {
+		if (config.interleave.logDebug) {
+			log(inClass, message);
 		}
 	}
 
-	/* Fixme
-	performance
-	parallizeRun
-
-	 */
-
-	protected abstract void logOrder(String order);
+	public void interleaveInfo(Class inClass, String message) {
+		if (config.interleave.logInfo) {
+			log(inClass, message);
+		}
+	}
 
 
-	
+	protected abstract void log(Class inClass, String message);
+
 }

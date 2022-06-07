@@ -1,16 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.interleave.syncAction;
 
 
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.DeadlockContext;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.OrderElementFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.OrderElementFactoryAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.SingleElementBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.SyncAction;
 import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockListCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BuildBlockListContext;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
-import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.SyncAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -46,11 +46,12 @@ public class VolatileFieldAccess implements OrderElementFactory<VolatileFieldAcc
         }
     }
 
+
     @Override
-    public void createBlock(Position position, int activeThreadCount,
+    public void createBlock(Position position, boolean moreThanOneThread,
                             BuildBlockListContext buildBlockListContext,
                             BlockListCollection blockListCollection) {
-        OrderElementFactoryAndPosition<VolatileFieldAccess> sap = new OrderElementFactoryAndPosition(activeThreadCount , position , this);
+        OrderElementFactoryAndPosition<VolatileFieldAccess> sap = new OrderElementFactoryAndPosition(moreThanOneThread, position, this);
         blockListCollection.volatileFieldAccess.add(new SingleElementBlock(sap));
     }
 }

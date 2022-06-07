@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.testFixture;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.apache.commons.collections4.bag.HashBag;
 
 public class TestConfig {
 
@@ -27,12 +26,12 @@ public class TestConfig {
         return expected;
     }
 
-    public Set<Long> threadIds(ThreadIndexToThreadId threadIndexToThreadId) {
-        Set<Long> result = new HashSet<>();
-        for (ExpectedRun run : expectedRuns) {
-            for (Long id : run.toThreadIds(threadIndexToThreadId)) {
-                result.add(id);
-            }
+
+    public HashBag<Integer> threadIndices() {
+        HashBag<Integer> result = new HashBag<>();
+        ExpectedRun run = expectedRuns[0];
+        for (Integer id : run.threadIndices) {
+            result.add(id);
         }
         return result;
     }

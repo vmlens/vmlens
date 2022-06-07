@@ -8,20 +8,22 @@ import com.vmlens.trace.agent.bootstrap.OptionalShort;
 import com.vmlens.trace.agent.bootstrap.event.ThreadNameEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.SendEvent;
 import com.vmlens.trace.agent.bootstrap.mode.AgentMode;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizedThreadLocal;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizedThreadFacade;
 import com.vmlens.trace.agent.bootstrap.threadQueue.QueueCollection;
 import gnu.trove.map.hash.TIntIntHashMap;
 
+// Fixme aufräumen
 public class CallbackStatePerThread {
 
-	
-	private static final AtomicCounter nextMappedId = new AtomicCounter();
-	private static final AtomicCounterShort   nextShortId = new AtomicCounterShort();
-	
-	public final TIntIntHashMap waitPointId2ActivatingCount = new TIntIntHashMap();
-	public final TIntIntHashMap waitPointId2DeActivatiedCount = new TIntIntHashMap();
-	
-	public static final String ANARSOFT_THREAD_NAME = "anarsoft";
+
+    private static final AtomicCounter nextMappedId = new AtomicCounter();
+    private static final AtomicCounterShort nextShortId = new AtomicCounterShort();
+
+    public final TIntIntHashMap waitPointId2ActivatingCount = new TIntIntHashMap();
+    public final TIntIntHashMap waitPointId2DeActivatiedCount = new TIntIntHashMap();
+
+    public static final String ANARSOFT_THREAD_NAME = "anarsoft";
 	
 	
 	public boolean methodTracingStarted = false;
@@ -29,30 +31,29 @@ public class CallbackStatePerThread {
 	
 	
 	public final AnarsoftWeakHashMap<Object>  arraysInThisThread = new  AnarsoftWeakHashMap<Object> ();
-	
-	
-	
-	
-	public final SendEvent sendEvent;
-	
-	
-	private final boolean syncActionSameAsField4TraceCheck;
 
-	public final AgentMode mode;
 
-	
-	
-	public ParallizedThreadFacade parallizedThread;
-	//public int monitorCount;
+    public final SendEvent sendEvent;
 
-	
+
+    private final boolean syncActionSameAsField4TraceCheck;
+
+    public final AgentMode mode;
+
+
+    public ParallizedThreadFacade parallizedThread;
+    // Fixme erzeugt zirkulare referenz
+    public ParallelizedThreadLocal parallelizedThreadLocal;
+    //public int monitorCount;
+
+
 //	public int monitorCount;
-	
 
-	public int tempDoNotInterleave;
-	
-	public int doNotInterleave;
-	public int doNotInterleaveFromLock;
+
+    public int tempDoNotInterleave;
+
+    public int doNotInterleave;
+    public int doNotInterleaveFromLock;
 	
 	
   public int inThreadStart;

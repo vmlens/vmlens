@@ -25,4 +25,9 @@ public class VolatileFieldModel implements SyncActionModel {
     public void accept(SyncActionVisitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public int getThreadIndex() {
+        return threadIndex;
+    }
 }

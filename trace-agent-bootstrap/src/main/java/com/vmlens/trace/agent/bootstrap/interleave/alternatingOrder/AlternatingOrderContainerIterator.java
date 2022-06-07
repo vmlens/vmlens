@@ -25,6 +25,8 @@ public class AlternatingOrderContainerIterator implements Iterator<CalculatedRun
             TLinkedList<TLinkableWrapper<Position>> orderedPositions =
                     new CreateCalculatedRunForOrder(order, container.length).create();
             if(orderedPositions != null ) {
+                // ToDo hier info loggen
+                container.logger.interleaveInfo(AlternatingOrderContainerIterator.class, calculatedRunToString(orderedPositions));
                 next = new CalculatedRun(orderedPositions);
             }
         }
@@ -32,6 +34,19 @@ public class AlternatingOrderContainerIterator implements Iterator<CalculatedRun
             return true;
         }
         return false;
+    }
+
+    private String calculatedRunToString(TLinkedList<TLinkableWrapper<Position>> orderedPositions) {
+        boolean isFirst = true;
+        String result = "calculatedRun(threadIndex(";
+        for (TLinkableWrapper<Position> position : orderedPositions) {
+            if (!isFirst) {
+                result += ",";
+            }
+            isFirst = false;
+            result += position.element.threadIndex;
+        }
+        return result + "))";
     }
 
     public CalculatedRun next() {

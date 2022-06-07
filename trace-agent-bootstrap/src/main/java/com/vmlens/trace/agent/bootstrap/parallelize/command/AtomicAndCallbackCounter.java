@@ -1,4 +1,4 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.command;
 
-public interface Command {
+public interface AtomicAndCallbackCounter {
 }

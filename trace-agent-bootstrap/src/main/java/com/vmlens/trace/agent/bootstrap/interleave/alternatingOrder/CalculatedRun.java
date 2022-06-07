@@ -1,27 +1,45 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.ThreadIndexContainer;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
+import java.util.Iterator;
+
 public class CalculatedRun {
-    private final TLinkedList<TLinkableWrapper<Position>> positions;
+    private final Iterator<TLinkableWrapper<Position>> positions;
+    private int activeThreadIndex = -1;
 
     public CalculatedRun(TLinkedList<TLinkableWrapper<Position>> positions) {
-        this.positions = positions;
+        this.positions = positions.iterator();
     }
 
-    public String toString() {
-        boolean isFirst = true;
-        String result = "";
-        for (TLinkableWrapper<Position> position : positions) {
-            if (!isFirst) {
-                result += ",";
-            }
-            isFirst = false;
-            result += position.element.threadIndex;
+    public CalculatedRun() {
+        this.positions = new TLinkedList<TLinkableWrapper<Position>>().iterator();
+    }
+
+    public void advance() {
+        if (positions.hasNext()) {
+            activeThreadIndex = positions.next().element.threadIndex;
         }
-        return result;
+    }
+
+    public boolean needsToWait(int threadIndex, ThreadIndexContainer threadIndexContainer) {
+        if (!threadIndexContainer.hasMoreThanOneThread()) {
+            activeThreadIndex = -1;
+            return false;
+        }
+
+        if (activeThreadIndex == -1) {
+            advance();
+        }
+        if (threadIndexContainer.exists(activeThreadIndex)) {
+            return activeThreadIndex != threadIndex;
+        }
+
+        activeThreadIndex = threadIndex;
+        return false;
     }
 
 }

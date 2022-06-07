@@ -12,7 +12,7 @@ public class Position implements Comparable<Position> {
 
     @Override
     public String toString() {
-        return "p(" + threadIndex + "," +
+        return "position(threadIndex=" + threadIndex + ",positionInThread=" +
                 positionInThread + ')';
     }
 
