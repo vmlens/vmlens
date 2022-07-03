@@ -1,19 +1,16 @@
-package com.vmlens.trace.agent.bootstrap.interleave.blockFactory;
+package com.vmlens.trace.agent.bootstrap.interleave.syncActionImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.FixedAndAlternatingOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.BlockList;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.DeadlockContext;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.Either;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.SingleElementBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.syncAction.*;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionBlock.BlockList;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionBlock.DeadlockContext;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionBlock.Either;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionBlock.SingleElementBlock;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-/**
- * Fixme interface nach orderFactory und in interleave odr syncaction
- */
+
 public class BlockListCollection {
 
     public final BlockList<SingleElementBlock<VolatileFieldAccess>> volatileFieldAccess = new

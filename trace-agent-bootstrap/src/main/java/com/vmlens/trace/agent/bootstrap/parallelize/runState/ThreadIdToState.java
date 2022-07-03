@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.parallelize.runState;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.ThreadIndexContainer;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.SyncAction;
 import com.vmlens.trace.agent.bootstrap.interleave.facade.InterleaveFacade;
+import com.vmlens.trace.agent.bootstrap.interleave.syncAction.SyncAction;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.map.hash.TLongObjectHashMap;
 

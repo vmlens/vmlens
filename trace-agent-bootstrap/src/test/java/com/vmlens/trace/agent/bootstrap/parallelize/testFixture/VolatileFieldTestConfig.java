@@ -10,8 +10,8 @@ public class VolatileFieldTestConfig {
 
     public static final TestConfig VOLATILE_FIELD_WITH_THREAD_START_AND_STOP =
             config(
-                    given(THREAD_ZERO_READ, THREAD_ONE_WRITE), expected(run(0, 1), run(1, 0))
-            );
+                    given(THREAD_ZERO_READ, THREAD_ONE_WRITE), expected(run(0, 1), run(1, 0)),
+                    3);
 
 
 }

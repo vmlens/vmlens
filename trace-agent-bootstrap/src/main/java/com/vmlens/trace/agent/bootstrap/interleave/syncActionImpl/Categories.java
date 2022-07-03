@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.syncAction;
+package com.vmlens.trace.agent.bootstrap.interleave.syncActionImpl;
 
 class Categories {
 

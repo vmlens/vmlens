@@ -64,7 +64,7 @@ public class ParallelizeFunctionalTest {
                     expectedRun.threadIndices)));
         }
         assertThat(actualResult, is(expectedResult));
-        System.out.println("runs " + runs);
+        assertThat(runs, is(config.numberofRuns));
     }
 
     private Set<Long> toThreadIds(CallbackStatePerThreadRepository callbackStatePerThreadRepository,

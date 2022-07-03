@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.blockFactory;
+package com.vmlens.trace.agent.bootstrap.interleave.syncAction;
 
 public interface GetThreadIndexForId {
 

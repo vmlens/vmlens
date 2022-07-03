@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.command;
 
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.SyncAction;
+import com.vmlens.trace.agent.bootstrap.interleave.syncAction.SyncAction;
 
 public interface RunStateContext {
 

@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
-import com.vmlens.trace.agent.bootstrap.interleave.syncAction.VolatileFieldAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionImpl.VolatileFieldAccess;
 import com.vmlens.trace.agent.bootstrap.parallelize.command.DirectSyncActionParallelizeCommand;
 import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.AllInterleavingsLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.SynchronizationWrapperForRun;

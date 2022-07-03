@@ -8,14 +8,17 @@ public class TestConfig {
 
     public final ExpectedRun[] expectedRuns;
 
+    public final int numberofRuns;
 
-    public TestConfig(SyncActionModel[] givenRun, ExpectedRun[] expectedRuns) {
+
+    public TestConfig(SyncActionModel[] givenRun, ExpectedRun[] expectedRuns, int numberofRuns) {
         this.givenRun = givenRun;
         this.expectedRuns = expectedRuns;
+        this.numberofRuns = numberofRuns;
     }
 
-    public static TestConfig config(SyncActionModel[] givenRun, ExpectedRun[] expectedRuns) {
-        return new TestConfig(givenRun, expectedRuns);
+    public static TestConfig config(SyncActionModel[] givenRun, ExpectedRun[] expectedRuns, int numberofRuns) {
+        return new TestConfig(givenRun, expectedRuns, numberofRuns);
     }
 
     public static SyncActionModel[] given(SyncActionModel... givenRun) {

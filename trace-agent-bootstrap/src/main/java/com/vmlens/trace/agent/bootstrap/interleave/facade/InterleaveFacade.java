@@ -4,8 +4,8 @@ import com.vmlens.trace.agent.bootstrap.Logger;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.ThreadIndexContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.SyncAction;
+import com.vmlens.trace.agent.bootstrap.interleave.syncAction.SyncAction;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionImpl.SyncActionAndPosition;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -21,7 +21,7 @@ public class InterleaveFacade {
     private final InterleaveContainer interleaveContainer;
     private final Logger logger;
 
-    private TLinkedList<TLinkableWrapper<BlockFactory>> actualRun = null;
+    private TLinkedList<TLinkableWrapper<SyncActionAndPosition>> actualRun = null;
     private CalculatedRun calculatedRun = new CalculatedRun();
 
     // For easier mocking
@@ -42,17 +42,17 @@ public class InterleaveFacade {
         if (moreThanOneThread) {
             calculatedRun.advance();
         }
-        actualRun.add(l(new BlockFactory(position, moreThanOneThread, syncAction)));
+        actualRun.add(l(new SyncActionAndPosition(position, moreThanOneThread, syncAction)));
     }
 
     public boolean advance() {
         // First run -> return true and create first actualRun
         if (actualRun == null) {
-            actualRun = new TLinkedList<TLinkableWrapper<BlockFactory>>();
+            actualRun = new TLinkedList<TLinkableWrapper<SyncActionAndPosition>>();
             return true;
         }
         interleaveContainer.addActualRun(actualRun);
-        actualRun = new TLinkedList<TLinkableWrapper<BlockFactory>>();
+        actualRun = new TLinkedList<TLinkableWrapper<SyncActionAndPosition>>();
         if (interleaveContainer.hasNext()) {
             calculatedRun = interleaveContainer.next();
             return true;

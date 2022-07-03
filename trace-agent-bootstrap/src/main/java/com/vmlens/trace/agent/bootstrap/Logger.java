@@ -22,17 +22,17 @@ public abstract class Logger {
 
 	public void interleaveDebug(Class inClass, String message) {
 		if (config.interleave.logDebug) {
-			log(inClass, message);
+			log("interleave", inClass, message);
 		}
 	}
 
 	public void interleaveInfo(Class inClass, String message) {
 		if (config.interleave.logInfo) {
-			log(inClass, message);
+            log("interleave", inClass, message);
 		}
 	}
 
 
-	protected abstract void log(Class inClass, String message);
+    protected abstract void log(String module, Class inClass, String message);
 
 }

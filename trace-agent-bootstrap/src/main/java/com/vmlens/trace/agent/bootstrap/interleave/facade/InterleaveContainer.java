@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.facade;
 
 import com.vmlens.trace.agent.bootstrap.Logger;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory.AlternatingOrderFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionBlock.AlternatingOrderFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionImpl.SyncActionAndPosition;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -35,7 +35,7 @@ public class InterleaveContainer {
         this.logger = logger;
     }
 
-    public boolean addActualRun(TLinkedList<TLinkableWrapper<BlockFactory>> run) {
+    public boolean addActualRun(TLinkedList<TLinkableWrapper<SyncActionAndPosition>> run) {
         Iterable<CalculatedRun> factory = create(run);
         boolean found = false;
         for (TLinkableWrapper<Iterable<CalculatedRun>> elem : allAlternativeOrderFactoryList) {
@@ -46,6 +46,7 @@ public class InterleaveContainer {
         }
         // ToDo hier info logggen
         if (!found) {
+            logger.interleaveInfo(InterleaveContainer.class, "added " + factory.toString());
             allAlternativeOrderFactoryList.add(new TLinkableWrapper<Iterable<CalculatedRun>>(factory));
             alternativeOrderFactoryQueue.addFirst(new TLinkableWrapper<Iterable<CalculatedRun>>(factory));
             return true;
@@ -70,7 +71,7 @@ public class InterleaveContainer {
     }
 
     // To make mocking of Iterable<CalculatedRun> easier
-    protected Iterable<CalculatedRun> create(TLinkedList<TLinkableWrapper<BlockFactory>> run) {
+    protected Iterable<CalculatedRun> create(TLinkedList<TLinkableWrapper<SyncActionAndPosition>> run) {
         return new AlternatingOrderFactory(logger).create(run);
     }
 

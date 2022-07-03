@@ -1,12 +1,12 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory;
+package com.vmlens.trace.agent.bootstrap.interleave.syncActionBlock;
 
 
 import com.vmlens.trace.agent.bootstrap.Logger;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.FixedAndAlternatingOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BlockListCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.BuildBlockListContext;
+import com.vmlens.trace.agent.bootstrap.interleave.syncAction.BuildBlockListContext;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionImpl.BlockListCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.syncActionImpl.SyncActionAndPosition;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -39,7 +39,7 @@ public class AlternatingOrderFactory {
         this.logger = logger;
     }
 
-    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<BlockFactory>> actualRun) {
+    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<SyncActionAndPosition>> actualRun) {
         return new AlternatingOrderContainer(logger,
                 createSyncActionBlocks(actualRun),
                 calculateLength(actualRun));
@@ -48,23 +48,23 @@ public class AlternatingOrderFactory {
     // Fixme sortieren und per thread context
     // Fixme nach blockfactory verschieben als BlockFactoryCollection
     private FixedAndAlternatingOrder createSyncActionBlocks
-            (TLinkedList<TLinkableWrapper<BlockFactory>> actualRun) {
+    (TLinkedList<TLinkableWrapper<SyncActionAndPosition>> actualRun) {
         BlockListCollection blockListCollection = new BlockListCollection();
         BuildBlockListContext buildBlockListContext = new BuildBlockListContext();
-        for (TLinkableWrapper<BlockFactory> linkable : actualRun) {
-            linkable.element.createBlock(buildBlockListContext,blockListCollection);
+        for (TLinkableWrapper<SyncActionAndPosition> linkable : actualRun) {
+            linkable.element.createBlock(buildBlockListContext, blockListCollection);
         }
         return blockListCollection.createOrder(buildBlockListContext.create());
     }
 
 
-    private int[] calculateLength(TLinkedList<TLinkableWrapper<BlockFactory>> actualRun) {
+    private int[] calculateLength(TLinkedList<TLinkableWrapper<SyncActionAndPosition>> actualRun) {
         int maxThreadIndex = 0;
-        for (TLinkableWrapper<BlockFactory> linkable : actualRun) {
+        for (TLinkableWrapper<SyncActionAndPosition> linkable : actualRun) {
             maxThreadIndex = max(linkable.element.position.threadIndex, maxThreadIndex);
         }
         int[] length = new int[maxThreadIndex + 1];
-        for (TLinkableWrapper<BlockFactory> linkable : actualRun) {
+        for (TLinkableWrapper<SyncActionAndPosition> linkable : actualRun) {
             int i = linkable.element.position.threadIndex;
             length[i] = max(linkable.element.position.positionInThread + 1, length[i]);
         }

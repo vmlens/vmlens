@@ -35,25 +35,6 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         this.fixedOrders = fixedAndAlternatingOrder.fixedOrder;
         this.optionalAlternatingOrderElements = fixedAndAlternatingOrder.alternatingOrder;
         this.length = length;
-        if (logger.isInterleaveDebug()) {
-            boolean isFirst = true;
-            String result = "";
-            for (TLinkableWrapper<LeftBeforeRight> element : fixedOrders) {
-                if (!isFirst) {
-                    result += ",\n";
-                }
-                isFirst = false;
-                result += "f" + element.element.toString();
-            }
-            for (TLinkableWrapper<AlternatingOrderElement> element : optionalAlternatingOrderElements) {
-                if (!isFirst) {
-                    result += ",\n";
-                }
-                isFirst = false;
-                result += element.element.toString();
-            }
-            logger.interleaveDebug(AlternatingOrderContainer.class, result);
-        }
     }
 
     public AlternatingOrderContainerIterator iterator() {
@@ -68,14 +49,35 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         AlternatingOrderContainer that = (AlternatingOrderContainer) o;
 
         if (!Arrays.equals(optionalAlternatingOrderElements, that.optionalAlternatingOrderElements)) return false;
-       return Arrays.equals(fixedOrders, that.fixedOrders);
-       
+        return Arrays.equals(fixedOrders, that.fixedOrders);
+
     }
 
     @Override
     public int hashCode() {
         int result = Arrays.hashCode(optionalAlternatingOrderElements);
         result = 31 * result + Arrays.hashCode(fixedOrders);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        boolean isFirst = true;
+        String result = "";
+        for (TLinkableWrapper<LeftBeforeRight> element : fixedOrders) {
+            if (!isFirst) {
+                result += ",\n";
+            }
+            isFirst = false;
+            result += "f" + element.element.toString();
+        }
+        for (TLinkableWrapper<AlternatingOrderElement> element : optionalAlternatingOrderElements) {
+            if (!isFirst) {
+                result += ",\n";
+            }
+            isFirst = false;
+            result += element.element.toString();
+        }
         return result;
     }
 }

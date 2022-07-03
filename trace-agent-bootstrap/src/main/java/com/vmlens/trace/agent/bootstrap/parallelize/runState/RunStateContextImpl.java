@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runState;
 
-import com.vmlens.trace.agent.bootstrap.interleave.blockFactory.SyncAction;
 import com.vmlens.trace.agent.bootstrap.interleave.facade.InterleaveFacade;
+import com.vmlens.trace.agent.bootstrap.interleave.syncAction.SyncAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.command.RunStateContext;
 
 public class RunStateContextImpl implements RunStateContext {

@@ -10,7 +10,7 @@ public class TestDebugLogger extends Logger {
     }
 
     @Override
-    protected void log(Class inClass, String message) {
-        System.out.println(inClass.getSimpleName() + ": " + message);
+    protected void log(String module, Class inClass, String message) {
+        System.out.println(module + "(" + inClass.getSimpleName() + "): " + message);
     }
 }

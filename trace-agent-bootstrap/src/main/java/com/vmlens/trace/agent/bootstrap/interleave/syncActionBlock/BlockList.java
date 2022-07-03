@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrderFactory;
+package com.vmlens.trace.agent.bootstrap.interleave.syncActionBlock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
