@@ -2,93 +2,71 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
-
-import java.util.Iterator;
-
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.l;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunElement;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunFromOrder;
 
 /**
- * One array per thread. The right part of the left before right order is stored in the array. current length per array.
+ * @hides the algorithm to calculate a run out of an order.
+ *
+ * left before right means that I can not execute right when I have not
+ * reached left.
+ * So I have a list of constraints, e.g. the right positions.
+ * I can check if a constraint exists for a position,
+ * e.g. pos >= right
+ * If not i can take this position, To execute the same thread again
+ * I can go forward till I have found a constraint, e.g. the maximum so tha still
+ * pos < right.
+ * Than I can remove all constraints with left =< pos
+ * ToDo test, really equals?
+ *
  */
-
-
 public class CreateCalculatedRunForOrder {
+    private final LeftBeforeRight[] currentOrder;
+    private final ThreadIdToElementList<CalculatedRunElement> actualRun;
 
-
-    private final int[] length;
-    private final TLinkedList<TLinkableWrapper<LeftBeforeRight>> order;
-
-    public CreateCalculatedRunForOrder(TLinkedList<TLinkableWrapper<LeftBeforeRight>> order, int[] length) {
-        this.length = length.clone();
-        this.order = order;
+    public CreateCalculatedRunForOrder(LeftBeforeRight[] currentOrder,
+                                       ThreadIdToElementList<CalculatedRunElement> actualRun) {
+        this.currentOrder = currentOrder;
+        this.actualRun = actualRun.safeClone();
     }
-
-    private void take(Position position) {
-        length[position.threadIndex]--;
-        Iterator<TLinkableWrapper<LeftBeforeRight>> iterator = order.iterator();
-        while (iterator.hasNext()) {
-            TLinkableWrapper<LeftBeforeRight> current = iterator.next();
-            if(current.element.right.equals(position) ) {
-                iterator.remove();
-            }
-        }
-        
-    }
-
-    private boolean isFree(Position position) {
-        for(TLinkableWrapper<LeftBeforeRight> leftBeforeRight : order) {
-            if( position.threadIndex == leftBeforeRight.element.left.threadIndex &&
-                    position.positionInThread <= leftBeforeRight.element.left.positionInThread) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public TLinkedList<TLinkableWrapper<Position>> create() {
-        TLinkedList<TLinkableWrapper<Position>> result = new TLinkedList<TLinkableWrapper<Position>>();
-        while (true) {
-            Position nextElement = null;
-            boolean elementsStillThere = false;
-            for (int i = 0; i < length.length; i++) {
-                Position current = getElementForIndex(i);
-                if (current != null) {
-                    elementsStillThere = true;
-                    if (isFree(current)) {
-                        take(current);
-                        nextElement = current;
-                        break;
+    public CalculatedRun create() {
+        CalculatedRunElement[] calculatedRunElementArray = new CalculatedRunElement[actualRun.elementCount()];
+        int currentPosInArray = 0;
+        while(! actualRun.isEmpty()) {
+            boolean somethingFound = false;
+            for(int i = 0;i <=  actualRun.maxThreadIndex(); i++) {
+                    while(! actualRun.isEmptyAtIndex(i) && ! constraintFound(actualRun.getAtIndex(i).position())) {
+                        removeConstraints(actualRun.getAtIndex(i).position());
+                        calculatedRunElementArray[currentPosInArray] = actualRun.getAndRemoveAtIndex(i);
+                        currentPosInArray++;
+                        somethingFound=true;
                     }
+            }
+            if(! somethingFound) {
+                return null;
+            }
+        }
+        return new CalculatedRunFromOrder(calculatedRunElementArray);
+    }
+    private boolean constraintFound(Position position) {
+        for(LeftBeforeRight constraint : currentOrder) {
+            if(constraint != null) {
+                if(position.greaterOrEquals(constraint.right)) {
+                    return true;
                 }
             }
-            if (!elementsStillThere) {
-                return reverse(result);
+        }
+        return false;
+    }
+    private void removeConstraints(Position position) {
+        for(int i = 0; i < currentOrder.length; i++) {
+            if(currentOrder[i] != null) {
+                if(currentOrder[i].left.greaterOrEquals(position)) {
+                    currentOrder[i] = null;
+                }
             }
-            if (nextElement == null) {
-                return null; // circle
-            }
-            result.add(l(nextElement));
         }
     }
-
-    private Position getElementForIndex(int i) {
-        if( length[i] == 0  ) {
-            return null;
-        }
-        return new Position(i, length[i] -1);
-        
-    }
-
-    private TLinkedList<TLinkableWrapper<Position>> reverse(TLinkedList<TLinkableWrapper<Position>> list) {
-        TLinkedList<TLinkableWrapper<Position>> reverse = new TLinkedList<TLinkableWrapper<Position>>();
-        Iterator<TLinkableWrapper<Position>> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            reverse.addFirst(l(iterator.next().element));
-        }
-        return reverse;
-    }
-
-
 }

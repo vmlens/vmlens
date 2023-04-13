@@ -3,29 +3,28 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
-public class AlternatingOrderElement {
-    public  final LeftBeforeRight leftBeforeRight;
+import java.util.Objects;
 
-    public static AlternatingOrderElement of(Position left, Position right) {
-        return new AlternatingOrderElement(new LeftBeforeRight(left,right));
-    }
+public class AlternatingOrderElement implements Comparable<AlternatingOrderElement> {
 
-    public AlternatingOrderElement(LeftBeforeRight leftBeforeRight) {
-        if (leftBeforeRight.left.threadIndex < leftBeforeRight.right.threadIndex) {
-            this.leftBeforeRight = leftBeforeRight;
+    private final LeftBeforeRight alternativeOne;
+    private final LeftBeforeRight alternativeTwo;
+    public AlternatingOrderElement(LeftBeforeRight alternativeOne, LeftBeforeRight alternativeTwo) {
+        if(alternativeOne.compareTo(alternativeTwo) > 0) {
+            this.alternativeOne = alternativeOne;
+            this.alternativeTwo = alternativeTwo;
         } else {
-            this.leftBeforeRight = leftBeforeRight.inverse();
+            this.alternativeOne = alternativeTwo;
+            this.alternativeTwo = alternativeOne;
         }
 
 
     }
-
-    public LeftBeforeRight getOrder(boolean original) {
-        if(original) {
-            return leftBeforeRight;
-        } else {
-            return leftBeforeRight.inverse();
+    public LeftBeforeRight order(boolean firstAlternative) {
+        if(firstAlternative) {
+            return alternativeOne;
         }
+        return alternativeTwo;
     }
 
     @Override
@@ -34,16 +33,24 @@ public class AlternatingOrderElement {
         if (o == null || getClass() != o.getClass()) return false;
 
         AlternatingOrderElement that = (AlternatingOrderElement) o;
-        return leftBeforeRight.equals(that.leftBeforeRight);
+
+        if (!Objects.equals(alternativeOne, that.alternativeOne))
+            return false;
+        return Objects.equals(alternativeTwo, that.alternativeTwo);
     }
 
     @Override
     public int hashCode() {
-        return leftBeforeRight.hashCode();
+        int result = alternativeOne != null ? alternativeOne.hashCode() : 0;
+        result = 31 * result + (alternativeTwo != null ? alternativeTwo.hashCode() : 0);
+        return result;
     }
 
     @Override
-    public String toString() {
-        return "alternatingOrder" + leftBeforeRight.toString();
+    public int compareTo(AlternatingOrderElement other) {
+        if( alternativeOne.compareTo(other.alternativeOne) > 0) {
+            return alternativeOne.compareTo(other.alternativeOne);
+        }
+        return alternativeTwo.compareTo(other.alternativeTwo);
     }
 }

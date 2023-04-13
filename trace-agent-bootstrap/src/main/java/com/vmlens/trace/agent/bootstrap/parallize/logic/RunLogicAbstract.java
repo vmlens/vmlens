@@ -23,12 +23,9 @@ public abstract class RunLogicAbstract {
 
 	}
 
-	
 	 protected abstract void waitTillActive(long threadId) throws InterruptedException;
-	
 	// 
-	
-	
+
 	protected abstract void notifyMonitor();
 
 	//
@@ -36,99 +33,63 @@ public abstract class RunLogicAbstract {
 	// end API for creation
 	
 	// start API
-	
-	
+
 	  void setActivated(long threadId)
 	 {
 		 
 		  interleaveControlLogic.threadId2State.setActivated(threadId);
 	 }
-	 
-	 
 	  void setDeactivated(long threadId)
 	 {
 		  interleaveControlLogic.threadId2State.setDeactivated(threadId);
 	 }
-	
 	  public void setAtThreadJoin(long threadId,long joinWithThreadId) {
 		  interleaveControlLogic.threadId2State.setAtThreadJoin(threadId,joinWithThreadId);
-			
 		}
 
-	  
-	  
-	  
-	
 	 void startFirstThread(long threadId,Thread thread)
 	{
 			interleaveControlLogic.startFirstThread(threadId,thread);
-
 	}
-
 	 BeginNewThreadResult beginNewThread(long threadId,Thread thread, RunnableOrThreadWrapper beganTask)
 	{
 		try {		
 			BeginNewThreadResult result =  interleaveControlLogic.beginWithNewThread(threadId,thread, beganTask);
-			
 			if(result != BeginNewThreadResult.UNKNOWN_THREAD )
 			{
 				notifyMonitor();
 				waitTillActive(threadId);
-				
 			}
-			
-			
 			return result;
-			
-			
-			
-		
+
 		}
 		catch (InterruptedException e) {
 			if (ParallizeFacade.ENABLE_LOGGING ) {
 				AgentLogCallback.log("beginNewThread interrupt " + threadId );
 			}
-			
 			Thread.currentThread().interrupt();
 			return BeginNewThreadResult.UNKNOWN_THREAD;
 		}
 	}
-	
-	
-	
-	
+
 	 void afterThreadStart(long threadId) {
-		
-		try {	
-		
-	
+		try {
 			interleaveControlLogic.startNewThread(threadId);
-			
 			notifyMonitor();
-			
 			waitTillActive(threadId);
-			
-			
-			
-		
 		} catch (InterruptedException e) {
 			if (ParallizeFacade.ENABLE_LOGGING ) {
 				AgentLogCallback.log("afterThreadStart interrupt " + threadId );
 			}
-			
 			Thread.currentThread().interrupt();
 		}
 		
 	}
-	 
 	  void lockOperation(long threadId, LockOperation operation) {
 		  interleaveControlLogic.lockOperation(threadId, operation);
 			
 		}
-	
-
 	 void afterOperation(long threadId , OperationTyp operation) {
-		
 			try {
 				interleaveControlLogic.afterOperation(threadId, operation, System.currentTimeMillis());
 				notifyMonitor();
@@ -138,51 +99,30 @@ public abstract class RunLogicAbstract {
 				if (ParallizeFacade.ENABLE_LOGGING) {
 					AgentLogCallback.log("afterOperation interrupt " + threadId + " " + operation);
 				}
-
 				Thread.currentThread().interrupt();
-					
 				}
-		
 	}
-	
   boolean endThread(long threadId) {
-		
-	    
 		interleaveControlLogic.afterOperation(threadId,  new ThreadEnd()  , System.currentTimeMillis());
 		notifyMonitor();
-	  
-	  
+
 	  boolean result = interleaveControlLogic.endThread(threadId, System.currentTimeMillis());
 		    notifyMonitor();
-		
 		  return result;  
-		    
-	}
 
+	}
 	 void beforeStart(RunnableOrThreadWrapper threadWrapper) {
 		 interleaveControlLogic.beforeStart(threadWrapper, System.currentTimeMillis());	
 	}
-
-
-
-
 	 boolean isMultiThreaded() {	
 		return interleaveControlLogic.isMultiThreaded();
 	}
 
-
-
-
 	public void stop(long threadId) {
-		
-	
-		
+
 	    interleaveControlLogic.endThread(threadId, System.currentTimeMillis());
-		
 	    notifyMonitor();
-		
-		try {	
-		
+		try {
 		long start = System.currentTimeMillis();
 //		boolean printed = false;	
 		
@@ -202,11 +142,8 @@ public abstract class RunLogicAbstract {
 			}
 			
 		}
-		
 //		AgentLogCallback.log("stop took " +  (System.currentTimeMillis() - start));
-		
-		
-		
+
 		} catch (InterruptedException e) {
 			if (ParallizeFacade.ENABLE_LOGGING ) {
 				AgentLogCallback.log("stop interrupt " + threadId );
@@ -215,17 +152,5 @@ public abstract class RunLogicAbstract {
 			Thread.currentThread().interrupt();
 		}
 	}
-
-
-	
-		
-
-
-
-
-
-
-
-	
 	// end API
 }

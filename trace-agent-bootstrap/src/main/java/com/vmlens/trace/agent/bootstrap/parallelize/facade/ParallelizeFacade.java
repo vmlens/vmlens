@@ -1,58 +1,43 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 
-import com.vmlens.api.AllInterleavings;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
-import com.vmlens.trace.agent.bootstrap.interleave.syncActionImpl.VolatileFieldAccess;
-import com.vmlens.trace.agent.bootstrap.parallelize.command.DirectSyncActionParallelizeCommand;
-import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.AllInterleavingsLoop;
-import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.SynchronizationWrapperForRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.SynchronizationWrapperForRunFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.SynchronizationWrapperForRunFactoryImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
+import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopContainer;
+import com.vmlens.trace.agent.bootstrap.parallelize.loop.LoopThreadState;
+import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFactoryImpl;
+import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.InterleaveActionWithPositionFactoryFactory;
+import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 /**
- * Responsible for creating sync actions. Basically the command design pattern.
- * called from ParallelizeCallback and other callbacks for example lock.
+ * Responsible for creating parallelize actions. Basically the command design pattern.
+ * called from external callbacks for example lock.
  */
 
 public class ParallelizeFacade {
 
-    public static final ParallelizeFacade SINGELTON = new ParallelizeFacade();
+    static volatile ParallelizeLoopContainer parallelizeLoopContainer =
+            new ParallelizeLoopContainer(new ParallelizeLoopFactoryImpl());
 
-    private final AllInterleavingsLoopCollection allInterleavingsLoopCollection;
-
-    public ParallelizeFacade() {
-        this(new SynchronizationWrapperForRunFactoryImpl());
-    }
-
-    public ParallelizeFacade(SynchronizationWrapperForRunFactory synchronizationWrapperForRunFactory) {
-        allInterleavingsLoopCollection = new AllInterleavingsLoopCollection(synchronizationWrapperForRunFactory);
-    }
-
-    // Functions called from extern
-    public boolean advance(CallbackStatePerThread callbackStatePerThread, AllInterleavings allInterleavings) {
-        AllInterleavingsLoop loop = allInterleavingsLoopCollection.getOrCreate(allInterleavings);
-        // callbackStatePerThread.parallelizedThreadLocal = new ParallelizedThreadLocal(loop.)
-        SynchronizationWrapperForRun run = loop.advance();
-        if (run != null) {
-            callbackStatePerThread.parallelizedThreadLocal = new ParallelizedThreadLocal(run);
-            return true;
+    public static void beforeFieldAccessVolatile(ThreadState loopThreadState,
+                                                 long objectHashCode, int fieldId, int operation) {
+        ParallelizedThreadLocal parallelizedThreadLocal = loopThreadState.getParallelizedThreadLocal();
+        if(parallelizedThreadLocal != null) {
+            parallelizedThreadLocal.after(new InterleaveActionWithPositionFactoryFactory(
+                    new VolatileFieldAccess(fieldId,operation),loopThreadState.threadId()));
         }
-
-        return false;
     }
 
-    public void beforeFieldAccessVolatile(CallbackStatePerThread callbackStatePerThread, long objectHashCode,
-                                          int fieldId, int operation) {
-        if (callbackStatePerThread.parallelizedThreadLocal != null) {
-            callbackStatePerThread.parallelizedThreadLocal.before(
-                    new DirectSyncActionParallelizeCommand(new VolatileFieldAccess(fieldId, operation)
-                            , callbackStatePerThread.threadId));
-        }
-
+    public static boolean beginThreadMethodEnter(LoopThreadState loopThreadState,
+                                                 RunnableOrThreadWrapper beganTask) {
+        return parallelizeLoopContainer.beginThreadMethodEnter(loopThreadState,beganTask);
     }
 
-    // Functions called from ParallelizeCallback
+    public static boolean hasNext(LoopThreadState loopThreadState, Object obj) {
+        return parallelizeLoopContainer.hasNext(loopThreadState,obj);
+    }
 
+    public static void close(LoopThreadState loopThreadState, Object obj) {
+        parallelizeLoopContainer.close(loopThreadState,obj);
+    }
 
 }

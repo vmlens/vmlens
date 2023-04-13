@@ -1,29 +1,18 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.command.ParallelizeCommand;
-import com.vmlens.trace.agent.bootstrap.parallelize.runAndLoop.SynchronizationWrapperForRun;
+
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 
 public class ParallelizedThreadLocal {
+    private final Run run;
 
-
-    private final SynchronizationWrapperForRun synchronizationWrapperForRun;
-    private ParallelizeCommand currentFieldAccess = null;
-
-    public ParallelizedThreadLocal(SynchronizationWrapperForRun synchronizationWrapperForRun) {
-        this.synchronizationWrapperForRun = synchronizationWrapperForRun;
+    public ParallelizedThreadLocal(Run run) {
+        this.run = run;
     }
 
-    void before(ParallelizeCommand wrapper) {
-        currentFieldAccess = wrapper;
-    }
-
-    public void afterFieldAccess() {
-        synchronizationWrapperForRun.after(currentFieldAccess);
-        currentFieldAccess = null;
-    }
-
-    void after() {
-
+    public void after(ParallelizeAction action) {
+        run.after(action);
     }
 
 }

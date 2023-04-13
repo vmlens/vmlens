@@ -1,0 +1,85 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.vmlens",
+    "module": "gradle-plugin",
+    "version": "1.1.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.vmlens",
+          "module": "interleave",
+          "version": {
+            "requires": "1.1.6"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "gradle-plugin-1.1.6.jar",
+          "url": "gradle-plugin-1.1.6.jar",
+          "size": 6349,
+          "sha512": "c7c71ba3c67194c436744b217e42642bdcf67c1d83c011a4e43f97c19894e3de4cef10051bd36e464358db358f228651831955c0d7f97b7dc8c9bf1868502092",
+          "sha256": "51e04c0939d0d451b22a35b4f17e49b65825a4b53966c525e221e131e897cb2c",
+          "sha1": "2a04a82ac23851439a443a2d67113d21a44de5a0",
+          "md5": "39a3a2dd3f16cca2194ddf06cf22b5df"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.google.guava",
+          "module": "guava",
+          "version": {
+            "requires": "23.0"
+          }
+        },
+        {
+          "group": "com.vmlens",
+          "module": "interleave",
+          "version": {
+            "requires": "1.1.6"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "gradle-plugin-1.1.6.jar",
+          "url": "gradle-plugin-1.1.6.jar",
+          "size": 6349,
+          "sha512": "c7c71ba3c67194c436744b217e42642bdcf67c1d83c011a4e43f97c19894e3de4cef10051bd36e464358db358f228651831955c0d7f97b7dc8c9bf1868502092",
+          "sha256": "51e04c0939d0d451b22a35b4f17e49b65825a4b53966c525e221e131e897cb2c",
+          "sha1": "2a04a82ac23851439a443a2d67113d21a44de5a0",
+          "md5": "39a3a2dd3f16cca2194ddf06cf22b5df"
+        }
+      ]
+    }
+  ]
+}

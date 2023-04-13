@@ -1,5 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
+/**
+ *
+ * @hides the algorithm to calculate all binary permutations for a given length
+ * @utilityClass
+ */
 public class PermutationIterator {
 
     private long index;
@@ -11,7 +16,6 @@ public class PermutationIterator {
         } else {
             this.maxIndex = (long) Math.pow(2, length);
         }
-
     }
 
     public void advance() {

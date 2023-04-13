@@ -1,44 +1,82 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
-import com.vmlens.trace.agent.bootstrap.Logger;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunElement;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
- * Container for the fixed and alternating order elements.
- * Actual runs are compared using this class. Creates all CalculatedRuns for the order elements through an iterator.
+ * ToDo sort alternatingOrderArray that equals always returns the right value
  */
-
-
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
-    final Logger logger;
-    final TLinkableWrapper<AlternatingOrderElement>[] optionalAlternatingOrderElements;
-    final TLinkableWrapper<LeftBeforeRight>[] fixedOrders;
-    final int[] length;
+    private class AlternatingOrderContainerIterator implements
+            Iterator<CalculatedRun> {
 
-    static void sort(TLinkableWrapper<AlternatingOrderElement>[] unsorted) {
-        Arrays.sort(unsorted, new AlternatingOrderElementComparator());
+        private final LeftBeforeRight[] currentOrder;
+
+        private final PermutationIterator permutationIterator;
+
+        public AlternatingOrderContainerIterator() {
+            this.permutationIterator = new PermutationIterator(alternatingOrderArray.length);
+            this.currentOrder = new LeftBeforeRight[alternatingOrderArray.length];
+        }
+
+        @Override
+        public boolean hasNext() {
+            return permutationIterator.hasNext();
+        }
+
+        @Override
+        public CalculatedRun next() {
+            for(int i = 0; i < alternatingOrderArray.length;i++) {
+                currentOrder[i] = alternatingOrderArray[i].order(permutationIterator.at(i));
+            }
+            permutationIterator.advance();
+
+            return new CreateCalculatedRunForOrder(currentOrder,actualRun).create();
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
     }
 
-    static void sortFixed(TLinkableWrapper<LeftBeforeRight>[] unsorted) {
-        Arrays.sort(unsorted, new TLinkableWrapperLeftBeforeRightComparator());
+
+    private final  LeftBeforeRight[] fixedOrderArray;
+    private final  AlternatingOrderElement[] alternatingOrderArray;
+    private final ThreadIdToElementList<CalculatedRunElement> actualRun;
+    public AlternatingOrderContainer(LeftBeforeRight[] fixedOrderArray,
+                                     AlternatingOrderElement[] alternatingOrderArray,
+                                     ThreadIdToElementList<CalculatedRunElement> actualRun) {
+        this.fixedOrderArray = fixedOrderArray;
+        this.alternatingOrderArray = alternatingOrderArray;
+        this.actualRun = actualRun;
+
+        Arrays.sort(this.fixedOrderArray);
+        Arrays.sort(this.alternatingOrderArray);
     }
 
-    public AlternatingOrderContainer(Logger logger, FixedAndAlternatingOrder fixedAndAlternatingOrder,
-                                     int[] length) {
-        sortFixed(fixedAndAlternatingOrder.fixedOrder);
-        sort(fixedAndAlternatingOrder.alternatingOrder);
-        this.logger = logger;
-        this.fixedOrders = fixedAndAlternatingOrder.fixedOrder;
-        this.optionalAlternatingOrderElements = fixedAndAlternatingOrder.alternatingOrder;
-        this.length = length;
+    // For Tests
+    public AlternatingOrderContainer(LeftBeforeRight[] fixedOrderArray,
+                                     AlternatingOrderElement[] alternatingOrderArray) {
+        this(fixedOrderArray,alternatingOrderArray,null);
     }
 
-    public AlternatingOrderContainerIterator iterator() {
-        return new AlternatingOrderContainerIterator(this);
+
+
+    /**
+     * @rule Iterator can return null, will be filtered by InterleaveLoopIteratorStateAlternatingOrderContainer
+     * @return
+     */
+    @Override
+    public Iterator<CalculatedRun> iterator() {
+        return new AlternatingOrderContainerIterator();
     }
 
     @Override
@@ -48,36 +86,14 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
         AlternatingOrderContainer that = (AlternatingOrderContainer) o;
 
-        if (!Arrays.equals(optionalAlternatingOrderElements, that.optionalAlternatingOrderElements)) return false;
-        return Arrays.equals(fixedOrders, that.fixedOrders);
-
+        if (!Arrays.equals(fixedOrderArray, that.fixedOrderArray)) return false;
+        return Arrays.equals(alternatingOrderArray, that.alternatingOrderArray);
     }
 
     @Override
     public int hashCode() {
-        int result = Arrays.hashCode(optionalAlternatingOrderElements);
-        result = 31 * result + Arrays.hashCode(fixedOrders);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        boolean isFirst = true;
-        String result = "";
-        for (TLinkableWrapper<LeftBeforeRight> element : fixedOrders) {
-            if (!isFirst) {
-                result += ",\n";
-            }
-            isFirst = false;
-            result += "f" + element.element.toString();
-        }
-        for (TLinkableWrapper<AlternatingOrderElement> element : optionalAlternatingOrderElements) {
-            if (!isFirst) {
-                result += ",\n";
-            }
-            isFirst = false;
-            result += element.element.toString();
-        }
+        int result = Arrays.hashCode(fixedOrderArray);
+        result = 31 * result + Arrays.hashCode(alternatingOrderArray);
         return result;
     }
 }
