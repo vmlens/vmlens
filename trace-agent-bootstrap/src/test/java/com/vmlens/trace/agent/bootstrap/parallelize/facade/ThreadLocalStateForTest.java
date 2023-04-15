@@ -1,15 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.loop.LoopThreadState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 
-public class ThreadStateForTest implements ThreadState {
+public class ThreadLocalStateForTest implements ThreadLocalStateForFacade {
 
     private final long threadId;
     private ParallelizedThreadLocal parallelizedThreadLocal;
 
 
-    public ThreadStateForTest(long threadId) {
+    public ThreadLocalStateForTest(long threadId) {
         this.threadId = threadId;
     }
 

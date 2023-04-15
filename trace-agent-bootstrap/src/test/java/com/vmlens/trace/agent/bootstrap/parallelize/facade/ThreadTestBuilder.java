@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
-import com.vmlens.trace.agent.bootstrap.parallelize.loop.LoopThreadState;
 
 public class ThreadTestBuilder {
     private long defaultObjectHashCode = 1L;
@@ -18,8 +17,8 @@ public class ThreadTestBuilder {
         Position temp =  new Position(threadIndex,position);
         actualRun.add(new ActionForTest(temp){
             @Override
-            public void execute(ThreadState loopThreadState) {
-                ParallelizeFacade.beforeFieldAccessVolatile(loopThreadState,defaultObjectHashCode,fieldId,operation);
+            public void execute(ThreadLocalStateForFacade loopThreadState) {
+                ParallelizeFacade.beforeFieldAccessVolatile(loopThreadState, defaultObjectHashCode, fieldId, operation);
             }
         });
         position++;

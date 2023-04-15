@@ -30,7 +30,6 @@ public class RunStateMachineImpl implements RunStateMachine {
     }
     @Override
     public void end() {
-
         runState = new RunStateEnd();
     }
 }

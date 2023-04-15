@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalState;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunStateMachineImpl;
 
 public class RunWrapperForTest implements Run {
@@ -19,12 +20,12 @@ public class RunWrapperForTest implements Run {
     }
 
     @Override
-    public void end() {
+    public void end(ThreadLocalState threadLocalState) {
 
     }
 
     @Override
-    public boolean newThread(Thread newThread) {
-        return false;
+    public void newThread(Thread newThread, ThreadLocalState threadLocalState) {
+        threadLocalState.createNewParallelizedThreadLocal(this);
     }
 }

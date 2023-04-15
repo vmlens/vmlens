@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunFactory;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalState;
 import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 import java.util.Iterator;
@@ -21,23 +22,23 @@ public class ParallelizeLoop {
         this.interleaveLoopIterator = interleaveLoopIterator;
     }
 
-    public boolean beginThreadMethodEnter(LoopThreadState loopThreadState, RunnableOrThreadWrapper beganTask) {
+    public boolean beginThreadMethodEnter(ThreadLocalState threadLocalState, RunnableOrThreadWrapper beganTask) {
         return false;
     }
 
-    public  boolean hasNext(LoopThreadState loopThreadState) {
-        if(currentRun != null) {
-            currentRun.end();
+    public boolean hasNext(ThreadLocalState threadLocalState) {
+        if (currentRun != null) {
+            currentRun.end(threadLocalState);
         }
-        if(interleaveLoopIterator.hasNext()) {
-            currentRun = runFactory.create(maxRunId,interleaveLoopIterator.next());
-            loopThreadState.createNewParallelizedThreadLocal(currentRun);
+        if (interleaveLoopIterator.hasNext()) {
+            currentRun = runFactory.create(maxRunId, interleaveLoopIterator.next());
+            threadLocalState.createNewParallelizedThreadLocal(currentRun);
             return true;
         }
         return false;
     }
 
-    public  void close(LoopThreadState loopThreadState) {
-        loopThreadState.setParallelizedThreadLocalToNull();
+    public void close(ThreadLocalState threadLocalState) {
+        threadLocalState.setParallelizedThreadLocalToNull();
     }
 }

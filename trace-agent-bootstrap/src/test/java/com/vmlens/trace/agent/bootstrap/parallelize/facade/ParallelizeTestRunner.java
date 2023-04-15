@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopContainer;
-import com.vmlens.trace.agent.bootstrap.parallelize.loop.LoopThreadState;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,9 +13,9 @@ public class ParallelizeTestRunner {
         ParallelizeFacade.parallelizeLoopContainer = new ParallelizeLoopContainer(parallelizeLoopFactoryForTest);
 
         ThreadIdToElementList<ActionForTest> actualRun = builder.build();
-        ThreadState[] loopThreadState = new ThreadState[actualRun.maxThreadIndex()+1];
+        ThreadLocalStateForFacade[] loopThreadState = new ThreadLocalStateForFacade[actualRun.maxThreadIndex() + 1];
         for(int i = 0; i <= actualRun.maxThreadIndex(); i++) {
-            loopThreadState[i] = new ThreadStateForTest(i);
+            loopThreadState[i] = new ThreadLocalStateForTest(i);
         }
 
         while(ParallelizeFacade.hasNext(loopThreadState[0],parallelizeLoopDefinition)) {
@@ -43,7 +42,7 @@ public class ParallelizeTestRunner {
                 assertThat(oneThreadWasActive,is(true));
             }
             for(int i = 0; i < actualRun.maxThreadIndex(); i++) {
-                loopThreadState[i] = new ThreadStateForTest(i);
+                loopThreadState[i] = new ThreadLocalStateForTest(i);
             }
         }
         matcher.assertExpectedResults();
