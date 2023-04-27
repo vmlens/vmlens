@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ThreadLocalWrapperMock;
 
 /**
  * calls ParallelizeFacade therefore abstract
@@ -22,5 +24,6 @@ public abstract class ActionForTest implements WithThreadIndex  {
         return position;
     }
 
-    public abstract void execute(ThreadLocalStateForFacade loopThreadState);
+    public abstract void execute(ThreadLocalWrapperMock[] loopThreadStateArray);
+
 }

@@ -1,9 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
-import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
 
-public interface BlockBuilder extends WithThreadIndex, BlockElement {
-    BlockBuilderKey key();
-    void start(KeyToThreadIdToElementList<BlockKey,Block> result);
-    void add(BlockBuilder next, KeyToThreadIdToElementList<BlockKey,Block> result);
+
+public interface BlockBuilder  {
+    BlockBuilderKey blockBuilderKey();
+    void blockBuilderStart(Position myPosition, BlockContainer result);
+    void blockBuilderAdd(Position myPosition, ElementAndPosition<BlockBuilder> next, BlockContainer result);
+
 }

@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.OptionalShort;
 import com.vmlens.trace.agent.bootstrap.event.ThreadNameEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.SendEvent;
 import com.vmlens.trace.agent.bootstrap.mode.AgentMode;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizedThreadLocal;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizedThreadLocal;
 import com.vmlens.trace.agent.bootstrap.parallize.ParallizedThreadFacade;
 import com.vmlens.trace.agent.bootstrap.threadQueue.QueueCollection;
 import gnu.trove.map.hash.TIntIntHashMap;

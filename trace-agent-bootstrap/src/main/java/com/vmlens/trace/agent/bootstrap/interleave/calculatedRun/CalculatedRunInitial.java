@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.calculatedRun;
 
-import com.vmlens.trace.agent.bootstrap.interleave.block.InterleaveActionWithPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -18,17 +18,13 @@ public class CalculatedRunInitial implements CalculatedRun {
         }
       return threadId == currentActiveThreadId;
     }
-
     @Override
-    public void after(InterleaveActionWithPositionFactory interleaveActionWithPosition) {
-        actualRun.add(new TLinkableWrapper(interleaveActionWithPosition));
+    public void incrementPositionInThread() {
         currentActiveThreadId = -1;
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> actualRun() {
-        return actualRun;
+    public void debug(AgentLogger agentLogger) {
+        agentLogger.debug("CalculatedRunInitial");
     }
-
-
 }

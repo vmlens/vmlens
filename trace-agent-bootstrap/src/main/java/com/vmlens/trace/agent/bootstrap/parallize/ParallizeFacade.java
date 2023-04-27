@@ -33,7 +33,6 @@ public class ParallizeFacade {
         }
     }
 
-
     public static void afterFutureGet(CallbackStatePerThread callbackStatePerThread, long threadId) {
         if (callbackStatePerThread.parallizedThread != null) {
             callbackStatePerThread.parallizedThread.afterThreadJoin(threadId);

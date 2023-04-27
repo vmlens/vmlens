@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
 import gnu.trove.map.hash.THashMap;
 
 public class ParallelizeLoopRepository {
@@ -19,5 +20,9 @@ public class ParallelizeLoopRepository {
             object2ParallelizeLoop.put(config,parallelizeLoop);
         }
         return parallelizeLoop;
+    }
+
+    public AgentLogger agentLogger() {
+        return parallelizeLoopFactory.agentLogger();
     }
 }

@@ -1,9 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.block.InterleaveActionWithPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.InterleaveActionWithPositionFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndCalculatedRunElementContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 
 public class InterleaveActionWithPositionFactoryImpl implements InterleaveActionWithPositionFactory {
     private final InterleaveAction interleaveAction;
@@ -13,14 +14,20 @@ public class InterleaveActionWithPositionFactoryImpl implements InterleaveAction
         this.interleaveAction = interleaveAction;
         this.threadIndex = threadIndex;
     }
-
     @Override
     public int threadIndex() {
         return threadIndex;
     }
+    @Override
+    public void addToContainer(int positionInThread, BlockBuilderAndCalculatedRunElementContainer container) {
+        container.add(new ElementAndPosition<InterleaveAction>(interleaveAction,new Position(threadIndex,positionInThread)));
+    }
 
     @Override
-    public InterleaveActionWithPosition create(int positionInThread) {
-        return new InterleaveActionWithPosition(interleaveAction,new Position(threadIndex,positionInThread));
+    public String toString() {
+        return "InterleaveActionWithPositionFactoryImpl{" +
+                "interleaveAction=" + interleaveAction +
+                ", threadIndex=" + threadIndex +
+                '}';
     }
 }

@@ -1,17 +1,17 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArrays;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunElement;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 
-/**
- * ToDo sort alternatingOrderArray that equals always returns the right value
- */
+
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
     private class AlternatingOrderContainerIterator implements
@@ -22,8 +22,8 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         private final PermutationIterator permutationIterator;
 
         public AlternatingOrderContainerIterator() {
-            this.permutationIterator = new PermutationIterator(alternatingOrderArray.length);
-            this.currentOrder = new LeftBeforeRight[alternatingOrderArray.length];
+            this.permutationIterator = new PermutationIterator(orderArrays.alternatingOrderArray.length);
+            this.currentOrder = new LeftBeforeRight[orderArrays.alternatingOrderArray.length];
         }
 
         @Override
@@ -33,8 +33,8 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
         @Override
         public CalculatedRun next() {
-            for(int i = 0; i < alternatingOrderArray.length;i++) {
-                currentOrder[i] = alternatingOrderArray[i].order(permutationIterator.at(i));
+            for(int i = 0; i < orderArrays.alternatingOrderArray.length;i++) {
+                currentOrder[i] = orderArrays.alternatingOrderArray[i].order(permutationIterator.at(i));
             }
             permutationIterator.advance();
 
@@ -48,24 +48,14 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
     }
 
 
-    private final  LeftBeforeRight[] fixedOrderArray;
-    private final  AlternatingOrderElement[] alternatingOrderArray;
-    private final ThreadIdToElementList<CalculatedRunElement> actualRun;
-    public AlternatingOrderContainer(LeftBeforeRight[] fixedOrderArray,
-                                     AlternatingOrderElement[] alternatingOrderArray,
-                                     ThreadIdToElementList<CalculatedRunElement> actualRun) {
-        this.fixedOrderArray = fixedOrderArray;
-        this.alternatingOrderArray = alternatingOrderArray;
+    private final OrderArrays orderArrays;
+    private final ThreadIdToElementList<ElementAndPosition<Object>> actualRun;
+    public AlternatingOrderContainer(OrderArrays orderArrays,
+                                     ThreadIdToElementList<ElementAndPosition<Object>> actualRun) {
+        this.orderArrays = orderArrays;
         this.actualRun = actualRun;
 
-        Arrays.sort(this.fixedOrderArray);
-        Arrays.sort(this.alternatingOrderArray);
-    }
 
-    // For Tests
-    public AlternatingOrderContainer(LeftBeforeRight[] fixedOrderArray,
-                                     AlternatingOrderElement[] alternatingOrderArray) {
-        this(fixedOrderArray,alternatingOrderArray,null);
     }
 
 
@@ -79,6 +69,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         return new AlternatingOrderContainerIterator();
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,14 +77,15 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
         AlternatingOrderContainer that = (AlternatingOrderContainer) o;
 
-        if (!Arrays.equals(fixedOrderArray, that.fixedOrderArray)) return false;
-        return Arrays.equals(alternatingOrderArray, that.alternatingOrderArray);
+        return orderArrays.equals(that.orderArrays);
     }
 
     @Override
     public int hashCode() {
-        int result = Arrays.hashCode(fixedOrderArray);
-        result = 31 * result + Arrays.hashCode(alternatingOrderArray);
-        return result;
+        return orderArrays.hashCode();
+    }
+
+    public void debug(AgentLogger agentLogger) {
+        orderArrays.debug(agentLogger);
     }
 }

@@ -1,30 +1,31 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.TLinkable;
 import gnu.trove.list.linked.TLinkedList;
 
 /**
  * creates a map of block keys to thread ids to blocks from an actual run.
  */
-public class BlockMapFactory<ELEMENT extends BlockBuilder> {
 
-    public KeyToThreadIdToElementList<BlockKey,Block> create(
-            TLinkedList<TLinkableWrapper<ELEMENT>> actualRun) {
-        KeyToThreadIdToElementList<BlockBuilderKey,BlockBuilder> blockFactoryMap =
+public class BlockMapFactory {
+
+    public BlockContainer create(
+            TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> actualRun) {
+        KeyToThreadIdToElementList<BlockBuilderKey,ElementAndPosition<BlockBuilder>> blockFactoryMap =
                 new KeyToThreadIdToElementList<>();
-        for(TLinkableWrapper<ELEMENT> blockBuilder : actualRun) {
-            blockFactoryMap.put(blockBuilder.element.key(), blockBuilder.element);
+        for(TLinkableWrapper<ElementAndPosition<BlockBuilder>> blockBuilder : actualRun) {
+            blockFactoryMap.put(blockBuilder.element.element().blockBuilderKey(), blockBuilder.element);
         }
-        KeyToThreadIdToElementList<BlockKey,Block> result = new KeyToThreadIdToElementList<>();
-        for(ThreadIdToElementList<BlockBuilder> threadIdToElementList : blockFactoryMap) {
-            for(TLinkableWrapper<TLinkedList<TLinkableWrapper<BlockBuilder>>> oneThread : threadIdToElementList) {
-                BlockBuilder prevoius = null;
-                for(TLinkableWrapper<BlockBuilder> current : oneThread.element) {
+        BlockContainer result = new BlockContainer();
+        for(ThreadIdToElementList<ElementAndPosition<BlockBuilder>> threadIdToElementList : blockFactoryMap) {
+            for(TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>> oneThread : threadIdToElementList) {
+                ElementAndPosition<BlockBuilder> prevoius = null;
+                for(TLinkableWrapper<ElementAndPosition<BlockBuilder>> current : oneThread.element) {
                     if(prevoius == null) {
-                        current.element.start(result);
+                        current.element.element().blockBuilderStart(current.element.position(),result);
                     } else {
-                        prevoius.add(current.element,result);
+                        prevoius.element().blockBuilderAdd(prevoius.position(),current.element,result);
                     }
                     prevoius = current.element;
                 }

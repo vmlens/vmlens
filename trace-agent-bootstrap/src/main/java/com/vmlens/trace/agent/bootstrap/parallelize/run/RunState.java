@@ -1,8 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
+import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
+
 public interface RunState {
-    boolean isActive(long threadId);
-    void after(ParallelizeAction action);
-    RunState prepare(ParallelizeAction action);
-    RunState newThread(Thread newThread);
+    boolean isActive(TestThreadState testThreadState);
+    RunState after(ParallelizeAction action, TestThreadState testThreadState);
+    boolean isNewTestTask(RunnableOrThreadWrapper newWrapper);
+    void addTaskStartedInterleaveAction(TestThreadState beginTestThreadState, InterleaveRun calculatedRun);
 }

@@ -1,21 +1,25 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.RunContext;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
+import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
-public class RunStateRunning implements RunState, RunContext {
-    private final RunStateContext runStateContext;
+public class RunStateRunning implements RunState, ActionContext {
+    private final InterleaveRun calculatedRun;
+    private final ThreadIdToState threadIdToState;
 
-    @Override
-    public CalculatedRun getCalculatedRun() {
-        return runStateContext.calculatedRun;
+    public RunStateRunning(InterleaveRun calculatedRun, ThreadIdToState threadIdToState) {
+        this.calculatedRun = calculatedRun;
+        this.threadIdToState = threadIdToState;
     }
 
     @Override
-    public int threadIndexForThreadId(long id) {
-        return (int) id;
+    public InterleaveRun getCalculatedRun() {
+        return calculatedRun;
     }
 
     @Override
@@ -23,28 +27,30 @@ public class RunStateRunning implements RunState, RunContext {
         return this;
     }
 
-    public RunStateRunning(CalculatedRun calculatedRun) {
-        this.runStateContext = new RunStateContext(new ThreadIdToState(),calculatedRun);
+
+    @Override
+    public boolean isActive(TestThreadState testThreadState) {
+        return calculatedRun.isActive(testThreadState.threadIndex());
     }
 
     @Override
-    public boolean isActive(long threadId) {
+    public RunState after(ParallelizeAction action, TestThreadState testThreadState) {
+        action.addInterleaveAction(this, testThreadState);
+        return action.nextState(this, testThreadState);
+    }
+
+    @Override
+    public RunState threadStarted(RunnableOrThreadWrapper startedThread, TestThreadState testThreadState) {
+        return new RunStateNewThreadStarted(startedThread, testThreadState);
+    }
+
+    @Override
+    public boolean isNewTestTask(RunnableOrThreadWrapper newWrapper) {
         return false;
     }
-
     @Override
-    public void after(ParallelizeAction action) {
-        action.addSyncAction(this);
+    public void addTaskStartedInterleaveAction(TestThreadState beginTestThreadState, InterleaveRun calculatedRun) {
+        throw new RuntimeException("should not be called");
     }
 
-    @Override
-    public RunState newThread(Thread newThread) {
-        return this;
-    }
-
-
-    @Override
-    public RunState prepare(ParallelizeAction action) {
-        return action.prepare(this);
-    }
 }

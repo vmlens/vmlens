@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
 
 import java.util.Iterator;
 
@@ -10,8 +11,8 @@ import java.util.Iterator;
 public class InterleaveLoopIteratorStateAlternatingOrderContainer  implements InterleaveLoopIteratorState {
     private final Iterator<CalculatedRun> alternatingOrderContainerIterator;
     private final InterleaveLoop container;
-    private CalculatedRun next;
-    private CalculatedRun previous;
+    private InterleaveRun next;
+    private InterleaveRun previous;
 
     public InterleaveLoopIteratorStateAlternatingOrderContainer(Iterator<CalculatedRun> alternatingOrderContainerIterator,
                                                                 InterleaveLoop container) {
@@ -29,18 +30,25 @@ public class InterleaveLoopIteratorStateAlternatingOrderContainer  implements In
             return true;
         }
         while(alternatingOrderContainerIterator.hasNext()) {
-            next = alternatingOrderContainerIterator.next();
-            if(next != null) {
+            CalculatedRun temp = alternatingOrderContainerIterator.next();
+            if(temp != null) {
+                next = new InterleaveRun(temp);
                 return true;
+            } else {
+                next = null;
             }
         }
         return false;
     }
 
     @Override
-    public CalculatedRun next() {
+    public InterleaveRun next() {
         previous =  next;
         next = null;
+        if(container.agentLogger().isDebugEnabled()) {
+            previous.debug(container.agentLogger());
+        }
+
         return previous;
     }
 

@@ -1,38 +1,39 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
+import com.vmlens.trace.agent.bootstrap.interleave.loop.AgentLoggerForTest;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopContainer;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
+import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFactoryImpl;
+import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ThreadLocalWrapperMock;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class ParallelizeTestRunner {
     public void run(ParallelizeTestBuilder builder, ParallelizeTestMatcher matcher)  {
-        ParallelizeLoopFactoryForTest parallelizeLoopFactoryForTest = new ParallelizeLoopFactoryForTest();
+        ParallelizeFacade.parallelizeLoopContainer =  new ParallelizeLoopContainer(
+                new ParallelizeLoopFactoryImpl(mock(WaitNotifyStrategy.class),new AgentLoggerForTest()));
         Object parallelizeLoopDefinition = new Object();
-        ParallelizeFacade.parallelizeLoopContainer = new ParallelizeLoopContainer(parallelizeLoopFactoryForTest);
 
+        int multiplyBy =  2;
         ThreadIdToElementList<ActionForTest> actualRun = builder.build();
-        ThreadLocalStateForFacade[] loopThreadState = new ThreadLocalStateForFacade[actualRun.maxThreadIndex() + 1];
+        ThreadLocalWrapperMock[] loopThreadState = new ThreadLocalWrapperMock[actualRun.maxThreadIndex() + 1];
         for(int i = 0; i <= actualRun.maxThreadIndex(); i++) {
-            loopThreadState[i] = new ThreadLocalStateForTest(i);
+            loopThreadState[i] = new ThreadLocalWrapperMock(i * multiplyBy + 1);
         }
 
         while(ParallelizeFacade.hasNext(loopThreadState[0],parallelizeLoopDefinition)) {
-
-            for(int i = 0; i <= actualRun.maxThreadIndex(); i++) {
-                loopThreadState[i].createNewParallelizedThreadLocal(parallelizeLoopFactoryForTest.getCurrentRun());
-            }
-
             matcher.advance();
             ThreadIdToElementList<ActionForTest> clone =  actualRun.safeClone();
             while (!clone.isEmpty()) {
                 boolean oneThreadWasActive = false;
                 for (int i = 0; i <= actualRun.maxThreadIndex(); i++) {
                     if (!clone.isEmptyAtIndex(i)) {
-                        if (parallelizeLoopFactoryForTest.isActive(i)) {
+                        if (loopThreadState[i].isActive()) {
                             ActionForTest actionForTest = clone.getAndRemoveAtIndex(i);
-                            actionForTest.execute(loopThreadState[actionForTest.threadIndex()]);
+                            actionForTest.execute(loopThreadState);
                             matcher.executed(actionForTest.position());
                             oneThreadWasActive = true;
                             break;
@@ -41,11 +42,13 @@ public class ParallelizeTestRunner {
                 }
                 assertThat(oneThreadWasActive,is(true));
             }
+            multiplyBy += 2;
             for(int i = 0; i < actualRun.maxThreadIndex(); i++) {
-                loopThreadState[i] = new ThreadLocalStateForTest(i);
+                loopThreadState[i] = new ThreadLocalWrapperMock(i * multiplyBy + 1);
             }
         }
         matcher.assertExpectedResults();
+
     }
 
 }

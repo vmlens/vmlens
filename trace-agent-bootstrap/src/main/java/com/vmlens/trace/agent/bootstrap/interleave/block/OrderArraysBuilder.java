@@ -1,12 +1,10 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
+package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
 import gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-public class AlternatingOrderContainerBuilder {
+public class OrderArraysBuilder {
 
     private final TLinkedList<TLinkableWrapper<LeftBeforeRight>> fixedOrderList = new
             TLinkedList<>();
@@ -21,7 +19,7 @@ public class AlternatingOrderContainerBuilder {
         fixedOrderList.add(new TLinkableWrapper(fixedOrder));
     }
 
-    public AlternatingOrderContainer build(ThreadIdToElementList<CalculatedRunElement> actualRun) {
+    public OrderArrays build() {
         AlternatingOrderElement[]
                 alternatingOrderArray = new  AlternatingOrderElement[alternatingOrderList.size()];
         int index = 0;
@@ -38,6 +36,6 @@ public class AlternatingOrderContainerBuilder {
             index++;
         }
 
-        return new AlternatingOrderContainer(fixedOrderArray,alternatingOrderArray, actualRun);
+        return new OrderArrays(fixedOrderArray,alternatingOrderArray);
     }
 }

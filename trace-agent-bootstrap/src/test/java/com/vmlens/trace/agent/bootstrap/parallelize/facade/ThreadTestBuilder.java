@@ -2,6 +2,9 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ThreadLocalWrapperMock;
+import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 public class ThreadTestBuilder {
     private long defaultObjectHashCode = 1L;
@@ -14,14 +17,28 @@ public class ThreadTestBuilder {
         this.threadIndex = threadIndex;
     }
     public Position volatileAccess(final int fieldId,final int operation) {
-        Position temp =  new Position(threadIndex,position);
-        actualRun.add(new ActionForTest(temp){
+      return create(new ActionForTest( new Position(threadIndex,position)){
+          @Override
+          public void execute(ThreadLocalWrapperMock[] loopThreadStateArray) {
+              ParallelizeFacade.beforeFieldAccessVolatile(loopThreadStateArray[threadIndex()], defaultObjectHashCode, fieldId, operation);
+          }
+      });
+    }
+    public Position startThread(final int startedThreadIndex) {
+        return create(new ActionForTest( new Position(threadIndex,position)){
             @Override
-            public void execute(ThreadLocalStateForFacade loopThreadState) {
-                ParallelizeFacade.beforeFieldAccessVolatile(loopThreadState, defaultObjectHashCode, fieldId, operation);
+            public void execute(ThreadLocalWrapperMock[] loopThreadStateArray) {
+                ParallelizeFacade.beforeThreadStart(loopThreadStateArray[threadIndex()],
+                        new RunnableOrThreadWrapper(loopThreadStateArray[startedThreadIndex]));
+                ParallelizeFacade.beginThreadMethodEnter(loopThreadStateArray[startedThreadIndex],
+                        new RunnableOrThreadWrapper(loopThreadStateArray[startedThreadIndex]));
             }
+
         });
+    }
+    private Position create(ActionForTest actionForTest) {
+        actualRun.add(actionForTest);
         position++;
-        return temp;
+        return actionForTest.position();
     }
 }

@@ -1,35 +1,27 @@
 package com.vmlens.trace.agent.bootstrap.interleave.calculatedRun;
 
-import com.vmlens.trace.agent.bootstrap.interleave.block.InterleaveActionWithPosition;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
+import java.util.Arrays;
 
 public class CalculatedRunFromOrder implements CalculatedRun {
 
-    private final TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> actualRun =
-            new TLinkedList<>();
-    private final CalculatedRunElement[] calculatedRunElementArray;
-    private int currentPosInArray = 0;
 
-    public CalculatedRunFromOrder(CalculatedRunElement[] calculatedRunElementArray) {
+    private final ElementAndPosition<Object>[] calculatedRunElementArray;
+    private int currentPosInArray = 0;
+    public CalculatedRunFromOrder(ElementAndPosition<Object>[] calculatedRunElementArray) {
         this.calculatedRunElementArray = calculatedRunElementArray;
     }
-
     @Override
     public boolean isActive(int threadIndex) {
         return calculatedRunElementArray[currentPosInArray].threadIndex() == threadIndex;
     }
-
     @Override
-    public void after(InterleaveActionWithPositionFactory interleaveActionWithPosition) {
-        actualRun.add(new TLinkableWrapper(interleaveActionWithPosition));
+    public void incrementPositionInThread() {
         currentPosInArray++;
     }
 
-
-
     @Override
-    public TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> actualRun() {
-        return actualRun;
+    public void debug(AgentLogger agentLogger) {
+        // ToDo improve log format
+        agentLogger.debug(Arrays.toString(calculatedRunElementArray));
     }
 }

@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalState;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 public class ParallelizeLoopContainer {
@@ -12,25 +13,27 @@ public class ParallelizeLoopContainer {
         this.parallelizeLoopRepository = new ParallelizeLoopRepository(parallelizeLoopFactory);
     }
 
-    public boolean beginThreadMethodEnter(ThreadLocalState threadLocalState,
+    public void beginThreadMethodEnter(TestThreadState testThreadState,
                                           RunnableOrThreadWrapper beganTask) {
         if (currentLoop != null) {
-            return currentLoop.beginThreadMethodEnter(threadLocalState, beganTask);
+             currentLoop.beginThreadMethodEnter(testThreadState, beganTask);
         }
-        return false;
+
     }
 
-    public boolean hasNext(ThreadLocalState threadLocalState, Object obj) {
+    public boolean hasNext(TestThreadState testThreadState, Object obj) {
         // ToDo if this is a new loop terminate the old one? or create a warning
         currentLoop = parallelizeLoopRepository.getOrCreate(obj);
-        return currentLoop.hasNext(threadLocalState);
+        return currentLoop.hasNext(testThreadState);
     }
 
-    public void close(ThreadLocalState threadLocalState, Object obj) {
+    public void close(TestThreadState testThreadState, Object obj) {
         // ToDo what to do when this is a different loop than the current?
-        currentLoop.close(threadLocalState);
+        currentLoop.close(testThreadState);
         currentLoop = null;
     }
 
-
+    public AgentLogger agentLogger() {
+        return parallelizeLoopRepository.agentLogger();
+    }
 }

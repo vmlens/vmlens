@@ -1,30 +1,30 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.actionImpl;
 
-import com.vmlens.trace.agent.bootstrap.interleave.block.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.InterleaveActionWithPositionFactoryImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.RunContext;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
 public class InterleaveActionWithPositionFactoryFactory implements ParallelizeAction {
 
     private final InterleaveAction interleaveAction;
-    private final long threadId;
 
-    public InterleaveActionWithPositionFactoryFactory(InterleaveAction interleaveAction, long threadId) {
+
+    public InterleaveActionWithPositionFactoryFactory(InterleaveAction interleaveAction) {
         this.interleaveAction = interleaveAction;
-        this.threadId = threadId;
     }
 
     @Override
-    public RunState prepare(RunContext context) {
+    public RunState nextState(ActionContext context, TestThreadState testThreadState) {
         return context.current();
     }
 
     @Override
-    public void addSyncAction(RunContext context) {
+    public void addInterleaveAction(ActionContext context, TestThreadState testThreadState) {
         context.getCalculatedRun().after(new InterleaveActionWithPositionFactoryImpl(
-                interleaveAction,context.threadIndexForThreadId(threadId)));
+                interleaveAction, testThreadState.threadIndex()));
     }
 
 

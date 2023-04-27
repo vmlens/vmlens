@@ -1,10 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
-import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilderKey;
-import com.vmlens.trace.agent.bootstrap.interleave.block.BlockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.block.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.block.*;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class ThreadStart implements InterleaveAction  {
+import javax.swing.*;
+
+public class ThreadStart implements InterleaveAction, InDependentBlockElement  {
     private final int startedThreadIndex;
 
     public ThreadStart(int startedThreadIndex) {
@@ -17,20 +21,31 @@ public class ThreadStart implements InterleaveAction  {
     }
 
     @Override
-    public BlockKey blockKey() {
-        return new ThreadStartOrBeginKey();
+    public void blockBuilderStart(Position myPosition, BlockContainer result) {
+        result.addInDependent(new ElementAndPosition<InDependentBlockElement>(this,myPosition));
+    }
+    @Override
+    public void blockBuilderAdd(Position myPosition, ElementAndPosition<BlockBuilder> next, BlockContainer result) {
+        result.addInDependent(new ElementAndPosition<InDependentBlockElement>((ThreadStart)next.element(),next.position()));
     }
 
     @Override
-    public boolean startsAlternatingOrder(InterleaveAction interleaveAction) {
-        return false;
+    public void addToAlternatingOrderContainerBuilder(Position myPosition, OrderArraysBuilder orderArraysBuilder) {
+        orderArraysBuilder.addFixedOrder(new LeftBeforeRight(myPosition,new Position(startedThreadIndex,0)));
     }
 
+
     @Override
-    public boolean startsFixedOrder(InterleaveAction otherAction, int otherThreadIndex) {
-        if(otherAction instanceof ThreadBegin) {
-            return otherThreadIndex == startedThreadIndex;
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ThreadStart that = (ThreadStart) o;
+
+        return startedThreadIndex == that.startedThreadIndex;
+    }
+    @Override
+    public int hashCode() {
+        return startedThreadIndex;
     }
 }

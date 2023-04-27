@@ -4,8 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunElement;
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunFromOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
 
 /**
  * @hides the algorithm to calculate a run out of an order.
@@ -24,15 +24,15 @@ import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunFr
  */
 public class CreateCalculatedRunForOrder {
     private final LeftBeforeRight[] currentOrder;
-    private final ThreadIdToElementList<CalculatedRunElement> actualRun;
+    private final ThreadIdToElementList<ElementAndPosition<Object>> actualRun;
 
     public CreateCalculatedRunForOrder(LeftBeforeRight[] currentOrder,
-                                       ThreadIdToElementList<CalculatedRunElement> actualRun) {
+                                       ThreadIdToElementList<ElementAndPosition<Object>> actualRun) {
         this.currentOrder = currentOrder;
         this.actualRun = actualRun.safeClone();
     }
     public CalculatedRun create() {
-        CalculatedRunElement[] calculatedRunElementArray = new CalculatedRunElement[actualRun.elementCount()];
+        ElementAndPosition<Object>[] calculatedRunElementArray = new ElementAndPosition[actualRun.elementCount()];
         int currentPosInArray = 0;
         while(! actualRun.isEmpty()) {
             boolean somethingFound = false;

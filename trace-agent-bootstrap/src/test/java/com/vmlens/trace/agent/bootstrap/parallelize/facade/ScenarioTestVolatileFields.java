@@ -3,13 +3,17 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import org.junit.Test;
 
+import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeTestBuilder.FIRST_WORKER_THREAD_INDEX;
+import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeTestBuilder.MAIN_THREAD_INDEX;
+
 public class ScenarioTestVolatileFields {
     @Test
     public void testReadWriteSingleVolatileField() {
         ParallelizeTestBuilder builder = new ParallelizeTestBuilder();
-        builder.beginMainThread();
+        builder.beginThread(MAIN_THREAD_INDEX);
+        builder.startThread(FIRST_WORKER_THREAD_INDEX);
         Position read = builder.readFirstVolatileField();
-        builder.beginFirstWorkerThread();
+        builder.beginThread(FIRST_WORKER_THREAD_INDEX);
         Position write = builder.writeFirstVolatileField();
 
         ParallelizeTestMatcher matcher = new ParallelizeTestMatcher();
