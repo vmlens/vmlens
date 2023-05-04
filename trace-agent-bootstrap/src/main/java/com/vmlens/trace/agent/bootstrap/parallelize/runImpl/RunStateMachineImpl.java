@@ -1,20 +1,19 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
-import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 public class RunStateMachineImpl implements RunStateMachine {
 
-    private final InterleaveRun calculatedRun;
+    private final ActualRun calculatedRun;
     // package visible for test
     final ThreadIdToState threadIdToState = new ThreadIdToState();
     private RunState runState;
-    public RunStateMachineImpl(InterleaveRun calculatedRun, TestThreadState testThreadState) {
+    public RunStateMachineImpl(ActualRun calculatedRun, TestThreadState testThreadState) {
         this.calculatedRun = calculatedRun;
         this.runState = new RunStateRunning(calculatedRun,threadIdToState);
         threadIdToState.add(testThreadState);

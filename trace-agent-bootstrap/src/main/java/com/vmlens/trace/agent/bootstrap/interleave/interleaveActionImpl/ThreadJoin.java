@@ -6,12 +6,13 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.*;
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class ThreadStart implements InterleaveAction, InDependentBlockElement  {
-    private static final Object SINGELTON_KEY = new Object();
-    private final int startedThreadIndex;
+public class ThreadJoin implements InterleaveAction, InDependentBlockElement  {
 
-    public ThreadStart(int startedThreadIndex) {
-        this.startedThreadIndex = startedThreadIndex;
+    private static final Object SINGELTON_KEY = new Object();
+    private final int joinedThreadIndex;
+
+    public ThreadJoin(int joinedThreadIndex) {
+        this.joinedThreadIndex = joinedThreadIndex;
     }
 
     @Override
@@ -23,6 +24,7 @@ public class ThreadStart implements InterleaveAction, InDependentBlockElement  {
     public void blockBuilderStart(Position myPosition, BlockContainer result) {
         result.addInDependent(new ElementAndPosition<InDependentBlockElement>(this,myPosition));
     }
+
     @Override
     public void blockBuilderAdd(Position myPosition, ElementAndPosition<BlockBuilder> next, BlockContainer result) {
         result.addInDependent(new ElementAndPosition<InDependentBlockElement>((ThreadStart)next.element(),next.position()));
@@ -30,20 +32,6 @@ public class ThreadStart implements InterleaveAction, InDependentBlockElement  {
 
     @Override
     public void addToAlternatingOrderContainerBuilder(Position myPosition, OrderArraysBuilder orderArraysBuilder, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
-        orderArraysBuilder.addFixedOrder(new LeftBeforeRight(myPosition,new Position(startedThreadIndex,0)));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ThreadStart that = (ThreadStart) o;
-
-        return startedThreadIndex == that.startedThreadIndex;
-    }
-    @Override
-    public int hashCode() {
-        return startedThreadIndex;
+        orderArraysBuilder.addFixedOrder(new LeftBeforeRight(new Position(joinedThreadIndex,threadIndexToMaxPosition.getPositionAtThreadIndex(joinedThreadIndex)),myPosition));
     }
 }

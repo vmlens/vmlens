@@ -3,13 +3,13 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.InterleaveActionWithPositionFactoryFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadStart;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopContainer;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFactoryImpl;
-import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 /**
  * Responsible for creating parallelize actions. Basically the command design pattern.
@@ -21,8 +21,8 @@ public class ParallelizeFacade {
     static volatile ParallelizeLoopContainer parallelizeLoopContainer =
             new ParallelizeLoopContainer(new ParallelizeLoopFactoryImpl());
 
-    public static void beforeFieldAccessVolatile(ThreadLocalWrapper threadLocalWrapper,
-                                                 long objectHashCode, int fieldId, int operation) {
+    public static void afterFieldAccessVolatile(ThreadLocalWrapper threadLocalWrapper,
+                                               int fieldId, int operation) {
         debugMethodCall(threadLocalWrapper,"beforeFieldAccessVolatile");
         // ToDo must be before call
         new TestThreadState(threadLocalWrapper).after(new InterleaveActionWithPositionFactoryFactory(
@@ -61,6 +61,5 @@ public class ParallelizeFacade {
     private static AgentLogger agentLogger() {
         return parallelizeLoopContainer.agentLogger();
     }
-
 
 }

@@ -12,7 +12,7 @@ public class BlockMapFactory {
 
     public BlockContainer create(
             TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> actualRun) {
-        KeyToThreadIdToElementList<BlockBuilderKey,ElementAndPosition<BlockBuilder>> blockFactoryMap =
+        KeyToThreadIdToElementList<Object,ElementAndPosition<BlockBuilder>> blockFactoryMap =
                 new KeyToThreadIdToElementList<>();
         for(TLinkableWrapper<ElementAndPosition<BlockBuilder>> blockBuilder : actualRun) {
             blockFactoryMap.put(blockBuilder.element.element().blockBuilderKey(), blockBuilder.element);

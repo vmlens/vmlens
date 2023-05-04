@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.actionImpl;
 
 
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
-import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 public class ThreadStart implements ParallelizeAction  {
 

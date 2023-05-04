@@ -1,24 +1,23 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
-import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 public class RunStateRunning implements RunState, ActionContext {
-    private final InterleaveRun calculatedRun;
+    private final ActualRun calculatedRun;
     private final ThreadIdToState threadIdToState;
 
-    public RunStateRunning(InterleaveRun calculatedRun, ThreadIdToState threadIdToState) {
+    public RunStateRunning(ActualRun calculatedRun, ThreadIdToState threadIdToState) {
         this.calculatedRun = calculatedRun;
         this.threadIdToState = threadIdToState;
     }
 
     @Override
-    public InterleaveRun getCalculatedRun() {
+    public ActualRun getCalculatedRun() {
         return calculatedRun;
     }
 
@@ -49,7 +48,7 @@ public class RunStateRunning implements RunState, ActionContext {
         return false;
     }
     @Override
-    public void addTaskStartedInterleaveAction(TestThreadState beginTestThreadState, InterleaveRun calculatedRun) {
+    public void addTaskStartedInterleaveAction(TestThreadState beginTestThreadState, ActualRun calculatedRun) {
         throw new RuntimeException("should not be called");
     }
 

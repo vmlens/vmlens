@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
-import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
+
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 public class Run {
     private final Object lock = new Object();

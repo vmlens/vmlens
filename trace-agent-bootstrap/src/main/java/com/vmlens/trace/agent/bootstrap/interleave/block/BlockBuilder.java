@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosit
 
 
 public interface BlockBuilder  {
-    BlockBuilderKey blockBuilderKey();
+    Object blockBuilderKey();
     void blockBuilderStart(Position myPosition, BlockContainer result);
     void blockBuilderAdd(Position myPosition, ElementAndPosition<BlockBuilder> next, BlockContainer result);
 

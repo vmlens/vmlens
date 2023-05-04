@@ -20,7 +20,7 @@ public class InterleaveActionWithPositionFactoryImpl implements InterleaveAction
     }
     @Override
     public void addToContainer(int positionInThread, BlockBuilderAndCalculatedRunElementContainer container) {
-        container.add(new ElementAndPosition<InterleaveAction>(interleaveAction,new Position(threadIndex,positionInThread)));
+        container.add(new ElementAndPosition<>(interleaveAction, new Position(threadIndex, positionInThread)));
     }
 
     @Override
@@ -29,5 +29,28 @@ public class InterleaveActionWithPositionFactoryImpl implements InterleaveAction
                 "interleaveAction=" + interleaveAction +
                 ", threadIndex=" + threadIndex +
                 '}';
+    }
+
+    // visible for test
+    InterleaveAction interleaveAction() {
+        return interleaveAction;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        InterleaveActionWithPositionFactoryImpl that = (InterleaveActionWithPositionFactoryImpl) o;
+
+        if (threadIndex != that.threadIndex) return false;
+        return interleaveAction.equals(that.interleaveAction);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = interleaveAction.hashCode();
+        result = 31 * result + threadIndex;
+        return result;
     }
 }

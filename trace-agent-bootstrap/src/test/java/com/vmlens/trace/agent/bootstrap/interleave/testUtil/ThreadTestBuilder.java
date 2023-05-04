@@ -1,32 +1,35 @@
 package com.vmlens.trace.agent.bootstrap.interleave.testUtil;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.InterleaveActionWithPositionFactoryImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
 
 public class ThreadTestBuilder {
-    private final TestBuilderResult testBuilderResult;
+    private final ResultTestBuilder resultTestBuilder;
     private final int threadIndex;
     private int position;
 
-    public ThreadTestBuilder(TestBuilderResult testBuilderResult, int threadIndex) {
-        this.testBuilderResult = testBuilderResult;
+    public ThreadTestBuilder(ResultTestBuilder resultTestBuilder, int threadIndex) {
+        this.resultTestBuilder = resultTestBuilder;
         this.threadIndex = threadIndex;
     }
 
     public Position volatileAccess(int fieldId, int operation) {
         Position temp =  new Position(threadIndex,position);
-        testBuilderResult.add(new VolatileFieldAccess(fieldId,operation),temp);
+        resultTestBuilder.add(new VolatileFieldAccess(fieldId,operation),temp);
         position++;
         return temp;
     }
     public Position startThread(int index) {
         Position temp =  new Position(threadIndex,position);
-        testBuilderResult.startThread(index,temp);
+        resultTestBuilder.startThread(index,temp);
         position++;
         return temp;
     }
 
+    public Position joinThread(int index) {
+        Position temp =  new Position(threadIndex,position);
+        resultTestBuilder.joinThread(index,temp);
+        position++;
+        return temp;
+    }
 }

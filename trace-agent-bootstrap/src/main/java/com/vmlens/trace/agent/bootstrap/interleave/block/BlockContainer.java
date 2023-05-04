@@ -7,19 +7,19 @@ import gnu.trove.list.linked.TLinkedList;
 
 public class BlockContainer {
 
-    private final KeyToThreadIdToElementList<BlockKey, DependentBlock> dependentBlocks =
+    private final KeyToThreadIdToElementList<Object, DependentBlock> dependentBlocks =
             new KeyToThreadIdToElementList<>();
     private final TLinkedList<TLinkableWrapper<ElementAndPosition<InDependentBlockElement>>> inDependentBlockList =
             new TLinkedList<>();
 
-    public void addDependent(BlockKey key, DependentBlock dependentBlock) {
+    public void addDependent(Object key, DependentBlock dependentBlock) {
         dependentBlocks.put(key, dependentBlock);
     }
 
     public void addInDependent(ElementAndPosition<InDependentBlockElement> inDependentBlockElement)   {
         inDependentBlockList.add(new TLinkableWrapper<>(inDependentBlockElement));
     }
-    public KeyToThreadIdToElementList<BlockKey, DependentBlock> dependentBlocks() {
+    public KeyToThreadIdToElementList<Object, DependentBlock> dependentBlocks() {
         return dependentBlocks;
     }
 

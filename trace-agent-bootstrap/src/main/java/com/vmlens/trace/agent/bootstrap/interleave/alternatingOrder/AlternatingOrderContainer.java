@@ -7,9 +7,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Objects;
+;
 
 
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
@@ -47,17 +46,12 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         }
     }
 
-
     private final OrderArrays orderArrays;
     private final ThreadIdToElementList<ElementAndPosition<Object>> actualRun;
-    public AlternatingOrderContainer(OrderArrays orderArrays,
-                                     ThreadIdToElementList<ElementAndPosition<Object>> actualRun) {
+    public AlternatingOrderContainer(OrderArrays orderArrays, ThreadIdToElementList<ElementAndPosition<Object>> actualRun) {
         this.orderArrays = orderArrays;
         this.actualRun = actualRun;
-
-
     }
-
 
 
     /**

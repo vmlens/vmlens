@@ -1,8 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 
 public class ParallelizedThreadLocal {
     private final Run run;

@@ -9,6 +9,6 @@ public class AlternatingOrderContainerFactory {
 
     public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
     ThreadIdToElementList<ElementAndPosition<Object>> run) {
-        return new AlternatingOrderContainer(new OrderArraysFactory().create(blockBuilderList),run);
+        return new AlternatingOrderContainer(new OrderArraysFactory().create(blockBuilderList,run),run);
     }
 }

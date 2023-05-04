@@ -16,7 +16,7 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
     }
 
     @Override
-    public BlockBuilderKey blockBuilderKey() {
+    public Object blockBuilderKey() {
         return new VolatileFieldAccessKey(fieldId);
     }
     @Override
@@ -38,4 +38,29 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
         return (otherVolatileFieldAccess.operation | operation) >= MIN_OPERATION;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        VolatileFieldAccess that = (VolatileFieldAccess) o;
+
+        if (fieldId != that.fieldId) return false;
+        return operation == that.operation;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fieldId;
+        result = 31 * result + operation;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "VolatileFieldAccess{" +
+                "fieldId=" + fieldId +
+                ", operation=" + operation +
+                '}';
+    }
 }

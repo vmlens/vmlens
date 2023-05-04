@@ -8,13 +8,14 @@ import java.util.Iterator;
 
 public class OrderArraysFactory {
 
-    public OrderArrays create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList) {
+    public OrderArrays create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
+                              ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         BlockContainer blockMap =
                 new BlockMapFactory().create(blockBuilderList);
-        return create(blockMap);
+        return create(blockMap,threadIndexToMaxPosition);
     }
 
-    private OrderArrays create(BlockContainer blockMap) {
+    private OrderArrays create(BlockContainer blockMap,ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         OrderArraysBuilder builder = new OrderArraysBuilder();
         for(ThreadIdToElementList<DependentBlock> threadIdToElementList : blockMap.dependentBlocks()) {
             for(TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>> oneThread : threadIdToElementList) {
@@ -32,7 +33,7 @@ public class OrderArraysFactory {
             }
         }
         for(TLinkableWrapper<ElementAndPosition<InDependentBlockElement>> independent : blockMap.inDependentBlocks()) {
-            independent.element.element().addToAlternatingOrderContainerBuilder(independent.element.position(),builder);
+            independent.element.element().addToAlternatingOrderContainerBuilder(independent.element.position(),builder,threadIndexToMaxPosition);
         }
         return builder.build();
     }

@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
-import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilderKey;
-import com.vmlens.trace.agent.bootstrap.interleave.block.BlockKey;
 
-public class VolatileFieldAccessKey implements BlockKey, BlockBuilderKey {
+public class VolatileFieldAccessKey  {
     private final int fieldId;
 
     public VolatileFieldAccessKey(int fieldId) {

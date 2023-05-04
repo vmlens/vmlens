@@ -12,7 +12,7 @@ import java.util.Iterator;
  *
  */
 public class ThreadIdToElementList<ELEMENT extends WithThreadIndex>  implements
-        Iterable<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>>  {
+        Iterable<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> , ThreadIndexToMaxPosition {
 
     private final class ThreadIndexIterator implements  Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>>{
 

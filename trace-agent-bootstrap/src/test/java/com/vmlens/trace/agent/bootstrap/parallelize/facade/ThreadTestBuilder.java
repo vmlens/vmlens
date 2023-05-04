@@ -2,12 +2,10 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ThreadLocalWrapperMock;
-import com.vmlens.trace.agent.bootstrap.parallize.logic.RunnableOrThreadWrapper;
 
 public class ThreadTestBuilder {
-    private long defaultObjectHashCode = 1L;
     private final ThreadIdToElementList<ActionForTest> actualRun;
     private final int threadIndex;
     private int position;
@@ -20,7 +18,7 @@ public class ThreadTestBuilder {
       return create(new ActionForTest( new Position(threadIndex,position)){
           @Override
           public void execute(ThreadLocalWrapperMock[] loopThreadStateArray) {
-              ParallelizeFacade.beforeFieldAccessVolatile(loopThreadStateArray[threadIndex()], defaultObjectHashCode, fieldId, operation);
+              ParallelizeFacade.afterFieldAccessVolatile(loopThreadStateArray[threadIndex()], fieldId, operation);
           }
       });
     }
