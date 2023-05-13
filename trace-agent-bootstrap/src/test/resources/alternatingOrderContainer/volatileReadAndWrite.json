@@ -1,0 +1,37 @@
+{
+  "fixedOrderArray": [],
+  "alternatingOrderArray": [
+    {
+      "alternativeOne": {
+        "left": {
+          "threadIndex": 0,
+          "positionInThread": 0
+        },
+        "right": {
+          "threadIndex": 1,
+          "positionInThread": 0
+        }
+      },
+      "alternativeTwo": {
+        "left": {
+          "threadIndex": 1,
+          "positionInThread": 0
+        },
+        "right": {
+          "threadIndex": 0,
+          "positionInThread": 0
+        }
+      }
+    }
+  ],
+  "actualRun": [
+    {
+      "threadIndex": 0,
+      "positionInThread": 0
+    },
+    {
+      "threadIndex": 1,
+      "positionInThread": 0
+    }
+  ]
+}
