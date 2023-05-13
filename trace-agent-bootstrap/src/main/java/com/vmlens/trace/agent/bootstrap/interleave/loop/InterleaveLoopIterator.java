@@ -1,34 +1,45 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 
 import java.util.Iterator;
 
-public class InterleaveLoopIterator implements Iterator<ActualRun> {
+public class InterleaveLoopIterator implements Iterator<CalculatedRun> {
 
-    private final InterleaveLoop container;
-    private InterleaveLoopIteratorState state;
+    private final IteratorQueue container;
+    private Iterator<CalculatedRun> currentIterator;
+    private CalculatedRun next;
 
-    public InterleaveLoopIterator(InterleaveLoop interleaveLoop) {
+    public InterleaveLoopIterator(IteratorQueue interleaveLoop) {
         this.container = interleaveLoop;
-        state =
-                new InterleaveLoopIteratorStateInitial(container);
     }
 
     @Override
     public boolean hasNext() {
-        while(state != null) {
-        if(state.hasNext()) {
+        if (next != null) {
             return true;
         }
-        state = state.nextState();
+        if (currentIterator == null) {
+            currentIterator = container.poll();
+        }
+        while (currentIterator != null) {
+            while (currentIterator.hasNext()) {
+                CalculatedRun temp = currentIterator.next();
+                if (temp != null) {
+                    next = temp;
+                    return true;
+                }
+            }
+            currentIterator = container.poll();
         }
         return false;
     }
 
     @Override
-    public ActualRun next() {
-        return state.next();
+    public CalculatedRun next() {
+        CalculatedRun temp = next;
+        next = null;
+        return temp;
     }
 
     @Override

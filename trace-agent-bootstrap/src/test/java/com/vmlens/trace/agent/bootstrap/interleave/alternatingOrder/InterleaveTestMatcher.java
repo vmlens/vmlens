@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.loop;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
@@ -12,15 +12,17 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 
+
+// ToDo test and ddocument
 public class InterleaveTestMatcher {
     private final Set<LeftBeforeRight> expectedLeftBeforeRight = new HashSet<>();
-    private  Set<LeftBeforeRight> currentFoundLeft = new HashSet<>();
-    private Map<Integer,Integer> threadIndexToPosition = new HashMap<>();
+    private Set<LeftBeforeRight> currentFoundLeft = new HashSet<>();
+    private Map<Integer, Integer> threadIndexToPosition = new HashMap<>();
     private int expectedRuns;
     private int actualRuns;
 
     public void leftBeforeRight(Position left, Position right) {
-        expectedLeftBeforeRight.add(new LeftBeforeRight(left,right));
+        expectedLeftBeforeRight.add(new LeftBeforeRight(left, right));
     }
 
     public void runs(int i) {
@@ -35,18 +37,19 @@ public class InterleaveTestMatcher {
 
     public void executed(int threadIndex) {
         int currentPos = 0;
-        if(threadIndexToPosition.containsKey(threadIndex)) {
-            currentPos =  threadIndexToPosition.get(threadIndex);
+        if (threadIndexToPosition.containsKey(threadIndex)) {
+            currentPos = threadIndexToPosition.get(threadIndex);
         }
-        threadIndexToPosition.put(threadIndex,currentPos+1);
+        threadIndexToPosition.put(threadIndex, currentPos + 1);
         Position position = new Position(threadIndex, currentPos);
-        for(LeftBeforeRight left :  expectedLeftBeforeRight) {
-            if(left.left.equals(position)) {
+        for (LeftBeforeRight left : expectedLeftBeforeRight) {
+            if (left.left.equals(position)) {
                 currentFoundLeft.add(left);
             }
         }
-        for(LeftBeforeRight right :  currentFoundLeft) {
-            if(right.right.equals(position)) {
+        Set<LeftBeforeRight> currentFoundLeftView = new HashSet<>(currentFoundLeft);
+        for (LeftBeforeRight right : currentFoundLeftView) {
+            if (right.right.equals(position)) {
                 currentFoundLeft.remove(right);
                 expectedLeftBeforeRight.remove(right);
             }

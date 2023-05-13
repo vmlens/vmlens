@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndCalculatedRunElementContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 
 public class InterleaveActionWithPositionFactoryImpl implements InterleaveActionWithPositionFactory {

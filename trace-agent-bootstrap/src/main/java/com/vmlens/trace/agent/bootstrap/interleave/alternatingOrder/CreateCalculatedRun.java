@@ -2,10 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRunFromOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 
 /**
  * @hides the algorithm to calculate a run out of an order.
@@ -22,33 +19,34 @@ import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosit
  * ToDo test, really equals?
  *
  */
-public class CreateCalculatedRunForOrder {
+public class CreateCalculatedRun {
     private final LeftBeforeRight[] currentOrder;
-    private final ThreadIdToElementList<ElementAndPosition<Object>> actualRun;
+    private final ThreadIndexToElementList<Position> actualRun;
 
-    public CreateCalculatedRunForOrder(LeftBeforeRight[] currentOrder,
-                                       ThreadIdToElementList<ElementAndPosition<Object>> actualRun) {
+    public CreateCalculatedRun(LeftBeforeRight[] currentOrder,
+                               ThreadIndexToElementList<Position> actualRun) {
         this.currentOrder = currentOrder;
         this.actualRun = actualRun.safeClone();
     }
+
     public CalculatedRun create() {
-        ElementAndPosition<Object>[] calculatedRunElementArray = new ElementAndPosition[actualRun.elementCount()];
+        Position[] calculatedRunElementArray = new Position[actualRun.elementCount()];
         int currentPosInArray = 0;
-        while(! actualRun.isEmpty()) {
+        while (!actualRun.isEmpty()) {
             boolean somethingFound = false;
-            for(int i = 0;i <=  actualRun.maxThreadIndex(); i++) {
-                    while(! actualRun.isEmptyAtIndex(i) && ! constraintFound(actualRun.getAtIndex(i).position())) {
-                        removeConstraints(actualRun.getAtIndex(i).position());
-                        calculatedRunElementArray[currentPosInArray] = actualRun.getAndRemoveAtIndex(i);
-                        currentPosInArray++;
-                        somethingFound=true;
-                    }
+            for (int i = 0; i <= actualRun.maxThreadIndex(); i++) {
+                while (!actualRun.isEmptyAtIndex(i) && !constraintFound(actualRun.getAtIndex(i))) {
+                    removeConstraints(actualRun.getAtIndex(i));
+                    calculatedRunElementArray[currentPosInArray] = actualRun.getAndRemoveAtIndex(i);
+                    currentPosInArray++;
+                    somethingFound = true;
+                }
             }
             if(! somethingFound) {
                 return null;
             }
         }
-        return new CalculatedRunFromOrder(calculatedRunElementArray);
+        return new CalculatedRun(calculatedRunElementArray);
     }
     private boolean constraintFound(Position position) {
         for(LeftBeforeRight constraint : currentOrder) {

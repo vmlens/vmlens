@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.calculatedRun;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.WithPosition;

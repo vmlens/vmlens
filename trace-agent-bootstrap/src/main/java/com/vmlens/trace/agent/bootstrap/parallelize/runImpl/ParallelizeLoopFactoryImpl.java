@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.AgentLoggerNoOp;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoop;
@@ -24,7 +24,7 @@ public class ParallelizeLoopFactoryImpl implements ParallelizeLoopFactory {
 
     @Override
     public ParallelizeLoop create(int loopId) {
-        return new ParallelizeLoop(loopId, new RunStateMachineFactoryImpl(), new InterleaveLoop(agentLogger).iterator(),waitNotifyStrategy);
+        return new ParallelizeLoop(loopId, new RunStateMachineFactoryImpl(), waitNotifyStrategy, new InterleaveLoop(agentLogger));
     }
 
     public AgentLogger agentLogger() {

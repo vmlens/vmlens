@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
 
 import java.util.Arrays;
 

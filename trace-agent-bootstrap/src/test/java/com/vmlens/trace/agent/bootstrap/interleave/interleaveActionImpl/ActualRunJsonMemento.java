@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InterleaveRunJsonMemento {
+public class ActualRunJsonMemento {
     private static final String ACTION_NAME_VOLATILE_FIELD_ACCESS = "volatileFieldAccess";
     private int fieldId;
     private int operation;
@@ -23,7 +23,7 @@ public class InterleaveRunJsonMemento {
 
     public static String toJson(TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> list) {
         List result = new LinkedList();
-        for(TLinkableWrapper<InterleaveActionWithPositionFactory> elem : list) {
+        for (TLinkableWrapper<InterleaveActionWithPositionFactory> elem : list) {
             result.add(of(elem));
 
         }
@@ -32,8 +32,8 @@ public class InterleaveRunJsonMemento {
 
     public static TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> load(String name)  {
         try{
-        InputStream inputStream = InterleaveRunJsonMemento.class.getResourceAsStream("/interleaveRun/" + name + ".json");
-        String json = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+            InputStream inputStream = ActualRunJsonMemento.class.getResourceAsStream("/actualRun/" + name + ".json");
+            String json = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         return fromJson(json);
         }
         catch(IOException exp) {
@@ -42,29 +42,29 @@ public class InterleaveRunJsonMemento {
     }
 
     private static TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>>  fromJson(String json) {
-        TypeToken<List<InterleaveRunJsonMemento>> collectionType = new TypeToken<List<InterleaveRunJsonMemento>>(){};
-        List<InterleaveRunJsonMemento> serializedList = new Gson().fromJson(json,collectionType);
-
+        TypeToken<List<ActualRunJsonMemento>> collectionType = new TypeToken<List<ActualRunJsonMemento>>() {
+        };
+        List<ActualRunJsonMemento> serializedList = new Gson().fromJson(json, collectionType);
         TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> result = new TLinkedList<>();
-        for(InterleaveRunJsonMemento elem : serializedList) {
+        for (ActualRunJsonMemento elem : serializedList) {
             elem.add(result);
         }
         return result;
     }
 
-    private static InterleaveRunJsonMemento
-        of(TLinkableWrapper<InterleaveActionWithPositionFactory> element) {
-        if(element.element instanceof InterleaveActionWithPositionFactoryImpl) {
+    private static ActualRunJsonMemento
+    of(TLinkableWrapper<InterleaveActionWithPositionFactory> element) {
+        if (element.element instanceof InterleaveActionWithPositionFactoryImpl) {
             InterleaveActionWithPositionFactoryImpl factory = (InterleaveActionWithPositionFactoryImpl) element.element;
             Gson gson = new Gson();
-            InterleaveRunJsonMemento memento =
-                    gson.fromJson(gson.toJson(factory.interleaveAction()), InterleaveRunJsonMemento.class);
+            ActualRunJsonMemento memento =
+                    gson.fromJson(gson.toJson(factory.interleaveAction()), ActualRunJsonMemento.class);
             memento.threadIndex = factory.threadIndex();
-            if(factory.interleaveAction() instanceof VolatileFieldAccess ) {
+            if (factory.interleaveAction() instanceof VolatileFieldAccess) {
                 memento.actionName = ACTION_NAME_VOLATILE_FIELD_ACCESS;
                 return memento;
             }
-            throw new RuntimeException("unknown interleaveAction class: " +  factory.interleaveAction().getClass());
+            throw new RuntimeException("unknown interleaveAction class: " + factory.interleaveAction().getClass());
         }
         throw new RuntimeException("unknown factory class: " +  element.element.getClass());
     }

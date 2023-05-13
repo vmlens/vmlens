@@ -1,24 +1,27 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
 public class RunStateRunning implements RunState, ActionContext {
-    private final ActualRun calculatedRun;
+    private final ActualRun actualRun;
+    private final CalculatedRun calculatedRun;
     private final ThreadIdToState threadIdToState;
 
-    public RunStateRunning(ActualRun calculatedRun, ThreadIdToState threadIdToState) {
+    public RunStateRunning(ActualRun actualRun, CalculatedRun calculatedRun, ThreadIdToState threadIdToState) {
+        this.actualRun = actualRun;
         this.calculatedRun = calculatedRun;
         this.threadIdToState = threadIdToState;
     }
 
     @Override
     public ActualRun getCalculatedRun() {
-        return calculatedRun;
+        return actualRun;
     }
 
     @Override

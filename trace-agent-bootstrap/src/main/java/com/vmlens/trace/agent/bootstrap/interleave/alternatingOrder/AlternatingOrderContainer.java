@@ -1,17 +1,63 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArrays;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 
 import java.util.Iterator;
+
 ;
 
 
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
+
+    private final ThreadIndexToElementList<Position> actualRun;
+
+    private final OrderArrays orderArrays;
+    public AlternatingOrderContainer(OrderArrays orderArrays, ThreadIndexToElementList<Position> actualRun) {
+        this.orderArrays = orderArrays;
+        this.actualRun = actualRun;
+    }
+
+    /**
+     * @return
+     * @rule Iterator can return null, will be filtered by InterleaveLoopIteratorStateAlternatingOrderContainer
+     */
+    @Override
+    public Iterator<CalculatedRun> iterator() {
+        return new AlternatingOrderContainerIterator();
+    }
+
+    OrderArrays orderArrays() {
+        return orderArrays;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AlternatingOrderContainer that = (AlternatingOrderContainer) o;
+
+        return orderArrays.equals(that.orderArrays);
+    }
+
+    @Override
+    public int hashCode() {
+        return orderArrays.hashCode();
+    }
+
+    public void debug(AgentLogger agentLogger) {
+        orderArrays.debug(agentLogger);
+    }
+
+    // Visble for test
+
+    ThreadIndexToElementList<Position> actualRun() {
+        return actualRun;
+    }
 
     private class AlternatingOrderContainerIterator implements
             Iterator<CalculatedRun> {
@@ -37,49 +83,12 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
             }
             permutationIterator.advance();
 
-            return new CreateCalculatedRunForOrder(currentOrder,actualRun).create();
+            return new CreateCalculatedRun(currentOrder, actualRun).create();
         }
 
         @Override
         public void remove() {
             throw new UnsupportedOperationException("remove");
         }
-    }
-
-    private final OrderArrays orderArrays;
-    private final ThreadIdToElementList<ElementAndPosition<Object>> actualRun;
-    public AlternatingOrderContainer(OrderArrays orderArrays, ThreadIdToElementList<ElementAndPosition<Object>> actualRun) {
-        this.orderArrays = orderArrays;
-        this.actualRun = actualRun;
-    }
-
-
-    /**
-     * @rule Iterator can return null, will be filtered by InterleaveLoopIteratorStateAlternatingOrderContainer
-     * @return
-     */
-    @Override
-    public Iterator<CalculatedRun> iterator() {
-        return new AlternatingOrderContainerIterator();
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AlternatingOrderContainer that = (AlternatingOrderContainer) o;
-
-        return orderArrays.equals(that.orderArrays);
-    }
-
-    @Override
-    public int hashCode() {
-        return orderArrays.hashCode();
-    }
-
-    public void debug(AgentLogger agentLogger) {
-        orderArrays.debug(agentLogger);
     }
 }

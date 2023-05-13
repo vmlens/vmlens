@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
+import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
@@ -9,36 +10,49 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
 public class RunStateMachineImpl implements RunStateMachine {
 
-    private final ActualRun calculatedRun;
     // package visible for test
-    final ThreadIdToState threadIdToState = new ThreadIdToState();
-    private RunState runState;
-    public RunStateMachineImpl(ActualRun calculatedRun, TestThreadState testThreadState) {
-        this.calculatedRun = calculatedRun;
-        this.runState = new RunStateRunning(calculatedRun,threadIdToState);
+    final ThreadIdToState threadIdToState;
+    private final ActualRun actualRun;
+    private final InterleaveLoop interleaveLoop;
+    private RunState stateAfterNewThreadStarted;
+    private RunState currentState;
+
+    public RunStateMachineImpl(ActualRun actualRun,
+                               TestThreadState testThreadState,
+                               InterleaveLoop interleaveLoop,
+                               ThreadIdToState threadIdToState,
+                               RunState initialState) {
+        this.actualRun = actualRun;
+        this.currentState = initialState;
+        this.stateAfterNewThreadStarted = initialState;
+        this.threadIdToState = threadIdToState;
+        this.interleaveLoop = interleaveLoop;
         threadIdToState.add(testThreadState);
     }
+
     @Override
     public boolean isActive(TestThreadState testThreadState) {
-        return runState.isActive(testThreadState);
+        return currentState.isActive(testThreadState);
     }
+
     @Override
     public void after(ParallelizeAction action, TestThreadState testThreadState) {
-        runState = runState.after(action, testThreadState);
+        currentState = currentState.after(action, testThreadState);
 
     }
     @Override
     public void processNewTestTask(TestThreadState testThreadState) {
         threadIdToState.add(testThreadState);
-        runState.addTaskStartedInterleaveAction(testThreadState,calculatedRun);
-        runState = new RunStateRunning(calculatedRun,threadIdToState);
+        currentState.addTaskStartedInterleaveAction(testThreadState, actualRun);
+        currentState = stateAfterNewThreadStarted;
     }
     @Override
     public boolean isNewTestTask(RunnableOrThreadWrapper newWrapper) {
-        return runState.isNewTestTask(newWrapper);
+        return currentState.isNewTestTask(newWrapper);
     }
     @Override
     public void end() {
-        runState = new RunStateEnd();
+        interleaveLoop.addActualRun(actualRun);
+        currentState = new RunStateEnd();
     }
 }

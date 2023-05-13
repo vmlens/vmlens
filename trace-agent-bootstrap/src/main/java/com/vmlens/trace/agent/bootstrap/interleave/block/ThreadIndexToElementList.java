@@ -9,48 +9,35 @@ import java.util.Iterator;
 /**
  * @responsible for the storage of elements for each thread index
  * @hides how the relation between thredindex and element list is stored
- *
  */
-public class ThreadIdToElementList<ELEMENT extends WithThreadIndex>  implements
-        Iterable<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> , ThreadIndexToMaxPosition {
+public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implements
+        Iterable<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>>, ThreadIndexToMaxPosition {
 
-    private final class ThreadIndexIterator implements  Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>>{
-
-        private int currentIndex;
-
-        public ThreadIndexIterator(int currentIndex) {
-            this.currentIndex = currentIndex;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return currentIndex < threadList.size();
-        }
-
-        @Override
-        public TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> next() {
-            TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> result = threadList.get(currentIndex);
-            currentIndex++;
-            return result;
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException("remove");
-        }
+    private ThreadIndexToElementList(TLinkedList<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> threadList,
+                                     int elementCount) {
+        this.threadList = threadList;
+        this.elementCount = elementCount;
     }
 
     private final TLinkedList<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> threadList;
     private int elementCount;
 
-    private ThreadIdToElementList(TLinkedList<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> threadList,
-                                  int elementCount) {
-        this.threadList = threadList;
-        this.elementCount = elementCount;
+    public ThreadIndexToElementList() {
+        this(new TLinkedList<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>>(), 0);
     }
 
-    public ThreadIdToElementList() {
-        this(new  TLinkedList<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>>(),0);
+    public ThreadIndexToElementList<ELEMENT> safeClone() {
+        TLinkedList<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> clone = new
+                TLinkedList<>();
+        for (TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> oneThread : threadList) {
+            TLinkedList<TLinkableWrapper<ELEMENT>> clonedThread =
+                    new TLinkedList<>();
+            for (TLinkableWrapper<ELEMENT> element : oneThread.element) {
+                clonedThread.add(new TLinkableWrapper<ELEMENT>(element.element));
+            }
+            clone.add(new TLinkableWrapper<>(clonedThread));
+        }
+        return new ThreadIndexToElementList(clone, elementCount);
     }
 
     public void add(ELEMENT element) {
@@ -104,18 +91,29 @@ public class ThreadIdToElementList<ELEMENT extends WithThreadIndex>  implements
         return threadList.listIterator(threadIndex);
     }
 
+    private final class ThreadIndexIterator implements Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> {
 
-    public ThreadIdToElementList<ELEMENT> safeClone()  {
-        TLinkedList<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> clone =  new
-                TLinkedList<>();
-        for(TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> oneThread : threadList) {
-            TLinkedList<TLinkableWrapper<ELEMENT>> clonedThread =
-                    new TLinkedList<>();
-            for(TLinkableWrapper<ELEMENT> element : oneThread.element) {
-                clonedThread.add(new TLinkableWrapper<ELEMENT>(element.element));
-            }
-            clone.add(new TLinkableWrapper<>(clonedThread));
+        private int currentIndex;
+
+        public ThreadIndexIterator(int currentIndex) {
+            this.currentIndex = currentIndex;
         }
-        return new ThreadIdToElementList(clone,elementCount);
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < threadList.size();
+        }
+
+        @Override
+        public TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> next() {
+            TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> result = threadList.get(currentIndex);
+            currentIndex++;
+            return result;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
     }
 }

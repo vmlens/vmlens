@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.calculatedRun;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 // ToDo move in other package
 // ToDo logger category/ type (enum)?

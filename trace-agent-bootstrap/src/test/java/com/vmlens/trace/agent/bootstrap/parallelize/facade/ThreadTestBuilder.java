@@ -1,26 +1,27 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ThreadLocalWrapperMock;
 
 public class ThreadTestBuilder {
-    private final ThreadIdToElementList<ActionForTest> actualRun;
+    private final ThreadIndexToElementList<ActionForTest> actualRun;
     private final int threadIndex;
     private int position;
 
-    public ThreadTestBuilder(ThreadIdToElementList<ActionForTest> actualRun, int threadIndex) {
+    public ThreadTestBuilder(ThreadIndexToElementList<ActionForTest> actualRun, int threadIndex) {
         this.actualRun = actualRun;
         this.threadIndex = threadIndex;
     }
-    public Position volatileAccess(final int fieldId,final int operation) {
-      return create(new ActionForTest( new Position(threadIndex,position)){
-          @Override
-          public void execute(ThreadLocalWrapperMock[] loopThreadStateArray) {
-              ParallelizeFacade.afterFieldAccessVolatile(loopThreadStateArray[threadIndex()], fieldId, operation);
-          }
-      });
+
+    public Position volatileAccess(final int fieldId, final int operation) {
+        return create(new ActionForTest(new Position(threadIndex, position)) {
+            @Override
+            public void execute(ThreadLocalWrapperMock[] loopThreadStateArray) {
+                ParallelizeFacade.afterFieldAccessVolatile(loopThreadStateArray[threadIndex()], fieldId, operation);
+            }
+        });
     }
     public Position startThread(final int startedThreadIndex) {
         return create(new ActionForTest( new Position(threadIndex,position)){

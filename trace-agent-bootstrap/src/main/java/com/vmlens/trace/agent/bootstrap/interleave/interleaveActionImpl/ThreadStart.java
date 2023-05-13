@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.*;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class ThreadStart implements InterleaveAction, InDependentBlockElement  {

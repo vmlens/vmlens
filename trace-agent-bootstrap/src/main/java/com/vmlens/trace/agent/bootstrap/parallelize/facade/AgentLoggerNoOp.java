@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 
 public class AgentLoggerNoOp implements AgentLogger {
     @Override

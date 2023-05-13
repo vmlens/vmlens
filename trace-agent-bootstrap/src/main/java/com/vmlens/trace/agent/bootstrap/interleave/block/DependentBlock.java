@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.block;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 
 /**
  * if we have a single element, start and end are the same

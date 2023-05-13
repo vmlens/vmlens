@@ -1,27 +1,33 @@
-package com.vmlens.trace.agent.bootstrap.interleave.calculatedRun;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
+
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
 import java.util.Arrays;
 
-public class CalculatedRunFromOrder implements CalculatedRun {
+public class CalculatedRun {
 
-
-    private final ElementAndPosition<Object>[] calculatedRunElementArray;
+    private final Position[] calculatedRunElementArray;
     private int currentPosInArray = 0;
-    public CalculatedRunFromOrder(ElementAndPosition<Object>[] calculatedRunElementArray) {
+
+    public CalculatedRun(Position[] calculatedRunElementArray) {
         this.calculatedRunElementArray = calculatedRunElementArray;
     }
-    @Override
+
     public boolean isActive(int threadIndex) {
         return calculatedRunElementArray[currentPosInArray].threadIndex() == threadIndex;
     }
-    @Override
+
     public void incrementPositionInThread() {
         currentPosInArray++;
     }
 
-    @Override
     public void debug(AgentLogger agentLogger) {
         // ToDo improve log format
         agentLogger.debug(Arrays.toString(calculatedRunElementArray));
+    }
+
+    // Visible for Test
+    Position[] calculatedRunElementArray() {
+        return calculatedRunElementArray;
     }
 }

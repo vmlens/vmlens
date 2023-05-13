@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.InterleaveTestMatcher;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.InterleaveTestBuilder;
 import org.junit.Test;
 

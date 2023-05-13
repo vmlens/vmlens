@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadJoin;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadStart;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;

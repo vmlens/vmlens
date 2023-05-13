@@ -1,15 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.InterleaveActionWithPositionFactoryImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadStartFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
-import  com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.ResultTestBuilder;
 
 public class InterleaveFactoryTestBuilderResult implements ResultTestBuilder {
-    private final ThreadIdToElementList<InterleaveActionWithPositionFactory> actualRun = new ThreadIdToElementList<>();
+    private final ThreadIndexToElementList<InterleaveActionWithPositionFactory> actualRun = new ThreadIndexToElementList<>();
 
     @Override
     public void add(InterleaveAction interleaveAction, Position position) {
@@ -26,7 +26,7 @@ public class InterleaveFactoryTestBuilderResult implements ResultTestBuilder {
         // ToDo implement
     }
 
-    public ThreadIdToElementList<InterleaveActionWithPositionFactory> actualRun() {
+    public ThreadIndexToElementList<InterleaveActionWithPositionFactory> actualRun() {
         return actualRun;
     }
 }

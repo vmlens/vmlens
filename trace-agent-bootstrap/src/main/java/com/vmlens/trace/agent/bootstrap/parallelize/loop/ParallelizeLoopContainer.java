@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 

@@ -5,22 +5,22 @@ import gnu.trove.map.hash.THashMap;
 
 import java.util.Iterator;
 
-public class KeyToThreadIdToElementList<KEY,ELEMENT extends WithThreadIndex>
-        implements Iterable<ThreadIdToElementList<ELEMENT>> {
+public class KeyToThreadIdToElementList<KEY, ELEMENT extends WithThreadIndex>
+        implements Iterable<ThreadIndexToElementList<ELEMENT>> {
 
-    private final THashMap<KEY,ThreadIdToElementList<ELEMENT>> map =
-            new THashMap<KEY,ThreadIdToElementList<ELEMENT>>();
+    private final THashMap<KEY, ThreadIndexToElementList<ELEMENT>> map =
+            new THashMap<KEY, ThreadIndexToElementList<ELEMENT>>();
 
     public void put(KEY key, ELEMENT element) {
-        ThreadIdToElementList<ELEMENT> threadIdToElementList = map.get(key);
-        if(threadIdToElementList == null) {
-            threadIdToElementList = new ThreadIdToElementList<ELEMENT>();
-            map.put(key,threadIdToElementList);
+        ThreadIndexToElementList<ELEMENT> threadIndexToElementList = map.get(key);
+        if (threadIndexToElementList == null) {
+            threadIndexToElementList = new ThreadIndexToElementList<ELEMENT>();
+            map.put(key, threadIndexToElementList);
         }
-        threadIdToElementList.add(element);
+        threadIndexToElementList.add(element);
     }
 
-    public Iterator<ThreadIdToElementList<ELEMENT>> iterator() {
+    public Iterator<ThreadIndexToElementList<ELEMENT>> iterator() {
         return map.values().iterator();
     }
 

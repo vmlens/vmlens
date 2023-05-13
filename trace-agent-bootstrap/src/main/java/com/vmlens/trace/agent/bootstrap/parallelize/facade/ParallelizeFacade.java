@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 
-import com.vmlens.trace.agent.bootstrap.interleave.calculatedRun.AgentLogger;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.InterleaveActionWithPositionFactoryFactory;
@@ -33,7 +33,7 @@ public class ParallelizeFacade {
                                          RunnableOrThreadWrapper runnableOrThreadWrapper) {
         debugMethodCall(threadLocalWrapper,"beforeThreadStart");
         // we need to know that a thread was started before the thread calls beginThreadMethodEnter
-        // there fore beforeThreadStart
+        // therefore beforeThreadStart
         // that we treat this as after concerning the interleave algo
         // should be no problem
         new TestThreadState(threadLocalWrapper).after(new ThreadStart(runnableOrThreadWrapper));

@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 
 public class ParallelizeTestBuilder {
 
@@ -10,7 +10,7 @@ public class ParallelizeTestBuilder {
     public static final int FIRST_WORKER_THREAD_INDEX = 1;
 
     private final int firstVolatileFieldId = 1;
-    private final ThreadIdToElementList<ActionForTest> actualRun = new ThreadIdToElementList<>();
+    private final ThreadIndexToElementList<ActionForTest> actualRun = new ThreadIndexToElementList<>();
 
     private ThreadTestBuilder threadTestBuilder;
 
@@ -30,7 +30,7 @@ public class ParallelizeTestBuilder {
         return threadTestBuilder.volatileAccess(firstVolatileFieldId,MemoryAccessType.IS_WRITE);
     }
 
-    public ThreadIdToElementList<ActionForTest> build() {
+    public ThreadIndexToElementList<ActionForTest> build() {
         return actualRun;
     }
 

@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.AgentLoggerForTest;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIdToElementList;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopContainer;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFactoryImpl;
@@ -17,8 +17,8 @@ public class ParallelizeTestRunner {
                 new ParallelizeLoopFactoryImpl(mock(WaitNotifyStrategy.class),new AgentLoggerForTest()));
         Object parallelizeLoopDefinition = new Object();
 
-        int multiplyBy =  2;
-        ThreadIdToElementList<ActionForTest> actualRun = builder.build();
+        int multiplyBy = 2;
+        ThreadIndexToElementList<ActionForTest> actualRun = builder.build();
         ThreadLocalWrapperMock[] loopThreadState = new ThreadLocalWrapperMock[actualRun.maxThreadIndex() + 1];
         for(int i = 0; i <= actualRun.maxThreadIndex(); i++) {
             loopThreadState[i] = new ThreadLocalWrapperMock(i * multiplyBy + 1);
@@ -26,7 +26,7 @@ public class ParallelizeTestRunner {
 
         while(ParallelizeFacade.hasNext(loopThreadState[0],parallelizeLoopDefinition)) {
             matcher.advance();
-            ThreadIdToElementList<ActionForTest> clone =  actualRun.safeClone();
+            ThreadIndexToElementList<ActionForTest> clone = actualRun.safeClone();
             while (!clone.isEmpty()) {
                 boolean oneThreadWasActive = false;
                 for (int i = 0; i <= actualRun.maxThreadIndex(); i++) {
