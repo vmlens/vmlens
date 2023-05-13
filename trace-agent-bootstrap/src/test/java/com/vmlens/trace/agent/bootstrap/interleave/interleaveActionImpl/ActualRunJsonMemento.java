@@ -18,7 +18,6 @@ public class ActualRunJsonMemento {
     private int fieldId;
     private int operation;
     private int threadIndex;
-
     private String actionName;
 
     public static String toJson(TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> list) {

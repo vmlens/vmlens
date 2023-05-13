@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
+package com.vmlens.trace.agent.bootstrap.interleave.testUtil;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
@@ -13,8 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 
 
-// ToDo test and ddocument
-public class InterleaveTestMatcher {
+public class FeatureTestMatcher {
     private final Set<LeftBeforeRight> expectedLeftBeforeRight = new HashSet<>();
     private Set<LeftBeforeRight> currentFoundLeft = new HashSet<>();
     private Map<Integer, Integer> threadIndexToPosition = new HashMap<>();

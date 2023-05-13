@@ -6,19 +6,19 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.Interlea
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadStartFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.testUtil.ResultTestBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.AbstractResultTestBuilderForInterleave;
 
-public class InterleaveFactoryTestBuilderResult implements ResultTestBuilder {
+public class ResultTestBuilderForInterleaveLoop extends AbstractResultTestBuilderForInterleave {
     private final ThreadIndexToElementList<InterleaveActionWithPositionFactory> actualRun = new ThreadIndexToElementList<>();
 
     @Override
     public void add(InterleaveAction interleaveAction, Position position) {
-        actualRun.add(new InterleaveActionWithPositionFactoryImpl(interleaveAction,position.threadIndex));
+        actualRun.add(new InterleaveActionWithPositionFactoryImpl(interleaveAction, position.threadIndex));
     }
 
     @Override
     public void startThread(int index, Position position) {
-        actualRun.add(new ThreadStartFactory(index,position.threadIndex));
+        actualRun.add(new ThreadStartFactory(index, position.threadIndex));
     }
 
     @Override

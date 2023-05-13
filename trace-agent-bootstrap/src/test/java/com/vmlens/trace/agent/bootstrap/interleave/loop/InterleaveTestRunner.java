@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.InterleaveTestMatcher;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
 
 import java.util.Iterator;
 
@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InterleaveTestRunner {
-    public void run(ThreadIndexToElementList<InterleaveActionWithPositionFactory> actualRun, InterleaveTestMatcher matcher) {
+    public void run(ThreadIndexToElementList<InterleaveActionWithPositionFactory> actualRun, FeatureTestMatcher matcher) {
         InterleaveLoop loop = new InterleaveLoop(new AgentLoggerForTest());
         Iterator<CalculatedRun> iter = loop.iterator();
         while (iter.hasNext()) {

@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -11,7 +12,7 @@ public class TestFromAlternatingOrderContainerToCalculatedRun {
     public void volatileReadAndWrite() {
         // Given
         AlternatingOrderContainer alternatingOrderContainer = AlternatingOrderContainerJsonMemento.load("volatileReadAndWrite");
-        InterleaveTestMatcher matcher = new InterleaveTestMatcher();
+        FeatureTestMatcher matcher = new FeatureTestMatcher();
         matcher.leftBeforeRight(new Position(0, 0), new Position(1, 0));
         matcher.leftBeforeRight(new Position(1, 0), new Position(0, 0));
         matcher.runs(2);

@@ -15,6 +15,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunStateMachineImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunStateRecording;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ThreadIdToState;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ThreadLocalWrapperMock;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -22,23 +23,32 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 
 public class TestFromParallelizeFacadeToActualRun {
-    @Test
-    public void volatileReadAndWrite() {
+
+    private ActualRun actualRun;
+    private ThreadLocalWrapper mainThread;
+    private ThreadLocalWrapper secondThread;
+
+    @Before
+    public void init() {
         // Mocks
         WaitNotifyStrategy waitNotifyStrategyMock = mock(WaitNotifyStrategy.class);
         InterleaveLoop interleaveLoopMock = mock(InterleaveLoop.class);
         // Given
-        ThreadLocalWrapper mainThread = new ThreadLocalWrapperMock(1L);
+        mainThread = new ThreadLocalWrapperMock(1L);
         TestThreadState threadStateMain = new TestThreadState(mainThread);
-        ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
+        actualRun = new ActualRun(new ActualRunObserverNoOp());
         ThreadIdToState threadIdToState = new ThreadIdToState();
         RunStateMachineImpl runStateMachineImpl = new RunStateMachineImpl(actualRun, threadStateMain,
                 interleaveLoopMock, threadIdToState, new RunStateRecording(actualRun, threadIdToState));
         Run run = new Run(0, waitNotifyStrategyMock, runStateMachineImpl, threadStateMain);
 
-        ThreadLocalWrapper secondThread = new ThreadLocalWrapperMock(20L);
+        secondThread = new ThreadLocalWrapperMock(20L);
         TestThreadState threadStateSecond = new TestThreadState(secondThread);
         threadStateSecond.createNewParallelizedThreadLocal(run, 1);
+    }
+
+    @Test
+    public void volatileReadAndWrite() {
         // When
         ParallelizeFacade.afterFieldAccessVolatile(mainThread, 1, MemoryAccessType.IS_READ);
         ParallelizeFacade.afterFieldAccessVolatile(secondThread, 1, MemoryAccessType.IS_WRITE);

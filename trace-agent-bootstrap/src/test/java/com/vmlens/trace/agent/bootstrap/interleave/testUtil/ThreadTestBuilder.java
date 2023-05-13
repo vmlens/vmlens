@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.testUtil;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
 
 public class ThreadTestBuilder {
     private final ResultTestBuilder resultTestBuilder;
@@ -15,7 +14,7 @@ public class ThreadTestBuilder {
 
     public Position volatileAccess(int fieldId, int operation) {
         Position temp =  new Position(threadIndex,position);
-        resultTestBuilder.add(new VolatileFieldAccess(fieldId,operation),temp);
+        resultTestBuilder.volatileAccess(fieldId, operation, temp);
         position++;
         return temp;
     }

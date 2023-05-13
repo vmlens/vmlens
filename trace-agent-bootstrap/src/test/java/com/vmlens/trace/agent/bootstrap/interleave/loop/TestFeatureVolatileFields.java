@@ -1,28 +1,28 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.InterleaveTestMatcher;
-import com.vmlens.trace.agent.bootstrap.interleave.testUtil.InterleaveTestBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
 import org.junit.Test;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeTestBuilder.FIRST_WORKER_THREAD_INDEX;
-import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeTestBuilder.MAIN_THREAD_INDEX;
+import static com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestBuilder.FIRST_WORKER_THREAD_INDEX;
+import static com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestBuilder.MAIN_THREAD_INDEX;
 
 public class TestFeatureVolatileFields {
     @Test
-    public void testReadWriteSingleVolatileField()  {
-        InterleaveFactoryTestBuilderResult interleaveFactoryTestBuilderResult = new InterleaveFactoryTestBuilderResult();
-        InterleaveTestBuilder builder = new InterleaveTestBuilder(interleaveFactoryTestBuilderResult);
+    public void testReadWriteSingleVolatileField() {
+        ResultTestBuilderForInterleaveLoop resultTestBuilderForInterleaveLoop = new ResultTestBuilderForInterleaveLoop();
+        FeatureTestBuilder builder = new FeatureTestBuilder(resultTestBuilderForInterleaveLoop);
         builder.beginThread(MAIN_THREAD_INDEX);
         Position read = builder.readFirstVolatileField();
         builder.beginThread(FIRST_WORKER_THREAD_INDEX);
         Position write = builder.writeFirstVolatileField();
 
-        InterleaveTestMatcher matcher = new InterleaveTestMatcher();
-        matcher.leftBeforeRight(read,write);
-        matcher.leftBeforeRight(write,read);
+        FeatureTestMatcher matcher = new FeatureTestMatcher();
+        matcher.leftBeforeRight(read, write);
+        matcher.leftBeforeRight(write, read);
         matcher.runs(3);
 
-        new InterleaveTestRunner().run(interleaveFactoryTestBuilderResult.actualRun(),matcher);
+        new InterleaveTestRunner().run(resultTestBuilderForInterleaveLoop.actualRun(), matcher);
     }
 }

@@ -12,15 +12,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 
 public class ParallelizeTestRunner {
-    public void run(ParallelizeTestBuilder builder, ParallelizeTestMatcher matcher)  {
-        ParallelizeFacade.parallelizeLoopContainer =  new ParallelizeLoopContainer(
-                new ParallelizeLoopFactoryImpl(mock(WaitNotifyStrategy.class),new AgentLoggerForTest()));
+    public void run(ThreadIndexToElementList<ActionForTest> actualRun, ParallelizeTestMatcher matcher) {
+        ParallelizeFacade.parallelizeLoopContainer = new ParallelizeLoopContainer(
+                new ParallelizeLoopFactoryImpl(mock(WaitNotifyStrategy.class), new AgentLoggerForTest()));
         Object parallelizeLoopDefinition = new Object();
 
         int multiplyBy = 2;
-        ThreadIndexToElementList<ActionForTest> actualRun = builder.build();
         ThreadLocalWrapperMock[] loopThreadState = new ThreadLocalWrapperMock[actualRun.maxThreadIndex() + 1];
-        for(int i = 0; i <= actualRun.maxThreadIndex(); i++) {
+        for (int i = 0; i <= actualRun.maxThreadIndex(); i++) {
             loopThreadState[i] = new ThreadLocalWrapperMock(i * multiplyBy + 1);
         }
 
