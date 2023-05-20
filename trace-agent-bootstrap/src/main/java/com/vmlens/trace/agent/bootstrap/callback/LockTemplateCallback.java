@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Lock;
@@ -24,9 +23,10 @@ public class LockTemplateCallback {
 	{
 		
 		
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();	
-		access(  sync  , -1 , false, false);
-		access(  sync  , -1 , true, false);
+		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+		int identity = System.identityHashCode(sync);
+		access(  identity  , -1 , false, false);
+		access(  identity  , -1 , true, false);
 		
 		
 	
@@ -45,7 +45,7 @@ public class LockTemplateCallback {
 		if(lock.tryLock())
 		{
 			
-			access(  getSync( callbackStatePerThread, lock) , methodId , true, false);
+			access(  getIdentity( callbackStatePerThread, lock) , methodId , true, false);
 			return true;
 		}
 		else
@@ -73,7 +73,7 @@ public class LockTemplateCallback {
 		if(lock.tryLock(time, unit))
 		{
 			
-			access(  getSync( callbackStatePerThread, lock) , methodId , true, false);
+			access(  getIdentity( callbackStatePerThread, lock) , methodId , true, false);
 			return true;
 		}
 		else
@@ -99,7 +99,7 @@ public class LockTemplateCallback {
 		
 			
 		lock.lockInterruptibly();
-		access(  getSync( callbackStatePerThread, lock) , methodId , true, false);
+		access(  getIdentity( callbackStatePerThread, lock) , methodId , true, false);
 		
 		}
 		finally {
@@ -134,7 +134,7 @@ public class LockTemplateCallback {
 			}
 	
 		
-		access(  getSync( callbackStatePerThread, lock) , methodId , true, false);
+		access(  getIdentity( callbackStatePerThread, lock) , methodId , true, false);
 		
 	}
 	
@@ -151,7 +151,7 @@ public class LockTemplateCallback {
 			}
 			
 
-			access(  getSync( callbackStatePerThread, lock) , methodId , false, false);
+			access(  getIdentity( callbackStatePerThread, lock) , methodId , false, false);
 		
 		
 	}
@@ -173,7 +173,7 @@ public class LockTemplateCallback {
 				if(lock.tryLock())
 				{
 					
-					access( getSync( callbackStatePerThread, lock) , methodId , true, true);
+					access( getIdentity( callbackStatePerThread, lock) , methodId , true, true);
 					return true;
 				}
 				else
@@ -201,7 +201,7 @@ public class LockTemplateCallback {
 				if(lock.tryLock(time,unit))
 				{
 					
-					access( getSync( callbackStatePerThread, lock) , methodId , true, true);
+					access( getIdentity( callbackStatePerThread, lock) , methodId , true, true);
 					return true;
 				}
 				else
@@ -228,7 +228,7 @@ public class LockTemplateCallback {
 				 callbackStatePerThread.doNotInterleaveFromLock--;
 			}
 	
-		access( getSync( callbackStatePerThread, lock) , methodId , true, true);
+		access( getIdentity( callbackStatePerThread, lock) , methodId , true, true);
 		
 	}
 	
@@ -247,7 +247,7 @@ public class LockTemplateCallback {
 				 callbackStatePerThread.doNotInterleaveFromLock--;
 			}
 	
-		access( getSync( callbackStatePerThread, lock) , methodId , true, true);
+		access( getIdentity( callbackStatePerThread, lock) , methodId , true, true);
 		
 	}
 	
@@ -265,7 +265,7 @@ public class LockTemplateCallback {
 		
 		
 			
-		access(getSync( callbackStatePerThread, lock)  , methodId , false, true);
+		access(getIdentity( callbackStatePerThread, lock)  , methodId , false, true);
 		
 		
 	}
@@ -282,7 +282,7 @@ public class LockTemplateCallback {
 			if(lock.tryLock())
 			{
 				
-				access(getSync( callbackStatePerThread, lock) , methodId , true, false);
+				access(getIdentity( callbackStatePerThread, lock) , methodId , true, false);
 				return true;
 			}
 			else
@@ -307,7 +307,7 @@ public class LockTemplateCallback {
 			if(lock.tryLock(time , unit ))
 			{
 				
-				access(getSync( callbackStatePerThread, lock) , methodId , true, false);
+				access(getIdentity( callbackStatePerThread, lock) , methodId , true, false);
 				return true;
 			}
 			else
@@ -339,7 +339,7 @@ public class LockTemplateCallback {
 	
 		
 		
-		access(getSync( callbackStatePerThread, lock) , methodId , true, false);
+		access(getIdentity( callbackStatePerThread, lock) , methodId , true, false);
 		
 	}
 	
@@ -364,7 +364,7 @@ public class LockTemplateCallback {
 	
 		
 		
-		access(getSync( callbackStatePerThread, lock) , methodId , true, false);
+		access(getIdentity( callbackStatePerThread, lock) , methodId , true, false);
 		
 	}
 	
@@ -390,7 +390,7 @@ public class LockTemplateCallback {
 		
 		
 		
-		access( getSync( callbackStatePerThread, lock)  , methodId , false, false);
+		access( getIdentity( callbackStatePerThread, lock)  , methodId , false, false);
 		
 		
 	}
@@ -550,32 +550,22 @@ public class LockTemplateCallback {
 	
 	
 	
-	private static Object getSync(CallbackStatePerThread callbackStatePerThread , Object theLock)
+	private static int getIdentity(final CallbackStatePerThread callbackStatePerThread , final Object theLock)
 	{
 		callbackStatePerThread.stackTraceBasedDoNotTrace++;
 		try {
-		
-			Field f = theLock.getClass().getDeclaredField("sync");
-			f.setAccessible(true);
-			return f.get(theLock);
-			
-		
-		} catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-			throw new RuntimeException(e);
+			return System.identityHashCode(theLock);
 		}
 		finally {
 			callbackStatePerThread.stackTraceBasedDoNotTrace--;
 		}
-		
-		
-		
 	}
 	
 
 	
 	
 	
-	protected static void access(Object theSync ,  int methodId, boolean isLockEnter, boolean isShared  )
+	protected static void access(final int identity, final int methodId, boolean isLockEnter, boolean isShared  )
 	{
 	
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();	
@@ -588,13 +578,13 @@ public class LockTemplateCallback {
 				  ParallizeFacade.afterLockOperation(callbackStatePerThread, new LockEnterOrExit(isShared));
 			  }
 			  
-			  ParallizeFacade.onLock(callbackStatePerThread, new LockEnter(isShared, System.identityHashCode(theSync) ));
+			  ParallizeFacade.onLock(callbackStatePerThread, new LockEnter(isShared, identity ));
 			  
 		}
 		else
 		{	 
 			
-			  ParallizeFacade.onLock(callbackStatePerThread, new LockExit(isShared, System.identityHashCode(theSync)  ));
+			  ParallizeFacade.onLock(callbackStatePerThread, new LockExit(isShared, identity  ));
 			
 			if( ! isShared )
 			  {
