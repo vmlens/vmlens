@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
 import java.util.Objects;
 
@@ -51,9 +50,9 @@ public class AlternatingOrderElement implements Comparable<AlternatingOrderEleme
 
     @Override
     public String toString() {
-        return "AlternatingOrderElement{" +
-                "alternativeOne=" + alternativeOne +
-                ", alternativeTwo=" + alternativeTwo +
-                '}';
+        if (alternativeOne.equals(alternativeTwo.inverse())) {
+            return "both" + alternativeOne;
+        }
+        return alternativeOne + "or" + alternativeTwo;
     }
 }

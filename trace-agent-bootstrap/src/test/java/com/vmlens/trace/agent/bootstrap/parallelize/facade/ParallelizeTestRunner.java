@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.AgentLoggerForTest;
+import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeFacadeImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopContainer;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFactoryImpl;
@@ -13,8 +14,10 @@ import static org.mockito.Mockito.mock;
 
 public class ParallelizeTestRunner {
     public void run(ThreadIndexToElementList<ActionForTest> actualRun, ParallelizeTestMatcher matcher) {
-        ParallelizeFacade.parallelizeLoopContainer = new ParallelizeLoopContainer(
-                new ParallelizeLoopFactoryImpl(mock(WaitNotifyStrategy.class), new AgentLoggerForTest()));
+
+        ParallelizeFacadeImpl parallelizeFacadeImpl = new ParallelizeFacadeImpl(new ParallelizeLoopContainer(
+                new ParallelizeLoopFactoryImpl(mock(WaitNotifyStrategy.class),
+                        new AgentLoggerForTest())));
         Object parallelizeLoopDefinition = new Object();
 
         int multiplyBy = 2;
@@ -23,7 +26,7 @@ public class ParallelizeTestRunner {
             loopThreadState[i] = new ThreadLocalWrapperMock(i * multiplyBy + 1);
         }
 
-        while(ParallelizeFacade.hasNext(loopThreadState[0],parallelizeLoopDefinition)) {
+        while (parallelizeFacadeImpl.hasNext(loopThreadState[0], parallelizeLoopDefinition)) {
             matcher.advance();
             ThreadIndexToElementList<ActionForTest> clone = actualRun.safeClone();
             while (!clone.isEmpty()) {
@@ -32,7 +35,7 @@ public class ParallelizeTestRunner {
                     if (!clone.isEmptyAtIndex(i)) {
                         if (loopThreadState[i].isActive()) {
                             ActionForTest actionForTest = clone.getAndRemoveAtIndex(i);
-                            actionForTest.execute(loopThreadState);
+                            actionForTest.execute(parallelizeFacadeImpl, loopThreadState);
                             matcher.executed(actionForTest.position());
                             oneThreadWasActive = true;
                             break;

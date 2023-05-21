@@ -46,13 +46,20 @@ public class RunStateMachineImpl implements RunStateMachine {
         currentState.addTaskStartedInterleaveAction(testThreadState, actualRun);
         currentState = stateAfterNewThreadStarted;
     }
+
     @Override
     public boolean isNewTestTask(RunnableOrThreadWrapper newWrapper) {
         return currentState.isNewTestTask(newWrapper);
     }
+
     @Override
     public void end() {
         interleaveLoop.addActualRun(actualRun);
         currentState = new RunStateEnd();
+    }
+
+    @Override
+    public ActualRun actualRun() {
+        return actualRun;
     }
 }

@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.ResultTestBuilder;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeFacadeImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ThreadLocalWrapperMock;
 
 public class ResultTestBuilderForParallelize implements ResultTestBuilder {
@@ -15,8 +16,8 @@ public class ResultTestBuilderForParallelize implements ResultTestBuilder {
     public void volatileAccess(final int fieldId, final int operation, Position position) {
         actualRun.add(new ActionForTest(position) {
             @Override
-            public void execute(ThreadLocalWrapperMock[] loopThreadStateArray) {
-                ParallelizeFacade.afterFieldAccessVolatile(loopThreadStateArray[threadIndex()], fieldId, operation);
+            public void execute(ParallelizeFacadeImpl parallelizeFacadeImpl, ThreadLocalWrapperMock[] loopThreadStateArray) {
+                parallelizeFacadeImpl.afterFieldAccessVolatile(loopThreadStateArray[threadIndex()], fieldId, operation);
             }
         });
     }
@@ -25,10 +26,10 @@ public class ResultTestBuilderForParallelize implements ResultTestBuilder {
     public void startThread(final int index, Position temp) {
         actualRun.add(new ActionForTest(temp) {
             @Override
-            public void execute(ThreadLocalWrapperMock[] loopThreadStateArray) {
-                ParallelizeFacade.beforeThreadStart(loopThreadStateArray[threadIndex()],
+            public void execute(ParallelizeFacadeImpl parallelizeFacadeImpl, ThreadLocalWrapperMock[] loopThreadStateArray) {
+                parallelizeFacadeImpl.beforeThreadStart(loopThreadStateArray[threadIndex()],
                         new RunnableOrThreadWrapper(loopThreadStateArray[index]));
-                ParallelizeFacade.beginThreadMethodEnter(loopThreadStateArray[index],
+                parallelizeFacadeImpl.beginThreadMethodEnter(loopThreadStateArray[index],
                         new RunnableOrThreadWrapper(loopThreadStateArray[index]));
             }
         });

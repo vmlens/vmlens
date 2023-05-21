@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 /**
- *
- * @hides the algorithm to calculate all binary permutations for a given length
- * @utilityClass
+ * hides the algorithm to calculate all binary permutations for a given length
  */
 public class PermutationIterator {
 

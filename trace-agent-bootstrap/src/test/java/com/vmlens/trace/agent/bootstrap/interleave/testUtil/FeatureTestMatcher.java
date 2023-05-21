@@ -24,6 +24,11 @@ public class FeatureTestMatcher {
         expectedLeftBeforeRight.add(new LeftBeforeRight(left, right));
     }
 
+    public void both(Position left, Position right) {
+        expectedLeftBeforeRight.add(new LeftBeforeRight(left, right));
+        expectedLeftBeforeRight.add(new LeftBeforeRight(right, left));
+    }
+
     public void runs(int i) {
         expectedRuns = i;
     }

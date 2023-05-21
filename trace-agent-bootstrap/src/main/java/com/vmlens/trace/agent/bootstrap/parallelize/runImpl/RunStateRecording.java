@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
@@ -38,11 +39,6 @@ public class RunStateRecording implements RunState, ActionContext {
     }
 
     @Override
-    public ActualRun getCalculatedRun() {
-        return actualRun;
-    }
-
-    @Override
     public RunState current() {
         return this;
     }
@@ -50,5 +46,10 @@ public class RunStateRecording implements RunState, ActionContext {
     @Override
     public RunState threadStarted(RunnableOrThreadWrapper startedThread, TestThreadState testThreadState) {
         return new RunStateNewThreadStarted(startedThread, testThreadState);
+    }
+
+    @Override
+    public void after(InterleaveActionWithPositionFactory interleaveActionWithPositionFactory) {
+        actualRun.after(interleaveActionWithPositionFactory);
     }
 }

@@ -1,3824 +1,3414 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import com.vmlens.trace.agent.bootstrap.callback.QueueCollectionWrapper;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizedThreadFacade;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizedThreadLocal;
+
 
 public abstract class AbstractSendEvent implements SendEvent {
 
-	public static final int ID_Field		= 0;
-	public static final int ID_SyncActions 	= 1;
-	public static final int ID_Monitor 		= 2;
-	public static final int ID_Method 		= 3;
-	public static final int ID_DirectMemory = 4;
-	public static final int ID_Scheduler 	= 5;
-	public static final int ID_Transfer 	= 6;
-	public static final int ID_State 	    = 7;
-	public static final int ID_StateInitial = 8;
-	
-	protected abstract long threadId();
-	protected abstract QueueCollectionWrapper  getQueueCollection();
-	protected abstract ParallizedThreadFacade getParallizedThreadFacade();
-	
-	
+    public static final int ID_Field = 0;
+    public static final int ID_SyncActions = 1;
+    public static final int ID_Monitor = 2;
+    public static final int ID_Method = 3;
+    public static final int ID_DirectMemory = 4;
+    public static final int ID_Scheduler = 5;
+    public static final int ID_Transfer = 6;
+    public static final int ID_State = 7;
+    public static final int ID_StateInitial = 8;
 
+    protected abstract long threadId();
 
+    protected abstract QueueCollectionWrapper getQueueCollection();
 
-   public void writeFieldAccessEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     operation
-, final  int     methodId
-, final  boolean     stackTraceIncomplete
-, final  long     objectHashCode
-)
-{
+    protected abstract ParallelizedThreadLocal getParallelizedThreadLocal();
 
 
+    public void writeFieldAccessEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int fieldId
+            , final int methodCounter
+            , final int operation
+            , final int methodId
+            , final boolean stackTraceIncomplete
+            , final long objectHashCode
+    ) {
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(FieldAccessEventGen.class) )
-{
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
- getQueueCollection().put( ID_Field , 
-EventFactory.createFieldAccessEventGenInterleave ( slidingWindowId
-,  
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(FieldAccessEventGen.class)) {
 
-threadId()
+            getQueueCollection().put(ID_Field,
+                    EventFactory.createFieldAccessEventGenInterleave(slidingWindowId
+                            ,
 
-,  
+                            threadId()
 
-programCounter
+                            ,
 
-,  
+                            programCounter
 
-fieldId
+                            ,
 
-,  
+                            fieldId
 
-methodCounter
+                            ,
 
-,  
+                            methodCounter
 
-operation
+                            ,
 
-,  
+                            operation
 
-methodId
+                            ,
 
-,  
+                            methodId
 
-stackTraceIncomplete
+                            ,
 
-,  
+                            stackTraceIncomplete
 
-objectHashCode
+                            ,
 
+                            objectHashCode
 
- , parallizedThreadFacade.showNonVolatileMemoryAccess()
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
+                            , ParallelizedThreadLocal.showNonVolatileMemoryAccess()
 
-) , slidingWindowId
-);
-}
-else
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-{
- getQueueCollection().put( ID_Field , 
-					
-							
-							EventFactory.createFieldAccessEventGen ( slidingWindowId
-,  
-threadId()
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_Field,
 
 
-,  
-programCounter
+                    EventFactory.createFieldAccessEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
-,  
-fieldId
+                            ,
+                            programCounter
 
 
-,  
-methodCounter
+                            ,
+                            fieldId
 
 
-,  
-operation
+                            ,
+                            methodCounter
 
 
-,  
-methodId
+                            ,
+                            operation
 
 
-,  
-stackTraceIncomplete
+                            ,
+                            methodId
 
 
-,  
-objectHashCode
+                            ,
+                            stackTraceIncomplete
 
 
-) , slidingWindowId
-);
+                            ,
+                            objectHashCode
 
-}
 
+                    ), slidingWindowId
+            );
 
-}
+        }
 
 
+    }
 
 
+    public void writeFieldAccessEventStaticGen(final int slidingWindowId
+            , final int programCounter
+            , final int fieldId
+            , final int methodCounter
+            , final int operation
+            , final int methodId
+            , final boolean stackTraceIncomplete
+    ) {
 
 
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(FieldAccessEventStaticGen.class)) {
 
-   public void writeFieldAccessEventStaticGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     operation
-, final  int     methodId
-, final  boolean     stackTraceIncomplete
-)
-{
+            getQueueCollection().put(ID_Field,
+                    EventFactory.createFieldAccessEventStaticGenInterleave(slidingWindowId
+                            ,
 
+                            threadId()
 
+                            ,
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+                            programCounter
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(FieldAccessEventStaticGen.class) )
-{
+                            ,
 
- getQueueCollection().put( ID_Field , 
-EventFactory.createFieldAccessEventStaticGenInterleave ( slidingWindowId
-,  
+                            fieldId
 
-threadId()
+                            ,
 
-,  
+                            methodCounter
 
-programCounter
+                            ,
 
-,  
+                            operation
 
-fieldId
+                            ,
 
-,  
+                            methodId
 
-methodCounter
+                            ,
 
-,  
+                            stackTraceIncomplete
 
-operation
 
-,  
+                            , ParallelizedThreadLocal.showNonVolatileMemoryAccess()
 
-methodId
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-,  
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_Field,
 
-stackTraceIncomplete
 
+                    EventFactory.createFieldAccessEventStaticGen(slidingWindowId
+                            ,
+                            threadId()
 
- , parallizedThreadFacade.showNonVolatileMemoryAccess()
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
+                            ,
+                            programCounter
 
-) , slidingWindowId
-);
-}
-else
 
-{
- getQueueCollection().put( ID_Field , 
-					
-							
-							EventFactory.createFieldAccessEventStaticGen ( slidingWindowId
-,  
-threadId()
+                            ,
+                            fieldId
 
 
-,  
-programCounter
+                            ,
+                            methodCounter
 
 
-,  
-fieldId
+                            ,
+                            operation
 
 
-,  
-methodCounter
+                            ,
+                            methodId
 
 
-,  
-operation
+                            ,
+                            stackTraceIncomplete
 
 
-,  
-methodId
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
-stackTraceIncomplete
 
+    }
 
-) , slidingWindowId
-);
 
-}
+    public void writeArrayAccessEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int fieldId
+            , final int methodCounter
+            , final int operation
+            , final int methodId
+            , final boolean stackTraceIncomplete
+            , final long objectHashCode
+            , final int position
+            , final int classId
+    ) {
 
 
-}
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(ArrayAccessEventGen.class)) {
 
+            getQueueCollection().put(ID_Field,
+                    EventFactory.createArrayAccessEventGenInterleave(slidingWindowId
+                            ,
 
+                            threadId()
 
+                            ,
 
+                            programCounter
 
+                            ,
 
+                            fieldId
 
-   public void writeArrayAccessEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     operation
-, final  int     methodId
-, final  boolean     stackTraceIncomplete
-, final  long     objectHashCode
-, final  int     position
-, final  int     classId
-)
-{
+                            ,
 
+                            methodCounter
 
+                            ,
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+                            operation
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(ArrayAccessEventGen.class) )
-{
+                            ,
 
- getQueueCollection().put( ID_Field , 
-EventFactory.createArrayAccessEventGenInterleave ( slidingWindowId
-,  
+                            methodId
 
-threadId()
+                            ,
 
-,  
+                            stackTraceIncomplete
 
-programCounter
+                            ,
 
-,  
+                            objectHashCode
 
-fieldId
+                            ,
 
-,  
+                            position
 
-methodCounter
+                            ,
 
-,  
+                            classId
 
-operation
 
-,  
+                            , ParallelizedThreadLocal.showNonVolatileMemoryAccess()
 
-methodId
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-,  
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_Field,
 
-stackTraceIncomplete
 
-,  
+                    EventFactory.createArrayAccessEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-objectHashCode
 
-,  
+                            ,
+                            programCounter
 
-position
 
-,  
+                            ,
+                            fieldId
 
-classId
 
+                            ,
+                            methodCounter
 
- , parallizedThreadFacade.showNonVolatileMemoryAccess()
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
+                            ,
+                            operation
 
-) , slidingWindowId
-);
-}
-else
 
-{
- getQueueCollection().put( ID_Field , 
-					
-							
-							EventFactory.createArrayAccessEventGen ( slidingWindowId
-,  
-threadId()
+                            ,
+                            methodId
 
 
-,  
-programCounter
+                            ,
+                            stackTraceIncomplete
 
 
-,  
-fieldId
+                            ,
+                            objectHashCode
 
 
-,  
-methodCounter
+                            ,
+                            position
 
 
-,  
-operation
+                            ,
+                            classId
 
 
-,  
-methodId
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
-stackTraceIncomplete
 
+    }
 
-,  
-objectHashCode
 
+    public void writeVolatileAccessEventStaticGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int fieldId
+            , final int methodCounter
+            , final int methodId
+            , final boolean isWrite
+    ) {
 
-,  
-position
 
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
-,  
-classId
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(VolatileAccessEventStaticGen.class)) {
 
+            getQueueCollection().put(ID_SyncActions,
+                    EventFactory.createVolatileAccessEventStaticGenInterleave(slidingWindowId
+                            ,
 
-) , slidingWindowId
-);
+                            threadId()
 
-}
+                            ,
 
+                            programCounter
 
-}
+                            ,
 
+                            order
 
+                            ,
 
+                            fieldId
 
+                            ,
 
+                            methodCounter
 
+                            ,
 
+                            methodId
 
-   public void writeVolatileAccessEventStaticGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     methodId
-, final  boolean     isWrite
-)
-{
+                            ,
 
+                            isWrite
 
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(VolatileAccessEventStaticGen.class) )
-{
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_SyncActions,
 
- getQueueCollection().put( ID_SyncActions , 
-EventFactory.createVolatileAccessEventStaticGenInterleave ( slidingWindowId
-,  
 
-threadId()
+                    EventFactory.createVolatileAccessEventStaticGen(slidingWindowId
+                            ,
+                            threadId()
 
-,  
 
-programCounter
+                            ,
+                            programCounter
 
-,  
 
-order
+                            ,
+                            order
 
-,  
 
-fieldId
+                            ,
+                            fieldId
 
-,  
 
-methodCounter
+                            ,
+                            methodCounter
 
-,  
 
-methodId
+                            ,
+                            methodId
 
-,  
 
-isWrite
+                            ,
+                            isWrite
 
 
+                    ), slidingWindowId
+            );
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
+        }
 
-) , slidingWindowId
-);
-}
-else
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createVolatileAccessEventStaticGen ( slidingWindowId
-,  
-threadId()
+    }
 
 
-,  
-programCounter
+    public void writeVolatileAccessEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int fieldId
+            , final int methodCounter
+            , final int methodId
+            , final int operation
+            , final long objectHashCode
+    ) {
 
 
-,  
-order
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(VolatileAccessEventGen.class)) {
 
-,  
-fieldId
+            getQueueCollection().put(ID_SyncActions,
+                    EventFactory.createVolatileAccessEventGenInterleave(slidingWindowId
+                            ,
 
+                            threadId()
 
-,  
-methodCounter
+                            ,
 
+                            programCounter
 
-,  
-methodId
+                            ,
 
+                            order
 
-,  
-isWrite
+                            ,
 
+                            fieldId
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            methodCounter
 
+                            ,
 
-}
+                            methodId
 
+                            ,
 
+                            operation
 
+                            ,
 
+                            objectHashCode
 
 
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_SyncActions,
 
-   public void writeVolatileAccessEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     methodId
-, final  int     operation
-, final  long     objectHashCode
-)
-{
 
+                    EventFactory.createVolatileAccessEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+                            ,
+                            programCounter
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(VolatileAccessEventGen.class) )
-{
 
- getQueueCollection().put( ID_SyncActions , 
-EventFactory.createVolatileAccessEventGenInterleave ( slidingWindowId
-,  
+                            ,
+                            order
 
-threadId()
 
-,  
+                            ,
+                            fieldId
 
-programCounter
 
-,  
+                            ,
+                            methodCounter
 
-order
 
-,  
+                            ,
+                            methodId
 
-fieldId
 
-,  
+                            ,
+                            operation
 
-methodCounter
 
-,  
+                            ,
+                            objectHashCode
 
-methodId
 
-,  
+                    ), slidingWindowId
+            );
 
-operation
+        }
 
-,  
 
-objectHashCode
+    }
 
 
+    public void writeVolatileArrayAccessEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final long index
+            , final int methodCounter
+            , final int methodId
+            , final int operation
+            , final long objectHashCode
+    ) {
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
 
-) , slidingWindowId
-);
-}
-else
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createVolatileAccessEventGen ( slidingWindowId
-,  
-threadId()
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(VolatileArrayAccessEventGen.class)) {
 
+            getQueueCollection().put(ID_SyncActions,
+                    EventFactory.createVolatileArrayAccessEventGenInterleave(slidingWindowId
+                            ,
 
-,  
-programCounter
+                            threadId()
 
+                            ,
 
-,  
-order
+                            programCounter
 
+                            ,
 
-,  
-fieldId
+                            order
 
+                            ,
 
-,  
-methodCounter
+                            index
 
+                            ,
 
-,  
-methodId
+                            methodCounter
 
+                            ,
 
-,  
-operation
+                            methodId
 
+                            ,
 
-,  
-objectHashCode
+                            operation
 
+                            ,
 
-) , slidingWindowId
-);
+                            objectHashCode
 
-}
 
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-}
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_SyncActions,
 
 
+                    EventFactory.createVolatileArrayAccessEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
+                            ,
+                            programCounter
 
 
+                            ,
+                            order
 
 
-   public void writeVolatileArrayAccessEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  long     index
-, final  int     methodCounter
-, final  int     methodId
-, final  int     operation
-, final  long     objectHashCode
-)
-{
+                            ,
+                            index
 
 
+                            ,
+                            methodCounter
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(VolatileArrayAccessEventGen.class) )
-{
+                            ,
+                            methodId
 
- getQueueCollection().put( ID_SyncActions , 
-EventFactory.createVolatileArrayAccessEventGenInterleave ( slidingWindowId
-,  
 
-threadId()
+                            ,
+                            operation
 
-,  
 
-programCounter
+                            ,
+                            objectHashCode
 
-,  
 
-order
+                    ), slidingWindowId
+            );
 
-,  
+        }
 
-index
 
-,  
+    }
 
-methodCounter
 
-,  
+    public void writeVolatileDirectMemoryEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int methodCounter
+            , final long objectHashCode
+            , final int operation
+            , final int order
+    ) {
 
-methodId
+        {
+            getQueueCollection().put(ID_DirectMemory,
 
-,  
 
-operation
+                    EventFactory.createVolatileDirectMemoryEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-,  
 
-objectHashCode
+                            ,
+                            programCounter
 
 
+                            ,
+                            methodCounter
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
 
-) , slidingWindowId
-);
-}
-else
+                            ,
+                            objectHashCode
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createVolatileArrayAccessEventGen ( slidingWindowId
-,  
-threadId()
 
+                            ,
+                            operation
 
-,  
-programCounter
 
+                            ,
+                            order
 
-,  
-order
 
+                    ), slidingWindowId
+            );
 
-,  
-index
+        }
 
 
-,  
-methodCounter
+    }
 
 
-,  
-methodId
+    public void writeLockEnterEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final boolean isShared
+            , final int lockTyp
+    ) {
 
 
-,  
-operation
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(LockEnterEventGen.class)) {
 
-,  
-objectHashCode
+            getQueueCollection().put(ID_SyncActions,
+                    EventFactory.createLockEnterEventGenInterleave(slidingWindowId
+                            ,
 
+                            threadId()
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            programCounter
 
+                            ,
 
-}
+                            order
 
+                            ,
 
+                            monitorId
 
+                            ,
 
+                            methodCounter
 
+                            ,
 
+                            isShared
 
+                            ,
 
-   public void writeVolatileDirectMemoryEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     methodCounter
-, final  long     objectHashCode
-, final  int     operation
-, final  int     order
-)
-{
+                            lockTyp
 
-{
- getQueueCollection().put( ID_DirectMemory , 
-					
-							
-							EventFactory.createVolatileDirectMemoryEventGen ( slidingWindowId
-,  
-threadId()
 
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-,  
-programCounter
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_SyncActions,
 
 
-,  
-methodCounter
+                    EventFactory.createLockEnterEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
-,  
-objectHashCode
+                            ,
+                            programCounter
 
 
-,  
-operation
+                            ,
+                            order
 
 
-,  
-order
+                            ,
+                            monitorId
 
 
-) , slidingWindowId
-);
+                            ,
+                            methodCounter
 
-}
 
+                            ,
+                            isShared
 
-}
 
+                            ,
+                            lockTyp
 
 
+                    ), slidingWindowId
+            );
 
+        }
 
-   public void writeLockEnterEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  boolean     isShared
-, final  int     lockTyp
-)
-{
 
+    }
 
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+    public void writeLockExitEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final boolean isShared
+            , final int lockTyp
+    ) {
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(LockEnterEventGen.class) )
-{
 
- getQueueCollection().put( ID_SyncActions , 
-EventFactory.createLockEnterEventGenInterleave ( slidingWindowId
-,  
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
-threadId()
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(LockExitEventGen.class)) {
 
-,  
+            getQueueCollection().put(ID_SyncActions,
+                    EventFactory.createLockExitEventGenInterleave(slidingWindowId
+                            ,
 
-programCounter
+                            threadId()
 
-,  
+                            ,
 
-order
+                            programCounter
 
-,  
+                            ,
 
-monitorId
+                            order
 
-,  
+                            ,
 
-methodCounter
+                            monitorId
 
-,  
+                            ,
 
-isShared
+                            methodCounter
 
-,  
+                            ,
 
-lockTyp
+                            isShared
 
+                            ,
 
+                            lockTyp
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
 
-) , slidingWindowId
-);
-}
-else
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createLockEnterEventGen ( slidingWindowId
-,  
-threadId()
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_SyncActions,
 
 
-,  
-programCounter
+                    EventFactory.createLockExitEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
-,  
-order
+                            ,
+                            programCounter
 
 
-,  
-monitorId
+                            ,
+                            order
 
 
-,  
-methodCounter
+                            ,
+                            monitorId
 
 
-,  
-isShared
+                            ,
+                            methodCounter
 
 
-,  
-lockTyp
+                            ,
+                            isShared
 
 
-) , slidingWindowId
-);
+                            ,
+                            lockTyp
 
-}
 
+                    ), slidingWindowId
+            );
 
-}
+        }
 
 
+    }
 
 
+    public void writeStampedLockEnterEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final boolean isShared
+            , final int lockTyp
+            , final int stampedLockMethodId
+    ) {
 
 
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(StampedLockEnterEventGen.class)) {
 
-   public void writeLockExitEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  boolean     isShared
-, final  int     lockTyp
-)
-{
+            getQueueCollection().put(ID_SyncActions,
+                    EventFactory.createStampedLockEnterEventGenInterleave(slidingWindowId
+                            ,
 
+                            threadId()
 
+                            ,
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+                            programCounter
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(LockExitEventGen.class) )
-{
+                            ,
 
- getQueueCollection().put( ID_SyncActions , 
-EventFactory.createLockExitEventGenInterleave ( slidingWindowId
-,  
+                            order
 
-threadId()
+                            ,
 
-,  
+                            monitorId
 
-programCounter
+                            ,
 
-,  
+                            methodCounter
 
-order
+                            ,
 
-,  
+                            isShared
 
-monitorId
+                            ,
 
-,  
+                            lockTyp
 
-methodCounter
+                            ,
 
-,  
+                            stampedLockMethodId
 
-isShared
 
-,  
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-lockTyp
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_SyncActions,
 
 
+                    EventFactory.createStampedLockEnterEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
 
-) , slidingWindowId
-);
-}
-else
+                            ,
+                            programCounter
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createLockExitEventGen ( slidingWindowId
-,  
-threadId()
 
+                            ,
+                            order
 
-,  
-programCounter
 
+                            ,
+                            monitorId
 
-,  
-order
 
+                            ,
+                            methodCounter
 
-,  
-monitorId
 
+                            ,
+                            isShared
 
-,  
-methodCounter
 
+                            ,
+                            lockTyp
 
-,  
-isShared
 
+                            ,
+                            stampedLockMethodId
 
-,  
-lockTyp
 
+                    ), slidingWindowId
+            );
 
-) , slidingWindowId
-);
+        }
 
-}
 
+    }
 
-}
 
+    public void writeStampedLockExitEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final boolean isShared
+            , final int lockTyp
+            , final int stampedLockMethodId
+    ) {
 
 
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(StampedLockExitEventGen.class)) {
 
+            getQueueCollection().put(ID_SyncActions,
+                    EventFactory.createStampedLockExitEventGenInterleave(slidingWindowId
+                            ,
 
+                            threadId()
 
+                            ,
 
-   public void writeStampedLockEnterEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  boolean     isShared
-, final  int     lockTyp
-, final  int     stampedLockMethodId
-)
-{
+                            programCounter
 
+                            ,
 
+                            order
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+                            ,
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(StampedLockEnterEventGen.class) )
-{
+                            monitorId
 
- getQueueCollection().put( ID_SyncActions , 
-EventFactory.createStampedLockEnterEventGenInterleave ( slidingWindowId
-,  
+                            ,
 
-threadId()
+                            methodCounter
 
-,  
+                            ,
 
-programCounter
+                            isShared
 
-,  
+                            ,
 
-order
+                            lockTyp
 
-,  
+                            ,
 
-monitorId
+                            stampedLockMethodId
 
-,  
 
-methodCounter
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-,  
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_SyncActions,
 
-isShared
 
-,  
+                    EventFactory.createStampedLockExitEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-lockTyp
 
-,  
+                            ,
+                            programCounter
 
-stampedLockMethodId
 
+                            ,
+                            order
 
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
+                            ,
+                            monitorId
 
-) , slidingWindowId
-);
-}
-else
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createStampedLockEnterEventGen ( slidingWindowId
-,  
-threadId()
+                            ,
+                            methodCounter
 
 
-,  
-programCounter
+                            ,
+                            isShared
 
 
-,  
-order
+                            ,
+                            lockTyp
 
 
-,  
-monitorId
+                            ,
+                            stampedLockMethodId
 
 
-,  
-methodCounter
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
-isShared
 
+    }
 
-,  
-lockTyp
 
+    public void writeMonitorEnterEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final int methodId
+            , final int position
+    ) {
 
-,  
-stampedLockMethodId
 
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
-) , slidingWindowId
-);
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(MonitorEnterEventGen.class)) {
 
-}
+            getQueueCollection().put(ID_Monitor,
+                    EventFactory.createMonitorEnterEventGenInterleave(slidingWindowId
+                            ,
 
+                            threadId()
 
-}
+                            ,
 
+                            programCounter
 
+                            ,
 
+                            order
 
+                            ,
 
+                            monitorId
 
+                            ,
 
+                            methodCounter
 
-   public void writeStampedLockExitEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  boolean     isShared
-, final  int     lockTyp
-, final  int     stampedLockMethodId
-)
-{
+                            ,
 
+                            methodId
 
+                            ,
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+                            position
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(StampedLockExitEventGen.class) )
-{
 
- getQueueCollection().put( ID_SyncActions , 
-EventFactory.createStampedLockExitEventGenInterleave ( slidingWindowId
-,  
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
-threadId()
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_Monitor,
 
-,  
 
-programCounter
+                    EventFactory.createMonitorEnterEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-,  
 
-order
+                            ,
+                            programCounter
 
-,  
 
-monitorId
+                            ,
+                            order
 
-,  
 
-methodCounter
+                            ,
+                            monitorId
 
-,  
 
-isShared
+                            ,
+                            methodCounter
 
-,  
 
-lockTyp
+                            ,
+                            methodId
 
-,  
 
-stampedLockMethodId
+                            ,
+                            position
 
 
+                    ), slidingWindowId
+            );
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
+        }
 
-) , slidingWindowId
-);
-}
-else
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createStampedLockExitEventGen ( slidingWindowId
-,  
-threadId()
+    }
 
 
-,  
-programCounter
+    public void writeMonitorExitEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final int methodId
+            , final int position
+    ) {
 
 
-,  
-order
+        ParallelizedThreadLocal ParallelizedThreadLocal = getParallelizedThreadLocal();
 
+        if (ParallelizedThreadLocal != null && ParallelizedThreadLocal.sendAsInterleaveEvent(MonitorExitEventGen.class)) {
 
-,  
-monitorId
+            getQueueCollection().put(ID_Monitor,
+                    EventFactory.createMonitorExitEventGenInterleave(slidingWindowId
+                            ,
 
+                            threadId()
 
-,  
-methodCounter
+                            ,
 
+                            programCounter
 
-,  
-isShared
+                            ,
 
+                            order
 
-,  
-lockTyp
+                            ,
 
+                            monitorId
 
-,  
-stampedLockMethodId
+                            ,
 
+                            methodCounter
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            methodId
 
+                            ,
 
-}
+                            position
 
 
+                            , ParallelizedThreadLocal.loopId()
+                            , ParallelizedThreadLocal.runId()
+                            , ParallelizedThreadLocal.runPosition()
 
+                    ), slidingWindowId
+            );
+        } else {
+            getQueueCollection().put(ID_Monitor,
 
 
+                    EventFactory.createMonitorExitEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
+                            ,
+                            programCounter
 
-   public void writeMonitorEnterEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  int     methodId
-, final  int     position
-)
-{
 
+                            ,
+                            order
 
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
+                            ,
+                            monitorId
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(MonitorEnterEventGen.class) )
-{
 
- getQueueCollection().put( ID_Monitor , 
-EventFactory.createMonitorEnterEventGenInterleave ( slidingWindowId
-,  
+                            ,
+                            methodCounter
 
-threadId()
 
-,  
+                            ,
+                            methodId
 
-programCounter
 
-,  
+                            ,
+                            position
 
-order
 
-,  
+                    ), slidingWindowId
+            );
 
-monitorId
+        }
 
-,  
 
-methodCounter
+    }
 
-,  
 
-methodId
+    public void writeMethodEnterEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
-,  
+        {
+            getQueueCollection().put(ID_Method,
 
-position
 
+                    EventFactory.createMethodEnterEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
+                            ,
+                            methodId
 
-) , slidingWindowId
-);
-}
-else
 
-{
- getQueueCollection().put( ID_Monitor , 
-					
-							
-							EventFactory.createMonitorEnterEventGen ( slidingWindowId
-,  
-threadId()
+                            ,
+                            methodCounter
 
 
-,  
-programCounter
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
-order
 
+    }
 
-,  
-monitorId
 
+    public void writeMethodExitEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
-,  
-methodCounter
+        {
+            getQueueCollection().put(ID_Method,
 
 
-,  
-methodId
+                    EventFactory.createMethodExitEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
-,  
-position
+                            ,
+                            methodId
 
 
-) , slidingWindowId
-);
+                            ,
+                            methodCounter
 
-}
 
+                    ), slidingWindowId
+            );
 
-}
+        }
 
 
+    }
 
 
+    public void writeParallizedMethodEnterEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+            , final int parallizeId
+    ) {
 
-   public void writeMonitorExitEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  int     methodId
-, final  int     position
-)
-{
+        {
+            getQueueCollection().put(ID_Method,
 
 
+                    EventFactory.createParallizedMethodEnterEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-ParallizedThreadFacade parallizedThreadFacade = getParallizedThreadFacade();
 
-if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent(MonitorExitEventGen.class) )
-{
+                            ,
+                            methodId
 
- getQueueCollection().put( ID_Monitor , 
-EventFactory.createMonitorExitEventGenInterleave ( slidingWindowId
-,  
 
-threadId()
+                            ,
+                            methodCounter
 
-,  
 
-programCounter
+                            ,
+                            parallizeId
 
-,  
 
-order
+                    ), slidingWindowId
+            );
 
-,  
+        }
 
-monitorId
 
-,  
+    }
 
-methodCounter
 
-,  
+    public void writeParallizedMethodExitEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
-methodId
+        {
+            getQueueCollection().put(ID_Method,
 
-,  
 
-position
+                    EventFactory.createParallizedMethodExitEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
+                            ,
+                            methodId
 
-, parallizedThreadFacade.loopId()
-,  parallizedThreadFacade.runId()
-,  parallizedThreadFacade.runPosition()
 
-) , slidingWindowId
-);
-}
-else
+                            ,
+                            methodCounter
 
-{
- getQueueCollection().put( ID_Monitor , 
-					
-							
-							EventFactory.createMonitorExitEventGen ( slidingWindowId
-,  
-threadId()
 
+                    ), slidingWindowId
+            );
 
-,  
-programCounter
+        }
 
 
-,  
-order
+    }
 
 
-,  
-monitorId
+    public void writeMethodEnterSmallThreadIdEventGen(final int slidingWindowId
+            , final byte smallThreadId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_Method,
 
-,  
-methodCounter
 
+                    EventFactory.createMethodEnterSmallThreadIdEventGen(slidingWindowId
+                            ,
+                            smallThreadId
 
-,  
-methodId
 
+                            ,
+                            methodId
 
-,  
-position
 
+                            ,
+                            methodCounter
 
-) , slidingWindowId
-);
 
-}
+                    ), slidingWindowId
+            );
 
+        }
 
-}
 
+    }
 
 
+    public void writeMethodExitSmallThreadIdEventGen(final int slidingWindowId
+            , final byte smallThreadId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_Method,
 
 
+                    EventFactory.createMethodExitSmallThreadIdEventGen(slidingWindowId
+                            ,
+                            smallThreadId
 
 
+                            ,
+                            methodId
 
 
+                            ,
+                            methodCounter
 
-   public void writeMethodEnterEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodEnterEventGen ( slidingWindowId
-,  
-threadId()
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
-methodId
 
+    }
 
-,  
-methodCounter
 
+    public void writeMethodEnterShortThreadIdEventGen(final int slidingWindowId
+            , final short shortThreadId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
-) , slidingWindowId
-);
+        {
+            getQueueCollection().put(ID_Method,
 
-}
 
+                    EventFactory.createMethodEnterShortThreadIdEventGen(slidingWindowId
+                            ,
+                            shortThreadId
 
-}
 
+                            ,
+                            methodId
 
 
+                            ,
+                            methodCounter
 
 
-   public void writeMethodExitEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
+                    ), slidingWindowId
+            );
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodExitEventGen ( slidingWindowId
-,  
-threadId()
+        }
 
 
-,  
-methodId
+    }
 
 
-,  
-methodCounter
+    public void writeMethodExitShortThreadIdEventGen(final int slidingWindowId
+            , final short shortThreadId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_Method,
 
-) , slidingWindowId
-);
 
-}
+                    EventFactory.createMethodExitShortThreadIdEventGen(slidingWindowId
+                            ,
+                            shortThreadId
 
 
-}
+                            ,
+                            methodId
 
 
+                            ,
+                            methodCounter
 
 
+                    ), slidingWindowId
+            );
 
-   public void writeParallizedMethodEnterEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-, final  int     parallizeId
-)
-{
+        }
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createParallizedMethodEnterEventGen ( slidingWindowId
-,  
-threadId()
 
+    }
 
-,  
-methodId
 
+    public void writeThreadBeginEventGen(final int slidingWindowId
+            , final long startedThreadId
+            , final int programCounter
+            , final int methodCounter
+    ) {
 
-,  
-methodCounter
+        {
+            getQueueCollection().put(ID_SyncActions,
 
 
-,  
-parallizeId
+                    EventFactory.createThreadBeginEventGen(slidingWindowId
+                            ,
+                            threadId()
 
 
-) , slidingWindowId
-);
+                            ,
+                            startedThreadId
 
-}
 
+                            ,
+                            programCounter
 
-}
 
+                            ,
+                            methodCounter
 
 
+                    ), slidingWindowId
+            );
 
+        }
 
-   public void writeParallizedMethodExitEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createParallizedMethodExitEventGen ( slidingWindowId
-,  
-threadId()
+    }
 
 
-,  
-methodId
+    public void writeThreadStoppedEventGen(final int slidingWindowId
+            , final long stoppedThreadId
+            , final int programCounter
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_SyncActions,
 
-,  
-methodCounter
 
+                    EventFactory.createThreadStoppedEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-) , slidingWindowId
-);
 
-}
+                            ,
+                            stoppedThreadId
 
 
-}
+                            ,
+                            programCounter
 
 
+                            ,
+                            methodCounter
 
 
+                    ), slidingWindowId
+            );
 
-   public void writeMethodEnterSmallThreadIdEventGen (final int slidingWindowId
-, final  byte     smallThreadId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
+        }
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodEnterSmallThreadIdEventGen ( slidingWindowId
-,  
-smallThreadId
 
+    }
 
-,  
-methodId
 
+    public void writeMethodAtomicEnterEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+            , final byte hasCallback
+            , final int loopId
+            , final int runId
+            , final int runPosition
+    ) {
 
-,  
-methodCounter
+        {
+            getQueueCollection().put(ID_Scheduler,
 
 
-) , slidingWindowId
-);
+                    EventFactory.createMethodAtomicEnterEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-}
 
+                            ,
+                            methodId
 
-}
 
+                            ,
+                            methodCounter
 
 
+                            ,
+                            hasCallback
 
 
-   public void writeMethodExitSmallThreadIdEventGen (final int slidingWindowId
-, final  byte     smallThreadId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
+                            ,
+                            loopId
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodExitSmallThreadIdEventGen ( slidingWindowId
-,  
-smallThreadId
 
+                            ,
+                            runId
 
-,  
-methodId
 
+                            ,
+                            runPosition
 
-,  
-methodCounter
 
+                    ), slidingWindowId
+            );
 
-) , slidingWindowId
-);
+        }
 
-}
 
+    }
 
-}
 
+    public void writeMethodAtomicExitEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+            , final byte hasCallback
+            , final int loopId
+            , final int runId
+            , final int runPosition
+    ) {
 
+        {
+            getQueueCollection().put(ID_Scheduler,
 
 
+                    EventFactory.createMethodAtomicExitEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-   public void writeMethodEnterShortThreadIdEventGen (final int slidingWindowId
-, final  short     shortThreadId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodEnterShortThreadIdEventGen ( slidingWindowId
-,  
-shortThreadId
+                            ,
+                            methodId
 
 
-,  
-methodId
+                            ,
+                            methodCounter
 
 
-,  
-methodCounter
+                            ,
+                            hasCallback
 
 
-) , slidingWindowId
-);
+                            ,
+                            loopId
 
-}
 
+                            ,
+                            runId
 
-}
 
+                            ,
+                            runPosition
 
 
+                    ), slidingWindowId
+            );
 
+        }
 
-   public void writeMethodExitShortThreadIdEventGen (final int slidingWindowId
-, final  short     shortThreadId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodExitShortThreadIdEventGen ( slidingWindowId
-,  
-shortThreadId
+    }
 
 
-,  
-methodId
+    public void writeMethodCallbackEnterEventGen(final int slidingWindowId
+            , final int methodCounter
+            , final int loopId
+            , final int runId
+            , final int runPosition
+    ) {
 
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-,  
-methodCounter
 
+                    EventFactory.createMethodCallbackEnterEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-) , slidingWindowId
-);
 
-}
+                            ,
+                            methodCounter
 
 
-}
+                            ,
+                            loopId
 
 
+                            ,
+                            runId
 
 
+                            ,
+                            runPosition
 
-   public void writeThreadBeginEventGen (final int slidingWindowId
-, final  long     startedThreadId
-, final  int     programCounter
-, final  int     methodCounter
-)
-{
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createThreadBeginEventGen ( slidingWindowId
-,  
-threadId()
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
-startedThreadId
 
+    }
 
-,  
-programCounter
 
+    public void writeMethodCallbackExitEventGen(final int slidingWindowId
+            , final int methodCounter
+            , final int loopId
+            , final int runId
+            , final int runPosition
+    ) {
 
-,  
-methodCounter
+        {
+            getQueueCollection().put(ID_Scheduler,
 
 
-) , slidingWindowId
-);
+                    EventFactory.createMethodCallbackExitEventGen(slidingWindowId
+                            ,
+                            threadId()
 
-}
 
+                            ,
+                            methodCounter
 
-}
 
+                            ,
+                            loopId
 
 
+                            ,
+                            runId
 
 
-   public void writeThreadStoppedEventGen (final int slidingWindowId
-, final  long     stoppedThreadId
-, final  int     programCounter
-, final  int     methodCounter
-)
-{
+                            ,
+                            runPosition
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createThreadStoppedEventGen ( slidingWindowId
-,  
-threadId()
 
+                    ), slidingWindowId
+            );
 
-,  
-stoppedThreadId
+        }
 
 
-,  
-programCounter
+    }
 
 
-,  
-methodCounter
+    public void writeLoopStartEventGen(final int slidingWindowId
+            , final int loopId
+    ) {
 
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-) , slidingWindowId
-);
 
-}
+                    EventFactory.createLoopStartEventGen(slidingWindowId
+                            ,
+                            loopId
 
 
-}
+                    ), slidingWindowId
+            );
 
+        }
 
 
+    }
 
 
-   public void writeMethodAtomicEnterEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-, final  byte     hasCallback
-, final  int     loopId
-, final  int     runId
-, final  int     runPosition
-)
-{
+    public void writeLoopEndEventGen(final int slidingWindowId
+            , final int loopId
+            , final int status
+    ) {
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createMethodAtomicEnterEventGen ( slidingWindowId
-,  
-threadId()
+        {
+            getQueueCollection().put(ID_Scheduler,
 
 
-,  
-methodId
+                    EventFactory.createLoopEndEventGen(slidingWindowId
+                            ,
+                            loopId
 
 
-,  
-methodCounter
+                            ,
+                            status
 
 
-,  
-hasCallback
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
-loopId
 
+    }
 
-,  
-runId
 
+    public void writeRunStartEventGen(final int slidingWindowId
+            , final int loopId
+            , final int runId
+    ) {
 
-,  
-runPosition
+        {
+            getQueueCollection().put(ID_Scheduler,
 
 
-) , slidingWindowId
-);
+                    EventFactory.createRunStartEventGen(slidingWindowId
+                            ,
+                            loopId
 
-}
 
+                            ,
+                            runId
 
-}
 
+                    ), slidingWindowId
+            );
 
+        }
 
 
+    }
 
-   public void writeMethodAtomicExitEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-, final  byte     hasCallback
-, final  int     loopId
-, final  int     runId
-, final  int     runPosition
-)
-{
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createMethodAtomicExitEventGen ( slidingWindowId
-,  
-threadId()
+    public void writeRunEndEventGen(final int slidingWindowId
+            , final int loopId
+            , final int runId
+    ) {
 
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-,  
-methodId
 
+                    EventFactory.createRunEndEventGen(slidingWindowId
+                            ,
+                            loopId
 
-,  
-methodCounter
 
+                            ,
+                            runId
 
-,  
-hasCallback
 
+                    ), slidingWindowId
+            );
 
-,  
-loopId
+        }
 
 
-,  
-runId
+    }
 
 
-,  
-runPosition
+    public void writeLoopWarningEventGen(final int slidingWindowId
+            , final int loopId
+            , final int runId
+    ) {
 
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-) , slidingWindowId
-);
 
-}
+                    EventFactory.createLoopWarningEventGen(slidingWindowId
+                            ,
+                            loopId
 
 
-}
+                            ,
+                            runId
 
 
+                    ), slidingWindowId
+            );
 
+        }
 
 
-   public void writeMethodCallbackEnterEventGen (final int slidingWindowId
-, final  int     methodCounter
-, final  int     loopId
-, final  int     runId
-, final  int     runPosition
-)
-{
+    }
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createMethodCallbackEnterEventGen ( slidingWindowId
-,  
-threadId()
 
+    public void writeWithoutInterleaveFieldAccessEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int fieldId
+            , final int methodCounter
+            , final int operation
+            , final int methodId
+            , final boolean stackTraceIncomplete
+            , final long objectHashCode
+    ) {
 
-,  
-methodCounter
+        {
+            getQueueCollection().put(ID_Field,
 
 
-,  
-loopId
+                    EventFactory.createFieldAccessEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
-,  
-runId
 
+                            ,
 
-,  
-runPosition
+                            programCounter
 
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            fieldId
 
 
-}
+                            ,
 
+                            methodCounter
 
 
+                            ,
 
+                            operation
 
-   public void writeMethodCallbackExitEventGen (final int slidingWindowId
-, final  int     methodCounter
-, final  int     loopId
-, final  int     runId
-, final  int     runPosition
-)
-{
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createMethodCallbackExitEventGen ( slidingWindowId
-,  
-threadId()
+                            ,
 
+                            methodId
 
-,  
-methodCounter
 
+                            ,
 
-,  
-loopId
+                            stackTraceIncomplete
 
 
-,  
-runId
+                            ,
 
+                            objectHashCode
 
-,  
-runPosition
 
+                    ), slidingWindowId
+            );
 
-) , slidingWindowId
-);
+        }
 
-}
 
+    }
 
-}
 
+    public void writeWithoutInterleaveFieldAccessEventStaticGen(final int slidingWindowId
+            , final int programCounter
+            , final int fieldId
+            , final int methodCounter
+            , final int operation
+            , final int methodId
+            , final boolean stackTraceIncomplete
+    ) {
 
+        {
+            getQueueCollection().put(ID_Field,
 
 
+                    EventFactory.createFieldAccessEventStaticGen(slidingWindowId
+                            ,
 
-   public void writeLoopStartEventGen (final int slidingWindowId
-, final  int     loopId
-)
-{
+                            threadId()
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createLoopStartEventGen ( slidingWindowId
-,  
-loopId
 
+                            ,
 
-) , slidingWindowId
-);
+                            programCounter
 
-}
 
+                            ,
 
-}
+                            fieldId
 
 
+                            ,
 
+                            methodCounter
 
 
-   public void writeLoopEndEventGen (final int slidingWindowId
-, final  int     loopId
-, final  int     status
-)
-{
+                            ,
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createLoopEndEventGen ( slidingWindowId
-,  
-loopId
+                            operation
 
 
-,  
-status
+                            ,
 
+                            methodId
 
-) , slidingWindowId
-);
 
-}
+                            ,
 
+                            stackTraceIncomplete
 
-}
 
+                    ), slidingWindowId
+            );
 
+        }
 
 
+    }
 
-   public void writeRunStartEventGen (final int slidingWindowId
-, final  int     loopId
-, final  int     runId
-)
-{
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createRunStartEventGen ( slidingWindowId
-,  
-loopId
+    public void writeWithoutInterleaveArrayAccessEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int fieldId
+            , final int methodCounter
+            , final int operation
+            , final int methodId
+            , final boolean stackTraceIncomplete
+            , final long objectHashCode
+            , final int position
+            , final int classId
+    ) {
 
+        {
+            getQueueCollection().put(ID_Field,
 
-,  
-runId
 
+                    EventFactory.createArrayAccessEventGen(slidingWindowId
+                            ,
 
-) , slidingWindowId
-);
+                            threadId()
 
-}
 
+                            ,
 
-}
+                            programCounter
 
 
+                            ,
 
+                            fieldId
 
 
-   public void writeRunEndEventGen (final int slidingWindowId
-, final  int     loopId
-, final  int     runId
-)
-{
+                            ,
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createRunEndEventGen ( slidingWindowId
-,  
-loopId
+                            methodCounter
 
 
-,  
-runId
+                            ,
 
+                            operation
 
-) , slidingWindowId
-);
 
-}
+                            ,
 
+                            methodId
 
-}
 
+                            ,
 
+                            stackTraceIncomplete
 
 
+                            ,
 
-   public void writeLoopWarningEventGen (final int slidingWindowId
-, final  int     loopId
-, final  int     runId
-)
-{
+                            objectHashCode
 
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createLoopWarningEventGen ( slidingWindowId
-,  
-loopId
 
+                            ,
 
-,  
-runId
+                            position
 
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            classId
 
 
-}
+                    ), slidingWindowId
+            );
 
+        }
 
 
+    }
 
 
+    public void writeWithoutInterleaveVolatileAccessEventStaticGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int fieldId
+            , final int methodCounter
+            , final int methodId
+            , final boolean isWrite
+    ) {
 
+        {
+            getQueueCollection().put(ID_SyncActions,
 
 
+                    EventFactory.createVolatileAccessEventStaticGen(slidingWindowId
+                            ,
 
+                            threadId()
 
 
+                            ,
 
+                            programCounter
 
 
+                            ,
 
+                            order
 
 
+                            ,
 
+                            fieldId
 
-   public void writeWithoutInterleaveFieldAccessEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     operation
-, final  int     methodId
-, final  boolean     stackTraceIncomplete
-, final  long     objectHashCode
-)
-{
 
-{
- getQueueCollection().put( ID_Field , 
-					
-							
-							EventFactory.createFieldAccessEventGen ( slidingWindowId
-,  
+                            ,
 
-threadId()
+                            methodCounter
 
 
-,  
+                            ,
 
-programCounter
+                            methodId
 
 
-,  
+                            ,
 
-fieldId
+                            isWrite
 
 
-,  
+                    ), slidingWindowId
+            );
 
-methodCounter
+        }
 
 
-,  
+    }
 
-operation
 
+    public void writeWithoutInterleaveVolatileAccessEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int fieldId
+            , final int methodCounter
+            , final int methodId
+            , final int operation
+            , final long objectHashCode
+    ) {
 
-,  
+        {
+            getQueueCollection().put(ID_SyncActions,
 
-methodId
 
+                    EventFactory.createVolatileAccessEventGen(slidingWindowId
+                            ,
 
-,  
+                            threadId()
 
-stackTraceIncomplete
 
+                            ,
 
-,  
+                            programCounter
 
-objectHashCode
 
+                            ,
 
-) , slidingWindowId
-);
+                            order
 
-}
 
+                            ,
 
-}
+                            fieldId
 
 
+                            ,
 
+                            methodCounter
 
 
+                            ,
 
+                            methodId
 
 
-   public void writeWithoutInterleaveFieldAccessEventStaticGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     operation
-, final  int     methodId
-, final  boolean     stackTraceIncomplete
-)
-{
+                            ,
 
-{
- getQueueCollection().put( ID_Field , 
-					
-							
-							EventFactory.createFieldAccessEventStaticGen ( slidingWindowId
-,  
+                            operation
 
-threadId()
 
+                            ,
 
-,  
+                            objectHashCode
 
-programCounter
 
+                    ), slidingWindowId
+            );
 
-,  
+        }
 
-fieldId
 
+    }
 
-,  
 
-methodCounter
+    public void writeWithoutInterleaveVolatileArrayAccessEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final long index
+            , final int methodCounter
+            , final int methodId
+            , final int operation
+            , final long objectHashCode
+    ) {
 
+        {
+            getQueueCollection().put(ID_SyncActions,
 
-,  
 
-operation
+                    EventFactory.createVolatileArrayAccessEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
-,  
 
-methodId
+                            ,
 
+                            programCounter
 
-,  
 
-stackTraceIncomplete
+                            ,
 
+                            order
 
-) , slidingWindowId
-);
 
-}
+                            ,
 
+                            index
 
-}
 
+                            ,
 
+                            methodCounter
 
 
+                            ,
 
+                            methodId
 
 
+                            ,
 
-   public void writeWithoutInterleaveArrayAccessEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     operation
-, final  int     methodId
-, final  boolean     stackTraceIncomplete
-, final  long     objectHashCode
-, final  int     position
-, final  int     classId
-)
-{
+                            operation
 
-{
- getQueueCollection().put( ID_Field , 
-					
-							
-							EventFactory.createArrayAccessEventGen ( slidingWindowId
-,  
 
-threadId()
+                            ,
 
+                            objectHashCode
 
-,  
 
-programCounter
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
 
-fieldId
+    }
 
 
-,  
+    public void writeWithoutInterleaveVolatileDirectMemoryEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int methodCounter
+            , final long objectHashCode
+            , final int operation
+            , final int order
+    ) {
 
-methodCounter
+        {
+            getQueueCollection().put(ID_DirectMemory,
 
 
-,  
+                    EventFactory.createVolatileDirectMemoryEventGen(slidingWindowId
+                            ,
 
-operation
+                            threadId()
 
 
-,  
+                            ,
 
-methodId
+                            programCounter
 
 
-,  
+                            ,
 
-stackTraceIncomplete
+                            methodCounter
 
 
-,  
+                            ,
 
-objectHashCode
+                            objectHashCode
 
 
-,  
+                            ,
 
-position
+                            operation
 
 
-,  
+                            ,
 
-classId
+                            order
 
 
-) , slidingWindowId
-);
+                    ), slidingWindowId
+            );
 
-}
+        }
 
 
-}
+    }
 
 
+    public void writeWithoutInterleaveLockEnterEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final boolean isShared
+            , final int lockTyp
+    ) {
 
+        {
+            getQueueCollection().put(ID_SyncActions,
 
 
+                    EventFactory.createLockEnterEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
 
-   public void writeWithoutInterleaveVolatileAccessEventStaticGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     methodId
-, final  boolean     isWrite
-)
-{
+                            ,
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createVolatileAccessEventStaticGen ( slidingWindowId
-,  
+                            programCounter
 
-threadId()
 
+                            ,
 
-,  
+                            order
 
-programCounter
 
+                            ,
 
-,  
+                            monitorId
 
-order
 
+                            ,
 
-,  
+                            methodCounter
 
-fieldId
 
+                            ,
 
-,  
+                            isShared
 
-methodCounter
 
+                            ,
 
-,  
+                            lockTyp
 
-methodId
 
+                    ), slidingWindowId
+            );
 
-,  
+        }
 
-isWrite
 
+    }
 
-) , slidingWindowId
-);
 
-}
+    public void writeWithoutInterleaveLockExitEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final boolean isShared
+            , final int lockTyp
+    ) {
 
+        {
+            getQueueCollection().put(ID_SyncActions,
 
-}
 
+                    EventFactory.createLockExitEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
 
+                            ,
 
+                            programCounter
 
 
+                            ,
 
-   public void writeWithoutInterleaveVolatileAccessEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     fieldId
-, final  int     methodCounter
-, final  int     methodId
-, final  int     operation
-, final  long     objectHashCode
-)
-{
+                            order
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createVolatileAccessEventGen ( slidingWindowId
-,  
 
-threadId()
+                            ,
 
+                            monitorId
 
-,  
 
-programCounter
+                            ,
 
+                            methodCounter
 
-,  
 
-order
+                            ,
 
+                            isShared
 
-,  
 
-fieldId
+                            ,
 
+                            lockTyp
 
-,  
 
-methodCounter
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
 
-methodId
+    }
 
 
-,  
+    public void writeWithoutInterleaveStampedLockEnterEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final boolean isShared
+            , final int lockTyp
+            , final int stampedLockMethodId
+    ) {
 
-operation
+        {
+            getQueueCollection().put(ID_SyncActions,
 
 
-,  
+                    EventFactory.createStampedLockEnterEventGen(slidingWindowId
+                            ,
 
-objectHashCode
+                            threadId()
 
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            programCounter
 
 
-}
+                            ,
 
+                            order
 
 
+                            ,
 
+                            monitorId
 
 
+                            ,
 
+                            methodCounter
 
-   public void writeWithoutInterleaveVolatileArrayAccessEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  long     index
-, final  int     methodCounter
-, final  int     methodId
-, final  int     operation
-, final  long     objectHashCode
-)
-{
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createVolatileArrayAccessEventGen ( slidingWindowId
-,  
+                            ,
 
-threadId()
+                            isShared
 
 
-,  
+                            ,
 
-programCounter
+                            lockTyp
 
 
-,  
+                            ,
 
-order
+                            stampedLockMethodId
 
 
-,  
+                    ), slidingWindowId
+            );
 
-index
+        }
 
 
-,  
+    }
 
-methodCounter
 
+    public void writeWithoutInterleaveStampedLockExitEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final boolean isShared
+            , final int lockTyp
+            , final int stampedLockMethodId
+    ) {
 
-,  
+        {
+            getQueueCollection().put(ID_SyncActions,
 
-methodId
 
+                    EventFactory.createStampedLockExitEventGen(slidingWindowId
+                            ,
 
-,  
+                            threadId()
 
-operation
 
+                            ,
 
-,  
+                            programCounter
 
-objectHashCode
 
+                            ,
 
-) , slidingWindowId
-);
+                            order
 
-}
 
+                            ,
 
-}
+                            monitorId
 
 
+                            ,
 
+                            methodCounter
 
 
+                            ,
 
+                            isShared
 
 
-   public void writeWithoutInterleaveVolatileDirectMemoryEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     methodCounter
-, final  long     objectHashCode
-, final  int     operation
-, final  int     order
-)
-{
+                            ,
 
-{
- getQueueCollection().put( ID_DirectMemory , 
-					
-							
-							EventFactory.createVolatileDirectMemoryEventGen ( slidingWindowId
-,  
+                            lockTyp
 
-threadId()
 
+                            ,
 
-,  
+                            stampedLockMethodId
 
-programCounter
 
+                    ), slidingWindowId
+            );
 
-,  
+        }
 
-methodCounter
 
+    }
 
-,  
 
-objectHashCode
+    public void writeWithoutInterleaveMonitorEnterEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final int methodId
+            , final int position
+    ) {
 
+        {
+            getQueueCollection().put(ID_Monitor,
 
-,  
 
-operation
+                    EventFactory.createMonitorEnterEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
-,  
 
-order
+                            ,
 
+                            programCounter
 
-) , slidingWindowId
-);
 
-}
+                            ,
 
+                            order
 
-}
 
+                            ,
 
+                            monitorId
 
 
+                            ,
 
-   public void writeWithoutInterleaveLockEnterEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  boolean     isShared
-, final  int     lockTyp
-)
-{
+                            methodCounter
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createLockEnterEventGen ( slidingWindowId
-,  
 
-threadId()
+                            ,
 
+                            methodId
 
-,  
 
-programCounter
+                            ,
 
+                            position
 
-,  
 
-order
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
 
-monitorId
+    }
 
 
-,  
+    public void writeWithoutInterleaveMonitorExitEventGen(final int slidingWindowId
+            , final int programCounter
+            , final int order
+            , final int monitorId
+            , final int methodCounter
+            , final int methodId
+            , final int position
+    ) {
 
-methodCounter
+        {
+            getQueueCollection().put(ID_Monitor,
 
 
-,  
+                    EventFactory.createMonitorExitEventGen(slidingWindowId
+                            ,
 
-isShared
+                            threadId()
 
 
-,  
+                            ,
 
-lockTyp
+                            programCounter
 
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            order
 
 
-}
+                            ,
 
+                            monitorId
 
 
+                            ,
 
+                            methodCounter
 
 
+                            ,
 
+                            methodId
 
-   public void writeWithoutInterleaveLockExitEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  boolean     isShared
-, final  int     lockTyp
-)
-{
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createLockExitEventGen ( slidingWindowId
-,  
+                            ,
 
-threadId()
+                            position
 
 
-,  
+                    ), slidingWindowId
+            );
 
-programCounter
+        }
 
 
-,  
+    }
 
-order
 
+    public void writeWithoutInterleaveMethodEnterEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
-,  
+        {
+            getQueueCollection().put(ID_Method,
 
-monitorId
 
+                    EventFactory.createMethodEnterEventGen(slidingWindowId
+                            ,
 
-,  
+                            threadId()
 
-methodCounter
 
+                            ,
 
-,  
+                            methodId
 
-isShared
 
+                            ,
 
-,  
+                            methodCounter
 
-lockTyp
 
+                    ), slidingWindowId
+            );
 
-) , slidingWindowId
-);
+        }
 
-}
 
+    }
 
-}
 
+    public void writeWithoutInterleaveMethodExitEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_Method,
 
 
+                    EventFactory.createMethodExitEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
 
+                            ,
 
-   public void writeWithoutInterleaveStampedLockEnterEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  boolean     isShared
-, final  int     lockTyp
-, final  int     stampedLockMethodId
-)
-{
+                            methodId
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createStampedLockEnterEventGen ( slidingWindowId
-,  
 
-threadId()
+                            ,
 
+                            methodCounter
 
-,  
 
-programCounter
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
 
-order
+    }
 
 
-,  
+    public void writeWithoutInterleaveParallizedMethodEnterEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+            , final int parallizeId
+    ) {
 
-monitorId
+        {
+            getQueueCollection().put(ID_Method,
 
 
-,  
+                    EventFactory.createParallizedMethodEnterEventGen(slidingWindowId
+                            ,
 
-methodCounter
+                            threadId()
 
 
-,  
+                            ,
 
-isShared
+                            methodId
 
 
-,  
+                            ,
 
-lockTyp
+                            methodCounter
 
 
-,  
+                            ,
 
-stampedLockMethodId
+                            parallizeId
 
 
-) , slidingWindowId
-);
+                    ), slidingWindowId
+            );
 
-}
+        }
 
 
-}
+    }
 
 
+    public void writeWithoutInterleaveParallizedMethodExitEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_Method,
 
 
+                    EventFactory.createParallizedMethodExitEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
 
-   public void writeWithoutInterleaveStampedLockExitEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  boolean     isShared
-, final  int     lockTyp
-, final  int     stampedLockMethodId
-)
-{
+                            ,
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createStampedLockExitEventGen ( slidingWindowId
-,  
+                            methodId
 
-threadId()
 
+                            ,
 
-,  
+                            methodCounter
 
-programCounter
 
+                    ), slidingWindowId
+            );
 
-,  
+        }
 
-order
 
+    }
 
-,  
 
-monitorId
+    public void writeWithoutInterleaveMethodEnterSmallThreadIdEventGen(final int slidingWindowId
+            , final byte smallThreadId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_Method,
 
-,  
 
-methodCounter
+                    EventFactory.createMethodEnterSmallThreadIdEventGen(slidingWindowId
+                            ,
 
+                            smallThreadId
 
-,  
 
-isShared
+                            ,
 
+                            methodId
 
-,  
 
-lockTyp
+                            ,
 
+                            methodCounter
 
-,  
 
-stampedLockMethodId
+                    ), slidingWindowId
+            );
 
+        }
 
-) , slidingWindowId
-);
 
-}
+    }
 
 
-}
+    public void writeWithoutInterleaveMethodExitSmallThreadIdEventGen(final int slidingWindowId
+            , final byte smallThreadId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_Method,
 
 
+                    EventFactory.createMethodExitSmallThreadIdEventGen(slidingWindowId
+                            ,
 
+                            smallThreadId
 
 
+                            ,
 
+                            methodId
 
-   public void writeWithoutInterleaveMonitorEnterEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  int     methodId
-, final  int     position
-)
-{
 
-{
- getQueueCollection().put( ID_Monitor , 
-					
-							
-							EventFactory.createMonitorEnterEventGen ( slidingWindowId
-,  
+                            ,
 
-threadId()
+                            methodCounter
 
 
-,  
+                    ), slidingWindowId
+            );
 
-programCounter
+        }
 
 
-,  
+    }
 
-order
 
+    public void writeWithoutInterleaveMethodEnterShortThreadIdEventGen(final int slidingWindowId
+            , final short shortThreadId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
-,  
+        {
+            getQueueCollection().put(ID_Method,
 
-monitorId
 
+                    EventFactory.createMethodEnterShortThreadIdEventGen(slidingWindowId
+                            ,
 
-,  
+                            shortThreadId
 
-methodCounter
 
+                            ,
 
-,  
+                            methodId
 
-methodId
 
+                            ,
 
-,  
+                            methodCounter
 
-position
 
+                    ), slidingWindowId
+            );
 
-) , slidingWindowId
-);
+        }
 
-}
 
+    }
 
-}
 
+    public void writeWithoutInterleaveMethodExitShortThreadIdEventGen(final int slidingWindowId
+            , final short shortThreadId
+            , final int methodId
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_Method,
 
 
+                    EventFactory.createMethodExitShortThreadIdEventGen(slidingWindowId
+                            ,
 
-   public void writeWithoutInterleaveMonitorExitEventGen (final int slidingWindowId
-, final  int     programCounter
-, final  int     order
-, final  int     monitorId
-, final  int     methodCounter
-, final  int     methodId
-, final  int     position
-)
-{
+                            shortThreadId
 
-{
- getQueueCollection().put( ID_Monitor , 
-					
-							
-							EventFactory.createMonitorExitEventGen ( slidingWindowId
-,  
 
-threadId()
+                            ,
 
+                            methodId
 
-,  
 
-programCounter
+                            ,
 
+                            methodCounter
 
-,  
 
-order
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
 
-monitorId
+    }
 
 
-,  
+    public void writeWithoutInterleaveThreadBeginEventGen(final int slidingWindowId
+            , final long startedThreadId
+            , final int programCounter
+            , final int methodCounter
+    ) {
 
-methodCounter
+        {
+            getQueueCollection().put(ID_SyncActions,
 
 
-,  
+                    EventFactory.createThreadBeginEventGen(slidingWindowId
+                            ,
 
-methodId
+                            threadId()
 
 
-,  
+                            ,
 
-position
+                            startedThreadId
 
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            programCounter
 
 
-}
+                            ,
 
+                            methodCounter
 
 
+                    ), slidingWindowId
+            );
 
+        }
 
 
+    }
 
 
+    public void writeWithoutInterleaveThreadStoppedEventGen(final int slidingWindowId
+            , final long stoppedThreadId
+            , final int programCounter
+            , final int methodCounter
+    ) {
 
+        {
+            getQueueCollection().put(ID_SyncActions,
 
 
-   public void writeWithoutInterleaveMethodEnterEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
+                    EventFactory.createThreadStoppedEventGen(slidingWindowId
+                            ,
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodEnterEventGen ( slidingWindowId
-,  
+                            threadId()
 
-threadId()
 
+                            ,
 
-,  
+                            stoppedThreadId
 
-methodId
 
+                            ,
 
-,  
+                            programCounter
 
-methodCounter
 
+                            ,
 
-) , slidingWindowId
-);
+                            methodCounter
 
-}
 
+                    ), slidingWindowId
+            );
 
-}
+        }
 
 
+    }
 
 
+    public void writeWithoutInterleaveMethodAtomicEnterEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+            , final byte hasCallback
+            , final int loopId
+            , final int runId
+            , final int runPosition
+    ) {
 
-   public void writeWithoutInterleaveMethodExitEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodExitEventGen ( slidingWindowId
-,  
 
-threadId()
+                    EventFactory.createMethodAtomicEnterEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
-,  
 
-methodId
+                            ,
 
+                            methodId
 
-,  
 
-methodCounter
+                            ,
 
+                            methodCounter
 
-) , slidingWindowId
-);
 
-}
+                            ,
 
+                            hasCallback
 
-}
 
+                            ,
 
+                            loopId
 
 
+                            ,
 
-   public void writeWithoutInterleaveParallizedMethodEnterEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-, final  int     parallizeId
-)
-{
+                            runId
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createParallizedMethodEnterEventGen ( slidingWindowId
-,  
 
-threadId()
+                            ,
 
+                            runPosition
 
-,  
 
-methodId
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
 
-methodCounter
+    }
 
 
-,  
+    public void writeWithoutInterleaveMethodAtomicExitEventGen(final int slidingWindowId
+            , final int methodId
+            , final int methodCounter
+            , final byte hasCallback
+            , final int loopId
+            , final int runId
+            , final int runPosition
+    ) {
 
-parallizeId
+        {
+            getQueueCollection().put(ID_Scheduler,
 
 
-) , slidingWindowId
-);
+                    EventFactory.createMethodAtomicExitEventGen(slidingWindowId
+                            ,
 
-}
+                            threadId()
 
 
-}
+                            ,
 
+                            methodId
 
 
+                            ,
 
+                            methodCounter
 
-   public void writeWithoutInterleaveParallizedMethodExitEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createParallizedMethodExitEventGen ( slidingWindowId
-,  
+                            ,
 
-threadId()
+                            hasCallback
 
 
-,  
+                            ,
 
-methodId
+                            loopId
 
 
-,  
+                            ,
 
-methodCounter
+                            runId
 
 
-) , slidingWindowId
-);
+                            ,
 
-}
+                            runPosition
 
 
-}
+                    ), slidingWindowId
+            );
 
+        }
 
 
+    }
 
 
-   public void writeWithoutInterleaveMethodEnterSmallThreadIdEventGen (final int slidingWindowId
-, final  byte     smallThreadId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
+    public void writeWithoutInterleaveMethodCallbackEnterEventGen(final int slidingWindowId
+            , final int methodCounter
+            , final int loopId
+            , final int runId
+            , final int runPosition
+    ) {
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodEnterSmallThreadIdEventGen ( slidingWindowId
-,  
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-smallThreadId
 
+                    EventFactory.createMethodCallbackEnterEventGen(slidingWindowId
+                            ,
 
-,  
+                            threadId()
 
-methodId
 
+                            ,
 
-,  
+                            methodCounter
 
-methodCounter
 
+                            ,
 
-) , slidingWindowId
-);
+                            loopId
 
-}
 
+                            ,
 
-}
+                            runId
 
 
+                            ,
 
+                            runPosition
 
 
-   public void writeWithoutInterleaveMethodExitSmallThreadIdEventGen (final int slidingWindowId
-, final  byte     smallThreadId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
+                    ), slidingWindowId
+            );
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodExitSmallThreadIdEventGen ( slidingWindowId
-,  
+        }
 
-smallThreadId
 
+    }
 
-,  
 
-methodId
+    public void writeWithoutInterleaveMethodCallbackExitEventGen(final int slidingWindowId
+            , final int methodCounter
+            , final int loopId
+            , final int runId
+            , final int runPosition
+    ) {
 
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-,  
 
-methodCounter
+                    EventFactory.createMethodCallbackExitEventGen(slidingWindowId
+                            ,
 
+                            threadId()
 
-) , slidingWindowId
-);
 
-}
+                            ,
 
+                            methodCounter
 
-}
 
+                            ,
 
+                            loopId
 
 
+                            ,
 
-   public void writeWithoutInterleaveMethodEnterShortThreadIdEventGen (final int slidingWindowId
-, final  short     shortThreadId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
+                            runId
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodEnterShortThreadIdEventGen ( slidingWindowId
-,  
 
-shortThreadId
+                            ,
 
+                            runPosition
 
-,  
 
-methodId
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
 
-methodCounter
+    }
 
 
-) , slidingWindowId
-);
+    public void writeWithoutInterleaveLoopStartEventGen(final int slidingWindowId
+            , final int loopId
+    ) {
 
-}
+        {
+            getQueueCollection().put(ID_Scheduler,
 
 
-}
+                    EventFactory.createLoopStartEventGen(slidingWindowId
+                            ,
 
+                            loopId
 
 
+                    ), slidingWindowId
+            );
 
+        }
 
-   public void writeWithoutInterleaveMethodExitShortThreadIdEventGen (final int slidingWindowId
-, final  short     shortThreadId
-, final  int     methodId
-, final  int     methodCounter
-)
-{
 
-{
- getQueueCollection().put( ID_Method , 
-					
-							
-							EventFactory.createMethodExitShortThreadIdEventGen ( slidingWindowId
-,  
+    }
 
-shortThreadId
 
+    public void writeWithoutInterleaveLoopEndEventGen(final int slidingWindowId
+            , final int loopId
+            , final int status
+    ) {
 
-,  
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-methodId
 
+                    EventFactory.createLoopEndEventGen(slidingWindowId
+                            ,
 
-,  
+                            loopId
 
-methodCounter
 
+                            ,
 
-) , slidingWindowId
-);
+                            status
 
-}
 
+                    ), slidingWindowId
+            );
 
-}
+        }
 
 
+    }
 
 
+    public void writeWithoutInterleaveRunStartEventGen(final int slidingWindowId
+            , final int loopId
+            , final int runId
+    ) {
 
-   public void writeWithoutInterleaveThreadBeginEventGen (final int slidingWindowId
-, final  long     startedThreadId
-, final  int     programCounter
-, final  int     methodCounter
-)
-{
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createThreadBeginEventGen ( slidingWindowId
-,  
 
-threadId()
+                    EventFactory.createRunStartEventGen(slidingWindowId
+                            ,
 
+                            loopId
 
-,  
 
-startedThreadId
+                            ,
 
+                            runId
 
-,  
 
-programCounter
+                    ), slidingWindowId
+            );
 
+        }
 
-,  
 
-methodCounter
+    }
 
 
-) , slidingWindowId
-);
+    public void writeWithoutInterleaveRunEndEventGen(final int slidingWindowId
+            , final int loopId
+            , final int runId
+    ) {
 
-}
+        {
+            getQueueCollection().put(ID_Scheduler,
 
 
-}
+                    EventFactory.createRunEndEventGen(slidingWindowId
+                            ,
 
+                            loopId
 
 
+                            ,
 
+                            runId
 
-   public void writeWithoutInterleaveThreadStoppedEventGen (final int slidingWindowId
-, final  long     stoppedThreadId
-, final  int     programCounter
-, final  int     methodCounter
-)
-{
 
-{
- getQueueCollection().put( ID_SyncActions , 
-					
-							
-							EventFactory.createThreadStoppedEventGen ( slidingWindowId
-,  
+                    ), slidingWindowId
+            );
 
-threadId()
+        }
 
 
-,  
+    }
 
-stoppedThreadId
 
+    public void writeWithoutInterleaveLoopWarningEventGen(final int slidingWindowId
+            , final int loopId
+            , final int runId
+    ) {
 
-,  
+        {
+            getQueueCollection().put(ID_Scheduler,
 
-programCounter
 
+                    EventFactory.createLoopWarningEventGen(slidingWindowId
+                            ,
 
-,  
+                            loopId
 
-methodCounter
 
+                            ,
 
-) , slidingWindowId
-);
+                            runId
 
-}
 
+                    ), slidingWindowId
+            );
 
-}
+        }
 
 
+    }
 
 
-
-   public void writeWithoutInterleaveMethodAtomicEnterEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-, final  byte     hasCallback
-, final  int     loopId
-, final  int     runId
-, final  int     runPosition
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createMethodAtomicEnterEventGen ( slidingWindowId
-,  
-
-threadId()
-
-
-,  
-
-methodId
-
-
-,  
-
-methodCounter
-
-
-,  
-
-hasCallback
-
-
-,  
-
-loopId
-
-
-,  
-
-runId
-
-
-,  
-
-runPosition
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-
-
-   public void writeWithoutInterleaveMethodAtomicExitEventGen (final int slidingWindowId
-, final  int     methodId
-, final  int     methodCounter
-, final  byte     hasCallback
-, final  int     loopId
-, final  int     runId
-, final  int     runPosition
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createMethodAtomicExitEventGen ( slidingWindowId
-,  
-
-threadId()
-
-
-,  
-
-methodId
-
-
-,  
-
-methodCounter
-
-
-,  
-
-hasCallback
-
-
-,  
-
-loopId
-
-
-,  
-
-runId
-
-
-,  
-
-runPosition
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-
-
-   public void writeWithoutInterleaveMethodCallbackEnterEventGen (final int slidingWindowId
-, final  int     methodCounter
-, final  int     loopId
-, final  int     runId
-, final  int     runPosition
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createMethodCallbackEnterEventGen ( slidingWindowId
-,  
-
-threadId()
-
-
-,  
-
-methodCounter
-
-
-,  
-
-loopId
-
-
-,  
-
-runId
-
-
-,  
-
-runPosition
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-
-
-   public void writeWithoutInterleaveMethodCallbackExitEventGen (final int slidingWindowId
-, final  int     methodCounter
-, final  int     loopId
-, final  int     runId
-, final  int     runPosition
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createMethodCallbackExitEventGen ( slidingWindowId
-,  
-
-threadId()
-
-
-,  
-
-methodCounter
-
-
-,  
-
-loopId
-
-
-,  
-
-runId
-
-
-,  
-
-runPosition
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-
-
-   public void writeWithoutInterleaveLoopStartEventGen (final int slidingWindowId
-, final  int     loopId
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createLoopStartEventGen ( slidingWindowId
-,  
-
-loopId
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-
-
-   public void writeWithoutInterleaveLoopEndEventGen (final int slidingWindowId
-, final  int     loopId
-, final  int     status
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createLoopEndEventGen ( slidingWindowId
-,  
-
-loopId
-
-
-,  
-
-status
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-
-
-   public void writeWithoutInterleaveRunStartEventGen (final int slidingWindowId
-, final  int     loopId
-, final  int     runId
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createRunStartEventGen ( slidingWindowId
-,  
-
-loopId
-
-
-,  
-
-runId
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-
-
-   public void writeWithoutInterleaveRunEndEventGen (final int slidingWindowId
-, final  int     loopId
-, final  int     runId
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createRunEndEventGen ( slidingWindowId
-,  
-
-loopId
-
-
-,  
-
-runId
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-
-
-   public void writeWithoutInterleaveLoopWarningEventGen (final int slidingWindowId
-, final  int     loopId
-, final  int     runId
-)
-{
-
-{
- getQueueCollection().put( ID_Scheduler , 
-					
-							
-							EventFactory.createLoopWarningEventGen ( slidingWindowId
-,  
-
-loopId
-
-
-,  
-
-runId
-
-
-) , slidingWindowId
-);
-
-}
-
-
-}
-
-
-
-	
 }

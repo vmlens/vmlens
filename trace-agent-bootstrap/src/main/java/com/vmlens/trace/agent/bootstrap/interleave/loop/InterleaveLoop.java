@@ -47,7 +47,12 @@ public class InterleaveLoop implements IteratorQueue {
 
     public void addActualRun(ActualRun actualRun) {
         actualRun.debug(agentLogger);
-        AlternatingOrderContainer container = create(actualRun.actualRun());
+        addActualRun(actualRun.run());
+    }
+
+    // Visible for Test
+    void addActualRun(TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> run) {
+        AlternatingOrderContainer container = create(run);
         container.debug(agentLogger);
         if (!allAlternatingOrderContainer.contains(container)) {
             allAlternatingOrderContainer.add(container);

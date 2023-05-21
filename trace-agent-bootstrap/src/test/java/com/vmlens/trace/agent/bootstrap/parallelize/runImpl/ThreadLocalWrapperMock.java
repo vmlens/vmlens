@@ -33,7 +33,7 @@ public class ThreadLocalWrapperMock implements ThreadLocalWrapper  {
              return false;
         }
 
-        return parallelizedThreadLocal.getRun().getRunStateMachine().isActive(new TestThreadState(this));
+        return parallelizedThreadLocal.getRun().isActive(new TestThreadState(this));
     }
 
 }

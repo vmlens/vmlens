@@ -7,8 +7,8 @@ import gnu.trove.list.linked.TLinkedList;
 import java.util.Iterator;
 
 /**
- * @responsible for the storage of elements for each thread index
- * @hides how the relation between thredindex and element list is stored
+ * responsible for the storage of elements for each thread index
+ * hides how the relation between thredindex and element list is stored
  */
 public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implements
         Iterable<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>>, ThreadIndexToMaxPosition {
@@ -92,25 +92,20 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
     }
 
     private final class ThreadIndexIterator implements Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> {
-
         private int currentIndex;
-
         public ThreadIndexIterator(int currentIndex) {
             this.currentIndex = currentIndex;
         }
-
         @Override
         public boolean hasNext() {
             return currentIndex < threadList.size();
         }
-
         @Override
         public TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> next() {
             TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> result = threadList.get(currentIndex);
             currentIndex++;
             return result;
         }
-
         @Override
         public void remove() {
             throw new UnsupportedOperationException("remove");

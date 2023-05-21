@@ -2,9 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.StaticMonitorRepository;
 import com.vmlens.trace.agent.bootstrap.callback.state.MonitorIdAndOrder;
-
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
-
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import gnu.trove.map.hash.TIntIntHashMap;
 
 public class SynchronizedStatementCallback {
@@ -164,7 +162,7 @@ public class SynchronizedStatementCallback {
 
 				callbackStatePerThread.programCount++;
 
-				ParallizeFacade.beforeMonitorExit(callbackStatePerThread, current.id, methodId, position);
+                ParallelizeFacade.beforeMonitorExit(callbackStatePerThread, current.id, methodId, position);
 
 			}
 
@@ -228,7 +226,7 @@ public class SynchronizedStatementCallback {
 
 		callbackStatePerThread.programCount++;
 
-		ParallizeFacade.onMonitorEnter(callbackStatePerThread, current.id);
+        ParallelizeFacade.onMonitorEnter(callbackStatePerThread, current.id);
 
 	}
 
@@ -260,14 +258,14 @@ public class SynchronizedStatementCallback {
 
 		callbackStatePerThread.programCount++;
 
-		ParallizeFacade.onMonitorEnter(callbackStatePerThread, id * -1);
+        ParallelizeFacade.onMonitorEnter(callbackStatePerThread, id * -1);
 
 	}
 
 	private static void monitorExitStatic_internal(int id, int methodId, CallbackStatePerThread callbackStatePerThread,
 			int slidingWindowId) {
 
-		ParallizeFacade.beforeMonitorExitStatic(callbackStatePerThread, slidingWindowId, methodId);
+        ParallelizeFacade.beforeMonitorExitStatic(callbackStatePerThread, slidingWindowId, methodId);
 
 		int order = 0;
 

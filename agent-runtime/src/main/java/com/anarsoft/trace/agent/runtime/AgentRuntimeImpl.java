@@ -1,12 +1,5 @@
 package com.anarsoft.trace.agent.runtime;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintStream;
-import java.lang.instrument.Instrumentation;
-import java.lang.instrument.UnmodifiableClassException;
-import java.util.Properties;
-
 import com.anarsoft.trace.agent.runtime.filter.FilterBuilder;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsAlwaysFalse;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
@@ -23,12 +16,14 @@ import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.mode.AgentMode;
-import com.vmlens.trace.agent.bootstrap.mode.AgentModeInterleave;
-import com.vmlens.trace.agent.bootstrap.mode.AgentModeMonitor;
-import com.vmlens.trace.agent.bootstrap.mode.AgentModeState;
-import com.vmlens.trace.agent.bootstrap.mode.ModeNames;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
+import com.vmlens.trace.agent.bootstrap.mode.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.PrintStream;
+import java.lang.instrument.Instrumentation;
+import java.lang.instrument.UnmodifiableClassException;
+import java.util.Properties;
 
 public class AgentRuntimeImpl implements AgentRuntime {
 
@@ -173,15 +168,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			String enableAgentLogPerformance = properties.getProperty(AgentKeys.AGENT_LOG_PERFORMANCE);
 			String enableAgentLogException = properties.getProperty(AgentKeys.AGENT_LOG_EXCEPTION);
 
-			if (enableAgentLog != null && enableAgentLog.trim().toLowerCase().equals("true")) {
-				ParallizeFacade.ENABLE_LOGGING = true;
-			}
 
-			if (enableAgentLogPerformance != null && enableAgentLogPerformance.trim().toLowerCase().equals("true")) {
-				ParallizeFacade.ENABLE_PERFORMANCE_LOGGING = true;
-			}
-			
-			
 			if (enableAgentLogException != null && enableAgentLogException.trim().toLowerCase().equals("true")) {
 				AgentLogCallback.ENABLE_EXCEPTION_LOGGING = true;
 			}

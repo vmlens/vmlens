@@ -2,8 +2,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
-import java.util.Arrays;
-
 public class CalculatedRun {
 
     private final Position[] calculatedRunElementArray;
@@ -19,11 +17,6 @@ public class CalculatedRun {
 
     public void incrementPositionInThread() {
         currentPosInArray++;
-    }
-
-    public void debug(AgentLogger agentLogger) {
-        // ToDo improve log format
-        agentLogger.debug(Arrays.toString(calculatedRunElementArray));
     }
 
     // Visible for Test

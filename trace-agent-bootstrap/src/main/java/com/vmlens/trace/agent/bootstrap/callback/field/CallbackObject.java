@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
 import com.vmlens.trace.agent.bootstrap.callback.VolatileArrayAccessCallback;
 import com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 public class CallbackObject {
 
@@ -196,13 +196,13 @@ public class CallbackObject {
 		if (orig.getClass().isArray()) {
 			VolatileArrayAccessCallback.access(offset, orig, methodId, operation);
 
-			ParallizeFacade.afterVolatileArrayAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(),
-					offset, operation);
+            ParallelizeFacade.afterVolatileArrayAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(),
+                    offset, operation);
 		} else {
 			OffsetAndClassName offsetAndClassName = new OffsetAndClassName(offset, orig.getClass().getName());
 			int fieldId = Offset2FieldId.getFieldId(orig, unsafe, offsetAndClassName);
-			volatile_access(orig, fieldId, methodId, operation);
-			ParallizeFacade.afterFieldAccess4UnsafeOrVarHandle( CallbackState.callbackStatePerThread.get() , fieldId, operation);
+            volatile_access(orig, fieldId, methodId, operation);
+            ParallelizeFacade.afterFieldAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(), fieldId, operation);
 		}
 
 	}
@@ -288,39 +288,18 @@ public class CallbackObject {
 		if (callbackStatePerThread.mode.isInterleave()) {
 
 			callbackStatePerThread.programCount += 1;
-			/*
-			 * (Object obj, long offset, int fieldId, int methodId, int operation,
-			 * CallbackStatePerThread callbackStatePerThread)
-			 */
-
 			updateBeforeObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
 
 			callbackStatePerThread.programCount += 1;
-		} 
-
-	
-
+        }
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private static void volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
+
+    private static void volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
 			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
 
 		if (callbackStatePerThread.mode.isInterleave()) {
 
 			callbackStatePerThread.programCount += 1;
-			/*
-			 * (Object obj, long offset, int fieldId, int methodId, int operation,
-			 * CallbackStatePerThread callbackStatePerThread)
-			 */
-
 			updateObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
 
 			callbackStatePerThread.programCount += 1;
@@ -331,56 +310,6 @@ public class CallbackObject {
 					callbackStatePerThread);
 
 		}
-
-		// if(callbackStatePerThread.mode.isInterleave())
-		// {
-		// synchronized (state) {
-		//
-		// ParallizeFacade.beforeFieldAccessVolatile(callbackStatePerThread,
-		// state.getId(), fieldId, operation);
-		//
-		// callbackStatePerThread.programCount += 1;
-		// int order = 0;
-		// ObjectIdAndOrder current = state.getOrderForFieldId(fieldId);
-		// if (current == null) {
-		// current = state.createOrderToFieldId(fieldId);
-		// // current.id = ObjectIdAndOrder.getNewId();
-		// }
-		// order = current.order;
-		// current.order += 1;
-		//
-		// callbackStatePerThread.sendEvent.writeVolatileAccessEventGen(
-		// CallbackState.traceSyncStatements(callbackStatePerThread),
-		// callbackStatePerThread.programCount,
-		// order, fieldId, callbackStatePerThread.methodCount, methodId, operation,
-		// current.getId());
-		//
-		// callbackStatePerThread.programCount += 1;
-		// }
-		// }
-		// else
-		// {
-		// ModeStateFieldAccess.access( callbackStatePerThread, orig, state, methodId,
-		// operation );
-		// }
-		//
-
 	}
-
-	// MemoryAccessType.getOperation(isWrite)
-	//
-	// private static void writeEvent(CallbackStatePerThread callbackStatePerThread,
-	// long threadId, int slidingWindowId,
-	// int fieldId, int methodId, int operation, int programCounter, int
-	// methodCounter, long objectId) {
-	//
-	//
-	//
-	// callbackStatePerThread.sendEvent.writeFieldAccessEventGen(slidingWindowId,
-	// programCounter, fieldId,
-	// methodCounter, operation , methodId,
-	// callbackStatePerThread.isStackTraceIncomplete(), objectId);
-	//
-	// }
 
 }

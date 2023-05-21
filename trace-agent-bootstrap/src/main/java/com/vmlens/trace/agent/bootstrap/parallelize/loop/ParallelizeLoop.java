@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 public class ParallelizeLoop {
 
+    private final Object singleLoopAndRunLock = new Object();
     private final int loopId;
     private final RunStateMachineFactory runStateMachineFactory;
     private final Iterator<CalculatedRun> interleaveLoopIterator;
@@ -30,27 +31,39 @@ public class ParallelizeLoop {
     }
 
     public void beginThreadMethodEnter(TestThreadState testThreadState, RunnableOrThreadWrapper beganTask) {
-        currentRun.newTask(beganTask, testThreadState);
+        synchronized (singleLoopAndRunLock) {
+            currentRun.newTask(beganTask, testThreadState);
+        }
     }
 
     public boolean hasNext(TestThreadState testThreadState) {
-        if (currentRun != null) {
-            currentRun.end(testThreadState);
-            if (interleaveLoopIterator.hasNext()) {
-                currentRun = new Run(maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(interleaveLoopIterator.next(), testThreadState, interleaveLoop),
+        synchronized (singleLoopAndRunLock) {
+            if (currentRun != null) {
+                currentRun.end(testThreadState);
+                if (interleaveLoopIterator.hasNext()) {
+                    currentRun = new Run(singleLoopAndRunLock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(interleaveLoopIterator.next(), testThreadState, interleaveLoop),
+                            testThreadState);
+                    maxRunId++;
+                    return true;
+                }
+                return false;
+            } else {
+                currentRun = new Run(singleLoopAndRunLock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(testThreadState, interleaveLoop),
                         testThreadState);
                 maxRunId++;
                 return true;
             }
-            return false;
-        } else {
-            currentRun = new Run(maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(testThreadState, interleaveLoop),
-                    testThreadState);
-            maxRunId++;
-            return true;
         }
     }
+
     public void close(TestThreadState testThreadState) {
-        testThreadState.setParallelizedThreadLocalToNull();
+        synchronized (singleLoopAndRunLock) {
+            testThreadState.setParallelizedThreadLocalToNull();
+        }
+    }
+
+    // For Test
+    public Run currentRun() {
+        return currentRun;
     }
 }

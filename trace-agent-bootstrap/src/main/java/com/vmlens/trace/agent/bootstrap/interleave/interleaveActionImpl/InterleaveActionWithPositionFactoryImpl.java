@@ -25,10 +25,9 @@ public class InterleaveActionWithPositionFactoryImpl implements InterleaveAction
 
     @Override
     public String toString() {
-        return "InterleaveActionWithPositionFactoryImpl{" +
-                "interleaveAction=" + interleaveAction +
+        return interleaveAction +
                 ", threadIndex=" + threadIndex +
-                '}';
+                ')';
     }
 
     // visible for test

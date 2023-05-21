@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import java.lang.invoke.VarHandle;
-
 import com.vmlens.trace.agent.bootstrap.callback.field.CallbackObject;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
+
+import java.lang.invoke.VarHandle;
 
 public class VarHandleCallback {
 
@@ -36,58 +36,26 @@ public class VarHandleCallback {
 	
 	
 	
-	public static void volatileAccess(VarHandle varHandle, Object obj, int methodId , int operation)
-	{
-		
+	public static void volatileAccess(VarHandle varHandle, Object obj, int methodId , int operation) {
+
 		int fieldId = MethodHandlesLookupCallback.getFieldId2VarHandle(varHandle);
-		
-		if(  fieldId > -1)
-		{
-			CallbackObject.volatile_access( obj , fieldId, methodId, operation);
+
+		if (fieldId > -1) {
+			CallbackObject.volatile_access(obj, fieldId, methodId, operation);
 		}
-		
-		
-		ParallizeFacade.afterFieldAccess4UnsafeOrVarHandle( CallbackState.callbackStatePerThread.get() , fieldId, operation);
-		
+
+
+		ParallelizeFacade.afterFieldAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(), fieldId, operation);
+
 	}
 	
 	
-	public static void volatileAccessArray(long index, Object obj, int methodId , int operation)
-	{
+	public static void volatileAccessArray(long index, Object obj, int methodId , int operation) {
 		VolatileArrayAccessCallback.access(index, obj, methodId, operation);
-		
-		
-		ParallizeFacade.afterVolatileArrayAccess4UnsafeOrVarHandle( CallbackState.callbackStatePerThread.get() , index, operation);
+
+
+		ParallelizeFacade.afterVolatileArrayAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(), index, operation);
 	}
-	
-	
-//	public static int getVolatile5(VarHandle varHandle, Object obj , int methodId)
-//	{
-//		
-//		volatileAccess( varHandle , obj , methodId  , false );		
-//		return (int) varHandle.getVolatile(obj);
-//		
-//	}
-//	
-//	public static void getVolatile0(VarHandle varHandle, Object obj , int methodId)
-//	{
-//		volatileAccess( varHandle , obj , methodId  , false);		
-//		varHandle.getVolatile(obj);
-//		
-//	}
-//	
-//	
-//	public static Object getVolatile10(VarHandle varHandle, Object obj , int methodId)
-//	{
-//		
-//		volatileAccess( varHandle , obj , methodId  , false);		
-//		
-//		return (Object) varHandle.getVolatile(obj);
-//		
-//	
-//		
-//	}
-	
-	
-	
+
+
 }

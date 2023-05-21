@@ -1,65 +1,83 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.InterleaveActionWithPositionFactoryFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadStart;
+import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeFacadeImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopContainer;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFactoryImpl;
 
-/**
- * Responsible for creating parallelize actions. Basically the command design pattern.
- * called from external callbacks for example lock.
- */
+import java.util.concurrent.Future;
 
+
+/**
+ * Singelton for ParallelizeFacadeImpl
+ */
 public class ParallelizeFacade {
 
-    static volatile ParallelizeLoopContainer parallelizeLoopContainer =
-            new ParallelizeLoopContainer(new ParallelizeLoopFactoryImpl());
+    private static final ParallelizeFacadeImpl parallelizeFacadeImpl =
+            new ParallelizeFacadeImpl(new ParallelizeLoopContainer(new ParallelizeLoopFactoryImpl()));
 
-    public static void afterFieldAccessVolatile(ThreadLocalWrapper threadLocalWrapper,
-                                               int fieldId, int operation) {
-        debugMethodCall(threadLocalWrapper,"beforeFieldAccessVolatile");
-        // ToDo must be before call
-        new TestThreadState(threadLocalWrapper).after(new InterleaveActionWithPositionFactoryFactory(
-                new VolatileFieldAccess(fieldId, operation)));
+    public static void afterFieldAccessVolatile(ThreadLocalWrapper threadLocalWrapper, int fieldId, int operation) {
+        parallelizeFacadeImpl.afterFieldAccessVolatile(threadLocalWrapper, fieldId, operation);
     }
 
-    public static void beforeThreadStart(ThreadLocalWrapper threadLocalWrapper,
-                                         RunnableOrThreadWrapper runnableOrThreadWrapper) {
-        debugMethodCall(threadLocalWrapper,"beforeThreadStart");
-        // we need to know that a thread was started before the thread calls beginThreadMethodEnter
-        // therefore beforeThreadStart
-        // that we treat this as after concerning the interleave algo
-        // should be no problem
-        new TestThreadState(threadLocalWrapper).after(new ThreadStart(runnableOrThreadWrapper));
+    public static void beforeThreadStart(ThreadLocalWrapper threadLocalWrapper, RunnableOrThreadWrapper runnableOrThreadWrapper) {
+        parallelizeFacadeImpl.beforeThreadStart(threadLocalWrapper, runnableOrThreadWrapper);
     }
-    public static void beginThreadMethodEnter(ThreadLocalWrapper threadLocalWrapper,
-                                                 RunnableOrThreadWrapper beganTask) {
-        debugMethodCall(threadLocalWrapper,"beginThreadMethodEnter");
-        parallelizeLoopContainer.beginThreadMethodEnter(new TestThreadState(threadLocalWrapper), beganTask);
+
+    public static void beginThreadMethodEnter(ThreadLocalWrapper threadLocalWrapper, RunnableOrThreadWrapper beganTask) {
+        parallelizeFacadeImpl.beginThreadMethodEnter(threadLocalWrapper, beganTask);
     }
 
     public static boolean hasNext(ThreadLocalWrapper threadLocalWrapper, Object obj) {
-        debugMethodCall(threadLocalWrapper,"hasNext");
-        return parallelizeLoopContainer.hasNext(new TestThreadState(threadLocalWrapper), obj);
+        return parallelizeFacadeImpl.hasNext(threadLocalWrapper, obj);
     }
 
     public static void close(ThreadLocalWrapper threadLocalWrapper, Object obj) {
-        debugMethodCall(threadLocalWrapper,"close");
-        parallelizeLoopContainer.close(new TestThreadState(threadLocalWrapper), obj);
+        parallelizeFacadeImpl.close(threadLocalWrapper, obj);
     }
 
-    private static void debugMethodCall(ThreadLocalWrapper threadLocalWrapper, String methodName) {
-        agentLogger().debug(threadLocalWrapper.threadId() + ":" +methodName );
+    public static void afterLockOperation(CallbackStatePerThread callbackStatePerThread, ParallelizeLock parallelizeLockEnter) {
     }
 
-    private static AgentLogger agentLogger() {
-        return parallelizeLoopContainer.agentLogger();
+    public static void beforeExecutorStart(CallbackStatePerThread callbackStatePerThread, Object runnable) {
     }
 
+    public static void beginThreadMethodExit(CallbackStatePerThread callbackStatePerThread) {
+    }
+
+    public static void afterFutureGet(CallbackStatePerThread callbackStatePerThread, Future future) {
+    }
+
+    public static void onAtomicMethodEnter(CallbackStatePerThread callbackStatePerThread, int methodId, boolean b, int atomicId) {
+    }
+
+    public static void onAtomicMethodExit(CallbackStatePerThread callbackStatePerThread, int methodId, int atomicId, boolean b) {
+    }
+
+    public static void taskMethodEnter(CallbackStatePerThread callbackStatePerThread) {
+    }
+
+    public static void taskMethodExit(CallbackStatePerThread callbackStatePerThread) {
+    }
+
+    public static void beforeFieldAccessVolatile(CallbackStatePerThread callbackStatePerThread, long id, int fieldId, int operation) {
+    }
+
+    public static void afterVolatileArrayAccess4UnsafeOrVarHandle(CallbackStatePerThread callbackStatePerThread, long offset, int operation) {
+    }
+
+    public static void afterFieldAccess4UnsafeOrVarHandle(CallbackStatePerThread callbackStatePerThread, int fieldId, int operation) {
+    }
+
+    public static void beforeMonitorExit(CallbackStatePerThread callbackStatePerThread, int id, int methodId, int position) {
+    }
+
+    public static void onMonitorEnter(CallbackStatePerThread callbackStatePerThread, int id) {
+    }
+
+    public static void beforeMonitorExitStatic(CallbackStatePerThread callbackStatePerThread, int slidingWindowId, int methodId) {
+    }
 }

@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArrays;
+import com.vmlens.trace.agent.bootstrap.interleave.loop.AgentLoggerForTest;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -29,7 +30,8 @@ public class TestAlternatingOrderContainer {
         // When
         boolean equals = first.equals(second);
         // Then
-        assertThat(equals,is(true));
+        second.debug(new AgentLoggerForTest());
+        assertThat(equals, is(true));
     }
     private AlternatingOrderContainer createFixed(int indexA,int indexB ) {
         LeftBeforeRight[] firstOrderArray = new LeftBeforeRight[2];

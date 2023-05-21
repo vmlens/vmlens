@@ -7,9 +7,11 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementLis
 
 import java.util.Iterator;
 
-;
 
-
+/**
+ * Let you iterate over all calculated runs which can be created out of the alternating order. The iterator return null
+ * when an order leads to an impossible calculated run.
+ */
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
     private final ThreadIndexToElementList<Position> actualRun;
@@ -22,7 +24,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
     /**
      * @return
-     * @rule Iterator can return null, will be filtered by InterleaveLoopIteratorStateAlternatingOrderContainer
+     * Iterator can return null, will be filtered by InterleaveLoopIteratorStateAlternatingOrderContainer
      */
     @Override
     public Iterator<CalculatedRun> iterator() {
@@ -53,8 +55,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         orderArrays.debug(agentLogger);
     }
 
-    // Visble for test
-
+    // Visible for test
     ThreadIndexToElementList<Position> actualRun() {
         return actualRun;
     }

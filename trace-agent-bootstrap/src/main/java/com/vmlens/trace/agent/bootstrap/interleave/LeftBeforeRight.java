@@ -29,10 +29,8 @@ public class LeftBeforeRight implements Comparable<LeftBeforeRight>  {
 
     @Override
     public String toString() {
-        return "LeftBeforeRight{" +
-                "left=" + left +
-                ", right=" + right +
-                '}';
+        return "(" + left +
+                "<" + right + ")";
     }
 
     @Override
@@ -43,4 +41,9 @@ public class LeftBeforeRight implements Comparable<LeftBeforeRight>  {
         }
         return left.compareTo(other.left);
     }
+
+    public LeftBeforeRight inverse() {
+        return new LeftBeforeRight(right, left);
+    }
+
 }

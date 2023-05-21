@@ -1,12 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.callback.state.*;
-import com.vmlens.trace.agent.bootstrap.parallize.ParallizeFacade;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+
 
 /*
  * ObjectState
@@ -273,7 +274,7 @@ public class UpdateObjectState {
 
 	public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
 			CallbackStatePerThread callbackStatePerThread) {
-		ParallizeFacade.beforeFieldAccessVolatile(callbackStatePerThread, id, fieldId, operation);
+		ParallelizeFacade.beforeFieldAccessVolatile(callbackStatePerThread, id, fieldId, operation);
 	}
 
 	/*

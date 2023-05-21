@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
+import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilder;
@@ -61,9 +62,7 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
 
     @Override
     public String toString() {
-        return "VolatileFieldAccess{" +
-                "fieldId=" + fieldId +
-                ", operation=" + operation +
-                '}';
+        return "volatile" + MemoryAccessType.asString(operation) +
+                "(" + fieldId + ')';
     }
 }

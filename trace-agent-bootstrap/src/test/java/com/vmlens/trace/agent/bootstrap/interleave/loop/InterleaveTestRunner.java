@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRu
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.ResultTestBuilderForActualRun;
 
 import java.util.Iterator;
 
@@ -11,8 +12,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InterleaveTestRunner {
-    public void run(ThreadIndexToElementList<InterleaveActionWithPositionFactory> actualRun, FeatureTestMatcher matcher) {
+    public void run(ResultTestBuilderForActualRun resultTestBuilderForInterleaveLoop, FeatureTestMatcher matcher) {
+        ThreadIndexToElementList<InterleaveActionWithPositionFactory> actualRun = resultTestBuilderForInterleaveLoop.threadIndexToFactoryList();
         InterleaveLoop loop = new InterleaveLoop(new AgentLoggerForTest());
+        loop.addActualRun(resultTestBuilderForInterleaveLoop.factoryList());
         Iterator<CalculatedRun> iter = loop.iterator();
         while (iter.hasNext()) {
             matcher.advance();
@@ -24,8 +27,7 @@ public class InterleaveTestRunner {
                     if (!clone.isEmptyAtIndex(i)) {
                         if (calculatedRun.isActive(i)) {
                             InterleaveActionWithPositionFactory interleaveActionWithPosition = clone.getAndRemoveAtIndex(i);
-                            // ToDo Fix
-                            //  calculatedRun.after(interleaveActionWithPosition);
+                            calculatedRun.incrementPositionInThread();
                             matcher.executed(interleaveActionWithPosition.threadIndex());
                             oneThreadWasActive = true;
                             break;

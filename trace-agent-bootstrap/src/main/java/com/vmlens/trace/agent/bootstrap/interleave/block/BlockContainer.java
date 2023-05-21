@@ -11,18 +11,15 @@ public class BlockContainer {
             new KeyToThreadIdToElementList<>();
     private final TLinkedList<TLinkableWrapper<ElementAndPosition<InDependentBlockElement>>> inDependentBlockList =
             new TLinkedList<>();
-
     public void addDependent(Object key, DependentBlock dependentBlock) {
         dependentBlocks.put(key, dependentBlock);
     }
-
     public void addInDependent(ElementAndPosition<InDependentBlockElement> inDependentBlockElement)   {
         inDependentBlockList.add(new TLinkableWrapper<>(inDependentBlockElement));
     }
     public KeyToThreadIdToElementList<Object, DependentBlock> dependentBlocks() {
         return dependentBlocks;
     }
-
     public TLinkedList<TLinkableWrapper<ElementAndPosition<InDependentBlockElement>>> inDependentBlocks() {
         return inDependentBlockList;
     }

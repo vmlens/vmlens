@@ -6,8 +6,10 @@ import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
 
+/**
+ * Creates alternating and fixed orders for each block type. Blocks with different keys are independent.
+ */
 public class OrderArraysFactory {
-
     public OrderArrays create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
                               ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         BlockContainer blockMap =

@@ -8,6 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPosit
 
 public class ThreadStartFactory  implements InterleaveActionWithPositionFactory  {
     private final int threadIndex;
+    // Visible for Test
     private final int startedThreadIndex;
 
     public ThreadStartFactory(int threadIndex, int startedThreadIndex) {
@@ -17,7 +18,7 @@ public class ThreadStartFactory  implements InterleaveActionWithPositionFactory 
 
     @Override
     public int threadIndex() {
-        return 0;
+        return threadIndex;
     }
     @Override
     public void addToContainer(int positionInThread, BlockBuilderAndCalculatedRunElementContainer container) {
@@ -44,9 +45,9 @@ public class ThreadStartFactory  implements InterleaveActionWithPositionFactory 
 
     @Override
     public String toString() {
-        return "ThreadStartFactory{" +
+        return "ThreadStart(" +
                 "threadIndex=" + threadIndex +
                 ", startedThreadIndex=" + startedThreadIndex +
-                '}';
+                ')';
     }
 }

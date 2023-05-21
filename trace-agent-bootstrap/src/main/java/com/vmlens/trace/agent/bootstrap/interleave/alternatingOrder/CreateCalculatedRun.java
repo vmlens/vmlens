@@ -5,19 +5,18 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 
 /**
- * @hides the algorithm to calculate a run out of an order.
- *
+ * hides the algorithm to calculate a run out of an order.
+ * <p>
  * left before right means that I can not execute right when I have not
  * reached left.
  * So I have a list of constraints, e.g. the right positions.
  * I can check if a constraint exists for a position,
  * e.g. pos >= right
  * If not i can take this position, To execute the same thread again
- * I can go forward till I have found a constraint, e.g. the maximum so tha still
- * pos < right.
- * Than I can remove all constraints with left =< pos
+ * I can go forward till I have found a constraint, e.g. the maximum so that still
+ * pos &lt; right.
+ * Than I can remove all constraints with left =&lt; pos
  * ToDo test, really equals?
- *
  */
 public class CreateCalculatedRun {
     private final LeftBeforeRight[] currentOrder;

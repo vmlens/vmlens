@@ -1,11 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainerJsonMemento;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ActualRunJsonMemento;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.TestData;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.TestFixture;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -15,14 +12,12 @@ public class TestFromActualRunToAlternatingOrderContainer {
     @Test
     public void volatileReadAndWrite() {
         // Given
-        AlternatingOrderContainer expected = AlternatingOrderContainerJsonMemento.load("volatileReadAndWrite");
-        TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> actualRun = ActualRunJsonMemento.load("volatileReadAndWrite");
+        TestData testData = TestFixture.volatileReadAndWrite();
 
         // When
-        AlternatingOrderContainer alternatingOrderContainer = InterleaveLoop.create(actualRun);
+        AlternatingOrderContainer alternatingOrderContainer = InterleaveLoop.create(testData.actualRun());
 
         // Then
-        alternatingOrderContainer.debug(new AgentLoggerForTest());
-        assertThat(alternatingOrderContainer, is(expected));
+        assertThat(alternatingOrderContainer, is(testData.alternatingOrderContainer()));
     }
 }

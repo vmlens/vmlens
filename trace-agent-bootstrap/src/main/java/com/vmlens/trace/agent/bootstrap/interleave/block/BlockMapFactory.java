@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 /**
- * creates a map of block keys to thread ids to blocks from an actual run.
+ * Creates blocks for each interleave action of an actual run. Interleave actions of different types are independent.
  */
 
 public class BlockMapFactory {

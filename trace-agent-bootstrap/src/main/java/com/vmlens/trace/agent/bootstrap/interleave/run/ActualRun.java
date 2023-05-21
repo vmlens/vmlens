@@ -11,22 +11,22 @@ public class ActualRun {
         this.actualRunObserver = actualRunObserver;
     }
 
-    private final TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> actualRun =
+    private final TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> run =
             new TLinkedList<>();
 
     public void after(InterleaveActionWithPositionFactory interleaveActionWithPositionFactory) {
-        actualRun.add(new TLinkableWrapper(interleaveActionWithPositionFactory));
+        run.add(new TLinkableWrapper(interleaveActionWithPositionFactory));
         actualRunObserver.after(interleaveActionWithPositionFactory);
     }
 
-    public TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> actualRun() {
-        return actualRun;
+    public TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> run() {
+        return run;
     }
 
     // Visible for Test
     public void debug(AgentLogger agentLogger) {
-        for (TLinkableWrapper<InterleaveActionWithPositionFactory> element : actualRun) {
-            agentLogger.debug(element.element.toString());
+        for (TLinkableWrapper<InterleaveActionWithPositionFactory> element : run) {
+            agentLogger.debug("actual(" + element.element.toString() + ")");
         }
     }
 
