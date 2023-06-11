@@ -1,8 +1,8 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
 
-import org.objectweb.asm.MethodVisitor;
 import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  *  public synchronized void start() {
@@ -42,7 +42,7 @@ public class MethodTransformerThreadStart  extends MethodTransformerAbstract {
 	
 	protected void onMethodReturn() {
 
-		  this.mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/parallize/ParallizeCallback", "afterThreadStart", "()V");
+		  this.mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/parallelize/facade/ParallelizeCallback", "afterThreadStart", "()V");
 
 	}
 

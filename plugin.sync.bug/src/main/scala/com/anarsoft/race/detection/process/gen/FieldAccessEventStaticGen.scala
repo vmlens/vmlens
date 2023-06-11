@@ -6,14 +6,14 @@ import java.nio.ByteBuffer
 import java.util.Comparator;
 
 
-class FieldAccessEventStaticGen (
-  val threadId  : Long
+class FieldAccessEventStaticGen(
+                                 val threadId: Long
 
 
-,  val programCounter  : Int
+                                 , val programCounter: Int
 
 
-,  val fieldId  : Int
+                                 , val fieldId: Int
 
 
 ,  val methodCounter  : Int

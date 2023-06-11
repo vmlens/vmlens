@@ -5,15 +5,13 @@ import com.anarsoft.race.detection.process.read._
 
 import java.nio.ByteBuffer
 
-class DirectMemoryDeSerializer   extends ReadStrategy[DirectMemoryEvent]
-{
-   def eventArraySize() = 33
-     
-     val blockSize =  33 * 10000;
-  
+class DirectMemoryDeSerializer extends ReadStrategy[DirectMemoryEvent] {
+  def eventArraySize() = 33
 
-    def deSerializeJavaEvent(buffer : ByteBuffer) =
-    {
+  val blockSize = 33 * 10000;
+
+
+  def deSerializeJavaEvent(buffer: ByteBuffer) = {
         
        val id = buffer.get();
        

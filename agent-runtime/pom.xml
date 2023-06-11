@@ -54,14 +54,23 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-
-
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>common-transform</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.12.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 
@@ -131,23 +140,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <source>1.7</source>
-                    <excludePackageNames>*.internal.*</excludePackageNames>
-                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
 </project>

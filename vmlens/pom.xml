@@ -59,7 +59,6 @@
         <module>../trace-agent-bootstrap</module>
         <module>../trace-agent-bootstrap-jdk8</module>
         <module>../trace-agent-bootstrap-jdk9</module>
-        <module>../trace-agent-bootstrap-test</module>
         <module>../trace-agent</module>
         <module>../agent-runtime</module>
         <module>../plugin.sync.bug</module>
@@ -119,6 +118,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

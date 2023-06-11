@@ -1,11 +1,9 @@
 package com.anarsoft.trace.agent.runtime.waitPoints;
 
-import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
-import com.vmlens.trace.agent.bootstrap.mode.AgentMode;
 import com.anarsoft.trace.agent.runtime.filter.FilterState;
 import com.anarsoft.trace.agent.runtime.transformer.MethodLockTypeEnum;
-
+import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
+import com.vmlens.trace.agent.bootstrap.mode.AgentMode;
 import com.vmlens.trace.agent.bootstrap.typeDesc.AtomicMethodWithCallback;
 
 /*
@@ -35,8 +33,6 @@ public class FilterList {
 		this.onlyTraceIn = onlyTraceIn;
 
 		this.agentMode = agentMode;
-
-	
 
 	}
 

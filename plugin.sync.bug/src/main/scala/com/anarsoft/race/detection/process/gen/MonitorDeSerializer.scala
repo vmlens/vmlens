@@ -5,15 +5,12 @@ import com.anarsoft.race.detection.process.read._
 
 import java.nio.ByteBuffer
 
-class MonitorDeSerializer   extends ReadStrategy[MonitorEvent]
-{
-   def eventArraySize() = 45
-     
-     val blockSize =  45 * 10000;
-  
+class MonitorDeSerializer extends ReadStrategy[MonitorEvent] {
+  val blockSize = 45 * 10000;
 
-    def deSerializeJavaEvent(buffer : ByteBuffer) =
-    {
+  def eventArraySize() = 45
+
+  def deSerializeJavaEvent(buffer: ByteBuffer) = {
         
        val id = buffer.get();
        

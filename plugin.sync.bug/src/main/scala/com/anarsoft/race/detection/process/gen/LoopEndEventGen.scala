@@ -6,11 +6,11 @@ import java.nio.ByteBuffer
 import java.util.Comparator;
 
 
-class LoopEndEventGen (
-  val loopId  : Int
+class LoopEndEventGen(
+                       val loopId: Int
 
 
-,  val status  : Int
+                       , val status: Int
 
 
 

@@ -6,14 +6,11 @@ import java.nio.ByteBuffer
 import java.util.Comparator;
 
 
-class LoopStartEventGen (
-  val loopId  : Int
+class LoopStartEventGen(
+                         val loopId: Int
 
 
-
-
-)    extends LoopStartEvent  
-{
+                       ) extends LoopStartEvent {
 override def toString() = {
   var text =  "LoopStartEventGen" 
   text = text + ", loopId:" +  loopId 

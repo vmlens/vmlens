@@ -1,18 +1,6 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
-import org.objectweb.asm.Label;
-
-import com.anarsoft.trace.agent.runtime.ClassVisitorCreateDesc;
-import com.anarsoft.trace.agent.runtime.MethodCounts;
-import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
-import com.anarsoft.trace.agent.runtime.MethodIdentifier;
-import com.anarsoft.trace.agent.runtime.TransformConstants;
-import com.anarsoft.trace.agent.runtime.WriteClassDescription;
+import com.anarsoft.trace.agent.runtime.*;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.transformer.template.Add2TemplateMethodDescList;
@@ -21,12 +9,12 @@ import com.anarsoft.trace.agent.runtime.transformer.template.TemplateMethodDesc;
 import com.anarsoft.trace.agent.runtime.waitPoints.CallbackFactory;
 import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
 import com.anarsoft.trace.agent.runtime.waitPoints.MethodInClassIdentifier;
-import com.vmlens.trace.agent.bootstrap.typeDesc.AtomicMethodWithCallback;
-
-import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
+import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
+import com.vmlens.trace.agent.bootstrap.typeDesc.AtomicMethodWithCallback;
+import org.objectweb.asm.*;
 
 public class ClassTransformer extends ClassTransformerAbstract implements Opcodes {
 
@@ -362,10 +350,6 @@ public class ClassTransformer extends ClassTransformerAbstract implements Opcode
 
 		boolean traceCalls = classVisitorCreateDesc.traceMethodCalls(methodIdentifier);
 
-		// if(filterList.createMethodParallized( className ) )
-		// {
-		// traceCalls = true;
-		// }
 
 		int methodId = newMethodId();
 

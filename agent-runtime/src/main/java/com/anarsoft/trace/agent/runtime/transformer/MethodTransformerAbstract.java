@@ -1,16 +1,14 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
-import java.util.Iterator;
-
+import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
+import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
-import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
+import java.util.Iterator;
 
 /**
  * verantwortlich fuer die korrekte umsetzung von method exit ueber try block
@@ -35,11 +33,6 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 	private final boolean useExpandedFrames;
 	private final boolean dottyProblematic;
 
-	// private boolean firstConstructorInitVisited = false;
-
-	// private boolean frameAlreadyVisited = false;
-	// ,boolean dottyProblematic
-
 	public MethodTransformerAbstract(MethodVisitor mv, int access, String desc, String name, String className,
 			String superClassName, int tryCatchBlockCount, MethodDescriptionBuilder methodDescriptionBuilder,
 			boolean dottyProblematic,boolean useExpandedFrames) {
@@ -58,10 +51,6 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 		return (Opcodes.ACC_STATIC & access) == Opcodes.ACC_STATIC;
 	}
 
-	// public boolean isConstructor()
-	// {
-	// return name.startsWith("<init");
-	// }
 
 	private void createTryBlock() {
 		if (!dottyProblematic) {
@@ -123,14 +112,6 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 		throw new RuntimeException(type + " can not be converted to frame type");
 	}
 
-	/**
-	 * private void writeFrameType(final Object type) { if (type instanceof String)
-	 * { stackMap.putByte(7).putShort(cw.newClass((String) type)); } else if (type
-	 * instanceof Integer) { stackMap.putByte(((Integer) type).intValue()); } else {
-	 * stackMap.putByte(8).putShort(((Label) type).position); } }
-	 * 
-	 * @return
-	 */
 
 	protected Object[] buildLocalVariables() {
 
@@ -156,7 +137,6 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 		while (it.hasNext()) {
 			TLinkableWrapper<Object> c = it.next();
 			result[index] = c.getElement();
-
 			index++;
 
 		}
@@ -184,9 +164,8 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 						new Object[] { "java/lang/Throwable" });
 
 			}
-			
-		
-			onMethodEscapedException();
+
+            onMethodEscapedException();
 
 			mv.visitInsn(ATHROW);
 		}
@@ -242,8 +221,6 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 		case BASTORE:
 		case CASTORE:
 		case SASTORE:
-			// case LASTORE:
-			// case DASTORE:
 			onArrayStore();
 			break;
 
@@ -263,31 +240,6 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 
 	}
 
-	/**
-	 * muss überall (auch im konstruktor aufgerufen werden)
-	 * 
-	 * 
-	 */
-	
-	/*
-	 * 
-	 * mv.visitTypeInsn(ANEWARRAY, "java/lang/String");
-mv.visitFieldInsn(PUTFIELD, "com/vmlens/test/state/array/ArrayInConstructor", "pathNames", "[Ljava/lang/String;");
-Label l2 = new Label();
-mv.visitLabel(l2);
-mv.visitLineNumber(8, l2);
-mv.visitVarInsn(ALOAD, 0);
-mv.visitIntInsn(BIPUSH, 32);
-mv.visitIntInsn(NEWARRAY, T_INT);
-mv.visitFieldInsn(PUTFIELD, "com/vmlens/test/state/array/ArrayInConstructor", "pathIndices", "[I");
-	 * 
-	 * (non-Javadoc)
-	 * @see org.objectweb.asm.MethodVisitor#visitInsn(int)
-	 */
-	
-	
-	
-	
 
 	@Override
 	public void visitIntInsn(int opcode, int operand) {
@@ -324,24 +276,6 @@ mv.visitFieldInsn(PUTFIELD, "com/vmlens/test/state/array/ArrayInConstructor", "p
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean isInterface) {
 
 		visitMethodInsnInChild(opcode, owner, name, desc, isInterface);
-
-		/**
-		 * needed to not get a nullpointer exception in visitMaxs:
-		 * java/lang/invoke/MethodHandleImpl <init> java.lang.NullPointerException at
-		 * org.objectweb.asm.MethodWriter.visitMaxs(MethodWriter.java:1389) at
-		 * com.anarsoft.trace.agent.runtime.transformer.MethodTransformerAbstract.visitMaxs(MethodTransformerAbstract.java:252)
-		 * 
-		 */
-		// herausgenommen
-
-		// if( ! firstConstructorInitVisited && opcode == INVOKESPECIAL &&
-		// name.equals("<init>") && isConstructor() && ( owner.equals(superClassName) ||
-		// owner.equals(className) ) )
-		// {
-		//
-		// mv.visitLabel(startLabel);
-		// firstConstructorInitVisited = true;
-		// }
 	}
 
 	public abstract void visitMethodInsnInChild(int opcode, String owner, String name, String desc,

@@ -6,11 +6,11 @@ import java.nio.ByteBuffer
 import java.util.Comparator;
 
 
-class LoopWarningEventGen (
-  val loopId  : Int
+class LoopWarningEventGen(
+                           val loopId: Int
 
 
-,  val runId  : Int
+                           , val runId: Int
 
 
 

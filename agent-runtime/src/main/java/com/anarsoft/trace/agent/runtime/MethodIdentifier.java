@@ -1,13 +1,9 @@
 package com.anarsoft.trace.agent.runtime;
 
 public class MethodIdentifier {
-
 	private String name;
 	private String desc;
 
-	
-	
-	
 	public String getName() {
 		return name;
 	}
@@ -48,8 +44,4 @@ public class MethodIdentifier {
 			return false;
 		return true;
 	}
-
-
-
-
 }

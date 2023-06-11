@@ -89,12 +89,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				startManually = true;
 			}
 
-			// System.err.println("startManually " +startManually);
-
-			/*
-			 * val START_FILE = "/start"; val STOP_FILE = "/stop"; val FINISHED_FILE =
-			 * "/finished"; val SHUTDOWN_FILE = "/shutdown";
-			 */
 
 			deleteFile(outputFileName + "/start");
 			deleteFile(outputFileName + "/stop");
@@ -136,24 +130,12 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			}
 
 			out.println("vmlens.mode=" + mode.asPropertyString());
-
-			// funktioniert nicht für jdk 6
-			// properties.save( out , "" );
 			out.close();
 
 			LoadAtomicClassesFromClasspath.load();
 
 			Offset2FieldId.initialize();
 
-			/*
-			 * vmlens.excludeFromTrace vmlens.doNotTraceIn vmlens.onlyTraceIn
-			 */
-			// FilterState excludeFromTrace, FilterState doNotTraceIn, FilterState
-			// onlyTraceIn
-
-			// FilterList(FilterState excludeFromTrace, FilterState
-			// excludeThroughDoNotTraceIn, FilterState doNotTraceIn,
-			// FilterState onlyTraceIn, WaitPointMap schedulingInfoClassMap)
 
 			FilterList filterList = new FilterList(
 					FilterBuilder.createExcludeFilter(properties.getProperty(AgentKeys.EXCLUDE_FROM_TRACE)),
@@ -161,8 +143,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 					FilterBuilder.createOnlyWhenSetFilter(properties.getProperty(AgentKeys.DO_NOT_TRACE_IN)),
 					FilterBuilder.createOnlyWhenSetFilter(properties.getProperty(AgentKeys.TRACE)), mode);
 
-			// LinkedNode<EventSink<Event,Object>> serializeEventNode = new
-			// LinkedNode<EventSink<Event,Object>>(new WriteEvent2File(outputFileName) );
 
 			String enableAgentLog = properties.getProperty(AgentKeys.AGENT_LOG);
 			String enableAgentLogPerformance = properties.getProperty(AgentKeys.AGENT_LOG_PERFORMANCE);
@@ -174,51 +154,15 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			}
 			
 
-//			String maximumRunCount = properties.getProperty(AgentKeys.MAXIMUM_RUN_COUNT);
-//
-//			if (maximumRunCount != null) {
-//				try {
-//					ParallizeFacade.MAX_RUN_COUNT = Integer.parseInt(maximumRunCount);
-//				} catch (NumberFormatException e) {
-//
-//				}
-//
-//			}
-//
-//			String maximumOperationCount = properties.getProperty(AgentKeys.MAXIMUM_OPERATION_COUNT);
-//
-//			if (maximumOperationCount != null) {
-//				try {
-//					ParallizeFacade.MAX_OPERATION_COUNT = Integer.parseInt(maximumOperationCount);
-//				} catch (NumberFormatException e) {
-//
-//				}
-//
-//			}
-
-			// PrintEvent.setStrater(new WriteEvent2FileStarterImpl(outputFileName));
 
 			CallbackState.doNotcheckStackTraceBasedDoTrace = !filterList.onlyTraceIn.isDefined();
-
 			CallbackState.syncActionSameAsField4TraceCheck = mode.syncActionSameAsField4TraceCheck();
-
 			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
-
-			//
 
 			AgentController agentController = AgentController.create(outputFileName);
 
-			// Thread.setDefaultUncaughtExceptionHandler( new
-			// VmlensUncaughtExceptionHandler() );
 			
 			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.SendEventDoNotSend");
-		
-			
-
-//			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.concurrent.collections.ConcurrentHashMapComputeIfAbsentOnly");
-//			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.concurrent.collections.KeyValue");
-//			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.concurrent.collections.FunctionForJDK7");
-			
 			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap");
 			
 			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.CreateGetState");
@@ -268,34 +212,9 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
 			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
 			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.TObjectIntHashMap");
-
-			// this.getClass().getClassLoader().loadClass("java.util.HashSet");
-
 			this.getClass().getClassLoader().loadClass("org.objectweb.asm.ConstantDynamic");
-			// this.getClass().getClassLoader().loadClass("org.objectweb.asm.commons.Method");
-			// this.getClass().getClassLoader().loadClass("org.objectweb.asm.commons.JSRInlinerAdapter");
-			// this.getClass().getClassLoader().loadClass("org.objectweb.asm.commons.AdviceAdapter");
-			//
-
-			// this.getClass().getClassLoader().loadClass("java.util.HashMap");
-			
 			this.getClass().getClassLoader()
 			.loadClass("com.vmlens.trace.agent.bootstrap.callback.StackTraceBasedFilterCallback");
-
-			/**
-			 * Exception in thread "main" java.lang.NoClassDefFoundError: Could not
-			 * initialize class java.util.concurrent.locks.LockSupport at
-			 * java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:349) at
-			 * java.anarsoft.executorService.internal.manyToOne.WithBackPressure.writeOne(WithBackPressure.java:44)
-			 * at
-			 * java.anarsoft.executorService.internal.manyToOne.QueueManyWritersForThreadLocal.accept(QueueManyWritersForThreadLocal.java:62)
-			 * at
-			 * java.anarsoft.trace.agent.bootstrap.callback.SynchronizedStatementCallback.monitorExit(SynchronizedStatementCallback.java:366)
-			 * at java.lang.ClassLoader.loadClass(ClassLoader.java:437) at
-			 * sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308) at
-			 * java.lang.ClassLoader.loadClass(ClassLoader.java:358) at
-			 * java.lang.ClassLoader.defineClass1(Native Method)
-			 */
 
 			this.getClass().getClassLoader().loadClass("java.util.concurrent.locks.LockSupport");
 
@@ -365,7 +284,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		THashSet<String> alreadyTransformed = new THashSet();
 		THashSet<String> withoutOwner = new THashSet();
 
-		retransform(inst, callBackStrings, filterList, classAnalyzedEventList, true, alreadyTransformed);
+	//	retransform(inst, callBackStrings, filterList, classAnalyzedEventList, true, alreadyTransformed);
 
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
@@ -376,7 +295,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		}
 		classAnalyzedEventList = new TLinkedList();
 
-		retransform(inst, callBackStrings, filterList, classAnalyzedEventList, false, alreadyTransformed);
+        //	retransform(inst, callBackStrings, filterList, classAnalyzedEventList, false, alreadyTransformed);
 		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
 			CallbackState.queueFacade.putDirect(classAnalyzedEvent.getElement());

@@ -6,14 +6,14 @@ import java.nio.ByteBuffer
 import java.util.Comparator;
 
 
-class MethodEnterSmallThreadIdEventGen (
-  val smallThreadId  : Byte
+class MethodEnterSmallThreadIdEventGen(
+                                        val smallThreadId: Byte
 
 
-,  val methodId  : Int
+                                        , val methodId: Int
 
 
-,  val methodCounter  : Int
+                                        , val methodCounter: Int
 
 
 

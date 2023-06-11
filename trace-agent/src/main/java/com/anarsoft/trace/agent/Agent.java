@@ -2,17 +2,13 @@ package com.anarsoft.trace.agent;
 
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
+
 import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
-
-
-
-
-
 
 /*
  * 
@@ -35,18 +31,9 @@ public class Agent {
 	
 	
 	private static boolean alreadyStarted = false;
-	
-	
-	
-	
-	
 	public static  boolean isAlreadyStarted() {
 		return alreadyStarted;
 	}
-
-
-
-
 
 	public static  void setAlreadyStarted(boolean alreadyStarted) {
 		Agent.alreadyStarted = alreadyStarted;
@@ -54,22 +41,11 @@ public class Agent {
 	
 	
 	public static void premain(String args, Instrumentation inst) {
-		
-		
 		execute( args,  inst);
-		
-		
 	}
-	
-	
-//	public static void agentmain(String agentArgs, Instrumentation inst)
-//	{
-//		execute( agentArgs,  inst);
-//	}
-	
-	
-	
-	private static void execute(String args, Instrumentation inst)
+
+
+    private static void execute(String args, Instrumentation inst)
 	{
 		
 	//	CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
@@ -127,53 +103,24 @@ public class Agent {
 			
 			
 		}
-			
-		
 		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 		
 		URLClassLoader classloader = new URLClassLoader(urlList.toArray(new URL[]{}) , null );
-		
 		Thread.currentThread().setContextClassLoader(classloader);
-	
-		
 		String agentName = "com.anarsoft.trace.agent.runtime.AgentRuntimeImpl";
-		//String agentName = "com.anarsoft.trace.agent.runtime.performance.PerformaneAgentRumtimeImpl";
-		
-		
 		AgentRuntime agentRuntime  =  (AgentRuntime) classloader.loadClass(agentName).newInstance();
-		
-		//classloader.loadClass("com.anarsoft.trace.agent.bootstrap.AgentRuntime");
-		
-		
-	
-		
-		
-		agentRuntime.run(configPath, inst);
-		
-		//System.err.println("------------------------------"); 
-		
-		
+
+            agentRuntime.run(configPath, inst);
 		System.err.println("------------------------------");
 		
 		Thread.currentThread().setContextClassLoader(contextClassLoader);
-			
-		
-		
-		
-		
-		}
+
+        }
 		catch(Throwable e)
 		{
 			e.printStackTrace();
 		}
 		
 		 CallbackState.setSlidingWindowToOneIfStartAtBeginning();
-		
-		// CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-		
 	}
-	
-	
-	
-
 }

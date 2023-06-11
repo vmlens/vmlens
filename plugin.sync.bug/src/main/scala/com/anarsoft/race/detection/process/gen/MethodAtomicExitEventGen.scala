@@ -6,14 +6,14 @@ import java.nio.ByteBuffer
 import java.util.Comparator;
 
 
-class MethodAtomicExitEventGen (
-  val threadId  : Long
+class MethodAtomicExitEventGen(
+                                val threadId: Long
 
 
-,  val methodId  : Int
+                                , val methodId: Int
 
 
-,  val methodCounter  : Int
+                                , val methodCounter: Int
 
 
 ,  val hasCallback  : Byte

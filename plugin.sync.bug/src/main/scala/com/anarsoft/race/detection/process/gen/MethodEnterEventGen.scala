@@ -6,14 +6,14 @@ import java.nio.ByteBuffer
 import java.util.Comparator;
 
 
-class MethodEnterEventGen (
-  val threadId  : Long
+class MethodEnterEventGen(
+                           val threadId: Long
 
 
-,  val methodId  : Int
+                           , val methodId: Int
 
 
-,  val methodCounter  : Int
+                           , val methodCounter: Int
 
 
 

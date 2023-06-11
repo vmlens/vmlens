@@ -6,14 +6,14 @@ import java.nio.ByteBuffer
 import java.util.Comparator;
 
 
-class MonitorExitEventGenInterleave (
-  val threadId  : Long
+class MonitorExitEventGenInterleave(
+                                     val threadId: Long
 
 
-,  val programCounter  : Int
+                                     , val programCounter: Int
 
 
-,  val order  : Int
+                                     , val order: Int
 
 
 ,  val monitorId  : Int
