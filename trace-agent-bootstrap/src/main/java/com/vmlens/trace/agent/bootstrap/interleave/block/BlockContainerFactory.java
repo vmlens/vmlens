@@ -8,7 +8,7 @@ import gnu.trove.list.linked.TLinkedList;
  * Creates blocks for each interleave action of an actual run. Interleave actions of different types are independent.
  */
 
-public class BlockMapFactory {
+public class BlockContainerFactory {
 
     public BlockContainer create(
             TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> actualRun) {

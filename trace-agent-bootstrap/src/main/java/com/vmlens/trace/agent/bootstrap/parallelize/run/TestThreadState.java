@@ -1,7 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
-public class TestThreadState {
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadStart;
 
+public class TestThreadState {
     private final ThreadLocalWrapper threadLocalWrapper;
 
     public TestThreadState(ThreadLocalWrapper threadLocalWrapper) {
@@ -9,7 +11,7 @@ public class TestThreadState {
     }
 
     public void createNewParallelizedThreadLocal(Run run, int threadIndex) {
-        threadLocalWrapper.setParallelizedThreadLocal(new ParallelizedThreadLocal(run ,threadIndex));
+        threadLocalWrapper.setParallelizedThreadLocal(new ParallelizedThreadLocal(run, threadIndex));
     }
     public void setParallelizedThreadLocalToNull() {
         threadLocalWrapper.setParallelizedThreadLocal(null);
@@ -17,12 +19,27 @@ public class TestThreadState {
     public long threadId() {
         return threadLocalWrapper.threadId();
     }
+
     public int threadIndex() {
         return threadLocalWrapper.getParallelizedThreadLocal().threadIndex();
     }
+
     public void after(ParallelizeAction action) {
-        if(threadLocalWrapper.getParallelizedThreadLocal() != null) {
-            threadLocalWrapper.getParallelizedThreadLocal().after(action,this);
+        if (threadLocalWrapper.getParallelizedThreadLocal() != null) {
+            threadLocalWrapper.getParallelizedThreadLocal().after(action, this);
+        }
+    }
+
+    public void addCreatedThreadForAfterStart(RunnableOrThreadWrapper runnableOrThreadWrapper) {
+        if (threadLocalWrapper.getParallelizedThreadLocal() != null) {
+            threadLocalWrapper.getParallelizedThreadLocal().setCreatedThread(runnableOrThreadWrapper);
+        }
+    }
+
+    public void afterThreadStart() {
+        if (threadLocalWrapper.getParallelizedThreadLocal() != null) {
+            threadLocalWrapper.getParallelizedThreadLocal()
+                    .after(new ThreadStart(threadLocalWrapper.getParallelizedThreadLocal().createdThread()), this);
         }
     }
 }

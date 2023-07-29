@@ -21,10 +21,11 @@ public class InterleaveLoop implements IteratorQueue {
             new THashSet<>();
     private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> stillToBeProcessedAlternatingOrderContainer =
             new TLinkedList<>();
-    private final InterleaveLoopIterator iterator = new InterleaveLoopIterator(this);
+    private final InterleaveLoopIterator iterator;
 
     public InterleaveLoop(AgentLogger agentLogger) {
         this.agentLogger = agentLogger;
+        this.iterator = new InterleaveLoopIterator(this, agentLogger);
     }
 
     // Visible for Test

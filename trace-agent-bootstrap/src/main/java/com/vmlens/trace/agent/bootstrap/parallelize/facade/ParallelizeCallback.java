@@ -11,7 +11,8 @@ public class ParallelizeCallback {
 
 
     public static void beforeThreadJoin(Thread toBeJoined) {
-
+        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ParallelizeFacade.beforeThreadJoin(callbackStatePerThread, toBeJoined.getId());
     }
 
     public static void afterThreadJoin(Thread toBeJoined, long millis) {
@@ -41,8 +42,8 @@ public class ParallelizeCallback {
     }
 
     public static void afterThreadStart() {
-
-
+        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ParallelizeFacade.afterThreadStart(callbackStatePerThread);
     }
 
     public static void beginTask(int id) {

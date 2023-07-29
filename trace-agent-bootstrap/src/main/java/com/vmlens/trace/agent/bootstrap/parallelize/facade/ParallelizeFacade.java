@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
  */
 public class ParallelizeFacade {
 
-    private static final ParallelizeFacadeImpl parallelizeFacadeImpl =
+    private static volatile ParallelizeFacadeImpl parallelizeFacadeImpl =
             new ParallelizeFacadeImpl(new ParallelizeLoopContainer(new ParallelizeLoopFactoryImpl()));
 
     public static void afterFieldAccessVolatile(ThreadLocalWrapper threadLocalWrapper, int fieldId, int operation) {
@@ -79,5 +79,13 @@ public class ParallelizeFacade {
     }
 
     public static void beforeMonitorExitStatic(CallbackStatePerThread callbackStatePerThread, int slidingWindowId, int methodId) {
+    }
+
+    public static void afterThreadStart(CallbackStatePerThread threadLocalWrapper) {
+        parallelizeFacadeImpl.afterThreadStart(threadLocalWrapper);
+    }
+
+    public static void beforeThreadJoin(CallbackStatePerThread threadLocalWrapper, long joinedThreadId) {
+        parallelizeFacadeImpl.beforeThreadJoin(threadLocalWrapper, joinedThreadId);
     }
 }

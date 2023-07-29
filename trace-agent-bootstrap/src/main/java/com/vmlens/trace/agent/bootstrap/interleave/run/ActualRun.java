@@ -26,7 +26,7 @@ public class ActualRun {
     // Visible for Test
     public void debug(AgentLogger agentLogger) {
         for (TLinkableWrapper<InterleaveActionWithPositionFactory> element : run) {
-            agentLogger.debug("actual(" + element.element.toString() + ")");
+            agentLogger.debug(this.getClass(), element.element.toString());
         }
     }
 

@@ -1,20 +1,13 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-
-
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.Opcodes;
-
-import com.anarsoft.trace.agent.runtime.AgentClassFileTransformer;
-import com.anarsoft.trace.agent.runtime.ClassVisitorCreateDesc;
-import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
-import com.anarsoft.trace.agent.runtime.TransformConstants;
-import com.anarsoft.trace.agent.runtime.WriteClassDescription;
+import com.anarsoft.trace.agent.runtime.*;
 import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
 import com.anarsoft.trace.agent.serialization.ClassDescription;
 import com.anarsoft.trace.agent.serialization.MethodDescription;
 import com.anarsoft.trace.agent.serialization.SerializedFieldDescription;
+import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Opcodes;
 
 public abstract class ClassTransformerAbstract  extends ClassVisitor {
 
@@ -150,25 +143,18 @@ public abstract class ClassTransformerAbstract  extends ClassVisitor {
 
 	@Override
 	public void visitEnd() {
-		
-		
-		if( isClass )
-	    {
-			addMethodsAndFieldsToClass();
-		}
+		if (isClass) {
+            addMethodsAndFieldsToClass();
+        }
 
-	
 		writeClassDescription.write(  this.createClassAnalyzedEvent()  );
-
-
 		super.visitEnd();
 	}
 
-	
-	protected void addToHasGeneratedMethodsSetBasedAtStart()
-	{
-		
-	}
+
+    protected void addToHasGeneratedMethodsSetBasedAtStart() {
+
+    }
 
 
 

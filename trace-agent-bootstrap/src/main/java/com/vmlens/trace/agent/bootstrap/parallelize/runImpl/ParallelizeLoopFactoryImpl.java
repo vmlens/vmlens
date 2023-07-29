@@ -14,7 +14,7 @@ public class ParallelizeLoopFactoryImpl implements ParallelizeLoopFactory {
     private final AgentLogger agentLogger;
 
     public ParallelizeLoopFactoryImpl() {
-        this(new WaitNotifyStrategyImpl(),new AgentLoggerNoOp());
+        this(new WaitNotifyStrategyImpl(new AgentLoggerNoOp()), new AgentLoggerNoOp());
     }
 
     public ParallelizeLoopFactoryImpl(WaitNotifyStrategy waitNotifyStrategy, AgentLogger agentLogger) {

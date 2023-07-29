@@ -56,4 +56,9 @@ public class RunStateRunning implements RunState, ActionContext {
     public void after(InterleaveActionWithPositionFactory interleaveActionWithPositionFactory) {
         actualRun.after(interleaveActionWithPositionFactory);
     }
+
+    @Override
+    public int threadIndexForId(long threadId) {
+        return threadIdToState.threadIndexForThreadId(threadId);
+    }
 }

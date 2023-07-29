@@ -46,13 +46,13 @@ public class AgentLogCallback {
 	}
 	
 
-	public static void log(String message)
-	{
+	public static void log(Class location, String text) {
+        String message = location.getSimpleName() + ":" + text;
         CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-		callbackStatePerThread.queueCollection.putDirect( new AgentLogEvent(message)  );
-		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;	
-	}
+        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        callbackStatePerThread.queueCollection.putDirect(new AgentLogEvent(message));
+        CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
+    }
 
     public static  void close(Object obj)
 	{

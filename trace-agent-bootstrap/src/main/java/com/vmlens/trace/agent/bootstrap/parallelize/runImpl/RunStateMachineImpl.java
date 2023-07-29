@@ -9,7 +9,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
 public class RunStateMachineImpl implements RunStateMachine {
-
     // package visible for test
     final ThreadIdToState threadIdToState;
     private final ActualRun actualRun;
@@ -56,6 +55,12 @@ public class RunStateMachineImpl implements RunStateMachine {
     public void end() {
         interleaveLoop.addActualRun(actualRun);
         currentState = new RunStateEnd();
+    }
+
+    @Override
+    public void setStateRecording() {
+        currentState = new RunStateRecording(actualRun, threadIdToState);
+        stateAfterNewThreadStarted = currentState;
     }
 
     @Override

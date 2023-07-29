@@ -1,8 +1,12 @@
 package com.anarsoft.trace.agent.runtime;
 
+import com.anarsoft.trace.agent.runtime.classArrayTransformer.ClassArrayTransformer;
+import com.anarsoft.trace.agent.runtime.classArrayTransformer.ClassArrayTransformerFactory;
+import com.anarsoft.trace.agent.runtime.classArrayTransformer.TransformerContext;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
 import com.anarsoft.trace.agent.runtime.transformer.*;
 import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
+import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
@@ -11,16 +15,12 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
-/**
- * Memory consistency effects: As with other concurrent collections, actions in
- * a thread prior to placing an object into a ConcurrentMap as a key or value
- * happen-before actions subsequent to the access or removal of that object from
- * the ConcurrentMap in another thread.
- */
 
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
@@ -30,9 +30,12 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
     private FilterList filterList;
     private boolean skipJavaUtil;
 
+    private final TLinkedList<TLinkableWrapper<ClassArrayTransformer>> classArrayTransformerList;
+
     // || name.startsWith("java/io") || name.startsWith("java/nio")
     private WriteClassDescription writeClassDescription;
     private boolean addInterface;
+
     public AgentClassFileTransformer(FilterList filterList, TransformConstants callBackStrings,
                                      boolean skipJavaUtil,
                                      WriteClassDescription writeClassDescription, boolean addInterface,
@@ -44,6 +47,8 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
         this.writeClassDescription = writeClassDescription;
         this.addInterface = addInterface;
         this.hasGeneratedMethods = hasGeneratedMethods;
+
+        this.classArrayTransformerList = new ClassArrayTransformerFactory().create();
     }
 
     private static boolean isUtilPackage(String name) {
@@ -77,11 +82,6 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
         if (name.startsWith("com/vmlens/api") || name.startsWith("com/vmlens/test")) {
             return true;
         }
-
-        if (true) {
-            return false;
-        }
-
 
         if (name.indexOf('[') > -1) {
             return false;
@@ -212,30 +212,25 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
                 || className.startsWith("java/lang/invoke") || className.startsWith("sun/nio");
     }
 
-
-    @Override
-    public byte[] transform(ClassLoader loader, String name, Class<?> cl, ProtectionDomain protectionDomain,
-                            byte[] classfileBuffer) throws IllegalClassFormatException {
-
+    private static void logTransformedClass(String className, byte[] transformedArray) {
+        if (transformedArray == null) {
+            return;
+        }
         try {
-            CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
+            String logDir = "";
+            String fileName = className.substring(className.lastIndexOf("/") + 1);
+            fileName = fileName.replace('$', 'I');
+            OutputStream outTransformed = new FileOutputStream(logDir + fileName + "_trans.class");
+            outTransformed.write(transformedArray);
+            outTransformed.close();
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
 
-            // System.out.println("xx " + name);
+    }
 
-            if (loader != null && loader.equals(this.getClass().getClassLoader())) {
-                //AgentLogCallback.log("not transformed " + name);
-                return null;
-            }
-            if (name == null) {
-                return null;
-            }
-
-
-            if (!shouldBeTransformed(skipJavaUtil, name)) {
-                return null;
-            }
-
-            ClassReader classReader = new ClassReader(classfileBuffer); // | ClassWriter.COMPUTE_FRAMES
+    /*
+                ClassReader classReader = new ClassReader(classfileBuffer); // | ClassWriter.COMPUTE_FRAMES
             // ClassWriter.COMPUTE_MAXS
             ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS); // //
 
@@ -295,15 +290,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
             return cw.toByteArray();
 
-        } catch (Throwable e) {
-            AgentLogCallback.logException(e);
-            return null;
-        } finally {
-            CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-
-        }
-
-    }
+     */
 
     private boolean transformConcurrent(ClassReader classReader, ClassWriter cw, String name, FilterList filterList2) {
 
@@ -442,5 +429,46 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
         return new ClassTransformer(outputClassWriter, name, filterList, callBackStrings, classVisitorCreateDesc,
                 writeClassDescription, addInterface && classVisitorCreateDesc.callbackMethodNotGenerated,
                 hasGeneratedMethods);
+    }
+
+    @Override
+    public byte[] transform(ClassLoader loader, String name, Class<?> cl, ProtectionDomain protectionDomain,
+                            byte[] classfileBuffer) throws IllegalClassFormatException {
+
+        try {
+            CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
+
+            if (loader != null && loader.equals(this.getClass().getClassLoader())) {
+                return null;
+            }
+            if (name == null) {
+                return null;
+            }
+            if (name.indexOf('[') > -1) {
+                return null;
+            }
+            if (name.startsWith("com/vmlens/shaded")) {
+                return null;
+            }
+
+            for (TLinkableWrapper<ClassArrayTransformer> transformerWrapper : classArrayTransformerList) {
+                ClassArrayTransformer transformer = transformerWrapper.getElement();
+                if (transformer.appliesTo(name)) {
+                    TransformerContext context = new TransformerContext(classfileBuffer, name, filterList,
+                            writeClassDescription, callBackStrings, hasGeneratedMethods);
+                    byte[] result = transformer.transform(context);
+                    logTransformedClass(name, result);
+                    return result;
+                }
+            }
+            return null;
+
+        } catch (Throwable e) {
+            AgentLogCallback.logException(e);
+            return null;
+        } finally {
+            CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
+
+        }
     }
 }

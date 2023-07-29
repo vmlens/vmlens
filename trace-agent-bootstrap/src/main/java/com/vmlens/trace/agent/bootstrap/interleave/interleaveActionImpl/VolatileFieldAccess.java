@@ -62,7 +62,7 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
 
     @Override
     public String toString() {
-        return "volatile" + MemoryAccessType.asString(operation) +
+        return MemoryAccessType.asString(operation) +
                 "(" + fieldId + ')';
     }
 }

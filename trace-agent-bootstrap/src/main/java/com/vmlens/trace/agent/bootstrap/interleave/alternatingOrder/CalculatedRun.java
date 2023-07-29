@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
+import java.util.Arrays;
+
 public class CalculatedRun {
 
     private final Position[] calculatedRunElementArray;
@@ -22,5 +24,12 @@ public class CalculatedRun {
     // Visible for Test
     Position[] calculatedRunElementArray() {
         return calculatedRunElementArray;
+    }
+
+    @Override
+    public String toString() {
+        return "CalculatedRun{" +
+                "calculatedRunElementArray=" + Arrays.toString(calculatedRunElementArray) +
+                '}';
     }
 }

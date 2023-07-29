@@ -13,7 +13,7 @@ public class OrderArraysFactory {
     public OrderArrays create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
                               ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         BlockContainer blockMap =
-                new BlockMapFactory().create(blockBuilderList);
+                new BlockContainerFactory().create(blockBuilderList);
         return create(blockMap,threadIndexToMaxPosition);
     }
 
@@ -34,8 +34,8 @@ public class OrderArraysFactory {
                 }
             }
         }
-        for(TLinkableWrapper<ElementAndPosition<InDependentBlockElement>> independent : blockMap.inDependentBlocks()) {
-            independent.element.element().addToAlternatingOrderContainerBuilder(independent.element.position(),builder,threadIndexToMaxPosition);
+        for (TLinkableWrapper<ElementAndPosition<InDependentBlock>> independent : blockMap.inDependentBlocks()) {
+            independent.element.element().addToAlternatingOrderContainerBuilder(independent.element.position(), builder, threadIndexToMaxPosition);
         }
         return builder.build();
     }

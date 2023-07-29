@@ -38,15 +38,8 @@ public class OrderArrays {
 
     public void debug(AgentLogger agentLogger) {
         if (agentLogger.isDebugEnabled()) {
-            // ToDo improve formatting for large arrays
-            for (LeftBeforeRight lr : fixedOrderArray) {
-                agentLogger.debug("fixed" + lr);
-            }
-            for (AlternatingOrderElement al : alternatingOrderArray) {
-                agentLogger.debug(al.toString());
-            }
-
-            agentLogger.debug(Arrays.toString(alternatingOrderArray));
+            agentLogger.debug(this.getClass(), "fixed:" + Arrays.toString(fixedOrderArray));
+            agentLogger.debug(this.getClass(), "alternating:" + Arrays.toString(alternatingOrderArray));
         }
     }
 

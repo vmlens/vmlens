@@ -3,16 +3,9 @@ package com.vmlens.trace.agent.bootstrap.callback;
 public class StackTraceBasedFilterCallback {
 
 	
-	public static void onMethodExitDoNotTrace()
-	{
-		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-		
-	
-		
-		
-//System.out.println(  Thread.currentThread().getName() +  " onMethodExit " + CallbackState.classLoaderMethodCount.get().count);
-		
-	}
+	public static void onMethodExitDoNotTrace() {
+        CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
+    }
 	
 	public static void onMethodEnterDoNotTrace()
 	{

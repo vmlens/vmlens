@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.testUtil;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.InterleaveActionWithPositionFactoryImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadJoinFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadStartFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
@@ -28,7 +29,7 @@ public class ResultTestBuilderForActualRun extends AbstractResultTestBuilderForI
 
     @Override
     public void joinThread(int index, Position position) {
-
+        add(new ThreadJoinFactory(position.threadIndex, index), position);
     }
 
     private void add(InterleaveActionWithPositionFactory interleaveActionWithPositionFactory, Position position) {

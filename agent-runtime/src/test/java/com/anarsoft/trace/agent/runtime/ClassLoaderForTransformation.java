@@ -5,17 +5,21 @@ import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
 import com.vmlens.trace.agent.bootstrap.mode.AgentModeInterleave;
 import org.apache.commons.io.IOUtils;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.util.TraceClassVisitor;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.instrument.IllegalClassFormatException;
 
 public class ClassLoaderForTransformation extends ClassLoader {
 
-    protected ClassLoaderForTransformation(ClassLoader parent) {
-        super(parent);
+    private final ClassLoader testClassLoader;
+
+
+    public ClassLoaderForTransformation(ClassLoader testClassLoader) {
+        super(null);
+        this.testClassLoader = testClassLoader;
     }
 
     AgentClassFileTransformer createTransformer() {
@@ -36,23 +40,34 @@ public class ClassLoaderForTransformation extends ClassLoader {
     }
 
     @Override
+    protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+        if (name.startsWith("com.vmlens.trace.agent")) {
+            return testClassLoader.loadClass(name);
+        }
+        return super.loadClass(name, resolve);
+    }
+
+    @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
-            if (name.startsWith("java")) {
-                System.out.println(name);
-            }
+
 
             String resourceName = name.replace('.', '/') + ".class";
             InputStream stream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
-            System.out.println(stream);
 
             byte[] targetArray = IOUtils.toByteArray(stream);
             AgentClassFileTransformer transformer = createTransformer();
 
             byte[] transformed = transformer.transform(null, name.replace('.', '/'), null, null, targetArray);
             if (transformed == null) {
+                System.out.println("not transformed " + name);
                 return defineClass(name, targetArray, 0, targetArray.length);
             }
+
+            ClassReader classReader = new ClassReader(transformed);
+            ClassVisitor visitor = new TraceClassVisitor(new PrintWriter(System.out));
+            classReader.accept(visitor, ClassReader.EXPAND_FRAMES);
+
             String fileName = name.substring(name.lastIndexOf("/") + 1);
             OutputStream outTransformed = new FileOutputStream(fileName + "_trans.class");
             outTransformed.write(transformed);
@@ -64,7 +79,5 @@ public class ClassLoaderForTransformation extends ClassLoader {
         } catch (IllegalClassFormatException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }

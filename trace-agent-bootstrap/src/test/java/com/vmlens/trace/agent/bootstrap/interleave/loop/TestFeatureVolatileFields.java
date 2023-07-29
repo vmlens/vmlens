@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcherBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.ResultTestBuilderForActualRun;
 import org.junit.Test;
 
@@ -19,11 +19,11 @@ public class TestFeatureVolatileFields {
         builder.beginThread(FIRST_WORKER_THREAD_INDEX);
         Position write = builder.writeFirstVolatileField();
 
-        FeatureTestMatcher matcher = new FeatureTestMatcher();
-        matcher.leftBeforeRight(read, write);
-        matcher.leftBeforeRight(write, read);
-        matcher.runs(2);
+        FeatureTestMatcherBuilder featureTestMatcherBuilder = new FeatureTestMatcherBuilder();
+        featureTestMatcherBuilder.leftBeforeRight(read, write);
+        featureTestMatcherBuilder.leftBeforeRight(write, read);
+        featureTestMatcherBuilder.runs(2);
 
-        new InterleaveTestRunner().run(resultTestBuilderForInterleaveLoop, matcher);
+        new InterleaveTestRunner().run(resultTestBuilderForInterleaveLoop, featureTestMatcherBuilder.build());
     }
 }

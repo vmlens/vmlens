@@ -4,7 +4,6 @@ import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.OffsetAndClassName;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
-import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
 import com.vmlens.trace.agent.bootstrap.callback.VolatileArrayAccessCallback;
 import com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;
@@ -86,7 +85,6 @@ public class CallbackObject {
 			return;
 		}
 
-		MethodCallback.sendStackTraceEventIfNeccesary(callbackStatePerThread, slidingWindowId);
 
 		/*
 		 * void nonVolatileAccess(boolean isInInterleaveLoop, Object obj, long offset,

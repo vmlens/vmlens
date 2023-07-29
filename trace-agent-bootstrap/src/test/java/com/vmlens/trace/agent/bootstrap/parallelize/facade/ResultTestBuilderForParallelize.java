@@ -29,6 +29,7 @@ public class ResultTestBuilderForParallelize implements ResultTestBuilder {
             public void execute(ParallelizeFacadeImpl parallelizeFacadeImpl, ThreadLocalWrapperMock[] loopThreadStateArray) {
                 parallelizeFacadeImpl.beforeThreadStart(loopThreadStateArray[threadIndex()],
                         new RunnableOrThreadWrapper(loopThreadStateArray[index]));
+                parallelizeFacadeImpl.afterThreadStart(loopThreadStateArray[threadIndex()]);
                 parallelizeFacadeImpl.beginThreadMethodEnter(loopThreadStateArray[index],
                         new RunnableOrThreadWrapper(loopThreadStateArray[index]));
             }

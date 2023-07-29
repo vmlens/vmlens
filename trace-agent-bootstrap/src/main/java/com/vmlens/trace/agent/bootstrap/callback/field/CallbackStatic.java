@@ -2,14 +2,9 @@ package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
-import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
 import com.vmlens.trace.agent.bootstrap.callback.state.Access4State;
-import com.vmlens.trace.agent.bootstrap.callback.state.ObjectIdAndOrder;
 import com.vmlens.trace.agent.bootstrap.callback.state.ModeStateStatic;
 import com.vmlens.trace.agent.bootstrap.callback.state.StaticVolatileOrder;
-
-
-
 import gnu.trove.map.hash.TIntLongHashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.procedure.TObjectProcedure;
@@ -112,14 +107,9 @@ public class CallbackStatic {
 		    if (!  CallbackState.isSlidingWindowTrace(slidingWindowId )) {
 		      return;
 		    }
-		    
-		   
-			MethodCallback.sendStackTraceEventIfNeccesary(callbackStatePerThread, slidingWindowId);
-			
-			 
-		    
-		    
-		    synchronized (staticField2ThreadId)
+
+
+          synchronized (staticField2ThreadId)
 		    {
 		    	
 		      if( callbackStatePerThread.isInInterleaveLoop()  )

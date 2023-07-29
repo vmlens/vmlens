@@ -17,7 +17,7 @@ public class TestInterleaveLoopIterator {
     public void testEmptyQueue() {
         // Given
         IteratorQueue iteratorQueue = new IteratorQueueWrapper(new LinkedList<Iterator<CalculatedRun>>());
-        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue);
+        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue, new AgentLoggerForTest());
 
         // Then
         assertThat(iterator.hasNext(), is(false));
@@ -34,7 +34,7 @@ public class TestInterleaveLoopIterator {
 
 
         IteratorQueue iteratorQueue = new IteratorQueueWrapper(queue);
-        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue);
+        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue, new AgentLoggerForTest());
 
         // Then
         assertThat(iterator.hasNext(), is(true));
@@ -65,7 +65,7 @@ public class TestInterleaveLoopIterator {
         queue.add(secondList.iterator());
 
         IteratorQueue iteratorQueue = new IteratorQueueWrapper(queue);
-        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue);
+        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue, new AgentLoggerForTest());
 
         // Then
         assertThat(iterator.hasNext(), is(true));

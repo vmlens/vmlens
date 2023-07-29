@@ -1,9 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+
 public class ParallelizedThreadLocal {
     private final Run run;
     private final int threadIndex;
+    private RunnableOrThreadWrapper createdThread;
 
     public ParallelizedThreadLocal(Run run, int threadIndex) {
         this.run = run;
@@ -26,6 +29,14 @@ public class ParallelizedThreadLocal {
     public boolean sendAsInterleaveEvent(Class fieldAccessEventStaticGenClass) {
         // ToDo implement correctly
         return true;
+    }
+
+    public RunnableOrThreadWrapper createdThread() {
+        return createdThread;
+    }
+
+    public void setCreatedThread(RunnableOrThreadWrapper createdThread) {
+        this.createdThread = createdThread;
     }
 
     public boolean showNonVolatileMemoryAccess() {

@@ -4,9 +4,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import gnu.trove.map.hash.TLongObjectHashMap;
 
 /**
- * the relation thread id to index is needed for thread start -> begin
- * and thread join
- *
+ * the relation thread id to index is needed for thread join
  */
 public class ThreadIdToState {
     // Package Visible for Test

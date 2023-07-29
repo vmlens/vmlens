@@ -59,7 +59,7 @@ public class CallbackStatePerThread implements ThreadLocalWrapper {
     public int methodCount;
     public int programCount = 1;
     public int notStartedCount;
-    int stackTraceDepth;
+    public int stackTraceDepth;
     // private int STATIC_MAXIMUM_STACK_TRACE_DEPTH = 10;
     boolean queueIsFull;
     String threadName;

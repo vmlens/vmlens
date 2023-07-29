@@ -17,6 +17,8 @@ import gnu.trove.list.linked.TLinkedList;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -71,7 +73,7 @@ public class TestRunStateMachine {
                 interleaveLoopMock, threadIdToState, initial);
 
         // When we create a new Run the containing thread gets a new thread local
-        Run run = new Run(new Object(), 0, waitNotifyStrategyMock, runStateMachineImpl, threadLocalMainThread);
+        Run run = new Run(new ReentrantLock(), 0, waitNotifyStrategyMock, runStateMachineImpl, threadLocalMainThread);
 
         // Then createNewParallelizedThreadLocal gets called and thread is 0
         assertThat(threadLocalMainThread.threadIndex(), is(0));

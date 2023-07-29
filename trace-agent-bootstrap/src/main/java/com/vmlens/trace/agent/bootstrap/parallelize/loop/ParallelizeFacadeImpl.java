@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.InterleaveActionWithPositionFactoryFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadStart;
+import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadJoin;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
 
@@ -29,11 +29,13 @@ public class ParallelizeFacadeImpl {
     public void beforeThreadStart(ThreadLocalWrapper threadLocalWrapper,
                                   RunnableOrThreadWrapper runnableOrThreadWrapper) {
         debugMethodCall(threadLocalWrapper, "beforeThreadStart");
-        // we need to know that a thread was started before the thread calls beginThreadMethodEnter
-        // therefore beforeThreadStart
-        // that we treat this as after concerning the interleave algo
-        // should be no problem
-        new TestThreadState(threadLocalWrapper).after(new ThreadStart(runnableOrThreadWrapper));
+        new TestThreadState(threadLocalWrapper).addCreatedThreadForAfterStart(runnableOrThreadWrapper);
+    }
+
+    public void beforeThreadJoin(ThreadLocalWrapper threadLocalWrapper, long joinedThreadId) {
+        debugMethodCall(threadLocalWrapper, "beforeThreadJoin");
+        new TestThreadState(threadLocalWrapper).after(
+                new ThreadJoin(joinedThreadId));
     }
 
     public void beginThreadMethodEnter(ThreadLocalWrapper threadLocalWrapper,
@@ -53,11 +55,15 @@ public class ParallelizeFacadeImpl {
     }
 
     private void debugMethodCall(ThreadLocalWrapper threadLocalWrapper, String methodName) {
-        agentLogger().debug(threadLocalWrapper.threadId() + ":" + methodName);
+        agentLogger().debug(this.getClass(), threadLocalWrapper.threadId() + ":" + methodName);
     }
 
     private AgentLogger agentLogger() {
         return parallelizeLoopContainer.agentLogger();
     }
 
+    public void afterThreadStart(ThreadLocalWrapper threadLocalWrapper) {
+        debugMethodCall(threadLocalWrapper, "afterThreadStart");
+        new TestThreadState(threadLocalWrapper).afterThreadStart();
+    }
 }

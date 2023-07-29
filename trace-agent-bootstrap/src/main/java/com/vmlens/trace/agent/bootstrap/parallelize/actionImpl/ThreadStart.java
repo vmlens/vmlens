@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.parallelize.actionImpl;
 
 
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
@@ -22,7 +22,7 @@ public class ThreadStart implements ParallelizeAction  {
 
     @Override
     public void addInterleaveAction(ActionContext context, TestThreadState testThreadState) {
-        // Nothing to do after gets called inside RunStateNewThreadStarted
+        // Nothing to do. After gets called inside RunStateNewThreadStarted
     }
 
 

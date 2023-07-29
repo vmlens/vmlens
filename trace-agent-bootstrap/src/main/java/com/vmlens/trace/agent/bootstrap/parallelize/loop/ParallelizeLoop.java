@@ -9,10 +9,11 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 
 import java.util.Iterator;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ParallelizeLoop {
 
-    private final Object singleLoopAndRunLock = new Object();
+    private final ReentrantLock lock = new ReentrantLock();
     private final int loopId;
     private final RunStateMachineFactory runStateMachineFactory;
     private final Iterator<CalculatedRun> interleaveLoopIterator;
@@ -31,34 +32,43 @@ public class ParallelizeLoop {
     }
 
     public void beginThreadMethodEnter(TestThreadState testThreadState, RunnableOrThreadWrapper beganTask) {
-        synchronized (singleLoopAndRunLock) {
+        lock.lock();
+        try {
             currentRun.newTask(beganTask, testThreadState);
+        } finally {
+            lock.unlock();
         }
     }
 
     public boolean hasNext(TestThreadState testThreadState) {
-        synchronized (singleLoopAndRunLock) {
+        lock.lock();
+        try {
             if (currentRun != null) {
                 currentRun.end(testThreadState);
                 if (interleaveLoopIterator.hasNext()) {
-                    currentRun = new Run(singleLoopAndRunLock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(interleaveLoopIterator.next(), testThreadState, interleaveLoop),
+                    currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(interleaveLoopIterator.next(), testThreadState, interleaveLoop),
                             testThreadState);
                     maxRunId++;
                     return true;
                 }
                 return false;
             } else {
-                currentRun = new Run(singleLoopAndRunLock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(testThreadState, interleaveLoop),
+                currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(testThreadState, interleaveLoop),
                         testThreadState);
                 maxRunId++;
                 return true;
             }
+        } finally {
+            lock.unlock();
         }
     }
 
     public void close(TestThreadState testThreadState) {
-        synchronized (singleLoopAndRunLock) {
+        lock.lock();
+        try {
             testThreadState.setParallelizedThreadLocalToNull();
+        } finally {
+            lock.unlock();
         }
     }
 

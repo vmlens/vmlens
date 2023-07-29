@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPo
 import com.vmlens.trace.agent.bootstrap.interleave.block.*;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class ThreadStart implements InterleaveAction, InDependentBlockElement  {
+public class ThreadStart implements InterleaveAction, InDependentBlock {
     private static final Object SINGELTON_KEY = new Object();
     private final int startedThreadIndex;
 
@@ -21,11 +21,11 @@ public class ThreadStart implements InterleaveAction, InDependentBlockElement  {
 
     @Override
     public void blockBuilderStart(Position myPosition, BlockContainer result) {
-        result.addInDependent(new ElementAndPosition<InDependentBlockElement>(this,myPosition));
+        result.addInDependent(new ElementAndPosition<InDependentBlock>(this, myPosition));
     }
     @Override
     public void blockBuilderAdd(Position myPosition, ElementAndPosition<BlockBuilder> next, BlockContainer result) {
-        result.addInDependent(new ElementAndPosition<InDependentBlockElement>((ThreadStart)next.element(),next.position()));
+        result.addInDependent(new ElementAndPosition<InDependentBlock>((ThreadStart) next.element(), next.position()));
     }
 
     @Override

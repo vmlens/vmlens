@@ -4,7 +4,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 // ToDo logger category/ type (enum)?
 public interface AgentLogger {
 
-    void debug(String message);
+    void debug(Class location, String message);
+
     boolean isDebugEnabled();
 
 }

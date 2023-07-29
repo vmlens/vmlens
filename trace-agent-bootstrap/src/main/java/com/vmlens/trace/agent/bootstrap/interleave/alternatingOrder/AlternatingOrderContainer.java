@@ -31,11 +31,6 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         return new AlternatingOrderContainerIterator();
     }
 
-    OrderArrays orderArrays() {
-        return orderArrays;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,9 +50,12 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         orderArrays.debug(agentLogger);
     }
 
-    // Visible for test
-    ThreadIndexToElementList<Position> actualRun() {
-        return actualRun;
+    @Override
+    public String toString() {
+        return "AlternatingOrderContainer{" +
+                "actualRun=" + actualRun +
+                ", orderArrays=" + orderArrays +
+                '}';
     }
 
     private class AlternatingOrderContainerIterator implements
@@ -69,7 +67,8 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
         public AlternatingOrderContainerIterator() {
             this.permutationIterator = new PermutationIterator(orderArrays.alternatingOrderArray.length);
-            this.currentOrder = new LeftBeforeRight[orderArrays.alternatingOrderArray.length];
+            this.currentOrder = new LeftBeforeRight[orderArrays.alternatingOrderArray.length +
+                    orderArrays.fixedOrderArray.length];
         }
 
         @Override
@@ -79,8 +78,12 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
         @Override
         public CalculatedRun next() {
-            for(int i = 0; i < orderArrays.alternatingOrderArray.length;i++) {
+            for (int i = 0; i < orderArrays.alternatingOrderArray.length; i++) {
                 currentOrder[i] = orderArrays.alternatingOrderArray[i].order(permutationIterator.at(i));
+            }
+            for (int i = 0; i < orderArrays.fixedOrderArray.length; i++) {
+                currentOrder[i + orderArrays.alternatingOrderArray.length] =
+                        orderArrays.fixedOrderArray[i];
             }
             permutationIterator.advance();
 

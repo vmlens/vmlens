@@ -25,39 +25,15 @@ public class MethodTransformerThreadJoin  extends MethodVisitor implements Opcod
 	public void visitMethodInsn(int opcode, String owner, String name,
 			String desc, boolean isInterface) {
 				
-		if(  MethodTransformer.isThreadActiveCall(opcode,owner,name,desc) )
-	    {
-			MethodTransformer.onThreadActiveCall( mv ,opcode,owner,name,desc);
-	    }
-		else
-		{
-			
-				mv.visitMethodInsn(opcode, owner, name, desc);
-			
-			
-		}
+		if (MethodTransformer.isThreadActiveCall(opcode, owner, name, desc)) {
+            MethodTransformer.onThreadActiveCall(mv, opcode, owner, name, desc);
+        } else {
 
-		
-		}
-
-	
-	@Override
-	public final void visitInsn(int inst) {
-
-	if(inst  == RETURN )
-	{
-
-		mv.visitVarInsn(ALOAD, 0);
-        mv.visitVarInsn(LLOAD, 1);
-        this.mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/parallelize/facade/ParallelizeCallback", "afterThreadJoin", "(Ljava/lang/Thread;J)V");
+            mv.visitMethodInsn(opcode, owner, name, desc);
+        }
 
 
-	}
-	mv.visitInsn(inst);
-	}
-	
-	
-	
-	
+    }
+
 }
 

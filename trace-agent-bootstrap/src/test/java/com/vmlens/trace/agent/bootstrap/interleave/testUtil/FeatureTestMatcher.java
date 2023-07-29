@@ -10,33 +10,32 @@ import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsEmptyCollection.empty;
 
 
 public class FeatureTestMatcher {
-    private final Set<LeftBeforeRight> expectedLeftBeforeRight = new HashSet<>();
-    private Set<LeftBeforeRight> currentFoundLeft = new HashSet<>();
+    private final Set<LeftBeforeRight> expectedLeftBeforeRight;
+    private final HashSet<LeftBeforeRight> alwaysExpected;
+    private final int expectedRuns;
     private Map<Integer, Integer> threadIndexToPosition = new HashMap<>();
-    private int expectedRuns;
     private int actualRuns;
+    private FeatureTestMatcherHelper helperForAlways;
+    private FeatureTestMatcherHelper helperForExpected;
 
-    public void leftBeforeRight(Position left, Position right) {
-        expectedLeftBeforeRight.add(new LeftBeforeRight(left, right));
-    }
-
-    public void both(Position left, Position right) {
-        expectedLeftBeforeRight.add(new LeftBeforeRight(left, right));
-        expectedLeftBeforeRight.add(new LeftBeforeRight(right, left));
-    }
-
-    public void runs(int i) {
-        expectedRuns = i;
+    public FeatureTestMatcher(Set<LeftBeforeRight> expectedLeftBeforeRight,
+                              HashSet<LeftBeforeRight> alwaysExpected,
+                              int expectedRuns) {
+        this.expectedLeftBeforeRight = expectedLeftBeforeRight;
+        this.alwaysExpected = alwaysExpected;
+        this.expectedRuns = expectedRuns;
+        this.helperForAlways = new FeatureTestMatcherHelper((Set<LeftBeforeRight>) alwaysExpected.clone());
+        this.helperForExpected = new FeatureTestMatcherHelper(expectedLeftBeforeRight);
     }
 
     public void advance() {
         actualRuns++;
-        currentFoundLeft = new HashSet<>();
         threadIndexToPosition = new HashMap<>();
+        helperForAlways.fullfilled();
+        helperForAlways = new FeatureTestMatcherHelper((Set<LeftBeforeRight>) alwaysExpected.clone());
     }
 
     public void executed(int threadIndex) {
@@ -46,23 +45,24 @@ public class FeatureTestMatcher {
         }
         threadIndexToPosition.put(threadIndex, currentPos + 1);
         Position position = new Position(threadIndex, currentPos);
-        for (LeftBeforeRight left : expectedLeftBeforeRight) {
-            if (left.left.equals(position)) {
-                currentFoundLeft.add(left);
-            }
-        }
-        Set<LeftBeforeRight> currentFoundLeftView = new HashSet<>(currentFoundLeft);
-        for (LeftBeforeRight right : currentFoundLeftView) {
-            if (right.right.equals(position)) {
-                currentFoundLeft.remove(right);
-                expectedLeftBeforeRight.remove(right);
-            }
-        }
+        executed(position);
+    }
+
+    private void executed(Position position) {
+        helperForAlways.executed(position);
+        helperForExpected.executed(position);
     }
 
     public void assertExpectedResults() {
-        assertThat(expectedLeftBeforeRight,empty());
-        assertThat(actualRuns,is(expectedRuns));
+        helperForAlways.fullfilled();
+        helperForExpected.fullfilled();
+        assertThat(actualRuns, is(expectedRuns));
     }
 
+    public void executed(Position[] calculatedRunElementArray) {
+        for (Position pos : calculatedRunElementArray) {
+            executed(pos);
+        }
+        advance();
+    }
 }

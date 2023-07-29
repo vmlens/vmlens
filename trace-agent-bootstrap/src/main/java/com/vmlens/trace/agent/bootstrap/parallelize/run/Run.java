@@ -4,26 +4,38 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Run {
-    private final Object singleLoopAndRunLock;
+    private final ReentrantLock lock;
+    private final Condition threadActiveCondition;
     private final WaitNotifyStrategy waitNotifyStrategy;
     private final RunStateMachine runStateMachine;
     private final int id;
     private int maxThreadIndex;
 
-    public Run(Object singleLoopAndRunLock, int id, WaitNotifyStrategy waitNotifyStrategy, RunStateMachine runStateMachine, TestThreadState testThreadState) {
+    public Run(ReentrantLock lock, int id, WaitNotifyStrategy waitNotifyStrategy, RunStateMachine runStateMachine, TestThreadState testThreadState) {
         this.waitNotifyStrategy = waitNotifyStrategy;
         this.runStateMachine = runStateMachine;
         this.id = id;
-        this.singleLoopAndRunLock = singleLoopAndRunLock;
+        this.lock = lock;
+        this.threadActiveCondition = lock.newCondition();
         testThreadState.createNewParallelizedThreadLocal(this, maxThreadIndex);
         maxThreadIndex++;
     }
 
     public void after(ParallelizeAction action, TestThreadState testThreadState) {
-        synchronized (singleLoopAndRunLock) {
+        lock.lock();
+        try {
             runStateMachine.after(action, testThreadState);
-            waitNotifyStrategy.notifyAndWaitTillActive(testThreadState, runStateMachine, singleLoopAndRunLock);
+            try {
+                waitNotifyStrategy.notifyAndWaitTillActive(testThreadState, runStateMachine, threadActiveCondition);
+            } catch (TestBlockedException e) {
+                runStateMachine.setStateRecording();
+            }
+        } finally {
+            lock.unlock();
         }
     }
     public void end(TestThreadState testThreadState) {
@@ -31,13 +43,20 @@ public class Run {
         runStateMachine.end();
     }
     public void newTask(RunnableOrThreadWrapper newWrapper, TestThreadState testThreadState) {
-        synchronized (singleLoopAndRunLock) {
+        lock.lock();
+        try {
             if (runStateMachine.isNewTestTask(newWrapper)) {
                 testThreadState.createNewParallelizedThreadLocal(this, maxThreadIndex);
                 runStateMachine.processNewTestTask(testThreadState);
                 maxThreadIndex++;
-                waitNotifyStrategy.notifyAndWaitTillActive(testThreadState, runStateMachine, singleLoopAndRunLock);
+                try {
+                    waitNotifyStrategy.notifyAndWaitTillActive(testThreadState, runStateMachine, threadActiveCondition);
+                } catch (TestBlockedException e) {
+                    runStateMachine.setStateRecording();
+                }
             }
+        } finally {
+            lock.unlock();
         }
     }
 

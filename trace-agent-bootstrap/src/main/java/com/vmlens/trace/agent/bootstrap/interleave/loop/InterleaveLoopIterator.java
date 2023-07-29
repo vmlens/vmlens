@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 
 import java.util.Iterator;
@@ -7,11 +8,13 @@ import java.util.Iterator;
 public class InterleaveLoopIterator implements Iterator<CalculatedRun> {
 
     private final IteratorQueue container;
+    private final AgentLogger agentLogger;
     private Iterator<CalculatedRun> currentIterator;
     private CalculatedRun next;
 
-    public InterleaveLoopIterator(IteratorQueue interleaveLoop) {
-        this.container = interleaveLoop;
+    public InterleaveLoopIterator(IteratorQueue container, AgentLogger agentLogger) {
+        this.container = container;
+        this.agentLogger = agentLogger;
     }
 
     @Override
@@ -37,6 +40,7 @@ public class InterleaveLoopIterator implements Iterator<CalculatedRun> {
 
     @Override
     public CalculatedRun next() {
+        agentLogger.debug(this.getClass(), next.toString());
         CalculatedRun temp = next;
         next = null;
         return temp;

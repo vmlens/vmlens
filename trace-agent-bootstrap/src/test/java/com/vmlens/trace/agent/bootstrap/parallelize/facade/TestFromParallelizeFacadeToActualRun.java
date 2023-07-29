@@ -22,6 +22,8 @@ import static org.mockito.Mockito.mock;
 
 public class TestFromParallelizeFacadeToActualRun {
 
+    private static final long SECOND_THREAD_ID = 20L;
+
     private Object loopIdentifier = new Object();
     private ThreadLocalWrapper mainThread;
     private ThreadLocalWrapper secondThread;
@@ -36,7 +38,7 @@ public class TestFromParallelizeFacadeToActualRun {
         InterleaveLoop interleaveLoopMock = mock(InterleaveLoop.class);
         // Given
         mainThread = new ThreadLocalWrapperMock(1L);
-        secondThread = new ThreadLocalWrapperMock(20L);
+        secondThread = new ThreadLocalWrapperMock(SECOND_THREAD_ID);
         parallelizeLoopContainer = new ParallelizeLoopContainer(new ParallelizeLoopFactoryImpl(mock(WaitNotifyStrategy.class),
                 new AgentLoggerForTest()));
         parallelizeFacadeImpl = new ParallelizeFacadeImpl(parallelizeLoopContainer);
@@ -57,7 +59,7 @@ public class TestFromParallelizeFacadeToActualRun {
         // Then
         parallelizeLoopContainer.currentRun().actualRun().debug(new AgentLoggerForTest());
         assertThat(parallelizeLoopContainer.currentRun().actualRun().run(),
-                is(TestFixture.volatileReadAndWrite().actualRun()));
+                is(TestFixture.volatileReadAndWrite().getLeft()));
     }
 
     @Test
@@ -69,6 +71,7 @@ public class TestFromParallelizeFacadeToActualRun {
 
         // When
         parallelizeFacadeImpl.beforeThreadStart(mainThread, runnableOrThreadWrapper);
+        parallelizeFacadeImpl.afterThreadStart(mainThread);
         parallelizeFacadeImpl.beginThreadMethodEnter(startedThread, runnableOrThreadWrapper);
         parallelizeFacadeImpl.afterFieldAccessVolatile(startedThread, 1, MemoryAccessType.IS_READ);
 
@@ -76,6 +79,26 @@ public class TestFromParallelizeFacadeToActualRun {
         parallelizeLoopContainer.currentRun().actualRun().debug(new AgentLoggerForTest());
         assertThat(parallelizeLoopContainer.currentRun().actualRun().run(),
                 is(TestFixture.startThread()));
+    }
+
+    @Test
+    public void joinThread() {
+        // Given
+        RunnableOrThreadWrapper runnableOrThreadWrapper = new RunnableOrThreadWrapper(new Object());
+        parallelizeFacadeImpl.hasNext(mainThread, loopIdentifier);
+
+        // When
+        parallelizeFacadeImpl.beforeThreadStart(mainThread, runnableOrThreadWrapper);
+        parallelizeFacadeImpl.afterThreadStart(mainThread);
+        parallelizeFacadeImpl.beginThreadMethodEnter(secondThread, runnableOrThreadWrapper);
+        parallelizeFacadeImpl.beforeThreadJoin(mainThread, SECOND_THREAD_ID);
+        parallelizeFacadeImpl.afterFieldAccessVolatile(secondThread, 1, MemoryAccessType.IS_READ);
+
+
+        // Then
+        parallelizeLoopContainer.currentRun().actualRun().debug(new AgentLoggerForTest());
+        assertThat(parallelizeLoopContainer.currentRun().actualRun().run(),
+                is(TestFixture.threadJoin().getLeft()));
     }
 
 }

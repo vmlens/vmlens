@@ -284,7 +284,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		THashSet<String> alreadyTransformed = new THashSet();
 		THashSet<String> withoutOwner = new THashSet();
 
-	//	retransform(inst, callBackStrings, filterList, classAnalyzedEventList, true, alreadyTransformed);
+		retransform(inst, callBackStrings, filterList, classAnalyzedEventList, true, alreadyTransformed);
 
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
@@ -295,7 +295,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		}
 		classAnalyzedEventList = new TLinkedList();
 
-        //	retransform(inst, callBackStrings, filterList, classAnalyzedEventList, false, alreadyTransformed);
+        retransform(inst, callBackStrings, filterList, classAnalyzedEventList, false, alreadyTransformed);
 		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
 			CallbackState.queueFacade.putDirect(classAnalyzedEvent.getElement());
