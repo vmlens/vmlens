@@ -27,20 +27,10 @@ public class ParallelizeCallback {
     public static void callbackMethodExit() {
 
     }
-
     public static void afterFieldAccess(int fieldId, int operation) {
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         ParallelizeFacade.afterFieldAccessVolatile(callbackStatePerThread, fieldId, operation);
     }
-
-    public static void afterMonitor() {
-
-    }
-
-    public static void afterMethod() {
-
-    }
-
     public static void afterThreadStart() {
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         ParallelizeFacade.afterThreadStart(callbackStatePerThread);

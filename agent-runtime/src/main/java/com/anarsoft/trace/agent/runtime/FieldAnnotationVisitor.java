@@ -24,9 +24,6 @@ public class FieldAnnotationVisitor extends AnnotationVisitor {
 
 	@Override
 	public AnnotationVisitor visitArray(String arg0) {
-		
-	
-		
 		return null;
 	}
 
@@ -38,8 +35,6 @@ public class FieldAnnotationVisitor extends AnnotationVisitor {
 
 	@Override
 	public void visitEnum(String arg0, String arg1, String arg2) {
-		
-		
 	}
 
 }

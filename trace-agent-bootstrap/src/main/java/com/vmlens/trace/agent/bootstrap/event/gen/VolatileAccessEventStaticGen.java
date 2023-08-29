@@ -1,10 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithSlidingWindow;
-
 import java.nio.ByteBuffer;
+
+import com.vmlens.trace.agent.bootstrap.event.*;
+
+import java.io.DataOutputStream;
 
 public class VolatileAccessEventStaticGen  implements RuntimeEvent 
 {

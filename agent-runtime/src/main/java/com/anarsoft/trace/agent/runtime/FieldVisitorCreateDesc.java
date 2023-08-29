@@ -39,9 +39,6 @@ public class FieldVisitorCreateDesc extends FieldVisitor {
 
 	@Override
 	public AnnotationVisitor visitAnnotation(String arg0, boolean arg1) {
-		//Lcom/vmlens/annotation/SuppressWarningForRace;
-		//System.out.println("visitAnnotation"  + arg0);
-		
 		if("Lcom/vmlens/annotation/SuppressWarningForRace;".equals(arg0))
 		{
 			hasSuppressAnnotation= true;

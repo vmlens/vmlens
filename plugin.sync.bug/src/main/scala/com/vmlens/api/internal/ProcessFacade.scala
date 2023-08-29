@@ -6,8 +6,6 @@ import com.anarsoft.race.detection.process.ProzessConfigProd
 import com.vmlens.api.internal.reports.ReportFacade
 import java.io._;
 import java.util.Properties
-import com.vmlens.trace.agent.bootstrap.mode.ModeNames
-import scala.collection.mutable.HashMap
 import com.vmlens.api.internal.reports.HtmlProviderStaticSite
 import com.anarsoft.trace.agent.runtime.process.PluginController
 import com.anarsoft.config._;
@@ -101,39 +99,26 @@ object ProcessFacade {
      try{
        
      val stream =   new FileInputStream(  eventDir  +  "/properties.vmlens")  ;
-       
+
        val properties = new Properties();
-      properties.load( stream ); 
-       
+       properties.load(stream);
+
        stream.close();
-       
-       
-      val mode = properties.getProperty("vmlens.mode")
-      
-     
-         val readAndProcessEvents = new ReadAndProcessEvents(new ProzessConfigProd() , PropertyTransformer.createConfigValues(new PropetyContainer2Properties(properties)));
-       val runResult = readAndProcessEvents.prozess(eventDir,maxSlidingWindowId)
+
+
+       val readAndProcessEvents = new ReadAndProcessEvents(new ProzessConfigProd(), PropertyTransformer.createConfigValues(new PropetyContainer2Properties(properties)));
+       val runResult = readAndProcessEvents.prozess(eventDir, maxSlidingWindowId)
        ReportFacade.createReportData4Plugin(runResult);
-      
-            
-	   
+
+
      }
      catch
      {
-       case exp : Throwable =>
-         {
-           ReportFacade.createExceptionReport4Plugin(exp);
-         }
-       
-       
-       
+       case exp: Throwable => {
+         ReportFacade.createExceptionReport4Plugin(exp);
+       }
      }
-     
-     
-     
+
   }
-  
-  
-  
-  
+
 }

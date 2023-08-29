@@ -8,6 +8,7 @@ public class AlternatingOrderElement implements Comparable<AlternatingOrderEleme
 
     private final LeftBeforeRight alternativeOne;
     private final LeftBeforeRight alternativeTwo;
+
     public AlternatingOrderElement(LeftBeforeRight alternativeOne, LeftBeforeRight alternativeTwo) {
         if(alternativeOne.compareTo(alternativeTwo) > 0) {
             this.alternativeOne = alternativeOne;

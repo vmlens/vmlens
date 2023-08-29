@@ -1,9 +1,6 @@
 package com.vmlens.trace.agent.bootstrap;
 
 
-
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
-
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.set.hash.THashSet;
 

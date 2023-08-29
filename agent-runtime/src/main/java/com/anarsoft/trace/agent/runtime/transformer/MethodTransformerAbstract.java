@@ -12,8 +12,7 @@ import java.util.Iterator;
 
 /**
  * verantwortlich fuer die korrekte umsetzung von method exit ueber try block
- * 
- * 
+ *
  * @author Thomas
  *
  */
@@ -231,11 +230,6 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 
 		if (inst != Opcodes.MONITORENTER) {
 			mv.visitInsn(inst);
-
-			if (inst == Opcodes.MONITOREXIT) {
-				onAfterMonitorExit();
-			}
-
 		}
 
 	}
@@ -284,8 +278,6 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 	protected abstract void onMonitorEnter(); // must call monitor enter
 
 	protected abstract void onMonitorExit();
-
-	protected abstract void onAfterMonitorExit();
 
 	protected abstract void onMethodEnter();
 

@@ -1,9 +1,7 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.anarsoft.trace.agent.runtime.filter.FilterStateDefaultValue;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
-import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
-import com.vmlens.trace.agent.bootstrap.mode.AgentModeInterleave;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
 import org.apache.commons.io.IOUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -23,19 +21,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
     }
 
     AgentClassFileTransformer createTransformer() {
-        TransformConstants callBackStrings = new TransformConstants(
-                "com/vmlens/trace/agent/bootstrap/callback/FieldAccessCallback",
-                "com/vmlens/trace/agent/bootstrap/callback/SynchronizedStatementCallback",
-                "com/vmlens/trace/agent/bootstrap/callback/LockStatementCallback",
-                "com/vmlens/trace/agent/bootstrap/ThreadIdForField",
-                "com/vmlens/trace/agent/bootstrap/callback/MethodCallback", "_pAnarsoft_", "_pAnarsoft_set_",
-                "_pAnarsoft_get_");
-
-        FilterList filterList = new FilterList(new FilterStateDefaultValue(true),
-                new FilterStateDefaultValue(false), new FilterStateDefaultValue(false),
-                new FilterStateDefaultValue(false), new AgentModeInterleave());
-
-        return new AgentClassFileTransformer(filterList, callBackStrings, false,
+        return new AgentClassFileTransformer(false,
                 new WriteClassDescriptionNormal(), true, new HasGeneratedMethodsSetBased());
     }
 

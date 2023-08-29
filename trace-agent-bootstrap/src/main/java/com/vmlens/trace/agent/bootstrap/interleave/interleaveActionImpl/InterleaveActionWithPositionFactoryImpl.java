@@ -30,11 +30,6 @@ public class InterleaveActionWithPositionFactoryImpl implements InterleaveAction
                 ')';
     }
 
-    // visible for test
-    InterleaveAction interleaveAction() {
-        return interleaveAction;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

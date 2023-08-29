@@ -3,14 +3,13 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.vmlens.trace.agent.bootstrap.FieldIdAndTyp;
 import com.vmlens.trace.agent.bootstrap.FieldIdRepository;
-import com.vmlens.trace.agent.bootstrap.FieldName;
 import com.vmlens.trace.agent.bootstrap.FieldTyp;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Opcodes;
 
-import com.anarsoft.trace.agent.runtime.filter.FieldRepositoryFacade;
+import com.anarsoft.trace.agent.runtime.repository.FieldRepositoryFacade;
 
 
 

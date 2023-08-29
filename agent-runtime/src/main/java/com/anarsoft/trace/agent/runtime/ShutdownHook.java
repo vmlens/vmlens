@@ -33,67 +33,35 @@ public class ShutdownHook extends Thread {
 	
 	public static synchronized void addShutdownHook(String eventDir,AgentController agentController)
 	{
-		if( ! alreadyAdded )
-		{
-			ShutdownHook shutdownHook = new ShutdownHook(eventDir,agentController);
-			Runtime.getRuntime().addShutdownHook(shutdownHook);
-			shutdownHook.startCleanThread();  
-		
-			  
-			alreadyAdded = true;
-		}
-	}
-	
-	
-	public  void stopProcessing(String eventDir )
-	{
-            try{
-			
-            	cleanCallbackStatePerThreadRecovery.stopped = true;
-            	cleanCallbackStatePerThreadRecovery.interrupt();
-            	
-			
-			if(  	CallbackState.slidingWindow  > 0)
-			{
-				System.err.println("agent stopped ");
-				
-				CallbackState.queueFacade.stop();
-	
-				System.err.println("agent ended ");
-			}
-			
-			
-			
-	    		
-	    		
-		
-			
-			
-			
+		if( ! alreadyAdded ) {
+            ShutdownHook shutdownHook = new ShutdownHook(eventDir, agentController);
+            Runtime.getRuntime().addShutdownHook(shutdownHook);
+            shutdownHook.startCleanThread();
 
-		    
-		    
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	
+            alreadyAdded = true;
+        }
+    }
+
+
+    public void stopProcessing(String eventDir) {
+        try {
+            cleanCallbackStatePerThreadRecovery.stopped = true;
+            cleanCallbackStatePerThreadRecovery.interrupt();
+            if (CallbackState.slidingWindow > 0) {
+                System.err.println("agent stopped ");
+
+                CallbackState.queueFacade.stop();
+
+                System.err.println("agent ended ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
-	
-	
-	
+
 	@Override
 	public void run() {
-		
-		
-		  CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;	
-	
-		stopProcessing(eventDir);
-		
-		
-		
-		
+        CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
+        stopProcessing(eventDir);
 	}
-
 }

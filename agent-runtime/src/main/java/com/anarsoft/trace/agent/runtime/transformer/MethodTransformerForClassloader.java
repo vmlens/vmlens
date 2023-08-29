@@ -7,31 +7,22 @@ import org.objectweb.asm.MethodVisitor;
 
 import java.util.Iterator;
 
-public class MethodTransformerForClassloader extends MethodTransformerAbstract {
+import static com.anarsoft.trace.agent.runtime.TransformConstants.CALLBACK_CLASS_STRACKTRACE_BASED_FILTER;
+import static com.anarsoft.trace.agent.runtime.TransformConstants.CALLBACK_CLASS_SYNCHRONIZED_STATEMENT;
 
-    static final String CALLBACK_CLASS_STRACKTRACE_BASED_FILTER = "com/vmlens/trace/agent/bootstrap/callback/StackTraceBasedFilterCallback";
-    protected final String CALLBACK_CLASS_SYNCHRONIZED_STATEMENT = "com/vmlens/trace/agent/bootstrap/callback/SynchronizedStatementCallback";
-    private final boolean traceMethodCalls;
+public class MethodTransformerForClassloader extends MethodTransformerAbstract {
     private int monitorPosition = 1;
     private int monitorExitPosition = 0;
 
-
     public MethodTransformerForClassloader(MethodVisitor mv, int access, String desc, String name,
-                                           String className, String superClassName, int tryCatchBlockCount, boolean traceMethodCalls, MethodDescriptionBuilder methodDescriptionBuilder, boolean dottyProblematic, boolean useExpandedFrames) {
+                                           String className, String superClassName, int tryCatchBlockCount, MethodDescriptionBuilder methodDescriptionBuilder, boolean dottyProblematic, boolean useExpandedFrames) {
         super(mv, access, desc, name, className, superClassName, tryCatchBlockCount, methodDescriptionBuilder, dottyProblematic, useExpandedFrames);
-        this.traceMethodCalls = traceMethodCalls;
     }
 
     protected void onMethodReturn() {
-
-
-        if (this.traceMethodCalls) {
-            this.mv.visitLdcInsn(Integer.valueOf(methodDescriptionBuilder.getId()));
-            this.mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/callback/MethodCallback", "methodExit", "(I)V");
-        }
-
+        this.mv.visitLdcInsn(Integer.valueOf(methodDescriptionBuilder.getId()));
+        this.mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/callback/MethodCallback", "methodExit", "(I)V");
         mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_STRACKTRACE_BASED_FILTER, "onMethodExitDoNotTrace", "()V");
-
     }
 
     protected void onMethodEscapedException() {
@@ -39,15 +30,9 @@ public class MethodTransformerForClassloader extends MethodTransformerAbstract {
     }
 
     protected void onMethodEnter() {
-
         mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_STRACKTRACE_BASED_FILTER, "onMethodEnterDoNotTrace", "()V");
-
-        if (this.traceMethodCalls) {
-            this.mv.visitLdcInsn(Integer.valueOf(methodDescriptionBuilder.getId()));
-            this.mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/callback/MethodCallback", "methodEnter", "(I)V");
-        }
-
-
+        this.mv.visitLdcInsn(Integer.valueOf(methodDescriptionBuilder.getId()));
+        this.mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/callback/MethodCallback", "methodEnter", "(I)V");
     }
 
     protected int getMethodId() {
@@ -63,7 +48,7 @@ public class MethodTransformerForClassloader extends MethodTransformerAbstract {
         this.mv.visitLdcInsn(Integer.valueOf(monitorPosition));
         monitorPosition++;
 
-        this.mv.visitMethodInsn(INVOKESTATIC, this.CALLBACK_CLASS_SYNCHRONIZED_STATEMENT, "monitorEnter", "(Ljava/lang/Object;II)V");
+        this.mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_SYNCHRONIZED_STATEMENT, "monitorEnter", "(Ljava/lang/Object;II)V");
 
 
     }
@@ -74,15 +59,12 @@ public class MethodTransformerForClassloader extends MethodTransformerAbstract {
         this.mv.visitLdcInsn(Integer.valueOf(monitorExitPosition));
         monitorExitPosition++;
 
-        this.mv.visitMethodInsn(INVOKESTATIC, this.CALLBACK_CLASS_SYNCHRONIZED_STATEMENT, "monitorExit", "(Ljava/lang/Object;II)V");
+        this.mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_SYNCHRONIZED_STATEMENT, "monitorExit", "(Ljava/lang/Object;II)V");
     }
 
     public void visitMethodInsnInChild(int opcode, String owner, String name,
                                        String desc, boolean isInterface) {
-
-
         ApplyMethodTemplate applyMethodTemplate = null;
-
         Iterator<TemplateMethodDesc> it = MethodTransformer.templateMethodDescList.iterator();
 
         while (it.hasNext()) {
@@ -93,8 +75,6 @@ public class MethodTransformerForClassloader extends MethodTransformerAbstract {
                 break;
             }
         }
-
-
         if (applyMethodTemplate != null) {
 
             mv.visitLdcInsn(getMethodId());
@@ -112,7 +92,4 @@ public class MethodTransformerForClassloader extends MethodTransformerAbstract {
 
     }
 
-    protected void onAfterMonitorExit() {
-
-    }
 }

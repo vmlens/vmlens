@@ -4,9 +4,10 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 
 
-public interface BlockBuilder  {
+public interface BlockBuilder {
     Object blockBuilderKey();
-    void blockBuilderStart(Position myPosition, BlockContainer result);
-    void blockBuilderAdd(Position myPosition, ElementAndPosition<BlockBuilder> next, BlockContainer result);
+
+    void blockBuilderAdd(Position myPosition, BlockContainer result);
+
 
 }

@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingO
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestBuilder;
 import org.junit.Test;
 
+import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 import static com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestBuilder.FIRST_WORKER_THREAD_INDEX;
 import static com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestBuilder.MAIN_THREAD_INDEX;
 import static org.hamcrest.CoreMatchers.is;
@@ -31,7 +32,7 @@ public class TestCreateAlternatingOrder {
 
         // Expected
         AlternatingOrderElement[] alternatingOrder = new AlternatingOrderElement[1];
-        alternatingOrder[0] = new AlternatingOrderElement(new LeftBeforeRight(read,write),new LeftBeforeRight(write,read));
+        alternatingOrder[0] = new AlternatingOrderElement(lbr(read, write), lbr(write, read));
         OrderArrays expectedOrderArrays = new OrderArrays(new LeftBeforeRight[0],alternatingOrder);
 
         // Then

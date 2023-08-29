@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
 import com.anarsoft.trace.agent.runtime.*;
-import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.anarsoft.trace.agent.serialization.ClassDescription;
 import com.anarsoft.trace.agent.serialization.MethodDescription;
 import com.anarsoft.trace.agent.serialization.SerializedFieldDescription;
@@ -13,32 +13,27 @@ public abstract class ClassTransformerAbstract  extends ClassVisitor {
 
 
 	protected TLinkedList<MethodDescriptionBuilder> methodBuilderList = new TLinkedList<MethodDescriptionBuilder>();
-	protected  final String className;
-	protected  final TransformConstants callBackStrings;
-	protected  FilterList filterList;
-	protected ClassVisitorCreateDesc  classVisitorCreateDesc;
+    protected final String className;
+    protected ClassVisitorCreateDesc classVisitorCreateDesc;
     private static int maxMethodId = -1;
-    
+
     protected String superClassName;
     private WriteClassDescription writeClassDescription;
     private int classVersion;
 
     protected boolean isClass = true;
-    
-	public ClassTransformerAbstract(ClassVisitor cv,String className,FilterList filterList,
-			TransformConstants callBackStrings,ClassVisitorCreateDesc		
-			classVisitorCreateDesc,WriteClassDescription writeClassDescription) {
-		super(AgentClassFileTransformer.ASM_API_VERSION , cv);
-		this.filterList = filterList;
-		this.className = className;
-		this.callBackStrings = callBackStrings;
-		this.classVisitorCreateDesc = classVisitorCreateDesc;
-		this.writeClassDescription = writeClassDescription;
-	}
 
-	
-	
-	 protected boolean useExpandedFrames()
+    public ClassTransformerAbstract(ClassVisitor cv, String className,
+                                    ClassVisitorCreateDesc
+                                            classVisitorCreateDesc, WriteClassDescription writeClassDescription) {
+        super(AgentClassFileTransformer.ASM_API_VERSION, cv);
+        this.className = className;
+        this.classVisitorCreateDesc = classVisitorCreateDesc;
+        this.writeClassDescription = writeClassDescription;
+    }
+
+
+    protected boolean useExpandedFrames()
 		{
 			int major =  classVersion & 0xFF;
 			
@@ -66,17 +61,7 @@ public abstract class ClassTransformerAbstract  extends ClassVisitor {
 		
 	}
 	 
-	 
-	
 
-
-//	protected String[] appendInterfaceForClass(String[] interfaces) {
-//		
-//		return interfaces;
-//	}
-
-
-	 
 	 
 	 public static synchronized void setMaxMethodId(int id)
 	 {
@@ -96,75 +81,46 @@ public abstract class ClassTransformerAbstract  extends ClassVisitor {
 	protected ClassDescription createClassAnalyzedEvent()
 	{
 
-		 MethodDescription[] methodArray 	= new MethodDescription[methodBuilderList.size()];
+        MethodDescription[] methodArray = new MethodDescription[methodBuilderList.size()];
 
-		  int index = 0;
+        int index = 0;
 
-		 for( MethodDescriptionBuilder methodDescriptionBuilder :  methodBuilderList  )
-			{
+        for (MethodDescriptionBuilder methodDescriptionBuilder : methodBuilderList) {
+            methodArray[index] = methodDescriptionBuilder.build();
+            index++;
 
-			 methodArray[index] = methodDescriptionBuilder.build();
+        }
 
+        SerializedFieldDescription[] fieldArray = new SerializedFieldDescription[classVisitorCreateDesc.fieldDescriptionList.size()];
 
+        index = 0;
 
-			index++;
+        for (SerializedFieldDescription serializedFieldDescription : classVisitorCreateDesc.fieldDescriptionList) {
+            fieldArray[index] = serializedFieldDescription;
+            index++;
 
-			}
-		 
-		 SerializedFieldDescription[] fieldArray 	= new SerializedFieldDescription[classVisitorCreateDesc.fieldDescriptionList.size()];
+        }
 
-		   index = 0;
+        ClassDescription classAnalyzedEvent = new ClassDescription(className, classVisitorCreateDesc.source,
+                classVisitorCreateDesc.except, methodArray, fieldArray, classVisitorCreateDesc.superName, classVisitorCreateDesc.interfaces);
 
-		 for( SerializedFieldDescription serializedFieldDescription :  classVisitorCreateDesc.fieldDescriptionList  )
-			{
-
-			 fieldArray[index] = serializedFieldDescription;
-
-
-
-			index++;
-
-			}	 
-		 
-
-
-	    // (String name, boolean isThreadSafe ,boolean isStateless , String[] exceptArray 
-		ClassDescription classAnalyzedEvent = new ClassDescription(className  , classVisitorCreateDesc.source   ,  classVisitorCreateDesc.isThreadSafe ,
-				classVisitorCreateDesc.isStateless , classVisitorCreateDesc.except , methodArray , fieldArray, classVisitorCreateDesc.superName , classVisitorCreateDesc.interfaces );
-
-
-		return classAnalyzedEvent;
-	}
-
-	
-
-
-
+        return classAnalyzedEvent;
+    }
 
 	@Override
 	public void visitEnd() {
 		if (isClass) {
             addMethodsAndFieldsToClass();
         }
-
 		writeClassDescription.write(  this.createClassAnalyzedEvent()  );
 		super.visitEnd();
 	}
 
 
     protected void addToHasGeneratedMethodsSetBasedAtStart() {
-
     }
 
 
-
 	protected void addMethodsAndFieldsToClass() {
-		// TODO Auto-generated method stub
-		
 	}
-
-
-
-
-
 }

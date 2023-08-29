@@ -14,16 +14,17 @@ public class OrderArraysFactory {
                               ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         BlockContainer blockMap =
                 new BlockContainerFactory().create(blockBuilderList);
-        return create(blockMap,threadIndexToMaxPosition);
+        return create(blockMap, threadIndexToMaxPosition);
     }
 
-    private OrderArrays create(BlockContainer blockMap,ThreadIndexToMaxPosition threadIndexToMaxPosition) {
+    // Visible for Test
+    OrderArrays create(BlockContainer blockMap, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         OrderArraysBuilder builder = new OrderArraysBuilder();
         for (ThreadIndexToElementList<DependentBlock> threadIndexToElementList : blockMap.dependentBlocks()) {
             for (TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>> oneThread : threadIndexToElementList) {
                 for (TLinkableWrapper<DependentBlock> current : oneThread.element) {
                     Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>>> otherThreadBlocks =
-                            threadIndexToElementList.iteratorAt(current.element.threadIndex() + 1);
+                            threadIndexToElementList.iteratorStartingAt(current.element.threadIndex() + 1);
                     while (otherThreadBlocks.hasNext()) {
                         TLinkedList<TLinkableWrapper<DependentBlock>> otherThread = otherThreadBlocks.next().element;
                         // ToDo we should probably stop when more than n elements were created

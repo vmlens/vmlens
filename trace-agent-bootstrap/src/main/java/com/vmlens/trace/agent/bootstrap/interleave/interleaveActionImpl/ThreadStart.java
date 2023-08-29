@@ -20,12 +20,8 @@ public class ThreadStart implements InterleaveAction, InDependentBlock {
     }
 
     @Override
-    public void blockBuilderStart(Position myPosition, BlockContainer result) {
+    public void blockBuilderAdd(Position myPosition, BlockContainer result) {
         result.addInDependent(new ElementAndPosition<InDependentBlock>(this, myPosition));
-    }
-    @Override
-    public void blockBuilderAdd(Position myPosition, ElementAndPosition<BlockBuilder> next, BlockContainer result) {
-        result.addInDependent(new ElementAndPosition<InDependentBlock>((ThreadStart) next.element(), next.position()));
     }
 
     @Override

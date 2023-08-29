@@ -1,9 +1,16 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.interleave._
-
-import java.nio.ByteBuffer
-import java.util.Comparator;
+import com.anarsoft.race.detection.process.method._
+import com.anarsoft.race.detection.process.syncAction._;
+import com.anarsoft.race.detection.process.volatileField._;
+import com.anarsoft.race.detection.process.monitor._;
+import com.anarsoft.race.detection.process.nonVolatileField._;
+import java.util.Comparator
+import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.interleave._;
 
 
 class LoopWarningEventGen(
@@ -13,11 +20,8 @@ class LoopWarningEventGen(
                            , val runId: Int
 
 
-
-
-)    extends LoopWarningEvent  
-{
-override def toString() = {
+                         ) extends LoopWarningEvent {
+  override def toString() = {
   var text =  "LoopWarningEventGen" 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 

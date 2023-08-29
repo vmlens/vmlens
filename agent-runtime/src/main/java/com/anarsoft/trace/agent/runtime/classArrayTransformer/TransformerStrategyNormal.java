@@ -15,12 +15,12 @@ public class TransformerStrategyNormal implements TransformerStrategy {
         ClassWriter cw = context.createClassWriter();
         ClassReader classReader = context.createClassReader();
 
-        ClassVisitorCreateDesc classVisitorCreateDesc = new ClassVisitorCreateDesc(context.name(), context.filterList());
+        ClassVisitorCreateDesc classVisitorCreateDesc = new ClassVisitorCreateDesc(context.name());
 
         classReader.accept(classVisitorCreateDesc, ClassReader.EXPAND_FRAMES);
 
-        ClassVisitor classTransformer = new ClassTransformer(cw, context.name(), context.filterList(),
-                context.callBackStrings(), classVisitorCreateDesc, context.writeClassDescription(),
+        ClassVisitor classTransformer = new ClassTransformer(cw, context.name(),
+                classVisitorCreateDesc, context.writeClassDescription(),
                 addInterface && classVisitorCreateDesc.callbackMethodNotGenerated, context.hasGeneratedMethods());
         classReader.accept(classTransformer, 0);
 

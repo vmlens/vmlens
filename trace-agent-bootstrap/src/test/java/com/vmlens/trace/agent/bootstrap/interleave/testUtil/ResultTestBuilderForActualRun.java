@@ -32,6 +32,7 @@ public class ResultTestBuilderForActualRun extends AbstractResultTestBuilderForI
         add(new ThreadJoinFactory(position.threadIndex, index), position);
     }
 
+
     private void add(InterleaveActionWithPositionFactory interleaveActionWithPositionFactory, Position position) {
         factoryList.add(new TLinkableWrapper<>(interleaveActionWithPositionFactory));
         threadIndexToFactoryList.add(interleaveActionWithPositionFactory);

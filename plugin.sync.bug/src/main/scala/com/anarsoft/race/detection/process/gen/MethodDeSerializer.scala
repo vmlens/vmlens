@@ -1,25 +1,29 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
-import com.anarsoft.race.detection.process.read._
-
 import java.nio.ByteBuffer
+import com.anarsoft.race.detection.process.read._;
+import com.anarsoft.race.detection.process.nonVolatileField.ApplyFieldEventVisitor
+import com.anarsoft.race.detection.process.syncAction.SyncAction
+import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
+import com.anarsoft.race.detection.process.monitor.MonitorEvent
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
 
 class MethodDeSerializer extends ReadStrategy[ApplyMethodEventVisitor] {
-  val blockSize = 21 * 10000;
-
   def eventArraySize() = 21
 
+  val blockSize = 21 * 10000;
+
+
   def deSerializeJavaEvent(buffer: ByteBuffer) = {
-        
-       val id = buffer.get();
-       
-       
-       if( id == 26 )
-       {
-          MethodEnterEventGen.applyFromJavaEvent( buffer   );
-       }
-       else
+
+    val id = buffer.get();
+
+
+    if (id == 26) {
+      MethodEnterEventGen.applyFromJavaEvent(buffer);
+    }
+    else
        
        
        if( id == 27 )

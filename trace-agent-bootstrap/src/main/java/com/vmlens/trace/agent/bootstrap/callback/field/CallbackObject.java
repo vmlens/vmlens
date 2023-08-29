@@ -13,28 +13,19 @@ public class CallbackObject {
 
 	private static final UpdateObjectState updateObjectState = new UpdateObjectState(200, 200);
 	
-	private static final UpdateObjectState updateBeforeObjectState = new UpdateObjectState(200, 200)
-			{
+	private static final UpdateObjectState updateBeforeObjectState = new UpdateObjectState(200, 200) {
+        public void sendEventVolatile(CallbackStatePerThread callbackStatePerThread, int order,
+                                      int fieldId, int methodId, int operation, long objectId) {
+            callbackStatePerThread.sendEvent.writeWithoutInterleaveVolatileAccessEventGen(
+                    CallbackState.traceSyncStatements(callbackStatePerThread), callbackStatePerThread.programCount,
+                    order, fieldId, callbackStatePerThread.methodCount, methodId, operation, objectId);
+        }
 
-		public void sendEventVolatile(CallbackStatePerThread callbackStatePerThread,int order,
-				int fieldId, int methodId, int operation, long objectId) {
-			callbackStatePerThread.sendEvent.writeWithoutInterleaveVolatileAccessEventGen(
-					CallbackState.traceSyncStatements(callbackStatePerThread), callbackStatePerThread.programCount,
-					order, fieldId, callbackStatePerThread.methodCount, methodId, operation,objectId);
-		}
-
-				@Override
-				public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
-						CallbackStatePerThread callbackStatePerThread) {
-				
-				}
-
-				
-		
-		
-		
-		
-			};
+        @Override
+        public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
+                                                             CallbackStatePerThread callbackStatePerThread) {
+        }
+    };
 	
 
 	public static void non_volatile_access(Object orig, int fieldId, int methodId, boolean isWrite) {
@@ -84,25 +75,10 @@ public class CallbackObject {
 		if (slidingWindowId <= CallbackState.SLIDING_WINDOW_MUST_BE_GREATER) {
 			return;
 		}
+        updateObjectState.nonVolatileAccess(callbackStatePerThread.isInInterleaveLoop(), stateHolder, offset,
+                callbackStatePerThread.threadId, slidingWindowId, fieldId, methodId, operation,
+                callbackStatePerThread);
 
-
-		/*
-		 * void nonVolatileAccess(boolean isInInterleaveLoop, Object obj, long offset,
-		 * long threadId, int slidingWindowId, int fieldId, int methodId, int operation,
-		 * CallbackStatePerThread callbackStatePerThread)
-		 */
-
-		if (callbackStatePerThread.mode.isInterleave()) {
-			updateObjectState.nonVolatileAccess(callbackStatePerThread.isInInterleaveLoop(), stateHolder, offset,
-					callbackStatePerThread.threadId, slidingWindowId, fieldId, methodId, operation,
-					callbackStatePerThread);
-		} else if (callbackStatePerThread.mode.isState()) {
-			final int classId = ModeStateFieldAccess.class2Id.getId(orig.getClass());
-
-			updateObjectState.stateAccess(stateHolder, offset, callbackStatePerThread.threadId, slidingWindowId,
-					classId, methodId, operation, callbackStatePerThread.methodCount, callbackStatePerThread);
-
-		}
 
 	}
 
@@ -207,35 +183,26 @@ public class CallbackObject {
 
 	static void volatile_access_generated(Object orig, long offset, int fieldId, int methodId, int operation) {
 		CallbackStatePerThread callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
-
 		if (callbackStatePerThread != null) {
-
 			volatile_access_internal(callbackStatePerThread, orig, orig, offset, fieldId, methodId, operation);
-
 		}
 	}
 
 	public static void volatile_access(Object orig, int fieldId, int methodId, int operation) {
 
 		CallbackStatePerThread callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
-
 		if (callbackStatePerThread != null) {
 			/**
 			 * Diese Methode wird sowohl direkt als auch durch unsafe aufgerufen, daher
 			 * getState und nicht getStateFromMap
 			 * 
 			 */
-
 			StateAccess state = Class2GetStateMap.getState(orig);
-
 			volatile_access_internal(callbackStatePerThread, orig, state.obj, state.offset, fieldId, methodId,
 					operation);
-
 		}
-
 	}
-	
-	
+
 	public static void before_volatile_access(Object orig, int fieldId, int methodId, int operation) {
 
 		CallbackStatePerThread callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
@@ -251,63 +218,31 @@ public class CallbackObject {
 
 			before_volatile_access_internal(callbackStatePerThread, orig, state.obj, state.offset, fieldId, methodId,
 					operation);
-
 		}
-
 	}
-	
-	
-	
-	
-	
-	
-	
+
 
 	private static CallbackStatePerThread volatile_filter_and_apply_waitpoints(Object orig, int fieldId) {
-
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-
 		int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
-
 		if (!CallbackState.isSlidingWindowTrace(slidingWindowId)) {
 			return null;
 		}
-
 		return callbackStatePerThread;
-
 	}
 
-	
-	
-	
 	private static void before_volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
 			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
-
-		if (callbackStatePerThread.mode.isInterleave()) {
-
-			callbackStatePerThread.programCount += 1;
-			updateBeforeObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
-
-			callbackStatePerThread.programCount += 1;
-        }
-	}
+        callbackStatePerThread.programCount += 1;
+        updateBeforeObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
+        callbackStatePerThread.programCount += 1;
+    }
 
     private static void volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
 			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
-
-		if (callbackStatePerThread.mode.isInterleave()) {
-
-			callbackStatePerThread.programCount += 1;
-			updateObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
-
-			callbackStatePerThread.programCount += 1;
-		} else if (callbackStatePerThread.mode.isState()) {
-			final int classId = ModeStateFieldAccess.class2Id.getId(orig.getClass());
-			updateObjectState.stateAccess(stateHolder, offset, callbackStatePerThread.threadId,
-					CallbackState.slidingWindow, classId, methodId, operation, callbackStatePerThread.methodCount,
-					callbackStatePerThread);
-
-		}
-	}
+        callbackStatePerThread.programCount += 1;
+        updateObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
+        callbackStatePerThread.programCount += 1;
+    }
 
 }

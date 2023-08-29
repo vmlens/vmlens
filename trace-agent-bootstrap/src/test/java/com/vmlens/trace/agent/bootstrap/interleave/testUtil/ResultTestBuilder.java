@@ -8,4 +8,8 @@ public interface ResultTestBuilder {
     void startThread(int index, Position temp);
 
     void joinThread(int index, Position temp);
+
+    void monitorEnter(int id, Position temp);
+
+    void monitorExit(int id, Position temp);
 }

@@ -13,9 +13,8 @@ public class MethodDescriptionBuilder implements TLinkable<MethodDescriptionBuil
 
 	private TLinkedList<TLinkableWrapper<FieldAccessDescription>> fieldDescriptionList = new TLinkedList<TLinkableWrapper<FieldAccessDescription>>();
 	private TLinkedList<TLinkableWrapper<String>> annotationList = new TLinkedList<TLinkableWrapper<String>>();
-	
-	
-	private final String name;
+
+    private final String name;
 	private final String desc;
 	private final int access;
 	private final int id;

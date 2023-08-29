@@ -1,6 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.*;
+
+import java.nio.ByteBuffer;
 
 public class EventFactory {
 

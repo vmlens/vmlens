@@ -4,20 +4,20 @@ import org.objectweb.asm.MethodVisitor;
 
 import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
 
+import static com.anarsoft.trace.agent.runtime.TransformConstants.CALLBACK_CLASS_METHOD;
+
 public class MethodTransformerThreadRun extends MethodTransformerAbstract {
 
-	final String CALLBACK_CLASS_METHOD_ENTER = "com/vmlens/trace/agent/bootstrap/callback/MethodCallback";
+    public MethodTransformerThreadRun(MethodVisitor mv, int access, String desc, String name, String className,
+                                      String superClassName, int tryCatchBlockCount, MethodDescriptionBuilder methodDescriptionBuilder, boolean dottyProblematic, boolean useExpandedFrames) {
+        super(mv, access, desc, name, className, superClassName, tryCatchBlockCount, methodDescriptionBuilder, dottyProblematic, useExpandedFrames);
 
-	public MethodTransformerThreadRun(MethodVisitor mv, int access, String desc, String name, String className,
-			String superClassName, int tryCatchBlockCount, MethodDescriptionBuilder methodDescriptionBuilder, boolean dottyProblematic,boolean useExpandedFrames) {
-		super(mv, access, desc, name, className, superClassName, tryCatchBlockCount, methodDescriptionBuilder,dottyProblematic, useExpandedFrames);
+    }
 
-	}
+    protected void onMethodReturn() {
 
-	protected void onMethodReturn() {
-
-		 this.mv.visitLdcInsn(Integer.valueOf(getMethodId()));
-	        this.mv.visitMethodInsn(INVOKESTATIC, this.CALLBACK_CLASS_METHOD_ENTER, "methodExitThreadRun", "(I)V");
+        this.mv.visitLdcInsn(Integer.valueOf(getMethodId()));
+        this.mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_METHOD, "methodExitThreadRun", "(I)V");
 	}
 
 	protected void onMethodEscapedException() {
@@ -26,8 +26,8 @@ public class MethodTransformerThreadRun extends MethodTransformerAbstract {
 
 	protected void onMethodEnter() {
 
-		 this.mv.visitLdcInsn(Integer.valueOf(getMethodId()));
-	      this.mv.visitMethodInsn(INVOKESTATIC, this.CALLBACK_CLASS_METHOD_ENTER, "methodEnterThreadRun"  , "(I)V");
+        this.mv.visitLdcInsn(Integer.valueOf(getMethodId()));
+        this.mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_METHOD, "methodEnterThreadRun", "(I)V");
 
 	}
 
@@ -57,7 +57,4 @@ public class MethodTransformerThreadRun extends MethodTransformerAbstract {
 
 	}
 
-	protected void onAfterMonitorExit() {
-
-	}
 }

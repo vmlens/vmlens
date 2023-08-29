@@ -1,12 +1,15 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.anarsoft.trace.agent.runtime.filter.FilterBuilder;
+
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsAlwaysFalse;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
 import com.anarsoft.trace.agent.runtime.util.AgentKeys;
-import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
-import com.anarsoft.trace.agent.runtime.waitPoints.LoadAtomicClassesFromClasspath;
+import com.anarsoft.trace.agent.runtime.repository.LoadAtomicClassesFromClasspath;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
+import com.anarsoft.trace.agent.runtime.write.WriteEvent2File;
+import com.anarsoft.trace.agent.runtime.write.WriteEvent2FileThreadFactory;
 import com.anarsoft.trace.agent.serialization.ClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
@@ -14,9 +17,7 @@ import com.vmlens.trace.agent.bootstrap.AgentRuntime;
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.mode.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -111,41 +112,10 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
 			String agentModeString = properties.getProperty("vmlens.mode");
 
-			AgentMode mode = new AgentModeInterleave();
-
-			if (ModeNames.MONITOR.equals(agentModeString)) {
-				mode = new AgentModeMonitor();
-			} else if (ModeNames.STATE.equals(agentModeString)) {
-				mode = new AgentModeState();
-			}
-
-			CallbackState.mode = mode;
-
-			String prop = properties.getProperty("vmlens.trace");
-
-			if (prop == null) {
-				out.println("vmlens.trace=");
-			} else {
-				out.println("vmlens.trace=" + prop);
-			}
-
-			out.println("vmlens.mode=" + mode.asPropertyString());
-			out.close();
 
 			LoadAtomicClassesFromClasspath.load();
-
 			Offset2FieldId.initialize();
 
-
-			FilterList filterList = new FilterList(
-					FilterBuilder.createExcludeFilter(properties.getProperty(AgentKeys.EXCLUDE_FROM_TRACE)),
-					FilterBuilder.createExcludeFilter(properties.getProperty(AgentKeys.DO_NOT_TRACE_IN)),
-					FilterBuilder.createOnlyWhenSetFilter(properties.getProperty(AgentKeys.DO_NOT_TRACE_IN)),
-					FilterBuilder.createOnlyWhenSetFilter(properties.getProperty(AgentKeys.TRACE)), mode);
-
-
-			String enableAgentLog = properties.getProperty(AgentKeys.AGENT_LOG);
-			String enableAgentLogPerformance = properties.getProperty(AgentKeys.AGENT_LOG_PERFORMANCE);
 			String enableAgentLogException = properties.getProperty(AgentKeys.AGENT_LOG_EXCEPTION);
 
 
@@ -154,9 +124,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			}
 			
 
-
-			CallbackState.doNotcheckStackTraceBasedDoTrace = !filterList.onlyTraceIn.isDefined();
-			CallbackState.syncActionSameAsField4TraceCheck = mode.syncActionSameAsField4TraceCheck();
 			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
 
 			AgentController agentController = AgentController.create(outputFileName);
@@ -166,14 +133,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap");
 			
 			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.CreateGetState");
-			
-			
-			this.getClass().getClassLoader().loadClass("com.anarsoft.trace.agent.runtime.filter.FilterBuilder");
-			this.getClass().getClassLoader().loadClass("com.anarsoft.trace.agent.runtime.filter.FilterState");
-			this.getClass().getClassLoader()
-					.loadClass("com.anarsoft.trace.agent.runtime.filter.FilterStateBasedOnList");
-			this.getClass().getClassLoader().loadClass("com.anarsoft.trace.agent.runtime.util.AntPatternMatcher");
-
 			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.FieldAccessCallback");
 			this.getClass().getClassLoader()
 					.loadClass("com.vmlens.trace.agent.bootstrap.callback.SynchronizedStatementCallback");
@@ -215,10 +174,9 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			this.getClass().getClassLoader().loadClass("org.objectweb.asm.ConstantDynamic");
 			this.getClass().getClassLoader()
 			.loadClass("com.vmlens.trace.agent.bootstrap.callback.StackTraceBasedFilterCallback");
-
 			this.getClass().getClassLoader().loadClass("java.util.concurrent.locks.LockSupport");
 
-			instrument(inst, outputFileName, filterList);
+            instrument(inst, outputFileName);
 
 			CallbackState.queueFacade.start(
 					new WriteEvent2File(outputFileName, new StreamRepository(outputFileName, 0), agentController),
@@ -234,16 +192,16 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
 	}
 
-	private void retransform(Instrumentation inst, TransformConstants callBackStrings, FilterList filterList,
-			TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList, boolean skipJavaUtil,
-			THashSet<String> alreadyTransformed) throws UnmodifiableClassException {
-		WriteClassDescriptionDuringStartup writeClassDescriptionDuringStartup = new WriteClassDescriptionDuringStartup(
-				classAnalyzedEventList);
+    private void retransform(Instrumentation inst,
+                             TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList, boolean skipJavaUtil,
+                             THashSet<String> alreadyTransformed) throws UnmodifiableClassException {
+        WriteClassDescriptionDuringStartup writeClassDescriptionDuringStartup = new WriteClassDescriptionDuringStartup(
+                classAnalyzedEventList);
 
-		AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(filterList, callBackStrings,
-				skipJavaUtil, writeClassDescriptionDuringStartup, false, new HasGeneratedMethodsAlwaysFalse());
+        AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
+                skipJavaUtil, writeClassDescriptionDuringStartup, false, new HasGeneratedMethodsAlwaysFalse());
 
-		inst.addTransformer(classRetransformer, true);
+        inst.addTransformer(classRetransformer, true);
 
 		TLinkedList<TLinkableWrapper<Class>> transformableClasses = new TLinkedList();
 		for (Class cl : inst.getAllLoadedClasses()) {
@@ -270,38 +228,25 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		inst.removeTransformer(classRetransformer);
 	}
 
-	protected void instrument(Instrumentation inst, String outputFileName, FilterList filterList) throws Exception {
-		TransformConstants callBackStrings = new TransformConstants(
-				"com/vmlens/trace/agent/bootstrap/callback/FieldAccessCallback",
-				"com/vmlens/trace/agent/bootstrap/callback/SynchronizedStatementCallback",
-				"com/vmlens/trace/agent/bootstrap/callback/LockStatementCallback",
-				"com/vmlens/trace/agent/bootstrap/ThreadIdForField",
-				"com/vmlens/trace/agent/bootstrap/callback/MethodCallback", "_pAnarsoft_", "_pAnarsoft_set_",
-				"_pAnarsoft_get_");
+    protected void instrument(Instrumentation inst, String outputFileName) throws Exception {
+        TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList();
+        THashSet<String> alreadyTransformed = new THashSet();
 
-		TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList();
+        retransform(inst, classAnalyzedEventList, true, alreadyTransformed);
+        for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-		THashSet<String> alreadyTransformed = new THashSet();
-		THashSet<String> withoutOwner = new THashSet();
+            CallbackState.queueFacade.putDirect(classAnalyzedEvent.getElement());
 
-		retransform(inst, callBackStrings, filterList, classAnalyzedEventList, true, alreadyTransformed);
+        }
+        classAnalyzedEventList = new TLinkedList();
 
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-
-		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
-
-			CallbackState.queueFacade.putDirect(classAnalyzedEvent.getElement());
-
-		}
-		classAnalyzedEventList = new TLinkedList();
-
-        retransform(inst, callBackStrings, filterList, classAnalyzedEventList, false, alreadyTransformed);
+        retransform(inst, classAnalyzedEventList, false, alreadyTransformed);
 		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
 			CallbackState.queueFacade.putDirect(classAnalyzedEvent.getElement());
 		}
-		inst.addTransformer(new AgentClassFileTransformer(filterList, callBackStrings, false,
-				new WriteClassDescriptionNormal(), true, new HasGeneratedMethodsSetBased()), false);
+        inst.addTransformer(new AgentClassFileTransformer(false,
+                new WriteClassDescriptionNormal(), true, new HasGeneratedMethodsSetBased()), false);
 		
 
 	}

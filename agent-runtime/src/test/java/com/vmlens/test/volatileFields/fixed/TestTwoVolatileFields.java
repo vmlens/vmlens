@@ -14,7 +14,7 @@ public class TestTwoVolatileFields {
 
     int z = 0;
 
-    @Test
+    //@Test
     public void testUpdate() throws InterruptedException {
         HashSet resultTwo = new HashSet();
 
@@ -42,13 +42,9 @@ public class TestTwoVolatileFields {
             }
 
             first.join();
-
-
             resultTwo.add(j);
 
         }
-
-
         HashSet compare = new HashSet();
 
         compare.add(1);

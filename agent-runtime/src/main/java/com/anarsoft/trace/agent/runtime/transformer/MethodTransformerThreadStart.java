@@ -83,33 +83,4 @@ public class MethodTransformerThreadStart  extends MethodTransformerAbstract {
 
 	}
 
-	protected void onAfterMonitorExit() {
-
-	}
-	
-
-	
-	
-	
-	
-//	@Override
-//	public void visitCode() {
-//		
-//		
-//		super.visitCode();
-//		
-
-//		
-//		
-//		
-//		
-//	}
-
-	
-	
-	
-	
-	
-	
-	
 }

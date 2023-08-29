@@ -4,6 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPo
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
+import java.util.Iterator;
+
 /**
  * Creates blocks for each interleave action of an actual run. Interleave actions of different types are independent.
  */
@@ -19,15 +21,14 @@ public class BlockContainerFactory {
         }
         BlockContainer result = new BlockContainer();
         for (ThreadIndexToElementList<ElementAndPosition<BlockBuilder>> threadIndexToElementList : blockFactoryMap) {
-            for (TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>> oneThread : threadIndexToElementList) {
-                ElementAndPosition<BlockBuilder> prevoius = null;
-                for (TLinkableWrapper<ElementAndPosition<BlockBuilder>> current : oneThread.element) {
-                    if (prevoius == null) {
-                        current.element.element().blockBuilderStart(current.element.position(), result);
-                    } else {
-                        prevoius.element().blockBuilderAdd(prevoius.position(), current.element, result);
-                    }
-                    prevoius = current.element;
+            Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>>> multipleThreadsIterator = threadIndexToElementList.iterator();
+            while (multipleThreadsIterator.hasNext()) {
+                TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>> thread = multipleThreadsIterator.next();
+                Iterator<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> perThreadIterator = thread.element.iterator();
+                while (perThreadIterator.hasNext()) {
+                    TLinkableWrapper<ElementAndPosition<BlockBuilder>> current = perThreadIterator.next();
+                    current.element.element().blockBuilderAdd(current.element.position(), result);
+
                 }
             }
         }

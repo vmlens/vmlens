@@ -24,4 +24,23 @@ public class KeyToThreadIdToElementList<KEY, ELEMENT extends WithThreadIndex>
         return map.values().iterator();
     }
 
+    // Visible for Test
+    public ThreadIndexToElementList<ELEMENT> get(KEY key) {
+        return map.get(key);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        KeyToThreadIdToElementList<?, ?> that = (KeyToThreadIdToElementList<?, ?>) o;
+
+        return map.equals(that.map);
+    }
+
+    @Override
+    public int hashCode() {
+        return map.hashCode();
+    }
 }

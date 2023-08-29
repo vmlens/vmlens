@@ -5,7 +5,7 @@ import com.anarsoft.trace.agent.runtime.classArrayTransformer.ClassArrayTransfor
 import com.anarsoft.trace.agent.runtime.classArrayTransformer.TransformerContext;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
 import com.anarsoft.trace.agent.runtime.transformer.*;
-import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
@@ -21,28 +21,22 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
+import static com.anarsoft.trace.agent.runtime.TransformConstants.CALLBACK_CLASS_LOCK_STATEMENT;
+
 
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
     public static final int ASM_API_VERSION = Opcodes.ASM7;
-    protected final TransformConstants callBackStrings;
     private final HasGeneratedMethods hasGeneratedMethods;
-    private FilterList filterList;
     private boolean skipJavaUtil;
-
     private final TLinkedList<TLinkableWrapper<ClassArrayTransformer>> classArrayTransformerList;
-
-    // || name.startsWith("java/io") || name.startsWith("java/nio")
     private WriteClassDescription writeClassDescription;
     private boolean addInterface;
 
-    public AgentClassFileTransformer(FilterList filterList, TransformConstants callBackStrings,
-                                     boolean skipJavaUtil,
+    public AgentClassFileTransformer(boolean skipJavaUtil,
                                      WriteClassDescription writeClassDescription, boolean addInterface,
                                      HasGeneratedMethods hasGeneratedMethods) {
         super();
-        this.filterList = filterList;
-        this.callBackStrings = callBackStrings;
         this.skipJavaUtil = skipJavaUtil;
         this.writeClassDescription = writeClassDescription;
         this.addInterface = addInterface;
@@ -292,11 +286,11 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
      */
 
-    private boolean transformConcurrent(ClassReader classReader, ClassWriter cw, String name, FilterList filterList2) {
+    private boolean transformConcurrent(ClassReader classReader, ClassWriter cw, String name) {
 
 
         if (name.startsWith("java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionObject")) {
-            transform(classReader, cw, name, filterList);
+            transform(classReader, cw, name);
             return true;
         }
 
@@ -307,45 +301,45 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
             // String name, String desc
             methodName2Transformer.put(new MethodIdentifier("acquire", "(I)V"),
-                    new FactoryMethodTransformerMethodExit(callBackStrings.callback_class_lock_statement, "acquire"));
+                    new FactoryMethodTransformerMethodExit(CALLBACK_CLASS_LOCK_STATEMENT, "acquire"));
 
             methodName2Transformer.put(new MethodIdentifier("acquireInterruptibly", "(I)V"),
-                    new FactoryMethodTransformerMethodExit(callBackStrings.callback_class_lock_statement, "acquire"));
+                    new FactoryMethodTransformerMethodExit(CALLBACK_CLASS_LOCK_STATEMENT, "acquire"));
 
             methodName2Transformer.put(new MethodIdentifier("acquireShared", "(I)V"),
-                    new FactoryMethodTransformerMethodExit(callBackStrings.callback_class_lock_statement,
+                    new FactoryMethodTransformerMethodExit(CALLBACK_CLASS_LOCK_STATEMENT,
                             "acquireShared"));
 
             methodName2Transformer.put(new MethodIdentifier("tryAcquireSharedNanos", "(IJ)Z"),
                     new FactoryMethodTransformerMethodExitWithReturnBoolean(
-                            callBackStrings.callback_class_lock_statement, "tryAcquireSharedBoolean"));
+                            CALLBACK_CLASS_LOCK_STATEMENT, "tryAcquireSharedBoolean"));
 
             methodName2Transformer.put(
                     new MethodIdentifier("acquireQueued",
                             "(Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;I)Z"),
-                    new FactoryMethodTransformerMethodExit(callBackStrings.callback_class_lock_statement,
+                    new FactoryMethodTransformerMethodExit(CALLBACK_CLASS_LOCK_STATEMENT,
                             "acquireQueued"));
 
             methodName2Transformer.put(new MethodIdentifier("acquireSharedInterruptibly", "(I)V"),
-                    new FactoryMethodTransformerMethodExit(callBackStrings.callback_class_lock_statement,
+                    new FactoryMethodTransformerMethodExit(CALLBACK_CLASS_LOCK_STATEMENT,
                             "acquireShared"));
 
             methodName2Transformer.put(new MethodIdentifier("release", "(I)Z"),
-                    new FactoryMethodTransformerMethodEnterNoArg(callBackStrings.callback_class_lock_statement,
+                    new FactoryMethodTransformerMethodEnterNoArg(CALLBACK_CLASS_LOCK_STATEMENT,
                             "release"));
 
             methodName2Transformer.put(
                     new MethodIdentifier("fullyRelease",
                             "(Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;)I"),
-                    new FactoryMethodTransformerMethodEnterNoArg(callBackStrings.callback_class_lock_statement,
+                    new FactoryMethodTransformerMethodEnterNoArg(CALLBACK_CLASS_LOCK_STATEMENT,
                             "fullyRelease"));
 
             methodName2Transformer.put(new MethodIdentifier("releaseShared", "(I)Z"),
-                    new FactoryMethodTransformerMethodEnterNoArg(callBackStrings.callback_class_lock_statement,
+                    new FactoryMethodTransformerMethodEnterNoArg(CALLBACK_CLASS_LOCK_STATEMENT,
                             "releaseShared"));
 
 
-            transformWithClassTransformerTraceMethod(methodName2Transformer, classReader, cw, name, filterList);
+            transformWithClassTransformerTraceMethod(methodName2Transformer, classReader, cw, name);
             return true;
         }
 
@@ -354,10 +348,10 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
             // String name, String desc
             methodName2Transformer.put(new MethodIdentifier("setExclusiveOwnerThread", "(Ljava/lang/Thread;)V"),
-                    new FactoryMethodTransformerMethodEnterObjectArg(callBackStrings.callback_class_lock_statement,
+                    new FactoryMethodTransformerMethodEnterObjectArg(CALLBACK_CLASS_LOCK_STATEMENT,
                             "setExclusiveOwnerThread"));
 
-            transformWithClassTransformerTraceMethod(methodName2Transformer, classReader, cw, name, filterList);
+            transformWithClassTransformerTraceMethod(methodName2Transformer, classReader, cw, name);
             return true;
         }
 
@@ -368,14 +362,14 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
             // String name, String desc
             methodName2Transformer.put(new MethodIdentifier("tryAcquireShared", "(I)I"),
-                    new FactoryMethodTransformerMethodExitWithReturnInt(callBackStrings.callback_class_lock_statement,
+                    new FactoryMethodTransformerMethodExitWithReturnInt(CALLBACK_CLASS_LOCK_STATEMENT,
                             "tryAcquireShared"));
 
             methodName2Transformer.put(new MethodIdentifier("tryReleaseShared", "(I)Z"),
                     new FactoryMethodTransformerMethodExitWithReturnBoolean(
-                            callBackStrings.callback_class_lock_statement, "tryReleaseShared"));
+                            CALLBACK_CLASS_LOCK_STATEMENT, "tryReleaseShared"));
 
-            transformWithClassTransformerTraceMethod(methodName2Transformer, classReader, cw, name, filterList);
+            transformWithClassTransformerTraceMethod(methodName2Transformer, classReader, cw, name);
             return true;
         }
 
@@ -385,14 +379,14 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             // String name, String desc
             methodName2Transformer.put(new MethodIdentifier("nonfairTryAcquire", "(I)Z"),
                     new FactoryMethodTransformerMethodExitWithReturnBoolean(
-                            callBackStrings.callback_class_lock_statement, "tryAcquire"));
+                            CALLBACK_CLASS_LOCK_STATEMENT, "tryAcquire"));
 
-            transformWithClassTransformerTraceMethod(methodName2Transformer, classReader, cw, name, filterList);
+            transformWithClassTransformerTraceMethod(methodName2Transformer, classReader, cw, name);
             return true;
         }
 
 
-        transform(classReader, cw, name, filterList);
+        transform(classReader, cw, name);
         return true;
 
 
@@ -400,7 +394,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
     private void transformWithClassTransformerTraceMethod(
             THashMap<MethodIdentifier, FactoryMethodTransformer> methodName2Transformer, ClassReader classReader,
-            ClassWriter cw, String name, FilterList filterList2) {
+            ClassWriter cw, String name) {
 
         ClassTransformerTraceMethod classTransformerTraceMethod = new ClassTransformerTraceMethod(cw,
                 methodName2Transformer);
@@ -409,24 +403,22 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
     }
 
-    protected void transform(ClassReader classReader, ClassWriter outputClassWriter, String name,
-                             FilterList filterList) {
+    protected void transform(ClassReader classReader, ClassWriter outputClassWriter, String name) {
 
-        ClassVisitorCreateDesc classVisitorCreateDesc = new ClassVisitorCreateDesc(name, filterList);
+        ClassVisitorCreateDesc classVisitorCreateDesc = new ClassVisitorCreateDesc(name);
 
         classReader.accept(classVisitorCreateDesc, ClassReader.EXPAND_FRAMES);
 
-        ClassVisitor classTransformer = createClassTransformer(outputClassWriter, name, filterList,
-                classVisitorCreateDesc); // new ClassTransformerForRetransform(outputClassWriter,name,filterList ,
-        // classAnalyzedEventList ,callBackStrings,methodIdentifierSet);
+        ClassVisitor classTransformer = createClassTransformer(outputClassWriter, name,
+                classVisitorCreateDesc);
         classReader.accept(classTransformer, 0);
 
     }
 
-    public ClassVisitor createClassTransformer(ClassWriter outputClassWriter, String name, FilterList filterList,
+    public ClassVisitor createClassTransformer(ClassWriter outputClassWriter, String name,
                                                ClassVisitorCreateDesc classVisitorCreateDesc) {
 
-        return new ClassTransformer(outputClassWriter, name, filterList, callBackStrings, classVisitorCreateDesc,
+        return new ClassTransformer(outputClassWriter, name, classVisitorCreateDesc,
                 writeClassDescription, addInterface && classVisitorCreateDesc.callbackMethodNotGenerated,
                 hasGeneratedMethods);
     }
@@ -454,8 +446,8 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             for (TLinkableWrapper<ClassArrayTransformer> transformerWrapper : classArrayTransformerList) {
                 ClassArrayTransformer transformer = transformerWrapper.getElement();
                 if (transformer.appliesTo(name)) {
-                    TransformerContext context = new TransformerContext(classfileBuffer, name, filterList,
-                            writeClassDescription, callBackStrings, hasGeneratedMethods);
+                    TransformerContext context = new TransformerContext(classfileBuffer, name,
+                            writeClassDescription, hasGeneratedMethods);
                     byte[] result = transformer.transform(context);
                     logTransformedClass(name, result);
                     return result;

@@ -2,8 +2,13 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.vmlens.trace.agent.bootstrap.callback.FieldAccessCallback;
 import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
+import com.vmlens.trace.agent.bootstrap.callback.SynchronizedStatementCallback;
 import com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.method.MethodCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.obj.HashMapCallback;
+import com.vmlens.trace.agent.bootstrap.callback.obj.ObjectCallbackState;
+import com.vmlens.trace.agent.bootstrap.callback.synchronizedStatement.SynchronizedStatementCallbackImpl;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,11 +30,8 @@ public class TestAgentClassFileTransformer {
         MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
 
         FieldAccessCallbackImpl fieldAccessCallbackImplMock = mock(FieldAccessCallbackImpl.class);
-        ;
         FieldAccessCallback.setFieldAccessCallbackImpl(fieldAccessCallbackImplMock);
-
         runTest("VolatileFieldAccess");
-
         verify(fieldAccessCallbackImplMock).field_access_from_generated_method(any(), nullable(Long.class), anyInt(), anyInt(), eq(CALLBACK_ID_WRITE_VOLATILE));
 
     }
@@ -38,6 +40,37 @@ public class TestAgentClassFileTransformer {
     public void withAllInterleavings() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         runTest("WithAllInterleavings");
+
+    }
+
+    @Test
+    public void methodCall() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
+        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+        runTest("MethodCall");
+        verify(methodCallbackImplMock).methodEnter(anyInt());
+        verify(methodCallbackImplMock).methodExit(anyInt());
+    }
+
+    @Test
+    public void monitorAndWaitNotify() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException, InterruptedException {
+        SynchronizedStatementCallbackImpl synchronizedStatementCallbackImplMock = mock(SynchronizedStatementCallbackImpl.class);
+        SynchronizedStatementCallback.setImpl(synchronizedStatementCallbackImplMock);
+        runTest("MonitorAndWaitNotify");
+        verify(synchronizedStatementCallbackImplMock).monitorEnter(any(), anyInt(), anyInt());
+        verify(synchronizedStatementCallbackImplMock).monitorExit(any(), anyInt(), anyInt());
+        verify(synchronizedStatementCallbackImplMock).waitCall(any(), anyLong(), anyInt());
+    }
+
+    @Test
+    public void callToHashMap() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        ObjectCallbackState state = mock(ObjectCallbackState.class);
+        HashMapCallback.setObjectCallbackState(state);
+        runTest("CallToHashMap");
+        verify(state).access(any(), eq(MemoryAccessType.IS_READ_WRITE), anyInt());
     }
 
     private void runTest(String className) throws ClassNotFoundException, InstantiationException,

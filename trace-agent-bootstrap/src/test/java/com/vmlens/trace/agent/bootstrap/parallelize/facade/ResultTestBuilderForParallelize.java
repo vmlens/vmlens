@@ -41,6 +41,16 @@ public class ResultTestBuilderForParallelize implements ResultTestBuilder {
         throw new RuntimeException("not implemented yet");
     }
 
+    @Override
+    public void monitorEnter(int id, Position temp) {
+        throw new RuntimeException("not implemented yet");
+    }
+
+    @Override
+    public void monitorExit(int id, Position temp) {
+        throw new RuntimeException("not implemented yet");
+    }
+
     public ThreadIndexToElementList<ActionForTest> actualRun() {
         return actualRun;
     }

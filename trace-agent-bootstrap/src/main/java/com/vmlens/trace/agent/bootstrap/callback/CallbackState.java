@@ -2,8 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 
 import com.vmlens.trace.agent.bootstrap.event.NewSlidingWindowId;
-import com.vmlens.trace.agent.bootstrap.mode.AgentMode;
-import com.vmlens.trace.agent.bootstrap.mode.AgentModeInterleave;
+
 import com.vmlens.trace.agent.bootstrap.threadQueue.InternalPerThreadQueueFactory;
 import com.vmlens.trace.agent.bootstrap.threadQueue.QueueFacade;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
@@ -15,17 +14,8 @@ import java.util.Set;
 
 
 public class CallbackState {
-
-
-	public static volatile AgentMode mode = new AgentModeInterleave();
-	
 	public static final int WAIT_TIME = 1000;
 	public static final int SLIDING_WINDOW_MUST_BE_GREATER = 0;
-	
-	
-	
-	
-	
 	public static boolean startAtBeginning;
 	public static volatile int  slidingWindow = 0;
 	public static volatile boolean doNotcheckStackTraceBasedDoTrace = true;
@@ -165,8 +155,8 @@ public class CallbackState {
 		
 		if( callbackStatePerThread == null   )
 		{
-			callbackStatePerThread = new CallbackStatePerThread(doNotcheckStackTraceBasedDoTrace,maxStackTraceDepth,threadId,  queueFacade.createQueueCollection4ThreadLocal() , syncActionSameAsField4TraceCheck , mode );
-			callbackStatePerThreadRecovery.put(threadId, callbackStatePerThread);
+            callbackStatePerThread = new CallbackStatePerThread(doNotcheckStackTraceBasedDoTrace, maxStackTraceDepth, threadId, queueFacade.createQueueCollection4ThreadLocal(), syncActionSameAsField4TraceCheck);
+            callbackStatePerThreadRecovery.put(threadId, callbackStatePerThread);
 		}
 		
 		

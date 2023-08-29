@@ -1,12 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
-public class LeftBeforeRight implements Comparable<LeftBeforeRight>  {
+public class LeftBeforeRight implements Comparable<LeftBeforeRight> {
     public final Position left;
     public final Position right;
 
     public LeftBeforeRight(Position left, Position right) {
         this.left = left;
         this.right = right;
+    }
+
+    public static LeftBeforeRight lbr(Position left, Position right) {
+        return new LeftBeforeRight(left, right);
     }
 
     @Override

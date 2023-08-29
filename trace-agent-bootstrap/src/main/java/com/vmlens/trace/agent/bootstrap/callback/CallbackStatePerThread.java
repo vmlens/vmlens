@@ -7,7 +7,6 @@ import com.vmlens.trace.agent.bootstrap.OptionalByte;
 import com.vmlens.trace.agent.bootstrap.OptionalShort;
 import com.vmlens.trace.agent.bootstrap.event.ThreadNameEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.SendEvent;
-import com.vmlens.trace.agent.bootstrap.mode.AgentMode;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizedThreadLocal;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
 import com.vmlens.trace.agent.bootstrap.threadQueue.QueueCollection;
@@ -23,8 +22,6 @@ public class CallbackStatePerThread implements ThreadLocalWrapper {
     public static final String ANARSOFT_THREAD_NAME = "anarsoft";
 
     public final AnarsoftWeakHashMap<Object> arraysInThisThread = new AnarsoftWeakHashMap<Object>();
-    // ToDo remove
-    public final AgentMode mode;
 
     public final SendEvent sendEvent;
     private final boolean syncActionSameAsField4TraceCheck;
@@ -69,13 +66,12 @@ public class CallbackStatePerThread implements ThreadLocalWrapper {
     private int maxStackTraceDepth = CallbackState.maxStackTraceDepth;
 
     public CallbackStatePerThread(boolean doNotcheckStackTraceBasedDoTrace, int maxStackTraceDepth,
-                                  long inThreadId, QueueCollection inQueueCollection, boolean syncActionSameAsField4TraceCheck, AgentMode mode) {
-        this(doNotcheckStackTraceBasedDoTrace, maxStackTraceDepth, inThreadId, inQueueCollection, syncActionSameAsField4TraceCheck, mode, true);
+                                  long inThreadId, QueueCollection inQueueCollection, boolean syncActionSameAsField4TraceCheck) {
+        this(doNotcheckStackTraceBasedDoTrace, maxStackTraceDepth, inThreadId, inQueueCollection, syncActionSameAsField4TraceCheck, true);
     }
 
     public CallbackStatePerThread(boolean doNotcheckStackTraceBasedDoTrace, int maxStackTraceDepth,
-                                  long inThreadId, QueueCollection inQueueCollection, boolean syncActionSameAsField4TraceCheck, AgentMode mode, boolean doSend) {
-        this.mode = mode;
+                                  long inThreadId, QueueCollection inQueueCollection, boolean syncActionSameAsField4TraceCheck, boolean doSend) {
         this.syncActionSameAsField4TraceCheck = syncActionSameAsField4TraceCheck;
         String name = Thread.currentThread().getName();
         threadId = inThreadId;

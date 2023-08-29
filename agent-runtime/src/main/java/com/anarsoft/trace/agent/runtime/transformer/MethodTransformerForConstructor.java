@@ -10,6 +10,8 @@ import org.objectweb.asm.Opcodes;
 
 import java.util.Iterator;
 
+import static com.anarsoft.trace.agent.runtime.TransformConstants.CALLBACK_CLASS_SYNCHRONIZED_STATEMENT;
+
 /*
  * Für Constructoren wird aktuell nor monitor enter und exit getraced
  *
@@ -24,30 +26,22 @@ import java.util.Iterator;
 
 public class MethodTransformerForConstructor extends MethodTransformerTraceLineNumber implements Opcodes {
 
-	private final HasGeneratedMethods hasGeneratedMethods;
+    private final HasGeneratedMethods hasGeneratedMethods;
+    private int monitorPosition = 1;
+    private int monitorExitPosition = 0;
+    protected String className;
 
-	protected final String CALLBACK_CLASS_SYNCHRONIZED_STATEMENT;
-	// private final MethodDescriptionBuilder methodDescriptionBuilder;
-	private final boolean traceMethodCalls;
+    public MethodTransformerForConstructor(MethodVisitor mv, MethodDescriptionBuilder methodDescriptionBuilder,
+                                           HasGeneratedMethods hasGeneratedMethods) {
+        super(mv, methodDescriptionBuilder);
+        this.hasGeneratedMethods = hasGeneratedMethods;
+        this.className = className;
+    }
 
-	private int monitorPosition = 1;
-	private int monitorExitPosition =0;
-	protected String className;
-
-	public MethodTransformerForConstructor(MethodVisitor mv, int access, String desc, String name, String className,
-			String superClassName, int tryCatchBlockCount, MethodDescriptionBuilder methodDescriptionBuilder,
-			HasGeneratedMethods hasGeneratedMethods, TransformConstants callBackStrings, boolean traceMethodCalls) {
-		super(mv, methodDescriptionBuilder);
-		this.hasGeneratedMethods = hasGeneratedMethods;
-		CALLBACK_CLASS_SYNCHRONIZED_STATEMENT = callBackStrings.callback_class_synchronized_statement;
-		this.traceMethodCalls = traceMethodCalls;
-		this.className = className;
-	}
-
-	@Override
-	public final void visitCode() {
-		mv.visitCode();
-		onMethodEnter();
+    @Override
+    public final void visitCode() {
+        mv.visitCode();
+        onMethodEnter();
 
 	}
 
@@ -67,8 +61,8 @@ public class MethodTransformerForConstructor extends MethodTransformerTraceLineN
 		this.mv.visitLdcInsn(Integer.valueOf(getMethodId()));
 		this.mv.visitLdcInsn(Integer.valueOf(monitorPosition));
 		monitorPosition++;
-		this.mv.visitMethodInsn(INVOKESTATIC, this.CALLBACK_CLASS_SYNCHRONIZED_STATEMENT, "monitorEnter",
-				"(Ljava/lang/Object;II)V");
+        this.mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_SYNCHRONIZED_STATEMENT, "monitorEnter",
+                "(Ljava/lang/Object;II)V");
 	}
 
 	protected void onMonitorExit() {
@@ -76,8 +70,8 @@ public class MethodTransformerForConstructor extends MethodTransformerTraceLineN
 		this.mv.visitLdcInsn(Integer.valueOf(getMethodId()));
 		this.mv.visitLdcInsn(Integer.valueOf(monitorExitPosition));
 		monitorExitPosition++;
-		this.mv.visitMethodInsn(INVOKESTATIC, this.CALLBACK_CLASS_SYNCHRONIZED_STATEMENT, "monitorExit",
-				"(Ljava/lang/Object;II)V");
+        this.mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_SYNCHRONIZED_STATEMENT, "monitorExit",
+                "(Ljava/lang/Object;II)V");
 	}
 
 	@Override

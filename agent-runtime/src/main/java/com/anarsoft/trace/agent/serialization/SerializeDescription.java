@@ -14,9 +14,6 @@ public class SerializeDescription {
 	{
 		out.writeUTF(description.name);
 		out.writeUTF(description.source);
-		out.writeBoolean( description.isThreadSafe );
-		out.writeBoolean(  description.isStateless);
-		
 		out.writeInt(description.exceptArray.length );
 		
 		for(  String except : description.exceptArray )
@@ -27,26 +24,21 @@ public class SerializeDescription {
 		out.writeUTF(description.superClass);
 		out.writeInt(description.interfaces.length);
 		
-		for(String name : description.interfaces )
-		{
-			out.writeUTF(name);
-		}
-		
-	
-		
+		for (String name : description.interfaces) {
+            out.writeUTF(name);
+        }
+
 		out.writeInt(description.getMethodArray().length);
-		
-		for(  MethodDescription md : description.getMethodArray()  )
-		{
-			serialize(md,out);
-		}
+
+        for (MethodDescription md : description.getMethodArray()) {
+            serialize(md, out);
+        }
 		
 		out.writeInt(description.getSerializedFieldDescriptionArray().length);
-		
-		for(  SerializedFieldDescription md : description.getSerializedFieldDescriptionArray()  )
-		{
-			serialize(md,out);
-		}
+
+        for (SerializedFieldDescription md : description.getSerializedFieldDescriptionArray()) {
+            serialize(md, out);
+        }
 		
 		
 		out.flush();

@@ -87,28 +87,32 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
     public Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> iterator() {
         return threadList.iterator();
     }
-    Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> iteratorAt(int threadIndex) {
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ThreadIndexToElementList<?> that = (ThreadIndexToElementList<?>) o;
+
+        if (elementCount != that.elementCount) return false;
+        return threadList.equals(that.threadList);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = threadList.hashCode();
+        result = 31 * result + elementCount;
+        return result;
+    }
+
+    Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> iteratorStartingAt(int threadIndex) {
         return threadList.listIterator(threadIndex);
     }
 
-    private final class ThreadIndexIterator implements Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> {
-        private int currentIndex;
-        public ThreadIndexIterator(int currentIndex) {
-            this.currentIndex = currentIndex;
-        }
-        @Override
-        public boolean hasNext() {
-            return currentIndex < threadList.size();
-        }
-        @Override
-        public TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> next() {
-            TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> result = threadList.get(currentIndex);
-            currentIndex++;
-            return result;
-        }
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException("remove");
-        }
+    TLinkedList<TLinkableWrapper<ELEMENT>> listAt(int threadIndex) {
+        return threadList.get(threadIndex).element;
     }
+
+
 }

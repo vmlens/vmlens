@@ -25,7 +25,7 @@ public class FeatureTestBuilder {
     }
 
     public Position writeFirstVolatileField() {
-        return threadTestBuilder.volatileAccess(firstVolatileFieldId,MemoryAccessType.IS_WRITE);
+        return threadTestBuilder.volatileAccess(firstVolatileFieldId, MemoryAccessType.IS_WRITE);
     }
 
     public Position startThread(int index) {
@@ -34,5 +34,13 @@ public class FeatureTestBuilder {
 
     public Position joinThread(int index) {
         return threadTestBuilder.joinThread(index);
+    }
+
+    public void monitorEnter(int id) {
+        threadTestBuilder.monitorEnter(id);
+    }
+
+    public void monitorExit(int id) {
+        threadTestBuilder.monitorExit(id);
     }
 }

@@ -1,25 +1,29 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.monitor.MonitorEvent
-import com.anarsoft.race.detection.process.read._
-
 import java.nio.ByteBuffer
+import com.anarsoft.race.detection.process.read._;
+import com.anarsoft.race.detection.process.nonVolatileField.ApplyFieldEventVisitor
+import com.anarsoft.race.detection.process.syncAction.SyncAction
+import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
+import com.anarsoft.race.detection.process.monitor.MonitorEvent
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
 
 class MonitorDeSerializer extends ReadStrategy[MonitorEvent] {
-  val blockSize = 45 * 10000;
-
   def eventArraySize() = 45
 
+  val blockSize = 45 * 10000;
+
+
   def deSerializeJavaEvent(buffer: ByteBuffer) = {
-        
-       val id = buffer.get();
-       
-       
-       if( id == 22 )
-       {
-          MonitorEnterEventGen.applyFromJavaEvent( buffer   );
-       }
-       else
+
+    val id = buffer.get();
+
+
+    if (id == 22) {
+      MonitorEnterEventGen.applyFromJavaEvent(buffer);
+    }
+    else
        
        
        if( id == 23 )

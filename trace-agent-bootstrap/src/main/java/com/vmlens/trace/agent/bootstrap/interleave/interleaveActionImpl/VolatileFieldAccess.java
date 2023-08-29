@@ -23,19 +23,14 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
     public Object blockBuilderKey() {
         return new VolatileFieldAccessKey(fieldId);
     }
+
     @Override
-    public void blockBuilderStart(Position myPosition, BlockContainer result) {
-        DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<DependentBlockElement>(this,myPosition),
-                new ElementAndPosition<DependentBlockElement>(this,myPosition));
+    public void blockBuilderAdd(Position myPosition, BlockContainer result) {
+        DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<DependentBlockElement>(this, myPosition),
+                new ElementAndPosition<DependentBlockElement>(this, myPosition));
         result.addDependent(new VolatileFieldAccessKey(fieldId), dependentBlock);
     }
-    @Override
-    public void blockBuilderAdd(Position myPosition, ElementAndPosition<BlockBuilder> next, BlockContainer result) {
-        VolatileFieldAccess nextVolatileFieldAccess = (VolatileFieldAccess) next.element();
-        DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<DependentBlockElement>(nextVolatileFieldAccess,myPosition),
-                new ElementAndPosition<DependentBlockElement>(nextVolatileFieldAccess,myPosition));
-        result.addDependent(new VolatileFieldAccessKey(nextVolatileFieldAccess.fieldId), dependentBlock);
-    }
+
     @Override
     public boolean startsAlternatingOrder(DependentBlockElement other) {
         VolatileFieldAccess otherVolatileFieldAccess = (VolatileFieldAccess) other;

@@ -12,11 +12,11 @@ public class TransformerStrategyThread implements TransformerStrategy {
         ClassWriter cw = context.createClassWriter();
         ClassReader classReader = context.createClassReader();
 
-        ClassVisitorCreateDesc classVisitorCreateDesc = new ClassVisitorCreateDesc(context.name(), context.filterList());
+        ClassVisitorCreateDesc classVisitorCreateDesc = new ClassVisitorCreateDesc(context.name());
         classReader.accept(classVisitorCreateDesc, 0);
 
-        ClassVisitor classVisitor = new ClassTransformerTraceClassThread(cw, context.name(), context.filterList(),
-                context.callBackStrings(), classVisitorCreateDesc, context.writeClassDescription());
+        ClassVisitor classVisitor = new ClassTransformerTraceClassThread(cw, context.name(),
+                classVisitorCreateDesc, context.writeClassDescription());
 
         classReader.accept(classVisitor, 0);
         return cw.toByteArray();

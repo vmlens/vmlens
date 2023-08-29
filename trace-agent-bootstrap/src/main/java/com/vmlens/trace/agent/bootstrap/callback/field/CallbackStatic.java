@@ -18,20 +18,10 @@ public class CallbackStatic {
 	
 	
 	
-	 public static void  volatile_access(int fieldId, int methodId, boolean isWrite)
-	  {
-		 
+	 public static void volatile_access(int fieldId, int methodId, boolean isWrite) {
 		 CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-
-			if(callbackStatePerThread.mode.isInterleave())
-			{
-		 volatile_access_internal(  callbackStatePerThread ,  fieldId,  methodId,  isWrite);
-			}
-			else  if(callbackStatePerThread.mode.isState())
-			{
-				access_mode_state(callbackStatePerThread , fieldId, methodId,  isWrite) ;
-			}
-	  }
+		 volatile_access_internal(callbackStatePerThread, fieldId, methodId, isWrite);
+	 }
 	  
 	  
 	 private static void  volatile_access_internal( CallbackStatePerThread callbackStatePerThread , int fieldId, int methodId, boolean isWrite)
@@ -89,14 +79,7 @@ public class CallbackStatic {
 	  public static void non_volatile_access( int fieldId, int methodId, boolean isWrite) 
 	  {
 	    CallbackStatePerThread callbackStatePerThread = (CallbackStatePerThread)CallbackState.callbackStatePerThread.get();
-		if(callbackStatePerThread.mode.isInterleave())
-		{
 	    non_volatile_access_internal(callbackStatePerThread , fieldId, methodId,  isWrite) ;
-		}
-		else  if(callbackStatePerThread.mode.isState())
-		{
-			access_mode_state(callbackStatePerThread , fieldId, methodId,  isWrite) ;
-		}
 	  }
 	  
 	  

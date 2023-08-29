@@ -7,10 +7,16 @@ import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
 public class ElementAndPosition<ELEMENT> implements WithPosition, WithThreadIndex {
     private final ELEMENT element;
     private final Position position;
+
     public ElementAndPosition(ELEMENT element, Position position) {
         this.element = element;
         this.position = position;
     }
+
+    public static <ELEMENT> ElementAndPosition ep(ELEMENT element, Position position) {
+        return new ElementAndPosition(element, position);
+    }
+
     public ELEMENT element() {
         return element;
     }

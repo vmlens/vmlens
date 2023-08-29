@@ -73,15 +73,8 @@ public class ArrayAccessCallback {
 		}
 
 		synchronized (state) {
-		
 			int arrayClassId = ModeStateFieldAccess.class2Id.getArrayClassId(theArray.getClass());
-			
-			if (callbackStatePerThread.mode.isInterleave()) {
-				access_interleave(callbackStatePerThread, state, index, methodId, position, isWrite, arrayClassId);
-			} else if (callbackStatePerThread.mode.isState()) {
-				access_state(callbackStatePerThread, state, methodId, position, isWrite,arrayClassId);
-			}
-
+			access_interleave(callbackStatePerThread, state, index, methodId, position, isWrite, arrayClassId);
 		}
 	}
 

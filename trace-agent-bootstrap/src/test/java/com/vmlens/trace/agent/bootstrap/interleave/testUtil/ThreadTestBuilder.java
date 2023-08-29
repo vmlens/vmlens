@@ -26,8 +26,22 @@ public class ThreadTestBuilder {
     }
 
     public Position joinThread(int index) {
-        Position temp =  new Position(threadIndex,position);
-        resultTestBuilder.joinThread(index,temp);
+        Position temp = new Position(threadIndex, position);
+        resultTestBuilder.joinThread(index, temp);
+        position++;
+        return temp;
+    }
+
+    public Position monitorEnter(int id) {
+        Position temp = new Position(threadIndex, position);
+        resultTestBuilder.monitorEnter(id, temp);
+        position++;
+        return temp;
+    }
+
+    public Position monitorExit(int id) {
+        Position temp = new Position(threadIndex, position);
+        resultTestBuilder.monitorExit(id, temp);
         position++;
         return temp;
     }

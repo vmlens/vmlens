@@ -6,14 +6,12 @@ import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.transformer.template.Add2TemplateMethodDescList;
 import com.anarsoft.trace.agent.runtime.transformer.template.ApplyMethodTemplateBeforeAfter;
 import com.anarsoft.trace.agent.runtime.transformer.template.TemplateMethodDesc;
-import com.anarsoft.trace.agent.runtime.waitPoints.CallbackFactory;
-import com.anarsoft.trace.agent.runtime.waitPoints.FilterList;
-import com.anarsoft.trace.agent.runtime.waitPoints.MethodInClassIdentifier;
+import com.anarsoft.trace.agent.runtime.repository.CallbackFactory;
+import com.anarsoft.trace.agent.runtime.repository.MethodInClassIdentifier;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
-import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
-import com.vmlens.trace.agent.bootstrap.typeDesc.AtomicMethodWithCallback;
 import org.objectweb.asm.*;
 
 public class ClassTransformer extends ClassTransformerAbstract implements Opcodes {
@@ -96,41 +94,25 @@ public class ClassTransformer extends ClassTransformerAbstract implements Opcode
 			// null, null);
 			// fv.visitEnd();
 
-	
-			}
-		}
-		else if(overridePossibleCallbackMethods())
-		{
-			createOverride4NativeClasses();
-		}
 
-	}
-	
-	
-	
-	
-	private boolean containsNative()
-	{
-//		if( ! className.contains("$"))
-//		{
-//			return classVisitorCreateDesc.containsNative;
-//		}
-//		
-//		return ! isNotFinal(removeInnerClassName(className));
-		
-		return classVisitorCreateDesc.containsNative;
-		
-	}
-	
+            }
+        } else if (overridePossibleCallbackMethods()) {
+            createOverride4NativeClasses();
+        }
 
-	
-	private void createOverride4NativeClasses() {
-		MethodVisitor mv = cv.visitMethod(ACC_PUBLIC, "_pAnarsoft_field_access", "(III)V", null, null);
-		mv.visitCode();
-		Label l0 = new Label();
-		mv.visitLabel(l0);
-		mv.visitLineNumber(11, l0);
-		mv.visitVarInsn(ALOAD, 0);
+    }
+
+    private boolean containsNative() {
+        return classVisitorCreateDesc.containsNative;
+    }
+
+    private void createOverride4NativeClasses() {
+        MethodVisitor mv = cv.visitMethod(ACC_PUBLIC, "_pAnarsoft_field_access", "(III)V", null, null);
+        mv.visitCode();
+        Label l0 = new Label();
+        mv.visitLabel(l0);
+        mv.visitLineNumber(11, l0);
+        mv.visitVarInsn(ALOAD, 0);
 		mv.visitVarInsn(ILOAD, 1);
 		mv.visitVarInsn(ILOAD, 2);
 		mv.visitVarInsn(ILOAD, 3);
@@ -177,23 +159,10 @@ public class ClassTransformer extends ClassTransformerAbstract implements Opcode
 			return false;
 		}
 
-		if (!filterList.changeClass(className)) {
-			return false;
-		}
-		
-//		if(classVisitorCreateDesc.containsNative)
-//		{
-//			return false;
-//		}
-		
-		
-		if(classVisitorCreateDesc.potentialSingelton)
-		{
-			return false;
-		}
-		
-		
-		
+        if (classVisitorCreateDesc.potentialSingelton) {
+            return false;
+        }
+
 		return true;
 	}
 	
@@ -204,23 +173,10 @@ public class ClassTransformer extends ClassTransformerAbstract implements Opcode
 			return false;
 		}
 
-		if (!filterList.changeClass(className)) {
-			return false;
-		}
-		
-		if(classVisitorCreateDesc.potentialSingelton)
-		{
-			return true;
-		}
-		
-		
-//		if(classVisitorCreateDesc.containsNative)
-//		{
-//			return true;
-//		}
-		
-		
-		
+        if (classVisitorCreateDesc.potentialSingelton) {
+            return true;
+        }
+
 		return false;
 	}
 	
@@ -287,207 +243,91 @@ public class ClassTransformer extends ClassTransformerAbstract implements Opcode
 			mv.visitLineNumber(53, l1);
 			mv.visitInsn(RETURN);
 			Label l2 = new Label();
-			mv.visitLabel(l2);
-//			mv.visitLocalVariable("this",className, null, l0, l2, 0);
-//			mv.visitLocalVariable("fieldId", "I", null, l0, l2, 1);
-//			mv.visitLocalVariable("methodId", "I", null, l0, l2, 2);
-//			mv.visitLocalVariable("callbackId", "I", null, l0, l2, 3);
-			mv.visitMaxs(5, 4);
-			mv.visitEnd();
-		}
+            mv.visitLabel(l2);
+            mv.visitMaxs(5, 4);
+            mv.visitEnd();
+        }
 
-	}
+    }
 
-	private final boolean addInterface;
-	private final HasGeneratedMethods hasGeneratedMethods;
-	private final AtomicMethodWithCallback[] isAtomic;
+    private final boolean addInterface;
+    private final HasGeneratedMethods hasGeneratedMethods;
 
-	public ClassTransformer(ClassVisitor cv, String className, FilterList filterList,
-			TransformConstants callBackStrings,
+    public ClassTransformer(ClassVisitor cv, String className,
+                            ClassVisitorCreateDesc classVisitorCreateDesc, WriteClassDescription writeClassDescription,
+                            boolean addInterface, HasGeneratedMethods hasGeneratedMethods) {
 
-			ClassVisitorCreateDesc classVisitorCreateDesc, WriteClassDescription writeClassDescription,
-			boolean addInterface, HasGeneratedMethods hasGeneratedMethods) {
+        super(cv, className, classVisitorCreateDesc, writeClassDescription);
+        this.addInterface = addInterface;
+        this.hasGeneratedMethods = hasGeneratedMethods;
 
-		super(cv, className, filterList, callBackStrings, classVisitorCreateDesc, writeClassDescription);
+    }
 
-		// if( className.startsWith("org/apache/archiva/web/model") ||
-		// className.startsWith("org.apache.archiva.web.model") )
-		// {
-		// System.out.println("no interface for " + className);
-		// this.addInterface = false;
-		// }
-		// else
-		// {
-		// this.addInterface = addInterface;
-		// }
-		//
-
-		this.addInterface = addInterface;
-		this.hasGeneratedMethods = hasGeneratedMethods;
-
-		AtomicMethodWithCallback[] atomicFromAnnotation = classVisitorCreateDesc.createAtomic.create();
-
-		if (atomicFromAnnotation != null) {
-			this.isAtomic = atomicFromAnnotation;
-		} else {
-
-			this.isAtomic = filterList.classIsAtomic(className);
-			//this.isAtomic=null;
-		}
-
-	}
-
-	@Override
-	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+    @Override
+    public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 
 		if (!isClass) {
 			return super.visitMethod(access, name, desc, signature, exceptions);
 		}
 
 		MethodIdentifier methodIdentifier = new MethodIdentifier(name, desc);
-
 		MethodCounts methodCounts = classVisitorCreateDesc.getMethodCounts(methodIdentifier);
-
-		boolean traceCalls = classVisitorCreateDesc.traceMethodCalls(methodIdentifier);
-
-
 		int methodId = newMethodId();
 
 		MethodDescriptionBuilder methodDescriptionBuilder = new MethodDescriptionBuilder(name, methodId, desc, access,
 				classVisitorCreateDesc);
 		methodBuilderList.add(methodDescriptionBuilder);
 
-		
-		
-		
 		/*
 		 * clinit lesen und schreiben muss herausgefiltert werden.
 		 */
 
 		if (name.startsWith("<cl")) {
-
-	
-			
-			
 			return new MethodTransformerForClassloader(super.visitMethod(access, name, desc, signature, exceptions),
-					access, desc, name, className, superClassName, methodCounts.tryCatchBlockCount, traceCalls,
-					methodDescriptionBuilder, methodCounts.dottyProblematic,useExpandedFrames());
+                    access, desc, name, className, superClassName, methodCounts.tryCatchBlockCount,
+                    methodDescriptionBuilder, methodCounts.dottyProblematic, useExpandedFrames());
 
 		}
 
-		/**
-		 * Filter für Class getDeclaredMethods()
-		 * 
-		 */
-
 		// Konstruktoren werden gesondert behandelt
 		if (name.startsWith("<init")) {
-			/*
-			 * MethodTransformerForConstructor(MethodVisitor mv, int access, String desc,
-			 * String name, String className, String superClassName, int tryCatchBlockCount,
-			 * MethodDescriptionBuilder methodDescriptionBuilder, HasGeneratedMethods
-			 * hasGeneratedMethods, TransformConstants callBackStrings, boolean
-			 * traceMethodCalls)
-			 */
-			// tring className, HasGeneratedMethods hasGeneratedMethods, TransformConstants
-			// callBackStrings,MethodDescriptionBuilder methodDescriptionBuilder
-			return new MethodTransformerForConstructor(cv.visitMethod(access, name, desc, signature, exceptions),
-					access, desc, name, className, superClassName, methodCounts.tryCatchBlockCount, methodDescriptionBuilder,
-					hasGeneratedMethods, callBackStrings, traceCalls);
+            return new MethodTransformerForConstructor(cv.visitMethod(access, name, desc, signature, exceptions),
+                    methodDescriptionBuilder, hasGeneratedMethods);
 
 		}
 
 		MethodInClassIdentifier id = new MethodInClassIdentifier(className, name, desc);
-
-		IsAtomicCallback isAtomicCallback = null;
-
-		if (isAtomic != null) {
-
-		
-			
-			int atomicId = AtomicClassRepo.getId4AtomicClass(removeInnerClassName(className));
-
-			isAtomicCallback = new IsAtomicCallbackEmpty(atomicId);
-
-			for (AtomicMethodWithCallback atomicMethodWithCallback : isAtomic) {
-
-				if (atomicMethodWithCallback.getMethodName().equals(name)
-						&& atomicMethodWithCallback.getDesc().equals(desc)) {
-					isAtomicCallback = new IsAtomicCallbackFilled(atomicMethodWithCallback.getCallbackClassName(),
-							atomicId);
-				}
-
-			}
-
-		}
-		
-		
-		
-	
-		
 		MethodInClassIdentifier methodInClassIdentifier  = new MethodInClassIdentifier(className , name , desc);
 
 		TLinkedList<TemplateMethodDesc> methodSpecificTemplatelist = methodIdentifier2CallbackList.get( methodInClassIdentifier );
 		TLinkedList<ApplyMethodTemplateBeforeAfter> templatelistBeforeAfter = methodIdentifier2CreateBeforeAfter.get( methodInClassIdentifier );
-		
-		
-		
-		boolean beganThread = false; //beganThreadMethodSet.contains(methodInClassIdentifier);
-		
-		if( name.equals("run") && desc.equals("()V") && ( access  & Opcodes.ACC_STATIC ) != Opcodes.ACC_STATIC )
-		{
-			beganThread = true;
-		}
-		
-		
+
+        boolean beganThread = false;
+
+        if (name.equals("run") && desc.equals("()V") && (access & Opcodes.ACC_STATIC) != Opcodes.ACC_STATIC) {
+            beganThread = true;
+        }
 
 		if ((Opcodes.ACC_SYNCHRONIZED & access) == Opcodes.ACC_SYNCHRONIZED) {
 
 			if ((Opcodes.ACC_STATIC & access) == Opcodes.ACC_STATIC) {
 
-				return new MethodTransformer(cv.visitMethod(access, name, desc, signature, exceptions), access, name,
-						desc, className, superClassName, filterList, methodDescriptionBuilder, callBackStrings,
-						TraceSynchronization.STATIC, traceCalls, methodCounts.tryCatchBlockCount, hasGeneratedMethods,
-						new CallbackFactory(), isAtomicCallback,
-						classVisitorCreateDesc.isThreadSafe,methodSpecificTemplatelist , startThreadMethodSet.contains(methodInClassIdentifier), beganThread , methodCounts.dottyProblematic , useExpandedFrames() , templatelistBeforeAfter);
+                return new MethodTransformer(cv.visitMethod(access, name, desc, signature, exceptions), access, name,
+                        desc, className, superClassName, methodDescriptionBuilder,
+                        TraceSynchronization.STATIC, methodCounts.tryCatchBlockCount, hasGeneratedMethods,
+                        new CallbackFactory(), methodSpecificTemplatelist, startThreadMethodSet.contains(methodInClassIdentifier), beganThread, methodCounts.dottyProblematic, useExpandedFrames(), templatelistBeforeAfter);
 
-			} else {
-				return new MethodTransformer(cv.visitMethod(access, name, desc, signature, exceptions), access, name,
-						desc, className, superClassName, filterList, methodDescriptionBuilder, callBackStrings,
-						TraceSynchronization.NORMAL, traceCalls, methodCounts.tryCatchBlockCount, hasGeneratedMethods,
-						new CallbackFactory(), isAtomicCallback,
-						classVisitorCreateDesc.isThreadSafe,methodSpecificTemplatelist , startThreadMethodSet.contains(methodInClassIdentifier),beganThread , methodCounts.dottyProblematic , useExpandedFrames() , templatelistBeforeAfter);
+            } else {
+                return new MethodTransformer(cv.visitMethod(access, name, desc, signature, exceptions), access, name,
+                        desc, className, superClassName, methodDescriptionBuilder,
+                        TraceSynchronization.NORMAL, methodCounts.tryCatchBlockCount, hasGeneratedMethods,
+                        new CallbackFactory(), methodSpecificTemplatelist, startThreadMethodSet.contains(methodInClassIdentifier), beganThread, methodCounts.dottyProblematic, useExpandedFrames(), templatelistBeforeAfter);
+            }
+        }
 
-			}
-
-		}
-
-		return new MethodTransformer(cv.visitMethod(access, name, desc, signature, exceptions), access, name, desc,
-				className, superClassName, filterList, methodDescriptionBuilder, callBackStrings,
-				TraceSynchronization.NONE, traceCalls, methodCounts.tryCatchBlockCount, hasGeneratedMethods,
-				new CallbackFactory(), isAtomicCallback,
-				classVisitorCreateDesc.isThreadSafe,methodSpecificTemplatelist , startThreadMethodSet.contains(methodInClassIdentifier), beganThread , methodCounts.dottyProblematic , useExpandedFrames(),templatelistBeforeAfter);
-
-	}
-	
-	public static String removeInnerClassName(String in)
-	{
-		int index = in.indexOf('$');
-		
-		if( index > 0 )
-		{
-			return in.substring(0, index);
-			
-			
-			
-		}
-		else
-		{
-			return in;
-		}
-	}
-	
-	
-	
-
+        return new MethodTransformer(cv.visitMethod(access, name, desc, signature, exceptions), access, name, desc,
+                className, superClassName, methodDescriptionBuilder,
+                TraceSynchronization.NONE, methodCounts.tryCatchBlockCount, hasGeneratedMethods,
+                new CallbackFactory(), methodSpecificTemplatelist, startThreadMethodSet.contains(methodInClassIdentifier), beganThread, methodCounts.dottyProblematic, useExpandedFrames(), templatelistBeforeAfter);
+    }
 }

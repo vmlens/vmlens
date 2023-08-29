@@ -1,25 +1,29 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.nonVolatileField.ApplyFieldEventVisitor
-import com.anarsoft.race.detection.process.read._
-
 import java.nio.ByteBuffer
+import com.anarsoft.race.detection.process.read._;
+import com.anarsoft.race.detection.process.nonVolatileField.ApplyFieldEventVisitor
+import com.anarsoft.race.detection.process.syncAction.SyncAction
+import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
+import com.anarsoft.race.detection.process.monitor.MonitorEvent
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
 
 class FieldDeSerializer extends ReadStrategy[ApplyFieldEventVisitor] {
-  val blockSize = 59 * 10000;
-
   def eventArraySize() = 59
 
+  val blockSize = 59 * 10000;
+
+
   def deSerializeJavaEvent(buffer: ByteBuffer) = {
-        
-       val id = buffer.get();
-       
-       
-       if( id == 1 )
-       {
-          FieldAccessEventGen.applyFromJavaEvent( buffer   );
-       }
-       else
+
+    val id = buffer.get();
+
+
+    if (id == 1) {
+      FieldAccessEventGen.applyFromJavaEvent(buffer);
+    }
+    else
        
        
        if( id == 2 )
