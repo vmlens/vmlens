@@ -17,8 +17,9 @@ public class InterleaveActionWithPositionFactoryFactory implements ParallelizeAc
     public RunState nextState(ActionContext context, TestThreadState testThreadState) {
         return context.current();
     }
+
     @Override
-    public void addInterleaveAction(ActionContext context, TestThreadState testThreadState) {
+    public void addInterleaveActionAndOrEvent(ActionContext context, TestThreadState testThreadState) {
         context.after(new InterleaveActionWithPositionFactoryImpl(
                 interleaveAction, testThreadState.threadIndex()));
     }

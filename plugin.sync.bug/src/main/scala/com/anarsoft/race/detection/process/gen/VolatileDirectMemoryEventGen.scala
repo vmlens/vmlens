@@ -1,16 +1,9 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+import com.anarsoft.race.detection.process.directMemory._
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class VolatileDirectMemoryEventGen (
@@ -26,30 +19,38 @@ class VolatileDirectMemoryEventGen (
 ,  val objectHashCode  : Long
 
 
+  , var stackTraceOrdinal: Int
+  , val operation: Int
 
 
-,  var stackTraceOrdinal  : Int
-,  val operation  : Int
+  , val order: Int
 
 
-,  val order  : Int
+  , val loopId: Int
 
 
+  , val runId: Int
 
 
-)    extends DirectMemoryEvent  
+  , val runPosition: Int
+
+
+                                   )    extends DirectMemoryEvent
 {
 override def toString() = {
-  var text =  "VolatileDirectMemoryEventGen" 
-  text = text + ", threadId:" +  threadId 
-  text = text + ", programCounter:" +  programCounter 
-  text = text + ", methodCounter:" +  methodCounter 
-  text = text + ", objectHashCode:" +  objectHashCode 
-  text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
-  text = text + ", operation:" +  operation 
-  text = text + ", order:" +  order 
+  var text = "VolatileDirectMemoryEventGen"
+  text = text + ", threadId:" + threadId
+  text = text + ", programCounter:" + programCounter
+  text = text + ", methodCounter:" + methodCounter
+  text = text + ", objectHashCode:" + objectHashCode
+  text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
+  text = text + ", operation:" + operation
+  text = text + ", order:" + order
+  text = text + ", loopId:" + loopId
+  text = text + ", runId:" + runId
+  text = text + ", runPosition:" + runPosition
 
-text;
+  text;
 
 }
 
@@ -106,14 +107,20 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( order != that.order )
-             {
+             else if (order != that.order) {
+               false;
+             }
+             else if (loopId != that.loopId) {
+               false;
+             }
+             else if (runId != that.runId) {
+               false;
+             }
+             else if (runPosition != that.runPosition) {
                false;
              }
              else
-             true;
+               true;
         }
 
 
@@ -144,22 +151,34 @@ object  VolatileDirectMemoryEventGen
           , 
             
                 data.getInt()
-           
-          , 
-            
-                data.getLong()
-           
-          , 
-            
-                0
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
+
+       ,
+
+       data.getLong()
+
+       ,
+
+       0
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
            
      
      
@@ -176,19 +195,20 @@ object  VolatileDirectMemoryEventGen
    
      def applyFromScalaEvent(data : ByteBuffer) =
    {
-     val result = new VolatileDirectMemoryEventGen (
-     
-            data.getLong()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getLong()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-     
-     
-     
-     
+     val result = new VolatileDirectMemoryEventGen(
+
+       data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+
+
      );
      
      

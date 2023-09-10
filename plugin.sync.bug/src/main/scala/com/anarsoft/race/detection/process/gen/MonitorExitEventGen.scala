@@ -1,16 +1,9 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+import com.anarsoft.race.detection.process.monitor._
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class MonitorExitEventGen(
@@ -32,26 +25,35 @@ class MonitorExitEventGen(
                            , val methodId: Int
 
 
-,  val position  : Int
+                           , val position: Int
 
 
+                           , val loopId: Int
 
 
-)    extends MonitorExitEvent  
-{
-override def toString() = {
-  var text =  "MonitorExitEventGen" 
-  text = text + ", threadId:" +  threadId 
-  text = text + ", programCounter:" +  programCounter 
-  text = text + ", order:" +  order 
-  text = text + ", monitorId:" +  monitorId 
-  text = text + ", methodCounter:" +  methodCounter 
-  text = text + ", methodId:" +  methodId 
-  text = text + ", position:" +  position 
+                           , val runId: Int
 
-text;
 
-}
+                           , val runPosition: Int
+
+
+                         ) extends MonitorExitEventInterleave {
+  override def toString() = {
+    var text = "MonitorExitEventGen"
+    text = text + ", threadId:" + threadId
+    text = text + ", programCounter:" + programCounter
+    text = text + ", order:" + order
+    text = text + ", monitorId:" + monitorId
+    text = text + ", methodCounter:" + methodCounter
+    text = text + ", methodId:" + methodId
+    text = text + ", position:" + position
+    text = text + ", loopId:" + loopId
+    text = text + ", runId:" + runId
+    text = text + ", runPosition:" + runPosition
+
+    text;
+
+  }
 
 
 
@@ -106,14 +108,20 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( position != that.position )
-             {
+             else if (position != that.position) {
+               false;
+             }
+             else if (loopId != that.loopId) {
+               false;
+             }
+             else if (runId != that.runId) {
+               false;
+             }
+             else if (runPosition != that.runPosition) {
                false;
              }
              else
-             true;
+               true;
         }
 
 
@@ -149,22 +157,31 @@ object  MonitorExitEventGen
             
                 data.getInt()
            
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
-     
-     
-     
-     
+          ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+
      );
      
      
@@ -176,19 +193,20 @@ object  MonitorExitEventGen
    
      def applyFromScalaEvent(data : ByteBuffer) =
    {
-     val result = new MonitorExitEventGen (
-     
-            data.getLong()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-     
-     
-     
-     
+     val result = new MonitorExitEventGen(
+
+       data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+
+
      );
      
      

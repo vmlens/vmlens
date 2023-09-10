@@ -7,7 +7,6 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.callback.VolatileArrayAccessCallback;
 import com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 public class CallbackObject {
 
@@ -16,10 +15,14 @@ public class CallbackObject {
 	private static final UpdateObjectState updateBeforeObjectState = new UpdateObjectState(200, 200) {
         public void sendEventVolatile(CallbackStatePerThread callbackStatePerThread, int order,
                                       int fieldId, int methodId, int operation, long objectId) {
+          /*
+          Fixme Callback
             callbackStatePerThread.sendEvent.writeWithoutInterleaveVolatileAccessEventGen(
                     CallbackState.traceSyncStatements(callbackStatePerThread), callbackStatePerThread.programCount,
                     order, fieldId, callbackStatePerThread.methodCount, methodId, operation, objectId);
+        */
         }
+
 
         @Override
         public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
@@ -168,16 +171,17 @@ public class CallbackObject {
 		}
 
 		if (orig.getClass().isArray()) {
-			VolatileArrayAccessCallback.access(offset, orig, methodId, operation);
-
-            ParallelizeFacade.afterVolatileArrayAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(),
-                    offset, operation);
-		} else {
-			OffsetAndClassName offsetAndClassName = new OffsetAndClassName(offset, orig.getClass().getName());
-			int fieldId = Offset2FieldId.getFieldId(orig, unsafe, offsetAndClassName);
+            VolatileArrayAccessCallback.access(offset, orig, methodId, operation);
+// Fixme Callback
+//            ParallelizeFacade.afterVolatileArrayAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(),
+//                    offset, operation);
+        } else {
+            OffsetAndClassName offsetAndClassName = new OffsetAndClassName(offset, orig.getClass().getName());
+            int fieldId = Offset2FieldId.getFieldId(orig, unsafe, offsetAndClassName);
             volatile_access(orig, fieldId, methodId, operation);
-            ParallelizeFacade.afterFieldAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(), fieldId, operation);
-		}
+            // Fixme Callback
+            //           ParallelizeFacade.afterFieldAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(), fieldId, operation);
+        }
 
 	}
 

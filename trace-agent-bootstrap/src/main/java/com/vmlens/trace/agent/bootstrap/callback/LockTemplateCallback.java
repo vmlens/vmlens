@@ -1,8 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeLock;
-
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
@@ -386,7 +383,8 @@ public class LockTemplateCallback {
 
     protected static void access(Object theSync, int methodId, boolean isLockEnter, boolean isShared) {
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        ParallelizeFacade.afterLockOperation(callbackStatePerThread, new ParallelizeLock(isLockEnter, isShared, System.identityHashCode(theSync)));
+        // Fixme Callback
+        //  ParallelizeFacade.afterLockOperation(callbackStatePerThread, new ParallelizeLock(isLockEnter, isShared, System.identityHashCode(theSync)));
         callbackStatePerThread.programCount++;
     }
 }

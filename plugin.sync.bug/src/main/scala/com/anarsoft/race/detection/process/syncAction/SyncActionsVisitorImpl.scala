@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.process.syncAction
 
-import com.anarsoft.race.detection.process.gen._;
 import com.anarsoft.race.detection.model.WithStatementPositionImpl
+import com.anarsoft.race.detection.process.gen._
 
 
 class SyncActionsVisitorImpl(val  context : ContextProcessSyncAction) extends SyncActionsVisitor {
@@ -32,76 +32,8 @@ class SyncActionsVisitorImpl(val  context : ContextProcessSyncAction) extends Sy
              
            }
   }
-  
-  
-  
-  
-  def visit( in :  VolatileAccessEventStaticGenInterleave)
-  {
-        in.slidingWindowId = currentReadSlidingWindowId;
-    
-    context.volatileAccessEventStatic.add( in );
-    
-    if( context.interleaveEventList != null )
-    {
-      context.interleaveEventList.add(in);
-    }
-    
-  }
-       
-
-       
-def visit( in :  VolatileAccessEventGenInterleave)
-{
-        in.slidingWindowId = currentReadSlidingWindowId;
-       
-       context.volatileAccessEventList.add( in );
-       
-           if( context.interleaveEventList != null )
-    {
-      context.interleaveEventList.add(in);
-    }
-}
-       
-
-       
-def visit( in :  LockEnterEventGenInterleave)
-{
-   
-       context.lockEventList.add(in);
-
-      if( context.interleaveEventList != null )
-    {
-      context.interleaveEventList.add(in);
-    }
-  
-}
 
 
-       
-def visit( in :  LockExitEventGenInterleave)
-{
-  
-       context.lockEventList.add(in);
-  
-      if( context.interleaveEventList != null )
-    {
-      context.interleaveEventList.add(in);
-    }
-  
-}
-  
-def visit( in :  VolatileArrayAccessEventGenInterleave)
-{
-   context.volatileAccessArrayEventList.add(in);
-  
-    if( context.interleaveEventList != null )
-    {
-      context.interleaveEventList.add(in);
-    }
-}
-  
-  
   def visit( in :  VolatileAccessEventStaticGen)
   {
     
@@ -150,34 +82,14 @@ def visit( in :  VolatileArrayAccessEventGenInterleave)
   {
      context.lockEventList.add(in);
   }
-    
-  
-def visit( in :  StampedLockEnterEventGenInterleave)
-{
-     context.lockEventList.add(in);
 
-      if( context.interleaveEventList != null )
-    {
-      context.interleaveEventList.add(in);
-    }
-  
-}
        
 def visit( in :  StampedLockExitEventGen)
 {
   
    context.lockEventList.add(in);
 }
-def visit( in :  StampedLockExitEventGenInterleave)
-{
-     context.lockEventList.add(in);
 
-      if( context.interleaveEventList != null )
-    {
-      context.interleaveEventList.add(in);
-    }
-  
-}
        
 
    def visit( in :  ThreadBeginEventGen)

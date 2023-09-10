@@ -21,7 +21,7 @@ public class ThreadStart implements ParallelizeAction  {
     }
 
     @Override
-    public void addInterleaveAction(ActionContext context, TestThreadState testThreadState) {
+    public void addInterleaveActionAndOrEvent(ActionContext context, TestThreadState testThreadState) {
         // Nothing to do. After gets called inside RunStateNewThreadStarted
     }
 

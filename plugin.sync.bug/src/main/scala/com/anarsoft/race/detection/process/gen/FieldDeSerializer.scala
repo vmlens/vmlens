@@ -1,13 +1,9 @@
 package com.anarsoft.race.detection.process.gen;
 
-import java.nio.ByteBuffer
-import com.anarsoft.race.detection.process.read._;
 import com.anarsoft.race.detection.process.nonVolatileField.ApplyFieldEventVisitor
-import com.anarsoft.race.detection.process.syncAction.SyncAction
-import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
-import com.anarsoft.race.detection.process.monitor.MonitorEvent
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.read._
+
+import java.nio.ByteBuffer
 
 class FieldDeSerializer extends ReadStrategy[ApplyFieldEventVisitor] {
   def eventArraySize() = 59
@@ -23,41 +19,15 @@ class FieldDeSerializer extends ReadStrategy[ApplyFieldEventVisitor] {
     if (id == 1) {
       FieldAccessEventGen.applyFromJavaEvent(buffer);
     }
-    else
-       
-       
-       if( id == 2 )
-       {
-          FieldAccessEventGenInterleave.applyFromJavaEvent( buffer   );
-       }
-       else
-       
-       
-       if( id == 3 )
-       {
-          FieldAccessEventStaticGen.applyFromJavaEvent( buffer   );
-       }
-       else
-       
-       
-       if( id == 4 )
-       {
-          FieldAccessEventStaticGenInterleave.applyFromJavaEvent( buffer   );
-       }
-       else
-       
-       
-       if( id == 5 )
-       {
-          ArrayAccessEventGen.applyFromJavaEvent( buffer   );
-       }
-       else
-       
-       
-       if( id == 6 )
-       {
-          ArrayAccessEventGenInterleave.applyFromJavaEvent( buffer   );
-       }
+    else if (id == 2) {
+      FieldAccessEventGenInterleave.applyFromJavaEvent(buffer);
+    }
+    else if (id == 4) {
+      FieldAccessEventStaticGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 5) {
+      ArrayAccessEventGen.applyFromJavaEvent(buffer);
+    }
        else
        
        {
@@ -88,16 +58,8 @@ class FieldDeSerializer extends ReadStrategy[ApplyFieldEventVisitor] {
        else
        
        
-       if( id == 3 )
-       {
-          FieldAccessEventStaticGen.applyFromScalaEvent( buffer   );
-       }
-       else
-       
-       
-       if( id == 4 )
-       {
-          FieldAccessEventStaticGenInterleave.applyFromScalaEvent( buffer   );
+       if( id == 4 ) {
+         FieldAccessEventStaticGen.applyFromScalaEvent(buffer);
        }
        else
        
@@ -105,13 +67,6 @@ class FieldDeSerializer extends ReadStrategy[ApplyFieldEventVisitor] {
        if( id == 5 )
        {
           ArrayAccessEventGen.applyFromScalaEvent( buffer   );
-       }
-       else
-       
-       
-       if( id == 6 )
-       {
-          ArrayAccessEventGenInterleave.applyFromScalaEvent( buffer   );
        }
        else
        

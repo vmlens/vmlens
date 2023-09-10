@@ -55,22 +55,21 @@ public class CallbackStatic {
 		  
 		  synchronized(current)
 		  {
-			 
-		  
-			  
-	        callbackStatePerThread.programCount += 1;
-	        int order = current.order;
-	        current.order = order + 1;
-	        
-	        callbackStatePerThread.programCount += 1;
-	        
-	        callbackStatePerThread.sendEvent.writeVolatileAccessEventStaticGen( slidingWindowId ,  
-	        		callbackStatePerThread.programCount, order, fieldId, callbackStatePerThread.methodCount, methodId, isWrite);
-	        
-	                
-	        callbackStatePerThread.programCount += 1;
-	        
-	      }
+
+
+              callbackStatePerThread.programCount += 1;
+              int order = current.order;
+              current.order = order + 1;
+
+              callbackStatePerThread.programCount += 1;
+// Fixme Callback
+//	        callbackStatePerThread.sendEvent.writeVolatileAccessEventStaticGen( slidingWindowId ,
+//	        		callbackStatePerThread.programCount, order, fieldId, callbackStatePerThread.methodCount, methodId, isWrite);
+
+
+              callbackStatePerThread.programCount += 1;
+
+          }
 	 }
 	 
 	 
@@ -123,13 +122,12 @@ public class CallbackStatic {
 	  
 	  
 	  
-	  private static void writeEvent(CallbackStatePerThread callbackStatePerThread, long threadId,int slidingWindowId ,  int fieldId, int methodId, boolean isWrite, int programCounter, int methodCounter)
-	  {
-	    
-		  callbackStatePerThread.sendEvent.writeFieldAccessEventStaticGen(slidingWindowId , programCounter, fieldId, methodCounter,  MemoryAccessType.getOperation(isWrite), methodId , callbackStatePerThread.isStackTraceIncomplete() ); 
-	    
-	    
-	  }
+	  private static void writeEvent(CallbackStatePerThread callbackStatePerThread, long threadId,int slidingWindowId ,  int fieldId, int methodId, boolean isWrite, int programCounter, int methodCounter) {
+// Fixme Callback
+//		  callbackStatePerThread.sendEvent.writeFieldAccessEventStaticGen(slidingWindowId , programCounter, fieldId, methodCounter,  MemoryAccessType.getOperation(isWrite), methodId , callbackStatePerThread.isStackTraceIncomplete() );
+
+
+      }
 	
 	
 	private static void access_mode_state(final  CallbackStatePerThread callbackStatePerThread , final int fieldId, int methodId, boolean isWrite)

@@ -13,7 +13,8 @@ public class ExecutorCallback {
 
 
     public static void threadStartMethodEnter(Object runnable) {
-        ParallelizeFacade.beforeExecutorStart(CallbackState.callbackStatePerThread.get(), runnable);
+        // Fixme Callback
+        // ParallelizeFacade.beforeExecutorStart(CallbackState.callbackStatePerThread.get(), runnable);
 
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
@@ -37,7 +38,8 @@ public class ExecutorCallback {
 
 
     public static void forkJoinTaskForkEnter(ForkJoinTask task) {
-        ParallelizeFacade.beforeExecutorStart(CallbackState.callbackStatePerThread.get(), task);
+        // Fixme Callback
+        //ParallelizeFacade.beforeExecutorStart(CallbackState.callbackStatePerThread.get(), task);
 
         CallbackState.callbackStatePerThread.get().inThreadStart++;
     }
@@ -77,8 +79,8 @@ public class ExecutorCallback {
 
             CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
-
-            ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
+// Fixme Callback
+            // ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
 
         }
     }
@@ -94,8 +96,8 @@ public class ExecutorCallback {
             return;
         }
 
-
-        ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
+        // Fixme Callback
+        // ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
         callbackStatePerThread.doNotInterleave = callbackStatePerThread.tempDoNotInterleave;
     }
 
@@ -154,7 +156,8 @@ public class ExecutorCallback {
                 int atomicId = AtomicClassRepo.getId4AtomicClass("java/util/concurrent/FutureTask");
                 MethodCallback.atomicMethodExitWithCallback(atomicId, methodId);
             }
-            ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
+            // Fixme Callback
+            //ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
             callbackStatePerThread.doNotInterleave = temp;
         }
     }
@@ -166,7 +169,8 @@ public class ExecutorCallback {
         } finally {
             if (future instanceof FutureTask) {
                 CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-                ParallelizeFacade.afterFutureGet(callbackStatePerThread, future);
+                // Fixme Callback
+                // ParallelizeFacade.afterFutureGet(callbackStatePerThread, future);
             }
         }
     }

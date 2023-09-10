@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.callback.HashMapForDirectMemoryAccess;
 import com.vmlens.trace.agent.bootstrap.callback.HashMapForDirectMemoryAccess.ElementFactory;
@@ -14,7 +13,6 @@ public class CallbackDirectMemoryAccess {
 
 				@Override
 				public ObjectIdAndOrder create() {
-					
 					return new ObjectIdAndOrder();
 				}
 		
@@ -27,13 +25,12 @@ public class CallbackDirectMemoryAccess {
 	public static void volatile_access(long address,CallbackStatePerThread callbackStatePerThread , int operation,  int     slidingWindowId )
 	{
 		ObjectIdAndOrder current = volatileDirectAccess.getOrCreate(address);
-		
-		synchronized(current)
-		{
-			
-		
-		
-		 int order = current.order;
+
+		synchronized (current) {
+			/*
+			Fixme Callback
+
+			int order = current.order;
 	      current.order += 1;
 	      
 	      callbackStatePerThread.programCount += 1;
@@ -45,13 +42,8 @@ public class CallbackDirectMemoryAccess {
 	    		, current.getId()
 	    		,       operation , order
 	    		);
-	      
-		
-	      
-  
-	      
 	      callbackStatePerThread.programCount += 1;
-	      
+	      */
 		}
 	      
 	      

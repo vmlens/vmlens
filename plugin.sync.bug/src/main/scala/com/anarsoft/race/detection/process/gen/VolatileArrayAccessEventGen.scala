@@ -1,69 +1,71 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+import com.anarsoft.race.detection.process.volatileField._
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class VolatileArrayAccessEventGen (
-  val threadId  : Long
+                                    val threadId  : Long
 
 
-,  val programCounter  : Int
+                                    , val programCounter  : Int
 
 
-,  val order  : Int
+                                    , val order  : Int
 
 
-,  val index  : Long
+                                    , val index  : Long
 
 
-,  val methodCounter  : Int
-
-
-
-
-,  var stackTraceOrdinal  : Int
-
-
-,  var slidingWindowId  : Int
-,  val methodId  : Int
-
-
-,  val operation  : Int
-
-
-,  val objectHashCode  : Long
+                                    , val methodCounter  : Int
 
 
 
 
-)    extends VolatileArrayAccessEvent  
-{
-override def toString() = {
-  var text =  "VolatileArrayAccessEventGen" 
-  text = text + ", threadId:" +  threadId 
-  text = text + ", programCounter:" +  programCounter 
-  text = text + ", order:" +  order 
-  text = text + ", index:" +  index 
-  text = text + ", methodCounter:" +  methodCounter 
-  text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
-  text = text + ", slidingWindowId:" +  slidingWindowId 
-  text = text + ", methodId:" +  methodId 
-  text = text + ", operation:" +  operation 
-  text = text + ", objectHashCode:" +  objectHashCode 
+                                    , var stackTraceOrdinal  : Int
 
-text;
 
-}
+                                    , var slidingWindowId: Int
+                                    , val methodId: Int
+
+
+                                    , val operation: Int
+
+
+                                    , val objectHashCode: Long
+
+
+                                    , val loopId: Int
+
+
+                                    , val runId: Int
+
+
+                                    , val runPosition: Int
+
+
+                                  ) extends VolatileArrayAccessEventInterleave {
+  override def toString() = {
+    var text = "VolatileArrayAccessEventGen"
+    text = text + ", threadId:" + threadId
+    text = text + ", programCounter:" + programCounter
+    text = text + ", order:" + order
+    text = text + ", index:" + index
+    text = text + ", methodCounter:" + methodCounter
+    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
+    text = text + ", slidingWindowId:" + slidingWindowId
+    text = text + ", methodId:" + methodId
+    text = text + ", operation:" + operation
+    text = text + ", objectHashCode:" + objectHashCode
+    text = text + ", loopId:" + loopId
+    text = text + ", runId:" + runId
+    text = text + ", runPosition:" + runPosition
+
+    text;
+
+  }
 
 
 
@@ -136,14 +138,20 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( objectHashCode != that.objectHashCode )
-             {
+             else if (objectHashCode != that.objectHashCode) {
+               false;
+             }
+             else if (loopId != that.loopId) {
+               false;
+             }
+             else if (runId != that.runId) {
+               false;
+             }
+             else if (runPosition != that.runPosition) {
                false;
              }
              else
-             true;
+               true;
         }
 
 
@@ -191,22 +199,31 @@ object  VolatileArrayAccessEventGen
             
                 0
            
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getLong()
-           
-     
-     
-     
-     
+          ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getLong()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+
      );
      
      
@@ -219,21 +236,22 @@ object  VolatileArrayAccessEventGen
      def applyFromScalaEvent(data : ByteBuffer) =
    {
      val result = new VolatileArrayAccessEventGen (
-     
-            data.getLong()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getLong()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getLong()
-     
-     
-     
-     
+
+       data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+
+
      );
      
      

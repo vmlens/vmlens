@@ -1,7 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.callback.state.MonitorIdAndOrder;
-
 public class VolatileArrayAccessCallback {
 
 	private static final AnarsoftWeakHashMap<VolatileArrayIdAndOrder> objectToOrder = new AnarsoftWeakHashMap<VolatileArrayIdAndOrder>();
@@ -32,24 +30,25 @@ public class VolatileArrayAccessCallback {
 				
 				order = monitorIdAndOrder.order;
 				id = monitorIdAndOrder.id;
-				
-				
-				monitorIdAndOrder.order++;
-				
-			}
-			
-			callbackStatePerThread.programCount++;
 
-			
-			int currentProgramCounter = callbackStatePerThread.programCount;
-			
-			callbackStatePerThread.sendEvent.writeVolatileArrayAccessEventGen(slidingWindowId, currentProgramCounter, order, index, callbackStatePerThread.methodCount, methodId, operation, id);
-			
 
-			callbackStatePerThread.programCount++;
-			
+                monitorIdAndOrder.order++;
 
-		}
+            }
+
+            callbackStatePerThread.programCount++;
+
+
+            int currentProgramCounter = callbackStatePerThread.programCount;
+
+            // Fixme Callback
+            //	callbackStatePerThread.sendEvent.writeVolatileArrayAccessEventGen(slidingWindowId, currentProgramCounter, order, index, callbackStatePerThread.methodCount, methodId, operation, id);
+
+
+            callbackStatePerThread.programCount++;
+
+
+        }
 		
 		
 		
@@ -80,24 +79,25 @@ public class VolatileArrayAccessCallback {
 				
 				order = monitorIdAndOrder.order;
 				id = monitorIdAndOrder.id;
-				
-				
-				monitorIdAndOrder.order++;
-				
-			}
-			
-			callbackStatePerThread.programCount++;
 
-			
-			int currentProgramCounter = callbackStatePerThread.programCount;
-			
-			callbackStatePerThread.sendEvent.writeWithoutInterleaveVolatileArrayAccessEventGen(slidingWindowId, currentProgramCounter, order, index, callbackStatePerThread.methodCount, methodId, operation, id);
-			
 
-			callbackStatePerThread.programCount++;
-			
+                monitorIdAndOrder.order++;
 
-		}
+            }
+
+            callbackStatePerThread.programCount++;
+
+
+            int currentProgramCounter = callbackStatePerThread.programCount;
+
+            // Fixme Callback
+            //	callbackStatePerThread.sendEvent.writeWithoutInterleaveVolatileArrayAccessEventGen(slidingWindowId, currentProgramCounter, order, index, callbackStatePerThread.methodCount, methodId, operation, id);
+
+
+            callbackStatePerThread.programCount++;
+
+
+        }
 		
 		
 		

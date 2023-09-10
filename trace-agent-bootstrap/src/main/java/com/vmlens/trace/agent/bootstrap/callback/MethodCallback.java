@@ -7,14 +7,6 @@ public class MethodCallback {
 
     private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl();
 
-    public static void methodEnterOwner(int methodId) {
-        methodCallbackImpl.methodEnterOwner(methodId);
-    }
-
-    public static void methodExitOwner(int methodId) {
-        methodCallbackImpl.methodExitOwner(methodId);
-    }
-
     public static void atomicMethodEnterWithCallback(int atomicId, int methodId) {
         methodCallbackImpl.atomicMethodEnterWithCallback(atomicId, methodId);
     }
@@ -46,16 +38,6 @@ public class MethodCallback {
     public static void methodExit(int methodId) {
         methodCallbackImpl.methodExit(methodId);
     }
-
-    public static void doNotInterleaveEnter() {
-        methodCallbackImpl.doNotInterleaveEnter();
-    }
-
-
-    public static void doNotInterleaveExit() {
-        methodCallbackImpl.doNotInterleaveExit();
-    }
-
 
     public static void taskMethodEnter() {
         methodCallbackImpl.taskMethodEnter();

@@ -6,7 +6,6 @@ import com.vmlens.trace.agent.bootstrap.callback.AnarsoftWeakHashMap;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.callback.state.MonitorIdAndOrder;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import gnu.trove.map.hash.TIntIntHashMap;
 
 public class SynchronizedStatementCallbackImpl {
@@ -125,11 +124,12 @@ public class SynchronizedStatementCallbackImpl {
                     objectToOrder.put(objectKey, current);
                 }
                 callbackStatePerThread.programCount++;
-                callbackStatePerThread.sendEvent.writeMonitorExitEventGen(slidingWindowId,
-                        callbackStatePerThread.programCount, order, current.id, callbackStatePerThread.methodCount,
-                        methodId, position);
-                callbackStatePerThread.programCount++;
-                ParallelizeFacade.beforeMonitorExit(callbackStatePerThread, current.id, methodId, position);
+                // Fixme Callback
+//                callbackStatePerThread.sendEvent.writeMonitorExitEventGen(slidingWindowId,
+//                        callbackStatePerThread.programCount, order, current.id, callbackStatePerThread.methodCount,
+//                        methodId, position);
+//                callbackStatePerThread.programCount++;
+//                ParallelizeFacade.beforeMonitorExit(callbackStatePerThread, current.id, methodId, position);
             }
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -164,11 +164,11 @@ public class SynchronizedStatementCallbackImpl {
             current.order = current.order + 1;
             objectToOrder.put(objectKey, current);
         }
-
-        callbackStatePerThread.sendEvent.writeMonitorEnterEventGen(slidingWindowId, currentProgramCounter, order,
-                current.id, callbackStatePerThread.methodCount, methodId, position);
-        callbackStatePerThread.programCount++;
-        ParallelizeFacade.onMonitorEnter(callbackStatePerThread, current.id);
+// Fixme Callback
+//        callbackStatePerThread.sendEvent.writeMonitorEnterEventGen(slidingWindowId, currentProgramCounter, order,
+//                current.id, callbackStatePerThread.methodCount, methodId, position);
+//        callbackStatePerThread.programCount++;
+//        ParallelizeFacade.onMonitorEnter(callbackStatePerThread, current.id);
     }
 
     private void monitorEnterStaticInternal(int id, int methodId, CallbackStatePerThread callbackStatePerThread,
@@ -185,15 +185,17 @@ public class SynchronizedStatementCallbackImpl {
         if (id * -1 > 0) {
             System.out.println("wrong id " + id);
         }
-        callbackStatePerThread.sendEvent.writeMonitorEnterEventGen(slidingWindowId, currentProgramCounter, order,
-                id * -1, callbackStatePerThread.methodCount, methodId, position);
-        callbackStatePerThread.programCount++;
-        ParallelizeFacade.onMonitorEnter(callbackStatePerThread, id * -1);
+        // Fixme Callback
+//        callbackStatePerThread.sendEvent.writeMonitorEnterEventGen(slidingWindowId, currentProgramCounter, order,
+//                id * -1, callbackStatePerThread.methodCount, methodId, position);
+//        callbackStatePerThread.programCount++;
+//        ParallelizeFacade.onMonitorEnter(callbackStatePerThread, id * -1);
     }
 
     private void monitorExitStatic_internal(int id, int methodId, CallbackStatePerThread callbackStatePerThread,
                                             int slidingWindowId) {
-        ParallelizeFacade.beforeMonitorExitStatic(callbackStatePerThread, slidingWindowId, methodId);
+        // Fixme Callback
+//        ParallelizeFacade.beforeMonitorExitStatic(callbackStatePerThread, slidingWindowId, methodId);
         int order = 0;
         synchronized (staticIdToOrder) {
             if (staticIdToOrder.contains(id)) {
@@ -205,8 +207,9 @@ public class SynchronizedStatementCallbackImpl {
             System.out.println("wrong id " + id);
         }
         callbackStatePerThread.programCount++;
-        callbackStatePerThread.sendEvent.writeMonitorExitEventGen(slidingWindowId, callbackStatePerThread.programCount,
-                order, id * -1, callbackStatePerThread.methodCount, methodId, 0);
+        // Fixme Callback
+//        callbackStatePerThread.sendEvent.writeMonitorExitEventGen(slidingWindowId, callbackStatePerThread.programCount,
+//                order, id * -1, callbackStatePerThread.methodCount, methodId, 0);
         callbackStatePerThread.programCount++;
     }
 }

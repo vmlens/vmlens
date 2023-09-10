@@ -1,65 +1,67 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+import com.anarsoft.race.detection.process.volatileField._
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class VolatileAccessEventStaticGen (
-  val threadId  : Long
+                                     val threadId  : Long
 
 
-,  val programCounter  : Int
+                                     , val programCounter  : Int
 
 
-,  val order  : Int
+                                     , val order  : Int
 
 
-,  val fieldId  : Int
+                                     , val fieldId  : Int
 
 
-,  val methodCounter  : Int
-
-
-
-
-,  var stackTraceOrdinal  : Int
-
-
-,  var slidingWindowId  : Int
-,  val methodId  : Int
-
-
-,  val isWrite  : Boolean
+                                     , val methodCounter  : Int
 
 
 
 
-)    extends VolatileAccessEventStatic  
-{
-override def toString() = {
-  var text =  "VolatileAccessEventStaticGen" 
-  text = text + ", threadId:" +  threadId 
-  text = text + ", programCounter:" +  programCounter 
-  text = text + ", order:" +  order 
-  text = text + ", fieldId:" +  fieldId 
-  text = text + ", methodCounter:" +  methodCounter 
-  text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
-  text = text + ", slidingWindowId:" +  slidingWindowId 
-  text = text + ", methodId:" +  methodId 
-  text = text + ", isWrite:" +  isWrite 
+                                     , var stackTraceOrdinal: Int
 
-text;
 
-}
+                                     , var slidingWindowId: Int
+                                     , val methodId: Int
+
+
+                                     , val isWrite: Boolean
+
+
+                                     , val loopId: Int
+
+
+                                     , val runId: Int
+
+
+                                     , val runPosition: Int
+
+
+                                   ) extends VolatileAccessEventStaticInterleave {
+  override def toString() = {
+    var text = "VolatileAccessEventStaticGen"
+    text = text + ", threadId:" + threadId
+    text = text + ", programCounter:" + programCounter
+    text = text + ", order:" + order
+    text = text + ", fieldId:" + fieldId
+    text = text + ", methodCounter:" + methodCounter
+    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
+    text = text + ", slidingWindowId:" + slidingWindowId
+    text = text + ", methodId:" + methodId
+    text = text + ", isWrite:" + isWrite
+    text = text + ", loopId:" + loopId
+    text = text + ", runId:" + runId
+    text = text + ", runPosition:" + runPosition
+
+    text;
+
+  }
 
 
 
@@ -126,14 +128,20 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( isWrite != that.isWrite )
-             {
+             else if (isWrite != that.isWrite) {
+               false;
+             }
+             else if (loopId != that.loopId) {
+               false;
+             }
+             else if (runId != that.runId) {
+               false;
+             }
+             else if (runPosition != that.runPosition) {
                false;
              }
              else
-             true;
+               true;
         }
 
 
@@ -177,22 +185,35 @@ object  VolatileAccessEventStaticGen
             
                 0
            
-          , 
-            
-                0
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-           
-     
-     
-     
-     
+          ,
+
+       0
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+
      );
      
      
@@ -205,20 +226,25 @@ object  VolatileAccessEventStaticGen
      def applyFromScalaEvent(data : ByteBuffer) =
    {
      val result = new VolatileAccessEventStaticGen (
-     
-            data.getLong()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-     
-     
-     
-     
+
+       data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+
+
      );
      
      

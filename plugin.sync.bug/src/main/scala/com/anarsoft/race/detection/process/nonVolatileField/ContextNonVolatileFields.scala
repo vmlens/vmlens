@@ -1,11 +1,11 @@
 package com.anarsoft.race.detection.process.nonVolatileField
 
 
-import java.util.ArrayList;
+import com.anarsoft.race.detection.process.aggregate.ContextBuildAggregate
 import com.anarsoft.race.detection.process.gen._
 import com.anarsoft.race.detection.process.read._
-import com.anarsoft.race.detection.process.aggregate.ContextBuildAggregate
-import com.anarsoft.race.detection.process.interleave.InterleaveEventList
+
+import java.util.ArrayList
 
 
 trait ContextNonVolatileFields extends FieldVisitor with ContextBuildAggregate   {
@@ -19,21 +19,7 @@ trait ContextNonVolatileFields extends FieldVisitor with ContextBuildAggregate  
   var fieldEventStreams  :  StreamAndStreamStatistic[ApplyFieldEventVisitor]  = null;
   
   
-  def visit( in :  FieldAccessEventStaticGenInterleave)
-  {
-   
-   
-    
-      nonVolatileFieldAccessEventStatic.add(in);
-  }
-       
- def visit( in :  ArrayAccessEventGenInterleave)
- {
-   
-  
 
-     arrayAccessEventList.add(in);
- }
   
   def visit( in :  FieldAccessEventGenInterleave)
   {

@@ -2,8 +2,6 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.state.LockIdAndOrder;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeLock;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
 
 import java.lang.reflect.InvocationTargetException;
@@ -205,14 +203,15 @@ public class StampedLockCallback {
 
         }
 
-        if (isLockEnter) {
-            callbackStatePerThread.sendEvent.writeStampedLockEnterEventGen(slidingWindowId, currentProgramCounter, order,
-                    current.id, callbackStatePerThread.methodCount, isShared, 4, stampedLockMethodId);
-
-        } else {
-            callbackStatePerThread.sendEvent.writeStampedLockExitEventGen(slidingWindowId, callbackStatePerThread.programCount, order, current.id, callbackStatePerThread.methodCount, isShared, 4, stampedLockMethodId);
-        }
-        ParallelizeFacade.afterLockOperation(callbackStatePerThread, new ParallelizeLock(isLockEnter, isShared, current.id));
+        // Fixme Callback
+//        if (isLockEnter) {
+//            callbackStatePerThread.sendEvent.writeStampedLockEnterEventGen(slidingWindowId, currentProgramCounter, order,
+//                    current.id, callbackStatePerThread.methodCount, isShared, 4, stampedLockMethodId);
+//
+//        } else {
+//            callbackStatePerThread.sendEvent.writeStampedLockExitEventGen(slidingWindowId, callbackStatePerThread.programCount, order, current.id, callbackStatePerThread.methodCount, isShared, 4, stampedLockMethodId);
+//        }
+//        ParallelizeFacade.afterLockOperation(callbackStatePerThread, new ParallelizeLock(isLockEnter, isShared, current.id));
 
 
         callbackStatePerThread.programCount++;

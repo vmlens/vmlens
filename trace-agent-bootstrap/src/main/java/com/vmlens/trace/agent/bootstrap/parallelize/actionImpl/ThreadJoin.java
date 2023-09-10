@@ -19,7 +19,7 @@ public class ThreadJoin implements ParallelizeAction {
     }
 
     @Override
-    public void addInterleaveAction(ActionContext context, TestThreadState testThreadState) {
+    public void addInterleaveActionAndOrEvent(ActionContext context, TestThreadState testThreadState) {
         context.after(new ThreadJoinFactory(testThreadState.threadIndex(), context.threadIndexForId(joinedThreadId)));
     }
 

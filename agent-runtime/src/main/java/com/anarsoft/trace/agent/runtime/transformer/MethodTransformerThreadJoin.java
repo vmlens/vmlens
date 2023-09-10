@@ -24,15 +24,7 @@ public class MethodTransformerThreadJoin  extends MethodVisitor implements Opcod
 	@Override
 	public void visitMethodInsn(int opcode, String owner, String name,
 			String desc, boolean isInterface) {
-				
-		if (MethodTransformer.isThreadActiveCall(opcode, owner, name, desc)) {
-            MethodTransformer.onThreadActiveCall(mv, opcode, owner, name, desc);
-        } else {
-
             mv.visitMethodInsn(opcode, owner, name, desc);
-        }
-
-
     }
 
 }

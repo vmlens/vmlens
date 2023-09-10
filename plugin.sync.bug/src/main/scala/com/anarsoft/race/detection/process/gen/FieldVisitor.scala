@@ -14,13 +14,7 @@ def visit( in :  FieldAccessEventGenInterleave);
 def visit( in :  FieldAccessEventStaticGen);
        
        
-def visit( in :  FieldAccessEventStaticGenInterleave);
-       
-       
 def visit( in :  ArrayAccessEventGen);
-       
-       
-def visit( in :  ArrayAccessEventGenInterleave);
        
      
        

@@ -1,16 +1,9 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+import com.anarsoft.race.detection.process.syncAction._
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class LockExitEventGen(
@@ -32,26 +25,35 @@ class LockExitEventGen(
                         , val isShared: Boolean
 
 
-,  val lockTyp  : Int
+                        , val lockTyp: Int
 
 
+                        , val loopId: Int
 
 
-)    extends SyncActionLockExit 
-{
-override def toString() = {
-  var text =  "LockExitEventGen" 
-  text = text + ", threadId:" +  threadId 
-  text = text + ", programCounter:" +  programCounter 
-  text = text + ", order:" +  order 
-  text = text + ", monitorId:" +  monitorId 
-  text = text + ", methodCounter:" +  methodCounter 
-  text = text + ", isShared:" +  isShared 
-  text = text + ", lockTyp:" +  lockTyp 
+                        , val runId: Int
 
-text;
 
-}
+                        , val runPosition: Int
+
+
+                      ) extends SyncActionLockExitInterleave {
+  override def toString() = {
+    var text = "LockExitEventGen"
+    text = text + ", threadId:" + threadId
+    text = text + ", programCounter:" + programCounter
+    text = text + ", order:" + order
+    text = text + ", monitorId:" + monitorId
+    text = text + ", methodCounter:" + methodCounter
+    text = text + ", isShared:" + isShared
+    text = text + ", lockTyp:" + lockTyp
+    text = text + ", loopId:" + loopId
+    text = text + ", runId:" + runId
+    text = text + ", runPosition:" + runPosition
+
+    text;
+
+  }
 
 
 
@@ -106,14 +108,20 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( lockTyp != that.lockTyp )
-             {
+             else if (lockTyp != that.lockTyp) {
+               false;
+             }
+             else if (loopId != that.loopId) {
+               false;
+             }
+             else if (runId != that.runId) {
+               false;
+             }
+             else if (runPosition != that.runPosition) {
                false;
              }
              else
-             true;
+               true;
         }
 
 
@@ -148,23 +156,36 @@ object  LockExitEventGen
           , 
             
                 data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-           
-          , 
-            
-                data.getInt()
-           
-     
-     
-     
-     
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+
      );
      
      
@@ -176,19 +197,24 @@ object  LockExitEventGen
    
      def applyFromScalaEvent(data : ByteBuffer) =
    {
-     val result = new LockExitEventGen (
-     
-            data.getLong()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-          ,  data.getInt()
-     
-     
-     
-     
+     val result = new LockExitEventGen(
+
+       data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+
+
      );
      
      

@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.callback.field;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.callback.state.*;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -267,14 +266,16 @@ public class UpdateObjectState {
 	
 	public void sendEventVolatile(CallbackStatePerThread callbackStatePerThread,int order,
 			int fieldId, int methodId, int operation, long objectId) {
-		callbackStatePerThread.sendEvent.writeVolatileAccessEventGen(
-				CallbackState.traceSyncStatements(callbackStatePerThread), callbackStatePerThread.programCount,
-				order, fieldId, callbackStatePerThread.methodCount, methodId, operation,objectId);
+		// Fixme Callback
+//		callbackStatePerThread.sendEvent.writeVolatileAccessEventGen(
+//				CallbackState.traceSyncStatements(callbackStatePerThread), callbackStatePerThread.programCount,
+//				order, fieldId, callbackStatePerThread.methodCount, methodId, operation,objectId);
 	}
 
 	public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
 			CallbackStatePerThread callbackStatePerThread) {
-		ParallelizeFacade.beforeFieldAccessVolatile(callbackStatePerThread, id, fieldId, operation);
+// Fixme Callback
+		//		ParallelizeFacade.beforeFieldAccessVolatile(callbackStatePerThread, id, fieldId, operation);
 	}
 
 	/*
@@ -285,9 +286,10 @@ public class UpdateObjectState {
 
 	public void sendEventNonVolatile(CallbackStatePerThread callbackStatePerThread, long threadId, int slidingWindowId,
 			int fieldId, int methodId, int operation, long objectId) {
-		callbackStatePerThread.sendEvent.writeFieldAccessEventGen(slidingWindowId, callbackStatePerThread.programCount,
-				fieldId, callbackStatePerThread.methodCount, operation, methodId,
-				callbackStatePerThread.isStackTraceIncomplete(), objectId);
+		//	Fixme Callback
+		//		callbackStatePerThread.sendEvent.writeFieldAccessEventGen(slidingWindowId, callbackStatePerThread.programCount,
+//				fieldId, callbackStatePerThread.methodCount, operation, methodId,
+//				callbackStatePerThread.isStackTraceIncomplete(), objectId);
 	}
 
 	public void sendStateEvent4Object(int slidingWindowId, int classOrFieldId, long id, int methodId, int operation,

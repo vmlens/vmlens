@@ -150,85 +150,63 @@ public class LockStatementCallback {
 				{
 					current = new LockIdAndOrder();
 					current.id = LockIdAndOrder.getNewId();
-				}
-				
-				order = current.order ;
-				
-				current.order = current.order + 1;
-				
-				objectToOrder.put(objectKey, current);
-				
-			}
+                }
 
-	
-			  callbackStatePerThread.sendEvent.writeLockEnterEventGen(slidingWindowId ,   currentProgramCounter, order,
-					 current.id ,  callbackStatePerThread.methodCount, isShared , lockTyp);
-			
-	
-				callbackStatePerThread.programCount++;
-				
-			
-				
-		}
+                order = current.order;
 
-	}
+                current.order = current.order + 1;
+
+                objectToOrder.put(objectKey, current);
+
+            }
+
+// Fixme Callback
+//			  callbackStatePerThread.sendEvent.writeLockEnterEventGen(slidingWindowId ,   currentProgramCounter, order,
+//					 current.id ,  callbackStatePerThread.methodCount, isShared , lockTyp);
+            callbackStatePerThread.programCount++;
+        }
+    }
 
 
+    private static void releaseInternal(Object objectKey, boolean isShared, int lockTyp) {
+
+        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
+
+        if (CallbackState.isSlidingWindowTrace(slidingWindowId)) {
+            callbackStatePerThread.programCount++;
 
 
-
-	/*
-	 *   public LockExitEventBootstrap(long threadId, int programCounter,
-			int order, int monitorId) {
-	 */
-
-	private static  void releaseInternal(Object objectKey,boolean isShared, int lockTyp)
-	{
-		
-	
-		
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-		
-	//	ParallizeFacade.beforeLockRelease(callbackStatePerThread , objectKey,isShared);
-		
-		int slidingWindowId =  CallbackState.traceSyncStatements(callbackStatePerThread);
-	
-		if(  CallbackState.isSlidingWindowTrace(slidingWindowId  ) )
-		{
-			callbackStatePerThread.programCount++;
-
-
-		int order = 0;
+            int order = 0;
 	
 		LockIdAndOrder current = null;
 		
 		synchronized(objectToOrder)
 		{
-//			pruneKeys();
+
             current =  objectToOrder.get(objectKey);
 			
 			if( current == null )
 			{
 				current = new LockIdAndOrder();
-				current.id = LockIdAndOrder.getNewId();
-			}
-			
-			order = current.order ;
-			
-			current.order = current.order + 1;
-			
-			objectToOrder.put(objectKey, current);
-		}	
+                current.id = LockIdAndOrder.getNewId();
+            }
 
-		 callbackStatePerThread.sendEvent.writeLockExitEventGen ( slidingWindowId , callbackStatePerThread.programCount, order,  current.id , callbackStatePerThread.methodCount, isShared,lockTyp);
-	
-		
-		
-		callbackStatePerThread.programCount++;
-		
-		
-		
-		}
+            order = current.order;
+
+            current.order = current.order + 1;
+
+            objectToOrder.put(objectKey, current);
+        }
+
+// 		Fixme Callback
+            // callbackStatePerThread.sendEvent.writeLockExitEventGen ( slidingWindowId , callbackStatePerThread.programCount, order,  current.id , callbackStatePerThread.methodCount, isShared,lockTyp);
+
+
+            callbackStatePerThread.programCount++;
+
+
+        }
 	}
 
 

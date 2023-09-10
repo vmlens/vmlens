@@ -33,7 +33,7 @@ public class RunStateRunning implements RunState, ActionContext {
 
     @Override
     public RunState after(ParallelizeAction action, TestThreadState testThreadState) {
-        action.addInterleaveAction(this, testThreadState);
+        action.addInterleaveActionAndOrEvent(this, testThreadState);
         return action.nextState(this, testThreadState);
     }
 

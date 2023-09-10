@@ -1,16 +1,9 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.method._
-import com.anarsoft.race.detection.process.syncAction._;
-import com.anarsoft.race.detection.process.volatileField._;
-import com.anarsoft.race.detection.process.monitor._;
-import com.anarsoft.race.detection.process.nonVolatileField._;
-import java.util.Comparator
-import java.nio.ByteBuffer;
-import java.io.DataOutputStream;
-import com.anarsoft.race.detection.process.directMemory._;
-import com.anarsoft.race.detection.process.scheduler._
-import com.anarsoft.race.detection.process.interleave._;
+import com.anarsoft.race.detection.process.nonVolatileField._
+
+import java.nio.ByteBuffer
+import java.util.Comparator;
 
 
 class FieldAccessEventStaticGen(
@@ -32,34 +25,45 @@ class FieldAccessEventStaticGen(
                                  , val methodId: Int
 
 
-,  val stackTraceIncomplete  : Boolean
+                                 , val stackTraceIncomplete: Boolean
 
 
+                                 , var stackTraceOrdinal: Int
 
 
-,  var stackTraceOrdinal  : Int
+                                 , var slidingWindowId: Int
+                                 , val showSharedMemory: Boolean
 
 
-,  var slidingWindowId  : Int
+                                 , val loopId: Int
 
 
-)    extends NonVolatileFieldAccessEventStatic with ApplyFieldEventVisitor 
-{
-override def toString() = {
-  var text =  "FieldAccessEventStaticGen" 
-  text = text + ", threadId:" +  threadId 
-  text = text + ", programCounter:" +  programCounter 
-  text = text + ", fieldId:" +  fieldId 
-  text = text + ", methodCounter:" +  methodCounter 
-  text = text + ", operation:" +  operation 
-  text = text + ", methodId:" +  methodId 
-  text = text + ", stackTraceIncomplete:" +  stackTraceIncomplete 
-  text = text + ", stackTraceOrdinal:" +  stackTraceOrdinal 
-  text = text + ", slidingWindowId:" +  slidingWindowId 
+                                 , val runId: Int
 
-text;
 
-}
+                                 , val runPosition: Int
+
+
+                               ) extends NonVolatileFieldAccessEventStaticInterleave with ApplyFieldEventVisitor {
+  override def toString() = {
+    var text = "FieldAccessEventStaticGen"
+    text = text + ", threadId:" + threadId
+    text = text + ", programCounter:" + programCounter
+    text = text + ", fieldId:" + fieldId
+    text = text + ", methodCounter:" + methodCounter
+    text = text + ", operation:" + operation
+    text = text + ", methodId:" + methodId
+    text = text + ", stackTraceIncomplete:" + stackTraceIncomplete
+    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
+    text = text + ", slidingWindowId:" + slidingWindowId
+    text = text + ", showSharedMemory:" + showSharedMemory
+    text = text + ", loopId:" + loopId
+    text = text + ", runId:" + runId
+    text = text + ", runPosition:" + runPosition
+
+    text;
+
+  }
 
 
 
@@ -126,14 +130,23 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( slidingWindowId != that.slidingWindowId )
-             {
+             else if (slidingWindowId != that.slidingWindowId) {
+               false;
+             }
+             else if (showSharedMemory != that.showSharedMemory) {
+               false;
+             }
+             else if (loopId != that.loopId) {
+               false;
+             }
+             else if (runId != that.runId) {
+               false;
+             }
+             else if (runPosition != that.runPosition) {
                false;
              }
              else
-             true;
+               true;
         }
 
 
@@ -173,26 +186,47 @@ object  FieldAccessEventStaticGen
             
                 data.getInt()
            
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-           
-          , 
-            
-                0
-           
-          , 
-            
-                0
-           
-     
-     
-     
-     
+          ,
+
+       data.getInt()
+
+       ,
+
+       if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+
+       ,
+
+       0
+
+       ,
+
+       0
+
+       ,
+
+       if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+
      );
      
      
@@ -205,20 +239,30 @@ object  FieldAccessEventStaticGen
      def applyFromScalaEvent(data : ByteBuffer) =
    {
      val result = new FieldAccessEventStaticGen (
-     
-            data.getLong()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  data.getInt()
-          ,  if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-          ,  data.getInt()
-          ,  data.getInt()
-     
-     
-     
-     
+
+       data.getLong()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+       , if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+       , data.getInt()
+       , data.getInt()
+       , if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+       , data.getInt()
+       , data.getInt()
+       , data.getInt()
+
+
      );
      
      

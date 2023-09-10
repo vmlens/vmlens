@@ -3,10 +3,6 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.AtomicCounter;
 import com.vmlens.trace.agent.bootstrap.AtomicCounterShort;
-import com.vmlens.trace.agent.bootstrap.OptionalByte;
-import com.vmlens.trace.agent.bootstrap.OptionalShort;
-import com.vmlens.trace.agent.bootstrap.event.ThreadNameEvent;
-import com.vmlens.trace.agent.bootstrap.event.gen.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizedThreadLocal;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
 import com.vmlens.trace.agent.bootstrap.threadQueue.QueueCollection;
@@ -23,7 +19,6 @@ public class CallbackStatePerThread implements ThreadLocalWrapper {
 
     public final AnarsoftWeakHashMap<Object> arraysInThisThread = new AnarsoftWeakHashMap<Object>();
 
-    public final SendEvent sendEvent;
     private final boolean syncActionSameAsField4TraceCheck;
     public final QueueCollectionWrapper queueCollection;
     public final long threadId;
@@ -81,46 +76,6 @@ public class CallbackStatePerThread implements ThreadLocalWrapper {
         //	 this.maxStackTraceDepth = maxStackTraceDepth;
         this.queueCollection = new QueueCollectionWrapper(inQueueCollection);
 
-        if (threadIsOk) {
-
-//			 synchronized(tracedThreadCount_lock)
-//			 {
-//
-//				 if( tracedThreadCount > 50)
-//				 {
-//					 doSend = false;
-//				 }
-//				 else
-//				 {
-//					 tracedThreadCount++;
-//				 }
-//
-//
-//			 }
-
-            if (doSend) {
-                final OptionalByte mappedId = nextMappedId.nextValue();
-                if (mappedId.isHasByte()) {
-                    sendEvent = new SendEventForSmallThreadId(inThreadId, queueCollection, mappedId.getTheValue(), this);
-
-                    queueCollection.putDirect(new ThreadNameEvent(threadId, threadName, mappedId, new OptionalShort(false, (short) 0)));
-
-
-                } else {
-                    OptionalShort shortThreadId = nextShortId.nextValue();
-                    queueCollection.putDirect(new ThreadNameEvent(threadId, threadName, mappedId, shortThreadId));
-                    if (shortThreadId.isHasShort()) {
-                        sendEvent = new SendEventForShortThreadId(inThreadId, queueCollection, shortThreadId.getTheValue(), this);
-                    } else {
-                        sendEvent = new SendEventImpl(inThreadId, queueCollection, this);
-                    }
-                }
-            } else {
-                sendEvent = new SendEventDoNotSend();
-            }
-        } else {
-            sendEvent = new SendEventDoNotSend();
-        }
     }
 
     public boolean isStackTraceIncomplete() {

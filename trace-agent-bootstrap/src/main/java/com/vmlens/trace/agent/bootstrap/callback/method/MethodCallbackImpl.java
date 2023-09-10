@@ -8,52 +8,10 @@ import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 public class MethodCallbackImpl {
 
-    public void methodEnterOwner(int methodId) {
-        try {
-
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-
-            int slidingWindowId = CallbackState.traceMethods(callbackStatePerThread);
-
-            if (CallbackState.isSlidingWindowTrace(slidingWindowId)) {
-                callbackStatePerThread.stackTraceDepth++;
-
-                callbackStatePerThread.methodCount++;
-                callbackStatePerThread.sendEvent.writeParallizedMethodEnterEventGen(slidingWindowId, methodId,
-                        callbackStatePerThread.methodCount, 0);
-
-            }
-
-        } catch (Throwable e) {
-            AgentLogCallback.logException(e);
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void methodExitOwner(int methodId) {
-        try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-
-            int slidingWindowId = CallbackState.traceMethods(callbackStatePerThread);
-            if (CallbackState.isSlidingWindowTrace(slidingWindowId)) {
-                callbackStatePerThread.methodCount++;
-                callbackStatePerThread.sendEvent.writeParallizedMethodExitEventGen(slidingWindowId, methodId,
-                        callbackStatePerThread.methodCount);
-                callbackStatePerThread.stackTraceDepth--;
-            }
-        } catch (Throwable e) {
-            AgentLogCallback.logException(e);
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
-
     public void atomicMethodEnterWithCallback(int atomicId, int methodId) {
         try {
             CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-            ParallelizeFacade.onAtomicMethodEnter(callbackStatePerThread, methodId, true, atomicId);
-            methodEnterInternal(methodId, callbackStatePerThread);
+            // Fixme Callback
 
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -65,8 +23,7 @@ public class MethodCallbackImpl {
     public void atomicMethodEnterWithoutCallback(int atomicId, int methodId) {
         try {
             CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-            ParallelizeFacade.onAtomicMethodEnter(callbackStatePerThread, methodId, false, atomicId);
-            methodEnterInternal(methodId, callbackStatePerThread);
+            // Fixme Callback
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
             e.printStackTrace();
@@ -78,8 +35,7 @@ public class MethodCallbackImpl {
     public void atomicMethodExitWithCallback(int atomicId, int methodId) {
         try {
             CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-            ParallelizeFacade.onAtomicMethodExit(callbackStatePerThread, methodId, atomicId, true);
-            methodExitInternal(methodId, callbackStatePerThread);
+            // Fixme Callback
 
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -92,8 +48,7 @@ public class MethodCallbackImpl {
     public void atomicMethodExitWithoutCallback(int atomicId, int methodId) {
         try {
             CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-            ParallelizeFacade.onAtomicMethodExit(callbackStatePerThread, methodId, atomicId, false);
-            methodExitInternal(methodId, callbackStatePerThread);
+            // Fixme Callback
 
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -104,18 +59,12 @@ public class MethodCallbackImpl {
     }
 
     public void methodEnterThreadRun(int methodId) {
-        /**
-         * nur wenn nicht instanceof worker thread
-         *
-         */
-
         try {
             CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             callbackStatePerThread.stackTraceBasedDoNotTrace++;
             Thread thread = Thread.currentThread();
+            // Fixme Callback hier auch methodid
             ParallelizeFacade.beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(thread));
-            methodEnterInternal(methodId, callbackStatePerThread);
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
 
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -128,10 +77,7 @@ public class MethodCallbackImpl {
     public void methodExitThreadRun(int methodId) {
         try {
             CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-            callbackStatePerThread.stackTraceBasedDoNotTrace++;
-            ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
             methodExitInternal(methodId, callbackStatePerThread);
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
 
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -167,62 +113,18 @@ public class MethodCallbackImpl {
     }
 
     private void methodEnterInternal(int methodId, CallbackStatePerThread callbackStatePerThread) {
-
-        int slidingWindowId = CallbackState.traceMethods(callbackStatePerThread);
-
-        if (CallbackState.isSlidingWindowTrace(slidingWindowId)) {
-            callbackStatePerThread.stackTraceDepth++;
-
-            if (callbackStatePerThread.traceMethodCall()) {
-
-                callbackStatePerThread.methodCount++;
-                callbackStatePerThread.sendEvent.writeMethodEnterEventGen(slidingWindowId, methodId,
-                        callbackStatePerThread.methodCount);
-
-            }
-        }
+        // Fixme Callback
     }
 
     private void methodExitInternal(int methodId, CallbackStatePerThread callbackStatePerThread) {
-        int slidingWindowId = CallbackState.traceMethods(callbackStatePerThread);
-        if (CallbackState.isSlidingWindowTrace(slidingWindowId)) {
-            if (callbackStatePerThread.traceMethodCall()) {
-
-                callbackStatePerThread.methodCount++;
-
-                callbackStatePerThread.sendEvent.writeMethodExitEventGen(slidingWindowId, methodId,
-                        callbackStatePerThread.methodCount);
-
-            }
-
-            callbackStatePerThread.stackTraceDepth--;
-
-        }
-    }
-
-
-    public void doNotInterleaveEnter() {
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.doNotInterleave++;
-
-
-    }
-
-
-    public void doNotInterleaveExit() {
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.doNotInterleave--;
-
-
+        // Fixme Callback
     }
 
 
     public void taskMethodEnter() {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-            ParallelizeFacade.taskMethodEnter(callbackStatePerThread);
-
-
+            // Fixme Callback
+            // for future
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
             e.printStackTrace();
@@ -232,8 +134,8 @@ public class MethodCallbackImpl {
 
     public void taskMethodExit() {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-            ParallelizeFacade.taskMethodExit(callbackStatePerThread);
+            // Fixme Callback
+            // for future
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
             e.printStackTrace();

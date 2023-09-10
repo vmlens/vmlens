@@ -9,18 +9,12 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 
 public class ParallelizeCallback {
 
-
     public static void beforeThreadJoin(Thread toBeJoined) {
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        ParallelizeFacade.beforeThreadJoin(callbackStatePerThread, toBeJoined.getId());
-    }
-
-    public static void afterThreadJoin(Thread toBeJoined, long millis) {
-
+        ParallelizeFacade.after(callbackStatePerThread, ParallelizeFacade.parallelizeActionFactory().threadJoin(toBeJoined.getId()));
     }
 
     public static void callbackMethodEnter(int atomicId) {
-
 
     }
 
@@ -29,7 +23,7 @@ public class ParallelizeCallback {
     }
     public static void afterFieldAccess(int fieldId, int operation) {
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        ParallelizeFacade.afterFieldAccessVolatile(callbackStatePerThread, fieldId, operation);
+        ParallelizeFacade.after(callbackStatePerThread, ParallelizeFacade.parallelizeActionFactory().fieldAccess(fieldId, operation));
     }
     public static void afterThreadStart() {
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();

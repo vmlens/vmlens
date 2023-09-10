@@ -2,14 +2,14 @@ package com.anarsoft.trace.agent.runtime.transformer;
 
 import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
 import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
-import com.anarsoft.trace.agent.runtime.repository.FieldRepositoryFacade;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
+import com.anarsoft.trace.agent.runtime.repository.CallbackFactory;
+import com.anarsoft.trace.agent.runtime.repository.FieldRepositoryFacade;
 import com.anarsoft.trace.agent.runtime.transformer.gen.Add2TemplateMethodDescListGen;
 import com.anarsoft.trace.agent.runtime.transformer.template.Add2TemplateMethodDescList;
 import com.anarsoft.trace.agent.runtime.transformer.template.ApplyMethodTemplate;
 import com.anarsoft.trace.agent.runtime.transformer.template.ApplyMethodTemplateBeforeAfter;
 import com.anarsoft.trace.agent.runtime.transformer.template.TemplateMethodDesc;
-import com.anarsoft.trace.agent.runtime.repository.CallbackFactory;
 import com.anarsoft.trace.agent.serialization.FieldAccessDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.FieldIdAndTyp;
@@ -62,17 +62,6 @@ public class MethodTransformer extends MethodTransformerAbstract {
 
     }
 
-    public static boolean isThreadActiveCall(int opcode, String owner, String name, String desc) {
-        return (opcode == INVOKEVIRTUAL) && (owner.equals("java/lang/Thread")) && (name.equals("isAlive"))
-                && (desc.equals("()Z"));
-    }
-
-    public static void onThreadActiveCall(MethodVisitor mv, int opcode, String owner, String name, String desc) {
-        mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/callback/ThreadStartCallback", "isAlive",
-                "(Ljava/lang/Thread;)Z");
-    }
-
-
     protected void onMethodEscapedException() {
         onMethodReturn();
     }
@@ -92,7 +81,6 @@ public class MethodTransformer extends MethodTransformerAbstract {
         return false;
 
     }
-
 
     private boolean isFutureTask() {
         if (className.equals("java/util/concurrent/FutureTask") && name.equals("run")) {
@@ -365,25 +353,7 @@ public class MethodTransformer extends MethodTransformerAbstract {
         }
     }
 
-    private boolean threadIsAliveTransformed(int opcode, String owner, String name, String desc) {
-        if (opcode == INVOKEVIRTUAL && "isAlive".equals(name) && "()Z".equals(desc)) {
 
-            this.mv.visitInsn(DUP);
-            this.mv.visitMethodInsn(opcode, owner, name, desc);
-
-            // Jetzt ist object + Boolean auf dem stack
-            // object, boolean dup_x1 value2, value1 → value1, value2, value1
-
-            this.mv.visitInsn(DUP_X1);
-            mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/callback/ThreadStartCallback",
-                    "isAliveObject", "(Ljava/lang/Object;Z)V");
-
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 
     private boolean isWaitCall(int opcode, String owner, String name, String desc) {
         return (opcode == INVOKEVIRTUAL) && (owner.equals("java/lang/Object")) && (name.equals("wait"))
@@ -444,7 +414,7 @@ public class MethodTransformer extends MethodTransformerAbstract {
         if (applyMethodTemplate != null) {
             mv.visitLdcInsn(getMethodId());
             applyMethodTemplate.apply(mv);
-        } else if (!threadIsAliveTransformed(opcode, owner, name, desc)) {
+        } else {
 
             if (isWaitCall(opcode, owner, name, desc)) {
                 onWaitCall(opcode, owner, name, desc);

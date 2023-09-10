@@ -1,16 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
+public interface RuntimeEvent extends StaticEvent {
+
+    int ID_Field = 0;
+    int ID_SyncActions = 1;
+    int ID_Method = 2;
+    int ID_DirectMemory = 3;
 
 
-public interface RuntimeEvent {
-	
-	void serialize(StreamRepository streamRepository) throws Exception;
-	void serialize2StreamWrapper(StreamWrapperWithSlidingWindow streamWrapper) throws Exception;
-	int getSlidingWindowId();
-	//void writeToStream(DataOutputStream stream) throws Exception;
+    void send(SendEventContext context);
 
-	
-	
-	
-	
 }

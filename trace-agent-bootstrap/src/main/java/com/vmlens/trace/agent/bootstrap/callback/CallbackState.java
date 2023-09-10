@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 
 import com.vmlens.trace.agent.bootstrap.event.NewSlidingWindowId;
-
 import com.vmlens.trace.agent.bootstrap.threadQueue.InternalPerThreadQueueFactory;
 import com.vmlens.trace.agent.bootstrap.threadQueue.QueueFacade;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
@@ -14,7 +13,6 @@ import java.util.Set;
 
 
 public class CallbackState {
-	public static final int WAIT_TIME = 1000;
 	public static final int SLIDING_WINDOW_MUST_BE_GREATER = 0;
 	public static boolean startAtBeginning;
 	public static volatile int  slidingWindow = 0;
