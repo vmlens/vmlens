@@ -8,17 +8,17 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class TestPermutationIterator {
+public class PermutationIteratorTest {
 
     @Test
     public void testLenghtZero() {
-        runTest(0,new HashSet<String>());
+        runTest(0, new HashSet<String>());
     }
 
     @Test
     public void testLengthOne() {
         Set<String> expected = new HashSet<>();
-        addAlternatives("",1,expected);
+        addAlternatives("", 1, expected);
         runTest(1,expected);
     }
 

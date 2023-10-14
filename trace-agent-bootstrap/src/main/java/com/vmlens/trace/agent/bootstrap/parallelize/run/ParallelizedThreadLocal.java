@@ -26,10 +26,6 @@ public class ParallelizedThreadLocal {
         return run;
     }
 
-    public boolean sendAsInterleaveEvent(Class fieldAccessEventStaticGenClass) {
-        // ToDo implement correctly
-        return true;
-    }
 
     public RunnableOrThreadWrapper createdThread() {
         return createdThread;
@@ -39,23 +35,5 @@ public class ParallelizedThreadLocal {
         this.createdThread = createdThread;
     }
 
-    public boolean showNonVolatileMemoryAccess() {
-        // ToDo implement correctly
-        return true;
-    }
 
-    public int loopId() {
-        // ToDo implement correctly
-        return 0;
-    }
-
-    public int runId() {
-        // ToDo implement correctly
-        return 0;
-    }
-
-    public int runPosition() {
-        // ToDo implement correctly
-        return 0;
-    }
 }

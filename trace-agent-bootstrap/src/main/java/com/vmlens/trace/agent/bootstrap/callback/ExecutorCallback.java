@@ -8,6 +8,8 @@ import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 import java.util.concurrent.*;
 
+import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade.parallelize;
+
 
 public class ExecutorCallback {
 
@@ -67,7 +69,7 @@ public class ExecutorCallback {
         if (task instanceof Thread) {
             CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
-            ParallelizeFacade.beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(task));
+            parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(task));
         }
 
     }
@@ -111,7 +113,7 @@ public class ExecutorCallback {
 
         callbackStatePerThread.doNotInterleave = 0;
 
-        ParallelizeFacade.beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(task));
+        parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(task));
         // ToDo do i need this?
         //if (!) {
         //    callbackStatePerThread.notStartedCount++;
@@ -130,12 +132,14 @@ public class ExecutorCallback {
 
     public static Object call(Callable callable, int methodId) throws Exception {
         int atomicId = AtomicClassRepo.getId4AtomicClass("java/util/concurrent/FutureTask");
-        ParallelizeCallback.callbackMethodEnter(atomicId);
+        // Fixme Callback
+        //parallelize().callbackMethodEnter(atomicId);
 
         try {
             return callable.call();
         } finally {
-            ParallelizeCallback.callbackMethodExit();
+            // Fixme Callback
+            //parallelize().callbackMethodExit();
         }
     }
 
@@ -144,7 +148,7 @@ public class ExecutorCallback {
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         int temp = callbackStatePerThread.doNotInterleave;
         callbackStatePerThread.doNotInterleave = 0;
-        ParallelizeFacade.beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(runnable));
+        parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(runnable));
         try {
             if (runnable instanceof FutureTask) {
                 int atomicId = AtomicClassRepo.getId4AtomicClass("java/util/concurrent/FutureTask");

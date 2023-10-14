@@ -385,6 +385,6 @@ public class LockTemplateCallback {
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme Callback
         //  ParallelizeFacade.afterLockOperation(callbackStatePerThread, new ParallelizeLock(isLockEnter, isShared, System.identityHashCode(theSync)));
-        callbackStatePerThread.programCount++;
+        // callbackStatePerThread.programCount++;
     }
 }

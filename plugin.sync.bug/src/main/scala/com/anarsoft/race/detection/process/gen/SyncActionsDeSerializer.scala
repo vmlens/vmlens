@@ -1,62 +1,63 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.read._
-import com.anarsoft.race.detection.process.syncAction.SyncAction
-
 import java.nio.ByteBuffer
+import com.anarsoft.race.detection.process.read._;
+import com.anarsoft.race.detection.process.nonVolatileField.ApplyFieldEventVisitor
+import com.anarsoft.race.detection.process.syncAction.SyncAction
+import com.anarsoft.race.detection.process.method.ApplyMethodEventVisitor
+import com.anarsoft.race.detection.process.monitor.MonitorEvent
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
 
-class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
-{
-   def eventArraySize() = 57
-     
-     val blockSize =  57 * 10000;
-  
+class SyncActionsDeSerializer extends ReadStrategy[SyncAction] {
+  def eventArraySize() = 57
 
-    def deSerializeJavaEvent(buffer : ByteBuffer) =
-    {
-        
-       val id = buffer.get();
-       
-       
-       if (id == 6) {
-         VolatileAccessEventStaticGen.applyFromJavaEvent(buffer);
-       }
-       else if (id == 7) {
-         VolatileAccessEventGen.applyFromJavaEvent(buffer);
-       }
-       else if (id == 8) {
-         VolatileArrayAccessEventGen.applyFromJavaEvent(buffer);
-       }
-       else if (id == 10) {
-         LockEnterEventGen.applyFromJavaEvent(buffer);
-       }
-       else if (id == 11) {
-         LockExitEventGen.applyFromJavaEvent(buffer);
-       }
-       else if (id == 12) {
-         StampedLockEnterEventGen.applyFromJavaEvent(buffer);
-       }
-       else if (id == 13) {
-         StampedLockExitEventGen.applyFromJavaEvent(buffer);
-       }
-       else if (id == 18) {
-         ThreadBeginEventGen.applyFromJavaEvent(buffer);
-       }
-       else if (id == 19) {
-         ThreadStoppedEventGen.applyFromJavaEvent(buffer);
-       }
-       else {
-         throw new RuntimeException("id " + id + " could not be deserialized");
-       }
+  val blockSize = 57 * 10000;
+
+
+  def deSerializeJavaEvent(buffer: ByteBuffer) = {
+
+    val id = buffer.get();
+
+
+    if (id == 6) {
+      VolatileAccessEventStaticGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 7) {
+      VolatileAccessEventGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 8) {
+      VolatileArrayAccessEventGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 10) {
+      LockEnterEventGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 11) {
+      LockExitEventGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 12) {
+      StampedLockEnterEventGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 13) {
+      StampedLockExitEventGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 18) {
+      ThreadStartEventGen.applyFromJavaEvent(buffer);
+    }
+    else if (id == 19) {
+      ThreadJoinedEventGen.applyFromJavaEvent(buffer);
+    }
+    else {
+      throw new RuntimeException("id " + id + " could not be deserialized");
+    }
        
        
     }
     
     
-    def deSerializeScalaEvent(buffer : ByteBuffer) =
-    {
-        
-       val id = buffer.get();
+    def deSerializeScalaEvent(buffer : ByteBuffer) = {
+
+      val id = buffer.get();
 
 
       if (id == 6) {
@@ -81,16 +82,16 @@ class SyncActionsDeSerializer   extends ReadStrategy[SyncAction]
         StampedLockExitEventGen.applyFromScalaEvent(buffer);
       }
       else if (id == 18) {
-        ThreadBeginEventGen.applyFromScalaEvent(buffer);
+        ThreadStartEventGen.applyFromScalaEvent(buffer);
       }
       else if (id == 19) {
-        ThreadStoppedEventGen.applyFromScalaEvent(buffer);
+        ThreadJoinedEventGen.applyFromScalaEvent(buffer);
       }
       else {
         throw new RuntimeException("id " + id + " could not be deserialized");
       }
-       
-       
+
+
     }
 
 

@@ -1,58 +1,64 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.directMemory._
-
-import java.nio.ByteBuffer
-import java.util.Comparator;
-
-
-class VolatileDirectMemoryEventGen (
-  val threadId  : Long
-
-
-,  val programCounter  : Int
-
-
-,  val methodCounter  : Int
+import com.anarsoft.race.detection.process.method._
+import com.anarsoft.race.detection.process.syncAction._;
+import com.anarsoft.race.detection.process.volatileField._;
+import com.anarsoft.race.detection.process.monitor._;
+import com.anarsoft.race.detection.process.nonVolatileField._;
+import java.util.Comparator
+import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.interleave._;
 
 
-,  val objectHashCode  : Long
+class VolatileDirectMemoryEventGen(
+                                    val threadId: Long
 
 
-  , var stackTraceOrdinal: Int
-  , val operation: Int
+                                    , val programCounter: Int
 
 
-  , val order: Int
+                                    , val methodCounter: Int
 
 
-  , val loopId: Int
+                                    , val objectHashCode: Long
 
 
-  , val runId: Int
+                                    , var stackTraceOrdinal: Int
+                                    , val operation: Int
 
 
-  , val runPosition: Int
+                                    , val order: Int
 
 
-                                   )    extends DirectMemoryEvent
-{
-override def toString() = {
-  var text = "VolatileDirectMemoryEventGen"
-  text = text + ", threadId:" + threadId
-  text = text + ", programCounter:" + programCounter
-  text = text + ", methodCounter:" + methodCounter
-  text = text + ", objectHashCode:" + objectHashCode
-  text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
-  text = text + ", operation:" + operation
-  text = text + ", order:" + order
-  text = text + ", loopId:" + loopId
-  text = text + ", runId:" + runId
-  text = text + ", runPosition:" + runPosition
+                                    , val loopId: Int
 
-  text;
 
-}
+                                    , val runId: Int
+
+
+                                    , val runPosition: Int
+
+
+                                  ) extends DirectMemoryEvent {
+  override def toString() = {
+    var text = "VolatileDirectMemoryEventGen"
+    text = text + ", threadId:" + threadId
+    text = text + ", programCounter:" + programCounter
+    text = text + ", methodCounter:" + methodCounter
+    text = text + ", objectHashCode:" + objectHashCode
+    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
+    text = text + ", operation:" + operation
+    text = text + ", order:" + order
+    text = text + ", loopId:" + loopId
+    text = text + ", runId:" + runId
+    text = text + ", runPosition:" + runPosition
+
+    text;
+
+  }
 
 
 
@@ -101,10 +107,7 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( operation != that.operation )
-             {
+             else if (operation != that.operation) {
                false;
              }
              else if (order != that.order) {
@@ -139,18 +142,17 @@ object  VolatileDirectMemoryEventGen
    def applyFromJavaEvent(data : ByteBuffer) =
    {
      val result = new VolatileDirectMemoryEventGen (
-     
-           
-            
-                data.getLong()
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
+
+
+       data.getLong()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
 
        ,
 
@@ -179,11 +181,8 @@ object  VolatileDirectMemoryEventGen
        ,
 
        data.getInt()
-           
-     
-     
-     
-     
+
+
      );
      
      
@@ -193,30 +192,27 @@ object  VolatileDirectMemoryEventGen
    }
    
    
-     def applyFromScalaEvent(data : ByteBuffer) =
-   {
-     val result = new VolatileDirectMemoryEventGen(
+     def applyFromScalaEvent(data : ByteBuffer) = {
+       val result = new VolatileDirectMemoryEventGen(
 
-       data.getLong()
-       , data.getInt()
-       , data.getInt()
-       , data.getLong()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
+         data.getLong()
+         , data.getInt()
+         , data.getInt()
+         , data.getLong()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
 
 
-     );
-     
-     
-     
-     
-     result;
-   
-   }
+       );
+
+
+       result;
+
+     }
    
 
 

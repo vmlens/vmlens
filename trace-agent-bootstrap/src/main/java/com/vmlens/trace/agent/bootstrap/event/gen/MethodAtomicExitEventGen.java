@@ -1,8 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-
 import java.nio.ByteBuffer;
+
+import com.vmlens.trace.agent.bootstrap.event.*;
+
+import java.io.DataOutputStream;
 
 public class MethodAtomicExitEventGen {
     protected int slidingWindowId;
@@ -14,22 +16,45 @@ public class MethodAtomicExitEventGen {
     protected int runId;
     protected int runPosition;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MethodAtomicExitEventGen that = (MethodAtomicExitEventGen) o;
+        if (threadId != that.threadId) return false;
+        if (methodId != that.methodId) return false;
+        if (methodCounter != that.methodCounter) return false;
+        if (hasCallback != that.hasCallback) return false;
+        if (loopId != that.loopId) return false;
+        if (runId != that.runId) return false;
+        if (runPosition != that.runPosition) return false;
+        return slidingWindowId == that.slidingWindowId;
+    }
+
+    @Override
+    public String toString() {
+        return "MethodAtomicExitEventGen{" +
+                "threadId=" + threadId +
+                "methodId=" + methodId +
+                "methodCounter=" + methodCounter +
+                "hasCallback=" + hasCallback +
+                "loopId=" + loopId +
+                "runId=" + runId +
+                "runPosition=" + runPosition +
+                '}';
+    }
+
+
     public void serialize(StreamRepository streamRepository) throws Exception {
         ByteBuffer buffer = streamRepository.scheduler.getByteBuffer(slidingWindowId, 30, EventConstants.MAX_ARRAY_SIZE * 1000);
         buffer.put((byte) 21);
         buffer.putLong(threadId);
-        ;
         buffer.putInt(methodId);
-        ;
         buffer.putInt(methodCounter);
-        ;
         buffer.put(hasCallback);
-        ;
         buffer.putInt(loopId);
-        ;
         buffer.putInt(runId);
-        ;
         buffer.putInt(runPosition);
-        ;
     }
 }

@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeFacadeImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopContainer;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFactoryImpl;
 
@@ -13,36 +14,44 @@ import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFacto
  */
 public class ParallelizeFacade {
 
-    private static volatile ParallelizeFacadeImpl parallelizeFacadeImpl =
-            new ParallelizeFacadeImpl(new ParallelizeLoopContainer(new ParallelizeLoopFactoryImpl()));
+    private static volatile ParallelizeFacade parallelizeFacade =
+            new ParallelizeFacade(new ParallelizeLoopContainer(new ParallelizeLoopFactoryImpl()));
 
-    private static final ParallelizeActionFactory parallelizeActionFactory = new ParallelizeActionFactory();
 
-    public static ParallelizeActionFactory parallelizeActionFactory() {
-        return parallelizeActionFactory;
+    public static ParallelizeFacade parallelize() {
+        return parallelizeFacade;
     }
 
-    public static void after(ThreadLocalWrapper threadLocalWrapper, ParallelizeAction parallelizeAction) {
-        parallelizeFacadeImpl.after(threadLocalWrapper, parallelizeAction);
+    private final ParallelizeLoopContainer parallelizeLoopContainer;
+
+    public ParallelizeFacade(ParallelizeLoopContainer parallelizeLoopContainer) {
+        this.parallelizeLoopContainer = parallelizeLoopContainer;
     }
 
-    public static void beforeThreadStart(ThreadLocalWrapper threadLocalWrapper, RunnableOrThreadWrapper runnableOrThreadWrapper) {
-        parallelizeFacadeImpl.beforeThreadStart(threadLocalWrapper, runnableOrThreadWrapper);
+    public void after(ThreadLocalWrapper threadLocalWrapper,
+                      ParallelizeAction parallelizeAction) {
+        new TestThreadState(threadLocalWrapper).after(parallelizeAction);
     }
 
-    public static void beginThreadMethodEnter(ThreadLocalWrapper threadLocalWrapper, RunnableOrThreadWrapper beganTask) {
-        parallelizeFacadeImpl.beginThreadMethodEnter(threadLocalWrapper, beganTask);
+    public void beforeThreadStart(ThreadLocalWrapper threadLocalWrapper,
+                                  RunnableOrThreadWrapper runnableOrThreadWrapper) {
+        new TestThreadState(threadLocalWrapper).addCreatedThreadForAfterStart(runnableOrThreadWrapper);
     }
 
-    public static boolean hasNext(ThreadLocalWrapper threadLocalWrapper, Object obj) {
-        return parallelizeFacadeImpl.hasNext(threadLocalWrapper, obj);
+    public void beginThreadMethodEnter(ThreadLocalWrapper threadLocalWrapper,
+                                       RunnableOrThreadWrapper beganTask) {
+        parallelizeLoopContainer.beginThreadMethodEnter(new TestThreadState(threadLocalWrapper), beganTask);
     }
 
-    public static void close(ThreadLocalWrapper threadLocalWrapper, Object obj) {
-        parallelizeFacadeImpl.close(threadLocalWrapper, obj);
+    public boolean hasNext(ThreadLocalWrapper threadLocalWrapper, Object obj) {
+        return parallelizeLoopContainer.hasNext(new TestThreadState(threadLocalWrapper), obj);
     }
 
-    public static void afterThreadStart(ThreadLocalWrapper threadLocalWrapper) {
-        parallelizeFacadeImpl.afterThreadStart(threadLocalWrapper);
+    public void close(ThreadLocalWrapper threadLocalWrapper, Object obj) {
+        parallelizeLoopContainer.close(new TestThreadState(threadLocalWrapper), obj);
+    }
+
+    public void afterThreadStart(ThreadLocalWrapper threadLocalWrapper) {
+        new TestThreadState(threadLocalWrapper).afterThreadStart();
     }
 }

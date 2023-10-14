@@ -5,6 +5,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPosit
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcherBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.TestFixture;
+import com.vmlens.trace.agent.bootstrap.testFixture.TestData;
+import com.vmlens.trace.agent.bootstrap.testFixture.VolatileFixture;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Triple;
@@ -20,21 +22,20 @@ public class TestFromAlternatingOrderContainerToCalculatedRun {
     @Test
     public void volatileReadAndWrite() {
         // Given
-        Triple<TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>>, AlternatingOrderContainer, FeatureTestMatcher>
-                testData = TestFixture.volatileReadAndWrite();
+        TestData testData = VolatileFixture.volatileReadAndWrite();
 
         // When
-        Iterator<CalculatedRun> iterator = testData.getMiddle().iterator();
+        Iterator<CalculatedRun> iterator = testData.alternatingOrderContainer().iterator();
 
         // Then
         while (iterator.hasNext()) {
             CalculatedRun run = iterator.next();
             for (Position pos : run.calculatedRunElementArray()) {
-                testData.getRight().executed(pos.threadIndex);
+                testData.featureTestMatcher().executed(pos.threadIndex);
             }
-            testData.getRight().advance();
+            testData.featureTestMatcher().advance();
         }
-        testData.getRight().assertExpectedResults();
+        testData.featureTestMatcher().assertExpectedResults();
     }
 
     @Test

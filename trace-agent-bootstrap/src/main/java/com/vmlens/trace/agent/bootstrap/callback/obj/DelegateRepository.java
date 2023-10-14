@@ -29,7 +29,7 @@ public class DelegateRepository {
 
 
     public static void access(Object delegate, int operation, int methodId) {
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+    /*    CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
         if (!CallbackState.isSlidingWindowTrace(slidingWindowId)) {
             return;
@@ -40,6 +40,6 @@ public class DelegateRepository {
         }
         if (delegateTarget != null) {
             delegateTarget.access(operation, methodId, callbackStatePerThread, slidingWindowId);
-        }
+        }*/
 	}
 }

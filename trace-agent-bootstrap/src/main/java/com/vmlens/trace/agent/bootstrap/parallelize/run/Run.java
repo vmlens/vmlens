@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
@@ -12,10 +13,12 @@ public class Run {
     private final Condition threadActiveCondition;
     private final WaitNotifyStrategy waitNotifyStrategy;
     private final RunStateMachine runStateMachine;
+
     private final int id;
     private int maxThreadIndex;
 
-    public Run(ReentrantLock lock, int id, WaitNotifyStrategy waitNotifyStrategy, RunStateMachine runStateMachine, TestThreadState testThreadState) {
+    public Run(ReentrantLock lock, int id, WaitNotifyStrategy waitNotifyStrategy,
+               RunStateMachine runStateMachine, TestThreadState testThreadState) {
         this.waitNotifyStrategy = waitNotifyStrategy;
         this.runStateMachine = runStateMachine;
         this.id = id;
@@ -59,6 +62,7 @@ public class Run {
             lock.unlock();
         }
     }
+
 
     // Visible for Test
     public boolean isActive(TestThreadState testThreadState) {

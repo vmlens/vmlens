@@ -110,34 +110,19 @@ public class LockStatementCallback {
 	
 
 	// ToDo change needs object
-	private static  void acquireInternal(Object objectKey,boolean isShared, int lockTyp)
-	{
-	
+    private static void acquireInternal(Object objectKey, boolean isShared, int lockTyp) {
+
+	/*	CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		
-		
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-		
-		
-	
-		 
+
 		int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 		
-		if(  CallbackState.isSlidingWindowTrace( slidingWindowId ) )
-		{
-
+		if(  CallbackState.isSlidingWindowTrace( slidingWindowId ) ) {
 
 			callbackStatePerThread.programCount++;
-
-
-
-			
-
 			 long currentThreadId = callbackStatePerThread.threadId;
 			 int currentProgramCounter = callbackStatePerThread.programCount;
-
-
 			//Integer orderInteger = objectToOrder.get(objectKey);
-
 			int order = 0;
 			LockIdAndOrder current = null;
 			
@@ -159,18 +144,18 @@ public class LockStatementCallback {
                 objectToOrder.put(objectKey, current);
 
             }
-
+*/
 // Fixme Callback
 //			  callbackStatePerThread.sendEvent.writeLockEnterEventGen(slidingWindowId ,   currentProgramCounter, order,
 //					 current.id ,  callbackStatePerThread.methodCount, isShared , lockTyp);
-            callbackStatePerThread.programCount++;
-        }
+        //     callbackStatePerThread.programCount++;
+        //}
     }
 
 
     private static void releaseInternal(Object objectKey, boolean isShared, int lockTyp) {
 
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+     /*   CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 
         if (CallbackState.isSlidingWindowTrace(slidingWindowId)) {
@@ -206,7 +191,7 @@ public class LockStatementCallback {
             callbackStatePerThread.programCount++;
 
 
-        }
+        } */
 	}
 
 

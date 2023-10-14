@@ -20,21 +20,21 @@ import com.anarsoft.race.detection.process.interleave.InterleaveEventList
 
 
 trait ContextProcessSyncAction extends ContextVolatileField  with ContextMonitor  with ContextCreatePartialOrder {
-  
-  
-    def  interleaveEventList : InterleaveEventList;
-  
-    var syncActionStreams  :   StreamAndStreamStatistic[SyncAction] = null;
-    var threadStopList : ArrayList[ThreadStoppedEventGen] = null;
-    var prevoiusStartHappensBeforeMap : PrevoiusStartHappensBeforeMap[SyncPointGeneric[_]] = null;
-  
 
-    def monitorEventList     :    ArrayList[MonitorEvent];
-    
-    var lockEventList        :   ArrayList[SyncActionLock] = null;
-    var volatileAccessEventList : ArrayList[VolatileAccessEvent] = null;
-    
-    var volatileAccessArrayEventList : ArrayList[VolatileArrayAccessEvent] = null;
+
+  def interleaveEventList: InterleaveEventList;
+
+  var syncActionStreams: StreamAndStreamStatistic[SyncAction] = null;
+  var threadStopList: ArrayList[ThreadJoinedEventGen] = null;
+  var prevoiusStartHappensBeforeMap: PrevoiusStartHappensBeforeMap[SyncPointGeneric[_]] = null;
+
+
+  def monitorEventList: ArrayList[MonitorEvent];
+
+  var lockEventList: ArrayList[SyncActionLock] = null;
+  var volatileAccessEventList: ArrayList[VolatileAccessEvent] = null;
+
+  var volatileAccessArrayEventList: ArrayList[VolatileArrayAccessEvent] = null;
     
     var volatileAccessEventStatic : ArrayList[VolatileAccessEventStatic] = null; 
     
@@ -70,7 +70,7 @@ trait ContextProcessSyncAction extends ContextVolatileField  with ContextMonitor
      
    def initializeContextSyncAction()
    {
-         threadStopList  = new ArrayList[ThreadStoppedEventGen]()
+     threadStopList = new ArrayList[ThreadJoinedEventGen]()
     
       
          

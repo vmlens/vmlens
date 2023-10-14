@@ -1,52 +1,57 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.volatileField._
-
-import java.nio.ByteBuffer
-import java.util.Comparator;
-
-
-class VolatileArrayAccessEventGen (
-                                    val threadId  : Long
-
-
-                                    , val programCounter  : Int
-
-
-                                    , val order  : Int
+import com.anarsoft.race.detection.process.method._
+import com.anarsoft.race.detection.process.syncAction._;
+import com.anarsoft.race.detection.process.volatileField._;
+import com.anarsoft.race.detection.process.monitor._;
+import com.anarsoft.race.detection.process.nonVolatileField._;
+import java.util.Comparator
+import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.interleave._;
 
 
-                                    , val index  : Long
+class VolatileArrayAccessEventGen(
+                                   val threadId: Long
 
 
-                                    , val methodCounter  : Int
+                                   , val programCounter: Int
 
 
+                                   , val order: Int
 
 
-                                    , var stackTraceOrdinal  : Int
+                                   , val index: Long
 
 
-                                    , var slidingWindowId: Int
-                                    , val methodId: Int
+                                   , val methodCounter: Int
 
 
-                                    , val operation: Int
+                                   , var stackTraceOrdinal: Int
 
 
-                                    , val objectHashCode: Long
+                                   , var slidingWindowId: Int
+                                   , val methodId: Int
 
 
-                                    , val loopId: Int
+                                   , val operation: Int
 
 
-                                    , val runId: Int
+                                   , val objectHashCode: Long
 
 
-                                    , val runPosition: Int
+                                   , val loopId: Int
 
 
-                                  ) extends VolatileArrayAccessEventInterleave {
+                                   , val runId: Int
+
+
+                                   , val runPosition: Int
+
+
+                                 ) extends VolatileArrayAccessEventInterleave {
   override def toString() = {
     var text = "VolatileArrayAccessEventGen"
     text = text + ", threadId:" + threadId
@@ -132,10 +137,7 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( operation != that.operation )
-             {
+             else if (operation != that.operation) {
                false;
              }
              else if (objectHashCode != that.objectHashCode) {
@@ -187,19 +189,19 @@ object  VolatileArrayAccessEventGen
             
                 data.getLong()
            
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                0
-           
-          , 
-            
-                0
-           
           ,
+
+       data.getInt()
+
+       ,
+
+       0
+
+       ,
+
+       0
+
+       ,
 
        data.getInt()
 
@@ -235,7 +237,7 @@ object  VolatileArrayAccessEventGen
    
      def applyFromScalaEvent(data : ByteBuffer) =
    {
-     val result = new VolatileArrayAccessEventGen (
+     val result = new VolatileArrayAccessEventGen(
 
        data.getLong()
        , data.getInt()

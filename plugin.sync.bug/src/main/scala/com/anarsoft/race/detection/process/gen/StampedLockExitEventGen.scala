@@ -1,46 +1,53 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.syncAction._
-
-import java.nio.ByteBuffer
-import java.util.Comparator;
-
-
-class StampedLockExitEventGen (
-  val threadId  : Long
-
-
-,  val programCounter  : Int
-
-
-,  val order  : Int
+import com.anarsoft.race.detection.process.method._
+import com.anarsoft.race.detection.process.syncAction._;
+import com.anarsoft.race.detection.process.volatileField._;
+import com.anarsoft.race.detection.process.monitor._;
+import com.anarsoft.race.detection.process.nonVolatileField._;
+import java.util.Comparator
+import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.interleave._;
 
 
-,  val monitorId  : Int
+class StampedLockExitEventGen(
+                               val threadId: Long
 
 
-,  val methodCounter  : Int
+                               , val programCounter: Int
 
 
-  , val isShared: Boolean
+                               , val order: Int
 
 
-  , val lockTyp: Int
+                               , val monitorId: Int
 
 
-  , val stampedLockMethodId: Int
+                               , val methodCounter: Int
 
 
-  , val loopId: Int
+                               , val isShared: Boolean
 
 
-  , val runId: Int
+                               , val lockTyp: Int
 
 
-  , val runPosition: Int
+                               , val stampedLockMethodId: Int
 
 
-                              ) extends StampedLockExitInterleave {
+                               , val loopId: Int
+
+
+                               , val runId: Int
+
+
+                               , val runPosition: Int
+
+
+                             ) extends StampedLockExitInterleave {
   override def toString() = {
     var text = "StampedLockExitEventGen"
     text = text + ", threadId:" + threadId
@@ -112,10 +119,7 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( lockTyp != that.lockTyp )
-             {
+             else if (lockTyp != that.lockTyp) {
                false;
              }
              else if (stampedLockMethodId != that.stampedLockMethodId) {
@@ -155,17 +159,17 @@ object  StampedLockExitEventGen
             
                 data.getLong()
            
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
+          ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
 
        ,
 
@@ -198,11 +202,8 @@ object  StampedLockExitEventGen
        ,
 
        data.getInt()
-           
-     
-     
-     
-     
+
+
      );
      
      
@@ -212,35 +213,32 @@ object  StampedLockExitEventGen
    }
    
    
-     def applyFromScalaEvent(data : ByteBuffer) =
-   {
-     val result = new StampedLockExitEventGen(
+     def applyFromScalaEvent(data : ByteBuffer) = {
+       val result = new StampedLockExitEventGen(
 
-       data.getLong()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , if (data.get() == 1.asInstanceOf[Byte]) {
-         true
-       } else {
-         false
-       }
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
+         data.getLong()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , if (data.get() == 1.asInstanceOf[Byte]) {
+           true
+         } else {
+           false
+         }
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
 
 
-     );
-     
-     
-     
-     
-     result;
-   
-   }
+       );
+
+
+       result;
+
+     }
    
 
 

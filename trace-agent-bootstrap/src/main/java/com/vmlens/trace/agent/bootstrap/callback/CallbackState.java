@@ -153,7 +153,7 @@ public class CallbackState {
 		
 		if( callbackStatePerThread == null   )
 		{
-            callbackStatePerThread = new CallbackStatePerThread(doNotcheckStackTraceBasedDoTrace, maxStackTraceDepth, threadId, queueFacade.createQueueCollection4ThreadLocal(), syncActionSameAsField4TraceCheck);
+            callbackStatePerThread = new CallbackStatePerThread(threadId, new QueueCollectionWrapper(queueFacade.createQueueCollection4ThreadLocal()));
             callbackStatePerThreadRecovery.put(threadId, callbackStatePerThread);
 		}
 		
@@ -200,38 +200,6 @@ public class CallbackState {
 	
 	
 
-	public static int traceMethods(CallbackStatePerThread callbackStatePerThread)
-	{
-		if( ! callbackStatePerThread.traceMethods()) 
-		{
-			return SLIDING_WINDOW_MUST_BE_GREATER;
-		}
-			
-		return CallbackState.slidingWindow;
-	}
-	
-	
-	public static int traceFields(CallbackStatePerThread callbackStatePerThread)
-	{
-		if( !  callbackStatePerThread.traceFields() )
-		{
-			return SLIDING_WINDOW_MUST_BE_GREATER;
-		}
-		
-		
-		return CallbackState.slidingWindow;
-	}
-	
-	public static int traceSyncStatements(CallbackStatePerThread callbackStatePerThread)
-	{
-		if( ! callbackStatePerThread.traceSyncStatements()  )
-		{
-			return SLIDING_WINDOW_MUST_BE_GREATER;
-		}
-		
-		
-		return CallbackState.slidingWindow;
-	}
 
 
 	public static final ThreadLocal<CallbackStatePerThread> callbackStatePerThread = new ThreadLocal<CallbackStatePerThread>()

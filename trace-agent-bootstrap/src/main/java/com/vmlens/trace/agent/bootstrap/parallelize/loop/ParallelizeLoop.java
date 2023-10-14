@@ -46,14 +46,16 @@ public class ParallelizeLoop {
             if (currentRun != null) {
                 currentRun.end(testThreadState);
                 if (interleaveLoopIterator.hasNext()) {
-                    currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(interleaveLoopIterator.next(), testThreadState, interleaveLoop),
+                    currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(interleaveLoopIterator.next(),
+                            testThreadState, interleaveLoop,
+                            loopId, maxRunId),
                             testThreadState);
                     maxRunId++;
                     return true;
                 }
                 return false;
             } else {
-                currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(testThreadState, interleaveLoop),
+                currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(testThreadState, interleaveLoop, loopId, maxRunId),
                         testThreadState);
                 maxRunId++;
                 return true;

@@ -15,25 +15,23 @@ class StepProzessThreadStoppedEvent extends SingleStep[ContextProcessSyncAction]
       
        
       
-      context.threadId2LastProgramCounter.get(e.stoppedThreadId) match
-      {
-        
-        case None =>
-          {
-            
-            
-            // hier benötigen wir 2 (durch test nachgewiesen)
-              context.partialOrder4SlidingWindowIdBuilder.leftComesBeforeRight( new WithStatementPositionImpl(  e.stoppedThreadId , 
-                   2  )  ,  new WithStatementPositionImpl( e.threadId , e.programCounter ) )
-          }
+      context.threadId2LastProgramCounter.get(e.joinedThreadId) match {
+
+        case None => {
+
+
+          // hier benötigen wir 2 (durch test nachgewiesen)
+          context.partialOrder4SlidingWindowIdBuilder.leftComesBeforeRight(new WithStatementPositionImpl(e.joinedThreadId,
+            2), new WithStatementPositionImpl(e.threadId, e.programCounter))
+        }
         
         case Some(stoppedProgramCounter) =>
           {
             
               
              // 2 sollte nicht schaden, wegen oben übernommen
-               context.partialOrder4SlidingWindowIdBuilder.leftComesBeforeRight( new WithStatementPositionImpl(  e.stoppedThreadId , 
-                   stoppedProgramCounter + 2 )  ,  new WithStatementPositionImpl( e.threadId , e.programCounter ) )
+            context.partialOrder4SlidingWindowIdBuilder.leftComesBeforeRight(new WithStatementPositionImpl(e.joinedThreadId,
+              stoppedProgramCounter + 2), new WithStatementPositionImpl(e.threadId, e.programCounter))
           }
         
       }

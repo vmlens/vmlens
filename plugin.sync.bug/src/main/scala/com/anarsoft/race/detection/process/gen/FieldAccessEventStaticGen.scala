@@ -1,9 +1,16 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.nonVolatileField._
-
-import java.nio.ByteBuffer
-import java.util.Comparator;
+import com.anarsoft.race.detection.process.method._
+import com.anarsoft.race.detection.process.syncAction._;
+import com.anarsoft.race.detection.process.volatileField._;
+import com.anarsoft.race.detection.process.monitor._;
+import com.anarsoft.race.detection.process.nonVolatileField._;
+import java.util.Comparator
+import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.interleave._;
 
 
 class FieldAccessEventStaticGen(
@@ -124,10 +131,7 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( stackTraceOrdinal != that.stackTraceOrdinal )
-             {
+             else if (stackTraceOrdinal != that.stackTraceOrdinal) {
                false;
              }
              else if (slidingWindowId != that.slidingWindowId) {
@@ -174,19 +178,19 @@ object  FieldAccessEventStaticGen
             
                 data.getInt()
            
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
           ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
 
        data.getInt()
 
@@ -238,7 +242,7 @@ object  FieldAccessEventStaticGen
    
      def applyFromScalaEvent(data : ByteBuffer) =
    {
-     val result = new FieldAccessEventStaticGen (
+     val result = new FieldAccessEventStaticGen(
 
        data.getLong()
        , data.getInt()

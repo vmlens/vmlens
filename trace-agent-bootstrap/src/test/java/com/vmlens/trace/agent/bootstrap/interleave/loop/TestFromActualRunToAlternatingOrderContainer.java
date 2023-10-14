@@ -1,9 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.run.AlternatingOrderContainerFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.TestFixture;
+import com.vmlens.trace.agent.bootstrap.testFixture.TestData;
+import com.vmlens.trace.agent.bootstrap.testFixture.VolatileFixture;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Pair;
@@ -17,14 +20,14 @@ public class TestFromActualRunToAlternatingOrderContainer {
     @Test
     public void volatileReadAndWrite() {
         // Given
-        Triple<TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>>, AlternatingOrderContainer, FeatureTestMatcher>
-                testData = TestFixture.volatileReadAndWrite();
+        TestData testData = VolatileFixture.volatileReadAndWrite();
 
         // When
-        AlternatingOrderContainer alternatingOrderContainer = InterleaveLoop.create(testData.getLeft());
+        AlternatingOrderContainer alternatingOrderContainer = new AlternatingOrderContainerFactory().create(testData.
+                resultTestBuilder().factoryList());
 
         // Then
-        assertThat(alternatingOrderContainer, is(testData.getMiddle()));
+        assertThat(alternatingOrderContainer, is(testData.alternatingOrderContainer()));
     }
 
     @Test
@@ -34,7 +37,7 @@ public class TestFromActualRunToAlternatingOrderContainer {
                 TestFixture.threadJoin();
 
         // When
-        AlternatingOrderContainer alternatingOrderContainer = InterleaveLoop.create(testData.getLeft());
+        AlternatingOrderContainer alternatingOrderContainer = new AlternatingOrderContainerFactory().create(testData.getLeft());
 
         // Then
         assertThat(alternatingOrderContainer, is(testData.getRight()));

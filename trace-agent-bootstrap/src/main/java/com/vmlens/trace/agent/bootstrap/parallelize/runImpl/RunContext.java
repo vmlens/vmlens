@@ -1,12 +1,19 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import gnu.trove.map.hash.TLongObjectHashMap;
 
-/**
- * the relation thread id to index is needed for thread join
- */
-public class ThreadIdToState {
+public class RunContext {
+
+    private final int runId;
+    private final int loopId;
+
+    public RunContext(int loopId, int runId) {
+        this.runId = runId;
+        this.loopId = loopId;
+    }
+
     // Package Visible for Test
     final TLongObjectHashMap<TestThreadState> threadIdToState = new TLongObjectHashMap<>();
 
@@ -14,7 +21,10 @@ public class ThreadIdToState {
     public void add(TestThreadState testThreadState) {
         threadIdToState.put(testThreadState.threadId(), testThreadState);
     }
-    public int threadIndexForThreadId(long id)  {
+
+    public int threadIndexForThreadId(long id) {
         return threadIdToState.get(id).threadIndex();
     }
+
+
 }

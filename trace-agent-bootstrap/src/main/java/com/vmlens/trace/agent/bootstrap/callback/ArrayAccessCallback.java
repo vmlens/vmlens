@@ -27,7 +27,6 @@ public class ArrayAccessCallback {
 	private static void accessField(Object theArray, int index, int methodId, boolean isWrite, int position) {
 		CallbackStatePerThread callbackStatePerThread = (CallbackStatePerThread) CallbackState.callbackStatePerThread
 				.get();
-		int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
 		ArrayState state = null;
 		synchronized (LOCK_WEAK_HASHMAP) {
 			state = arrayAccessedInOtherThread.get(theArray);

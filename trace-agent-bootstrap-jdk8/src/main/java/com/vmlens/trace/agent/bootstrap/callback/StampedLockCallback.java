@@ -175,16 +175,16 @@ public class StampedLockCallback {
 
 
     protected static void access(CallbackStatePerThread callbackStatePerThread, Object theLock, int methodId, boolean isLockEnter, boolean isShared, int stampedLockMethodId) {
-        int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
+     /*   int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 
 
         if (!CallbackState.isSlidingWindowTrace(slidingWindowId)) {
             return;
         }
+*/
 
-
-        callbackStatePerThread.programCount++;
-        int currentProgramCounter = callbackStatePerThread.programCount;
+        //   callbackStatePerThread.programCount++;
+        //   int currentProgramCounter = callbackStatePerThread.programCount;
 
         int order = 0;
         LockIdAndOrder current = null;
@@ -214,7 +214,7 @@ public class StampedLockCallback {
 //        ParallelizeFacade.afterLockOperation(callbackStatePerThread, new ParallelizeLock(isLockEnter, isShared, current.id));
 
 
-        callbackStatePerThread.programCount++;
+        // callbackStatePerThread.programCount++;
     }
 
 }

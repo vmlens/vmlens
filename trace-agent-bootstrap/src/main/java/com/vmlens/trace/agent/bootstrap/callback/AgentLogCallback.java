@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.event.AgentLogEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
+import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade.parallelize;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -21,8 +21,8 @@ public class AgentLogCallback {
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
-		exception.printStackTrace(writer);
-		callbackStatePerThread.queueCollection.putDirect( new AgentLogEvent("EXCEPTION:"  + stringWriter.toString())  );
+			exception.printStackTrace(writer);
+			callbackStatePerThread.putDirect(new AgentLogEvent("EXCEPTION:" + stringWriter.toString()));
 		
 		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
 		}
@@ -38,9 +38,9 @@ public class AgentLogCallback {
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
-		new Exception().printStackTrace(writer);
-		callbackStatePerThread.queueCollection.putDirect( new AgentLogEvent("EXCEPTION:"  + message  + "  " + stringWriter.toString() )  );
-		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;	
+			new Exception().printStackTrace(writer);
+			callbackStatePerThread.putDirect(new AgentLogEvent("EXCEPTION:" + message + "  " + stringWriter.toString()));
+			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
 		
 		}
 	}
@@ -50,20 +50,20 @@ public class AgentLogCallback {
         String message = location.getSimpleName() + ":" + text;
         CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
         CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.queueCollection.putDirect(new AgentLogEvent(message));
-        CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
+		callbackStatePerThread.putDirect(new AgentLogEvent(message));
+		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
     }
 
     public static  void close(Object obj)
 	{
 		CallbackStatePerThread callbackStatePerThread  = CallbackState.callbackStatePerThread.get();
-        ParallelizeFacade.close(callbackStatePerThread, obj);
+		parallelize().close(callbackStatePerThread, obj);
 	}
 
     public static boolean hasNext(Object obj)
 	{
 		CallbackStatePerThread callbackStatePerThread  = CallbackState.callbackStatePerThread.get();
-        return ParallelizeFacade.hasNext(callbackStatePerThread, obj);
+		return parallelize().hasNext(callbackStatePerThread, obj);
 	}
 
 }

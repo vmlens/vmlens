@@ -2,22 +2,14 @@ package com.vmlens.trace.agent.bootstrap.event;
 
 import com.vmlens.trace.agent.bootstrap.callback.QueueCollectionWrapper;
 
-public class SendEventContext {
+public interface SendEventContext {
 
-    public int incrementAndGetMethodCount() {
-        return 0;
-    }
+    int incrementAndGetMethodCount();
 
-    public QueueCollectionWrapper queueCollection() {
-        return null;
-    }
+    long threadId();
 
-    public long threadId() {
-        return 0L;
-    }
+    int slidingWindowId();
 
-    public int slidingWindowId() {
-        return 0;
-    }
+    void put(int index, StaticEvent element, int slidingWindowId);
 
 }

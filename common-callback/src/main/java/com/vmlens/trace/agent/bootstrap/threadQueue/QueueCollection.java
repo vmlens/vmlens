@@ -69,27 +69,6 @@ public class QueueCollection {
 		 UNSAFE.park(false, nanoSeconds);
 	}
 	
-	
-
-	/*
-	 * haupt methode
-	 * 	
-	 * 
-	 * 
-	 * put(index, Object, slidingWindowId)
-
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * @param index
-	 * @param element
-	 * @param sldingWindowId
-	 * @return
-	 */
-	
-	
 
 	public void put(int index, Object element, int slidingWindowId)
 	{

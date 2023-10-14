@@ -1,9 +1,16 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.monitor._
-
-import java.nio.ByteBuffer
-import java.util.Comparator;
+import com.anarsoft.race.detection.process.method._
+import com.anarsoft.race.detection.process.syncAction._;
+import com.anarsoft.race.detection.process.volatileField._;
+import com.anarsoft.race.detection.process.monitor._;
+import com.anarsoft.race.detection.process.nonVolatileField._;
+import java.util.Comparator
+import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.interleave._;
 
 
 class MonitorExitEventGen(
@@ -102,10 +109,7 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( methodId != that.methodId )
-             {
+             else if (methodId != that.methodId) {
                false;
              }
              else if (position != that.position) {
@@ -145,18 +149,6 @@ object  MonitorExitEventGen
             
                 data.getLong()
            
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
-          , 
-            
-                data.getInt()
-           
           ,
 
        data.getInt()
@@ -181,6 +173,18 @@ object  MonitorExitEventGen
 
        data.getInt()
 
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
+       ,
+
+       data.getInt()
+
 
      );
      
@@ -191,30 +195,27 @@ object  MonitorExitEventGen
    }
    
    
-     def applyFromScalaEvent(data : ByteBuffer) =
-   {
-     val result = new MonitorExitEventGen(
+     def applyFromScalaEvent(data : ByteBuffer) = {
+       val result = new MonitorExitEventGen(
 
-       data.getLong()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
-       , data.getInt()
+         data.getLong()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
+         , data.getInt()
 
 
-     );
-     
-     
-     
-     
-     result;
-   
-   }
+       );
+
+
+       result;
+
+     }
    
 
 

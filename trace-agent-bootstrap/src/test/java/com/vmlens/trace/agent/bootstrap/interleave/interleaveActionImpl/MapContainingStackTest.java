@@ -10,7 +10,7 @@ import static com.vmlens.trace.agent.bootstrap.interleave.Position.p;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class TestMapContainingStack {
+public class MapContainingStackTest {
 
     @Test
     public void testStack() {

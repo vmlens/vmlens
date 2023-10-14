@@ -1,9 +1,10 @@
-package com.vmlens.trace.agent.bootstrap.interleave.testUtil;
+package com.vmlens.trace.agent.bootstrap.testFixture;
 
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.testUtil.ThreadTestBuilder;
 
-public class FeatureTestBuilder {
+public class FixtureBuilder {
 
     public static final int MAIN_THREAD_INDEX = 0;
     public static final int FIRST_WORKER_THREAD_INDEX = 1;
@@ -12,7 +13,7 @@ public class FeatureTestBuilder {
     private final ResultTestBuilder resultTestBuilder;
     private ThreadTestBuilder threadTestBuilder;
 
-    public FeatureTestBuilder(ResultTestBuilder resultTestBuilder) {
+    public FixtureBuilder(ResultTestBuilder resultTestBuilder) {
         this.resultTestBuilder = resultTestBuilder;
     }
 
@@ -43,4 +44,5 @@ public class FeatureTestBuilder {
     public void monitorExit(int id) {
         threadTestBuilder.monitorExit(id);
     }
+
 }

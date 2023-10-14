@@ -9,17 +9,17 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TestAlternatingOrderContainer {
+public class AlternatingOrderContainerTest {
 
     @Test
     public void testFixedEqualsIndependentOfSort() {
         // Given
-        AlternatingOrderContainer first = createFixed(0,1);
-        AlternatingOrderContainer second = createFixed(1,0);
+        AlternatingOrderContainer first = createFixed(0, 1);
+        AlternatingOrderContainer second = createFixed(1, 0);
         // When
         boolean equals = first.equals(second);
         // Then
-        assertThat(equals,is(true));
+        assertThat(equals, is(true));
     }
 
     @Test

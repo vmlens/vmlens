@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
 public class RunStateMachineImpl implements RunStateMachine {
     // package visible for test
-    final ThreadIdToState threadIdToState;
+    final RunContext runContext;
     private final ActualRun actualRun;
     private final InterleaveLoop interleaveLoop;
     private RunState stateAfterNewThreadStarted;
@@ -19,14 +19,14 @@ public class RunStateMachineImpl implements RunStateMachine {
     public RunStateMachineImpl(ActualRun actualRun,
                                TestThreadState testThreadState,
                                InterleaveLoop interleaveLoop,
-                               ThreadIdToState threadIdToState,
+                               RunContext runContext,
                                RunState initialState) {
         this.actualRun = actualRun;
         this.currentState = initialState;
         this.stateAfterNewThreadStarted = initialState;
-        this.threadIdToState = threadIdToState;
+        this.runContext = runContext;
         this.interleaveLoop = interleaveLoop;
-        threadIdToState.add(testThreadState);
+        runContext.add(testThreadState);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RunStateMachineImpl implements RunStateMachine {
     }
     @Override
     public void processNewTestTask(TestThreadState testThreadState) {
-        threadIdToState.add(testThreadState);
+        runContext.add(testThreadState);
         currentState.addTaskStartedInterleaveAction(testThreadState, actualRun);
         currentState = stateAfterNewThreadStarted;
     }
@@ -59,7 +59,7 @@ public class RunStateMachineImpl implements RunStateMachine {
 
     @Override
     public void setStateRecording() {
-        currentState = new RunStateRecording(actualRun, threadIdToState);
+        currentState = new RunStateRecording(actualRun, runContext);
         stateAfterNewThreadStarted = currentState;
     }
 

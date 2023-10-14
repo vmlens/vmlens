@@ -92,22 +92,20 @@ def visit( in :  StampedLockExitEventGen)
 
        
 
-   def visit( in :  ThreadBeginEventGen)
-   {
-  
-     
-      context.partialOrder4SlidingWindowIdBuilder.leftComesBeforeRight(new WithStatementPositionImpl(in.threadId , in.programCounter ) , new WithStatementPositionImpl(in.startedThreadId , 0  ))
-          setMaxProgramCounter(in.threadId , in.programCounter);
-   }
-       
+   def visit(in: ThreadStartEventGen) {
 
-   def visit( in :  ThreadStoppedEventGen)
-   {
-   
-     
-      context.threadStopList.add( in );
-          setMaxProgramCounter(in.threadId , in.programCounter);
+
+     context.partialOrder4SlidingWindowIdBuilder.leftComesBeforeRight(new WithStatementPositionImpl(in.threadId, in.programCounter), new WithStatementPositionImpl(in.startedThreadId, 0))
+     setMaxProgramCounter(in.threadId, in.programCounter);
    }
+
+
+  def visit(in: ThreadJoinedEventGen) {
+
+
+    context.threadStopList.add(in);
+    setMaxProgramCounter(in.threadId, in.programCounter);
+  }
   
   
 }

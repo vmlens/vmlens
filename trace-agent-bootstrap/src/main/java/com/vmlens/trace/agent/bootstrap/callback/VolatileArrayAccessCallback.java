@@ -8,7 +8,7 @@ public class VolatileArrayAccessCallback {
 	
 	public static void access(long index, Object obj, int methodId , int operation)
 	{
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+	/*	CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		//callbackStatePerThread.monitorCount++;
 		int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 
@@ -50,14 +50,14 @@ public class VolatileArrayAccessCallback {
 
         }
 		
-		
+	*/
 		
 	}
 	
 	
 	public static void before_access(long index, Object obj, int methodId , int operation)
 	{
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+	/*	CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		//callbackStatePerThread.monitorCount++;
 		int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 
@@ -100,7 +100,7 @@ public class VolatileArrayAccessCallback {
         }
 		
 		
-		
+		*/
 	}
 	
 	

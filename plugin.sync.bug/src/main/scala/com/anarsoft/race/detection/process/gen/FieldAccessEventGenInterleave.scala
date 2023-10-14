@@ -1,9 +1,16 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.nonVolatileField._
-
-import java.nio.ByteBuffer
-import java.util.Comparator;
+import com.anarsoft.race.detection.process.method._
+import com.anarsoft.race.detection.process.syncAction._;
+import com.anarsoft.race.detection.process.volatileField._;
+import com.anarsoft.race.detection.process.monitor._;
+import com.anarsoft.race.detection.process.nonVolatileField._;
+import java.util.Comparator
+import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.interleave._;
 
 
 class FieldAccessEventGenInterleave(
@@ -32,13 +39,11 @@ class FieldAccessEventGenInterleave(
                                      , val objectHashCode: Long
 
 
+                                     , var slidingWindowId: Int
+                                     , val showSharedMemory: Boolean
 
 
-,  var slidingWindowId  : Int
-,  val showSharedMemory  : Boolean
-
-
-,  val loopId  : Int
+                                     , val loopId: Int
 
 
 ,  val runId  : Int

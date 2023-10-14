@@ -26,7 +26,7 @@ public class CallbackStatic {
 	  
 	 private static void  volatile_access_internal( CallbackStatePerThread callbackStatePerThread , int fieldId, int methodId, boolean isWrite)
 	 {
-		 int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
+/*		 int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 
 	    	if( !  CallbackState.isSlidingWindowTrace( slidingWindowId  ) )
 			{
@@ -69,7 +69,7 @@ public class CallbackStatic {
 
               callbackStatePerThread.programCount += 1;
 
-          }
+          } */
 	 }
 	 
 	 
@@ -84,7 +84,7 @@ public class CallbackStatic {
 	  
 	  private static void non_volatile_access_internal( CallbackStatePerThread callbackStatePerThread , int fieldId, int methodId, boolean isWrite) 
 	  {
-		   int slidingWindowId =  CallbackState.traceFields(callbackStatePerThread);
+	/*	   int slidingWindowId =  CallbackState.traceFields(callbackStatePerThread);
 		    
 		    if (!  CallbackState.isSlidingWindowTrace(slidingWindowId )) {
 		      return;
@@ -117,7 +117,7 @@ public class CallbackStatic {
 		        }
 		        writeEvent(callbackStatePerThread, callbackStatePerThread.threadId, slidingWindowId , fieldId, methodId, isWrite, callbackStatePerThread.programCount, callbackStatePerThread.methodCount);
 		      }
-		    }
+		    } */
 	  }
 	  
 	  
@@ -132,7 +132,7 @@ public class CallbackStatic {
 	
 	private static void access_mode_state(final  CallbackStatePerThread callbackStatePerThread , final int fieldId, int methodId, boolean isWrite)
 	{
-		 final int slidingWindowId =  CallbackState.traceFields(callbackStatePerThread);
+	/*	 final int slidingWindowId =  CallbackState.traceFields(callbackStatePerThread);
 		    
 		    if (!  CallbackState.isSlidingWindowTrace(slidingWindowId )) {
 		      return;
@@ -199,7 +199,7 @@ public class CallbackStatic {
 			
 		}
 		    
-		    
+		*/
 	}
 	
 	

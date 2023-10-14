@@ -30,7 +30,7 @@ public class Class2Id {
 			
 			callbackStatePerThread.stackTraceBasedDoNotTrace++;
 			
-			callbackStatePerThread.queueCollection.putDirect( new ClassNameEvent(cl.getName() ,current )  );
+			callbackStatePerThread.putDirect(new ClassNameEvent(cl.getName(), current));
 			
 			callbackStatePerThread.stackTraceBasedDoNotTrace--;
 			
@@ -67,9 +67,9 @@ public class Class2Id {
 			callbackStatePerThread.stackTraceBasedDoNotTrace++;
 			
 			String name = createName(cl);
-			
-			
-			callbackStatePerThread.queueCollection.putDirect( new ClassNameEvent(name ,current )  );
+
+
+            callbackStatePerThread.putDirect(new ClassNameEvent(name, current));
 			
 			callbackStatePerThread.stackTraceBasedDoNotTrace--;
 			

@@ -1,7 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactoryAndOrRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
@@ -10,11 +11,12 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
 public class RunStateRecording implements RunState, ActionContext {
     private final ActualRun actualRun;
-    private final ThreadIdToState threadIdToState;
 
-    public RunStateRecording(ActualRun actualRun, ThreadIdToState threadIdToState) {
+    private final RunContext runContext;
+
+    public RunStateRecording(ActualRun actualRun, RunContext runContext) {
         this.actualRun = actualRun;
-        this.threadIdToState = threadIdToState;
+        this.runContext = runContext;
     }
 
     @Override
@@ -45,16 +47,18 @@ public class RunStateRecording implements RunState, ActionContext {
 
     @Override
     public RunState threadStarted(RunnableOrThreadWrapper startedThread, TestThreadState testThreadState) {
-        return new RunStateNewThreadStarted(startedThread, testThreadState);
+        return new RunStateNewThreadStarted(startedThread, testThreadState.threadIndex(), runContext);
     }
 
     @Override
     public int threadIndexForId(long threadId) {
-        return threadIdToState.threadIndexForThreadId(threadId);
+        return runContext.threadIndexForThreadId(threadId);
     }
 
     @Override
-    public void after(InterleaveActionWithPositionFactory interleaveActionWithPositionFactory) {
-        actualRun.after(interleaveActionWithPositionFactory);
+    public void afterInterleaveActionWithPositionFactory(InterleaveActionWithPositionFactoryAndOrRuntimeEvent
+                                                                 interleaveActionWithPositionFactory, TestThreadState testThreadState) {
+        actualRun.after(interleaveActionWithPositionFactory, new ActualRunContextImpl(runContext, testThreadState));
     }
+
 }

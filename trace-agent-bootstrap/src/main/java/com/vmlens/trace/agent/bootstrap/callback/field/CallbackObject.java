@@ -61,19 +61,19 @@ public class CallbackObject {
 			boolean isWrite) {
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
-		int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
+	/*	int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
 
 		if (!CallbackState.isSlidingWindowTrace(slidingWindowId)) {
 			return null;
 		}
-
+*/
 		return callbackStatePerThread;
 	}
 
 	public static void non_volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
 			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
 
-		int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
+	/*	int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
 
 		if (slidingWindowId <= CallbackState.SLIDING_WINDOW_MUST_BE_GREATER) {
 			return;
@@ -82,7 +82,7 @@ public class CallbackObject {
                 callbackStatePerThread.threadId, slidingWindowId, fieldId, methodId, operation,
                 callbackStatePerThread);
 
-
+*/
 	}
 
 	public static void nonVolatileAccessWithOffset(Object orig, sun.misc.Unsafe unsafe, long offset, int methodId,
@@ -148,7 +148,7 @@ public class CallbackObject {
 	public static void volatileAccessWithOffset(Object orig, sun.misc.Unsafe unsafe, long offset, int methodId,
 			int operation) {
 
-		if (orig == null) {
+	/*	if (orig == null) {
 
 			CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
@@ -182,7 +182,7 @@ public class CallbackObject {
             // Fixme Callback
             //           ParallelizeFacade.afterFieldAccess4UnsafeOrVarHandle(CallbackState.callbackStatePerThread.get(), fieldId, operation);
         }
-
+*/
 	}
 
 	static void volatile_access_generated(Object orig, long offset, int fieldId, int methodId, int operation) {
@@ -228,25 +228,30 @@ public class CallbackObject {
 
 	private static CallbackStatePerThread volatile_filter_and_apply_waitpoints(Object orig, int fieldId) {
 		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-		int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
+	/*	int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 		if (!CallbackState.isSlidingWindowTrace(slidingWindowId)) {
 			return null;
 		}
+	*/
 		return callbackStatePerThread;
 	}
 
 	private static void before_volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
 			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
-        callbackStatePerThread.programCount += 1;
+   /*     callbackStatePerThread.programCount += 1;
         updateBeforeObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
         callbackStatePerThread.programCount += 1;
+    */
     }
+
 
     private static void volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
 			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
-        callbackStatePerThread.programCount += 1;
+  /*      callbackStatePerThread.programCount += 1;
         updateObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
         callbackStatePerThread.programCount += 1;
+   */
     }
+
 
 }

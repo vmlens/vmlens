@@ -15,28 +15,21 @@ def visit( in :  VolatileArrayAccessEventGen);
        
        
 def visit( in :  LockEnterEventGen);
-       
-       
-def visit( in :  LockExitEventGen);
-       
-       
-def visit( in :  StampedLockEnterEventGen);
-       
-       
-def visit( in :  StampedLockExitEventGen);
-       
-       
-def visit( in :  ThreadBeginEventGen);
-       
-       
-def visit( in :  ThreadStoppedEventGen);
-       
-     
-       
-       
-    
 
 
+  def visit(in: LockExitEventGen);
+
+
+  def visit(in: StampedLockEnterEventGen);
+
+
+  def visit(in: StampedLockExitEventGen);
+
+
+  def visit(in: ThreadStartEventGen);
+
+
+  def visit(in: ThreadJoinedEventGen);
 
 
 }

@@ -1,6 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.actionImpl;
 
+import com.vmlens.trace.agent.bootstrap.event.impl.ThreadJoinedEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadJoinFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactoryAndRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
@@ -20,7 +22,10 @@ public class ThreadJoin implements ParallelizeAction {
 
     @Override
     public void addInterleaveActionAndOrEvent(ActionContext context, TestThreadState testThreadState) {
-        context.after(new ThreadJoinFactory(testThreadState.threadIndex(), context.threadIndexForId(joinedThreadId)));
+        context.afterInterleaveActionWithPositionFactory(new InterleaveActionWithPositionFactoryAndRuntimeEvent(
+                new ThreadJoinFactory(testThreadState.threadIndex(), context.threadIndexForId(joinedThreadId)),
+                new ThreadJoinedEvent()
+        ), testThreadState);
     }
 
     @Override

@@ -1,9 +1,16 @@
 package com.anarsoft.race.detection.process.gen;
 
-import com.anarsoft.race.detection.process.nonVolatileField._
-
-import java.nio.ByteBuffer
-import java.util.Comparator;
+import com.anarsoft.race.detection.process.method._
+import com.anarsoft.race.detection.process.syncAction._;
+import com.anarsoft.race.detection.process.volatileField._;
+import com.anarsoft.race.detection.process.monitor._;
+import com.anarsoft.race.detection.process.nonVolatileField._;
+import java.util.Comparator
+import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
+import com.anarsoft.race.detection.process.directMemory._;
+import com.anarsoft.race.detection.process.scheduler._
+import com.anarsoft.race.detection.process.interleave._;
 
 
 class ArrayAccessEventGen(
@@ -152,10 +159,7 @@ visitor.visit(this);
              {
                false;
              }
-             else
-            
-             if( classId != that.classId )
-             {
+             else if (classId != that.classId) {
                false;
              }
              else if (slidingWindowId != that.slidingWindowId) {
@@ -218,19 +222,23 @@ object  ArrayAccessEventGen
             
                 data.getInt()
            
-          , 
-            
-                if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-           
-          , 
-            
-                0
-           
-          , 
-            
-                data.getLong()
-           
           ,
+
+       if (data.get() == 1.asInstanceOf[Byte]) {
+         true
+       } else {
+         false
+       }
+
+       ,
+
+       0
+
+       ,
+
+       data.getLong()
+
+       ,
 
        data.getInt()
 
@@ -274,10 +282,10 @@ object  ArrayAccessEventGen
    
      def applyFromScalaEvent(data : ByteBuffer) =
    {
-     val result = new ArrayAccessEventGen (
-     
-            data.getLong()
-          ,  data.getInt()
+     val result = new ArrayAccessEventGen(
+
+       data.getLong()
+       , data.getInt()
        , data.getInt()
        , data.getInt()
        , data.getInt()

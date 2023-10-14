@@ -128,9 +128,8 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
 			AgentController agentController = AgentController.create(outputFileName);
 
-			
-			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.SendEventDoNotSend");
-			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap");
+
+            this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap");
 			
 			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.CreateGetState");
 			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.FieldAccessCallback");

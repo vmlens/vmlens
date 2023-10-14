@@ -6,6 +6,8 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
+import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade.parallelize;
+
 public class MethodCallbackImpl {
 
     public void atomicMethodEnterWithCallback(int atomicId, int methodId) {
@@ -64,7 +66,7 @@ public class MethodCallbackImpl {
             callbackStatePerThread.stackTraceBasedDoNotTrace++;
             Thread thread = Thread.currentThread();
             // Fixme Callback hier auch methodid
-            ParallelizeFacade.beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(thread));
+            parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(thread));
 
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
