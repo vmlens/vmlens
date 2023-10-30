@@ -4,6 +4,8 @@ import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileAccessEventGen;
 
+import static com.vmlens.trace.agent.bootstrap.event.RuntimeEventIds.ID_SyncActions;
+
 public class VolatileAccessEvent extends VolatileAccessEventGen implements RuntimeEvent {
 
 
@@ -27,6 +29,6 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
 
     @Override
     public void send(SendEventContext context) {
-
+        context.put(ID_SyncActions, this, slidingWindowId);
     }
 }

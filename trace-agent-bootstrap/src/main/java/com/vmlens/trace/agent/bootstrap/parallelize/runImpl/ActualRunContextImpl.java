@@ -1,6 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRunContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
@@ -13,5 +15,13 @@ public class ActualRunContextImpl implements ActualRunContext {
         this.testThreadState = testThreadState;
     }
 
+    @Override
+    public void setRunIdsInRuntimeEvent(RuntimeEvent event) {
+        runContext.setRunIdsInRuntimeEvent(event);
+    }
 
+    @Override
+    public SendEventContext sendEventContext() {
+        return testThreadState.threadLocalWrapper();
+    }
 }

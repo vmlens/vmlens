@@ -1,10 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
 import java.nio.ByteBuffer;
-
-import com.vmlens.trace.agent.bootstrap.event.*;
-
-import java.io.DataOutputStream;
 
 public class FieldAccessEventGen {
     protected int slidingWindowId;
@@ -16,6 +14,10 @@ public class FieldAccessEventGen {
     protected int methodId;
     protected boolean stackTraceIncomplete;
     protected long objectHashCode;
+    protected boolean showSharedMemory;
+    protected int loopId;
+    protected int runId;
+    protected int runPosition;
 
     @Override
     public boolean equals(Object o) {
@@ -31,6 +33,10 @@ public class FieldAccessEventGen {
         if (methodId != that.methodId) return false;
         if (stackTraceIncomplete != that.stackTraceIncomplete) return false;
         if (objectHashCode != that.objectHashCode) return false;
+        if (showSharedMemory != that.showSharedMemory) return false;
+        if (loopId != that.loopId) return false;
+        if (runId != that.runId) return false;
+        if (runPosition != that.runPosition) return false;
         return slidingWindowId == that.slidingWindowId;
     }
 
@@ -45,13 +51,17 @@ public class FieldAccessEventGen {
                 "methodId=" + methodId +
                 "stackTraceIncomplete=" + stackTraceIncomplete +
                 "objectHashCode=" + objectHashCode +
+                "showSharedMemory=" + showSharedMemory +
+                "loopId=" + loopId +
+                "runId=" + runId +
+                "runPosition=" + runPosition +
                 '}';
     }
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.field.getByteBuffer(slidingWindowId, 38, EventConstants.MAX_ARRAY_SIZE * 1000);
-        buffer.put((byte) 1);
+        ByteBuffer buffer = streamRepository.field.getByteBuffer(slidingWindowId, 51, EventConstants.MAX_ARRAY_SIZE * 1000);
+        buffer.put((byte) 2);
         buffer.putLong(threadId);
         buffer.putInt(programCounter);
         buffer.putInt(fieldId);
@@ -60,5 +70,9 @@ public class FieldAccessEventGen {
         buffer.putInt(methodId);
         buffer.put((byte) (stackTraceIncomplete ? 1 : 0));
         buffer.putLong(objectHashCode);
+        buffer.put((byte) (showSharedMemory ? 1 : 0));
+        buffer.putInt(loopId);
+        buffer.putInt(runId);
+        buffer.putInt(runPosition);
     }
 }

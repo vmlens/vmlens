@@ -1,15 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcherBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.testUtil.TestFixture;
 import com.vmlens.trace.agent.bootstrap.testFixture.TestData;
 import com.vmlens.trace.agent.bootstrap.testFixture.VolatileFixture;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
-import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -22,7 +17,7 @@ public class TestFromAlternatingOrderContainerToCalculatedRun {
     @Test
     public void volatileReadAndWrite() {
         // Given
-        TestData testData = VolatileFixture.volatileReadAndWrite();
+        TestData testData = new VolatileFixture().volatileReadAndWrite();
 
         // When
         Iterator<CalculatedRun> iterator = testData.alternatingOrderContainer().iterator();
@@ -67,6 +62,5 @@ public class TestFromAlternatingOrderContainerToCalculatedRun {
             }
         }
     }
-
 
 }

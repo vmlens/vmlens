@@ -1,10 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
 import java.nio.ByteBuffer;
-
-import com.vmlens.trace.agent.bootstrap.event.*;
-
-import java.io.DataOutputStream;
 
 public class MonitorExitEventGen {
     protected int slidingWindowId;

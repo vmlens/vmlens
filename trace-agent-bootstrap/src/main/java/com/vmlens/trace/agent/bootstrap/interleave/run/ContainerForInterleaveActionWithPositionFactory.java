@@ -11,7 +11,7 @@ public class ContainerForInterleaveActionWithPositionFactory implements Interlea
 
     @Override
     public void apply(ActualRun actualRun, ActualRunContext actualRunContext) {
-
+        actualRun.after(interleaveActionWithPositionFactory);
     }
 
     @Override

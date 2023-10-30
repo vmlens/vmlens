@@ -13,7 +13,7 @@ import static com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder.MAIN_T
 
 public class VolatileFixture {
 
-    public static TestData volatileReadAndWrite() {
+    public TestData volatileReadAndWrite() {
 
         ResultTestBuilder resultTestBuilderForActualRun = new ResultTestBuilder();
 

@@ -42,4 +42,8 @@ public class TestThreadState {
                     .after(new ThreadStart(threadLocalWrapper.getParallelizedThreadLocal().createdThread()), this);
         }
     }
+
+    public ThreadLocalWrapper threadLocalWrapper() {
+        return threadLocalWrapper;
+    }
 }

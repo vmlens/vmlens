@@ -14,7 +14,7 @@ public class TestModuleParallelize {
     @Test
     public void volatileReadAndWrite() {
         // Given
-        TestData testData = VolatileFixture.volatileReadAndWrite();
+        TestData testData = new VolatileFixture().volatileReadAndWrite();
 
         // When
         ParallelizeFacade facade = testData.resultTestBuilder().parallelizeFacade();

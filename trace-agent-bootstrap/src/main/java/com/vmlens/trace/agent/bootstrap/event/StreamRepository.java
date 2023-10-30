@@ -7,20 +7,17 @@ import java.util.Iterator;
 public class StreamRepository {
 public final StreamWrapperWithoutSlidingWindow threadName;
     public final StreamWrapperWithoutSlidingWindow description;
-	public final StreamWrapperWithoutSlidingWindow stackTrace;
-	public final StreamWrapperWithoutSlidingWindow agentLog;
-	public final StreamWrapperWithoutSlidingWindow className;
-	public final StreamWrapperWithSlidingWindow firstWrite;
-	public final StreamWrapperWithSlidingWindow method;
+    public final StreamWrapperWithoutSlidingWindow stackTrace;
+    public final StreamWrapperWithoutSlidingWindow agentLog;
+    public final StreamWrapperWithoutSlidingWindow className;
+    public final StreamWrapperWithSlidingWindow firstWrite;
+    public final StreamWrapperWithSlidingWindow method;
     public final StreamWrapperWithSlidingWindow syncActions;
     public final StreamWrapperWithSlidingWindow field;
     public final StreamWrapperWithSlidingWindow monitor;
     public final StreamWrapperWithSlidingWindow directMemory;
-    //	public final StreamWrapperWithSlidingWindow methodCoverage;
-    public final StreamWrapperWithSlidingWindow scheduler;
-    public final StreamWrapperWithSlidingWindow transfer;
-    public final StreamWrapperWithSlidingWindow state;
-    public final StreamWrapperWithSlidingWindow stateInitial;
+    public final StreamWrapperWithSlidingWindow interleave;
+
     private final TLinkedList<AbstractStreamWrapper> streamList = new TLinkedList<AbstractStreamWrapper>();
 
     public StreamRepository(String eventDir, int writerNumber) {
@@ -37,11 +34,7 @@ public final StreamWrapperWithoutSlidingWindow threadName;
         this.monitor = new StreamWrapperWithSlidingWindow(eventDir, "monitor", writerNumber, streamList);
         this.directMemory = new StreamWrapperWithSlidingWindow(eventDir, "directMemory", writerNumber, streamList);
 
-        this.scheduler = new StreamWrapperWithSlidingWindow(eventDir, "scheduler", writerNumber, streamList);
-        this.transfer = new StreamWrapperWithSlidingWindow(eventDir, "transfer", writerNumber, streamList);
-
-        this.state = new StreamWrapperWithSlidingWindow(eventDir, "state", writerNumber, streamList);
-        this.stateInitial = new StreamWrapperWithSlidingWindow(eventDir, "stateInitial", writerNumber, streamList);
+        this.interleave = new StreamWrapperWithSlidingWindow(eventDir, "interleave", writerNumber, streamList);
     }
 
     public void flush() throws Exception {

@@ -18,15 +18,14 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static com.vmlens.trace.agent.bootstrap.event.AbstractRuntimeEvent.ID_SyncActions;
-import static org.mockito.Mockito.mock;
+import static com.vmlens.trace.agent.bootstrap.event.RuntimeEventIds.ID_SyncActions;
+
 
 public class ResultTestBuilder {
 
@@ -39,12 +38,11 @@ public class ResultTestBuilder {
     private final List<ParallelizeActionAndThreadLocalWrapper> parallelizeActionAndThreadLocalWrapperList = new
             LinkedList<ParallelizeActionAndThreadLocalWrapper>();
     private final Map<Integer, CallbackStatePerThread> threadIndexToThreadLocalWrapperMock = new HashMap<>();
-
-
     private List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> actualRun = new
             LinkedList<>();
-
     private List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> expectedRun = new
+            LinkedList<>();
+    private List<StaticEventAndId> expectedEvents = new
             LinkedList<>();
 
 
@@ -58,8 +56,7 @@ public class ResultTestBuilder {
         threadIndexToThreadLocalWrapperMock.put(2, threadLocalWrapper(2, 20L, run));
     }
 
-    private static CallbackStatePerThread threadLocalWrapper(int threadIndex, long threadId,
-                                                             Run run) {
+    private static CallbackStatePerThread threadLocalWrapper(int threadIndex, long threadId, Run run) {
         CallbackStatePerThread threadLocalWrapperMock = new CallbackStatePerThread(1L, null);
         threadLocalWrapperMock.setParallelizedThreadLocal(new ParallelizedThreadLocal(run, threadIndex));
         return threadLocalWrapperMock;
@@ -70,6 +67,11 @@ public class ResultTestBuilder {
         VolatileAccessEvent actual = new VolatileAccessEvent(1L, 5, fieldId, 5, 5, operation, 10L);
         VolatileAccessEvent expected = new VolatileAccessEvent(1L, 5, fieldId, 5, 5, operation, 10L);
         expectedRun.add(new ContainerForRuntimeEvent(expected));
+
+        VolatileAccessEvent expectedEvent = new VolatileAccessEvent(1L, 5, fieldId, 5, 5, operation, 10L);
+        runContext.setRunIdsInRuntimeEvent(expectedEvent);
+        expectedEvents.add(new StaticEventAndId(expectedEvent, ID_SyncActions));
+
 
         add(new ParallelizeActionWithRuntimeEvent(actual), position);
         VolatileFieldAccess action = new VolatileFieldAccess(fieldId, operation);
@@ -149,5 +151,9 @@ public class ResultTestBuilder {
         add(new InterleaveActionWithPositionFactoryImpl(interleaveAction, position.threadIndex), position);
         blockBuilderList.add(new TLinkableWrapper<ElementAndPosition<BlockBuilder>>
                 (new ElementAndPosition(interleaveAction, position)));
+    }
+
+    public List<StaticEventAndId> expectedEvents() {
+        return expectedEvents;
     }
 }

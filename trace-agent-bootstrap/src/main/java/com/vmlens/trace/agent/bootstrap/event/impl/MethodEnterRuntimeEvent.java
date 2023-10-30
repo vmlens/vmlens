@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodEnterEventGen;
 
-import static com.vmlens.trace.agent.bootstrap.event.AbstractRuntimeEvent.ID_Method;
+import static com.vmlens.trace.agent.bootstrap.event.RuntimeEventIds.ID_Method;
 
 public class MethodEnterRuntimeEvent extends MethodEnterEventGen implements RuntimeEvent {
 
@@ -14,13 +14,14 @@ public class MethodEnterRuntimeEvent extends MethodEnterEventGen implements Runt
 
     @Override
     public void setRunLoopAndSlidingWindowId(int runId, int loopId, int slidingWindowId) {
+        this.runId = runId;
+        this.loopId = loopId;
         this.slidingWindowId = slidingWindowId;
     }
 
     @Override
     public void send(SendEventContext context) {
         this.methodCounter = context.incrementAndGetMethodCount();
-        this.slidingWindowId = context.slidingWindowId();
         this.threadId = context.threadId();
 
         context.put(ID_Method, this, this.slidingWindowId);

@@ -1,0 +1,88 @@
+package com.anarsoft.race.detection.event.gen;
+
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.monitor.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
+
+import java.nio.ByteBuffer;
+
+
+class MethodAtomicExitEventGen(
+                                val threadId: Long
+                                , val methodId: Int
+                                , val methodCounter: Int
+                                , val hasCallback: Byte
+                                , val loopId: Int
+                                , val runId: Int
+                                , val runPosition: Int
+                              ) extends MethodAtomicExitEvent {
+  override def toString() = {
+    var text = "MethodAtomicExitEventGen"
+    text = text + ", threadId:" + threadId
+    text = text + ", methodId:" + methodId
+    text = text + ", methodCounter:" + methodCounter
+    text = text + ", hasCallback:" + hasCallback
+    text = text + ", loopId:" + loopId
+    text = text + ", runId:" + runId
+    text = text + ", runPosition:" + runPosition
+    text;
+  }
+
+  override def equals(other: Any) = {
+    other match {
+      case that: MethodAtomicExitEventGen => {
+        if (threadId != that.threadId) {
+          false;
+        }
+        else if (methodId != that.methodId) {
+          false;
+        }
+        else if (methodCounter != that.methodCounter) {
+          false;
+        }
+        else if (hasCallback != that.hasCallback) {
+          false;
+        }
+        else if (loopId != that.loopId) {
+          false;
+        }
+        else if (runId != that.runId) {
+          false;
+        }
+        else if (runPosition != that.runPosition) {
+          false;
+        }
+        else
+          true;
+      }
+      case _ => false
+    }
+  }
+}
+
+
+object MethodAtomicExitEventGen {
+  def applyFromJavaEvent(data: ByteBuffer) = {
+    val result = new MethodAtomicExitEventGen(
+
+      data.getLong()
+      ,
+      data.getInt()
+      ,
+      data.getInt()
+      ,
+      data.get()
+      ,
+      data.getInt()
+      ,
+      data.getInt()
+      ,
+      data.getInt()
+    );
+    result;
+  }
+
+}

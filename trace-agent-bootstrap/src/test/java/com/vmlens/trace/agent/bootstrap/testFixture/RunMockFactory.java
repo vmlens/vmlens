@@ -11,7 +11,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunStateMachineImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunStateRunning;
 
-import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static org.mockito.Mockito.mock;
@@ -19,7 +18,6 @@ import static org.mockito.Mockito.mock;
 public class RunMockFactory {
 
     public Run create(ActualRun actualRun, RunContext runContext) {
-
         InterleaveLoop interleaveLoopMock = mock(InterleaveLoop.class);
         WaitNotifyStrategy waitNotifyStrategyMock = mock(WaitNotifyStrategy.class);
         CalculatedRun calculatedRunMock = mock(CalculatedRun.class);

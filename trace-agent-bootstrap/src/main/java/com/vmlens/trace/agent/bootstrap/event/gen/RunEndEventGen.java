@@ -1,10 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
 import java.nio.ByteBuffer;
-
-import com.vmlens.trace.agent.bootstrap.event.*;
-
-import java.io.DataOutputStream;
 
 public class RunEndEventGen {
     protected int slidingWindowId;
@@ -32,7 +30,7 @@ public class RunEndEventGen {
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.scheduler.getByteBuffer(slidingWindowId, 9, EventConstants.MAX_ARRAY_SIZE * 1000);
+        ByteBuffer buffer = streamRepository.interleave.getByteBuffer(slidingWindowId, 9, EventConstants.MAX_ARRAY_SIZE * 1000);
         buffer.put((byte) 27);
         buffer.putInt(loopId);
         buffer.putInt(runId);

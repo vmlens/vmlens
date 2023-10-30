@@ -26,5 +26,8 @@ public class RunContext {
         return threadIdToState.get(id).threadIndex();
     }
 
+    public void setRunIdsInRuntimeEvent(RuntimeEvent event) {
+        event.setRunLoopAndSlidingWindowId(runId, loopId, 1);
+    }
 
 }

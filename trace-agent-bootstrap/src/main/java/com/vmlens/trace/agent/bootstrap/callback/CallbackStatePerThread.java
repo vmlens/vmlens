@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
 
 
 // Fixme aufräumen
-public class CallbackStatePerThread implements ThreadLocalWrapper {
+public class CallbackStatePerThread extends PerThreadCounter implements ThreadLocalWrapper {
 
     public static final String ANARSOFT_THREAD_NAME = "anarsoft";
 
@@ -33,7 +33,7 @@ public class CallbackStatePerThread implements ThreadLocalWrapper {
 
     private ParallelizedThreadLocal parallelizedThreadLocal;
 
-    private int methodCount;
+
     private int programCount = 1;
 
 
@@ -57,10 +57,6 @@ public class CallbackStatePerThread implements ThreadLocalWrapper {
         this.parallelizedThreadLocal = parallelizedThreadLocal;
     }
 
-    @Override
-    public int incrementAndGetMethodCount() {
-        return methodCount++;
-    }
 
     @Override
     public void put(int id, StaticEvent element, int slidingWindowId) {
@@ -71,9 +67,4 @@ public class CallbackStatePerThread implements ThreadLocalWrapper {
         queueIn.putDirect(in);
     }
 
-    // Fixme
-    @Override
-    public int slidingWindowId() {
-        return 0;
-    }
 }
