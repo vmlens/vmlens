@@ -4,46 +4,48 @@ import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadStart;
 
 public class TestThreadState {
-    private final ThreadLocalWrapper threadLocalWrapper;
+    private final ThreadLocalWrapperForParallelize threadLocalWrapperForParallelize;
 
-    public TestThreadState(ThreadLocalWrapper threadLocalWrapper) {
-        this.threadLocalWrapper = threadLocalWrapper;
+    public TestThreadState(ThreadLocalWrapperForParallelize threadLocalWrapperForParallelize) {
+        this.threadLocalWrapperForParallelize = threadLocalWrapperForParallelize;
     }
 
     public void createNewParallelizedThreadLocal(Run run, int threadIndex) {
-        threadLocalWrapper.setParallelizedThreadLocal(new ParallelizedThreadLocal(run, threadIndex));
+        threadLocalWrapperForParallelize.setParallelizedThreadLocal(new ParallelizedThreadLocal(run, threadIndex));
     }
+
     public void setParallelizedThreadLocalToNull() {
-        threadLocalWrapper.setParallelizedThreadLocal(null);
+        threadLocalWrapperForParallelize.setParallelizedThreadLocal(null);
     }
+
     public long threadId() {
-        return threadLocalWrapper.threadId();
+        return threadLocalWrapperForParallelize.threadId();
     }
 
     public int threadIndex() {
-        return threadLocalWrapper.getParallelizedThreadLocal().threadIndex();
+        return threadLocalWrapperForParallelize.getParallelizedThreadLocal().threadIndex();
     }
 
     public void after(ParallelizeAction action) {
-        if (threadLocalWrapper.getParallelizedThreadLocal() != null) {
-            threadLocalWrapper.getParallelizedThreadLocal().after(action, this);
+        if (threadLocalWrapperForParallelize.getParallelizedThreadLocal() != null) {
+            threadLocalWrapperForParallelize.getParallelizedThreadLocal().after(action, this);
         }
     }
 
     public void addCreatedThreadForAfterStart(RunnableOrThreadWrapper runnableOrThreadWrapper) {
-        if (threadLocalWrapper.getParallelizedThreadLocal() != null) {
-            threadLocalWrapper.getParallelizedThreadLocal().setCreatedThread(runnableOrThreadWrapper);
+        if (threadLocalWrapperForParallelize.getParallelizedThreadLocal() != null) {
+            threadLocalWrapperForParallelize.getParallelizedThreadLocal().setCreatedThread(runnableOrThreadWrapper);
         }
     }
 
     public void afterThreadStart() {
-        if (threadLocalWrapper.getParallelizedThreadLocal() != null) {
-            threadLocalWrapper.getParallelizedThreadLocal()
-                    .after(new ThreadStart(threadLocalWrapper.getParallelizedThreadLocal().createdThread()), this);
+        if (threadLocalWrapperForParallelize.getParallelizedThreadLocal() != null) {
+            threadLocalWrapperForParallelize.getParallelizedThreadLocal()
+                    .after(new ThreadStart(threadLocalWrapperForParallelize.getParallelizedThreadLocal().createdThread()), this);
         }
     }
 
-    public ThreadLocalWrapper threadLocalWrapper() {
-        return threadLocalWrapper;
+    public ThreadLocalWrapperForParallelize threadLocalWrapper() {
+        return threadLocalWrapperForParallelize;
     }
 }

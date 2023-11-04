@@ -1,8 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.obj;
 
 import com.vmlens.trace.agent.bootstrap.callback.AnarsoftWeakHashMap;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 
 
 public class DelegateRepository {

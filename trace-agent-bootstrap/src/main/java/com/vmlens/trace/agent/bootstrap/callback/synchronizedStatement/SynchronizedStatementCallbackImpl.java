@@ -1,10 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callback.synchronizedStatement;
 
-import com.vmlens.trace.agent.bootstrap.StaticMonitorRepository;
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.AnarsoftWeakHashMap;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.state.MonitorIdAndOrder;
 import gnu.trove.map.hash.TIntIntHashMap;
 
@@ -42,7 +41,7 @@ public class SynchronizedStatementCallbackImpl {
 
     public void synchronizedMethod(Object objectKey, int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             monitorEnterInternal(objectKey, methodId, 0);
 
         } catch (Throwable e) {
@@ -171,7 +170,7 @@ public class SynchronizedStatementCallbackImpl {
 //        ParallelizeFacade.onMonitorEnter(callbackStatePerThread, current.id);
     }
 
-    private void monitorEnterStaticInternal(int id, int methodId, CallbackStatePerThread callbackStatePerThread,
+    private void monitorEnterStaticInternal(int id, int methodId, CallbackStatePerThreadForParallelize callbackStatePerThread,
                                             int position, int slidingWindowId) {
       /*  callbackStatePerThread.programCount++;
         int currentProgramCounter = callbackStatePerThread.programCount;
@@ -192,7 +191,7 @@ public class SynchronizedStatementCallbackImpl {
 //        ParallelizeFacade.onMonitorEnter(callbackStatePerThread, id * -1);
     }
 
-    private void monitorExitStatic_internal(int id, int methodId, CallbackStatePerThread callbackStatePerThread,
+    private void monitorExitStatic_internal(int id, int methodId, CallbackStatePerThreadForParallelize callbackStatePerThread,
                                             int slidingWindowId) {
         // Fixme Callback
 //        ParallelizeFacade.beforeMonitorExitStatic(callbackStatePerThread, slidingWindowId, methodId);

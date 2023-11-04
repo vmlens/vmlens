@@ -4,7 +4,6 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeCallback;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 import java.util.concurrent.*;
 
@@ -18,7 +17,7 @@ public class ExecutorCallback {
         // Fixme Callback
         // ParallelizeFacade.beforeExecutorStart(CallbackState.callbackStatePerThread.get(), runnable);
 
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         callbackStatePerThread.inThreadStart++;
 
@@ -27,7 +26,7 @@ public class ExecutorCallback {
 
 
     public static void threadStartMethodExit() {
-        CallbackStatePerThread callbackStatePerThread =
+        CallbackStatePerThreadForParallelize callbackStatePerThread =
                 CallbackState.callbackStatePerThread.get();
 
         callbackStatePerThread.inThreadStart--;
@@ -48,7 +47,7 @@ public class ExecutorCallback {
 
 
     public static void forkJoinTaskForkExit() {
-        CallbackStatePerThread callbackStatePerThread =
+        CallbackStatePerThreadForParallelize callbackStatePerThread =
                 CallbackState.callbackStatePerThread.get();
 
         callbackStatePerThread.inThreadStart--;
@@ -67,7 +66,7 @@ public class ExecutorCallback {
     public static void methodEnterExecTask(Object task) {
 
         if (task instanceof Thread) {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
             parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(task));
         }
@@ -79,7 +78,7 @@ public class ExecutorCallback {
 
         if (task instanceof Thread) {
 
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 // Fixme Callback
             // ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
@@ -89,7 +88,7 @@ public class ExecutorCallback {
 
 
     public static void execAfter() {
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         // ToDo do i need this?
         if (callbackStatePerThread.notStartedCount > 0) {
@@ -107,7 +106,7 @@ public class ExecutorCallback {
     public static void execBefore(ForkJoinTask task) {
 
 
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         callbackStatePerThread.tempDoNotInterleave = callbackStatePerThread.doNotInterleave;
 
@@ -145,7 +144,7 @@ public class ExecutorCallback {
 
 
     public static void run(Runnable runnable, int methodId) {
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         int temp = callbackStatePerThread.doNotInterleave;
         callbackStatePerThread.doNotInterleave = 0;
         parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(runnable));
@@ -172,7 +171,7 @@ public class ExecutorCallback {
             return future.get();
         } finally {
             if (future instanceof FutureTask) {
-                CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+                CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
                 // Fixme Callback
                 // ParallelizeFacade.afterFutureGet(callbackStatePerThread, future);
             }

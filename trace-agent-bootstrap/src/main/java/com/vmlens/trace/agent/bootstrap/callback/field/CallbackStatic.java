@@ -1,13 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
-import com.vmlens.trace.agent.bootstrap.callback.state.Access4State;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.state.ModeStateStatic;
 import com.vmlens.trace.agent.bootstrap.callback.state.StaticVolatileOrder;
 import gnu.trove.map.hash.TIntLongHashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.procedure.TObjectProcedure;
 
 public class CallbackStatic {
 
@@ -19,13 +17,12 @@ public class CallbackStatic {
 	
 	
 	 public static void volatile_access(int fieldId, int methodId, boolean isWrite) {
-		 CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+		 CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		 volatile_access_internal(callbackStatePerThread, fieldId, methodId, isWrite);
 	 }
-	  
-	  
-	 private static void  volatile_access_internal( CallbackStatePerThread callbackStatePerThread , int fieldId, int methodId, boolean isWrite)
-	 {
+
+
+	private static void volatile_access_internal(CallbackStatePerThreadForParallelize callbackStatePerThread, int fieldId, int methodId, boolean isWrite) {
 /*		 int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 
 	    	if( !  CallbackState.isSlidingWindowTrace( slidingWindowId  ) )
@@ -77,13 +74,12 @@ public class CallbackStatic {
 	 
 	  public static void non_volatile_access( int fieldId, int methodId, boolean isWrite) 
 	  {
-	    CallbackStatePerThread callbackStatePerThread = (CallbackStatePerThread)CallbackState.callbackStatePerThread.get();
+		  CallbackStatePerThreadForParallelize callbackStatePerThread = (CallbackStatePerThreadForParallelize) CallbackState.callbackStatePerThread.get();
 	    non_volatile_access_internal(callbackStatePerThread , fieldId, methodId,  isWrite) ;
 	  }
-	  
-	  
-	  private static void non_volatile_access_internal( CallbackStatePerThread callbackStatePerThread , int fieldId, int methodId, boolean isWrite) 
-	  {
+
+
+	private static void non_volatile_access_internal(CallbackStatePerThreadForParallelize callbackStatePerThread, int fieldId, int methodId, boolean isWrite) {
 	/*	   int slidingWindowId =  CallbackState.traceFields(callbackStatePerThread);
 		    
 		    if (!  CallbackState.isSlidingWindowTrace(slidingWindowId )) {
@@ -119,19 +115,17 @@ public class CallbackStatic {
 		      }
 		    } */
 	  }
-	  
-	  
-	  
-	  private static void writeEvent(CallbackStatePerThread callbackStatePerThread, long threadId,int slidingWindowId ,  int fieldId, int methodId, boolean isWrite, int programCounter, int methodCounter) {
+
+
+	private static void writeEvent(CallbackStatePerThreadForParallelize callbackStatePerThread, long threadId, int slidingWindowId, int fieldId, int methodId, boolean isWrite, int programCounter, int methodCounter) {
 // Fixme Callback
 //		  callbackStatePerThread.sendEvent.writeFieldAccessEventStaticGen(slidingWindowId , programCounter, fieldId, methodCounter,  MemoryAccessType.getOperation(isWrite), methodId , callbackStatePerThread.isStackTraceIncomplete() );
 
 
-      }
-	
-	
-	private static void access_mode_state(final  CallbackStatePerThread callbackStatePerThread , final int fieldId, int methodId, boolean isWrite)
-	{
+	}
+
+
+	private static void access_mode_state(final CallbackStatePerThreadForParallelize callbackStatePerThread, final int fieldId, int methodId, boolean isWrite) {
 	/*	 final int slidingWindowId =  CallbackState.traceFields(callbackStatePerThread);
 		    
 		    if (!  CallbackState.isSlidingWindowTrace(slidingWindowId )) {

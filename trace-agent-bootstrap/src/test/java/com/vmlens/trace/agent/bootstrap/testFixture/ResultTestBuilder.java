@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.testFixture;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
@@ -29,6 +29,11 @@ import static com.vmlens.trace.agent.bootstrap.event.RuntimeEventIds.ID_SyncActi
 
 public class ResultTestBuilder {
 
+    public static final int VOLATILE_FIELD_EVENT_ORDER = 5;
+    public static final int VOLATILE_FIELD_EVENT_METHOD_ID = 22;
+    public static final long VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE = 33L;
+
+
     private final RunContext runContext = new RunContext(1, 1);
     private final ThreadIndexToElementList<InterleaveActionWithPositionFactory> threadIndexToFactoryList = new ThreadIndexToElementList<>();
     private TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> factoryList =
@@ -37,46 +42,50 @@ public class ResultTestBuilder {
             new TLinkedList<>();
     private final List<ParallelizeActionAndThreadLocalWrapper> parallelizeActionAndThreadLocalWrapperList = new
             LinkedList<ParallelizeActionAndThreadLocalWrapper>();
-    private final Map<Integer, CallbackStatePerThread> threadIndexToThreadLocalWrapperMock = new HashMap<>();
+    private final Map<Integer, CallbackStatePerThreadForParallelize> threadIndexToThreadLocalWrapperMock = new HashMap<>();
+    private final EventBuilder eventBuilder;
+    // ToDo herausziehen
     private List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> actualRun = new
             LinkedList<>();
-    private List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> expectedRun = new
+    private List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> givenRun = new
             LinkedList<>();
-    private List<StaticEventAndId> expectedEvents = new
-            LinkedList<>();
-
-
     private ThreadIndexToElementList<Position> positions = new ThreadIndexToElementList<Position>();
     private final ParallelizeFacade parallelizeFacade = new ParallelizeFacade(null);
+    private List<StaticEventAndId> givenEvents = new
+            LinkedList<>();
 
     public ResultTestBuilder() {
+        this(new EventBuilderNoop());
+    }
+
+    public ResultTestBuilder(EventBuilder eventBuilder) {
+        this.eventBuilder = eventBuilder;
         Run run = new RunMockFactory().create(new ActualRunMock(actualRun), runContext);
         threadIndexToThreadLocalWrapperMock.put(0, threadLocalWrapper(0, 1L, run));
         threadIndexToThreadLocalWrapperMock.put(1, threadLocalWrapper(1, 15L, run));
         threadIndexToThreadLocalWrapperMock.put(2, threadLocalWrapper(2, 20L, run));
     }
 
-    private static CallbackStatePerThread threadLocalWrapper(int threadIndex, long threadId, Run run) {
-        CallbackStatePerThread threadLocalWrapperMock = new CallbackStatePerThread(1L, null);
+    private static CallbackStatePerThreadForParallelize threadLocalWrapper(int threadIndex, long threadId, Run run) {
+        CallbackStatePerThreadForParallelize threadLocalWrapperMock = new CallbackStatePerThreadForParallelize(1L, null);
         threadLocalWrapperMock.setParallelizedThreadLocal(new ParallelizedThreadLocal(run, threadIndex));
         return threadLocalWrapperMock;
     }
 
 
     public void volatileAccess(int fieldId, int operation, Position position) {
-        VolatileAccessEvent actual = new VolatileAccessEvent(1L, 5, fieldId, 5, 5, operation, 10L);
-        VolatileAccessEvent expected = new VolatileAccessEvent(1L, 5, fieldId, 5, 5, operation, 10L);
-        expectedRun.add(new ContainerForRuntimeEvent(expected));
+        VolatileAccessEvent actual = new VolatileAccessEvent(1L, VOLATILE_FIELD_EVENT_ORDER, fieldId, VOLATILE_FIELD_EVENT_METHOD_ID, operation, VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE);
+        VolatileAccessEvent expected = new VolatileAccessEvent(1L, VOLATILE_FIELD_EVENT_ORDER, fieldId, VOLATILE_FIELD_EVENT_METHOD_ID, operation, VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE);
+        eventBuilder.addVolatileAccessEvent(1L, VOLATILE_FIELD_EVENT_ORDER, fieldId, VOLATILE_FIELD_EVENT_METHOD_ID, operation, VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE, 0, 0, 0);
+        givenRun.add(new ContainerForRuntimeEvent(expected));
 
-        VolatileAccessEvent expectedEvent = new VolatileAccessEvent(1L, 5, fieldId, 5, 5, operation, 10L);
-        runContext.setRunIdsInRuntimeEvent(expectedEvent);
-        expectedEvents.add(new StaticEventAndId(expectedEvent, ID_SyncActions));
+        givenEvents.add(new StaticEventAndId(expected, ID_SyncActions));
 
 
         add(new ParallelizeActionWithRuntimeEvent(actual), position);
         VolatileFieldAccess action = new VolatileFieldAccess(fieldId, operation);
 
-        expectedRun.add(new ContainerForInterleaveActionWithPositionFactory(new InterleaveActionWithPositionFactoryImpl(action, position.threadIndex())));
+        givenRun.add(new ContainerForInterleaveActionWithPositionFactory(new InterleaveActionWithPositionFactoryImpl(action, position.threadIndex())));
 
         add(new ParallelizeActionWithInterleaveAction(action), position);
         add(action, position);
@@ -127,13 +136,7 @@ public class ResultTestBuilder {
         return parallelizeFacade;
     }
 
-    public List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> actualRun() {
-        return actualRun;
-    }
 
-    public List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> expectedRun() {
-        return expectedRun;
-    }
 
     private void add(ParallelizeAction parallelizeAction, Position position) {
         parallelizeActionAndThreadLocalWrapperList.add(
@@ -153,7 +156,15 @@ public class ResultTestBuilder {
                 (new ElementAndPosition(interleaveAction, position)));
     }
 
-    public List<StaticEventAndId> expectedEvents() {
-        return expectedEvents;
+    public List<StaticEventAndId> givenEvents() {
+        return givenEvents;
+    }
+
+    public List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> actualRun() {
+        return actualRun;
+    }
+
+    public List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> givenRun() {
+        return givenRun;
     }
 }

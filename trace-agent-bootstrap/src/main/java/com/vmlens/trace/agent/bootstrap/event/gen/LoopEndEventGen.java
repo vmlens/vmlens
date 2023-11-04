@@ -28,11 +28,15 @@ public class LoopEndEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.interleave.getByteBuffer(slidingWindowId, 9, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.interleave.getByteBuffer(slidingWindowId, 9, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 25);
         buffer.putInt(loopId);
         buffer.putInt(status);
     }
+
+
 }

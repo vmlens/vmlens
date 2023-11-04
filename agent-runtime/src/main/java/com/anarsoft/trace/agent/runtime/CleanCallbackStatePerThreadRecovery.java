@@ -3,7 +3,7 @@ package com.anarsoft.trace.agent.runtime;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
 import com.anarsoft.trace.agent.runtime.write.WriteEvent2File;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 
 public class CleanCallbackStatePerThreadRecovery extends Thread {
 
@@ -11,8 +11,8 @@ public class CleanCallbackStatePerThreadRecovery extends Thread {
 	private final AgentController agentController;
 
 	public CleanCallbackStatePerThreadRecovery(AgentController agentController) {
-		super(CallbackStatePerThread.ANARSOFT_THREAD_NAME);
-		this.setDaemon(true);
+        super(CallbackStatePerThreadForParallelize.ANARSOFT_THREAD_NAME);
+        this.setDaemon(true);
 		this.agentController = agentController;
 
 	}

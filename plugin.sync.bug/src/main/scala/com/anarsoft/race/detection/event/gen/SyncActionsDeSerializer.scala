@@ -11,9 +11,10 @@ import com.anarsoft.race.detection.event.syncAction.*
 import java.nio.ByteBuffer;
 
 class SyncActionsDeSerializer extends DeSerializeStrategy[LoadedSyncActionEvent] {
+  def eventArraySize() = 57
+
   val blockSize = 57 * 10000;
 
-  def eventArraySize() = 57
 
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedSyncActionEvent = {
     val id = buffer.get();

@@ -4,11 +4,11 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizedThreadLocal;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapperForParallelize;
 
 
 // Fixme aufräumen
-public class CallbackStatePerThread extends PerThreadCounter implements ThreadLocalWrapper {
+public class CallbackStatePerThreadForParallelize extends PerThreadCounter implements ThreadLocalWrapperForParallelize {
 
     public static final String ANARSOFT_THREAD_NAME = "anarsoft";
 
@@ -37,7 +37,7 @@ public class CallbackStatePerThread extends PerThreadCounter implements ThreadLo
     private int programCount = 1;
 
 
-    public CallbackStatePerThread(long threadId, QueueIn queueIn) {
+    public CallbackStatePerThreadForParallelize(long threadId, QueueIn queueIn) {
         this.queueIn = queueIn;
         this.threadId = threadId;
     }
@@ -58,7 +58,6 @@ public class CallbackStatePerThread extends PerThreadCounter implements ThreadLo
     }
 
 
-    @Override
     public void put(int id, StaticEvent element, int slidingWindowId) {
         queueIn.put(id, element, slidingWindowId);
     }

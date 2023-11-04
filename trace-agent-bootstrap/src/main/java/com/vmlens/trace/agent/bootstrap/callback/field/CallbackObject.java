@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback.field;
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.OffsetAndClassName;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.VolatileArrayAccessCallback;
 import com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;
@@ -13,7 +13,7 @@ public class CallbackObject {
 	private static final UpdateObjectState updateObjectState = new UpdateObjectState(200, 200);
 	
 	private static final UpdateObjectState updateBeforeObjectState = new UpdateObjectState(200, 200) {
-        public void sendEventVolatile(CallbackStatePerThread callbackStatePerThread, int order,
+        public void sendEventVolatile(CallbackStatePerThreadForParallelize callbackStatePerThread, int order,
                                       int fieldId, int methodId, int operation, long objectId) {
           /*
           Fixme Callback
@@ -26,15 +26,15 @@ public class CallbackObject {
 
         @Override
         public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
-                                                             CallbackStatePerThread callbackStatePerThread) {
+                                                             CallbackStatePerThreadForParallelize callbackStatePerThread) {
         }
     };
 	
 
 	public static void non_volatile_access(Object orig, int fieldId, int methodId, boolean isWrite) {
 
-		CallbackStatePerThread callbackStatePerThread = non_volatile_filter_and_apply_waitpoints(orig, fieldId,
-				isWrite);
+        CallbackStatePerThreadForParallelize callbackStatePerThread = non_volatile_filter_and_apply_waitpoints(orig, fieldId,
+                isWrite);
 
 		if (callbackStatePerThread != null) {
 			StateAccess c = Class2GetStateMap.getState(orig);
@@ -47,19 +47,19 @@ public class CallbackObject {
 
 	static void non_volatile_access_generated(Object orig, long offset, int fieldId, int methodId, boolean isWrite) {
 
-		CallbackStatePerThread callbackStatePerThread = non_volatile_filter_and_apply_waitpoints(orig, fieldId,
-				isWrite);
+        CallbackStatePerThreadForParallelize callbackStatePerThread = non_volatile_filter_and_apply_waitpoints(orig, fieldId,
+                isWrite);
 
-		if (callbackStatePerThread != null) {
-			non_volatile_access_internal(callbackStatePerThread, orig, orig, offset, fieldId, methodId,
-					MemoryAccessType.getOperation(isWrite));
-		}
+        if (callbackStatePerThread != null) {
+            non_volatile_access_internal(callbackStatePerThread, orig, orig, offset, fieldId, methodId,
+                    MemoryAccessType.getOperation(isWrite));
+        }
 
-	}
+    }
 
-	private static CallbackStatePerThread non_volatile_filter_and_apply_waitpoints(Object orig, int fieldId,
-			boolean isWrite) {
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+    private static CallbackStatePerThreadForParallelize non_volatile_filter_and_apply_waitpoints(Object orig, int fieldId,
+                                                                                                 boolean isWrite) {
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 	/*	int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
 
@@ -67,11 +67,11 @@ public class CallbackObject {
 			return null;
 		}
 */
-		return callbackStatePerThread;
-	}
+        return callbackStatePerThread;
+    }
 
-	public static void non_volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
-			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
+    public static void non_volatile_access_internal(CallbackStatePerThreadForParallelize callbackStatePerThread, Object orig,
+                                                    Object stateHolder, long offset, int fieldId, int methodId, int operation) {
 
 	/*	int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
 
@@ -186,7 +186,7 @@ public class CallbackObject {
 	}
 
 	static void volatile_access_generated(Object orig, long offset, int fieldId, int methodId, int operation) {
-		CallbackStatePerThread callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
+        CallbackStatePerThreadForParallelize callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
 		if (callbackStatePerThread != null) {
 			volatile_access_internal(callbackStatePerThread, orig, orig, offset, fieldId, methodId, operation);
 		}
@@ -194,7 +194,7 @@ public class CallbackObject {
 
 	public static void volatile_access(Object orig, int fieldId, int methodId, int operation) {
 
-		CallbackStatePerThread callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
+        CallbackStatePerThreadForParallelize callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
 		if (callbackStatePerThread != null) {
 			/**
 			 * Diese Methode wird sowohl direkt als auch durch unsafe aufgerufen, daher
@@ -209,35 +209,35 @@ public class CallbackObject {
 
 	public static void before_volatile_access(Object orig, int fieldId, int methodId, int operation) {
 
-		CallbackStatePerThread callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
+        CallbackStatePerThreadForParallelize callbackStatePerThread = volatile_filter_and_apply_waitpoints(orig, fieldId);
 
 		if (callbackStatePerThread != null) {
 			/**
 			 * Diese Methode wird sowohl direkt als auch durch unsafe aufgerufen, daher
 			 * getState und nicht getStateFromMap
-			 * 
-			 */
+			 *
+             */
 
-			StateAccess state = Class2GetStateMap.getState(orig);
+            StateAccess state = Class2GetStateMap.getState(orig);
 
-			before_volatile_access_internal(callbackStatePerThread, orig, state.obj, state.offset, fieldId, methodId,
-					operation);
-		}
-	}
+            before_volatile_access_internal(callbackStatePerThread, orig, state.obj, state.offset, fieldId, methodId,
+                    operation);
+        }
+    }
 
 
-	private static CallbackStatePerThread volatile_filter_and_apply_waitpoints(Object orig, int fieldId) {
-		CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+    private static CallbackStatePerThreadForParallelize volatile_filter_and_apply_waitpoints(Object orig, int fieldId) {
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 	/*	int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 		if (!CallbackState.isSlidingWindowTrace(slidingWindowId)) {
 			return null;
 		}
 	*/
-		return callbackStatePerThread;
-	}
+        return callbackStatePerThread;
+    }
 
-	private static void before_volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
-			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
+    private static void before_volatile_access_internal(CallbackStatePerThreadForParallelize callbackStatePerThread, Object orig,
+                                                        Object stateHolder, long offset, int fieldId, int methodId, int operation) {
    /*     callbackStatePerThread.programCount += 1;
         updateBeforeObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
         callbackStatePerThread.programCount += 1;
@@ -245,8 +245,8 @@ public class CallbackObject {
     }
 
 
-    private static void volatile_access_internal(CallbackStatePerThread callbackStatePerThread, Object orig,
-			Object stateHolder, long offset, int fieldId, int methodId, int operation) {
+    private static void volatile_access_internal(CallbackStatePerThreadForParallelize callbackStatePerThread, Object orig,
+                                                 Object stateHolder, long offset, int fieldId, int methodId, int operation) {
   /*      callbackStatePerThread.programCount += 1;
         updateObjectState.volatileAccess(stateHolder, offset, fieldId, methodId, operation, callbackStatePerThread);
         callbackStatePerThread.programCount += 1;

@@ -52,9 +52,11 @@ public class MonitorEnterEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.monitor.getByteBuffer(slidingWindowId, 45, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.monitor.getByteBuffer(slidingWindowId, 45, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 14);
         buffer.putLong(threadId);
         buffer.putInt(programCounter);
@@ -67,4 +69,6 @@ public class MonitorEnterEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

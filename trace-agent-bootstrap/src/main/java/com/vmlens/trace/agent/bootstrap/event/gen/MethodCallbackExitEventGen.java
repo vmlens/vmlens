@@ -37,9 +37,11 @@ public class MethodCallbackExitEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.interleave.getByteBuffer(slidingWindowId, 25, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.interleave.getByteBuffer(slidingWindowId, 25, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 23);
         buffer.putLong(threadId);
         buffer.putInt(methodCounter);
@@ -47,4 +49,6 @@ public class MethodCallbackExitEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

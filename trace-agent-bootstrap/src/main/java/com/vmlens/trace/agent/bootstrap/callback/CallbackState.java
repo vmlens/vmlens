@@ -98,12 +98,18 @@ public class CallbackState {
 	 * @param object
 	 */
 	
-	private static final TLongObjectHashMap<CallbackStatePerThread> callbackStatePerThreadRecovery = new TLongObjectHashMap<CallbackStatePerThread>();
+	private static final TLongObjectHashMap<CallbackStatePerThreadForParallelize> callbackStatePerThreadRecovery = new TLongObjectHashMap<CallbackStatePerThreadForParallelize>();
 	
 	
 	private static int lastRemovedThreadCount = 0;
-	
-	
+    public static final ThreadLocal<CallbackStatePerThreadForParallelize> callbackStatePerThread = new ThreadLocal<CallbackStatePerThreadForParallelize>() {
+        @Override
+        protected CallbackStatePerThreadForParallelize initialValue() {
+
+            return getOrCreateCallbackStatePerThread();
+        }
+    };
+
 	public static synchronized void clearCallbackStatePerThreadRecovery()
 	{
 		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
@@ -114,8 +120,8 @@ public class CallbackState {
 		{
 			threadIds.add(t.getId());
 		}
-		
-		TLongObjectIterator<CallbackStatePerThread> iter = callbackStatePerThreadRecovery.iterator();
+
+        TLongObjectIterator<CallbackStatePerThreadForParallelize> iter = callbackStatePerThreadRecovery.iterator();
 		
 		while( iter.hasNext() )
 		{
@@ -140,30 +146,6 @@ public class CallbackState {
 		}
 		
 		
-	}
-	
-	
-	
-	private static synchronized CallbackStatePerThread getOrCreateCallbackStatePerThread()
-	{
-		long  threadId = Thread.currentThread().getId();
-		
-		
-		CallbackStatePerThread callbackStatePerThread = callbackStatePerThreadRecovery.get(threadId);
-		
-		if( callbackStatePerThread == null   )
-		{
-            callbackStatePerThread = new CallbackStatePerThread(threadId, new QueueCollectionWrapper(queueFacade.createQueueCollection4ThreadLocal()));
-            callbackStatePerThreadRecovery.put(threadId, callbackStatePerThread);
-		}
-		
-		
-
-		
-		
-		
-		
-		return callbackStatePerThread;
 	}
 	
 	
@@ -196,21 +178,26 @@ public class CallbackState {
 	{
 		return slidingWindow > -1;
 	}
-	
-	
-	
+
+    private static synchronized CallbackStatePerThreadForParallelize getOrCreateCallbackStatePerThread() {
+        long threadId = Thread.currentThread().getId();
 
 
+        CallbackStatePerThreadForParallelize callbackStatePerThread = callbackStatePerThreadRecovery.get(threadId);
 
-	public static final ThreadLocal<CallbackStatePerThread> callbackStatePerThread = new ThreadLocal<CallbackStatePerThread>()
-		     {
-      @Override
-      	protected CallbackStatePerThread  initialValue()
-      {
- 	  
-   	   return getOrCreateCallbackStatePerThread();
-      }
-};
+        if (callbackStatePerThread == null) {
+            callbackStatePerThread = new CallbackStatePerThreadForParallelize(threadId, new QueueCollectionWrapper(queueFacade.createQueueCollection4ThreadLocal()));
+            callbackStatePerThreadRecovery.put(threadId, callbackStatePerThread);
+		}
+		
+		
+
+		
+		
+		
+		
+		return callbackStatePerThread;
+	}
 
 
 

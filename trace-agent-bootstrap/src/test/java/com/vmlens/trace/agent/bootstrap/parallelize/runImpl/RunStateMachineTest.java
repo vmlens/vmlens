@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadStartFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
@@ -13,12 +13,10 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
-import com.vmlens.trace.agent.bootstrap.testFixture.StaticEventAndId;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.junit.Before;
 
-import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -43,11 +41,11 @@ public class RunStateMachineTest {
         calculatedRunMock = mock(CalculatedRun.class);
 
         // Main Thread Mocks
-        threadLocalMainThread = new TestThreadState(new CallbackStatePerThread(1L, null));
+        threadLocalMainThread = new TestThreadState(new CallbackStatePerThreadForParallelize(1L, null));
 
         // Second Thread Mocks
         secondThreadWrapper = new RunnableOrThreadWrapper(new Object());
-        localStateSecondThread = new TestThreadState(new CallbackStatePerThread(20L, null));
+        localStateSecondThread = new TestThreadState(new CallbackStatePerThreadForParallelize(20L, null));
 
         runContext = new RunContext(1, 1);
         actualRun = new ActualRun(new ActualRunObserverNoOp());

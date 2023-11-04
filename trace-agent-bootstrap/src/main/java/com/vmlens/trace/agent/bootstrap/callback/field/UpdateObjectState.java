@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.state.*;
 
 import java.lang.reflect.Constructor;
@@ -125,17 +125,17 @@ public class UpdateObjectState {
 		this.maxWriteEvents = maxWriteEvents;
 	}
 
-	void stateAccess(Object obj, long offset, long threadId, int slidingWindowId, int classOrFieldId, int methodId,
-			int operation, int methodCount, CallbackStatePerThread callbackStatePerThread) {
-		ModeStateObject current = getModeStateObject(obj, offset);
+    void stateAccess(Object obj, long offset, long threadId, int slidingWindowId, int classOrFieldId, int methodId,
+                     int operation, int methodCount, CallbackStatePerThreadForParallelize callbackStatePerThread) {
+        ModeStateObject current = getModeStateObject(obj, offset);
 
-		if (current == null) {
-			current = new ModeStateObject(threadId);
+        if (current == null) {
+            current = new ModeStateObject(threadId);
 
-			if (!setModeStateObjectIfNotThere(obj, offset, current)) {
-				current = getModeStateObject(obj, offset);
-			}
-		}
+            if (!setModeStateObjectIfNotThere(obj, offset, current)) {
+                current = getModeStateObject(obj, offset);
+            }
+        }
 
 		/*
 		 * protected void access(long threadId, final int slidingWindowId, final int
@@ -157,35 +157,35 @@ public class UpdateObjectState {
 		return (ModeStateObject) UNSAFE.getObjectVolatile(obj, offset);
 	}
 
-	void volatileAccess(Object obj, long offset, int fieldId, int methodId,
-			int operation, CallbackStatePerThread callbackStatePerThread) {
-		ObjectState current = getState(obj, offset);
+    void volatileAccess(Object obj, long offset, int fieldId, int methodId,
+                        int operation, CallbackStatePerThreadForParallelize callbackStatePerThread) {
+        ObjectState current = getState(obj, offset);
 
-		ObjectStateVolatile objectStateVolatile = null;
+        ObjectStateVolatile objectStateVolatile = null;
 
-		if (!(current instanceof ObjectStateVolatile)) {
-			objectStateVolatile = setVolatile(obj, offset, current);
-		} else {
-			objectStateVolatile = (ObjectStateVolatile) current;
-		}
+        if (!(current instanceof ObjectStateVolatile)) {
+            objectStateVolatile = setVolatile(obj, offset, current);
+        } else {
+            objectStateVolatile = (ObjectStateVolatile) current;
+        }
 
 		objectStateVolatile.sendVolatile( fieldId, methodId, operation, this,
 				callbackStatePerThread);
 
 	}
 
-	void nonVolatileAccess(boolean isInInterleaveLoop, Object obj, long offset, long threadId, int slidingWindowId,
-			int fieldId, int methodId, int operation, CallbackStatePerThread callbackStatePerThread) {
+    void nonVolatileAccess(boolean isInInterleaveLoop, Object obj, long offset, long threadId, int slidingWindowId,
+                           int fieldId, int methodId, int operation, CallbackStatePerThreadForParallelize callbackStatePerThread) {
 
-		ObjectState current = getState(obj, offset);
-		if (isInInterleaveLoop) {
-			if (!(current instanceof ObjectStateAbstractMultiThreaded)) {
-				current = setMultiThreaded(obj, offset, current);
-			}
+        ObjectState current = getState(obj, offset);
+        if (isInInterleaveLoop) {
+            if (!(current instanceof ObjectStateAbstractMultiThreaded)) {
+                current = setMultiThreaded(obj, offset, current);
+            }
 
-		} else {
-			if (current == null) {
-				current = setSingleThreaded(obj, offset, threadId, current);
+        } else {
+            if (current == null) {
+                current = setSingleThreaded(obj, offset, threadId, current);
 			} else if (current instanceof ObjectStateSingleThreaded) {
 				ObjectStateSingleThreaded st = (ObjectStateSingleThreaded) current;
 
@@ -254,56 +254,54 @@ public class UpdateObjectState {
 
 			if (UNSAFE.compareAndSwapObject(obj, offset, current, n)) {
 				return n;
-			} else {
-				current = getState(obj, offset);
-			}
-		}
-		return (ObjectStateVolatile) current;
-	}
+            } else {
+                current = getState(obj, offset);
+            }
+        }
+        return (ObjectStateVolatile) current;
+    }
 
-	
-	
-	
-	public void sendEventVolatile(CallbackStatePerThread callbackStatePerThread,int order,
-			int fieldId, int methodId, int operation, long objectId) {
-		// Fixme Callback
+
+    public void sendEventVolatile(CallbackStatePerThreadForParallelize callbackStatePerThread, int order,
+                                  int fieldId, int methodId, int operation, long objectId) {
+        // Fixme Callback
 //		callbackStatePerThread.sendEvent.writeVolatileAccessEventGen(
 //				CallbackState.traceSyncStatements(callbackStatePerThread), callbackStatePerThread.programCount,
 //				order, fieldId, callbackStatePerThread.methodCount, methodId, operation,objectId);
-	}
+    }
 
-	public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
-			CallbackStatePerThread callbackStatePerThread) {
+    public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
+                                                         CallbackStatePerThreadForParallelize callbackStatePerThread) {
 // Fixme Callback
-		//		ParallelizeFacade.beforeFieldAccessVolatile(callbackStatePerThread, id, fieldId, operation);
-	}
+        //		ParallelizeFacade.beforeFieldAccessVolatile(callbackStatePerThread, id, fieldId, operation);
+    }
 
-	/*
-	 * void writeFieldAccessEventGen (int slidingWindowId , int programCounter , int
-	 * fieldId , int methodCounter , int operation , int methodId , boolean
-	 * stackTraceIncomplete , long objectHashCode );
-	 */
+    /*
+     * void writeFieldAccessEventGen (int slidingWindowId , int programCounter , int
+     * fieldId , int methodCounter , int operation , int methodId , boolean
+     * stackTraceIncomplete , long objectHashCode );
+     */
 
-	public void sendEventNonVolatile(CallbackStatePerThread callbackStatePerThread, long threadId, int slidingWindowId,
-			int fieldId, int methodId, int operation, long objectId) {
-		//	Fixme Callback
-		//		callbackStatePerThread.sendEvent.writeFieldAccessEventGen(slidingWindowId, callbackStatePerThread.programCount,
+    public void sendEventNonVolatile(CallbackStatePerThreadForParallelize callbackStatePerThread, long threadId, int slidingWindowId,
+                                     int fieldId, int methodId, int operation, long objectId) {
+        //	Fixme Callback
+        //		callbackStatePerThread.sendEvent.writeFieldAccessEventGen(slidingWindowId, callbackStatePerThread.programCount,
 //				fieldId, callbackStatePerThread.methodCount, operation, methodId,
 //				callbackStatePerThread.isStackTraceIncomplete(), objectId);
-	}
+    }
 
-	public void sendStateEvent4Object(int slidingWindowId, int classOrFieldId, long id, int methodId, int operation,
-			CallbackStatePerThread callbackStatePerThread) {
+    public void sendStateEvent4Object(int slidingWindowId, int classOrFieldId, long id, int methodId, int operation,
+                                      CallbackStatePerThreadForParallelize callbackStatePerThread) {
 //		callbackStatePerThread.sendEvent.writeStateEventFieldGen(slidingWindowId, classOrFieldId, methodId,
 //				callbackStatePerThread.methodCount, operation, id);
-	}
+    }
 
-	public void sendStateEventInitial4Object(int currentSlidingWindowId, int classOrFieldId, long id, long lastThreadId,
-			int methodId, int methodCount, int operation, int slidingWindowIdAtAccess,
-			CallbackStatePerThread callbackStatePerThread) {
+    public void sendStateEventInitial4Object(int currentSlidingWindowId, int classOrFieldId, long id, long lastThreadId,
+                                             int methodId, int methodCount, int operation, int slidingWindowIdAtAccess,
+                                             CallbackStatePerThreadForParallelize callbackStatePerThread) {
 //		callbackStatePerThread.sendEvent.writeStateEventFieldInitialGen(currentSlidingWindowId, lastThreadId,
 //				classOrFieldId, methodId, methodCount, operation, id, slidingWindowIdAtAccess);
 
-	}
+    }
 
 }

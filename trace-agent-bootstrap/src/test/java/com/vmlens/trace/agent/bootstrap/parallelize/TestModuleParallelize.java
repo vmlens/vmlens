@@ -19,11 +19,11 @@ public class TestModuleParallelize {
         // When
         ParallelizeFacade facade = testData.resultTestBuilder().parallelizeFacade();
         for (ParallelizeActionAndThreadLocalWrapper action : testData.resultTestBuilder().parallelizeActionAndThreadLocalWrapperList()) {
-            facade.after(action.threadLocalWrapper, action.parallelizeAction);
+            facade.after(action.threadLocalWrapperForParallelize, action.parallelizeAction);
         }
 
         // Then
-        assertThat(testData.resultTestBuilder().actualRun(), is(testData.resultTestBuilder().expectedRun()));
+        assertThat(testData.resultTestBuilder().actualRun(), is(testData.resultTestBuilder().givenRun()));
 
 
     }

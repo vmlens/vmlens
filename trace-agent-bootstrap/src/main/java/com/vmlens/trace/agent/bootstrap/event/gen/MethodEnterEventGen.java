@@ -40,9 +40,11 @@ public class MethodEnterEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.method.getByteBuffer(slidingWindowId, 29, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.method.getByteBuffer(slidingWindowId, 29, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 16);
         buffer.putLong(threadId);
         buffer.putInt(methodId);
@@ -51,4 +53,6 @@ public class MethodEnterEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

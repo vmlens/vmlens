@@ -43,9 +43,11 @@ public class ThreadStartEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.syncActions.getByteBuffer(slidingWindowId, 37, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.syncActions.getByteBuffer(slidingWindowId, 37, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 18);
         buffer.putLong(threadId);
         buffer.putLong(startedThreadId);
@@ -55,4 +57,6 @@ public class ThreadStartEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

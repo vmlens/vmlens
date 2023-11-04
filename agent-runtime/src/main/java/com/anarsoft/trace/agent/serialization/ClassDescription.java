@@ -2,21 +2,21 @@ package com.anarsoft.trace.agent.serialization;
 
 
 import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
-import java.util.Arrays;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
 import java.io.DataOutputStream;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 
 
 public class ClassDescription implements StaticEvent {
 
-
-	 final String name;
+    final String name;
 	 final String source;
 	 final String[] exceptArray;
 	 final String superClass;
 	 final String[] interfaces;
-
 	private  MethodDescription[] methodArray;
     private  final SerializedFieldDescription[] serializedFieldDescriptionArray;
 
@@ -32,25 +32,29 @@ public class ClassDescription implements StaticEvent {
 
         this.superClass = superClass;
         this.interfaces = interfaces;
-		
-		
-	}
+
+
+    }
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         (new SerializeDescription()).serialize(this, streamRepository.description.getStream());
     }
 
+    @Override
+    public void serialize(ByteBuffer buffer) throws Exception {
+
+    }
 
     public void writeToStream(DataOutputStream stream) throws Exception {
         (new SerializeDescription()).serialize(this, stream);
     }
 
-	public MethodDescription[] getMethodArray() {
-		return methodArray;
-	}
+    public MethodDescription[] getMethodArray() {
+        return methodArray;
+    }
 
-	public SerializedFieldDescription[] getSerializedFieldDescriptionArray() {
+    public SerializedFieldDescription[] getSerializedFieldDescriptionArray() {
 		return serializedFieldDescriptionArray;
 	}
 

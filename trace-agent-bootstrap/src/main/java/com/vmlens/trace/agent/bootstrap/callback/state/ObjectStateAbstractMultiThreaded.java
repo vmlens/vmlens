@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.field.UpdateObjectState;
 
@@ -35,19 +35,19 @@ public abstract class ObjectStateAbstractMultiThreaded implements ObjectState {
 		this.id = getNewId();
 	}
 
-	@Override
-	public void sendNonVolatile(long threadId, int slidingWindowId, int fieldId, int methodId, int operation,
-			 UpdateObjectState updateObjectStateNew,
-			CallbackStatePerThread callbackStatePerThread) {
-		boolean sendEvent = true;
+    @Override
+    public void sendNonVolatile(long threadId, int slidingWindowId, int fieldId, int methodId, int operation,
+                                UpdateObjectState updateObjectStateNew,
+                                CallbackStatePerThreadForParallelize callbackStatePerThread) {
+        boolean sendEvent = true;
 
-		
-			if (MemoryAccessType.containsWrite(operation)) {
-				if (writeEventCount > updateObjectStateNew.maxWriteEvents) {
-					sendEvent = false;
-				} else {
-					writeEventCount++;
-				}
+
+        if (MemoryAccessType.containsWrite(operation)) {
+            if (writeEventCount > updateObjectStateNew.maxWriteEvents) {
+                sendEvent = false;
+            } else {
+                writeEventCount++;
+            }
 
 			} else {
 				if (readEventCount > updateObjectStateNew.maxReadEvents) {

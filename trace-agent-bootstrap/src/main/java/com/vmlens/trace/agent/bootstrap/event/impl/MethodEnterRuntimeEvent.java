@@ -13,17 +13,10 @@ public class MethodEnterRuntimeEvent extends MethodEnterEventGen implements Runt
     }
 
     @Override
-    public void setRunLoopAndSlidingWindowId(int runId, int loopId, int slidingWindowId) {
-        this.runId = runId;
-        this.loopId = loopId;
-        this.slidingWindowId = slidingWindowId;
-    }
-
-    @Override
     public void send(SendEventContext context) {
-        this.methodCounter = context.incrementAndGetMethodCount();
-        this.threadId = context.threadId();
+        this.methodCounter = context.threadLocalWrapper().incrementAndGetMethodCount();
+        this.threadId = context.threadLocalWrapper().threadId();
 
-        context.put(ID_Method, this, this.slidingWindowId);
+        context.threadLocalWrapper().put(ID_Method, this, this.slidingWindowId);
     }
 }

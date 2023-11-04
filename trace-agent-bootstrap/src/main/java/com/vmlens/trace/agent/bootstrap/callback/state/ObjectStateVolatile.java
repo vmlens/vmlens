@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.field.UpdateObjectState;
 
 public class ObjectStateVolatile extends ObjectStateAbstractMultiThreaded {
@@ -81,8 +81,8 @@ public class ObjectStateVolatile extends ObjectStateAbstractMultiThreaded {
 	 */
 	
 	
-	 public  void sendVolatile( int fieldId,
-				int methodId, int operation,UpdateObjectState updateObjectStateNew , CallbackStatePerThread callbackStatePerThread)
+	 public  void sendVolatile(int fieldId,
+                               int methodId, int operation, UpdateObjectState updateObjectStateNew, CallbackStatePerThreadForParallelize callbackStatePerThread)
 	  {
 		  synchronized(this)
 		  {

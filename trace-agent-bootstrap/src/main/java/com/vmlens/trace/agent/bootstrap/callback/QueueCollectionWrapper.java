@@ -23,7 +23,7 @@ public class QueueCollectionWrapper implements QueueIn {
     int writeEventCount = 0;
 
     public void put(int index, StaticEvent element, int slidingWindowId) {
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         callbackStatePerThread.stackTraceBasedDoNotTrace++;
         queueCollection.put(index, element, slidingWindowId);
         writeEventCount++;

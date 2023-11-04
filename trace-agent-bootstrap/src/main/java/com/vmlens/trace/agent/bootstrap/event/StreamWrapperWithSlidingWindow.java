@@ -36,17 +36,14 @@ public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper  {
 
     public void flush() throws IOException {
         if (streamStatistic != null) {
-
             streamStatistic.writeInt(lastWrittenSlidingWindow);
             streamStatistic.writeLong(start + mappedByteBuffer.position());
             streamStatistic.flush();
             fileChannel.force(false);
-            ;
         }
     }
 
     public void close() throws Exception {
-
         if (streamStatistic != null) {
             streamStatistic.writeInt(lastWrittenSlidingWindow);
             streamStatistic.writeLong(start + mappedByteBuffer.position());

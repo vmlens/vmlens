@@ -2,9 +2,8 @@ package com.vmlens.trace.agent.bootstrap.callback.method;
 
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade.parallelize;
 
@@ -12,7 +11,7 @@ public class MethodCallbackImpl {
 
     public void atomicMethodEnterWithCallback(int atomicId, int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             // Fixme Callback
 
         } catch (Throwable e) {
@@ -24,7 +23,7 @@ public class MethodCallbackImpl {
 
     public void atomicMethodEnterWithoutCallback(int atomicId, int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             // Fixme Callback
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -36,7 +35,7 @@ public class MethodCallbackImpl {
 
     public void atomicMethodExitWithCallback(int atomicId, int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             // Fixme Callback
 
         } catch (Throwable e) {
@@ -49,7 +48,7 @@ public class MethodCallbackImpl {
 
     public void atomicMethodExitWithoutCallback(int atomicId, int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             // Fixme Callback
 
         } catch (Throwable e) {
@@ -62,7 +61,7 @@ public class MethodCallbackImpl {
 
     public void methodEnterThreadRun(int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             callbackStatePerThread.stackTraceBasedDoNotTrace++;
             Thread thread = Thread.currentThread();
             // Fixme Callback hier auch methodid
@@ -78,7 +77,7 @@ public class MethodCallbackImpl {
 
     public void methodExitThreadRun(int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             methodExitInternal(methodId, callbackStatePerThread);
 
         } catch (Throwable e) {
@@ -91,7 +90,7 @@ public class MethodCallbackImpl {
 
     public void methodEnter(int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             methodEnterInternal(methodId, callbackStatePerThread);
 
         } catch (Throwable e) {
@@ -104,7 +103,7 @@ public class MethodCallbackImpl {
 
     public void methodExit(int methodId) {
         try {
-            CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             methodExitInternal(methodId, callbackStatePerThread);
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -114,11 +113,11 @@ public class MethodCallbackImpl {
 
     }
 
-    private void methodEnterInternal(int methodId, CallbackStatePerThread callbackStatePerThread) {
+    private void methodEnterInternal(int methodId, CallbackStatePerThreadForParallelize callbackStatePerThread) {
         // Fixme Callback
     }
 
-    private void methodExitInternal(int methodId, CallbackStatePerThread callbackStatePerThread) {
+    private void methodExitInternal(int methodId, CallbackStatePerThreadForParallelize callbackStatePerThread) {
         // Fixme Callback
     }
 

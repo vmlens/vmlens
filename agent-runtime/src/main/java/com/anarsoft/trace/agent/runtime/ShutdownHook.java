@@ -1,9 +1,9 @@
 package com.anarsoft.trace.agent.runtime;
 
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 
 
 
@@ -16,8 +16,8 @@ public class ShutdownHook extends Thread {
 	
 	public ShutdownHook(String eventDir,AgentController agentController) {
 
-			super(CallbackStatePerThread.ANARSOFT_THREAD_NAME);
-			this.eventDir = eventDir;
+        super(CallbackStatePerThreadForParallelize.ANARSOFT_THREAD_NAME);
+        this.eventDir = eventDir;
 			this.cleanCallbackStatePerThreadRecovery = new CleanCallbackStatePerThreadRecovery(agentController);
 	}
 	

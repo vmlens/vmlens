@@ -13,10 +13,20 @@ import static com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder.MAIN_T
 
 public class VolatileFixture {
 
+    private final EventBuilder eventBuilder;
+
+    public VolatileFixture() {
+        this(new EventBuilderNoop());
+    }
+
+    public VolatileFixture(EventBuilder eventBuilder) {
+        this.eventBuilder = eventBuilder;
+    }
+
+
     public TestData volatileReadAndWrite() {
 
-        ResultTestBuilder resultTestBuilderForActualRun = new ResultTestBuilder();
-
+        ResultTestBuilder resultTestBuilderForActualRun = new ResultTestBuilder(eventBuilder);
 
         FixtureBuilder builder = new FixtureBuilder(resultTestBuilderForActualRun);
         builder.beginThread(MAIN_THREAD_INDEX);
@@ -27,7 +37,6 @@ public class VolatileFixture {
         OrderArraysBuilder orderArraysBuilder = new OrderArraysBuilder();
         orderArraysBuilder.addAlternatingOrder(withInverse(read, write));
 
-
         FeatureTestMatcherBuilder featureTestMatcherBuilder = new FeatureTestMatcherBuilder();
         featureTestMatcherBuilder.both(read, write);
         featureTestMatcherBuilder.runs(2);
@@ -35,7 +44,6 @@ public class VolatileFixture {
         FeatureTestMatcher matcher = featureTestMatcherBuilder.build();
 
         TestData testData = new TestData();
-
         testData.setAlternatingOrderContainer(new AlternatingOrderContainer(orderArraysBuilder.build(),
                 resultTestBuilderForActualRun.positions()));
         testData.setFeatureTestMatcher(matcher);

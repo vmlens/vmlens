@@ -43,9 +43,11 @@ public class ThreadJoinedEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.syncActions.getByteBuffer(slidingWindowId, 37, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.syncActions.getByteBuffer(slidingWindowId, 37, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 19);
         buffer.putLong(threadId);
         buffer.putLong(joinedThreadId);
@@ -55,4 +57,6 @@ public class ThreadJoinedEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

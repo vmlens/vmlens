@@ -13,7 +13,6 @@ public class ContainerForRuntimeEvent implements InterleaveActionWithPositionFac
 
     @Override
     public void apply(ActualRun actualRun, ActualRunContext actualRunContext) {
-        actualRunContext.setRunIdsInRuntimeEvent(runtimeEvent);
         runtimeEvent.send(actualRunContext.sendEventContext());
     }
 

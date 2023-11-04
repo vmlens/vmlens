@@ -6,14 +6,6 @@ import com.vmlens.trace.agent.bootstrap.event.gen.ThreadStartEventGen;
 
 public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEvent {
 
-
-    @Override
-    public void setRunLoopAndSlidingWindowId(int runId, int loopId, int slidingWindowId) {
-        this.runId = runId;
-        this.loopId = loopId;
-        this.slidingWindowId = slidingWindowId;
-    }
-
     @Override
     public void send(SendEventContext context) {
 

@@ -10,7 +10,7 @@ public class ArrayAccessCallback {
 	private static final Object DUMMY_OBJECT = new Object();
 
 	public static void newArray(Object theArray) {
-        CallbackStatePerThread callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme Callback
         // we could filter threads which can not be tested (finalizer...)
         callbackStatePerThread.arraysInThisThread.put(theArray, DUMMY_OBJECT);
@@ -25,25 +25,25 @@ public class ArrayAccessCallback {
 	}
 
 	private static void accessField(Object theArray, int index, int methodId, boolean isWrite, int position) {
-		CallbackStatePerThread callbackStatePerThread = (CallbackStatePerThread) CallbackState.callbackStatePerThread
-				.get();
-		ArrayState state = null;
+        CallbackStatePerThreadForParallelize callbackStatePerThread = (CallbackStatePerThreadForParallelize) CallbackState.callbackStatePerThread
+                .get();
+        ArrayState state = null;
 		synchronized (LOCK_WEAK_HASHMAP) {
 			state = arrayAccessedInOtherThread.get(theArray);
 			if (state == null) {
 				state = new ArrayState(ArrayState.getNewId());
-				arrayAccessedInOtherThread.put(theArray, state);
-			}
-		}
+                arrayAccessedInOtherThread.put(theArray, state);
+            }
+        }
 
-		synchronized (state) {
-			int arrayClassId = ModeStateFieldAccess.class2Id.getArrayClassId(theArray.getClass());
-			access_interleave(callbackStatePerThread, state, index, methodId, position, isWrite, arrayClassId);
-		}
-	}
+        synchronized (state) {
+            int arrayClassId = ModeStateFieldAccess.class2Id.getArrayClassId(theArray.getClass());
+            access_interleave(callbackStatePerThread, state, index, methodId, position, isWrite, arrayClassId);
+        }
+    }
 
-	private static void access_interleave(CallbackStatePerThread callbackStatePerThread, ArrayState state, int index,
-			int methodId, int position, boolean isWrite , int arrayClassId) {
+    private static void access_interleave(CallbackStatePerThreadForParallelize callbackStatePerThread, ArrayState state, int index,
+                                          int methodId, int position, boolean isWrite, int arrayClassId) {
         // Fixme Callback
 		/* writeEvent(callbackStatePerThread, callbackStatePerThread.threadId,
 					slidingWindowId, index, methodId, isWrite,
@@ -52,11 +52,11 @@ public class ArrayAccessCallback {
 
     }
 
-	private static void access_state(CallbackStatePerThread callbackStatePerThread, ArrayState state, int methodId,
-			int position, boolean isWrite, int arrayClassId) {
+    private static void access_state(CallbackStatePerThreadForParallelize callbackStatePerThread, ArrayState state, int methodId,
+                                     int position, boolean isWrite, int arrayClassId) {
         // Fixme Callback
 //			callbackStatePerThread.sendEvent.writeStateEventArrayGen(slidingWindowId,
 //					methodId, position, callbackStatePerThread.methodCount, operation, state.id,arrayClassId);
-	}
+    }
 
 }

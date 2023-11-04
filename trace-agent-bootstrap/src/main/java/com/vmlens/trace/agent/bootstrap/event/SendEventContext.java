@@ -2,10 +2,8 @@ package com.vmlens.trace.agent.bootstrap.event;
 
 public interface SendEventContext {
 
-    int incrementAndGetMethodCount();
+    int runId();
 
-    long threadId();
-
-    void put(int index, StaticEvent element, int slidingWindowId);
+    ThreadLocalWrapperForEvent threadLocalWrapper();
 
 }

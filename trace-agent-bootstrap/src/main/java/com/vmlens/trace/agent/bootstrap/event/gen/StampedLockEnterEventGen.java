@@ -55,9 +55,11 @@ public class StampedLockEnterEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.syncActions.getByteBuffer(slidingWindowId, 46, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.syncActions.getByteBuffer(slidingWindowId, 46, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 12);
         buffer.putLong(threadId);
         buffer.putInt(programCounter);
@@ -71,4 +73,6 @@ public class StampedLockEnterEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

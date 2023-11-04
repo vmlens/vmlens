@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.HashMapForDirectMemoryAccess;
 import com.vmlens.trace.agent.bootstrap.callback.HashMapForDirectMemoryAccess.ElementFactory;
 import com.vmlens.trace.agent.bootstrap.callback.state.ObjectIdAndOrder;
@@ -19,14 +19,12 @@ public class CallbackDirectMemoryAccess {
 		
 		
 			});
-	
-	
-	
-	public static void volatile_access(long address,CallbackStatePerThread callbackStatePerThread , int operation,  int     slidingWindowId )
-	{
-		ObjectIdAndOrder current = volatileDirectAccess.getOrCreate(address);
 
-		synchronized (current) {
+
+    public static void volatile_access(long address, CallbackStatePerThreadForParallelize callbackStatePerThread, int operation, int slidingWindowId) {
+        ObjectIdAndOrder current = volatileDirectAccess.getOrCreate(address);
+
+        synchronized (current) {
 			/*
 			Fixme Callback
 

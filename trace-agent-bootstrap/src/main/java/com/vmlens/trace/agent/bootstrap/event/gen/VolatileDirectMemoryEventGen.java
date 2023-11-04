@@ -49,9 +49,11 @@ public class VolatileDirectMemoryEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.directMemory.getByteBuffer(slidingWindowId, 45, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.directMemory.getByteBuffer(slidingWindowId, 45, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 9);
         buffer.putLong(threadId);
         buffer.putInt(programCounter);
@@ -63,4 +65,6 @@ public class VolatileDirectMemoryEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

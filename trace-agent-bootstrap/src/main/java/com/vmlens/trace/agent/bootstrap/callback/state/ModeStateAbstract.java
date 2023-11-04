@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.field.UpdateObjectState;
 import gnu.trove.procedure.TObjectProcedure;
 import gnu.trove.set.hash.THashSet;
@@ -55,19 +55,19 @@ public abstract class ModeStateAbstract {
 	 * objectState.getId()); }
 	 */
 
-	public void access(long threadId, final int slidingWindowId, final int classOrFieldId, int methodId,
-			int operation, int methodCount, final UpdateObjectState updateObjectStateNew,
-			final CallbackStatePerThread callbackStatePerThread) {
-		synchronized (this) {
-			if (lastThreadId == threadId) {
+    public void access(long threadId, final int slidingWindowId, final int classOrFieldId, int methodId,
+                       int operation, int methodCount, final UpdateObjectState updateObjectStateNew,
+                       final CallbackStatePerThreadForParallelize callbackStatePerThread) {
+        synchronized (this) {
+            if (lastThreadId == threadId) {
 
-				if (access4StateSet == null) {
-					access4StateSet = new THashSet<Access4State>();
-				}
+                if (access4StateSet == null) {
+                    access4StateSet = new THashSet<Access4State>();
+                }
 
-				access4StateSet.add(new Access4State(methodCount, methodId, operation, slidingWindowId));
+                access4StateSet.add(new Access4State(methodCount, methodId, operation, slidingWindowId));
 
-			} else if (lastThreadId > 0) {
+            } else if (lastThreadId > 0) {
 
 				if (access4StateSet != null) {
 					access4StateSet.forEach(new TObjectProcedure<Access4State>() {
@@ -112,11 +112,11 @@ public abstract class ModeStateAbstract {
 		}
 	}
 
-	protected abstract  void write(int slidingWindowId, int classOrFieldId, int methodId, int operation,
-			UpdateObjectState updateObjectStateNew, CallbackStatePerThread callbackStatePerThread);
+    protected abstract void write(int slidingWindowId, int classOrFieldId, int methodId, int operation,
+                                  UpdateObjectState updateObjectStateNew, CallbackStatePerThreadForParallelize callbackStatePerThread);
 
-	protected abstract void writeInitial(int slidingWindowId, int classOrFieldId, long lastThreadId, int methodId,
-			int methodNumber, int operation, int slidingWindowId2, UpdateObjectState updateObjectStateNew,
-			CallbackStatePerThread callbackStatePerThread);
+    protected abstract void writeInitial(int slidingWindowId, int classOrFieldId, long lastThreadId, int methodId,
+                                         int methodNumber, int operation, int slidingWindowId2, UpdateObjectState updateObjectStateNew,
+                                         CallbackStatePerThreadForParallelize callbackStatePerThread);
 
 }

@@ -58,9 +58,11 @@ public class FieldAccessEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.field.getByteBuffer(slidingWindowId, 51, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.field.getByteBuffer(slidingWindowId, 51, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 2);
         buffer.putLong(threadId);
         buffer.putInt(programCounter);
@@ -75,4 +77,6 @@ public class FieldAccessEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

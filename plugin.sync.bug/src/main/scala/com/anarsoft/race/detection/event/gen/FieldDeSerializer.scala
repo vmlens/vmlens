@@ -11,9 +11,10 @@ import com.anarsoft.race.detection.event.syncAction.*
 import java.nio.ByteBuffer;
 
 class FieldDeSerializer extends DeSerializeStrategy[LoadedNonVolatileFieldEvent] {
+  def eventArraySize() = 59
+
   val blockSize = 59 * 10000;
 
-  def eventArraySize() = 59
 
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedNonVolatileFieldEvent = {
     val id = buffer.get();

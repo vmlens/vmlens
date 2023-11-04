@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 import gnu.trove.map.hash.TLongObjectHashMap;
 
@@ -17,7 +16,6 @@ public class RunContext {
     // Package Visible for Test
     final TLongObjectHashMap<TestThreadState> threadIdToState = new TLongObjectHashMap<>();
 
-
     public void add(TestThreadState testThreadState) {
         threadIdToState.put(testThreadState.threadId(), testThreadState);
     }
@@ -26,8 +24,11 @@ public class RunContext {
         return threadIdToState.get(id).threadIndex();
     }
 
-    public void setRunIdsInRuntimeEvent(RuntimeEvent event) {
-        event.setRunLoopAndSlidingWindowId(runId, loopId, 1);
+    public int runId() {
+        return runId;
     }
 
+    public int loopId() {
+        return loopId;
+    }
 }

@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.obj;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 
 
 public class DelegateTarget {
@@ -20,16 +20,12 @@ public class DelegateTarget {
 	}
 
 
+    void access(int operation, int methodId, CallbackStatePerThreadForParallelize callbackStatePerThread, int slidingWindowId) {
+
+        objectCallbackState.access(orig, operation, methodId);
 
 
-
-
-	void access(int operation, int methodId , CallbackStatePerThread callbackStatePerThread, int slidingWindowId) {
-	
-		objectCallbackState.access(orig , operation , methodId);
-		 
-		
-	}
+    }
 	
 	
 	

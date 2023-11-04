@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.OptionalShort;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
 
 import java.io.DataOutputStream;
+import java.nio.ByteBuffer;
 
 
 public class ThreadNameEvent implements StaticEvent  {
@@ -27,14 +28,19 @@ public class ThreadNameEvent implements StaticEvent  {
     }
 
 	public void serialize(StreamRepository streamRepository) throws Exception {
-		DataOutputStream stream = streamRepository.threadName.getStream();
-		stream.writeInt(Constants.TYPE_THREAD_NAME_EVENT);
-		stream.writeLong(threadId);
-		stream.writeUTF(threadName);
-		stream.writeBoolean( hasMappedThreadId );
-		stream.writeByte( mappedThreadId);
-		stream.writeBoolean( hasShortThreadId );
-		stream.writeShort( shortThreadId);
-		stream.flush();
-	}
+        DataOutputStream stream = streamRepository.threadName.getStream();
+        stream.writeInt(Constants.TYPE_THREAD_NAME_EVENT);
+        stream.writeLong(threadId);
+        stream.writeUTF(threadName);
+        stream.writeBoolean(hasMappedThreadId);
+        stream.writeByte(mappedThreadId);
+        stream.writeBoolean(hasShortThreadId);
+        stream.writeShort(shortThreadId);
+        stream.flush();
+    }
+
+    @Override
+    public void serialize(ByteBuffer buffer) throws Exception {
+        // ToDo
+    }
 }

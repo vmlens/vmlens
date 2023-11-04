@@ -1,26 +1,23 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelizeMock;
 import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
+import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunContext;
+import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.SendEventContextImpl;
 import com.vmlens.trace.agent.bootstrap.testFixture.StaticEventAndId;
 
 import java.util.List;
 
 public class ActualRunContextMock implements ActualRunContext {
-
-    private final SendEventContextMock sendEventContextMock = new SendEventContextMock();
+    private final CallbackStatePerThreadForParallelizeMock callbackStatePerThreadForParallelizeMock =
+            new CallbackStatePerThreadForParallelizeMock();
 
     @Override
     public SendEventContext sendEventContext() {
-        return sendEventContextMock;
-    }
-
-    @Override
-    public void setRunIdsInRuntimeEvent(RuntimeEvent event) {
-        event.setRunLoopAndSlidingWindowId(1, 1, 1);
+        return new SendEventContextImpl(new RunContext(5, 7), callbackStatePerThreadForParallelizeMock);
     }
 
     public List<StaticEventAndId> actualEvents() {
-        return sendEventContextMock.actualEvents();
+        return callbackStatePerThreadForParallelizeMock.actualEvents();
     }
 }

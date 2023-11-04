@@ -43,9 +43,11 @@ public class MethodAtomicEnterEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.interleave.getByteBuffer(slidingWindowId, 30, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.interleave.getByteBuffer(slidingWindowId, 30, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 20);
         buffer.putLong(threadId);
         buffer.putInt(methodId);
@@ -55,4 +57,6 @@ public class MethodAtomicEnterEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

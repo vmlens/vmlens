@@ -14,6 +14,10 @@ public class StaticEventAndId {
         this.id = id;
     }
 
+    public StaticEvent event() {
+        return event;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

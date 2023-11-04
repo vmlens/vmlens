@@ -55,9 +55,11 @@ public class VolatileAccessEventGen {
                 '}';
     }
 
-
     public void serialize(StreamRepository streamRepository) throws Exception {
-        ByteBuffer buffer = streamRepository.syncActions.getByteBuffer(slidingWindowId, 53, EventConstants.MAX_ARRAY_SIZE * 1000);
+        serialize(streamRepository.syncActions.getByteBuffer(slidingWindowId, 53, EventConstants.MAX_ARRAY_SIZE * 1000));
+    }
+
+    public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 7);
         buffer.putLong(threadId);
         buffer.putInt(programCounter);
@@ -71,4 +73,6 @@ public class VolatileAccessEventGen {
         buffer.putInt(runId);
         buffer.putInt(runPosition);
     }
+
+
 }

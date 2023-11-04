@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.testFixture;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThread;
+import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
@@ -21,7 +21,7 @@ public class RunMockFactory {
         InterleaveLoop interleaveLoopMock = mock(InterleaveLoop.class);
         WaitNotifyStrategy waitNotifyStrategyMock = mock(WaitNotifyStrategy.class);
         CalculatedRun calculatedRunMock = mock(CalculatedRun.class);
-        TestThreadState threadLocalMainThread = new TestThreadState(new CallbackStatePerThread(1L, null));
+        TestThreadState threadLocalMainThread = new TestThreadState(new CallbackStatePerThreadForParallelize(1L, null));
         RunStateRunning runningState = new RunStateRunning(actualRun, calculatedRunMock, runContext);
         RunStateMachineImpl runStateMachineImpl = new RunStateMachineImpl(actualRun, threadLocalMainThread,
                 interleaveLoopMock, runContext, runningState);

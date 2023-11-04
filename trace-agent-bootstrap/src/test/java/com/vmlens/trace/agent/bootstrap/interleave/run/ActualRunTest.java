@@ -16,13 +16,13 @@ public class ActualRunTest {
         ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
         ActualRunContextMock context = new ActualRunContextMock();
         // When
-        for (InterleaveActionWithPositionFactoryAndOrRuntimeEvent action : testData.resultTestBuilder().expectedRun()) {
+        for (InterleaveActionWithPositionFactoryAndOrRuntimeEvent action : testData.resultTestBuilder().givenRun()) {
             actualRun.after(action, context);
         }
 
         // Then
         assertThat(actualRun.run(), is(testData.resultTestBuilder().factoryList()));
-        assertThat(context.actualEvents(), is(testData.resultTestBuilder().expectedEvents()));
+        assertThat(context.actualEvents(), is(testData.resultTestBuilder().givenEvents()));
     }
 
 }
