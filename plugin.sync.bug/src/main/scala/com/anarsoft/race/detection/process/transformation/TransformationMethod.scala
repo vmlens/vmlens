@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.process.transformation
 
-class TransformationMethod {
+trait TransformationMethod {
   def start(): Unit = {
 
   }

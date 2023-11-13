@@ -74,8 +74,21 @@ public class ResultTestBuilder {
 
 
     public void volatileAccess(int fieldId, int operation, Position position) {
-        VolatileAccessEvent actual = new VolatileAccessEvent(1L, VOLATILE_FIELD_EVENT_ORDER, fieldId, VOLATILE_FIELD_EVENT_METHOD_ID, operation, VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE);
-        VolatileAccessEvent expected = new VolatileAccessEvent(1L, VOLATILE_FIELD_EVENT_ORDER, fieldId, VOLATILE_FIELD_EVENT_METHOD_ID, operation, VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE);
+        VolatileAccessEvent actual = new VolatileAccessEvent()
+                .setThreadId(1L)
+                .setFieldId(fieldId)
+                .setOperation(operation)
+                .setOrder(VOLATILE_FIELD_EVENT_ORDER)
+                .setObjectHashCode(VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE)
+                .setMethodId(VOLATILE_FIELD_EVENT_METHOD_ID);
+
+        VolatileAccessEvent expected = new VolatileAccessEvent()
+                .setThreadId(1L)
+                .setFieldId(fieldId)
+                .setOperation(operation)
+                .setOrder(VOLATILE_FIELD_EVENT_ORDER)
+                .setObjectHashCode(VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE)
+                .setMethodId(VOLATILE_FIELD_EVENT_METHOD_ID);
         eventBuilder.addVolatileAccessEvent(1L, VOLATILE_FIELD_EVENT_ORDER, fieldId, VOLATILE_FIELD_EVENT_METHOD_ID, operation, VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE, 0, 0, 0);
         givenRun.add(new ContainerForRuntimeEvent(expected));
 

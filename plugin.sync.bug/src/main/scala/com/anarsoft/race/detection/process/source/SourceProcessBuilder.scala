@@ -1,5 +1,10 @@
 package com.anarsoft.race.detection.process.source
 
-class SourceProcessBuilder {
+import com.anarsoft.race.detection.process.{Source, SourcePreCondition}
 
+
+class SourceProcessBuilder {
+  def add(source: Source, preConditions: SourcePreCondition*): Unit = {
+
+  }
 }

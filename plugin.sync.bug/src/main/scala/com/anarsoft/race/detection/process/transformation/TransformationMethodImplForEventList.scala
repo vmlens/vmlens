@@ -1,5 +1,5 @@
 package com.anarsoft.race.detection.process.transformation
 
-class ImmutableValue {
+class TransformationMethodImplForEventList[CONTEXT, EVENT] {
 
 }
