@@ -11,7 +11,6 @@ class SourceProcess(var currentSources: List[Source]) {
 
     for (source <- currentSources) {
       source.start();
-      newSources += source;
     }
 
     currentSources = newSources.toList;

@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.process
 
+import com.anarsoft.race.detection.process.execute.ExecuteSourceAndTransformationProcess
 import com.anarsoft.race.detection.process.source.SourceProcessBuilder
 import com.anarsoft.race.detection.process.transformation.TransformationProcessBuilder
 import com.anarsoft.race.detection.variable.*
@@ -16,10 +17,10 @@ class MainProcessTest extends AnyFlatSpec with Matchers {
     val secondVariable = new ExclusiveVariableBuilder[GuineaPigB]();
 
     // A combined Variable
-    val combined = new CombinedExclusiveVariable[GuineaPigTrait](List(firstVariable));
+    val combined = new CombinedExclusiveVariable[GuineaPigTrait](List(firstVariable, secondVariable));
     val firstStep = combined.newId();
 
-    // The resul is a shared variable which gets processed outside of the process
+    // The result is a shared variable which gets processed outside of the process
 
     // The source process builder
     val sourceProcessBuilder = new SourceProcessBuilder();
@@ -27,7 +28,13 @@ class MainProcessTest extends AnyFlatSpec with Matchers {
     // First Source
     sourceProcessBuilder.add(new SourceMock(() => {
       val publish = firstVariable.createPublisher(firstStep.getIdFor(firstVariable));
-      publish.publish(new GuineaPigA("initial"));
+      publish.publish(new GuineaPigA("Erste"));
+    }));
+
+    // Second Source
+    sourceProcessBuilder.add(new SourceMock(() => {
+      val publish = secondVariable.createPublisher(firstStep.getIdFor(secondVariable));
+      publish.publish(new GuineaPigB("Zweites"));
     }));
 
     // The transformer builder
@@ -40,7 +47,7 @@ class MainProcessTest extends AnyFlatSpec with Matchers {
         () => {
           if (access.isAvailable()) {
             val value = access.take();
-            value.setText("neuer Wert");
+            value.setText("geladen:" + value.getText());
             access.publish();
             true;
           }
@@ -68,10 +75,15 @@ class MainProcessTest extends AnyFlatSpec with Matchers {
     });
 
     // Build The Process
-
+    val transformationProcess = transformationProcessBuilder.build();
+    val sourceProcess = sourceProcessBuilder.build();
 
     // Execute the Process
+    val executeSourceAndTransformationProcess = new ExecuteSourceAndTransformationProcess(sourceProcess, transformationProcess);
+    executeSourceAndTransformationProcess.execute();
 
+    result should contain("geladen:Erste")
+    result should contain("geladen:Zweites")
   }
 
 }

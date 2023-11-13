@@ -16,7 +16,7 @@ class CombinedExclusiveVariable[TYPE](val elements: Seq[CombinedExclusiveVariabl
 
   def foreach(sourceId: CombinedExclusiveVariableId[TYPE], targetId: CombinedExclusiveVariableId[TYPE],
               function: CombinedExclusiveVariableAccess[TYPE] => Unit): Unit = {
-    for (elem <- targetId.elementToId) {
+    for (elem <- sourceId.elementToId) {
       val targetVariableId = targetId.getIdFor(elem._1);
       val access = new CombinedExclusiveVariableAccess[TYPE](elem._1.createExtractor(elem._2), elem._1, targetVariableId);
       function(access);
