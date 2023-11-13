@@ -15,4 +15,8 @@ class ExclusiveVariableBuilder[TYPE] extends CombinedExclusiveVariableElement[TY
   def newId(): ExclusiveVariableId = {
     new ExclusiveVariableId();
   }
+
+  def intermediatePublish(id: ExclusiveVariableId): Unit = {
+    variable.intermediatePublish(id);
+  }
 }

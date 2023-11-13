@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.variable
 
 import com.anarsoft.race.detection.variable.value.VariableValue
 
-class ExclusiveVariable[TYPE] extends VariableForExtract[TYPE] {
+class ExclusiveVariable[TYPE] extends VariableForExtract[TYPE] with VariableForIntermediatePublisher {
   val value = new VariableValue[TYPE]();
 
   var nextId: Option[ExclusiveVariableId] = None;
@@ -14,6 +14,10 @@ class ExclusiveVariable[TYPE] extends VariableForExtract[TYPE] {
   def put(in: TYPE, forId: ExclusiveVariableId): Unit = {
     nextId = Some(forId);
     value.put(in);
+  }
+
+  def intermediatePublish(id: ExclusiveVariableId): Unit = {
+    nextId = Some(id);
   }
 
   def take(id: VariableId): TYPE = {

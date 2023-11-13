@@ -1,15 +1,21 @@
 package com.anarsoft.race.detection.process.transformation
 
-import com.anarsoft.race.detection.process.Loop
+import com.anarsoft.race.detection.process.Transformation
+
+import scala.collection.mutable.ListBuffer
+
 
 class TransformationProcessBuilder {
 
-  def add(transformationMethod: TransformationMethod): Unit = {
+  val transformations = new ListBuffer[Transformation]();
 
+
+  def add(transformation: Transformation): Unit = {
+    transformations += transformation;
   }
 
-  def add(loop: Loop): Unit = {
-
+  def build(): TransformationProcess = {
+    new TransformationProcess(transformations.toList);
   }
 
 

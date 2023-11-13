@@ -1,5 +1,5 @@
 package com.anarsoft.race.detection.variable
 
-class CombinedExclusiveVariableElement[+TYPE] {
-
+trait CombinedExclusiveVariableElement[+TYPE] extends VariableForIntermediatePublisher {
+  def createExtractor(id: ExclusiveVariableId): Extractor[TYPE];
 }

@@ -1,9 +1,9 @@
 package com.anarsoft.race.detection.process
 
-import com.anarsoft.race.detection.process.transformation.TransformationMethod
+import com.anarsoft.race.detection.process.Transformation
 
-class TransformationMethodMock extends TransformationMethod {
-  override def start(): Unit = {
-    
+class TransformationMethodMock(val transform: () => Boolean) extends Transformation {
+  override def start(): Boolean = {
+    transform();
   }
 }

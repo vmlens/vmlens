@@ -1,5 +1,5 @@
 package com.anarsoft.race.detection.process
 
-trait Loop {
-
+trait Transformation {
+  def start(): Boolean;
 }

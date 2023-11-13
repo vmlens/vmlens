@@ -15,13 +15,20 @@ class CombinedExclusiveVariable[TYPE](val elements: Seq[CombinedExclusiveVariabl
   }
 
   def foreach(sourceId: CombinedExclusiveVariableId[TYPE], targetId: CombinedExclusiveVariableId[TYPE],
-              access: CombinedExclusiveVariableAccess[TYPE] => Unit): Unit = {
+              function: CombinedExclusiveVariableAccess[TYPE] => Unit): Unit = {
+    for (elem <- targetId.elementToId) {
+      val targetVariableId = targetId.getIdFor(elem._1);
+      val access = new CombinedExclusiveVariableAccess[TYPE](elem._1.createExtractor(elem._2), elem._1, targetVariableId);
+      function(access);
 
+    }
   }
 
   def foreach(sourceId: CombinedExclusiveVariableId[TYPE],
-              extract: CombinedExclusiveVariableExtractor[TYPE] => Unit): Unit = {
-
+              function: Extractor[TYPE] => Unit): Unit = {
+    for (elem <- sourceId.elementToId) {
+      function(elem._1.createExtractor(elem._2));
+    }
   }
 
 

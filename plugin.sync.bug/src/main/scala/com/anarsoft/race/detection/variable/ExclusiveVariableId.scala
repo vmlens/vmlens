@@ -1,5 +1,5 @@
 package com.anarsoft.race.detection.variable
 
-class ExclusiveVariableId() extends VariableId {
+class ExclusiveVariableId extends VariableId {
 
 }
