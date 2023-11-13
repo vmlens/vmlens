@@ -5,7 +5,7 @@ class SharedVariableBuilder[TYPE]() {
   val variable = new SharedVariable[TYPE]
 
   def createExtractor(): Extractor[TYPE] = {
-    val id = new VariableId();
+    val id = new SharedVariableId();
     variable.requiredBy(id);
     new Extractor[TYPE](id, variable);
   }

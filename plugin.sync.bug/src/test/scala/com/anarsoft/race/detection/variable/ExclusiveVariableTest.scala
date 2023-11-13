@@ -6,12 +6,12 @@ import org.scalatest.matchers.should.Matchers
 class ExclusiveVariableTest extends AnyFlatSpec with Matchers {
 
   "An exclusive variable" should "only be available to one consumer at a time" in {
-    // Constants
-    val first = new VariableId()
-    val second = new VariableId();
-
     // Given
     val builder = new ExclusiveVariableBuilder[String]();
+
+    val first = builder.newId();
+    val second = builder.newId();
+
     val firstExtractor = builder.createExtractor(first);
     val secondExtractor = builder.createExtractor(second);
     val firstPublisher = builder.createPublisher(first);

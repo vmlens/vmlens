@@ -33,8 +33,8 @@ class SharedVariableTest extends AnyFlatSpec with Matchers {
 
   it should "be empty after all values were taken out" in {
     // Constants
-    val first = new VariableId()
-    val second = new VariableId();
+    val first = new SharedVariableId()
+    val second = new SharedVariableId();
 
     // Given
     val sharedVariable = new SharedVariable[String]();

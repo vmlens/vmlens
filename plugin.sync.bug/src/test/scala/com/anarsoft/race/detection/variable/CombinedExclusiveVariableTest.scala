@@ -8,8 +8,8 @@ class CombinedExclusiveVariableTest extends AnyFlatSpec with Matchers {
 
   "A CombinedExclusiveVariable" should "combine two variables" in {
     // Constants
-    val first = new CombinedExclusiveVariableId();
-    val second = new CombinedExclusiveVariableId();
+    // val first = new CombinedExclusiveVariableId();
+    // val second = new CombinedExclusiveVariableId();
 
 
     // Given

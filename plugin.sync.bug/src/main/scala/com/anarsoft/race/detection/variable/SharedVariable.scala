@@ -6,7 +6,7 @@ class SharedVariable[TYPE] extends VariableForExtract[TYPE] {
 
   val value = new VariableValue[TYPE]();
 
-  def requiredBy(id: VariableId): Unit = {
+  def requiredBy(id: SharedVariableId): Unit = {
     value.requiredBy(id);
   }
 

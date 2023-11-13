@@ -1,14 +1,18 @@
 package com.anarsoft.race.detection.variable
 
-class ExclusiveVariableBuilder[TYPE] {
+class ExclusiveVariableBuilder[TYPE] extends CombinedExclusiveVariableElement[TYPE] {
   val variable = new ExclusiveVariable[TYPE]
 
-  def createExtractor(id: VariableId): Extractor[TYPE] = {
+  def createExtractor(id: ExclusiveVariableId): Extractor[TYPE] = {
     variable.requiredBy(id);
     new Extractor[TYPE](id, variable);
   }
 
-  def createPublisher(id: VariableId): ExclusivePublisher[TYPE] = {
+  def createPublisher(id: ExclusiveVariableId): ExclusivePublisher[TYPE] = {
     new ExclusivePublisher[TYPE](variable, id);
+  }
+
+  def newId(): ExclusiveVariableId = {
+    new ExclusiveVariableId();
   }
 }

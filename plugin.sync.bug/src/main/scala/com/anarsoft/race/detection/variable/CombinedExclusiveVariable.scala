@@ -1,13 +1,26 @@
 package com.anarsoft.race.detection.variable
 
-class CombinedExclusiveVariable[TYPE](val elements: CombinedExclusiveVariableElement[_ <: TYPE]) {
+import scala.collection.mutable.Map
 
+class CombinedExclusiveVariable[TYPE](val elements: Seq[CombinedExclusiveVariableElement[TYPE]]) {
 
-}
+  def newId(): CombinedExclusiveVariableId[TYPE] = {
+    val map = Map[CombinedExclusiveVariableElement[TYPE], ExclusiveVariableId]();
 
-object CombinedExclusiveVariable {
+    for (elem <- elements) {
+      map.put(elem, new ExclusiveVariableId());
+    }
 
-  def apply[TYPE](elements: CombinedExclusiveVariableElement[_ <: TYPE]*): Unit = {
+    new CombinedExclusiveVariableId[TYPE](map.toMap);
+  }
+
+  def foreach(sourceId: CombinedExclusiveVariableId[TYPE], targetId: CombinedExclusiveVariableId[TYPE],
+              access: CombinedExclusiveVariableAccess[TYPE] => Unit): Unit = {
+
+  }
+
+  def foreach(sourceId: CombinedExclusiveVariableId[TYPE],
+              extract: CombinedExclusiveVariableExtractor[TYPE] => Unit): Unit = {
 
   }
 

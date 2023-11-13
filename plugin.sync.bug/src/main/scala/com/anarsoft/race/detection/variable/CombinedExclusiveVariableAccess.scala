@@ -1,5 +1,5 @@
 package com.anarsoft.race.detection.variable
 
-class CombinedExclusiveVariableAccess {
+class CombinedExclusiveVariableAccess[TYPE] {
 
 }

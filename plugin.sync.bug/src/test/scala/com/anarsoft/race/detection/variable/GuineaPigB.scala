@@ -1,5 +1,5 @@
 package com.anarsoft.race.detection.variable
 
-class GuineaPigB {
+class GuineaPigB extends GuineaPigTrait {
 
 }

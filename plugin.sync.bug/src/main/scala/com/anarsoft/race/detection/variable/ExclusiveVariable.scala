@@ -5,13 +5,13 @@ import com.anarsoft.race.detection.variable.value.VariableValue
 class ExclusiveVariable[TYPE] extends VariableForExtract[TYPE] {
   val value = new VariableValue[TYPE]();
 
-  var nextId: Option[VariableId] = None;
+  var nextId: Option[ExclusiveVariableId] = None;
 
-  def requiredBy(id: VariableId): Unit = {
+  def requiredBy(id: ExclusiveVariableId): Unit = {
     value.requiredBy(id);
   }
 
-  def put(in: TYPE, forId: VariableId): Unit = {
+  def put(in: TYPE, forId: ExclusiveVariableId): Unit = {
     nextId = Some(forId);
     value.put(in);
   }
