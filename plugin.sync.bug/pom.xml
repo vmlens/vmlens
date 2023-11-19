@@ -71,12 +71,6 @@
             <artifactId>asm</artifactId>
             <version>${asm.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.netflix.nfgraph/netflix-graph -->
-        <dependency>
-            <groupId>com.netflix.nfgraph</groupId>
-            <artifactId>netflix-graph</artifactId>
-            <version>1.5.2</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
@@ -84,39 +78,9 @@
             <version>2.5</version>
         </dependency>
         <dependency>
-            <groupId>net.liftweb</groupId>
-            <artifactId>lift-json_2.13</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>net.liftweb</groupId>
-            <artifactId>lift-json-ext_2.13</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.samskivert</groupId>
-            <artifactId>jmustache</artifactId>
-            <version>1.15</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-configuration</groupId>
-            <artifactId>commons-configuration</artifactId>
-            <version>1.10</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.roaringbitmap</groupId>
-            <artifactId>RoaringBitmap</artifactId>
-            <version>0.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.java-diff-utils</groupId>
-            <artifactId>java-diff-utils</artifactId>
-            <version>4.0</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.scala-logging</groupId>
