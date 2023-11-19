@@ -7,19 +7,15 @@ import java.util.List;
 
 public class QueueInMock implements QueueIn {
 
-    private final List<StaticEventAndId> eventList;
+    private final List<StaticEvent> eventList;
 
-    public QueueInMock(List<StaticEventAndId> eventList) {
+    public QueueInMock(List<StaticEvent> eventList) {
         this.eventList = eventList;
     }
 
     @Override
-    public void put(int id, StaticEvent element, int slidingWindowId) {
-        eventList.add(new StaticEventAndId(element, id));
+    public void offer(Object element) {
+        eventList.add((StaticEvent) element);
     }
 
-    @Override
-    public void putDirect(StaticEvent in) {
-
-    }
 }

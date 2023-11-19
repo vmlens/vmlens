@@ -9,25 +9,7 @@ import com.anarsoft.trace.agent.serialization.ClassDescription;
 
 public class WriteClassDescriptionNormal implements WriteClassDescription {
 
-	
-	
-	
-	public  void write(final ClassDescription classDescription)
-	{
-		
-		if(CallbackState.writeClassDescription())
-		{
-			CallbackState.queueFacade.putDirect  ( 	 	 
-					  classDescription					
-							
-						
-					 
-					 );
-			
-		}
-		
-		
-	}
-
-	
+    public void write(final ClassDescription classDescription) {
+        CallbackState.eventQueue.offer(classDescription);
+    }
 }

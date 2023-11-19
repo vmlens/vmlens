@@ -1,13 +1,13 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.directMemory.*
-import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.monitor.*
-import com.anarsoft.race.detection.event.nonVolatileField.*
-import com.anarsoft.race.detection.event.syncAction.*
-
 import java.nio.ByteBuffer;
+
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.syncAction._;
+import com.anarsoft.race.detection.event.monitor._;
+import com.anarsoft.race.detection.event.nonVolatileField._;
+import com.anarsoft.race.detection.event.directMemory._;
+import com.anarsoft.race.detection.event.interleave._;
 
 
 class VolatileAccessEventGen(
@@ -16,7 +16,6 @@ class VolatileAccessEventGen(
                               , val order: Int
                               , val fieldId: Int
                               , val methodCounter: Int
-                              , var stackTraceOrdinal: Int
                               , var slidingWindowId: Int
                               , val methodId: Int
                               , val operation: Int
@@ -32,7 +31,6 @@ class VolatileAccessEventGen(
     text = text + ", order:" + order
     text = text + ", fieldId:" + fieldId
     text = text + ", methodCounter:" + methodCounter
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", slidingWindowId:" + slidingWindowId
     text = text + ", methodId:" + methodId
     text = text + ", operation:" + operation
@@ -59,9 +57,6 @@ class VolatileAccessEventGen(
           false;
         }
         else if (methodCounter != that.methodCounter) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (slidingWindowId != that.slidingWindowId) {
@@ -107,8 +102,6 @@ object VolatileAccessEventGen {
       data.getInt()
       ,
       data.getInt()
-      ,
-      0
       ,
       0
       ,

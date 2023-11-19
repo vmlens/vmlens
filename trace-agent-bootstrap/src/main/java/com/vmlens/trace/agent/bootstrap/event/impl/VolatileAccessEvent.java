@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileAccessEventGen;
 
-import static com.vmlens.trace.agent.bootstrap.event.RuntimeEventIds.ID_SyncActions;
+
 
 public class VolatileAccessEvent extends VolatileAccessEventGen implements RuntimeEvent {
     public VolatileAccessEvent setThreadId(long threadId) {
@@ -39,15 +39,16 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
 
     @Override
     public void send(SendEventContext context) {
-        context.threadLocalWrapper().put(ID_SyncActions, this, slidingWindowId);
+        context.threadLocalWrapper().offer(this);
     }
 
-    // For Test
+    // Currently not used
     VolatileAccessEvent setSlidingWindowId(int slidingWindowId) {
         this.slidingWindowId = slidingWindowId;
         return this;
     }
 
+    // For Test
     VolatileAccessEvent setProgramCounter(int programCounter) {
         this.programCounter = programCounter;
         return this;
@@ -71,6 +72,54 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
     VolatileAccessEvent setRunPosition(int runPosition) {
         this.runPosition = runPosition;
         return this;
+    }
+
+    int slidingWindowId() {
+        return slidingWindowId;
+    }
+
+    long threadId() {
+        return threadId;
+    }
+
+    int programCounter() {
+        return programCounter;
+    }
+
+    int order() {
+        return order;
+    }
+
+    int fieldId() {
+        return fieldId;
+    }
+
+    int methodCounter() {
+        return methodCounter;
+    }
+
+    int methodId() {
+        return methodId;
+    }
+
+    int operation() {
+        return operation;
+    }
+
+    long objectHashCode() {
+        return objectHashCode;
+    }
+
+    int loopId() {
+        return loopId;
+    }
+
+    int runId() {
+        return runId;
+    }
+
+    int runPosition() {
+        return runPosition;
     }
 
 }

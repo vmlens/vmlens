@@ -5,15 +5,13 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParall
 
 import java.util.concurrent.ThreadFactory;
 
-public class WriteEvent2FileThreadFactory implements ThreadFactory  {
+public class WriteEventToFileThreadFactory implements ThreadFactory {
 
-	@Override
-	public Thread newThread(Runnable arg0) {
-
+    @Override
+    public Thread newThread(Runnable arg0) {
         Thread thread = new Thread(arg0, CallbackStatePerThreadForParallelize.ANARSOFT_THREAD_NAME);
-		thread.setDaemon(true);
-	
-	    return thread;
-	}
+        thread.setDaemon(true);
+        return thread;
+    }
 
 }

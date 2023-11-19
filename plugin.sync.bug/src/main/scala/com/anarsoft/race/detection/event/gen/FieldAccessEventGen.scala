@@ -18,7 +18,6 @@ class FieldAccessEventGen(
                            , val operation: Int
                            , val methodId: Int
                            , val stackTraceIncomplete: Boolean
-                           , var stackTraceOrdinal: Int
                            , val objectHashCode: Long
                            , var slidingWindowId: Int
                            , val showSharedMemory: Boolean
@@ -35,7 +34,6 @@ class FieldAccessEventGen(
     text = text + ", operation:" + operation
     text = text + ", methodId:" + methodId
     text = text + ", stackTraceIncomplete:" + stackTraceIncomplete
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", objectHashCode:" + objectHashCode
     text = text + ", slidingWindowId:" + slidingWindowId
     text = text + ", showSharedMemory:" + showSharedMemory
@@ -67,9 +65,6 @@ class FieldAccessEventGen(
           false;
         }
         else if (stackTraceIncomplete != that.stackTraceIncomplete) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (objectHashCode != that.objectHashCode) {
@@ -120,8 +115,6 @@ object FieldAccessEventGen {
       } else {
         false
       }
-      ,
-      0
       ,
       data.getLong()
       ,

@@ -4,7 +4,6 @@ import com.anarsoft.race.detection.event.gen.{SyncActionsDeSerializer, VolatileA
 import com.anarsoft.race.detection.event.syncAction.{LoadedSyncActionContext, LoadedSyncActionEvent}
 import com.anarsoft.race.detection.testFixture.RaceDetectionVolatileFixture
 import com.vmlens.trace.agent.bootstrap.event.gen.EventConstants.MAX_ARRAY_SIZE
-import com.vmlens.trace.agent.bootstrap.testFixture.VolatileFixture
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -37,7 +36,7 @@ class SourceImplTest extends AnyFlatSpec with Matchers {
     val testData = new RaceDetectionVolatileFixture().volatileReadAndWrite();
     val events = testData.javaEvents;
     for (e <- events) {
-      e.event().serialize(byteBuffer);
+      e.serialize(byteBuffer);
     }
 
     byteBuffer.flip();
@@ -51,14 +50,14 @@ class SourceImplTest extends AnyFlatSpec with Matchers {
     }
 
     // Then
-    serializedEvents should be(testData.scalaEvent);
+    serializedEvents should be(testData.volatileAccessEvents);
 
   }
 
   it should "distributeLoadedEvent" in {
     // Given
     val event = new VolatileAccessEventGen(1L, 0, 0, 0, 0,
-      0, 0, 0, 0, 1L, 0, 0, 0);
+      0, 0, 0, 1L, 0, 0, 0);
     val context = new LoadedSyncActionContext();
     val eventSourceImpl = createSourceImpl(context);
 

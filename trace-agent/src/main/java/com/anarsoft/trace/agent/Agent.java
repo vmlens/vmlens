@@ -1,7 +1,6 @@
 package com.anarsoft.trace.agent;
 
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 
 import java.io.File;
 import java.lang.instrument.Instrumentation;
@@ -103,6 +102,5 @@ public class /**/Agent {
             e.printStackTrace();
         }
 
-        CallbackState.setSlidingWindowToOneIfStartAtBeginning();
     }
 }

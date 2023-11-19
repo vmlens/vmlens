@@ -1,13 +1,13 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.directMemory.*
-import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.monitor.*
-import com.anarsoft.race.detection.event.nonVolatileField.*
-import com.anarsoft.race.detection.event.syncAction.*
-
 import java.nio.ByteBuffer;
+
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.syncAction._;
+import com.anarsoft.race.detection.event.monitor._;
+import com.anarsoft.race.detection.event.nonVolatileField._;
+import com.anarsoft.race.detection.event.directMemory._;
+import com.anarsoft.race.detection.event.interleave._;
 
 
 class VolatileDirectMemoryEventGen(
@@ -15,7 +15,6 @@ class VolatileDirectMemoryEventGen(
                                     , val programCounter: Int
                                     , val methodCounter: Int
                                     , val objectHashCode: Long
-                                    , var stackTraceOrdinal: Int
                                     , val operation: Int
                                     , val order: Int
                                     , val loopId: Int
@@ -28,7 +27,6 @@ class VolatileDirectMemoryEventGen(
     text = text + ", programCounter:" + programCounter
     text = text + ", methodCounter:" + methodCounter
     text = text + ", objectHashCode:" + objectHashCode
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", operation:" + operation
     text = text + ", order:" + order
     text = text + ", loopId:" + loopId
@@ -50,9 +48,6 @@ class VolatileDirectMemoryEventGen(
           false;
         }
         else if (objectHashCode != that.objectHashCode) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (operation != that.operation) {
@@ -90,8 +85,6 @@ object VolatileDirectMemoryEventGen {
       data.getInt()
       ,
       data.getLong()
-      ,
-      0
       ,
       data.getInt()
       ,

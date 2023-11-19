@@ -23,7 +23,7 @@ public class AgentLogCallback {
 			StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 			exception.printStackTrace(writer);
-			callbackStatePerThread.putDirect(new AgentLogEvent("EXCEPTION:" + stringWriter.toString()));
+            callbackStatePerThread.offer(new AgentLogEvent("EXCEPTION:" + stringWriter.toString()));
 		
 		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
 		}
@@ -39,9 +39,9 @@ public class AgentLogCallback {
 			CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 			StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
-			new Exception().printStackTrace(writer);
-			callbackStatePerThread.putDirect(new AgentLogEvent("EXCEPTION:" + message + "  " + stringWriter.toString()));
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
+            new Exception().printStackTrace(writer);
+            callbackStatePerThread.offer(new AgentLogEvent("EXCEPTION:" + message + "  " + stringWriter.toString()));
+            CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
 		
 		}
 	}
@@ -51,8 +51,8 @@ public class AgentLogCallback {
         String message = location.getSimpleName() + ":" + text;
         CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
 		CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-		callbackStatePerThread.putDirect(new AgentLogEvent(message));
-		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
+        callbackStatePerThread.offer(new AgentLogEvent(message));
+        CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
     }
 
     public static  void close(Object obj)

@@ -13,20 +13,11 @@ import static com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder.MAIN_T
 
 public class VolatileFixture {
 
-    private final EventBuilder eventBuilder;
-
-    public VolatileFixture() {
-        this(new EventBuilderNoop());
-    }
-
-    public VolatileFixture(EventBuilder eventBuilder) {
-        this.eventBuilder = eventBuilder;
-    }
 
 
     public TestData volatileReadAndWrite() {
 
-        ResultTestBuilder resultTestBuilderForActualRun = new ResultTestBuilder(eventBuilder);
+        ResultTestBuilder resultTestBuilderForActualRun = new ResultTestBuilder();
 
         FixtureBuilder builder = new FixtureBuilder(resultTestBuilderForActualRun);
         builder.beginThread(MAIN_THREAD_INDEX);

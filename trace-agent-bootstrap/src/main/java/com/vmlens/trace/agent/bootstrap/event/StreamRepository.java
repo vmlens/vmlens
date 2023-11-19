@@ -20,21 +20,21 @@ public final StreamWrapperWithoutSlidingWindow threadName;
 
     private final TLinkedList<AbstractStreamWrapper> streamList = new TLinkedList<AbstractStreamWrapper>();
 
-    public StreamRepository(String eventDir, int writerNumber) {
-        this.threadName = new StreamWrapperWithoutSlidingWindow(eventDir, "threadName", writerNumber, streamList);
-        this.description = new StreamWrapperWithoutSlidingWindow(eventDir, "description", writerNumber, streamList);
-        this.stackTrace = new StreamWrapperWithoutSlidingWindow(eventDir, "stackTrace", writerNumber, streamList);
-        this.agentLog = new StreamWrapperWithoutSlidingWindow(eventDir, "agentLog", writerNumber, streamList);
-        this.className = new StreamWrapperWithoutSlidingWindow(eventDir, "className", writerNumber, streamList);
+    public StreamRepository(String eventDir) {
+        this.threadName = new StreamWrapperWithoutSlidingWindow(eventDir, "threadName", streamList);
+        this.description = new StreamWrapperWithoutSlidingWindow(eventDir, "description", streamList);
+        this.stackTrace = new StreamWrapperWithoutSlidingWindow(eventDir, "stackTrace", streamList);
+        this.agentLog = new StreamWrapperWithoutSlidingWindow(eventDir, "agentLog", streamList);
+        this.className = new StreamWrapperWithoutSlidingWindow(eventDir, "className", streamList);
 
-        this.firstWrite = new StreamWrapperWithSlidingWindow(eventDir, "firstWrite", writerNumber, streamList);
-        this.method = new StreamWrapperWithSlidingWindow(eventDir, "method", writerNumber, streamList);
-        this.syncActions = new StreamWrapperWithSlidingWindow(eventDir, "syncActions", writerNumber, streamList);
-        this.field = new StreamWrapperWithSlidingWindow(eventDir, "field", writerNumber, streamList);
-        this.monitor = new StreamWrapperWithSlidingWindow(eventDir, "monitor", writerNumber, streamList);
-        this.directMemory = new StreamWrapperWithSlidingWindow(eventDir, "directMemory", writerNumber, streamList);
+        this.firstWrite = new StreamWrapperWithSlidingWindow(eventDir, "firstWrite", streamList);
+        this.method = new StreamWrapperWithSlidingWindow(eventDir, "method", streamList);
+        this.syncActions = new StreamWrapperWithSlidingWindow(eventDir, "syncActions", streamList);
+        this.field = new StreamWrapperWithSlidingWindow(eventDir, "field", streamList);
+        this.monitor = new StreamWrapperWithSlidingWindow(eventDir, "monitor", streamList);
+        this.directMemory = new StreamWrapperWithSlidingWindow(eventDir, "directMemory", streamList);
 
-        this.interleave = new StreamWrapperWithSlidingWindow(eventDir, "interleave", writerNumber, streamList);
+        this.interleave = new StreamWrapperWithSlidingWindow(eventDir, "interleave", streamList);
     }
 
     public void flush() throws Exception {

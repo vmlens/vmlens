@@ -57,13 +57,7 @@ public class CallbackStatePerThreadForParallelize extends PerThreadCounter imple
         this.parallelizedThreadLocal = parallelizedThreadLocal;
     }
 
-
-    public void put(int id, StaticEvent element, int slidingWindowId) {
-        queueIn.put(id, element, slidingWindowId);
+    public void offer(StaticEvent element) {
+        queueIn.offer(element);
     }
-
-    public void putDirect(StaticEvent in) {
-        queueIn.putDirect(in);
-    }
-
 }

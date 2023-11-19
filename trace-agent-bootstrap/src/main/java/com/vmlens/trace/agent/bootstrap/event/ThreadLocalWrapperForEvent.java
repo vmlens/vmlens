@@ -4,7 +4,7 @@ public interface ThreadLocalWrapperForEvent {
 
     long threadId();
 
-    void put(int index, StaticEvent element, int slidingWindowId);
+    void offer(StaticEvent element);
 
     int incrementAndGetMethodCount();
 }

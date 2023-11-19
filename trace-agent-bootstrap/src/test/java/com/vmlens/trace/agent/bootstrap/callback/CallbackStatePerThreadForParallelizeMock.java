@@ -3,14 +3,13 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizedThreadLocal;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWrapperForParallelize;
-import com.vmlens.trace.agent.bootstrap.testFixture.StaticEventAndId;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class CallbackStatePerThreadForParallelizeMock extends PerThreadCounter implements ThreadLocalWrapperForParallelize {
 
-    private final List<StaticEventAndId> actualEvents = new LinkedList<StaticEventAndId>();
+    private final List<StaticEvent> actualEvents = new LinkedList<StaticEvent>();
 
     @Override
     public long threadId() {
@@ -18,8 +17,8 @@ public class CallbackStatePerThreadForParallelizeMock extends PerThreadCounter i
     }
 
     @Override
-    public void put(int index, StaticEvent element, int slidingWindowId) {
-        actualEvents.add(new StaticEventAndId(element, index));
+    public void offer(StaticEvent element) {
+        actualEvents.add(element);
     }
 
     @Override
@@ -32,7 +31,7 @@ public class CallbackStatePerThreadForParallelizeMock extends PerThreadCounter i
 
     }
 
-    public List<StaticEventAndId> actualEvents() {
+    public List<StaticEvent> actualEvents() {
         return actualEvents;
     }
 }

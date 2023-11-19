@@ -18,7 +18,6 @@ class FieldAccessEventStaticGen(
                                  , val operation: Int
                                  , val methodId: Int
                                  , val stackTraceIncomplete: Boolean
-                                 , var stackTraceOrdinal: Int
                                  , var slidingWindowId: Int
                                  , val showSharedMemory: Boolean
                                  , val loopId: Int
@@ -34,7 +33,6 @@ class FieldAccessEventStaticGen(
     text = text + ", operation:" + operation
     text = text + ", methodId:" + methodId
     text = text + ", stackTraceIncomplete:" + stackTraceIncomplete
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", slidingWindowId:" + slidingWindowId
     text = text + ", showSharedMemory:" + showSharedMemory
     text = text + ", loopId:" + loopId
@@ -65,9 +63,6 @@ class FieldAccessEventStaticGen(
           false;
         }
         else if (stackTraceIncomplete != that.stackTraceIncomplete) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (slidingWindowId != that.slidingWindowId) {
@@ -115,8 +110,6 @@ object FieldAccessEventStaticGen {
       } else {
         false
       }
-      ,
-      0
       ,
       0
       ,

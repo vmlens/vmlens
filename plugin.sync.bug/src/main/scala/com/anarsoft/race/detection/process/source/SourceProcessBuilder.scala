@@ -1,15 +1,14 @@
 package com.anarsoft.race.detection.process.source
 
-import com.anarsoft.race.detection.process.{Source, SourcePreCondition}
+import com.anarsoft.race.detection.process.Source
 
 import scala.collection.mutable.ListBuffer
-
 
 class SourceProcessBuilder {
 
   val sources = new ListBuffer[Source]();
 
-  def add(source: Source, preConditions: SourcePreCondition*): Unit = {
+  def add(source: Source): Unit = {
     sources.append(source);
   }
 

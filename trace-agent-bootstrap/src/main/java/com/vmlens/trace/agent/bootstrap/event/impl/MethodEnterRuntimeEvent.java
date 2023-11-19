@@ -4,8 +4,6 @@ import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodEnterEventGen;
 
-import static com.vmlens.trace.agent.bootstrap.event.RuntimeEventIds.ID_Method;
-
 public class MethodEnterRuntimeEvent extends MethodEnterEventGen implements RuntimeEvent {
 
     public MethodEnterRuntimeEvent(int methodId) {
@@ -17,6 +15,6 @@ public class MethodEnterRuntimeEvent extends MethodEnterEventGen implements Runt
         this.methodCounter = context.threadLocalWrapper().incrementAndGetMethodCount();
         this.threadId = context.threadLocalWrapper().threadId();
 
-        context.threadLocalWrapper().put(ID_Method, this, this.slidingWindowId);
+        context.threadLocalWrapper().offer(this);
     }
 }

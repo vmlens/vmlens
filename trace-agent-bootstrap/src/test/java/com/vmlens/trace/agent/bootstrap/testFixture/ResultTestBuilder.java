@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.testFixture;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
+import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
@@ -24,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static com.vmlens.trace.agent.bootstrap.event.RuntimeEventIds.ID_SyncActions;
+
 
 
 public class ResultTestBuilder {
@@ -43,7 +44,6 @@ public class ResultTestBuilder {
     private final List<ParallelizeActionAndThreadLocalWrapper> parallelizeActionAndThreadLocalWrapperList = new
             LinkedList<ParallelizeActionAndThreadLocalWrapper>();
     private final Map<Integer, CallbackStatePerThreadForParallelize> threadIndexToThreadLocalWrapperMock = new HashMap<>();
-    private final EventBuilder eventBuilder;
     // ToDo herausziehen
     private List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> actualRun = new
             LinkedList<>();
@@ -51,15 +51,11 @@ public class ResultTestBuilder {
             LinkedList<>();
     private ThreadIndexToElementList<Position> positions = new ThreadIndexToElementList<Position>();
     private final ParallelizeFacade parallelizeFacade = new ParallelizeFacade(null);
-    private List<StaticEventAndId> givenEvents = new
+    private List<StaticEvent> givenEvents = new
             LinkedList<>();
 
-    public ResultTestBuilder() {
-        this(new EventBuilderNoop());
-    }
 
-    public ResultTestBuilder(EventBuilder eventBuilder) {
-        this.eventBuilder = eventBuilder;
+    public ResultTestBuilder() {
         Run run = new RunMockFactory().create(new ActualRunMock(actualRun), runContext);
         threadIndexToThreadLocalWrapperMock.put(0, threadLocalWrapper(0, 1L, run));
         threadIndexToThreadLocalWrapperMock.put(1, threadLocalWrapper(1, 15L, run));
@@ -89,10 +85,9 @@ public class ResultTestBuilder {
                 .setOrder(VOLATILE_FIELD_EVENT_ORDER)
                 .setObjectHashCode(VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE)
                 .setMethodId(VOLATILE_FIELD_EVENT_METHOD_ID);
-        eventBuilder.addVolatileAccessEvent(1L, VOLATILE_FIELD_EVENT_ORDER, fieldId, VOLATILE_FIELD_EVENT_METHOD_ID, operation, VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE, 0, 0, 0);
         givenRun.add(new ContainerForRuntimeEvent(expected));
 
-        givenEvents.add(new StaticEventAndId(expected, ID_SyncActions));
+        givenEvents.add(expected);
 
 
         add(new ParallelizeActionWithRuntimeEvent(actual), position);
@@ -169,7 +164,7 @@ public class ResultTestBuilder {
                 (new ElementAndPosition(interleaveAction, position)));
     }
 
-    public List<StaticEventAndId> givenEvents() {
+    public List<StaticEvent> givenEvents() {
         return givenEvents;
     }
 

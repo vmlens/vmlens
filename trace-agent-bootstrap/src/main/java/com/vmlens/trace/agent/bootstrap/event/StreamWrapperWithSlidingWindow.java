@@ -13,25 +13,22 @@ public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper  {
     private long start;
 	protected final String eventDir;
 	protected final String name;
-	protected final int writerNumber;
     private ByteBuffer mappedByteBuffer;
     private FileChannel fileChannel;
 
 	public StreamWrapperWithSlidingWindow(
-			String eventDir, String name, int writerNumber,TLinkedList<AbstractStreamWrapper> list) {
-		super(list);
-		this.eventDir = eventDir;
-		this.name = name;
-		this.writerNumber = writerNumber;
-	}
+            String eventDir, String name, TLinkedList<AbstractStreamWrapper> list) {
+        super(list);
+        this.eventDir = eventDir;
+        this.name = name;
+    }
 
-	public StreamWrapperWithSlidingWindow(
-			String eventDir, String name, int writerNumber) {
-		super();
-		this.eventDir = eventDir;
-		this.name = name;
-		this.writerNumber = writerNumber;
-	}
+    public StreamWrapperWithSlidingWindow(
+            String eventDir, String name) {
+        super();
+        this.eventDir = eventDir;
+        this.name = name;
+    }
 
 
     public void flush() throws IOException {
@@ -55,9 +52,9 @@ public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper  {
     public ByteBuffer getByteBuffer(int slidingWindowId, int arraySize, int blocksize) throws Exception {
         if (lastWrittenSlidingWindow != slidingWindowId) {
             if (mappedByteBuffer == null) {
-                fileChannel = (new RandomAccessFile(new File(eventDir + "/" + name + "_" + +writerNumber + ".vmlens"), "rw")).getChannel();
+                fileChannel = (new RandomAccessFile(new File(eventDir + "/" + name + ".vmlens"), "rw")).getChannel();
                 mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, start, blocksize);
-                streamStatistic = new DataOutputStream((new FileOutputStream(eventDir + "/" + name + "Statistic_" + writerNumber + ".vmlens")));
+                streamStatistic = new DataOutputStream((new FileOutputStream(eventDir + "/" + name + "Statistic.vmlens")));
             }
             streamStatistic.writeInt(lastWrittenSlidingWindow);
             streamStatistic.writeLong(start + mappedByteBuffer.position());

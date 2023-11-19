@@ -6,29 +6,8 @@ public class IntStack {
 
 	
 	private final TIntLinkedList list = new TIntLinkedList();
-	
-	/*
-	 * public boolean isEmpty() {
-		return linkedList.isEmpty();
-	}
 
-
-	public void push(T in)
-	{
-		linkedList.add( new TLinkableWrapper<T>(in) );
-	}
-	
-	
-	public T poll()
-	{
-		return linkedList.remove( linkedList.size() -1   ).element;
-	}
-	
-	
-	
-	 */
-	
-	public boolean isEmpty() {
+    public boolean isEmpty() {
 		return list.isEmpty();
 	}
 

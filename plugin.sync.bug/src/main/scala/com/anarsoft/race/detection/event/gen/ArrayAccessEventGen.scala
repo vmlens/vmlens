@@ -18,7 +18,6 @@ class ArrayAccessEventGen(
                            , val operation: Int
                            , val methodId: Int
                            , val stackTraceIncomplete: Boolean
-                           , var stackTraceOrdinal: Int
                            , val objectHashCode: Long
                            , val position: Int
                            , val classId: Int
@@ -37,7 +36,6 @@ class ArrayAccessEventGen(
     text = text + ", operation:" + operation
     text = text + ", methodId:" + methodId
     text = text + ", stackTraceIncomplete:" + stackTraceIncomplete
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", objectHashCode:" + objectHashCode
     text = text + ", position:" + position
     text = text + ", classId:" + classId
@@ -71,9 +69,6 @@ class ArrayAccessEventGen(
           false;
         }
         else if (stackTraceIncomplete != that.stackTraceIncomplete) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (objectHashCode != that.objectHashCode) {
@@ -130,8 +125,6 @@ object ArrayAccessEventGen {
       } else {
         false
       }
-      ,
-      0
       ,
       data.getLong()
       ,

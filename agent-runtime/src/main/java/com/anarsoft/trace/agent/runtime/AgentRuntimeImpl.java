@@ -4,12 +4,11 @@ package com.anarsoft.trace.agent.runtime;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsAlwaysFalse;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
-import com.anarsoft.trace.agent.runtime.util.AgentKeys;
 import com.anarsoft.trace.agent.runtime.repository.LoadAtomicClassesFromClasspath;
+import com.anarsoft.trace.agent.runtime.util.AgentKeys;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
-import com.anarsoft.trace.agent.runtime.write.WriteEvent2File;
-import com.anarsoft.trace.agent.runtime.write.WriteEvent2FileThreadFactory;
+import com.anarsoft.trace.agent.runtime.write.WriteEventToFile;
 import com.anarsoft.trace.agent.serialization.ClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
@@ -17,7 +16,6 @@ import com.vmlens.trace.agent.bootstrap.AgentRuntime;
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -176,10 +174,8 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			this.getClass().getClassLoader().loadClass("java.util.concurrent.locks.LockSupport");
 
             instrument(inst, outputFileName);
+            WriteEventToFile.startWriteEventToFileThread(outputFileName, agentController);
 
-			CallbackState.queueFacade.start(
-					new WriteEvent2File(outputFileName, new StreamRepository(outputFileName, 0), agentController),
-					new WriteEvent2FileThreadFactory());
 
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -187,7 +183,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
 		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
 
-		CallbackState.slidingWindow = 1;
+
 
 	}
 
@@ -234,7 +230,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
         retransform(inst, classAnalyzedEventList, true, alreadyTransformed);
         for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-            CallbackState.queueFacade.putDirect(classAnalyzedEvent.getElement());
+            CallbackState.eventQueue.offer(classAnalyzedEvent.getElement());
 
         }
         classAnalyzedEventList = new TLinkedList();
@@ -242,7 +238,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
         retransform(inst, classAnalyzedEventList, false, alreadyTransformed);
 		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-			CallbackState.queueFacade.putDirect(classAnalyzedEvent.getElement());
+            CallbackState.eventQueue.offer(classAnalyzedEvent.getElement());
 		}
         inst.addTransformer(new AgentClassFileTransformer(false,
                 new WriteClassDescriptionNormal(), true, new HasGeneratedMethodsSetBased()), false);
