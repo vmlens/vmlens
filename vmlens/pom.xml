@@ -62,6 +62,7 @@
         <module>../trace-agent</module>
         <module>../agent-runtime</module>
         <module>../plugin.sync.bug</module>
+        <module>../report</module>
     </modules>
 
 

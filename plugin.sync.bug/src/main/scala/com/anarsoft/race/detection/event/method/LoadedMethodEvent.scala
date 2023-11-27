@@ -1,5 +1,7 @@
 package com.anarsoft.race.detection.event.method
 
-class LoadedMethodEvent {
+import com.anarsoft.race.detection.stacktrace.MethodEvent
+
+trait LoadedMethodEvent extends MethodEvent {
 
 }

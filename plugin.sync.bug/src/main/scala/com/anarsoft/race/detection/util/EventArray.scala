@@ -1,6 +1,8 @@
 package com.anarsoft.race.detection.util
 
-class EventArray[EVENT](private val array: Array[EVENT]) {
+import scala.math.Ordering.Implicits.*
+
+class EventArray[+EVENT <: ThreadIdAndMethodCounter](private[this] val array: Array[EVENT]) {
 
   def foreach(f: (EVENT) => Unit): Unit = {
     for (elem <- array) {
@@ -8,13 +10,11 @@ class EventArray[EVENT](private val array: Array[EVENT]) {
     }
   }
 
-  def sort(): Unit = {
-
+  def sortByMethodCounter(): Unit = {
+    array.sortInPlaceWith((a, b) =>
+      if (a.threadId != b.threadId) a.threadId < b.threadId
+      else a.methodCounter < b.methodCounter
+    )
   }
-
-  def createWithSameSize[NEW_EVENT](): Unit = {
-
-  }
-
 
 }
