@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.process.source
+package com.anarsoft.race.detection.source
 
 import com.anarsoft.race.detection.util.{EventArray, ThreadIdAndMethodCounter}
 
