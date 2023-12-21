@@ -1,21 +1,16 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.directMemory.*
-import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.load.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.monitor.*
-import com.anarsoft.race.detection.event.nonVolatileField.*
-import com.anarsoft.race.detection.event.syncAction.*
+import java.nio.ByteBuffer
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.syncAction._;
+import com.anarsoft.race.detection.event.monitor._;
+import com.anarsoft.race.detection.event.nonVolatileField._;
+import com.anarsoft.race.detection.event.directMemory._;
+import com.anarsoft.race.detection.event.interleave._;
+import com.anarsoft.race.detection.event.load._;
 
-class MethodDeSerializer extends DeSerializeStrategy[LoadedMethodEvent] {
-  def eventArraySize() = 29
-
-  val blockSize = 29 * 10000;
-
-
+class MethodDeserializer extends DeserializeStrategy[LoadedMethodEvent] {
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedMethodEvent = {
     val id = buffer.get();
 
@@ -27,5 +22,4 @@ class MethodDeSerializer extends DeSerializeStrategy[LoadedMethodEvent] {
     }
     throw new RuntimeException("id " + id + " could not be deserialized");
   }
-
 }

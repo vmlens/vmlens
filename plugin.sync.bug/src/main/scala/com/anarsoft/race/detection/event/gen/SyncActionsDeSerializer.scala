@@ -10,12 +10,7 @@ import com.anarsoft.race.detection.event.directMemory._;
 import com.anarsoft.race.detection.event.interleave._;
 import com.anarsoft.race.detection.event.load._;
 
-class SyncActionsDeSerializer extends DeSerializeStrategy[LoadedSyncActionEvent] {
-  def eventArraySize() = 57
-
-  val blockSize = 57 * 10000;
-
-
+class SyncActionsDeserializer extends DeserializeStrategy[LoadedSyncActionEvent] {
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedSyncActionEvent = {
     val id = buffer.get();
 
@@ -48,5 +43,4 @@ class SyncActionsDeSerializer extends DeSerializeStrategy[LoadedSyncActionEvent]
     }
     throw new RuntimeException("id " + id + " could not be deserialized");
   }
-
 }

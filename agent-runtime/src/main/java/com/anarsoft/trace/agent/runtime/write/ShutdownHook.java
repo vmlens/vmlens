@@ -15,7 +15,7 @@ public class ShutdownHook extends Thread {
 
     public void stopProcessing() {
         try {
-            CallbackState.eventQueue.offer(new PoisonEven());
+            CallbackState.eventQueue.offer(new PoisonedEvent());
         } catch (Exception e) {
             e.printStackTrace();
         }

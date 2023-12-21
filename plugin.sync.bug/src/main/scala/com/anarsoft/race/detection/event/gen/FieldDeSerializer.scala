@@ -1,21 +1,16 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.directMemory.*
-import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.load.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.monitor.*
-import com.anarsoft.race.detection.event.nonVolatileField.*
-import com.anarsoft.race.detection.event.syncAction.*
+import java.nio.ByteBuffer
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.syncAction._;
+import com.anarsoft.race.detection.event.monitor._;
+import com.anarsoft.race.detection.event.nonVolatileField._;
+import com.anarsoft.race.detection.event.directMemory._;
+import com.anarsoft.race.detection.event.interleave._;
+import com.anarsoft.race.detection.event.load._;
 
-class FieldDeSerializer extends DeSerializeStrategy[LoadedNonVolatileFieldEvent] {
-  def eventArraySize() = 59
-
-  val blockSize = 59 * 10000;
-
-
+class FieldDeserializer extends DeserializeStrategy[LoadedNonVolatileFieldEvent] {
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedNonVolatileFieldEvent = {
     val id = buffer.get();
 
@@ -30,5 +25,4 @@ class FieldDeSerializer extends DeSerializeStrategy[LoadedNonVolatileFieldEvent]
     }
     throw new RuntimeException("id " + id + " could not be deserialized");
   }
-
 }

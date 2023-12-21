@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.util
+package com.anarsoft.race.detection.stacktrace
 
 trait ThreadIdAndMethodCounter {
   def threadId: Long;

@@ -49,7 +49,7 @@ public class WriteEventToFile implements Runnable {
             try {
                 Object in = CallbackState.eventQueue.queue().poll();
                 if (in != null) {
-                    if (in instanceof PoisonEven) {
+                    if (in instanceof PoisonedEvent) {
                         process = false;
                     } else if (in instanceof StaticEvent) {
                         StaticEvent staticEvent = (StaticEvent) in;

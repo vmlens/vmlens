@@ -1,4 +1,5 @@
-package com.anarsoft.race.detection.util
+package com.anarsoft.race.detection.prozessEventByType
+
 
 trait ProzessorAndEvent[EVENT <: EventWithType, FAILURE] {
 

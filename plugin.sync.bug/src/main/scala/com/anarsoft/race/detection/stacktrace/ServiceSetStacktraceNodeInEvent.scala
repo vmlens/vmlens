@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.stacktrace
 
-import com.anarsoft.race.detection.util.{EventArray, ThreadIdAndMethodCounter}
+import com.anarsoft.race.detection.util.EventArray
 
 class ServiceSetStacktraceNodeInEvent {
 

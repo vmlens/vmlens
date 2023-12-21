@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import java.nio.ByteBuffer;
-
 import com.vmlens.trace.agent.bootstrap.event.*;
-
 import java.io.DataOutputStream;
 
 public class ThreadStartEventGen {

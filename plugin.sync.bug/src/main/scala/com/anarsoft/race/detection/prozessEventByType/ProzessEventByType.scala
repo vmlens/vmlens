@@ -1,4 +1,7 @@
-package com.anarsoft.race.detection.util
+package com.anarsoft.race.detection.prozessEventByType
+
+import com.anarsoft.race.detection.prozessEventByType.EventWithType
+import com.anarsoft.race.detection.util.EventArray
 
 class ProzessEventByType[EVENT <: EventWithType, FAILURE](val newProzessor: (EVENT) => ProzessOneType[EVENT, FAILURE]) {
 

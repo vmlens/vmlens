@@ -1,4 +1,5 @@
-package com.anarsoft.race.detection.util
+package com.anarsoft.race.detection.prozessEventByType
+
 
 class ProzessorAndEventStart[EVENT <: EventWithType, FAILURE] extends ProzessorAndEvent[EVENT, FAILURE] {
 
