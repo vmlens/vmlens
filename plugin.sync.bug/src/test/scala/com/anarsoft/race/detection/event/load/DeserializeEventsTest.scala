@@ -2,12 +2,13 @@ package com.anarsoft.race.detection.event.load
 
 import com.anarsoft.race.detection.event.gen.SyncActionsDeserializer
 import com.anarsoft.race.detection.event.syncAction.LoadedSyncActionEvent
+import com.anarsoft.race.detection.testFixture.VolatileFixture
+import com.vmlens.trace.agent.bootstrap.event.gen.EventConstants.MAX_ARRAY_SIZE
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import com.vmlens.trace.agent.bootstrap.event.gen.EventConstants.MAX_ARRAY_SIZE
 
 import java.nio.ByteBuffer
-import com.anarsoft.race.detection.testFixture.RaceDetectionVolatileFixture
+import scala.jdk.CollectionConverters.*
 
 class DeserializeEventsTest extends AnyFlatSpec with Matchers {
 
@@ -15,8 +16,8 @@ class DeserializeEventsTest extends AnyFlatSpec with Matchers {
     // Given
     val byteArray: Array[Byte] = new Array[Byte](MAX_ARRAY_SIZE * 100)
     val byteBuffer = ByteBuffer.wrap(byteArray);
-    val testData = new RaceDetectionVolatileFixture().volatileReadAndWrite();
-    val events = testData.javaEvents;
+    val testData = new VolatileFixture().volatileReadAndWrite();
+    val events = testData.syncActionJavaEvents;
     for (e <- events) {
       e.serialize(byteBuffer);
     }
@@ -28,6 +29,6 @@ class DeserializeEventsTest extends AnyFlatSpec with Matchers {
     val serializedEvents = deserializeEvents.deserialize(byteBuffer, new SyncActionsDeserializer());
 
     // Then
-    serializedEvents should be(testData.volatileAccessEvents);
+    serializedEvents.asScala.toList should be(testData.volatileAccessEvents);
   }
 }

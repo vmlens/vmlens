@@ -1,9 +1,11 @@
 package com.anarsoft.race.detection.testFixture
 
 import com.anarsoft.race.detection.event.gen.VolatileAccessEventGen
-import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
-import java.util.List;
+import com.anarsoft.race.detection.event.method.LoadedMethodEvent
+import com.vmlens.trace.agent.bootstrap.event.{RuntimeEvent, StaticEvent}
 
-case class TestData(javaEvents: Seq[StaticEvent], volatileAccessEvents: List[VolatileAccessEventGen]) {
+
+case class TestData(syncActionJavaEvents: List[StaticEvent], volatileAccessEvents: List[VolatileAccessEventGen],
+                    methodJavaEvents: List[RuntimeEvent], methodEvents: List[LoadedMethodEvent]) {
 
 }

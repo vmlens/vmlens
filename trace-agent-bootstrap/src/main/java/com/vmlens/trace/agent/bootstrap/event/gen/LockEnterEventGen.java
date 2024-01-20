@@ -1,10 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithSlidingWindow;
+
 import java.nio.ByteBuffer;
-
-import com.vmlens.trace.agent.bootstrap.event.*;
-
-import java.io.DataOutputStream;
 
 public class LockEnterEventGen {
     protected int slidingWindowId;
@@ -55,7 +54,11 @@ public class LockEnterEventGen {
     }
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.syncActions.getByteBuffer(slidingWindowId, 42, EventConstants.MAX_ARRAY_SIZE * 1000));
+        serialize(streamRepository.syncActions);
+    }
+
+    public void serialize(StreamWrapperWithSlidingWindow streamWrapperWithSlidingWindow) throws Exception {
+        serialize(streamWrapperWithSlidingWindow.getByteBuffer(slidingWindowId, 42, EventConstants.MAX_ARRAY_SIZE * 1000));
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {

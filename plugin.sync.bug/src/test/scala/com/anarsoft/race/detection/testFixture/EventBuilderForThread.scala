@@ -1,14 +1,23 @@
 package com.anarsoft.race.detection.testFixture
 
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
-import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEventBuilder
+import com.vmlens.trace.agent.bootstrap.event.impl.{MethodEnterEventBuilder, VolatileAccessEventBuilder}
 
-class EventBuilderForThread(val threadId: Long) {
+import scala.collection.mutable.Stack
 
-  var programCounter = 0;
+class EventBuilderForThread(private val threadId: Long, private val eventBuilder: EventBuilder) {
 
-  var methodCounter = 0;
-  var methodId = 0;
+  private val methodStack = new Stack[Int]();
+  private var programCounter = 0;
+
+  def addMethodEnterEvent(methodId: Int): Unit = {
+    methodStack.push(methodId);
+
+    val methodEnterEventBuilder = new MethodEnterEventBuilder();
+    methodEnterEventBuilder.setMethodId(methodId);
+    methodEnterEventBuilder.setThreadId(threadId);
+    eventBuilder.add(methodEnterEventBuilder)
+  }
 
 
   def addVolatileRead(field: EventBuilderForSyncAction): Unit = {
@@ -24,9 +33,13 @@ class EventBuilderForThread(val threadId: Long) {
     val event = new VolatileAccessEventBuilder();
     event.setProgramCounter(programCounter);
     event.setOperation(operation);
-    event.setMethodId(methodId);
-    event.setMethodCounter(methodCounter);
-    field.add(event);
+
+    if (!methodStack.isEmpty) {
+      event.setMethodId(methodStack.top);
+    }
+
+    field.setFieldValues(event);
+    eventBuilder.add(event)
     programCounter = programCounter + 1;
   }
 

@@ -7,16 +7,19 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper  {
-	private DataOutputStream streamStatistic;
+public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper {
+
+    public static final String EVENT_FILE_POSTFIX = ".vmlens";
+    public static final String STATISTIC_FILE_POSTFIX = "Statistic.vmlens";
+    protected final String eventDir;
     private int lastWrittenSlidingWindow = -1;
     private long start;
-	protected final String eventDir;
-	protected final String name;
+    protected final String name;
+    private DataOutputStream streamStatistic;
     private ByteBuffer mappedByteBuffer;
     private FileChannel fileChannel;
 
-	public StreamWrapperWithSlidingWindow(
+    public StreamWrapperWithSlidingWindow(
             String eventDir, String name, TLinkedList<AbstractStreamWrapper> list) {
         super(list);
         this.eventDir = eventDir;
@@ -52,9 +55,9 @@ public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper  {
     public ByteBuffer getByteBuffer(int slidingWindowId, int arraySize, int blocksize) throws Exception {
         if (lastWrittenSlidingWindow != slidingWindowId) {
             if (mappedByteBuffer == null) {
-                fileChannel = (new RandomAccessFile(new File(eventDir + "/" + name + ".vmlens"), "rw")).getChannel();
+                fileChannel = (new RandomAccessFile(new File(eventDir + "/" + name + EVENT_FILE_POSTFIX), "rw")).getChannel();
                 mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, start, blocksize);
-                streamStatistic = new DataOutputStream((new FileOutputStream(eventDir + "/" + name + "Statistic.vmlens")));
+                streamStatistic = new DataOutputStream((new FileOutputStream(eventDir + "/" + name + STATISTIC_FILE_POSTFIX)));
             }
             streamStatistic.writeInt(lastWrittenSlidingWindow);
             streamStatistic.writeLong(start + mappedByteBuffer.position());

@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import java.nio.ByteBuffer;
-
 import com.vmlens.trace.agent.bootstrap.event.*;
-
 import java.io.DataOutputStream;
 
 public class StampedLockEnterEventGen {
@@ -58,7 +56,11 @@ public class StampedLockEnterEventGen {
     }
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.syncActions.getByteBuffer(slidingWindowId, 46, EventConstants.MAX_ARRAY_SIZE * 1000));
+        serialize(streamRepository.syncActions);
+    }
+
+    public void serialize(StreamWrapperWithSlidingWindow streamWrapperWithSlidingWindow) throws Exception {
+        serialize(streamWrapperWithSlidingWindow.getByteBuffer(slidingWindowId, 46, EventConstants.MAX_ARRAY_SIZE * 1000));
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {

@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.syncAction
 
-import com.anarsoft.race.detection.event.load.LoadedEventContext
-import com.anarsoft.race.detection.process.loopAndRunData.{LoopAndRunDataBuilder, LoopAndRunId}
+import com.anarsoft.race.detection.event.distribute.LoadedEventContext
+import com.anarsoft.race.detection.process.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 
 import java.util.*
 
@@ -17,7 +17,7 @@ class LoadedSyncActionContext extends LoadedEventContext[LoadedSyncActionEvent] 
     volatileAccessEvents.add(event);
   }
 
-  override def addToBuilder(loopAndRunId: LoopAndRunId, builder: LoopAndRunDataBuilder): Unit = {
+  override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
     // ToDo
   }
 }

@@ -5,11 +5,11 @@ import org.scalatest.matchers.should.Matchers
 
 class ServiceSortMemoryAccessTest extends AnyFlatSpec with Matchers {
 
-  "The service" should "process after and modify and before" in {
+  "The service" should "keepGoing after and modify and before" in {
 
   }
 
-  it should "process after and data race" in {
+  it should "keepGoing after and data race" in {
 
   }
 

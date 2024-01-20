@@ -1,5 +1,7 @@
 package com.anarsoft.race.detection.process.main
 
-trait LoadEvents {
+import com.anarsoft.race.detection.process.loopAndRunData.RunData
 
+trait LoadEvents {
+  def foreach(f: (RunData) => Unit): Unit;
 }

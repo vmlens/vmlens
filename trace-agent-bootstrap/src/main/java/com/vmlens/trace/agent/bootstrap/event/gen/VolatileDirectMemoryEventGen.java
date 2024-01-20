@@ -50,7 +50,11 @@ public class VolatileDirectMemoryEventGen {
     }
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.directMemory.getByteBuffer(slidingWindowId, 45, EventConstants.MAX_ARRAY_SIZE * 1000));
+        serialize(streamRepository.directMemory);
+    }
+
+    public void serialize(StreamWrapperWithSlidingWindow streamWrapperWithSlidingWindow) throws Exception {
+        serialize(streamWrapperWithSlidingWindow.getByteBuffer(slidingWindowId, 45, EventConstants.MAX_ARRAY_SIZE * 1000));
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
