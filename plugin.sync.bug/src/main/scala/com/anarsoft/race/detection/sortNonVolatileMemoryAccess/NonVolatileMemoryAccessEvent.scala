@@ -1,0 +1,9 @@
+package com.anarsoft.race.detection.sortNonVolatileMemoryAccess
+
+import com.anarsoft.race.detection.processEventByType.EventWithType
+import com.anarsoft.race.detection.sortUtil.SortableEvent
+import com.anarsoft.race.detection.util.WithPosition
+
+trait NonVolatileMemoryAccessEvent[EVENT] extends EventWithType[EVENT] with SortableEvent {
+
+}

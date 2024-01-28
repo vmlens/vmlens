@@ -1,13 +1,13 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.monitor.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.monitor._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class MonitorExitEventGen(
@@ -30,7 +30,7 @@ class MonitorExitEventGen(
     text = text + ", monitorId:" + monitorId
     text = text + ", methodCounter:" + methodCounter
     text = text + ", methodId:" + methodId
-    text = text + ", position:" + position
+    text = text + ", positionInRun:" + position
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
     text = text + ", runPosition:" + runPosition

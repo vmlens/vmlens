@@ -21,11 +21,23 @@ class EventArray[+EVENT](private[this] val array: Array[EVENT]) {
     }
   }
 
+  def sort[EVENT >: this.EVENT](ord: Ordering[EVENT]): Unit = {
+    array.sortInPlace()(ord);
+  }
+
   def foreach(f: (EVENT) => Unit): Unit = {
     for (elem <- array) {
       f(elem);
     }
   }
+
+  override def equals(other: Any): Boolean = other match {
+    case that: EventArray[EVENT] =>
+      (that canEqual this) && (that sameArray this)
+    case _ => false
+  }
+
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[EventArray[EVENT]]
 
   private def arrayLength() = array.length;
 
@@ -45,17 +57,9 @@ class EventArray[+EVENT](private[this] val array: Array[EVENT]) {
     }
   }
 
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[EventArray[EVENT]]
-
-  override def equals(other: Any): Boolean = other match {
-    case that: EventArray[EVENT] =>
-      (that canEqual this) && (that sameArray this)
-    case _ => false
-  }
-
   override def hashCode(): Int = {
     val state = Seq(array)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
+
 }

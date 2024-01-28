@@ -4,6 +4,6 @@ trait WithPosition {
 
   def threadId: Long;
 
-  def position: Int;
+  def positionInRun: Int;
 
 }
