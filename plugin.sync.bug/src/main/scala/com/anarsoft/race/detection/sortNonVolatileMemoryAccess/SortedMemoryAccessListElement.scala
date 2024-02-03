@@ -1,5 +1,8 @@
 package com.anarsoft.race.detection.sortNonVolatileMemoryAccess
 
-private trait SortedMemoryAccessListElement {
+private class SortedMemoryAccessListElement[EVENT](var isDataRace: Boolean,
+                                                   val event: NonVolatileMemoryAccessEvent[EVENT]) {
+
+  def positionInRun = event.positionInRun;
 
 }

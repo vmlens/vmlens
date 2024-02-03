@@ -6,6 +6,10 @@ class MemoryAccessEventBuilder {
   var threadId = 1L;
   var typeId = 1;
 
+  def incrementPositionInRun(delta: Int): Unit = {
+    positionInRun = positionInRun + delta;
+  }
+
   def threadId(threadId: Long): MemoryAccessEventBuilder = {
     this.threadId = threadId;
     this;
