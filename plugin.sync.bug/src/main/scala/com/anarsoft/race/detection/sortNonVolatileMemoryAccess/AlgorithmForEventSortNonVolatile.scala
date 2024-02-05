@@ -7,8 +7,18 @@ private class AlgorithmForEventSortNonVolatile[EVENT <: NonVolatileMemoryAccessE
  val sortedListBuilder: MemoryAccessReportBuilder)
   extends AlgorithmForEvent[EVENT] {
 
+  var previous: Option[SortedMemoryAccessList[EVENT]] = None;
+
   override def create(event: EVENT): AlgorithmForOneType[EVENT] = {
-    new AlgorithmForOneTypeSortNonVolatile[EVENT](partialOrder, new SortedMemoryAccessList[EVENT]());
+    previous.foreach(builder => builder.buildResult(sortedListBuilder));
+
+    val builder = new SortedMemoryAccessList[EVENT]();
+    previous = Some(builder);
+    new AlgorithmForOneTypeSortNonVolatile[EVENT](partialOrder, builder);
+  }
+
+  def done(): Unit = {
+    previous.foreach(builder => builder.buildResult(sortedListBuilder));
   }
 
 }
