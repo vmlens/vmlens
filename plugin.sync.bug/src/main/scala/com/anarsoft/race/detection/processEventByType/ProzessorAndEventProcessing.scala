@@ -7,7 +7,7 @@ private class ProcessorAndEventProcessing[EVENT <: EventWithType[EVENT]]
   val algorithm = algorithmForEvent.create(forEvent);
 
   override def process(event: EVENT, algorithmForEvent: AlgorithmForEvent[EVENT]): ProcessorAndEvent[EVENT] = {
-    if (!forEvent.sameType(event)) {
+    if (forEvent.compareType(event) != 0) {
       new ProcessorAndEventProcessing[EVENT](event, algorithmForEvent)
     } else {
       if (algorithm.prozess(event)) {

@@ -11,7 +11,6 @@ class ServiceSetStacktraceNodeInEvent {
       current = current match {
         case None => threadIdToStacktraceNodeArray.get(event.threadId)
           .map(array => ThreadIdToArray(event.threadId, array))
-
         case Some(x) => {
           if (x.threadId == event.threadId) {
             Some(x)
@@ -21,9 +20,7 @@ class ServiceSetStacktraceNodeInEvent {
           }
         }
       }
-
       event.setStacktraceNode(current.get.array(event.methodCounter));
-
     }
   }
 

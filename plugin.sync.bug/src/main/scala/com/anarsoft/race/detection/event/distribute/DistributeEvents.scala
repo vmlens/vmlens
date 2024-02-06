@@ -7,7 +7,7 @@ import java.util.Collections.sort
 
 /**
  * Distribute the events based on the loop and run id and then on the type
- * Add them for each run to the run context to create Groups.
+ * Add them for each run to the run context to getOrCreateElement Groups.
  */
 class DistributeEvents[EVENT <: EventWithLoopAndRunId] {
 

@@ -6,7 +6,7 @@ class NonVolatileMemoryAccessEventContainer[EVENT <: NonVolatileMemoryAccessEven
 (private var read: Option[EVENT],
  private var write: Option[EVENT]) extends EventContainer[EVENT] {
 
-  override def create(event: EVENT): EventContainer[EVENT] = {
+  override def getOrCreateElement(event: EVENT): EventContainer[EVENT] = {
     if (event.isRead) {
       new NonVolatileMemoryAccessEventContainer(Some(event), write);
     } else {

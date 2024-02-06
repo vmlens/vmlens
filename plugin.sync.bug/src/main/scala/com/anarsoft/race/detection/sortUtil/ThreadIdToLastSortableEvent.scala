@@ -29,7 +29,7 @@ class ThreadIdToLastSortableEvent[EVENT <: WithPosition](newContainer: (EVENT) =
           newContainer(elem);
         }
         case Some(x) => {
-          x.create(elem);
+          x.getOrCreateElement(elem);
         }
       }
     map.put(elem.threadId, newElement);
