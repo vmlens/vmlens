@@ -1,10 +1,12 @@
 package com.anarsoft.race.detection.sortUtil
 
+import com.anarsoft.race.detection.util.WithPosition
+
 import scala.collection.mutable.HashMap
 
-class ThreadIdToLastSortableEvent[EVENT <: SortableEvent] {
+class ThreadIdToLastSortableEvent[EVENT <: WithPosition](newContainer: (EVENT) => EventContainer[EVENT]) {
 
-  private val map = new HashMap[Long, LeftRightAndOrBoth[EVENT]]();
+  private val map = new HashMap[Long, EventContainer[EVENT]]();
 
   def foreachOppositeAndPut(elem: EVENT, f: (EVENT) => Unit): Unit = {
     foreachOpposite(elem, f);
@@ -24,7 +26,7 @@ class ThreadIdToLastSortableEvent[EVENT <: SortableEvent] {
     val newElement =
       map.get(elem.threadId) match {
         case None => {
-          LeftRightAndOrBoth(elem);
+          newContainer(elem);
         }
         case Some(x) => {
           x.create(elem);

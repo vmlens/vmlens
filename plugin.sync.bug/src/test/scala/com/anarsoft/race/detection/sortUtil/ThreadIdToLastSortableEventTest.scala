@@ -1,13 +1,14 @@
 package com.anarsoft.race.detection.sortUtil
 
-import com.anarsoft.race.detection.sortNonVolatileMemoryAccess.{MemoryAccessEventBuilder, NonVolatileMemoryAccessEventGuineaPig}
+import com.anarsoft.race.detection.sortNonVolatileMemoryAccess.{MemoryAccessEventBuilder, NonVolatileMemoryAccessEventContainer, NonVolatileMemoryAccessEventGuineaPig}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class ThreadIdToLastSortableEventTest extends AnyFlatSpec with Matchers {
 
   "ThreadIdToLastSortableEvent" should "store non volatile field access events" in {
-    val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[NonVolatileMemoryAccessEventGuineaPig]();
+    val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[NonVolatileMemoryAccessEventGuineaPig](
+      (event) => NonVolatileMemoryAccessEventContainer(event))
 
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder();
 
@@ -21,12 +22,10 @@ class ThreadIdToLastSortableEventTest extends AnyFlatSpec with Matchers {
       fail();
     })
 
-
     val firstWriteThreadOne = memoryAccessEventBuilder.threadId(1L).write();
     threadIdToLastSortableEvent.foreachOppositeAndPut(firstWriteThreadOne, (previous) => {
       previous should be(firstReadThreadTwo)
     })
-
 
     val secondWriteThreadOne = memoryAccessEventBuilder.threadId(1L).write();
     threadIdToLastSortableEvent.foreachOppositeAndPut(secondWriteThreadOne, (previous) => {
@@ -37,8 +36,5 @@ class ThreadIdToLastSortableEventTest extends AnyFlatSpec with Matchers {
     threadIdToLastSortableEvent.foreachOppositeAndPut(secondReadThreadTwo, (previous) => {
       previous should be(secondWriteThreadOne)
     })
-
-
   }
-
 }
