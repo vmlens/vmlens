@@ -1,5 +1,6 @@
-package com.anarsoft.race.detection.stacktrace
+package com.anarsoft.race.detection.createStacktrace
 
+import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
 
 import scala.collection.mutable.{HashMap, ListBuffer, Map, Stack}

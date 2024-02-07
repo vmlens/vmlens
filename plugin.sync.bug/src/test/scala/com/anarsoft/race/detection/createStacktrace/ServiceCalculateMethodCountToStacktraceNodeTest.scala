@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.stacktrace
+package com.anarsoft.race.detection.createStacktrace
 
 import com.anarsoft.race.detection.event.gen.{MethodEnterEventGen, MethodExitEventGen}
 import com.anarsoft.race.detection.util.EventArray

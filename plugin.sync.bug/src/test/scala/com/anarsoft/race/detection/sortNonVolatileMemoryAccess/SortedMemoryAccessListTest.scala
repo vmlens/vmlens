@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.sortNonVolatileMemoryAccess
 
-import com.vmlens.report.eventView.MemoryAccessView
+import com.vmlens.report.dataView.MemoryAccessView
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

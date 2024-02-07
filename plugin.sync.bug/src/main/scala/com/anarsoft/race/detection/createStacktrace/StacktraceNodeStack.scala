@@ -1,4 +1,6 @@
-package com.anarsoft.race.detection.stacktrace
+package com.anarsoft.race.detection.createStacktrace
+
+import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
 import scala.collection.mutable.{Map, Stack}
 

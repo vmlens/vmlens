@@ -1,4 +1,4 @@
-package com.vmlens.report.eventView;
+package com.vmlens.report.dataView;
 
 public interface MemoryAccessView {
 }
