@@ -2,6 +2,7 @@ package com.anarsoft.race.detection.sortNonVolatileMemoryAccess
 
 import com.anarsoft.race.detection.processEventByType.ProcessEventByType
 import com.anarsoft.race.detection.util.EventArray
+import com.vmlens.report.dataView.MemoryAccessReportBuilder
 
 class SortNonVolatileMemoryAccess[EVENT <: NonVolatileMemoryAccessEvent[EVENT]] {
 

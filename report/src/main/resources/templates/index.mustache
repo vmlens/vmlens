@@ -1,0 +1,24 @@
+{{>header.mustache}}
+
+<!-- index.mustache -->
+
+<div class="container">
+
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Count</th>
+            <th>Result</th>
+        </tr>
+        {{#loops}}
+            <tr>
+                <td><a href="{{link}}">{{index}} </a></td>
+                <td><a href="{{link}}">{{{name}}}</a></td>
+                <td><a href="{{link}}">{{count}}</a></td>
+                <td><a href="{{link}}"> <img src="{{{imagePath}}}"/> {{resultText}} </a></td>
+            </tr>
+        {{/loops}}
+    </table>
+</div>
+{{>footer.mustache}}

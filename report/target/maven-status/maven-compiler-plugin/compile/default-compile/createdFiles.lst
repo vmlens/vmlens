@@ -1,2 +1,8 @@
-com\vmlens\report\eventView\MemoryAccessView.class
-com\vmlens\report\eventView\SyncActionReportBuilder.class
+com\vmlens\report\domain\UILoop.class
+com\vmlens\report\domain\UIRunElement.class
+com\vmlens\report\domain\UIStacktraceElement.class
+com\vmlens\report\dataView\MemoryAccessView.class
+com\vmlens\report\dataView\SyncActionReportBuilder.class
+com\vmlens\report\dataView\StacktraceNodeView.class
+com\vmlens\report\dataView\MemoryAccessReportBuilder.class
+com\vmlens\report\process\CreateOneReport.class

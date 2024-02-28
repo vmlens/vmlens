@@ -1,10 +1,10 @@
 package com.anarsoft.race.detection.sortNonVolatileMemoryAccess
 
 import com.anarsoft.race.detection.processEventByType.{AlgorithmForEvent, AlgorithmForOneType}
+import com.vmlens.report.dataView.MemoryAccessReportBuilder
 
 private class AlgorithmForEventSortNonVolatile[EVENT <: NonVolatileMemoryAccessEvent[EVENT]]
-(val partialOrder: PartialOrder,
- val sortedListBuilder: MemoryAccessReportBuilder)
+(val partialOrder: PartialOrder, val sortedListBuilder: MemoryAccessReportBuilder)
   extends AlgorithmForEvent[EVENT] {
 
   var previous: Option[SortedMemoryAccessList[EVENT]] = None;

@@ -1,0 +1,5 @@
+package com.anarsoft.race.detection.syncActionGroup
+
+class SyncActionElementImpl {
+
+}

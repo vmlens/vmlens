@@ -1,5 +1,7 @@
 package com.anarsoft.race.detection.sortNonVolatileMemoryAccess
 
+import com.vmlens.report.dataView.MemoryAccessReportBuilder
+
 import scala.collection.mutable.ArrayBuffer
 
 private class SortedMemoryAccessList[EVENT] {
