@@ -449,7 +449,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
                     TransformerContext context = new TransformerContext(classfileBuffer, name,
                             writeClassDescription, hasGeneratedMethods);
                     byte[] result = transformer.transform(context);
-                    logTransformedClass(name, result);
+                    //logTransformedClass(name, result);
                     return result;
                 }
             }

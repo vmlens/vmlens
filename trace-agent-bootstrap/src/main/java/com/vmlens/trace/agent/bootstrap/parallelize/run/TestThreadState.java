@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadStart;
+import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionForThreadStart;
 
 public class TestThreadState {
     private final ThreadLocalWrapperForParallelize threadLocalWrapperForParallelize;
@@ -41,7 +41,7 @@ public class TestThreadState {
     public void afterThreadStart() {
         if (threadLocalWrapperForParallelize.getParallelizedThreadLocal() != null) {
             threadLocalWrapperForParallelize.getParallelizedThreadLocal()
-                    .after(new ThreadStart(threadLocalWrapperForParallelize.getParallelizedThreadLocal().createdThread()), this);
+                    .after(new ParallelizeActionForThreadStart(threadLocalWrapperForParallelize.getParallelizedThreadLocal().createdThread()), this);
         }
     }
 

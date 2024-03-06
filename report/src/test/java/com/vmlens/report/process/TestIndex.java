@@ -43,12 +43,13 @@ public class TestIndex {
         Patch<String> diff = DiffUtils.diff(expectedList, actualList);
         expected.close();
 
-        assertNoDiff(diff);
+        assertNoDiff(diff, writer.toString());
     }
 
-    private void assertNoDiff(Patch<String> diff) {
+    private void assertNoDiff(Patch<String> diff, String actual) {
         if (!diff.getDeltas().isEmpty()) {
             System.out.println(diff.getDeltas());
+            System.out.println(actual);
             fail();
         }
     }

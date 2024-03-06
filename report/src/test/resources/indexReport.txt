@@ -24,7 +24,7 @@
 
 <div class="container">
 
-    <table class="table table-striped" >
+    <table class="table table-striped">
         <tr>
             <th>#</th>
             <th>Name</th>
@@ -32,10 +32,10 @@
             <th>Result</th>
         </tr>
             <tr>
-                <td><a   href="link" >0 </a> </td>
-                <td><a   href="link" >name</a>  </td>
-                <td><a   href="link" >0</a>  </td>
-                <td><a   href="link" > <img src="imagePath" /> resultText </a> </td>
+                <td><a href="link">0 </a></td>
+                <td><a href="link">name</a></td>
+                <td><a href="link">0</a></td>
+                <td><a href="link"> <img src="imagePath"/> resultText </a></td>
             </tr>
     </table>
 </div>

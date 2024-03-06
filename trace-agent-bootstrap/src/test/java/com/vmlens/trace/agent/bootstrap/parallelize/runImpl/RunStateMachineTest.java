@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRunObserverNoOp;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadStart;
+import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionForThreadStart;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
@@ -82,7 +82,7 @@ public class RunStateMachineTest {
         assertThat(runStateMachineImpl.runContext.threadIndexForThreadId(1L), is(0));
 
         // When we start a new runnable
-        ThreadStart threadStart = new ThreadStart(secondThreadWrapper);
+        ParallelizeActionForThreadStart threadStart = new ParallelizeActionForThreadStart(secondThreadWrapper);
         runStateMachineImpl.after(threadStart, threadLocalMainThread);
 
         // Then the thread is inactive

@@ -1,17 +1,17 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.actionImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.InterleaveActionWithPositionFactoryImpl;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ContainerForInterleaveActionWithPositionFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
-public class ParallelizeActionWithInterleaveAction extends ParallelizeActionWithInterleaveActionAndOrRuntimeEvent {
+public class ParallelizeActionForInterleaveAction extends ParallelizeActionWithInterleaveActionAndOrRuntimeEvent {
 
     private final InterleaveAction interleaveAction;
 
 
-    public ParallelizeActionWithInterleaveAction(InterleaveAction interleaveAction) {
+    public ParallelizeActionForInterleaveAction(InterleaveAction interleaveAction) {
         this.interleaveAction = interleaveAction;
     }
 

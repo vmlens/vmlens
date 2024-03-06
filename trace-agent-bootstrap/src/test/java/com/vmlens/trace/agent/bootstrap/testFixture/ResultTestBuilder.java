@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementLis
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.*;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
 import com.vmlens.trace.agent.bootstrap.interleave.run.*;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionWithInterleaveAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionForInterleaveAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionWithRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
@@ -95,7 +95,7 @@ public class ResultTestBuilder {
 
         givenRun.add(new ContainerForInterleaveActionWithPositionFactory(new InterleaveActionWithPositionFactoryImpl(action, position.threadIndex())));
 
-        add(new ParallelizeActionWithInterleaveAction(action), position);
+        add(new ParallelizeActionForInterleaveAction(action), position);
         add(action, position);
     }
 

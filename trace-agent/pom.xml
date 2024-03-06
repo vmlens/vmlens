@@ -130,7 +130,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>../interleave/_dist/agent_lib</outputDirectory>
+                            <outputDirectory>../vmlens-maven-plugin/_dist/agent_lib</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>target/</directory>

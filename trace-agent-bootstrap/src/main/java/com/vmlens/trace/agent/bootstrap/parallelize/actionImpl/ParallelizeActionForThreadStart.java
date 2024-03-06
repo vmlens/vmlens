@@ -7,11 +7,11 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
-public class ThreadStart implements ParallelizeAction  {
+public class ParallelizeActionForThreadStart implements ParallelizeAction {
 
     private final RunnableOrThreadWrapper startedThread;
 
-    public ThreadStart(RunnableOrThreadWrapper startedThread) {
+    public ParallelizeActionForThreadStart(RunnableOrThreadWrapper startedThread) {
         this.startedThread = startedThread;
     }
 

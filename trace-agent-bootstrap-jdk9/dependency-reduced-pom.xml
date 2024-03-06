@@ -90,7 +90,7 @@
                   <destFileName>agent_bootstrap.jar</destFileName>
                 </artifactItem>
               </artifactItems>
-              <outputDirectory>../interleave/_dist/agent_lib</outputDirectory>
+              <outputDirectory>../vmlens-maven-plugin/_dist/agent_lib</outputDirectory>
             </configuration>
           </execution>
         </executions>

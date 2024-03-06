@@ -8,10 +8,10 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
 
-public class ThreadJoin implements ParallelizeAction {
+public class ParallelizeActionForThreadJoin implements ParallelizeAction {
     private final long joinedThreadId;
 
-    public ThreadJoin(long joinedThreadId) {
+    public ParallelizeActionForThreadJoin(long joinedThreadId) {
         this.joinedThreadId = joinedThreadId;
     }
 
@@ -33,7 +33,7 @@ public class ThreadJoin implements ParallelizeAction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ThreadJoin that = (ThreadJoin) o;
+        ParallelizeActionForThreadJoin that = (ParallelizeActionForThreadJoin) o;
 
         return joinedThreadId == that.joinedThreadId;
     }

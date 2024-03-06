@@ -1,9 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionWithInterleaveAction;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionWithInterleaveActionAndOrRuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ThreadJoin;
+import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionForInterleaveAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionForThreadJoin;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 
 public class ParallelizeActionFactory {
@@ -15,11 +14,11 @@ public class ParallelizeActionFactory {
     }
 
     public ParallelizeAction threadJoin(long threadId) {
-        return new ThreadJoin(threadId);
+        return new ParallelizeActionForThreadJoin(threadId);
     }
 
     public ParallelizeAction fieldAccess(int fieldId, int operation) {
-        return new ParallelizeActionWithInterleaveAction(
+        return new ParallelizeActionForInterleaveAction(
                 new VolatileFieldAccess(fieldId, operation));
     }
 

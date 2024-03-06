@@ -19,7 +19,6 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.PrintStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
 import java.util.Properties;
@@ -43,14 +42,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 						agentFile.toString().length() - "/agent_runtime.jar".length());
 				inputFileName = libPath + "/run.properties";
 			}
-			// else if( ! args.contains("/") && ! args.contains("\\") )
-			// {
-			// File agentFile = new
-			// File(AgentRuntimeImpl.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-			// String libPath = agentFile.toString().substring(0,
-			// agentFile.toString().length() - "/agent_runtime.jar".length());
-			// inputFileName = libPath + args;
-			// }
 
 			if (!new File(inputFileName).exists()) {
 				File agentFile = new File(
@@ -66,7 +57,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			}
 
 			Properties properties = new Properties();
-
 			properties.load(new FileInputStream(inputFileName));
 
 			String outputFileName = properties.getProperty("eventDir");
@@ -82,34 +72,16 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				outputDir.mkdirs();
 			}
 
-			boolean startManually = Boolean.parseBoolean(properties.getProperty("vmlens.startManually", "false"));
 
-			if ((args != null) && (args.trim().startsWith("startManually"))) {
-				startManually = true;
-			}
-
-
-			deleteFile(outputFileName + "/start");
-			deleteFile(outputFileName + "/stop");
-			deleteFile(outputFileName + "/finished");
-			deleteFile(outputFileName + "/shutdown");
 
 			File dir = new File(outputFileName);
 
 			for (File file : dir.listFiles()) {
 				if (file.getName().endsWith(".vmlens")) {
 					file.delete();
-				} else if (file.getName().endsWith(".state")) {
-					file.delete();
 				}
 
 			}
-
-			File fileOut = new File(outputDir.getAbsolutePath() + "/properties.vmlens");
-			PrintStream out = new PrintStream(fileOut);
-
-			String agentModeString = properties.getProperty("vmlens.mode");
-
 
 			LoadAtomicClassesFromClasspath.load();
 			Offset2FieldId.initialize();
@@ -123,9 +95,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			
 
 			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
-
 			AgentController agentController = AgentController.create(outputFileName);
-
 
             this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap");
 			
