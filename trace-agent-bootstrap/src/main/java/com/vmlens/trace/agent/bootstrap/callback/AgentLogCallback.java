@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -14,7 +16,7 @@ public class AgentLogCallback {
 	{
         if (ENABLE_EXCEPTION_LOGGING) {
 
-            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             StringWriter stringWriter = new StringWriter();
             PrintWriter writer = new PrintWriter(stringWriter);
             exception.printStackTrace(writer);
@@ -27,7 +29,7 @@ public class AgentLogCallback {
 	{
 		if(ENABLE_EXCEPTION_LOGGING) {
 
-            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
             StringWriter stringWriter = new StringWriter();
             PrintWriter writer = new PrintWriter(stringWriter);
             new Exception().printStackTrace(writer);
@@ -42,7 +44,7 @@ public class AgentLogCallback {
 	public static void log(Class location, String text) {
         String message = location.getSimpleName() + ":" + text;
 
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme
         //  callbackStatePerThread.offer(new AgentLogEvent(message));
 
@@ -50,13 +52,13 @@ public class AgentLogCallback {
 
     public static  void close(Object obj)
 	{
-		CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		parallelize().close(callbackStatePerThread, obj);
 	}
 
     public static boolean hasNext(Object obj)
 	{
-		CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		return parallelize().hasNext(callbackStatePerThread, obj);
 	}
 

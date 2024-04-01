@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import org.jctools.queues.MpscArrayQueue;
 
 
@@ -18,7 +19,7 @@ public class EventQueue implements QueueIn {
     int writeEventCount = 0;
 
     public void offer(Object element) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         queue.offer(element);
 

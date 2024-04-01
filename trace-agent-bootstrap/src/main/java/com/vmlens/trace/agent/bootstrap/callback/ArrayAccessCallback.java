@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.field.ModeStateFieldAccess;
 import com.vmlens.trace.agent.bootstrap.callback.state.ArrayState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
 public class ArrayAccessCallback {
 	private static final AnarsoftWeakHashMap<ArrayState> arrayAccessedInOtherThread = new AnarsoftWeakHashMap<ArrayState>();
@@ -10,7 +11,7 @@ public class ArrayAccessCallback {
 	private static final Object DUMMY_OBJECT = new Object();
 
 	public static void newArray(Object theArray) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme Callback
         // we could filter threads which can not be tested (finalizer...)
         //callbackStatePerThread.arraysInThisThread.put(theArray, DUMMY_OBJECT);
@@ -25,7 +26,7 @@ public class ArrayAccessCallback {
 	}
 
 	private static void accessField(Object theArray, int index, int methodId, boolean isWrite, int position) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = (CallbackStatePerThreadForParallelize) CallbackState.callbackStatePerThread
+        ThreadLocalForParallelize callbackStatePerThread = (ThreadLocalForParallelize) CallbackState.callbackStatePerThread
                 .get();
         ArrayState state = null;
 		synchronized (LOCK_WEAK_HASHMAP) {
@@ -42,7 +43,7 @@ public class ArrayAccessCallback {
         }
     }
 
-    private static void access_interleave(CallbackStatePerThreadForParallelize callbackStatePerThread, ArrayState state, int index,
+    private static void access_interleave(ThreadLocalForParallelize callbackStatePerThread, ArrayState state, int index,
                                           int methodId, int position, boolean isWrite, int arrayClassId) {
         // Fixme Callback
 		/* writeEvent(callbackStatePerThread, callbackStatePerThread.threadId,
@@ -52,7 +53,7 @@ public class ArrayAccessCallback {
 
     }
 
-    private static void access_state(CallbackStatePerThreadForParallelize callbackStatePerThread, ArrayState state, int methodId,
+    private static void access_state(ThreadLocalForParallelize callbackStatePerThread, ArrayState state, int methodId,
                                      int position, boolean isWrite, int arrayClassId) {
         // Fixme Callback
 //			callbackStatePerThread.sendEvent.writeStateEventArrayGen(slidingWindowId,

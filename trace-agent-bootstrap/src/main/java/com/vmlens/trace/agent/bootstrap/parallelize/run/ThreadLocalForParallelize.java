@@ -1,21 +1,58 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
+import com.vmlens.trace.agent.bootstrap.callback.AnarsoftWeakHashMap;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 
-public interface ThreadLocalForParallelize {
+public class ThreadLocalForParallelize {
 
 
-    ThreadLocalDataWhenInTest getThreadLocalDataWhenInTest();
+    public static final String ANARSOFT_THREAD_NAME = "anarsoft";
 
-    void setThreadLocalDataWhenInTest(ThreadLocalDataWhenInTest parallelizedThreadLocal);
+    private final AnarsoftWeakHashMap<Object> arraysInThisThread = new AnarsoftWeakHashMap<Object>();
+    private final QueueIn queueIn;
+    private final long threadId;
 
-    ThreadLocalDataWhenInTest startCallbackProcessing();
+    private ThreadLocalDataWhenInTest parallelizedThreadLocal;
 
-    QueueIn queueIn();
 
-    long threadId();
+    public ThreadLocalForParallelize(long threadId, QueueIn queueIn) {
+        this.queueIn = queueIn;
+        this.threadId = threadId;
+    }
 
-    void setParallelizedThreadLocalToNull();
 
-    ThreadLocalDataWhenInTest createNewParallelizedThreadLocal(Run run, int maxThreadIndex);
+    public ThreadLocalDataWhenInTest getThreadLocalDataWhenInTest() {
+        return parallelizedThreadLocal;
+    }
+
+
+    public void setThreadLocalDataWhenInTest(ThreadLocalDataWhenInTest parallelizedThreadLocal) {
+        this.parallelizedThreadLocal = parallelizedThreadLocal;
+    }
+
+    public ThreadLocalDataWhenInTest startCallbackProcessing() {
+        if (parallelizedThreadLocal != null) {
+            return parallelizedThreadLocal.startCallbackProcessing();
+        }
+        return null;
+    }
+
+    public QueueIn queueIn() {
+        return queueIn;
+    }
+
+    public long threadId() {
+        return threadId;
+    }
+
+
+    public void setParallelizedThreadLocalToNull() {
+        this.parallelizedThreadLocal = null;
+    }
+
+
+    public ThreadLocalDataWhenInTest createNewParallelizedThreadLocal(Run run, int threadIndex) {
+        this.parallelizedThreadLocal = new ThreadLocalDataWhenInTest(run, threadIndex, queueIn, threadId);
+        return parallelizedThreadLocal;
+    }
 }

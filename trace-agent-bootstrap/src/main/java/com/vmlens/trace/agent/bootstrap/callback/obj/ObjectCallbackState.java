@@ -2,10 +2,10 @@ package com.vmlens.trace.agent.bootstrap.callback.obj;
 
 import com.vmlens.trace.agent.bootstrap.callback.AnarsoftWeakHashMap;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.field.CallbackObject;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateHolder;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
 public class ObjectCallbackState {
 	private final int fieldId;
@@ -18,7 +18,7 @@ public class ObjectCallbackState {
 	}
 
     public void access(Object obj, int operation, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         StateAccess objectState = null;
         synchronized (LOCK) {
             objectState = object2State.get(obj);

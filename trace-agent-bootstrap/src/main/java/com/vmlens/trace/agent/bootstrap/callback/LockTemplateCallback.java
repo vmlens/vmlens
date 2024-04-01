@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
@@ -14,7 +16,7 @@ public class LockTemplateCallback {
     public static void conditionAwait(AbstractQueuedSynchronizer sync) {
 
 
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         access(sync, -1, false, false);
         access(sync, -1, true, false);
 
@@ -23,7 +25,7 @@ public class LockTemplateCallback {
 
 
     public static boolean tryLock(ReentrantLock lock, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         try {
 
@@ -45,7 +47,7 @@ public class LockTemplateCallback {
 
 
     public static boolean tryLock(ReentrantLock lock, long time, TimeUnit unit, int methodId) throws InterruptedException {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
         if (lock.tryLock(time, unit)) {
@@ -62,7 +64,7 @@ public class LockTemplateCallback {
 
 
     public static void lockInterruptibly(ReentrantLock lock, int methodId) throws InterruptedException {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
             lock.lockInterruptibly();
@@ -74,7 +76,7 @@ public class LockTemplateCallback {
 
 
     public static void lock(ReentrantLock lock, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
             lock.lock();
 
@@ -86,7 +88,7 @@ public class LockTemplateCallback {
 
     public static void unlock(ReentrantLock lock, int methodId) {
 
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         lock.unlock();
 
@@ -98,7 +100,7 @@ public class LockTemplateCallback {
 
 
     public static boolean tryLock(ReadLock lock, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
         if (lock.tryLock()) {
@@ -113,7 +115,7 @@ public class LockTemplateCallback {
     }
 
     public static boolean tryLock(ReadLock lock, long time, TimeUnit unit, int methodId) throws InterruptedException {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
         if (lock.tryLock(time, unit)) {
@@ -128,7 +130,7 @@ public class LockTemplateCallback {
     }
 
     public static void lockInterruptibly(ReadLock lock, int methodId) throws InterruptedException {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
         lock.lockInterruptibly();
@@ -139,7 +141,7 @@ public class LockTemplateCallback {
 
 
     public static void lock(ReadLock lock, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         lock.lock();
 
@@ -149,7 +151,7 @@ public class LockTemplateCallback {
     }
 
     public static void unlock(ReadLock lock, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
         lock.unlock();
@@ -162,7 +164,7 @@ public class LockTemplateCallback {
 
 
     public static boolean tryLock(WriteLock lock, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
             if (lock.tryLock()) {
 
@@ -177,7 +179,7 @@ public class LockTemplateCallback {
 
 
     public static boolean tryLock(WriteLock lock, long time, TimeUnit unit, int methodId) throws InterruptedException {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
             if (lock.tryLock(time, unit)) {
 
@@ -192,7 +194,7 @@ public class LockTemplateCallback {
 
 
     public static void lockInterruptibly(WriteLock lock, int methodId) throws InterruptedException {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
         lock.lockInterruptibly();
@@ -204,7 +206,7 @@ public class LockTemplateCallback {
 
 
     public static void lock(WriteLock lock, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         lock.lock();
 
@@ -214,7 +216,7 @@ public class LockTemplateCallback {
     }
 
     public static void unlock(WriteLock lock, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         lock.unlock();
 
@@ -305,7 +307,7 @@ public class LockTemplateCallback {
     }
 
 
-    private static Object getSync(CallbackStatePerThreadForParallelize callbackStatePerThread, Object theLock) {
+    private static Object getSync(ThreadLocalForParallelize callbackStatePerThread, Object theLock) {
         try {
             Field f = theLock.getClass().getDeclaredField("sync");
             f.setAccessible(true);
@@ -320,7 +322,7 @@ public class LockTemplateCallback {
 
 
     protected static void access(Object theSync, int methodId, boolean isLockEnter, boolean isShared) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme Callback
         //  ParallelizeFacade.afterLockOperation(callbackStatePerThread, new ParallelizeLock(isLockEnter, isShared, System.identityHashCode(theSync)));
         // callbackStatePerThread.programCount++;

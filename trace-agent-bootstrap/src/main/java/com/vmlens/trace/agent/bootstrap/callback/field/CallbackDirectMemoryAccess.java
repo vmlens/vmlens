@@ -1,12 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
+
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
 public class CallbackDirectMemoryAccess {
-	
-	
 
-    public static void volatile_access(long address, CallbackStatePerThreadForParallelize callbackStatePerThread, int operation, int slidingWindowId) {
+
+    public static void volatile_access(long address, ThreadLocalForParallelize callbackStatePerThread, int operation, int slidingWindowId) {
 
 			/*
 			Fixme Callback

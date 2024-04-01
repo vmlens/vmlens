@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.testFixture;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
+
 import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
@@ -15,6 +15,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -42,7 +43,7 @@ public class ResultTestBuilder {
             new TLinkedList<>();
     private final List<ParallelizeActionAndThreadLocalWrapper> parallelizeActionAndThreadLocalWrapperList = new
             LinkedList<ParallelizeActionAndThreadLocalWrapper>();
-    private final Map<Integer, CallbackStatePerThreadForParallelize> threadIndexToThreadLocalWrapperMock = new HashMap<>();
+    private final Map<Integer, ThreadLocalForParallelize> threadIndexToThreadLocalWrapperMock = new HashMap<>();
 
     private ThreadIndexToElementList<Position> positions = new ThreadIndexToElementList<Position>();
     private final ParallelizeFacade parallelizeFacade = new ParallelizeFacade(null);
@@ -57,8 +58,8 @@ public class ResultTestBuilder {
         threadIndexToThreadLocalWrapperMock.put(2, threadLocalWrapper(2, 20L, run));
     }
 
-    private static CallbackStatePerThreadForParallelize threadLocalWrapper(int threadIndex, long threadId, Run run) {
-        CallbackStatePerThreadForParallelize threadLocalWrapperMock = new CallbackStatePerThreadForParallelize(1L, null);
+    private static ThreadLocalForParallelize threadLocalWrapper(int threadIndex, long threadId, Run run) {
+        ThreadLocalForParallelize threadLocalWrapperMock = new ThreadLocalForParallelize(1L, null);
         threadLocalWrapperMock.setThreadLocalDataWhenInTest(new ThreadLocalDataWhenInTest(run, threadIndex, null, threadId));
         return threadLocalWrapperMock;
     }

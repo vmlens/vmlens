@@ -1,11 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.ucTest;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
+
 import com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.field.GetOrCreateObjectState;
 import com.vmlens.trace.agent.bootstrap.callback.field.ObjectState;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.testFixture.InitialRunMockFactory;
 
@@ -16,8 +17,8 @@ import static org.mockito.Mockito.when;
 public class FieldAccessCallbackImplTestFactory {
 
     public FieldAccessCallbackImpl create(QueueIn queue) {
-        CallbackStatePerThreadForParallelize callbackStatePerThreadForParallelize =
-                new CallbackStatePerThreadForParallelize(1L, queue);
+        ThreadLocalForParallelize callbackStatePerThreadForParallelize =
+                new ThreadLocalForParallelize(1L, queue);
 
         ThreadLocalDataWhenInTest threadLocalDataWhenInTest =
                 new ThreadLocalDataWhenInTest(new InitialRunMockFactory().create(1, 1),

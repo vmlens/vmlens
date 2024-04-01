@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 public class Class2Id {
@@ -24,7 +24,7 @@ public class Class2Id {
 
 			current = maxId;
 
-			CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+			ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
 			// Fixme
@@ -52,7 +52,7 @@ public class Class2Id {
 
 			current = maxId;
 
-			CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+			ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
 			String name = createName(cl);

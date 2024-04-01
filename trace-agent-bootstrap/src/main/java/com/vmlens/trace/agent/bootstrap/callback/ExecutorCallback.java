@@ -4,6 +4,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeCallback;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
 import java.util.concurrent.*;
 
@@ -17,14 +18,14 @@ public class ExecutorCallback {
         // Fixme Callback
         // ParallelizeFacade.beforeExecutorStart(CallbackState.callbackStatePerThread.get(), runnable);
 
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
     }
 
 
     public static void threadStartMethodExit() {
-        CallbackStatePerThreadForParallelize callbackStatePerThread =
+        ThreadLocalForParallelize callbackStatePerThread =
                 CallbackState.callbackStatePerThread.get();
 
 
@@ -43,7 +44,7 @@ public class ExecutorCallback {
 
 
     public static void forkJoinTaskForkExit() {
-        CallbackStatePerThreadForParallelize callbackStatePerThread =
+        ThreadLocalForParallelize callbackStatePerThread =
                 CallbackState.callbackStatePerThread.get();
 
 
@@ -61,7 +62,7 @@ public class ExecutorCallback {
     public static void methodEnterExecTask(Object task) {
 
         if (task instanceof Thread) {
-            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
             parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(task));
         }
@@ -73,7 +74,7 @@ public class ExecutorCallback {
 
         if (task instanceof Thread) {
 
-            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 // Fixme Callback
             // ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
@@ -83,7 +84,7 @@ public class ExecutorCallback {
 
 
     public static void execAfter() {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
         // Fixme Callback
@@ -95,7 +96,7 @@ public class ExecutorCallback {
     public static void execBefore(ForkJoinTask task) {
 
 
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
 
 
@@ -131,7 +132,7 @@ public class ExecutorCallback {
 
 
     public static void run(Runnable runnable, int methodId) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
         parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(runnable));
         try {
@@ -157,7 +158,7 @@ public class ExecutorCallback {
             return future.get();
         } finally {
             if (future instanceof FutureTask) {
-                CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+                ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
                 // Fixme Callback
                 // ParallelizeFacade.afterFutureGet(callbackStatePerThread, future);
             }

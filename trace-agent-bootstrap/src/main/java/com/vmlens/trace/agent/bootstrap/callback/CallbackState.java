@@ -9,10 +9,10 @@ public class CallbackState implements ThreadLocalForParallelizeProvider {
     public static final EventQueue eventQueue = new EventQueue();
 
     // Fixme  make private
-    public static final ThreadLocal<CallbackStatePerThreadForParallelize> callbackStatePerThread = new ThreadLocal<CallbackStatePerThreadForParallelize>() {
+    public static final ThreadLocal<ThreadLocalForParallelize> callbackStatePerThread = new ThreadLocal<ThreadLocalForParallelize>() {
         @Override
-        protected CallbackStatePerThreadForParallelize initialValue() {
-            return new CallbackStatePerThreadForParallelize(Thread.currentThread().getId(), eventQueue);
+        protected ThreadLocalForParallelize initialValue() {
+            return new ThreadLocalForParallelize(Thread.currentThread().getId(), eventQueue);
         }
     };
 

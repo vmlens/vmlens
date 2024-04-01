@@ -1,8 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
-
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
 
 /**
@@ -13,7 +12,7 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParall
 public class ParallelizeCallback {
 
     public static void beforeThreadJoin(Thread toBeJoined) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme
     }
 
@@ -25,11 +24,11 @@ public class ParallelizeCallback {
 
     }
     public static void afterFieldAccess(int fieldId, int operation) {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme
     }
     public static void afterThreadStart() {
-        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme
     }
 
