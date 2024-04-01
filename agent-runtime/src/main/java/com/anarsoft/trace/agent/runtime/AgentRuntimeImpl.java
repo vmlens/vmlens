@@ -94,7 +94,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			}
 			
 
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
+
 			AgentController agentController = AgentController.create(outputFileName);
 
             this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap");
@@ -109,11 +109,11 @@ public class AgentRuntimeImpl implements AgentRuntime {
 					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.CallbackObject");
 			this.getClass().getClassLoader()
 					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.CallbackStatic");
-			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.field.Strategy");
+			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessAdapter");
 			this.getClass().getClassLoader()
-					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.StrategyImplNonVolatile");
+					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessImplNonVolatile");
 			this.getClass().getClassLoader()
-					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.StrategyImplVolatile");
+					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessImplVolatile");
 
 			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.TLinkableAdapter");
 			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
@@ -150,9 +150,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-
-		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-
 
 
 	}

@@ -3,12 +3,11 @@ package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactoryAndOrRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 
 public class RunStateRunning implements RunState, ActionContext {
     private final ActualRun actualRun;
@@ -28,19 +27,19 @@ public class RunStateRunning implements RunState, ActionContext {
 
 
     @Override
-    public boolean isActive(TestThreadState testThreadState) {
-        return calculatedRun.isActive(testThreadState.threadIndex());
+    public boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        return calculatedRun.isActive(threadLocalDataWhenInTest.threadIndex());
     }
 
     @Override
-    public RunState after(ParallelizeAction action, TestThreadState testThreadState) {
-        action.addInterleaveActionAndOrEvent(this, testThreadState);
-        return action.nextState(this, testThreadState);
+    public RunState after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        action.addInterleaveActionAndOrEvent(this, threadLocalDataWhenInTest);
+        return action.nextState(this, threadLocalDataWhenInTest);
     }
 
     @Override
-    public RunState threadStarted(RunnableOrThreadWrapper startedThread, TestThreadState testThreadState) {
-        return new RunStateNewThreadStarted(startedThread, testThreadState.threadIndex(), runContext);
+    public RunState threadStarted(RunnableOrThreadWrapper startedThread, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        return new RunStateNewThreadStarted(startedThread, threadLocalDataWhenInTest.threadIndex(), runContext);
     }
 
     @Override
@@ -49,14 +48,14 @@ public class RunStateRunning implements RunState, ActionContext {
     }
 
     @Override
-    public void addTaskStartedInterleaveAction(TestThreadState beginTestThreadState, ActualRun calculatedRun) {
+    public void addTaskStartedInterleaveAction(ThreadLocalDataWhenInTest threadLocalDataWhenInTest, ActualRun calculatedRun) {
         throw new RuntimeException("should not be called");
     }
 
     @Override
-    public void afterInterleaveActionWithPositionFactory(InterleaveActionWithPositionFactoryAndOrRuntimeEvent interleaveActionWithPositionFactory,
-                                                         TestThreadState testThreadState) {
-        actualRun.after(interleaveActionWithPositionFactory, new ActualRunContextImpl(runContext, testThreadState));
+    public void afterInterleaveActionWithPositionFactory(RuntimeEvent runtimeEvent,
+                                                         ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        actualRun.after(runtimeEvent, new ActualRunContextImpl(runContext, threadLocalDataWhenInTest));
     }
 
     @Override

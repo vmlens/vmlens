@@ -25,12 +25,12 @@ public class StampedLockCallback {
     public static long readLock(StampedLock lock, int methodId) {
 
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
         try {
             return lock.readLock();
 
         } finally {
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
+
             setType(lock, StampedLockType.SHARED);
             access(callbackStatePerThread, lock, methodId, true, true, Constants.STAMPED_READ_LOCK);
 
@@ -42,12 +42,12 @@ public class StampedLockCallback {
     public static void unlockRead(StampedLock lock, long stamp, int methodId) {
 
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
         try {
             lock.unlockRead(stamp);
 
         } finally {
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
+
         }
 
         access(callbackStatePerThread, lock, methodId, false, true, Constants.STAMPED_READ_UNLOCK);
@@ -59,12 +59,12 @@ public class StampedLockCallback {
     public static long writeLock(StampedLock lock, int methodId) {
 
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
         try {
             return lock.writeLock();
 
         } finally {
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
+
             setType(lock, StampedLockType.EXCLUSIVE);
             access(callbackStatePerThread, lock, methodId, true, false, Constants.STAMPED_WRITE_LOCK);
 
@@ -76,12 +76,12 @@ public class StampedLockCallback {
     public static void unlockWrite(StampedLock lock, long stamp, int methodId) {
 
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
         try {
             lock.unlockWrite(stamp);
 
         } finally {
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
+
         }
 
         access(callbackStatePerThread, lock, methodId, false, false, Constants.STAMPED_WRITE_UNLOCK);
@@ -93,12 +93,12 @@ public class StampedLockCallback {
     public static void unlock(StampedLock lock, long stamp, int methodId) {
 
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
         try {
             lock.unlock(stamp);
 
         } finally {
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
+
         }
 
         StampedLockType stampedLockType = StampedLockType.NONE;
@@ -148,12 +148,12 @@ public class StampedLockCallback {
 
     public static void unstampedUnlockWrite(StampedLock lock, int methodId) {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
         try {
             call(lock, "unstampedUnlockWrite");
 
         } finally {
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
+
         }
 
         access(callbackStatePerThread, lock, methodId, false, false, Constants.STAMPED_PRIVATE);
@@ -162,12 +162,12 @@ public class StampedLockCallback {
 
     public static void unstampedUnlockRead(StampedLock lock, int methodId) {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
         try {
             call(lock, "unstampedUnlockRead");
 
         } finally {
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
+
         }
 
         access(callbackStatePerThread, lock, methodId, false, true, Constants.STAMPED_PRIVATE);

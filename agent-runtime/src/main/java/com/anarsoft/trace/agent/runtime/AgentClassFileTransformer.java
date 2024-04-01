@@ -9,7 +9,6 @@ import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -428,7 +427,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
                             byte[] classfileBuffer) throws IllegalClassFormatException {
 
         try {
-            CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
+
 
             if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
@@ -459,7 +458,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             AgentLogCallback.logException(e);
             return null;
         } finally {
-            CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
+
 
         }
     }

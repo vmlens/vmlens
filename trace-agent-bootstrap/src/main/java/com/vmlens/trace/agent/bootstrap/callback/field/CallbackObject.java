@@ -5,30 +5,13 @@ import com.vmlens.trace.agent.bootstrap.OffsetAndClassName;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.callback.VolatileArrayAccessCallback;
-import com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap;
-import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;
+
 
 public class CallbackObject {
 
-	private static final UpdateObjectState updateObjectState = new UpdateObjectState(200, 200);
+    private static final GetOrCreateObjectState updateObjectState = new GetOrCreateObjectState();
 	
-	private static final UpdateObjectState updateBeforeObjectState = new UpdateObjectState(200, 200) {
-        public void sendEventVolatile(CallbackStatePerThreadForParallelize callbackStatePerThread, int order,
-                                      int fieldId, int methodId, int operation, long objectId) {
-          /*
-          Fixme Callback
-            callbackStatePerThread.sendEvent.writeWithoutInterleaveVolatileAccessEventGen(
-                    CallbackState.traceSyncStatements(callbackStatePerThread), callbackStatePerThread.programCount,
-                    order, fieldId, callbackStatePerThread.methodCount, methodId, operation, objectId);
-        */
-        }
 
-
-        @Override
-        public void parallizeFacadeBeforeFieldAccessVolatile(long id, int fieldId, int operation,
-                                                             CallbackStatePerThreadForParallelize callbackStatePerThread) {
-        }
-    };
 	
 
 	public static void non_volatile_access(Object orig, int fieldId, int methodId, boolean isWrite) {
@@ -36,12 +19,7 @@ public class CallbackObject {
         CallbackStatePerThreadForParallelize callbackStatePerThread = non_volatile_filter_and_apply_waitpoints(orig, fieldId,
                 isWrite);
 
-		if (callbackStatePerThread != null) {
-			StateAccess c = Class2GetStateMap.getState(orig);
 
-			non_volatile_access_internal(callbackStatePerThread, orig, c.obj, c.offset, fieldId, methodId,
-					MemoryAccessType.getOperation(isWrite));
-		}
 
 	}
 
@@ -201,10 +179,8 @@ public class CallbackObject {
 			 * getState und nicht getStateFromMap
 			 * 
 			 */
-			StateAccess state = Class2GetStateMap.getState(orig);
-			volatile_access_internal(callbackStatePerThread, orig, state.obj, state.offset, fieldId, methodId,
-					operation);
-		}
+
+        }
 	}
 
 	public static void before_volatile_access(Object orig, int fieldId, int methodId, int operation) {
@@ -218,10 +194,7 @@ public class CallbackObject {
 			 *
              */
 
-            StateAccess state = Class2GetStateMap.getState(orig);
 
-            before_volatile_access_internal(callbackStatePerThread, orig, state.obj, state.offset, fieldId, methodId,
-                    operation);
         }
     }
 

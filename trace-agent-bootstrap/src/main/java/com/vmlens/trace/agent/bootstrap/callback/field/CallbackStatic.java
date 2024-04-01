@@ -2,21 +2,12 @@ package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
-import com.vmlens.trace.agent.bootstrap.callback.state.ModeStateStatic;
-import com.vmlens.trace.agent.bootstrap.callback.state.StaticVolatileOrder;
-import gnu.trove.map.hash.TIntLongHashMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
+
 
 public class CallbackStatic {
 
-	private static final TIntLongHashMap staticField2ThreadId = new TIntLongHashMap();
-	private static final TIntObjectHashMap<StaticVolatileOrder> staticIdToOrder = new TIntObjectHashMap<StaticVolatileOrder>();
-	private static final TIntObjectHashMap<ModeStateStatic> staticId2State4ModeState = new TIntObjectHashMap<ModeStateStatic>();
-	
-	
-	
-	
-	 public static void volatile_access(int fieldId, int methodId, boolean isWrite) {
+
+    public static void volatile_access(int fieldId, int methodId, boolean isWrite) {
 		 CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 		 volatile_access_internal(callbackStatePerThread, fieldId, methodId, isWrite);
 	 }

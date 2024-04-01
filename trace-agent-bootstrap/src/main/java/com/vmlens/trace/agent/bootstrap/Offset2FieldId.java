@@ -5,9 +5,6 @@ import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
 
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-
 /**
  * 
  * zur verwendung von Unsafe calls
@@ -93,15 +90,12 @@ public class Offset2FieldId {
 		
 		if(!  offsetAndClassName2FieldId.contains(offset) )
 		{
-			
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
-			
-			addAllFieldsForobject( obj,  unsafe);
-			
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-			
-				
-		}
+
+
+            addAllFieldsForobject( obj,  unsafe);
+
+
+        }
 		
 		
 		int result = offsetAndClassName2FieldId.get(offset);

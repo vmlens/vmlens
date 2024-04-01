@@ -19,9 +19,7 @@ public class ExecutorCallback {
 
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
-        callbackStatePerThread.inThreadStart++;
 
-        callbackStatePerThread.doNotInterleave++;
     }
 
 
@@ -29,8 +27,6 @@ public class ExecutorCallback {
         CallbackStatePerThreadForParallelize callbackStatePerThread =
                 CallbackState.callbackStatePerThread.get();
 
-        callbackStatePerThread.inThreadStart--;
-        callbackStatePerThread.doNotInterleave--;
 
         ParallelizeCallback.afterThreadStart();
 
@@ -42,7 +38,7 @@ public class ExecutorCallback {
         // Fixme Callback
         //ParallelizeFacade.beforeExecutorStart(CallbackState.callbackStatePerThread.get(), task);
 
-        CallbackState.callbackStatePerThread.get().inThreadStart++;
+
     }
 
 
@@ -50,7 +46,6 @@ public class ExecutorCallback {
         CallbackStatePerThreadForParallelize callbackStatePerThread =
                 CallbackState.callbackStatePerThread.get();
 
-        callbackStatePerThread.inThreadStart--;
 
         ParallelizeCallback.afterThreadStart();
     }
@@ -90,16 +85,10 @@ public class ExecutorCallback {
     public static void execAfter() {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
-        // ToDo do i need this?
-        if (callbackStatePerThread.notStartedCount > 0) {
-            callbackStatePerThread.notStartedCount--;
-            callbackStatePerThread.doNotInterleave = callbackStatePerThread.tempDoNotInterleave;
-            return;
-        }
 
         // Fixme Callback
         // ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
-        callbackStatePerThread.doNotInterleave = callbackStatePerThread.tempDoNotInterleave;
+
     }
 
 
@@ -108,9 +97,7 @@ public class ExecutorCallback {
 
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
-        callbackStatePerThread.tempDoNotInterleave = callbackStatePerThread.doNotInterleave;
 
-        callbackStatePerThread.doNotInterleave = 0;
 
         parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(task));
         // ToDo do i need this?
@@ -145,8 +132,7 @@ public class ExecutorCallback {
 
     public static void run(Runnable runnable, int methodId) {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        int temp = callbackStatePerThread.doNotInterleave;
-        callbackStatePerThread.doNotInterleave = 0;
+
         parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(runnable));
         try {
             if (runnable instanceof FutureTask) {
@@ -161,7 +147,7 @@ public class ExecutorCallback {
             }
             // Fixme Callback
             //ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
-            callbackStatePerThread.doNotInterleave = temp;
+
         }
     }
 

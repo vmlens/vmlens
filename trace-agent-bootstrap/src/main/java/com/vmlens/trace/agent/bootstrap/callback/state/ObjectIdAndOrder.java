@@ -2,38 +2,12 @@ package com.vmlens.trace.agent.bootstrap.callback.state;
 
 public class ObjectIdAndOrder {
 
-	private final long id;
-	public int order;
+    public final int order;
+    private final long id;
 
 
-	
-	
-	public ObjectIdAndOrder() {
-		super();
-		 id = getNewId();
-	}
-
-	
-	
-	
-	
-	public long getId() {
-		return id;
-	}
-
-
-
-
-
-	private static long maxId = 0;
-	
-	public synchronized static long getNewId()
-	{
-		maxId++;
-		return maxId;
-	}
-	
-	
-   
-	
+    public ObjectIdAndOrder(long id, int order) {
+        this.id = id;
+        this.order = order;
+    }
 }

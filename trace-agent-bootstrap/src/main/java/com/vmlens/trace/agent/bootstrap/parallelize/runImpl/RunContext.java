@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 import gnu.trove.map.hash.TLongObjectHashMap;
 
 public class RunContext {
@@ -14,9 +14,9 @@ public class RunContext {
     }
 
     // Package Visible for Test
-    final TLongObjectHashMap<TestThreadState> threadIdToState = new TLongObjectHashMap<>();
+    final TLongObjectHashMap<ThreadLocalDataWhenInTest> threadIdToState = new TLongObjectHashMap<>();
 
-    public void add(TestThreadState testThreadState) {
+    public void add(ThreadLocalDataWhenInTest testThreadState) {
         threadIdToState.put(testThreadState.threadId(), testThreadState);
     }
 

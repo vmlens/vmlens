@@ -5,14 +5,16 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 public interface RunStateMachine {
-    boolean isActive(TestThreadState testThreadState);
-    void after(ParallelizeAction action, TestThreadState testThreadState);
+    boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
+
+    void after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
+
     boolean isNewTestTask(RunnableOrThreadWrapper newWrapper);
-    void processNewTestTask(TestThreadState testThreadState);
+
+    void processNewTestTask(ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
 
     void setStateRecording();
 
-    void end();
-    // For Test
-    ActualRun actualRun();
+    ActualRun end();
+
 }

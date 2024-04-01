@@ -16,9 +16,12 @@ public class ActualRun {
     private final TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> run =
             new TLinkedList<>();
 
-    public void after(InterleaveActionWithPositionFactoryAndOrRuntimeEvent interleaveActionWithPositionFactoryAndOrRuntimeEvent,
+
+    public void after(RuntimeEvent runtimeEvent,
                       ActualRunContext actualRunContext) {
-        interleaveActionWithPositionFactoryAndOrRuntimeEvent.apply(this, actualRunContext);
+        after(runtimeEvent);
+        onEvent(runtimeEvent, actualRunContext.sendEventContext());
+
     }
 
 

@@ -4,8 +4,11 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 public interface RunState {
-    boolean isActive(TestThreadState testThreadState);
-    RunState after(ParallelizeAction action, TestThreadState testThreadState);
+    boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
+
+    RunState after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
+
     boolean isNewTestTask(RunnableOrThreadWrapper newWrapper);
-    void addTaskStartedInterleaveAction(TestThreadState beginTestThreadState, ActualRun calculatedRun);
+
+    void addTaskStartedInterleaveAction(ThreadLocalDataWhenInTest threadLocalDataWhenInTest, ActualRun calculatedRun);
 }

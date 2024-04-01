@@ -1,6 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-public interface RuntimeEvent extends StaticEvent {
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
+
+public interface RuntimeEvent extends StaticEvent, InterleaveActionWithPositionFactory {
 
     void send(SendEventContext context);
 

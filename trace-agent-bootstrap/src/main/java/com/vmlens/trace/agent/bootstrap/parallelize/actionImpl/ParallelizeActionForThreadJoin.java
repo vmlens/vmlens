@@ -1,12 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.actionImpl;
 
 import com.vmlens.trace.agent.bootstrap.event.impl.ThreadJoinedEvent;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadJoinFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactoryAndRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 
 public class ParallelizeActionForThreadJoin implements ParallelizeAction {
     private final long joinedThreadId;
@@ -16,16 +14,14 @@ public class ParallelizeActionForThreadJoin implements ParallelizeAction {
     }
 
     @Override
-    public RunState nextState(ActionContext context, TestThreadState testThreadState) {
+    public RunState nextState(ActionContext context, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
         return context.current();
     }
 
     @Override
-    public void addInterleaveActionAndOrEvent(ActionContext context, TestThreadState testThreadState) {
-        context.afterInterleaveActionWithPositionFactory(new InterleaveActionWithPositionFactoryAndRuntimeEvent(
-                new ThreadJoinFactory(testThreadState.threadIndex(), context.threadIndexForId(joinedThreadId)),
-                new ThreadJoinedEvent()
-        ), testThreadState);
+    public void addInterleaveActionAndOrEvent(ActionContext context, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        context.afterInterleaveActionWithPositionFactory(
+                new ThreadJoinedEvent(), threadLocalDataWhenInTest);
     }
 
     @Override

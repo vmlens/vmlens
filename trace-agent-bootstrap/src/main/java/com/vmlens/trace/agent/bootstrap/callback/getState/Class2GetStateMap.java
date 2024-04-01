@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.getState;
 
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;
 
 public class Class2GetStateMap {
@@ -17,31 +16,12 @@ public class Class2GetStateMap {
 	// }
 
 	public static void resetState(Object in) {
-		try {
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
 
-			Class cl = in.getClass();
-
-			GetState getState = (GetState) class2GetState.computeIfAbsent(cl,createGetState);
-
-			getState.resetState(in);
-		} finally {
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-		}
 	}
 
 	public static StateAccess getState(Object in) {
 
-		try {
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
-
-			Class cl = in.getClass();
-			GetState getState = (GetState) class2GetState.computeIfAbsent(cl,createGetState);
-
-			return getState.getState(in);
-		} finally {
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-		}
+		return null;
 	}
 
 }

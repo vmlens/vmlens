@@ -13,7 +13,7 @@ public class ArrayAccessCallback {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
         // Fixme Callback
         // we could filter threads which can not be tested (finalizer...)
-        callbackStatePerThread.arraysInThisThread.put(theArray, DUMMY_OBJECT);
+        //callbackStatePerThread.arraysInThisThread.put(theArray, DUMMY_OBJECT);
     }
 
 	public static void get(Object theArray, int index, int methodId, int position) {

@@ -23,7 +23,7 @@ public class ShutdownHook extends Thread {
 
 	@Override
 	public void run() {
-        CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
+
         stopProcessing();
 	}
 }

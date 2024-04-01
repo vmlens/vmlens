@@ -1,21 +1,20 @@
 package com.vmlens.trace.agent.bootstrap.callback.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.field.UpdateObjectState;
 
-public class StateHolder {
+public class
+StateHolder {
 
-	private volatile Object _pAnarsoft_;
-	
-	public static final long offset;
-	
-	
-	static {
-		
-		offset = UpdateObjectState.getFieldOffset(StateHolder.class)	;
-		
-		
-		
-	}
+    // Fixme
+    public static final long offset = 0;
+
+    static {
+
+        //null; //offset = UpdateObjectState.getFieldOffset(StateHolder.class)	;
+
+
+    }
+
+    private volatile Object _pAnarsoft_;
 	
 	
 	public static StateAccess createAccess() {

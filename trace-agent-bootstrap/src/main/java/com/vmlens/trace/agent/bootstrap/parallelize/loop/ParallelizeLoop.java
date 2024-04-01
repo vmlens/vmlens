@@ -2,10 +2,13 @@ package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRunObserverForCalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRunObserverNoOp;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachineFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.TestThreadState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 
 import java.util.Iterator;
@@ -31,32 +34,35 @@ public class ParallelizeLoop {
         this.interleaveLoop = interleaveLoop;
     }
 
-    public void beginThreadMethodEnter(TestThreadState testThreadState, RunnableOrThreadWrapper beganTask) {
+    public void beginThreadMethodEnter(ThreadLocalForParallelize threadLocalForParallelize, RunnableOrThreadWrapper beganTask) {
         lock.lock();
         try {
-            currentRun.newTask(beganTask, testThreadState);
+            currentRun.newTask(beganTask, threadLocalForParallelize);
         } finally {
             lock.unlock();
         }
     }
 
-    public boolean hasNext(TestThreadState testThreadState) {
+    public boolean hasNext(ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
             if (currentRun != null) {
-                currentRun.end(testThreadState);
+                ActualRun previous = currentRun.end(threadLocalForParallelize);
+                interleaveLoop.addActualRun(previous);
+
                 if (interleaveLoopIterator.hasNext()) {
-                    currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(interleaveLoopIterator.next(),
-                            testThreadState, interleaveLoop,
-                            loopId, maxRunId),
-                            testThreadState);
+                    CalculatedRun calculatedReun = interleaveLoopIterator.next();
+                    ActualRun actualRun = new ActualRun(new ActualRunObserverForCalculatedRun(calculatedReun));
+                    currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(
+                            loopId, maxRunId, calculatedReun, actualRun));
                     maxRunId++;
                     return true;
                 }
                 return false;
             } else {
-                currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(testThreadState, interleaveLoop, loopId, maxRunId),
-                        testThreadState);
+                ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
+                currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(
+                        loopId, maxRunId, actualRun));
                 maxRunId++;
                 return true;
             }
@@ -65,10 +71,10 @@ public class ParallelizeLoop {
         }
     }
 
-    public void close(TestThreadState testThreadState) {
+    public void close(ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
-            testThreadState.setParallelizedThreadLocalToNull();
+            threadLocalForParallelize.setParallelizedThreadLocalToNull();
         } finally {
             lock.unlock();
         }

@@ -1,7 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.event.AgentLogEvent;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -14,45 +12,40 @@ public class AgentLogCallback {
 
 	public static void logException(Throwable exception)
 	{
-		if(ENABLE_EXCEPTION_LOGGING)
-		{
-			
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;	
-			
-		CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-			StringWriter stringWriter = new StringWriter();
-		PrintWriter writer = new PrintWriter(stringWriter);
-			exception.printStackTrace(writer);
-            callbackStatePerThread.offer(new AgentLogEvent("EXCEPTION:" + stringWriter.toString()));
-		
-		CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-		}
-	}
+        if (ENABLE_EXCEPTION_LOGGING) {
+
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter writer = new PrintWriter(stringWriter);
+            exception.printStackTrace(writer);
+            // Fixme
+            //  callbackStatePerThread.offer(new AgentLogEvent("EXCEPTION:" + stringWriter.toString()));
+        }
+    }
 	
 	public static void logError(String message)
 	{
-		if(ENABLE_EXCEPTION_LOGGING)
-		{
-			
-			CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
+		if(ENABLE_EXCEPTION_LOGGING) {
 
-			CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-			StringWriter stringWriter = new StringWriter();
-		PrintWriter writer = new PrintWriter(stringWriter);
+            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter writer = new PrintWriter(stringWriter);
             new Exception().printStackTrace(writer);
-            callbackStatePerThread.offer(new AgentLogEvent("EXCEPTION:" + message + "  " + stringWriter.toString()));
-            CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
-		
-		}
+            // Fixme
+            //  callbackStatePerThread.offer(new AgentLogEvent("EXCEPTION:" + message + "  " + stringWriter.toString()));
+
+
+        }
 	}
 	
 
 	public static void log(Class location, String text) {
         String message = location.getSimpleName() + ":" + text;
-        CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace++;
-		CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.offer(new AgentLogEvent(message));
-        CallbackState.callbackStatePerThread.get().stackTraceBasedDoNotTrace--;
+
+        CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+        // Fixme
+        //  callbackStatePerThread.offer(new AgentLogEvent(message));
+
     }
 
     public static  void close(Object obj)

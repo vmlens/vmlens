@@ -1,8 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import gnu.trove.map.hash.THashMap;
 
+/**
+ * Adapter for the generic class @see gnu.trove.map.hash.THashMap
+ */
 public class ParallelizeLoopRepository {
     private final Object lock = new Object();
     private final ParallelizeLoopFactory parallelizeLoopFactory;
@@ -25,7 +27,4 @@ public class ParallelizeLoopRepository {
         }
     }
 
-    public AgentLogger agentLogger() {
-        return parallelizeLoopFactory.agentLogger();
-    }
 }

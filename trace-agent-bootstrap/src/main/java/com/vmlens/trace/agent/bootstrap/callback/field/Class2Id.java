@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
-import com.vmlens.trace.agent.bootstrap.event.ClassNameEvent;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 public class Class2Id {
@@ -17,26 +16,24 @@ public class Class2Id {
 		synchronized(LOCK)
 		{
 			int current = class2Id.get(cl);
-			
-			if( current != 0 )
-			{
+
+			if (current != 0) {
 				return current;
 			}
-			
-			
+
+
 			current = maxId;
 
-            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-			
-			callbackStatePerThread.stackTraceBasedDoNotTrace++;
-			
-			callbackStatePerThread.offer(new ClassNameEvent(cl.getName(), current));
-			
-			callbackStatePerThread.stackTraceBasedDoNotTrace--;
+			CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
+
+
+			// Fixme
+			//callbackStatePerThread.offer(new ClassNameEvent(cl.getName(), current));
+
 
 			maxId++;
 			class2Id.put(cl, current);
-			
+
 			return current;
 		}
 	}
@@ -51,25 +48,25 @@ public class Class2Id {
 			{
 				return current;
 			}
-			
-			
+
+
 			current = maxId;
 
-            CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-			
-			callbackStatePerThread.stackTraceBasedDoNotTrace++;
-			
-			String name = createName(cl);
-            callbackStatePerThread.offer(new ClassNameEvent(name, current));
-            callbackStatePerThread.stackTraceBasedDoNotTrace--;
+			CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
 
-            maxId++;
-			
+
+			String name = createName(cl);
+			// Fixme
+			//callbackStatePerThread.offer(new ClassNameEvent(name, current));
+
+
+			maxId++;
+
 			class2Id.put(cl, current);
-			
+
 			return current;
-			
-			
+
+
 		}
 	}
 	

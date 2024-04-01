@@ -2,13 +2,14 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessCallbackImpl;
-
-
+import com.vmlens.trace.agent.bootstrap.callback.field.GetOrCreateObjectState;
 
 
 public class FieldAccessCallback {
 
-    private static volatile FieldAccessCallbackImpl fieldAccessCallbackImpl = new FieldAccessCallbackImpl();
+    private static volatile FieldAccessCallbackImpl fieldAccessCallbackImpl = new FieldAccessCallbackImpl(
+            new GetOrCreateObjectState(),
+            new CallbackState());
 
     public static void field_access_static(int fieldId, int methodId, int callbackId) {
         fieldAccessCallbackImpl.field_access_static(fieldId, methodId, callbackId);

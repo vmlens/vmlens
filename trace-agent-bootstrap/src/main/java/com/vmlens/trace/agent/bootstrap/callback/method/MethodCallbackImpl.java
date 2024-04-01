@@ -62,7 +62,7 @@ public class MethodCallbackImpl {
     public void methodEnterThreadRun(int methodId) {
         try {
             CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-            callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
             Thread thread = Thread.currentThread();
             // Fixme Callback hier auch methodid
             parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(thread));

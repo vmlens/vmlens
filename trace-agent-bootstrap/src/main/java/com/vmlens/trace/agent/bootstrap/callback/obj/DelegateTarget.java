@@ -7,13 +7,9 @@ public class DelegateTarget {
 
 	private final ObjectCallbackState objectCallbackState;
 	private final Object orig;
-	
 
-	
-	
-	
-	
-	 public DelegateTarget(ObjectCallbackState objectCallbackState, Object orig) {
+
+    public DelegateTarget(ObjectCallbackState objectCallbackState, Object orig) {
 		super();
 		this.objectCallbackState = objectCallbackState;
 		this.orig = orig;
@@ -21,8 +17,6 @@ public class DelegateTarget {
 
 
     void access(int operation, int methodId, CallbackStatePerThreadForParallelize callbackStatePerThread, int slidingWindowId) {
-
-        objectCallbackState.access(orig, operation, methodId);
 
 
     }

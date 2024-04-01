@@ -3,10 +3,24 @@ package com.vmlens.trace.agent.bootstrap.event.impl;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileAccessEventGen;
-
+import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndCalculatedRunElementContainer;
 
 
 public class VolatileAccessEvent extends VolatileAccessEventGen implements RuntimeEvent {
+
+    // Fixme
+
+
+    @Override
+    public int threadIndex() {
+        return 0;
+    }
+
+    @Override
+    public void addToContainer(int positionInThread, BlockBuilderAndCalculatedRunElementContainer container) {
+
+    }
+
     public VolatileAccessEvent setThreadId(long threadId) {
         this.threadId = threadId;
         return this;

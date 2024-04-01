@@ -1,43 +1,36 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelizeProvider;
+
 public class FieldAccessCallbackImpl {
-    private final Strategy[] strategyArray;
+    private final FieldAccessAdapter[] strategyArray;
 
-    public FieldAccessCallbackImpl() {
-        strategyArray = new Strategy[10];
-        strategyArray[0] = new StrategyImplNonVolatile(false);
-        strategyArray[1] = new StrategyImplNonVolatile(true);
 
-        strategyArray[2] = new StrategyImplVolatile(false);
-        strategyArray[3] = new StrategyImplVolatile(true);
+    public FieldAccessCallbackImpl(GetOrCreateObjectState getAndUpdateVolatileObjectState,
+                                   ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider) {
+        strategyArray = new FieldAccessAdapter[4];
+        /*
+        strategyArray[0] = new FieldAccessImplNonVolatile(false);
+        strategyArray[1] = new FieldAccessImplNonVolatile(true);
+
+        strategyArray[2] = new FieldAccessImplVolatile(false);
+
+         */
+        strategyArray[3] = FieldAccessAdapter.createForVolatile(MemoryAccessType.IS_WRITE, getAndUpdateVolatileObjectState,
+                threadLocalForParallelizeProvider);
+
     }
-
 
     public void field_access_static(int fieldId, int methodId, int callbackId) {
         strategyArray[callbackId].field_access_static(fieldId, methodId);
     }
 
-
     public Long field_access_from_generated_method(Object orig, Long offset, int
             fieldId, int methodId, int callbackId) {
-        if (orig == null) {
-            return offset;
-        }
-        Long calculatedOffset = offset;
-        if (calculatedOffset == null) {
-            calculatedOffset = UpdateObjectState.getFieldOffset(orig.getClass());
-        }
-
-        strategyArray[callbackId].field_access_generated(orig, calculatedOffset, fieldId, methodId);
-        return calculatedOffset;
+        return strategyArray[callbackId].field_access_from_generated_method(orig, offset, fieldId, methodId);
     }
 
     public void field_access(Object orig, int fieldId, int methodId, int callbackId) {
-        if (orig == null) {
-            return;
-        }
         strategyArray[callbackId].field_access_default(orig, fieldId, methodId);
     }
-
-
 }

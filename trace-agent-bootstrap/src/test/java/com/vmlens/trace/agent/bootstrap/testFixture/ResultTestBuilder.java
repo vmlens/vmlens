@@ -9,13 +9,12 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.*;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
-import com.vmlens.trace.agent.bootstrap.interleave.run.*;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionForInterleaveAction;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionWithRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizedThreadLocal;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.RunContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -25,7 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
+import static org.mockito.Mockito.mock;
 
 
 public class ResultTestBuilder {
@@ -44,11 +43,7 @@ public class ResultTestBuilder {
     private final List<ParallelizeActionAndThreadLocalWrapper> parallelizeActionAndThreadLocalWrapperList = new
             LinkedList<ParallelizeActionAndThreadLocalWrapper>();
     private final Map<Integer, CallbackStatePerThreadForParallelize> threadIndexToThreadLocalWrapperMock = new HashMap<>();
-    // ToDo herausziehen
-    private List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> actualRun = new
-            LinkedList<>();
-    private List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> givenRun = new
-            LinkedList<>();
+
     private ThreadIndexToElementList<Position> positions = new ThreadIndexToElementList<Position>();
     private final ParallelizeFacade parallelizeFacade = new ParallelizeFacade(null);
     private List<StaticEvent> givenEvents = new
@@ -56,7 +51,7 @@ public class ResultTestBuilder {
 
 
     public ResultTestBuilder() {
-        Run run = new RunMockFactory().create(new ActualRunMock(actualRun), runContext);
+        Run run = mock(Run.class);
         threadIndexToThreadLocalWrapperMock.put(0, threadLocalWrapper(0, 1L, run));
         threadIndexToThreadLocalWrapperMock.put(1, threadLocalWrapper(1, 15L, run));
         threadIndexToThreadLocalWrapperMock.put(2, threadLocalWrapper(2, 20L, run));
@@ -64,7 +59,7 @@ public class ResultTestBuilder {
 
     private static CallbackStatePerThreadForParallelize threadLocalWrapper(int threadIndex, long threadId, Run run) {
         CallbackStatePerThreadForParallelize threadLocalWrapperMock = new CallbackStatePerThreadForParallelize(1L, null);
-        threadLocalWrapperMock.setParallelizedThreadLocal(new ParallelizedThreadLocal(run, threadIndex));
+        threadLocalWrapperMock.setThreadLocalDataWhenInTest(new ThreadLocalDataWhenInTest(run, threadIndex, null, threadId));
         return threadLocalWrapperMock;
     }
 
@@ -85,18 +80,11 @@ public class ResultTestBuilder {
                 .setOrder(VOLATILE_FIELD_EVENT_ORDER)
                 .setObjectHashCode(VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE)
                 .setMethodId(VOLATILE_FIELD_EVENT_METHOD_ID);
-        givenRun.add(new ContainerForRuntimeEvent(expected));
+
 
         givenEvents.add(expected);
 
 
-        add(new ParallelizeActionWithRuntimeEvent(actual), position);
-        VolatileFieldAccess action = new VolatileFieldAccess(fieldId, operation);
-
-        givenRun.add(new ContainerForInterleaveActionWithPositionFactory(new InterleaveActionWithPositionFactoryImpl(action, position.threadIndex())));
-
-        add(new ParallelizeActionForInterleaveAction(action), position);
-        add(action, position);
     }
 
     public void monitorEnter(int id, Position temp) {
@@ -168,11 +156,5 @@ public class ResultTestBuilder {
         return givenEvents;
     }
 
-    public List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> actualRun() {
-        return actualRun;
-    }
 
-    public List<InterleaveActionWithPositionFactoryAndOrRuntimeEvent> givenRun() {
-        return givenRun;
-    }
 }

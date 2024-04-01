@@ -1,13 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
-
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+/*
+Fixme auseinander ziehen damit ohne lock testbar
+ */
 public class Run {
     private final ReentrantLock lock;
     private final Condition threadActiveCondition;
@@ -18,22 +19,21 @@ public class Run {
     private int maxThreadIndex;
 
     public Run(ReentrantLock lock, int id, WaitNotifyStrategy waitNotifyStrategy,
-               RunStateMachine runStateMachine, TestThreadState testThreadState) {
+               RunStateMachine runStateMachine) {
         this.waitNotifyStrategy = waitNotifyStrategy;
         this.runStateMachine = runStateMachine;
         this.id = id;
         this.lock = lock;
         this.threadActiveCondition = lock.newCondition();
-        testThreadState.createNewParallelizedThreadLocal(this, maxThreadIndex);
         maxThreadIndex++;
     }
 
-    public void after(ParallelizeAction action, TestThreadState testThreadState) {
+    public void after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
         lock.lock();
         try {
-            runStateMachine.after(action, testThreadState);
+            runStateMachine.after(action, threadLocalDataWhenInTest);
             try {
-                waitNotifyStrategy.notifyAndWaitTillActive(testThreadState, runStateMachine, threadActiveCondition);
+                waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
             } catch (TestBlockedException e) {
                 runStateMachine.setStateRecording();
             }
@@ -41,19 +41,16 @@ public class Run {
             lock.unlock();
         }
     }
-    public void end(TestThreadState testThreadState) {
-        testThreadState.setParallelizedThreadLocalToNull();
-        runStateMachine.end();
-    }
-    public void newTask(RunnableOrThreadWrapper newWrapper, TestThreadState testThreadState) {
+
+    public void newTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
             if (runStateMachine.isNewTestTask(newWrapper)) {
-                testThreadState.createNewParallelizedThreadLocal(this, maxThreadIndex);
-                runStateMachine.processNewTestTask(testThreadState);
+                ThreadLocalDataWhenInTest threadLocalDataWhenInTest = threadLocalForParallelize.createNewParallelizedThreadLocal(this, maxThreadIndex);
+                runStateMachine.processNewTestTask(threadLocalDataWhenInTest);
                 maxThreadIndex++;
                 try {
-                    waitNotifyStrategy.notifyAndWaitTillActive(testThreadState, runStateMachine, threadActiveCondition);
+                    waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
                 } catch (TestBlockedException e) {
                     runStateMachine.setStateRecording();
                 }
@@ -65,12 +62,13 @@ public class Run {
 
 
     // Visible for Test
-    public boolean isActive(TestThreadState testThreadState) {
-        return runStateMachine.isActive(testThreadState);
+    public boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        return runStateMachine.isActive(threadLocalDataWhenInTest);
     }
 
-    // Visible for Test
-    public ActualRun actualRun() {
-        return runStateMachine.actualRun();
+    public ActualRun end(ThreadLocalForParallelize threadLocalForParallelize) {
+        threadLocalForParallelize.setParallelizedThreadLocalToNull();
+        return runStateMachine.end();
     }
+
 }

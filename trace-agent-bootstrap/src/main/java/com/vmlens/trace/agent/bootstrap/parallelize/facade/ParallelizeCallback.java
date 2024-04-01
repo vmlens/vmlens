@@ -3,18 +3,18 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackStatePerThreadForParallelize;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeActionFactory.action;
-import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade.parallelize;
+
 
 /**
  * The methods of this class are interleaved to the bytecode of the application.
+ * Fixme ove to callbacks
  */
 
 public class ParallelizeCallback {
 
     public static void beforeThreadJoin(Thread toBeJoined) {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        parallelize().after(callbackStatePerThread, action().threadJoin(toBeJoined.getId()));
+        // Fixme
     }
 
     public static void callbackMethodEnter(int atomicId) {
@@ -26,11 +26,11 @@ public class ParallelizeCallback {
     }
     public static void afterFieldAccess(int fieldId, int operation) {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        parallelize().after(callbackStatePerThread, action().fieldAccess(fieldId, operation));
+        // Fixme
     }
     public static void afterThreadStart() {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        parallelize().afterThreadStart(callbackStatePerThread);
+        // Fixme
     }
 
     public static void beginTask(int id) {

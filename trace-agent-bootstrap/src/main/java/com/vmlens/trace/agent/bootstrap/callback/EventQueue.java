@@ -19,9 +19,9 @@ public class EventQueue implements QueueIn {
 
     public void offer(Object element) {
         CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        callbackStatePerThread.stackTraceBasedDoNotTrace++;
+
         queue.offer(element);
-        callbackStatePerThread.stackTraceBasedDoNotTrace--;
+
     }
 
     public MpscArrayQueue queue() {
