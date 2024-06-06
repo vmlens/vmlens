@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.load
 
-import com.anarsoft.race.detection.createStacktrace.ThreadIdAndMethodCounter
+import com.anarsoft.race.detection.createstacktrace.ThreadIdAndMethodCounter
 import com.anarsoft.race.detection.event.load.LoopAndRunIdAndEventArray
 import com.anarsoft.race.detection.util.EventArray
 

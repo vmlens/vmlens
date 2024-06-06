@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.method
 
-import com.anarsoft.race.detection.createStacktrace.MethodEvent
+import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
 import com.anarsoft.race.detection.process.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 import com.anarsoft.race.detection.util.EventArray

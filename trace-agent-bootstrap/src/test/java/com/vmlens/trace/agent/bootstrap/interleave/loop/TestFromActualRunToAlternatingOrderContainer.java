@@ -4,8 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingO
 import com.vmlens.trace.agent.bootstrap.interleave.run.AlternatingOrderContainerFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.TestFixture;
-import com.vmlens.trace.agent.bootstrap.testFixture.TestData;
-import com.vmlens.trace.agent.bootstrap.testFixture.VolatileFixture;
+import com.vmlens.trace.agent.bootstrap.testfixture.TestData;
+import com.vmlens.trace.agent.bootstrap.testfixture.VolatileFixture;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Pair;

@@ -9,12 +9,12 @@ public interface RunStateMachine {
 
     void after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
 
-    boolean isNewTestTask(RunnableOrThreadWrapper newWrapper);
-
-    void processNewTestTask(ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
+    ThreadLocalDataWhenInTest processNewTestTask(RunnableOrThreadWrapper newWrapper,
+                                                 ThreadLocalForParallelize threadLocalForParallelize,
+                                                 Run run);
 
     void setStateRecording();
 
-    ActualRun end();
+    ActualRun end(ThreadLocalForParallelize threadLocalForParallelize);
 
 }

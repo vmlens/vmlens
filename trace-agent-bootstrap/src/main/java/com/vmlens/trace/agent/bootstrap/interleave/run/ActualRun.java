@@ -21,7 +21,6 @@ public class ActualRun {
                       ActualRunContext actualRunContext) {
         after(runtimeEvent);
         onEvent(runtimeEvent, actualRunContext.sendEventContext());
-
     }
 
 

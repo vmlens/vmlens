@@ -10,8 +10,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.BlockContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
-import com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder;
-import com.vmlens.trace.agent.bootstrap.testFixture.ResultTestBuilder;
+import com.vmlens.trace.agent.bootstrap.testfixture.FixtureBuilder;
+import com.vmlens.trace.agent.bootstrap.testfixture.ResultTestBuilder;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -23,8 +23,8 @@ import static com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.Eleme
 import static com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock.db;
 import static com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorEnterImpl.enter;
 import static com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorExit.exit;
-import static com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder.FIRST_WORKER_THREAD_INDEX;
-import static com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder.MAIN_THREAD_INDEX;
+import static com.vmlens.trace.agent.bootstrap.testfixture.FixtureBuilder.FIRST_WORKER_THREAD_INDEX;
+import static com.vmlens.trace.agent.bootstrap.testfixture.FixtureBuilder.MAIN_THREAD_INDEX;
 
 public class TestFixture {
 

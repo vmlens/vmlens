@@ -3,12 +3,12 @@ package com.vmlens.trace.agent.bootstrap.interleave.block;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
-import com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder;
-import com.vmlens.trace.agent.bootstrap.testFixture.ResultTestBuilder;
+import com.vmlens.trace.agent.bootstrap.testfixture.FixtureBuilder;
+import com.vmlens.trace.agent.bootstrap.testfixture.ResultTestBuilder;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
-import static com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder.FIRST_WORKER_THREAD_INDEX;
-import static com.vmlens.trace.agent.bootstrap.testFixture.FixtureBuilder.MAIN_THREAD_INDEX;
+import static com.vmlens.trace.agent.bootstrap.testfixture.FixtureBuilder.FIRST_WORKER_THREAD_INDEX;
+import static com.vmlens.trace.agent.bootstrap.testfixture.FixtureBuilder.MAIN_THREAD_INDEX;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;

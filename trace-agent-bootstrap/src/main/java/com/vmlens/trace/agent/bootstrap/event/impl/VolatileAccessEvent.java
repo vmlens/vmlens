@@ -25,27 +25,22 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
         this.threadId = threadId;
         return this;
     }
-
     public VolatileAccessEvent setOrder(int order) {
         this.order = order;
         return this;
     }
-
     public VolatileAccessEvent setFieldId(int fieldId) {
         this.fieldId = fieldId;
         return this;
     }
-
     public VolatileAccessEvent setMethodId(int methodId) {
         this.methodId = methodId;
         return this;
     }
-
     public VolatileAccessEvent setOperation(int operation) {
         this.operation = operation;
         return this;
     }
-
     public VolatileAccessEvent setObjectHashCode(long objectHashCode) {
         this.objectHashCode = objectHashCode;
         return this;
@@ -67,72 +62,68 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
         this.programCounter = programCounter;
         return this;
     }
-
     VolatileAccessEvent setMethodCounter(int methodCounter) {
         this.methodCounter = methodCounter;
         return this;
     }
-
     VolatileAccessEvent setLoopId(int loopId) {
         this.loopId = loopId;
         return this;
     }
-
     VolatileAccessEvent setRunId(int runId) {
         this.runId = runId;
         return this;
     }
-
     VolatileAccessEvent setRunPosition(int runPosition) {
         this.runPosition = runPosition;
         return this;
     }
 
-    int slidingWindowId() {
+    public int slidingWindowId() {
         return slidingWindowId;
     }
 
-    long threadId() {
+    public long threadId() {
         return threadId;
     }
 
-    int programCounter() {
+    public int programCounter() {
         return programCounter;
     }
 
-    int order() {
+    public int order() {
         return order;
     }
 
-    int fieldId() {
+    public int fieldId() {
         return fieldId;
     }
 
-    int methodCounter() {
+    public int methodCounter() {
         return methodCounter;
     }
 
-    int methodId() {
+    public int methodId() {
         return methodId;
     }
 
-    int operation() {
+    public int operation() {
         return operation;
     }
 
-    long objectHashCode() {
+    public long objectHashCode() {
         return objectHashCode;
     }
 
-    int loopId() {
+    public int loopId() {
         return loopId;
     }
 
-    int runId() {
+    public int runId() {
         return runId;
     }
 
-    int runPosition() {
+    public int runPosition() {
         return runPosition;
     }
 

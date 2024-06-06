@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopRepository;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.runImpl.ParallelizeLoopFactoryImpl;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ParallelizeLoopFactoryImpl;
 
 
 /**

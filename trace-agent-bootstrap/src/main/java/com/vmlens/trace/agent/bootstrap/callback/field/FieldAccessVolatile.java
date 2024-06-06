@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
 import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.actionImpl.ParallelizeActionForRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.action.ParallelizeActionForRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 
 public class FieldAccessVolatile implements FieldAccess {

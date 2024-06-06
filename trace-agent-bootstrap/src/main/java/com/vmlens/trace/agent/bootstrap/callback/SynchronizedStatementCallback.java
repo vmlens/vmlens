@@ -1,11 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.StaticMonitorRepository;
-import com.vmlens.trace.agent.bootstrap.callback.state.MonitorIdAndOrder;
-import com.vmlens.trace.agent.bootstrap.callback.synchronizedStatement.SynchronizedStatementCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
-import gnu.trove.map.hash.TIntIntHashMap;
-
 public class SynchronizedStatementCallback {
 
     private static volatile SynchronizedStatementCallbackImpl impl = new SynchronizedStatementCallbackImpl();

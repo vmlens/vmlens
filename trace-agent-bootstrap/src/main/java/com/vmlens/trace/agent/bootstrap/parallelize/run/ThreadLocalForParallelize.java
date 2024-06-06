@@ -51,8 +51,4 @@ public class ThreadLocalForParallelize {
     }
 
 
-    public ThreadLocalDataWhenInTest createNewParallelizedThreadLocal(Run run, int threadIndex) {
-        this.parallelizedThreadLocal = new ThreadLocalDataWhenInTest(run, threadIndex, queueIn, threadId);
-        return parallelizedThreadLocal;
-    }
 }

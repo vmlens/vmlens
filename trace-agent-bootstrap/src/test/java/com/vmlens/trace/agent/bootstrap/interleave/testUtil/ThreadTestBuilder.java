@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.testUtil;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.testFixture.ResultTestBuilder;
+import com.vmlens.trace.agent.bootstrap.testfixture.ResultTestBuilder;
 
 public class ThreadTestBuilder {
     private final ResultTestBuilder resultTestBuilder;

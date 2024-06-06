@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.callback.getState;
+package com.vmlens.trace.agent.bootstrap.callback.getstate;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.state.StateAccess;

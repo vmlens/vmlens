@@ -9,7 +9,7 @@ public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEven
 
     @Override
     public void send(SendEventContext context) {
-
+        context.threadLocalWrapper().offer(this);
     }
 
     // Fixme

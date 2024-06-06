@@ -3,8 +3,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcher;
 import com.vmlens.trace.agent.bootstrap.interleave.testUtil.FeatureTestMatcherBuilder;
-import com.vmlens.trace.agent.bootstrap.testFixture.TestData;
-import com.vmlens.trace.agent.bootstrap.testFixture.VolatileFixture;
+import com.vmlens.trace.agent.bootstrap.testfixture.TestData;
+import com.vmlens.trace.agent.bootstrap.testfixture.VolatileFixture;
 
 import java.util.Arrays;
 import java.util.Iterator;

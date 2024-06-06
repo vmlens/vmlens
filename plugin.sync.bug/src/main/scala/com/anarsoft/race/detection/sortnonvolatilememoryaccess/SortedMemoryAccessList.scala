@@ -1,0 +1,34 @@
+package com.anarsoft.race.detection.sortnonvolatilememoryaccess
+
+import com.vmlens.report.dataView.MemoryAccessReportBuilder
+
+import scala.collection.mutable.ArrayBuffer
+
+private class SortedMemoryAccessList[EVENT] {
+
+  private val list = new ArrayBuffer[SortedMemoryAccessListElement[EVENT]]();
+
+  def add(memoryAccess: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
+    list.append(new SortedMemoryAccessListElement[EVENT](false, memoryAccess));
+  }
+
+  def addDataRace(alreadyAdded: NonVolatileMemoryAccessEvent[EVENT],
+                  newMemoryAccess: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
+    for (elem <- list) {
+      if (elem.positionInRun == alreadyAdded.positionInRun) {
+        elem.isDataRace = true;
+      }
+    }
+    list.append(new SortedMemoryAccessListElement[EVENT](true, newMemoryAccess));
+  }
+
+  def buildResult(accessReportBuilder: MemoryAccessReportBuilder): Unit = {
+    for (elem <- list) {
+      if (elem.isDataRace) {
+        accessReportBuilder.addDataRace(elem.event)
+      } else {
+        accessReportBuilder.addMemoryAccess(elem.event)
+      }
+    }
+  }
+}

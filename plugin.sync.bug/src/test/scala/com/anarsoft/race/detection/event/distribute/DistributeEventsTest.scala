@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.distribute
 
-import com.anarsoft.race.detection.createStacktrace.MethodEvent
+import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.distribute.DistributeEvents
 import com.anarsoft.race.detection.event.gen.MethodEnterEventGen
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}

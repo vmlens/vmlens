@@ -1,7 +1,5 @@
-package com.vmlens.trace.agent.bootstrap.callback.getState;
+package com.vmlens.trace.agent.bootstrap.callback.getstate;
 
-import java.lang.reflect.Constructor;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 /*

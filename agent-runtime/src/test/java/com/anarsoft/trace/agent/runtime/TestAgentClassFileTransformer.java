@@ -3,12 +3,12 @@ package com.anarsoft.trace.agent.runtime;
 import com.vmlens.trace.agent.bootstrap.callback.FieldAccessCallback;
 import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
 import com.vmlens.trace.agent.bootstrap.callback.SynchronizedStatementCallback;
+import com.vmlens.trace.agent.bootstrap.callback.SynchronizedStatementCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.method.MethodCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.obj.HashMapCallback;
 import com.vmlens.trace.agent.bootstrap.callback.obj.ObjectCallbackState;
-import com.vmlens.trace.agent.bootstrap.callback.synchronizedStatement.SynchronizedStatementCallbackImpl;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;

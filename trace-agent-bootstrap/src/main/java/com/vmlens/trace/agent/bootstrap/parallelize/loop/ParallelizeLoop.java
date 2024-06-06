@@ -10,10 +10,13 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachineFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunImpl;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
 
 import java.util.Iterator;
 import java.util.concurrent.locks.ReentrantLock;
 
+// Fixme synchonization herausziehen
 public class ParallelizeLoop {
 
     private final ReentrantLock lock = new ReentrantLock();
@@ -43,6 +46,7 @@ public class ParallelizeLoop {
         }
     }
 
+    // Fixme erzeugen des in test thread local und test
     public boolean hasNext(ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
@@ -53,16 +57,22 @@ public class ParallelizeLoop {
                 if (interleaveLoopIterator.hasNext()) {
                     CalculatedRun calculatedReun = interleaveLoopIterator.next();
                     ActualRun actualRun = new ActualRun(new ActualRunObserverForCalculatedRun(calculatedReun));
-                    currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createRunning(
-                            loopId, maxRunId, calculatedReun, actualRun));
+                    ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(loopId, maxRunId);
+                    currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createRunning(
+                            runContext, calculatedReun, actualRun));
+                    threadLocalForParallelize.setThreadLocalDataWhenInTest(
+                            runContext.create(currentRun, threadLocalForParallelize.queueIn(), threadLocalForParallelize.threadId()));
                     maxRunId++;
                     return true;
                 }
                 return false;
             } else {
                 ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
-                currentRun = new Run(lock, maxRunId, waitNotifyStrategy, runStateMachineFactory.createInitial(
-                        loopId, maxRunId, actualRun));
+                ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(loopId, maxRunId);
+                currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
+                        runContext, actualRun));
+                threadLocalForParallelize.setThreadLocalDataWhenInTest(
+                        runContext.create(currentRun, threadLocalForParallelize.queueIn(), threadLocalForParallelize.threadId()));
                 maxRunId++;
                 return true;
             }
