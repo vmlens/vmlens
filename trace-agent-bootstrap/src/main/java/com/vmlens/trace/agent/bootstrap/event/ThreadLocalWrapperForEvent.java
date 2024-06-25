@@ -4,7 +4,7 @@ public interface ThreadLocalWrapperForEvent {
 
     long threadId();
 
-    void offer(StaticEvent element);
+    void offer(SerializableEvent element);
 
     int incrementAndGetMethodCount();
 }

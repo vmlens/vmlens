@@ -8,16 +8,16 @@ import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 
-public class ThreadNameEvent implements StaticEvent  {
+public class ThreadNameEvent implements SerializableEvent {
 
-	private final long threadId;
-	private final String threadName;
-	private final boolean hasMappedThreadId;
-	private final byte mappedThreadId;
-	private final boolean hasShortThreadId;
-	private final short shortThreadId;
+    private final long threadId;
+    private final String threadName;
+    private final boolean hasMappedThreadId;
+    private final byte mappedThreadId;
+    private final boolean hasShortThreadId;
+    private final short shortThreadId;
 
-    public ThreadNameEvent(long threadId, String threadName,OptionalByte optionalByte, OptionalShort optionalShort) {
+    public ThreadNameEvent(long threadId, String threadName, OptionalByte optionalByte, OptionalShort optionalShort) {
         super();
         this.threadId = threadId;
         this.threadName = threadName;

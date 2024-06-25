@@ -5,10 +5,11 @@ import com.vmlens.trace.agent.bootstrap.util.Constants;
 import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
-public class WhileLoopNameEvent implements StaticEvent {
-	private final int loopId;
-	private final String name;
-	public WhileLoopNameEvent(int loopId, String name) {
+public class WhileLoopNameEvent implements SerializableEvent {
+    private final int loopId;
+    private final String name;
+
+    public WhileLoopNameEvent(int loopId, String name) {
         super();
         this.loopId = loopId;
         this.name = name;

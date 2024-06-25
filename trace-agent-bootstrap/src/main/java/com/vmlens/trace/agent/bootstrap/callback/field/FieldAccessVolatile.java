@@ -1,30 +1,24 @@
 package com.vmlens.trace.agent.bootstrap.callback.field;
 
-import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.action.ParallelizeActionForRuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.impl.ParallelizeBridgeForCallback;
 
 public class FieldAccessVolatile implements FieldAccess {
-
     private final int operation;
-    private final GetOrCreateObjectState getOrCreateObjectState;
+    private final GetOrCreateObjectState getAndUpdateVolatileObjectState;
+    private final ParallelizeBridgeForCallback parallelizeBridgeForCallback;
 
-    public FieldAccessVolatile(int operation, GetOrCreateObjectState getOrCreateObjectState) {
+    public FieldAccessVolatile(int operation,
+                               GetOrCreateObjectState getAndUpdateVolatileObjectState,
+                               ParallelizeBridgeForCallback parallelizeBridgeForCallback) {
         this.operation = operation;
-        this.getOrCreateObjectState = getOrCreateObjectState;
+        this.getAndUpdateVolatileObjectState = getAndUpdateVolatileObjectState;
+        this.parallelizeBridgeForCallback = parallelizeBridgeForCallback;
     }
 
     @Override
-    public void field_access_from_generated_method(Object orig, int fieldId, int methodId,
-                                                   ThreadLocalDataWhenInTest dataWhenInTest) {
-
-        ObjectState objectState = getOrCreateObjectState.getOrCreate(orig);
-        objectState.getAndIncrementOrder(fieldId);
-
-        VolatileAccessEvent volatileAccessEvent = new VolatileAccessEvent();
-
-        dataWhenInTest.after(new ParallelizeActionForRuntimeEvent(volatileAccessEvent));
-        // Fixme
-
+    public Long field_access_from_generated_method(Object orig, Long offset, int fieldId, int methodId) {
+        parallelizeBridgeForCallback.processRuntimeEventFactory(new RuntimeEventFactoryVolatileField(orig, fieldId,
+                methodId, operation, getAndUpdateVolatileObjectState));
+        return offset;
     }
 }

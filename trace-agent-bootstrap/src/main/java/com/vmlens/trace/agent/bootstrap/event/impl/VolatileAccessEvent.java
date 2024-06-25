@@ -1,82 +1,60 @@
 package com.vmlens.trace.agent.bootstrap.event.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileAccessEventGen;
-import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndCalculatedRunElementContainer;
 
+/**
+ * a data structure
+ */
 
 public class VolatileAccessEvent extends VolatileAccessEventGen implements RuntimeEvent {
 
-    // Fixme
-
-
-    @Override
-    public int threadIndex() {
-        return 0;
-    }
-
-    @Override
-    public void addToContainer(int positionInThread, BlockBuilderAndCalculatedRunElementContainer container) {
-
-    }
-
-    public VolatileAccessEvent setThreadId(long threadId) {
+    public void setThreadId(long threadId) {
         this.threadId = threadId;
-        return this;
     }
+
     public VolatileAccessEvent setOrder(int order) {
         this.order = order;
         return this;
     }
-    public VolatileAccessEvent setFieldId(int fieldId) {
+
+    public void setFieldId(int fieldId) {
         this.fieldId = fieldId;
-        return this;
     }
-    public VolatileAccessEvent setMethodId(int methodId) {
+
+    public void setMethodId(int methodId) {
         this.methodId = methodId;
-        return this;
     }
-    public VolatileAccessEvent setOperation(int operation) {
+
+    public void setOperation(int operation) {
         this.operation = operation;
-        return this;
     }
-    public VolatileAccessEvent setObjectHashCode(long objectHashCode) {
+
+    public void setObjectHashCode(long objectHashCode) {
         this.objectHashCode = objectHashCode;
-        return this;
     }
 
-    @Override
-    public void send(SendEventContext context) {
-        context.threadLocalWrapper().offer(this);
-    }
-
-    // Currently not used
-    VolatileAccessEvent setSlidingWindowId(int slidingWindowId) {
+    public void setSlidingWindowId(int slidingWindowId) {
         this.slidingWindowId = slidingWindowId;
-        return this;
     }
 
-    // For Test
-    VolatileAccessEvent setProgramCounter(int programCounter) {
+    public void setProgramCounter(int programCounter) {
         this.programCounter = programCounter;
-        return this;
     }
-    VolatileAccessEvent setMethodCounter(int methodCounter) {
+
+    public void setMethodCounter(int methodCounter) {
         this.methodCounter = methodCounter;
-        return this;
     }
-    VolatileAccessEvent setLoopId(int loopId) {
+
+    public void setLoopId(int loopId) {
         this.loopId = loopId;
-        return this;
     }
-    VolatileAccessEvent setRunId(int runId) {
+
+    public void setRunId(int runId) {
         this.runId = runId;
-        return this;
     }
-    VolatileAccessEvent setRunPosition(int runPosition) {
+
+    public void setRunPosition(int runPosition) {
         this.runPosition = runPosition;
-        return this;
     }
 
     public int slidingWindowId() {
@@ -126,5 +104,11 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
     public int runPosition() {
         return runPosition;
     }
+
+    @Override
+    public void accept(RuntimeEventVisitor visitor) {
+        visitor.visit(this);
+    }
+
 
 }

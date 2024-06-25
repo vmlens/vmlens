@@ -1,21 +1,21 @@
 package com.vmlens.trace.agent.bootstrap.testfixture;
 
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 
 import java.util.List;
 
 public class QueueInMock implements QueueIn {
 
-    private final List<StaticEvent> eventList;
+    private final List<SerializableEvent> eventList;
 
-    public QueueInMock(List<StaticEvent> eventList) {
+    public QueueInMock(List<SerializableEvent> eventList) {
         this.eventList = eventList;
     }
 
     @Override
     public void offer(Object element) {
-        eventList.add((StaticEvent) element);
+        eventList.add((SerializableEvent) element);
     }
 
 }

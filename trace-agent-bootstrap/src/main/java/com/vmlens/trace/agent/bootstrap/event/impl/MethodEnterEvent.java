@@ -1,9 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodEnterEventGen;
-import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndCalculatedRunElementContainer;
 
 public class MethodEnterEvent extends MethodEnterEventGen implements RuntimeEvent {
 
@@ -70,22 +67,8 @@ public class MethodEnterEvent extends MethodEnterEventGen implements RuntimeEven
         return runPosition;
     }
 
-    // Fixme
     @Override
-    public int threadIndex() {
-        return 0;
-    }
-
-    @Override
-    public void addToContainer(int positionInThread, BlockBuilderAndCalculatedRunElementContainer container) {
-
-    }
-
-    @Override
-    public void send(SendEventContext context) {
-        this.methodCounter = context.threadLocalWrapper().incrementAndGetMethodCount();
-        this.threadId = context.threadLocalWrapper().threadId();
-
-        context.threadLocalWrapper().offer(this);
+    public void accept(RuntimeEventVisitor visitor) {
+        // Fixme implement
     }
 }

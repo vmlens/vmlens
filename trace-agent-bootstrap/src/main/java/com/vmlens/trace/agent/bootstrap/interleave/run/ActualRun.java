@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.SendEventContext;
+import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -19,8 +18,8 @@ public class ActualRun {
 
     public void after(RuntimeEvent runtimeEvent,
                       ActualRunContext actualRunContext) {
-        after(runtimeEvent);
-        onEvent(runtimeEvent, actualRunContext.sendEventContext());
+
+        // Fixme, auch schnittstelle anpassen
     }
 
 
@@ -40,8 +39,5 @@ public class ActualRun {
         actualRunObserver.after(interleaveActionWithPositionFactory);
     }
 
-    void onEvent(RuntimeEvent event, SendEventContext sendEventContext) {
-        event.send(sendEventContext);
-    }
 
 }

@@ -3,7 +3,7 @@ package com.anarsoft.trace.agent.runtime.write;
 
 import com.anarsoft.trace.agent.runtime.process.AgentController;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
-import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 
 
@@ -51,8 +51,8 @@ public class WriteEventToFile implements Runnable {
                 if (in != null) {
                     if (in instanceof PoisonedEvent) {
                         process = false;
-                    } else if (in instanceof StaticEvent) {
-                        StaticEvent staticEvent = (StaticEvent) in;
+                    } else if (in instanceof SerializableEvent) {
+                        SerializableEvent staticEvent = (SerializableEvent) in;
                         staticEvent.serialize(streamRepository);
                     } else {
                         throw new RuntimeException("unknown " + in.getClass());

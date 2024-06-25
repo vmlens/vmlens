@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.runImpl;
 
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRunObserverNoOp;
@@ -21,11 +21,11 @@ public class RunStateMachineImplTestFixture {
     private final Run run;
     private final RunStateMachine runStateMachine;
     private final ThreadLocalDataWhenInTest mainTestThread;
-    private final List<StaticEvent> eventList;
+    private final List<SerializableEvent> eventList;
 
     private RunStateMachineImplTestFixture(QueueIn queueIn, Run run, RunStateMachine runStateMachine,
                                            ThreadLocalDataWhenInTest mainTestThread,
-                                           List<StaticEvent> eventList) {
+                                           List<SerializableEvent> eventList) {
         this.queueIn = queueIn;
         this.run = run;
         this.runStateMachine = runStateMachine;
@@ -57,7 +57,7 @@ public class RunStateMachineImplTestFixture {
     private static RunStateMachineImplTestFixture create(RunStateMachineTestFactory factory) {
         ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(1, 1);
         RunStateMachine runStateMachine = factory.create(runContext);
-        List<StaticEvent> eventList = new LinkedList<>();
+        List<SerializableEvent> eventList = new LinkedList<>();
         Run run = new RunTestAdapter(runStateMachine);
         QueueIn queueIn = new QueueInMock(eventList);
         ThreadLocalDataWhenInTest mainTestThread = runContext.create(run, queueIn, 1L);
@@ -73,7 +73,7 @@ public class RunStateMachineImplTestFixture {
         return mainTestThread;
     }
 
-    public List<StaticEvent> eventList() {
+    public List<SerializableEvent> eventList() {
         return eventList;
     }
 

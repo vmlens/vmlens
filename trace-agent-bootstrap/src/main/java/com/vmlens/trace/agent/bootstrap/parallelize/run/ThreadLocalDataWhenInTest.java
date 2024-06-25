@@ -3,9 +3,11 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 import com.vmlens.trace.agent.bootstrap.callback.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.StaticEvent;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.ThreadLocalWrapperForEvent;
+import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.action.ParallelizeActionForRuntimeEvent;
 
 /**
  * Set when the current thread is in a vmlens unit test
@@ -26,8 +28,11 @@ public class ThreadLocalDataWhenInTest extends PerThreadCounter implements Threa
         this.threadId = threadId;
     }
 
-    public void after(ParallelizeAction action) {
-        run.after(action, this);
+    // Can be null when the runtime event should not be serialized
+    public SerializableEvent after(RuntimeEvent runtimeEvent) {
+        run.after(new ParallelizeActionForRuntimeEvent(runtimeEvent), this);
+        // Fixme
+        return null;
     }
 
     // public for test
@@ -67,7 +72,7 @@ public class ThreadLocalDataWhenInTest extends PerThreadCounter implements Threa
     }
 
     @Override
-    public void offer(StaticEvent element) {
+    public void offer(SerializableEvent element) {
         queueIn.offer(element);
     }
 }

@@ -37,8 +37,9 @@ public class RunStateMachineImpl implements RunStateMachine {
         if (!currentState.isNewTestTask(newWrapper)) {
             return null;
         }
+        // Fixme remove queue in
         ThreadLocalDataWhenInTest threadLocalDataWhenInTest = runContext.create(
-                run, threadLocalForParallelize.queueIn(), threadLocalForParallelize.threadId());
+                run, null, threadLocalForParallelize.threadId());
         currentState.addTaskStartedInterleaveAction(threadLocalDataWhenInTest, actualRun);
         currentState = stateAfterNewThreadStarted;
         threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalDataWhenInTest);

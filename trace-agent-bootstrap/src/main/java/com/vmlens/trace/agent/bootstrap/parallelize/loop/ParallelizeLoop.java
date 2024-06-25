@@ -60,8 +60,9 @@ public class ParallelizeLoop {
                     ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(loopId, maxRunId);
                     currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createRunning(
                             runContext, calculatedReun, actualRun));
+                    // Fixme remove queue in
                     threadLocalForParallelize.setThreadLocalDataWhenInTest(
-                            runContext.create(currentRun, threadLocalForParallelize.queueIn(), threadLocalForParallelize.threadId()));
+                            runContext.create(currentRun, null, threadLocalForParallelize.threadId()));
                     maxRunId++;
                     return true;
                 }
@@ -71,8 +72,9 @@ public class ParallelizeLoop {
                 ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(loopId, maxRunId);
                 currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
                         runContext, actualRun));
+                // Fixme remove queue in
                 threadLocalForParallelize.setThreadLocalDataWhenInTest(
-                        runContext.create(currentRun, threadLocalForParallelize.queueIn(), threadLocalForParallelize.threadId()));
+                        runContext.create(currentRun, null, threadLocalForParallelize.threadId()));
                 maxRunId++;
                 return true;
             }

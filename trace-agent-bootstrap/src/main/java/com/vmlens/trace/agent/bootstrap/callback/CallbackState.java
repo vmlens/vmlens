@@ -1,10 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
 
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.impl.ParallelizeBridgeForCallback;
+import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEventFactory;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelizeProvider;
 
-public class CallbackState implements ThreadLocalForParallelizeProvider {
+public class CallbackState implements ParallelizeBridgeForCallback {
 
     public static final EventQueue eventQueue = new EventQueue();
 
@@ -12,13 +15,25 @@ public class CallbackState implements ThreadLocalForParallelizeProvider {
     public static final ThreadLocal<ThreadLocalForParallelize> callbackStatePerThread = new ThreadLocal<ThreadLocalForParallelize>() {
         @Override
         protected ThreadLocalForParallelize initialValue() {
-            return new ThreadLocalForParallelize(Thread.currentThread().getId(), eventQueue);
+            return new ThreadLocalForParallelize(Thread.currentThread().getId());
         }
     };
 
 
     @Override
-    public ThreadLocalForParallelize getThreadLocalForParallelize() {
-        return callbackStatePerThread.get();
+    public void processRuntimeEventFactory(RuntimeEventFactory runtimeEventFactory) {
+        ThreadLocalForParallelize threadLocal = callbackStatePerThread.get();
+        ThreadLocalDataWhenInTest dataWhenInTest = threadLocal.startCallbackProcessing();
+        if (dataWhenInTest != null) {
+            try {
+                SerializableEvent serializableEvent = dataWhenInTest.after(runtimeEventFactory.create());
+                if (serializableEvent != null) {
+                    eventQueue.offer(serializableEvent);
+                }
+
+            } finally {
+                dataWhenInTest.stopCallbackProcessing();
+            }
+        }
     }
 }

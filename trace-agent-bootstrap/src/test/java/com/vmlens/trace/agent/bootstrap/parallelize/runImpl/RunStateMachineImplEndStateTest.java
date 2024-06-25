@@ -19,7 +19,7 @@ public class RunStateMachineImplEndStateTest {
         when(calculatedRunMock.isActive(anyInt())).thenReturn(false);
         RunStateMachineImplTestFixture fixture = RunStateMachineImplTestFixture.createRunning(calculatedRunMock);
 
-        ThreadLocalForParallelize mainThread = new ThreadLocalForParallelize(2L, fixture.queueIn());
+        ThreadLocalForParallelize mainThread = new ThreadLocalForParallelize(2L);
         mainThread.setThreadLocalDataWhenInTest(fixture.mainTestThread());
 
         // When

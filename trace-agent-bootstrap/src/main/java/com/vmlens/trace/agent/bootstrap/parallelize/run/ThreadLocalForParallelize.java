@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 import com.vmlens.trace.agent.bootstrap.callback.AnarsoftWeakHashMap;
-import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 
 public class ThreadLocalForParallelize {
 
@@ -9,14 +8,12 @@ public class ThreadLocalForParallelize {
     public static final String ANARSOFT_THREAD_NAME = "anarsoft";
 
     private final AnarsoftWeakHashMap<Object> arraysInThisThread = new AnarsoftWeakHashMap<Object>();
-    private final QueueIn queueIn;
     private final long threadId;
 
     private ThreadLocalDataWhenInTest parallelizedThreadLocal;
 
 
-    public ThreadLocalForParallelize(long threadId, QueueIn queueIn) {
-        this.queueIn = queueIn;
+    public ThreadLocalForParallelize(long threadId) {
         this.threadId = threadId;
     }
 
@@ -35,10 +32,6 @@ public class ThreadLocalForParallelize {
             return parallelizedThreadLocal.startCallbackProcessing();
         }
         return null;
-    }
-
-    public QueueIn queueIn() {
-        return queueIn;
     }
 
     public long threadId() {

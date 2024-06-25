@@ -3,14 +3,14 @@ package com.vmlens.trace.agent.bootstrap.event;
 import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
-public class ClassNameEvent implements StaticEvent  {
+public class ClassNameEvent implements SerializableEvent {
 
-	private final String name;
-	private final int id;
+    private final String name;
+    private final int id;
 
-	public ClassNameEvent(String name, int id) {
-		super();
-		this.name = name;
+    public ClassNameEvent(String name, int id) {
+        super();
+        this.name = name;
         this.id = id;
     }
 

@@ -3,12 +3,12 @@ package com.vmlens.trace.agent.bootstrap.event;
 import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
-public class AgentLogEvent implements StaticEvent  {
+public class AgentLogEvent implements SerializableEvent {
 
     private final String message;
 
-	public AgentLogEvent(String message) {
-		super();
+    public AgentLogEvent(String message) {
+        super();
         int maxLength = Math.min(6000, message.length());
         this.message = message.substring(0, maxLength);
     }

@@ -4,7 +4,7 @@ import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 
-public class StackTraceEvent implements StaticEvent   {
+public class StackTraceEvent implements SerializableEvent {
 
 
     public static final int MIN_LENGTH = 4;
