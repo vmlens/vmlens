@@ -1,13 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithSlidingWindow;
 
 import java.nio.ByteBuffer;
 
 public class MethodAtomicExitEventGen {
-    protected int slidingWindowId;
-    protected long threadId;
+
+    protected int threadIndex;
     protected int methodId;
     protected int methodCounter;
     protected byte hasCallback;
@@ -21,20 +20,20 @@ public class MethodAtomicExitEventGen {
         if (o == null || getClass() != o.getClass()) return false;
 
         MethodAtomicExitEventGen that = (MethodAtomicExitEventGen) o;
-        if (threadId != that.threadId) return false;
+        if (threadIndex != that.threadIndex) return false;
         if (methodId != that.methodId) return false;
         if (methodCounter != that.methodCounter) return false;
         if (hasCallback != that.hasCallback) return false;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
         if (runPosition != that.runPosition) return false;
-        return slidingWindowId == that.slidingWindowId;
+        return true;
     }
 
     @Override
     public String toString() {
         return "MethodAtomicExitEventGen{" +
-                "threadId=" + threadId +
+                "threadIndex=" + threadIndex +
                 "methodId=" + methodId +
                 "methodCounter=" + methodCounter +
                 "hasCallback=" + hasCallback +
@@ -44,17 +43,16 @@ public class MethodAtomicExitEventGen {
                 '}';
     }
 
-    public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.interleave);
-    }
 
-    public void serialize(StreamWrapperWithSlidingWindow streamWrapperWithSlidingWindow) throws Exception {
-        serialize(streamWrapperWithSlidingWindow.getByteBuffer(slidingWindowId, 30, EventConstants.MAX_ARRAY_SIZE * 1000));
+    public void serialize(StreamRepository streamRepository) throws Exception {
+        serialize(streamRepository.interleave.
+                getByteBuffer(26, EventConstants.MAX_ARRAY_SIZE * 1000));
+
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 21);
-        buffer.putLong(threadId);
+        buffer.putInt(threadIndex);
         buffer.putInt(methodId);
         buffer.putInt(methodCounter);
         buffer.put(hasCallback);

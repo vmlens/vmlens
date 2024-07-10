@@ -11,8 +11,7 @@ import java.nio.ByteBuffer;
 
 
 class MonitorEnterEventGen(
-                            val threadId: Long
-                            , val programCounter: Int
+                            val threadIndex: Int
                             , val order: Int
                             , val monitorId: Int
                             , val methodCounter: Int
@@ -24,13 +23,12 @@ class MonitorEnterEventGen(
                           ) extends MonitorEnterEvent {
   override def toString() = {
     var text = "MonitorEnterEventGen"
-    text = text + ", threadId:" + threadId
-    text = text + ", programCounter:" + programCounter
+    text = text + ", threadIndex:" + threadIndex
     text = text + ", order:" + order
     text = text + ", monitorId:" + monitorId
     text = text + ", methodCounter:" + methodCounter
     text = text + ", methodId:" + methodId
-    text = text + ", positionInRun:" + position
+    text = text + ", position:" + position
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
     text = text + ", runPosition:" + runPosition
@@ -40,10 +38,7 @@ class MonitorEnterEventGen(
   override def equals(other: Any) = {
     other match {
       case that: MonitorEnterEventGen => {
-        if (threadId != that.threadId) {
-          false;
-        }
-        else if (programCounter != that.programCounter) {
+        if (threadIndex != that.threadIndex) {
           false;
         }
         else if (order != that.order) {
@@ -83,8 +78,6 @@ object MonitorEnterEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new MonitorEnterEventGen(
 
-      data.getLong()
-      ,
       data.getInt()
       ,
       data.getInt()

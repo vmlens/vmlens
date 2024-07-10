@@ -1,19 +1,18 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.monitor.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.monitor._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class ThreadJoinedEventGen(
-                            val threadId: Long
+                            val threadIndex: Int
                             , val joinedThreadId: Long
-                            , val programCounter: Int
                             , val methodCounter: Int
                             , val loopId: Int
                             , val runId: Int
@@ -21,9 +20,8 @@ class ThreadJoinedEventGen(
                           ) extends ThreadJoinedEvent {
   override def toString() = {
     var text = "ThreadJoinedEventGen"
-    text = text + ", threadId:" + threadId
+    text = text + ", threadIndex:" + threadIndex
     text = text + ", joinedThreadId:" + joinedThreadId
-    text = text + ", programCounter:" + programCounter
     text = text + ", methodCounter:" + methodCounter
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
@@ -34,13 +32,10 @@ class ThreadJoinedEventGen(
   override def equals(other: Any) = {
     other match {
       case that: ThreadJoinedEventGen => {
-        if (threadId != that.threadId) {
+        if (threadIndex != that.threadIndex) {
           false;
         }
         else if (joinedThreadId != that.joinedThreadId) {
-          false;
-        }
-        else if (programCounter != that.programCounter) {
           false;
         }
         else if (methodCounter != that.methodCounter) {
@@ -68,11 +63,9 @@ object ThreadJoinedEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new ThreadJoinedEventGen(
 
-      data.getLong()
-      ,
-      data.getLong()
-      ,
       data.getInt()
+      ,
+      data.getLong()
       ,
       data.getInt()
       ,

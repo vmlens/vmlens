@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.OrderArrays;
 import gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 public class OrderArraysBuilder {

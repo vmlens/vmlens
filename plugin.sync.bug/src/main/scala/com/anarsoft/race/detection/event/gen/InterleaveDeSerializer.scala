@@ -10,7 +10,12 @@ import com.anarsoft.race.detection.event.syncAction.*
 
 import java.nio.ByteBuffer;
 
-class InterleaveDeserializer extends DeserializeStrategy[LoadedInterleaveEvent] {
+class InterleaveDeSerializer extends LoadStrategy[LoadedInterleaveEvent] {
+  val blockSize = 26 * 10000;
+
+  def eventArraySize() = 26
+
+
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedInterleaveEvent = {
     val id = buffer.get();
 
@@ -43,4 +48,5 @@ class InterleaveDeserializer extends DeserializeStrategy[LoadedInterleaveEvent] 
     }
     throw new RuntimeException("id " + id + " could not be deserialized");
   }
+
 }

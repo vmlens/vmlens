@@ -8,13 +8,12 @@ import com.vmlens.trace.agent.bootstrap.event.gen.VolatileAccessEventGen;
 
 public class VolatileAccessEvent extends VolatileAccessEventGen implements RuntimeEvent {
 
-    public void setThreadId(long threadId) {
-        this.threadId = threadId;
+    public void setThreadIndex(int threadIndex) {
+        this.threadIndex = threadIndex;
     }
 
-    public VolatileAccessEvent setOrder(int order) {
+    public void setOrder(int order) {
         this.order = order;
-        return this;
     }
 
     public void setFieldId(int fieldId) {
@@ -33,14 +32,6 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
         this.objectHashCode = objectHashCode;
     }
 
-    public void setSlidingWindowId(int slidingWindowId) {
-        this.slidingWindowId = slidingWindowId;
-    }
-
-    public void setProgramCounter(int programCounter) {
-        this.programCounter = programCounter;
-    }
-
     public void setMethodCounter(int methodCounter) {
         this.methodCounter = methodCounter;
     }
@@ -57,16 +48,8 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
         this.runPosition = runPosition;
     }
 
-    public int slidingWindowId() {
-        return slidingWindowId;
-    }
-
-    public long threadId() {
-        return threadId;
-    }
-
-    public int programCounter() {
-        return programCounter;
+    public int threadIndex() {
+        return threadIndex;
     }
 
     public int order() {

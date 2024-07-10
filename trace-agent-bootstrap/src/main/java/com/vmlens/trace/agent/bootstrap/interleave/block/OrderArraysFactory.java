@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.OrderArrays;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -12,13 +13,13 @@ import java.util.Iterator;
 public class OrderArraysFactory {
     public OrderArrays create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
                               ThreadIndexToMaxPosition threadIndexToMaxPosition) {
-        BlockContainer blockMap =
-                new BlockContainerFactory().create(blockBuilderList);
+        MapOfBlocks blockMap =
+                new MapOfBlocksExceptDeadlockFactory().create(blockBuilderList);
         return create(blockMap, threadIndexToMaxPosition);
     }
 
     // Visible for Test
-    OrderArrays create(BlockContainer blockMap, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
+    OrderArrays create(MapOfBlocks blockMap, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         OrderArraysBuilder builder = new OrderArraysBuilder();
         for (ThreadIndexToElementList<DependentBlock> threadIndexToElementList : blockMap.dependentBlocks()) {
             for (TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>> oneThread : threadIndexToElementList) {
@@ -29,14 +30,14 @@ public class OrderArraysFactory {
                         TLinkedList<TLinkableWrapper<DependentBlock>> otherThread = otherThreadBlocks.next().element;
                         // ToDo we should probably stop when more than n elements were created
                         for (TLinkableWrapper<DependentBlock> otherBlock : otherThread) {
-                            current.element.addToAlternatingOrderContainerBuilder(otherBlock.element, builder);
+                            current.element.addAlternatingOrder(otherBlock.element, builder);
                         }
                     }
                 }
             }
         }
         for (TLinkableWrapper<ElementAndPosition<InDependentBlock>> independent : blockMap.inDependentBlocks()) {
-            independent.element.element().addToAlternatingOrderContainerBuilder(independent.element.position(), builder, threadIndexToMaxPosition);
+            independent.element.element().addFixedOrder(independent.element.position(), builder, threadIndexToMaxPosition);
         }
         return builder.build();
     }

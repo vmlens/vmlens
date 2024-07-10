@@ -1,17 +1,17 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.monitor.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.monitor._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class MethodCallbackExitEventGen(
-                                  val threadId: Long
+                                  val threadIndex: Int
                                   , val methodCounter: Int
                                   , val loopId: Int
                                   , val runId: Int
@@ -19,7 +19,7 @@ class MethodCallbackExitEventGen(
                                 ) extends MethodCallbackExitEvent {
   override def toString() = {
     var text = "MethodCallbackExitEventGen"
-    text = text + ", threadId:" + threadId
+    text = text + ", threadIndex:" + threadIndex
     text = text + ", methodCounter:" + methodCounter
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
@@ -30,7 +30,7 @@ class MethodCallbackExitEventGen(
   override def equals(other: Any) = {
     other match {
       case that: MethodCallbackExitEventGen => {
-        if (threadId != that.threadId) {
+        if (threadIndex != that.threadIndex) {
           false;
         }
         else if (methodCounter != that.methodCounter) {
@@ -58,7 +58,7 @@ object MethodCallbackExitEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new MethodCallbackExitEventGen(
 
-      data.getLong()
+      data.getInt()
       ,
       data.getInt()
       ,

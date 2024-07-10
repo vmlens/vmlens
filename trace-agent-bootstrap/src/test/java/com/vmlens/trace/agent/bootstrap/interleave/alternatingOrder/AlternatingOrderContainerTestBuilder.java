@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArrays;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 
 import java.util.LinkedList;

@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArrays;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 
 import java.util.Iterator;
@@ -15,7 +14,6 @@ import java.util.Iterator;
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
     private final ThreadIndexToElementList<Position> actualRun;
-
     private final OrderArrays orderArrays;
     public AlternatingOrderContainer(OrderArrays orderArrays, ThreadIndexToElementList<Position> actualRun) {
         this.orderArrays = orderArrays;
@@ -62,7 +60,6 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
             Iterator<CalculatedRun> {
 
         private final LeftBeforeRight[] currentOrder;
-
         private final PermutationIterator permutationIterator;
 
         public AlternatingOrderContainerIterator() {
@@ -86,7 +83,6 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
                         orderArrays.fixedOrderArray[i];
             }
             permutationIterator.advance();
-
             return new CreateCalculatedRun(currentOrder, actualRun).create();
         }
 

@@ -7,12 +7,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.*;
-import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
@@ -35,10 +30,8 @@ public class ResultTestBuilder {
     public static final long VOLATILE_FIELD_EVENT_OBJECT_HASH_CODE = 33L;
 
 
-    private final ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(1, 1);
-    private final ThreadIndexToElementList<InterleaveActionWithPositionFactory> threadIndexToFactoryList = new ThreadIndexToElementList<>();
-    private TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> factoryList =
-            new TLinkedList<>();
+    private final ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
+
     private final TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList =
             new TLinkedList<>();
     private final List<ParallelizeActionAndThreadLocalWrapper> parallelizeActionAndThreadLocalWrapperList = new
@@ -60,14 +53,14 @@ public class ResultTestBuilder {
 
     private static ThreadLocalForParallelize threadLocalWrapper(int threadIndex, long threadId, Run run) {
         ThreadLocalForParallelize threadLocalWrapperMock = new ThreadLocalForParallelize(1L);
-        threadLocalWrapperMock.setThreadLocalDataWhenInTest(new ThreadLocalDataWhenInTest(run, threadIndex, null, threadId));
+        threadLocalWrapperMock.setThreadLocalDataWhenInTest(new ThreadLocalDataWhenInTest(run, threadIndex));
         return threadLocalWrapperMock;
     }
 
 
     public void volatileAccess(int fieldId, int operation, Position position) {
         VolatileAccessEvent actual = new VolatileAccessEvent();
-        actual.setThreadId(1L);
+        actual.setThreadIndex(1);
         actual.setFieldId(fieldId);
         actual.setOperation(operation);
         actual.setOrder(VOLATILE_FIELD_EVENT_ORDER);
@@ -75,7 +68,7 @@ public class ResultTestBuilder {
         actual.setMethodId(VOLATILE_FIELD_EVENT_METHOD_ID);
 
         VolatileAccessEvent expected = new VolatileAccessEvent();
-        expected.setThreadId(1L);
+        expected.setThreadIndex(1);
         expected.setFieldId(fieldId);
         expected.setOperation(operation);
         expected.setOrder(VOLATILE_FIELD_EVENT_ORDER);
@@ -89,70 +82,7 @@ public class ResultTestBuilder {
 
     }
 
-    public void monitorEnter(int id, Position temp) {
-        add(new LockOrMonitorEnterImpl(new Monitor(id)), temp);
-    }
 
-    public void monitorExit(int id, Position temp) {
-        add(new LockOrMonitorExit(new Monitor(id)), temp);
-    }
-
-
-    public void startThread(int index, Position position) {
-        add(new ThreadStartFactory(position.threadIndex, index), position);
-        blockBuilderList.add(new TLinkableWrapper<ElementAndPosition<BlockBuilder>>
-                (new ElementAndPosition(new ThreadStart(index), position)));
-    }
-
-    public void joinThread(int index, Position position) {
-        add(new ThreadJoinFactory(position.threadIndex, index), position);
-        blockBuilderList.add(new TLinkableWrapper<ElementAndPosition<BlockBuilder>>
-                (new ElementAndPosition(new ThreadJoin(index), position)));
-    }
-
-    public ThreadIndexToElementList<Position> positions() {
-        return positions;
-    }
-
-    public TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> factoryList() {
-        return factoryList;
-    }
-
-    public ThreadIndexToElementList<InterleaveActionWithPositionFactory> threadIndexToFactoryList() {
-        return threadIndexToFactoryList;
-    }
-
-    public TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList() {
-        return blockBuilderList;
-    }
-
-    public List<ParallelizeActionAndThreadLocalWrapper> parallelizeActionAndThreadLocalWrapperList() {
-        return parallelizeActionAndThreadLocalWrapperList;
-    }
-
-    public ParallelizeFacade parallelizeFacade() {
-        return parallelizeFacade;
-    }
-
-
-
-    private void add(ParallelizeAction parallelizeAction, Position position) {
-        parallelizeActionAndThreadLocalWrapperList.add(
-                new ParallelizeActionAndThreadLocalWrapper(parallelizeAction,
-                        threadIndexToThreadLocalWrapperMock.get(position.threadIndex())));
-    }
-
-    private void add(InterleaveActionWithPositionFactory interleaveActionWithPositionFactory, Position position) {
-        factoryList.add(new TLinkableWrapper<>(interleaveActionWithPositionFactory));
-        threadIndexToFactoryList.add(interleaveActionWithPositionFactory);
-        positions.add(position);
-    }
-
-    private void add(InterleaveAction interleaveAction, Position position) {
-        add(new InterleaveActionWithPositionFactoryImpl(interleaveAction, position.threadIndex), position);
-        blockBuilderList.add(new TLinkableWrapper<ElementAndPosition<BlockBuilder>>
-                (new ElementAndPosition(interleaveAction, position)));
-    }
 
     public List<SerializableEvent> givenEvents() {
         return givenEvents;

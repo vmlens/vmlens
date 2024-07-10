@@ -1,13 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithSlidingWindow;
 
 import java.nio.ByteBuffer;
 
 public class MethodExitEventGen {
-    protected int slidingWindowId;
-    protected long threadId;
+
+    protected int threadIndex;
     protected int methodId;
     protected int methodCounter;
     protected int loopId;
@@ -20,19 +19,19 @@ public class MethodExitEventGen {
         if (o == null || getClass() != o.getClass()) return false;
 
         MethodExitEventGen that = (MethodExitEventGen) o;
-        if (threadId != that.threadId) return false;
+        if (threadIndex != that.threadIndex) return false;
         if (methodId != that.methodId) return false;
         if (methodCounter != that.methodCounter) return false;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
         if (runPosition != that.runPosition) return false;
-        return slidingWindowId == that.slidingWindowId;
+        return true;
     }
 
     @Override
     public String toString() {
         return "MethodExitEventGen{" +
-                "threadId=" + threadId +
+                "threadIndex=" + threadIndex +
                 "methodId=" + methodId +
                 "methodCounter=" + methodCounter +
                 "loopId=" + loopId +
@@ -41,17 +40,16 @@ public class MethodExitEventGen {
                 '}';
     }
 
-    public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.method);
-    }
 
-    public void serialize(StreamWrapperWithSlidingWindow streamWrapperWithSlidingWindow) throws Exception {
-        serialize(streamWrapperWithSlidingWindow.getByteBuffer(slidingWindowId, 29, EventConstants.MAX_ARRAY_SIZE * 1000));
+    public void serialize(StreamRepository streamRepository) throws Exception {
+        serialize(streamRepository.method.
+                getByteBuffer(25, EventConstants.MAX_ARRAY_SIZE * 1000));
+
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 17);
-        buffer.putLong(threadId);
+        buffer.putInt(threadIndex);
         buffer.putInt(methodId);
         buffer.putInt(methodCounter);
         buffer.putInt(loopId);

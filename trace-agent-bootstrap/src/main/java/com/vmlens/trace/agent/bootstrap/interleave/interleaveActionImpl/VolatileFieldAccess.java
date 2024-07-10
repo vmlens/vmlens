@@ -3,20 +3,21 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.block.BlockContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlockElement;
+import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class VolatileFieldAccess implements InterleaveAction, DependentBlockElement {
     private static final int MIN_OPERATION = 3;
     private final int fieldId;
     private final int operation;
+    private final int threadIndex;
 
-    public VolatileFieldAccess(int fieldId, int operation) {
+    public VolatileFieldAccess(int fieldId, int operation, int threadIndex) {
         this.fieldId = fieldId;
         this.operation = operation;
+        this.threadIndex = threadIndex;
     }
 
     @Override
@@ -25,7 +26,7 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
     }
 
     @Override
-    public void blockBuilderAdd(Position myPosition, BlockContainer result) {
+    public void blockBuilderAdd(Position myPosition, MapOfBlocks result) {
         DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<DependentBlockElement>(this, myPosition),
                 new ElementAndPosition<DependentBlockElement>(this, myPosition));
         result.addDependent(new VolatileFieldAccessKey(fieldId), dependentBlock);
@@ -45,13 +46,15 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
         VolatileFieldAccess that = (VolatileFieldAccess) o;
 
         if (fieldId != that.fieldId) return false;
-        return operation == that.operation;
+        if (operation != that.operation) return false;
+        return threadIndex == that.threadIndex;
     }
 
     @Override
     public int hashCode() {
         int result = fieldId;
         result = 31 * result + operation;
+        result = 31 * result + threadIndex;
         return result;
     }
 

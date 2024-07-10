@@ -57,24 +57,22 @@ public class ParallelizeLoop {
                 if (interleaveLoopIterator.hasNext()) {
                     CalculatedRun calculatedReun = interleaveLoopIterator.next();
                     ActualRun actualRun = new ActualRun(new ActualRunObserverForCalculatedRun(calculatedReun));
-                    ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(loopId, maxRunId);
+                    ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
                     currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createRunning(
-                            runContext, calculatedReun, actualRun));
-                    // Fixme remove queue in
+                            runContext, calculatedReun, actualRun), loopId, maxRunId);
                     threadLocalForParallelize.setThreadLocalDataWhenInTest(
-                            runContext.create(currentRun, null, threadLocalForParallelize.threadId()));
+                            runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
                     maxRunId++;
                     return true;
                 }
                 return false;
             } else {
                 ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
-                ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(loopId, maxRunId);
+                ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
                 currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
-                        runContext, actualRun));
-                // Fixme remove queue in
+                        runContext, actualRun), loopId, maxRunId);
                 threadLocalForParallelize.setThreadLocalDataWhenInTest(
-                        runContext.create(currentRun, null, threadLocalForParallelize.threadId()));
+                        runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
                 maxRunId++;
                 return true;
             }

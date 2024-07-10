@@ -14,7 +14,7 @@ public class BlockBuilderAndCalculatedRunElementContainer {
     public BlockBuilderAndCalculatedRunElementContainer() {
     }
 
-    public void add(ElementAndPosition<InterleaveAction> withPosition) {
+    public void add(ElementAndPosition<BlockBuilder> withPosition) {
         run.add(withPosition.position());
         runWithPosition.add(new TLinkableWrapper(new ElementAndPosition(withPosition.element(), withPosition.position())));
     }

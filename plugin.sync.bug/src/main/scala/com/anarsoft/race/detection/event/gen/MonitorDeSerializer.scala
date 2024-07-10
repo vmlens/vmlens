@@ -10,7 +10,12 @@ import com.anarsoft.race.detection.event.syncAction.*
 
 import java.nio.ByteBuffer;
 
-class MonitorDeserializer extends DeserializeStrategy[LoadedMonitorEvent] {
+class MonitorDeSerializer extends LoadStrategy[LoadedMonitorEvent] {
+  val blockSize = 37 * 10000;
+
+  def eventArraySize() = 37
+
+
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedMonitorEvent = {
     val id = buffer.get();
 
@@ -22,4 +27,5 @@ class MonitorDeserializer extends DeserializeStrategy[LoadedMonitorEvent] {
     }
     throw new RuntimeException("id " + id + " could not be deserialized");
   }
+
 }

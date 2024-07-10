@@ -2,9 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.ThreadLocalWrapperForEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.action.ParallelizeActionForRuntimeEvent;
@@ -13,45 +11,26 @@ import com.vmlens.trace.agent.bootstrap.parallelize.action.ParallelizeActionForR
  * Set when the current thread is in a vmlens unit test
  */
 
-public class ThreadLocalDataWhenInTest extends PerThreadCounter implements ThreadLocalWrapperForEvent {
+public class ThreadLocalDataWhenInTest extends PerThreadCounter {
     private final Run run;
     private final int threadIndex;
-    private final QueueIn queueIn;
-    private final long threadId;
+
     private boolean inCallbackProcessing = false;
     private RunnableOrThreadWrapper createdThread;
 
-    public ThreadLocalDataWhenInTest(Run run, int threadIndex, QueueIn queueIn, long threadId) {
+    public ThreadLocalDataWhenInTest(Run run, int threadIndex) {
         this.run = run;
         this.threadIndex = threadIndex;
-        this.queueIn = queueIn;
-        this.threadId = threadId;
     }
 
     // Can be null when the runtime event should not be serialized
-    public SerializableEvent after(RuntimeEvent runtimeEvent) {
-        run.after(new ParallelizeActionForRuntimeEvent(runtimeEvent), this);
-        // Fixme
-        return null;
-    }
-
-    // public for test
-    public int threadIndex() {
-        return threadIndex;
-    }
-
-    // visible for test
-    public Run getRun() {
-        return run;
-    }
-
-
-    public RunnableOrThreadWrapper createdThread() {
-        return createdThread;
-    }
-
-    public void setCreatedThread(RunnableOrThreadWrapper createdThread) {
-        this.createdThread = createdThread;
+    public SerializableEvent after(RuntimeEvent runtimeEventIn) {
+        runtimeEventIn.setThreadIndex(threadIndex);
+        RuntimeEvent result = run.after(new ParallelizeActionForRuntimeEvent(runtimeEventIn), this);
+        if (result != null) {
+            result.setMethodCounter(incrementAndGetMethodCount());
+        }
+        return result;
     }
 
     public ThreadLocalDataWhenInTest startCallbackProcessing() {
@@ -66,13 +45,15 @@ public class ThreadLocalDataWhenInTest extends PerThreadCounter implements Threa
         inCallbackProcessing = false;
     }
 
-    @Override
-    public long threadId() {
-        return threadId;
+
+    // public for test
+    public int threadIndex() {
+        return threadIndex;
     }
 
-    @Override
-    public void offer(SerializableEvent element) {
-        queueIn.offer(element);
+    // visible for test
+    public Run getRun() {
+        return run;
     }
+
 }

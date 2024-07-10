@@ -11,11 +11,13 @@ import gnu.trove.list.linked.TLinkedList;
 
 public class AlternatingOrderContainerFactory {
 
-    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> actualRun) {
+    /*
+    Fixme
+    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<InterleaveFactory>> actualRun) {
         BlockBuilderAndCalculatedRunElementContainer container = new BlockBuilderAndCalculatedRunElementContainerFactory().create(actualRun);
         return create(container.runWithPosition, container.run);
     }
-
+*/
 
     public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
                                             ThreadIndexToElementList<Position> run) {

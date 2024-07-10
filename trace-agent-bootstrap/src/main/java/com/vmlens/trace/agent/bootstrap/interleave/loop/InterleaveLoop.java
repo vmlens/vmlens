@@ -3,11 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.loop;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.AlternatingOrderContainerFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndCalculatedRunElementContainer;
-import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndCalculatedRunElementContainerFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.set.hash.THashSet;
@@ -43,12 +39,14 @@ public class InterleaveLoop implements IteratorQueue {
     }
 
     public void addActualRun(ActualRun actualRun) {
-        actualRun.debug(agentLogger);
-        addActualRun(actualRun.run());
+        // Fixme
+        // addActualRun(actualRun.run());
     }
 
+
     // Visible for Test
-    void addActualRun(TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>> run) {
+    /*
+    void addActualRun(TLinkedList<TLinkableWrapper<InterleaveFactory>> run) {
         AlternatingOrderContainer container = new AlternatingOrderContainerFactory().create(run);
         container.debug(agentLogger);
         if (!allAlternatingOrderContainer.contains(container)) {
@@ -57,5 +55,5 @@ public class InterleaveLoop implements IteratorQueue {
                     .add(new TLinkableWrapper<>(container));
         }
     }
-
+*/
 }

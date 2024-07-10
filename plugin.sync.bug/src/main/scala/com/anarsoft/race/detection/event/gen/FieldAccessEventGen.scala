@@ -1,25 +1,24 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.monitor.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.monitor._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class FieldAccessEventGen(
-                           val threadId: Long
-                           , val programCounter: Int
+                           val threadIndex: Int
                            , val fieldId: Int
                            , val methodCounter: Int
                            , val operation: Int
                            , val methodId: Int
                            , val stackTraceIncomplete: Boolean
+                           , var stackTraceOrdinal: Int
                            , val objectHashCode: Long
-                           , var slidingWindowId: Int
                            , val showSharedMemory: Boolean
                            , val loopId: Int
                            , val runId: Int
@@ -27,15 +26,14 @@ class FieldAccessEventGen(
                          ) extends NonVolatileFieldAccessEvent {
   override def toString() = {
     var text = "FieldAccessEventGen"
-    text = text + ", threadId:" + threadId
-    text = text + ", programCounter:" + programCounter
+    text = text + ", threadIndex:" + threadIndex
     text = text + ", fieldId:" + fieldId
     text = text + ", methodCounter:" + methodCounter
     text = text + ", operation:" + operation
     text = text + ", methodId:" + methodId
     text = text + ", stackTraceIncomplete:" + stackTraceIncomplete
+    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", objectHashCode:" + objectHashCode
-    text = text + ", slidingWindowId:" + slidingWindowId
     text = text + ", showSharedMemory:" + showSharedMemory
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
@@ -46,10 +44,7 @@ class FieldAccessEventGen(
   override def equals(other: Any) = {
     other match {
       case that: FieldAccessEventGen => {
-        if (threadId != that.threadId) {
-          false;
-        }
-        else if (programCounter != that.programCounter) {
+        if (threadIndex != that.threadIndex) {
           false;
         }
         else if (fieldId != that.fieldId) {
@@ -67,10 +62,10 @@ class FieldAccessEventGen(
         else if (stackTraceIncomplete != that.stackTraceIncomplete) {
           false;
         }
-        else if (objectHashCode != that.objectHashCode) {
+        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
-        else if (slidingWindowId != that.slidingWindowId) {
+        else if (objectHashCode != that.objectHashCode) {
           false;
         }
         else if (showSharedMemory != that.showSharedMemory) {
@@ -98,8 +93,6 @@ object FieldAccessEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new FieldAccessEventGen(
 
-      data.getLong()
-      ,
       data.getInt()
       ,
       data.getInt()
@@ -116,9 +109,9 @@ object FieldAccessEventGen {
         false
       }
       ,
-      data.getLong()
-      ,
       0
+      ,
+      data.getLong()
       ,
       if (data.get() == 1.asInstanceOf[Byte]) {
         true

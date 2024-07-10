@@ -1,29 +1,29 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.action;
 
 
+import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.impl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 
 public class ParallelizeActionForThreadStart implements ParallelizeAction {
 
     private final RunnableOrThreadWrapper startedThread;
+    private final int threadIndex;
 
-    public ParallelizeActionForThreadStart(RunnableOrThreadWrapper startedThread) {
+    public ParallelizeActionForThreadStart(RunnableOrThreadWrapper startedThread, int threadIndex) {
         this.startedThread = startedThread;
+        this.threadIndex = threadIndex;
     }
+
 
     @Override
-    public RunState nextState(ActionContext context, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
-        return context.threadStarted(startedThread, threadLocalDataWhenInTest);
+    public RunStateAndRuntimeEvent execute(ActionContext context) {
+        ThreadStartEvent threadStartEvent = new ThreadStartEvent();
+        threadStartEvent.setThreadIndex(threadIndex);
+        int startedIndex = context.getThreadIndexForNewTestThread();
+        threadStartEvent.setStartedThreadId(startedIndex);
+
+        return new RunStateAndRuntimeEvent(context.threadStarted(startedThread, startedIndex), threadStartEvent);
     }
-
-    @Override
-    public void addInterleaveActionAndOrEvent(ActionContext context, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
-        // Nothing to do. After gets called inside RunStateNewThreadStarted
-    }
-
-
 }

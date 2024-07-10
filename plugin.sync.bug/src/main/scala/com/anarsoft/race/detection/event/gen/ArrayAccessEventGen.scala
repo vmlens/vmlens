@@ -11,17 +11,16 @@ import java.nio.ByteBuffer;
 
 
 class ArrayAccessEventGen(
-                           val threadId: Long
-                           , val programCounter: Int
+                           val threadIndex: Int
                            , val fieldId: Int
                            , val methodCounter: Int
                            , val operation: Int
                            , val methodId: Int
                            , val stackTraceIncomplete: Boolean
+                           , var stackTraceOrdinal: Int
                            , val objectHashCode: Long
                            , val position: Int
                            , val classId: Int
-                           , var slidingWindowId: Int
                            , val showSharedMemory: Boolean
                            , val loopId: Int
                            , val runId: Int
@@ -29,17 +28,16 @@ class ArrayAccessEventGen(
                          ) extends ArrayAccessEvent {
   override def toString() = {
     var text = "ArrayAccessEventGen"
-    text = text + ", threadId:" + threadId
-    text = text + ", programCounter:" + programCounter
+    text = text + ", threadIndex:" + threadIndex
     text = text + ", fieldId:" + fieldId
     text = text + ", methodCounter:" + methodCounter
     text = text + ", operation:" + operation
     text = text + ", methodId:" + methodId
     text = text + ", stackTraceIncomplete:" + stackTraceIncomplete
+    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", objectHashCode:" + objectHashCode
-    text = text + ", positionInRun:" + position
+    text = text + ", position:" + position
     text = text + ", classId:" + classId
-    text = text + ", slidingWindowId:" + slidingWindowId
     text = text + ", showSharedMemory:" + showSharedMemory
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
@@ -50,10 +48,7 @@ class ArrayAccessEventGen(
   override def equals(other: Any) = {
     other match {
       case that: ArrayAccessEventGen => {
-        if (threadId != that.threadId) {
-          false;
-        }
-        else if (programCounter != that.programCounter) {
+        if (threadIndex != that.threadIndex) {
           false;
         }
         else if (fieldId != that.fieldId) {
@@ -71,6 +66,9 @@ class ArrayAccessEventGen(
         else if (stackTraceIncomplete != that.stackTraceIncomplete) {
           false;
         }
+        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
+          false;
+        }
         else if (objectHashCode != that.objectHashCode) {
           false;
         }
@@ -78,9 +76,6 @@ class ArrayAccessEventGen(
           false;
         }
         else if (classId != that.classId) {
-          false;
-        }
-        else if (slidingWindowId != that.slidingWindowId) {
           false;
         }
         else if (showSharedMemory != that.showSharedMemory) {
@@ -108,8 +103,6 @@ object ArrayAccessEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new ArrayAccessEventGen(
 
-      data.getLong()
-      ,
       data.getInt()
       ,
       data.getInt()
@@ -126,13 +119,13 @@ object ArrayAccessEventGen {
         false
       }
       ,
+      0
+      ,
       data.getLong()
       ,
       data.getInt()
       ,
       data.getInt()
-      ,
-      0
       ,
       if (data.get() == 1.asInstanceOf[Byte]) {
         true

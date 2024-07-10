@@ -26,8 +26,8 @@ public class DependentBlock implements WithThreadIndex {
         return start.threadIndex();
     }
 
-    public void addToAlternatingOrderContainerBuilder(DependentBlock blockFromOtherThread,
-                                                      OrderArraysBuilder orderArraysBuilder) {
+    public void addAlternatingOrder(DependentBlock blockFromOtherThread,
+                                    OrderArraysBuilder orderArraysBuilder) {
         if (end.element().startsAlternatingOrder(blockFromOtherThread.start.element())) {
             orderArraysBuilder.addAlternatingOrder(new AlternatingOrderElement(
                     new LeftBeforeRight(end.position(), blockFromOtherThread.start.position()),

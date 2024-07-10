@@ -17,11 +17,11 @@ import static org.mockito.Mockito.mock;
 public class RunInitialTestFactory {
 
     public Run create(int loopId, int runId) {
-        ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap(loopId, runId);
+        ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
         WaitNotifyStrategy waitNotifyStrategyMock = mock(WaitNotifyStrategy.class);
         RunStateMachine runStateMachine = new RunStateMachineFactoryImpl()
                 .createInitial(runContext, new ActualRun(new ActualRunObserverNoOp()));
 
-        return new RunImpl(new ReentrantLock(), waitNotifyStrategyMock, runStateMachine);
+        return new RunImpl(new ReentrantLock(), waitNotifyStrategyMock, runStateMachine, loopId, runId);
     }
 }

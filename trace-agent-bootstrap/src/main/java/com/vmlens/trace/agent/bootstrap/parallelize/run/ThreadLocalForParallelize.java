@@ -6,10 +6,8 @@ public class ThreadLocalForParallelize {
 
 
     public static final String ANARSOFT_THREAD_NAME = "anarsoft";
-
-    private final AnarsoftWeakHashMap<Object> arraysInThisThread = new AnarsoftWeakHashMap<Object>();
     private final long threadId;
-
+    private final AnarsoftWeakHashMap<Object> arraysInThisThread = new AnarsoftWeakHashMap<Object>();
     private ThreadLocalDataWhenInTest parallelizedThreadLocal;
 
 
@@ -34,14 +32,12 @@ public class ThreadLocalForParallelize {
         return null;
     }
 
-    public long threadId() {
-        return threadId;
-    }
-
 
     public void setParallelizedThreadLocalToNull() {
         this.parallelizedThreadLocal = null;
     }
 
-
+    public long threadId() {
+        return threadId;
+    }
 }

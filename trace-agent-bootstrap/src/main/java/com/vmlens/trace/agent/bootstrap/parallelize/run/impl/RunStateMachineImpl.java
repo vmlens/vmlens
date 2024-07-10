@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
+import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
@@ -26,9 +27,10 @@ public class RunStateMachineImpl implements RunStateMachine {
     }
 
     @Override
-    public void after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
-        currentState = currentState.after(action, threadLocalDataWhenInTest);
-
+    public RuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        RunStateAndRuntimeEvent result = currentState.after(action, threadLocalDataWhenInTest);
+        currentState = result.runState();
+        return result.runtimeEvent();
     }
 
     @Override
@@ -37,10 +39,8 @@ public class RunStateMachineImpl implements RunStateMachine {
         if (!currentState.isNewTestTask(newWrapper)) {
             return null;
         }
-        // Fixme remove queue in
-        ThreadLocalDataWhenInTest threadLocalDataWhenInTest = runContext.create(
-                run, null, threadLocalForParallelize.threadId());
-        currentState.addTaskStartedInterleaveAction(threadLocalDataWhenInTest, actualRun);
+        ThreadLocalDataWhenInTest threadLocalDataWhenInTest = runContext.createForStartedThread(
+                run, threadLocalForParallelize.threadId(), currentState.getStartedThreadIndex());
         currentState = stateAfterNewThreadStarted;
         threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalDataWhenInTest);
         return threadLocalDataWhenInTest;
@@ -48,7 +48,7 @@ public class RunStateMachineImpl implements RunStateMachine {
 
     @Override
     public void setStateRecording() {
-        currentState = new RunStateRecording(actualRun, runContext);
+        currentState = RunStateActive.createRecording(actualRun, runContext);
         stateAfterNewThreadStarted = currentState;
     }
 

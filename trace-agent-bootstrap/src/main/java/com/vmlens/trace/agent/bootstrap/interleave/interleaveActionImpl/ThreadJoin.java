@@ -3,7 +3,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.*;
+import com.vmlens.trace.agent.bootstrap.interleave.block.InDependentBlock;
+import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
+import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class ThreadJoin implements InterleaveAction, InDependentBlock {
@@ -21,12 +24,12 @@ public class ThreadJoin implements InterleaveAction, InDependentBlock {
     }
 
     @Override
-    public void blockBuilderAdd(Position myPosition, BlockContainer result) {
+    public void blockBuilderAdd(Position myPosition, MapOfBlocks result) {
         result.addInDependent(new ElementAndPosition<InDependentBlock>(this, myPosition));
     }
 
     @Override
-    public void addToAlternatingOrderContainerBuilder(Position myPosition, OrderArraysBuilder orderArraysBuilder, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
-        orderArraysBuilder.addFixedOrder(new LeftBeforeRight(new Position(joinedThreadIndex,threadIndexToMaxPosition.getPositionAtThreadIndex(joinedThreadIndex)),myPosition));
+    public void addFixedOrder(Position myPosition, OrderArraysBuilder orderArraysBuilder, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
+        orderArraysBuilder.addFixedOrder(new LeftBeforeRight(new Position(joinedThreadIndex, threadIndexToMaxPosition.getPositionAtThreadIndex(joinedThreadIndex)), myPosition));
     }
 }

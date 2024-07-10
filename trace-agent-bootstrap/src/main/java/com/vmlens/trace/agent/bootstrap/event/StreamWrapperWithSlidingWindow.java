@@ -3,7 +3,8 @@ package com.vmlens.trace.agent.bootstrap.event;
 
 import gnu.trove.list.linked.TLinkedList;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -52,8 +53,8 @@ public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper {
         }
     }
 
-    public ByteBuffer getByteBuffer(int slidingWindowId, int arraySize, int blocksize) throws Exception {
-        if (lastWrittenSlidingWindow != slidingWindowId) {
+    public ByteBuffer getByteBuffer(int arraySize, int blocksize) throws Exception {
+      /*  if (lastWrittenSlidingWindow != slidingWindowId) {
             if (mappedByteBuffer == null) {
                 fileChannel = (new RandomAccessFile(new File(eventDir + "/" + name + EVENT_FILE_POSTFIX), "rw")).getChannel();
                 mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, start, blocksize);
@@ -67,7 +68,8 @@ public class StreamWrapperWithSlidingWindow extends AbstractStreamWrapper {
         if ((mappedByteBuffer.position() + arraySize) >= blocksize) {
             start = start + mappedByteBuffer.position();
             mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, start, blocksize);
-        }
+        } */
+        // Fixme
         return mappedByteBuffer;
     }
 }

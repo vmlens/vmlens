@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateAndRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 
 /**
@@ -20,13 +20,14 @@ public class RunStateEnd implements RunState {
         return false;
     }
 
+
     @Override
-    public void addTaskStartedInterleaveAction(ThreadLocalDataWhenInTest threadLocalDataWhenInTest, ActualRun calculatedRun) {
-        throw new RuntimeException("should not be called");
+    public RunStateAndRuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        return new RunStateAndRuntimeEvent(this, null);
     }
 
     @Override
-    public RunState after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
-        return this;
+    public int getStartedThreadIndex() {
+        throw new RuntimeException("should not be called");
     }
 }

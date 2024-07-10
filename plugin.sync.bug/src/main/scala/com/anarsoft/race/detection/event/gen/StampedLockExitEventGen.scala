@@ -1,18 +1,17 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.monitor.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.monitor._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class StampedLockExitEventGen(
-                               val threadId: Long
-                               , val programCounter: Int
+                               val threadIndex: Int
                                , val order: Int
                                , val monitorId: Int
                                , val methodCounter: Int
@@ -25,8 +24,7 @@ class StampedLockExitEventGen(
                              ) extends StampedLockExit {
   override def toString() = {
     var text = "StampedLockExitEventGen"
-    text = text + ", threadId:" + threadId
-    text = text + ", programCounter:" + programCounter
+    text = text + ", threadIndex:" + threadIndex
     text = text + ", order:" + order
     text = text + ", monitorId:" + monitorId
     text = text + ", methodCounter:" + methodCounter
@@ -42,10 +40,7 @@ class StampedLockExitEventGen(
   override def equals(other: Any) = {
     other match {
       case that: StampedLockExitEventGen => {
-        if (threadId != that.threadId) {
-          false;
-        }
-        else if (programCounter != that.programCounter) {
+        if (threadIndex != that.threadIndex) {
           false;
         }
         else if (order != that.order) {
@@ -88,8 +83,6 @@ object StampedLockExitEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new StampedLockExitEventGen(
 
-      data.getLong()
-      ,
       data.getInt()
       ,
       data.getInt()

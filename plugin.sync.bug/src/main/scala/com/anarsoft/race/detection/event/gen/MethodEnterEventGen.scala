@@ -1,17 +1,17 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.monitor.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.monitor._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class MethodEnterEventGen(
-                           val threadId: Long
+                           val threadIndex: Int
                            , val methodId: Int
                            , val methodCounter: Int
                            , val loopId: Int
@@ -20,7 +20,7 @@ class MethodEnterEventGen(
                          ) extends MethodEnterEvent {
   override def toString() = {
     var text = "MethodEnterEventGen"
-    text = text + ", threadId:" + threadId
+    text = text + ", threadIndex:" + threadIndex
     text = text + ", methodId:" + methodId
     text = text + ", methodCounter:" + methodCounter
     text = text + ", loopId:" + loopId
@@ -32,7 +32,7 @@ class MethodEnterEventGen(
   override def equals(other: Any) = {
     other match {
       case that: MethodEnterEventGen => {
-        if (threadId != that.threadId) {
+        if (threadIndex != that.threadIndex) {
           false;
         }
         else if (methodId != that.methodId) {
@@ -63,7 +63,7 @@ object MethodEnterEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new MethodEnterEventGen(
 
-      data.getLong()
+      data.getInt()
       ,
       data.getInt()
       ,

@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
-public class Position implements Comparable<Position> , WithThreadIndex {
+public class Position implements Comparable<Position>, WithThreadIndex {
 
     public final int threadIndex;
     public final int positionInThread;
@@ -8,6 +8,10 @@ public class Position implements Comparable<Position> , WithThreadIndex {
     public Position(int threadIndex, int positionInThread) {
         this.threadIndex = threadIndex;
         this.positionInThread = positionInThread;
+    }
+
+    public static Position pos(int threadIndex, int positionInThread) {
+        return new Position(threadIndex, positionInThread);
     }
 
     @Override

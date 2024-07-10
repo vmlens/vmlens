@@ -2,7 +2,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.*;
+import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock;
+import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlockElement;
+import com.vmlens.trace.agent.bootstrap.interleave.block.LockOrMonitorEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.LockOrMonitor;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
@@ -24,7 +27,7 @@ public class LockOrMonitorExit implements InterleaveAction, DependentBlockElemen
     }
 
     @Override
-    public void blockBuilderAdd(Position myPosition, BlockContainer result) {
+    public void blockBuilderAdd(Position myPosition, MapOfBlocks result) {
         ElementAndPosition<LockOrMonitorEnter> enter = result.pop(lockOrMonitor.key());
         DependentBlock dependentBlock = new DependentBlock((ElementAndPosition) enter,
                 new ElementAndPosition<DependentBlockElement>(this, myPosition));

@@ -10,7 +10,12 @@ import com.anarsoft.race.detection.event.syncAction.*
 
 import java.nio.ByteBuffer;
 
-class FieldDeserializer extends DeserializeStrategy[LoadedNonVolatileFieldEvent] {
+class FieldDeSerializer extends LoadStrategy[LoadedNonVolatileFieldEvent] {
+  val blockSize = 51 * 10000;
+
+  def eventArraySize() = 51
+
+
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedNonVolatileFieldEvent = {
     val id = buffer.get();
 
@@ -25,4 +30,5 @@ class FieldDeserializer extends DeserializeStrategy[LoadedNonVolatileFieldEvent]
     }
     throw new RuntimeException("id " + id + " could not be deserialized");
   }
+
 }

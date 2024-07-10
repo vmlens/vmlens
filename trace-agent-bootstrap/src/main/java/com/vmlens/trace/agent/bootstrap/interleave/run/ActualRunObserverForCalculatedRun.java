@@ -11,7 +11,7 @@ public class ActualRunObserverForCalculatedRun implements ActualRunObserver {
     }
 
     @Override
-    public void after(InterleaveActionWithPositionFactory interleaveActionWithPositionFactory) {
+    public void after(InterleaveAction interleaveAction) {
         calculatedRun.incrementPositionInThread();
     }
 }

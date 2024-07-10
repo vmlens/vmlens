@@ -1,23 +1,22 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.impl.ThreadStartEvent;
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateAndRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 
 
 public class RunStateNewThreadStarted implements RunState {
 
     private final RunnableOrThreadWrapper startedThread;
-    private final int startingThreadIndex;
     private final ThreadLocalDataWhenInTestMap runContext;
+    private final int startedThreadIndex;
 
-    public RunStateNewThreadStarted(RunnableOrThreadWrapper startedThread, int startingThreadIndex, ThreadLocalDataWhenInTestMap runContext) {
+    public RunStateNewThreadStarted(RunnableOrThreadWrapper startedThread, ThreadLocalDataWhenInTestMap runContext, int startedThreadIndex) {
         this.startedThread = startedThread;
-        this.startingThreadIndex = startingThreadIndex;
         this.runContext = runContext;
+        this.startedThreadIndex = startedThreadIndex;
     }
 
     @Override
@@ -26,8 +25,8 @@ public class RunStateNewThreadStarted implements RunState {
     }
 
     @Override
-    public RunState after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
-        return this;
+    public RunStateAndRuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        throw new RuntimeException("should not be called");
     }
 
     @Override
@@ -36,10 +35,7 @@ public class RunStateNewThreadStarted implements RunState {
     }
 
     @Override
-    public void addTaskStartedInterleaveAction(ThreadLocalDataWhenInTest threadLocalDataWhenInTest, ActualRun calculatedRun) {
-        calculatedRun.after(
-                new ThreadStartEvent(),
-                new ActualRunContextImpl(runContext, threadLocalDataWhenInTest));
+    public int getStartedThreadIndex() {
+        return startedThreadIndex;
     }
-
 }

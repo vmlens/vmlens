@@ -1,14 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithSlidingWindow;
 
 import java.nio.ByteBuffer;
 
 public class ArrayAccessEventGen {
-    protected int slidingWindowId;
-    protected long threadId;
-    protected int programCounter;
+
+    protected int threadIndex;
     protected int fieldId;
     protected int methodCounter;
     protected int operation;
@@ -28,8 +26,7 @@ public class ArrayAccessEventGen {
         if (o == null || getClass() != o.getClass()) return false;
 
         ArrayAccessEventGen that = (ArrayAccessEventGen) o;
-        if (threadId != that.threadId) return false;
-        if (programCounter != that.programCounter) return false;
+        if (threadIndex != that.threadIndex) return false;
         if (fieldId != that.fieldId) return false;
         if (methodCounter != that.methodCounter) return false;
         if (operation != that.operation) return false;
@@ -42,14 +39,13 @@ public class ArrayAccessEventGen {
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
         if (runPosition != that.runPosition) return false;
-        return slidingWindowId == that.slidingWindowId;
+        return true;
     }
 
     @Override
     public String toString() {
         return "ArrayAccessEventGen{" +
-                "threadId=" + threadId +
-                "programCounter=" + programCounter +
+                "threadIndex=" + threadIndex +
                 "fieldId=" + fieldId +
                 "methodCounter=" + methodCounter +
                 "operation=" + operation +
@@ -65,18 +61,16 @@ public class ArrayAccessEventGen {
                 '}';
     }
 
-    public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.field);
-    }
 
-    public void serialize(StreamWrapperWithSlidingWindow streamWrapperWithSlidingWindow) throws Exception {
-        serialize(streamWrapperWithSlidingWindow.getByteBuffer(slidingWindowId, 59, EventConstants.MAX_ARRAY_SIZE * 1000));
+    public void serialize(StreamRepository streamRepository) throws Exception {
+        serialize(streamRepository.field.
+                getByteBuffer(51, EventConstants.MAX_ARRAY_SIZE * 1000));
+
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 5);
-        buffer.putLong(threadId);
-        buffer.putInt(programCounter);
+        buffer.putInt(threadIndex);
         buffer.putInt(fieldId);
         buffer.putInt(methodCounter);
         buffer.putInt(operation);

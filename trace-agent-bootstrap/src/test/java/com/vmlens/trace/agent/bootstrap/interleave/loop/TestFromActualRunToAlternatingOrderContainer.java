@@ -1,21 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
-import com.vmlens.trace.agent.bootstrap.interleave.run.AlternatingOrderContainerFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.testUtil.TestFixture;
-import com.vmlens.trace.agent.bootstrap.testfixture.TestData;
-import com.vmlens.trace.agent.bootstrap.testfixture.VolatileFixture;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
-import org.apache.commons.lang3.tuple.Pair;
-import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 public class TestFromActualRunToAlternatingOrderContainer {
-
+/*
     // Fixme
     //@Test
     public void volatileReadAndWrite() {
@@ -34,7 +20,7 @@ public class TestFromActualRunToAlternatingOrderContainer {
     //@Test
     public void threadJoin() {
         // Given
-        Pair<TLinkedList<TLinkableWrapper<InterleaveActionWithPositionFactory>>, AlternatingOrderContainer> testData =
+        Pair<TLinkedList<TLinkableWrapper<InterleaveFactory>>, AlternatingOrderContainer> testData =
                 TestFixture.threadJoin();
 
         // When
@@ -48,6 +34,6 @@ public class TestFromActualRunToAlternatingOrderContainer {
     public void testVolatileIncrement() {
 
     }
-
+*/
 
 }

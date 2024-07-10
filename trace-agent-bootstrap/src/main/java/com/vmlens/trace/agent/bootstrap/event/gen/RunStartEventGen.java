@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
 import java.nio.ByteBuffer;
-import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class RunStartEventGen {
-    protected int slidingWindowId;
+
     protected int loopId;
     protected int runId;
 
@@ -17,7 +17,7 @@ public class RunStartEventGen {
         RunStartEventGen that = (RunStartEventGen) o;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
-        return slidingWindowId == that.slidingWindowId;
+        return true;
     }
 
     @Override
@@ -28,12 +28,11 @@ public class RunStartEventGen {
                 '}';
     }
 
-    public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.interleave);
-    }
 
-    public void serialize(StreamWrapperWithSlidingWindow streamWrapperWithSlidingWindow) throws Exception {
-        serialize(streamWrapperWithSlidingWindow.getByteBuffer(slidingWindowId, 9, EventConstants.MAX_ARRAY_SIZE * 1000));
+    public void serialize(StreamRepository streamRepository) throws Exception {
+        serialize(streamRepository.interleave.
+                getByteBuffer(9, EventConstants.MAX_ARRAY_SIZE * 1000));
+
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {

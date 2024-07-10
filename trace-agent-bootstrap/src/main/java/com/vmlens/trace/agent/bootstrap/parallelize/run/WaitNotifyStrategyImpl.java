@@ -22,7 +22,7 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
             while (!runStateMachine.isActive(threadLocalDataWhenInTest)) {
                 threadActiveCondition.await(10, TimeUnit.MICROSECONDS);
                 if ((System.currentTimeMillis() - started) > 3000) {
-                    agentLogger.debug(this.getClass(), "blocked:" + threadLocalDataWhenInTest.threadId());
+                    agentLogger.debug(this.getClass(), "blocked:" + threadLocalDataWhenInTest.threadIndex());
                     throw new TestBlockedException();
                 }
             }
