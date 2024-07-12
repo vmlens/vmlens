@@ -14,22 +14,24 @@ public class MapOfBlocksExceptDeadlockFactory {
 
     public MapOfBlocks create(
             TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> actualRun) {
-        KeyToThreadIdToElementList<Object, ElementAndPosition<BlockBuilder>> blockFactoryMap =
-                new KeyToThreadIdToElementList<>();
+
+        ThreadIndexToElementList<ElementAndPosition<BlockBuilder>> threadIndexToElementList = new
+                ThreadIndexToElementList<>();
         for (TLinkableWrapper<ElementAndPosition<BlockBuilder>> blockBuilder : actualRun) {
-            blockFactoryMap.put(blockBuilder.element.element().blockBuilderKey(), blockBuilder.element);
+            threadIndexToElementList.add(blockBuilder.element);
         }
         MapOfBlocks result = new MapOfBlocks();
-        for (ThreadIndexToElementList<ElementAndPosition<BlockBuilder>> threadIndexToElementList : blockFactoryMap) {
-            Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>>> multipleThreadsIterator = threadIndexToElementList.iterator();
-            while (multipleThreadsIterator.hasNext()) {
-                TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>> thread = multipleThreadsIterator.next();
-                Iterator<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> perThreadIterator = thread.element.iterator();
-                while (perThreadIterator.hasNext()) {
-                    TLinkableWrapper<ElementAndPosition<BlockBuilder>> current = perThreadIterator.next();
-                    current.element.element().blockBuilderAdd(current.element.position(), result);
+        MapContainingStack mapContainingStack = new MapContainingStack();
+        Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>>> multipleThreadsIterator =
+                threadIndexToElementList.iterator();
+        while (multipleThreadsIterator.hasNext()) {
+            TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>> thread =
+                    multipleThreadsIterator.next();
+            Iterator<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> perThreadIterator = thread.element.iterator();
+            while (perThreadIterator.hasNext()) {
+                TLinkableWrapper<ElementAndPosition<BlockBuilder>> current = perThreadIterator.next();
+                current.element.element().blockBuilderAdd(current.element.position(), mapContainingStack, result);
 
-                }
             }
         }
         return result;

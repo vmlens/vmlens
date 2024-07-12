@@ -4,6 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.WithPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
 
+import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
+
 public class ElementAndPosition<ELEMENT> implements WithPosition, WithThreadIndex {
     private final ELEMENT element;
     private final Position position;
@@ -13,8 +15,8 @@ public class ElementAndPosition<ELEMENT> implements WithPosition, WithThreadInde
         this.position = position;
     }
 
-    public static <ELEMENT> ElementAndPosition ep(ELEMENT element, Position position) {
-        return new ElementAndPosition(element, position);
+    public static <ELEMENT> ElementAndPosition epos(ELEMENT element, int threadIndex, int positionInThread) {
+        return new ElementAndPosition(element, pos(threadIndex, positionInThread));
     }
 
     public ELEMENT element() {

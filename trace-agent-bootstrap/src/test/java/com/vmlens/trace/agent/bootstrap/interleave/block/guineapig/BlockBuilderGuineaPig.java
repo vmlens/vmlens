@@ -1,16 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block.guineapig;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.InDependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.block.*;
 
 public class BlockBuilderGuineaPig implements BlockBuilder {
 
     private final DependentBlock dependentBlock;
     private final Object dependentBlockKey;
-    private final InDependentBlock inDependentBlock;
+    private final ElementAndPosition<InDependentBlock> inDependentBlock;
 
     public BlockBuilderGuineaPig(DependentBlock dependentBlock, Object dependentBlockKey) {
         this.inDependentBlock = null;
@@ -18,13 +16,18 @@ public class BlockBuilderGuineaPig implements BlockBuilder {
         this.dependentBlockKey = dependentBlockKey;
     }
 
-    @Override
-    public Object blockBuilderKey() {
-        return null;
+    public BlockBuilderGuineaPig(ElementAndPosition<InDependentBlock> inDependentBlock) {
+        this.inDependentBlock = inDependentBlock;
+        this.dependentBlock = null;
+        this.dependentBlockKey = null;
     }
 
     @Override
-    public void blockBuilderAdd(Position myPosition, MapOfBlocks result) {
-
+    public void blockBuilderAdd(Position myPosition, MapContainingStack mapContainingStack, MapOfBlocks result) {
+        if (dependentBlock != null) {
+            result.dependentBlocks().put(dependentBlockKey, dependentBlock);
+        } else {
+            result.addInDependent(inDependentBlock);
+        }
     }
 }

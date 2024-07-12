@@ -1,8 +1,7 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
+package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.LockOrMonitorEnter;
-import com.vmlens.trace.agent.bootstrap.interleave.block.MapContainingStack;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
 import org.junit.Test;
 

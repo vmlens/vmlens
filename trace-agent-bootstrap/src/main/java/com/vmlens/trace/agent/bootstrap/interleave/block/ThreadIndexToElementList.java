@@ -67,6 +67,12 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
         return threadList.get(index).element.get(0).element;
     }
 
+    // For Tests
+    public ELEMENT getElementNAtIndex(int index, int n) {
+        return threadList.get(index).element.get(n).element;
+    }
+
+
     public ELEMENT getAndRemoveAtIndex(int index) {
         return threadList.get(index).element.removeFirst().element;
     }

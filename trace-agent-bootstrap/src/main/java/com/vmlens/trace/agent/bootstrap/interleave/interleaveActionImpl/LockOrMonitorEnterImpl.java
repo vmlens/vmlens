@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlockElement;
 import com.vmlens.trace.agent.bootstrap.interleave.block.LockOrMonitorEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.block.MapContainingStack;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.LockOrMonitor;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.LockOrMonitorKey;
@@ -22,18 +23,15 @@ public class LockOrMonitorEnterImpl implements InterleaveAction, LockOrMonitorEn
     }
 
     @Override
-    public Object blockBuilderKey() {
-        return lockOrMonitor.key();
-    }
-
-    @Override
     public LockOrMonitorKey key() {
         return lockOrMonitor.key();
     }
 
     @Override
-    public void blockBuilderAdd(Position myPosition, MapOfBlocks result) {
-        result.push(new ElementAndPosition<LockOrMonitorEnter>(this, myPosition));
+    public void blockBuilderAdd(Position myPosition,
+                                MapContainingStack mapContainingStack,
+                                MapOfBlocks result) {
+        mapContainingStack.push(new ElementAndPosition<LockOrMonitorEnter>(this, myPosition));
     }
 
     @Override

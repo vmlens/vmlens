@@ -1,7 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.OrderArrays;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -10,18 +8,10 @@ import java.util.Iterator;
 /**
  * Creates alternating and fixed orders for each block type. Blocks with different keys are independent.
  */
-public class OrderArraysFactory {
-    public OrderArrays create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
-                              ThreadIndexToMaxPosition threadIndexToMaxPosition) {
-        MapOfBlocks blockMap =
-                new MapOfBlocksExceptDeadlockFactory().create(blockBuilderList);
-        return create(blockMap, threadIndexToMaxPosition);
-    }
-
-    // Visible for Test
-    OrderArrays create(MapOfBlocks blockMap, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
-        OrderArraysBuilder builder = new OrderArraysBuilder();
-        for (ThreadIndexToElementList<DependentBlock> threadIndexToElementList : blockMap.dependentBlocks()) {
+public class AddDependentBlocksToOrderArraysBuilder {
+    public void create(KeyToThreadIdToElementList<Object, DependentBlock> dependentBlocks,
+                       OrderArraysBuilder builder) {
+        for (ThreadIndexToElementList<DependentBlock> threadIndexToElementList : dependentBlocks) {
             for (TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>> oneThread : threadIndexToElementList) {
                 for (TLinkableWrapper<DependentBlock> current : oneThread.element) {
                     Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>>> otherThreadBlocks =
@@ -36,9 +26,5 @@ public class OrderArraysFactory {
                 }
             }
         }
-        for (TLinkableWrapper<ElementAndPosition<InDependentBlock>> independent : blockMap.inDependentBlocks()) {
-            independent.element.element().addFixedOrder(independent.element.position(), builder, threadIndexToMaxPosition);
-        }
-        return builder.build();
     }
 }

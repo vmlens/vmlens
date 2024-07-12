@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.testUtil;
+package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
@@ -9,12 +9,12 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 
-class FeatureTestMatcherHelper {
+class AssertAlternatingOrder {
 
     private final Set<LeftBeforeRight> currentFoundLeft = new HashSet<>();
     private final Set<LeftBeforeRight> expectedLeftBeforeRight;
 
-    FeatureTestMatcherHelper(Set<LeftBeforeRight> expectedLeftBeforeRight) {
+    AssertAlternatingOrder(Set<LeftBeforeRight> expectedLeftBeforeRight) {
         this.expectedLeftBeforeRight = expectedLeftBeforeRight;
     }
 

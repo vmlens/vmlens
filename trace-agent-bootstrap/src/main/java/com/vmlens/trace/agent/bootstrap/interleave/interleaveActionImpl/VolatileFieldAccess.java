@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlockElement;
+import com.vmlens.trace.agent.bootstrap.interleave.block.MapContainingStack;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
@@ -21,12 +22,9 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
     }
 
     @Override
-    public Object blockBuilderKey() {
-        return new VolatileFieldAccessKey(fieldId);
-    }
-
-    @Override
-    public void blockBuilderAdd(Position myPosition, MapOfBlocks result) {
+    public void blockBuilderAdd(Position myPosition,
+                                MapContainingStack mapContainingStack,
+                                MapOfBlocks result) {
         DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<DependentBlockElement>(this, myPosition),
                 new ElementAndPosition<DependentBlockElement>(this, myPosition));
         result.addDependent(new VolatileFieldAccessKey(fieldId), dependentBlock);
@@ -49,7 +47,6 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
         if (operation != that.operation) return false;
         return threadIndex == that.threadIndex;
     }
-
     @Override
     public int hashCode() {
         int result = fieldId;
@@ -57,7 +54,6 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
         result = 31 * result + threadIndex;
         return result;
     }
-
     @Override
     public String toString() {
         return MemoryAccessType.asString(operation) +
