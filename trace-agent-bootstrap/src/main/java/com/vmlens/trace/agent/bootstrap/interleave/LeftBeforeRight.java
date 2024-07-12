@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
+import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
+
 public class LeftBeforeRight implements Comparable<LeftBeforeRight> {
     public final Position left;
     public final Position right;
@@ -9,8 +11,9 @@ public class LeftBeforeRight implements Comparable<LeftBeforeRight> {
         this.right = right;
     }
 
-    public static LeftBeforeRight lbr(Position left, Position right) {
-        return new LeftBeforeRight(left, right);
+    public static LeftBeforeRight lbr(int leftThreadIndex, int leftPositionInThread,
+                                      int rightThreadIndex, int rightPositionInThread) {
+        return new LeftBeforeRight(pos(leftThreadIndex, leftPositionInThread), pos(rightThreadIndex, rightPositionInThread));
     }
 
     @Override

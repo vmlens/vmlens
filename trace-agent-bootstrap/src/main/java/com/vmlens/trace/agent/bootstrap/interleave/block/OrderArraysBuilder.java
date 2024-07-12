@@ -3,8 +3,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.block;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.OrderArrays;
-import gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 public class OrderArraysBuilder {
 
     private final TLinkedList<TLinkableWrapper<LeftBeforeRight>> fixedOrderList = new
@@ -32,11 +32,21 @@ public class OrderArraysBuilder {
         LeftBeforeRight[]
                 fixedOrderArray = new LeftBeforeRight[fixedOrderList.size()];
         index = 0;
-        for(TLinkableWrapper<LeftBeforeRight> elem : fixedOrderList) {
+        for (TLinkableWrapper<LeftBeforeRight> elem : fixedOrderList) {
             fixedOrderArray[index] = elem.element;
             index++;
         }
 
-        return new OrderArrays(fixedOrderArray,alternatingOrderArray);
+        return new OrderArrays(fixedOrderArray, alternatingOrderArray);
+    }
+
+    // Visible for Test
+    public TLinkedList<TLinkableWrapper<LeftBeforeRight>> fixedOrderList() {
+        return fixedOrderList;
+    }
+
+    // Visible for Test
+    public TLinkedList<TLinkableWrapper<AlternatingOrderElement>> alternatingOrderList() {
+        return alternatingOrderList;
     }
 }

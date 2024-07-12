@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.testfixture;
+package com.vmlens.trace.agent.bootstrap.mocks;
 
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;

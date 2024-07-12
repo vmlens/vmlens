@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderGuineaPig;
-import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.DependentBlockElementNoOpGuineaPig;
+import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.DependentBlockElementGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.InDependentBlockElementNoOpGuineaPig;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -18,8 +18,8 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
     public void dependentBlocks() {
         // Given
         Object firstKey = new Object();
-        DependentBlockElementNoOpGuineaPig firstBlockElement = new DependentBlockElementNoOpGuineaPig();
-        DependentBlockElementNoOpGuineaPig secondBlockElement = new DependentBlockElementNoOpGuineaPig();
+        DependentBlockElementGuineaPig firstBlockElement = new DependentBlockElementGuineaPig();
+        DependentBlockElementGuineaPig secondBlockElement = new DependentBlockElementGuineaPig();
 
         DependentBlock firstBlock = new DependentBlock(epos(firstBlockElement, 0, 0),
                 epos(firstBlockElement, 0, 0));
@@ -27,7 +27,7 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
                 epos(secondBlockElement, 0, 2));
 
         Object secondKey = new Object();
-        DependentBlockElementNoOpGuineaPig thirdBlockElement = new DependentBlockElementNoOpGuineaPig();
+        DependentBlockElementGuineaPig thirdBlockElement = new DependentBlockElementGuineaPig();
         DependentBlock thirdBlock = new DependentBlock(epos(thirdBlockElement, 0, 3),
                 epos(secondBlockElement, 0, 3));
 

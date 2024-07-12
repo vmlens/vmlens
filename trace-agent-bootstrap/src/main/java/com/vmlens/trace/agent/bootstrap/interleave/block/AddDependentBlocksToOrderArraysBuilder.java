@@ -9,8 +9,8 @@ import java.util.Iterator;
  * Creates alternating and fixed orders for each block type. Blocks with different keys are independent.
  */
 public class AddDependentBlocksToOrderArraysBuilder {
-    public void create(KeyToThreadIdToElementList<Object, DependentBlock> dependentBlocks,
-                       OrderArraysBuilder builder) {
+    public void add(KeyToThreadIdToElementList<Object, DependentBlock> dependentBlocks,
+                    OrderArraysBuilder builder) {
         for (ThreadIndexToElementList<DependentBlock> threadIndexToElementList : dependentBlocks) {
             for (TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>> oneThread : threadIndexToElementList) {
                 for (TLinkableWrapper<DependentBlock> current : oneThread.element) {

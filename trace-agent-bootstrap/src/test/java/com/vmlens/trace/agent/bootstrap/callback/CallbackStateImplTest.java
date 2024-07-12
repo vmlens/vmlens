@@ -4,9 +4,9 @@ import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEventFactory;
 import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
+import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.testfixture.QueueInMock;
 import org.junit.Test;
 
 import java.util.LinkedList;
