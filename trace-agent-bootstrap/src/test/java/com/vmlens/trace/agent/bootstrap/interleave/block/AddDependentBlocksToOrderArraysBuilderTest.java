@@ -21,7 +21,6 @@ public class AddDependentBlocksToOrderArraysBuilderTest {
         // When
         OrderArraysBuilder builder = executeTest(1, 0, true);
 
-
         // Then
         assertThat(builder.alternatingOrderList().get(0).element, is(expectedAlternatingOrderElement));
     }
@@ -65,6 +64,4 @@ public class AddDependentBlocksToOrderArraysBuilderTest {
 
         return builder;
     }
-
-
 }

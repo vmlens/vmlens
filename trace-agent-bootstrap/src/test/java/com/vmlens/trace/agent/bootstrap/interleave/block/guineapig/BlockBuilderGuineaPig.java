@@ -8,7 +8,7 @@ public class BlockBuilderGuineaPig implements BlockBuilder {
 
     private final DependentBlock dependentBlock;
     private final Object dependentBlockKey;
-    private final ElementAndPosition<InDependentBlock> inDependentBlock;
+    private final ElementAndPosition<IndependentBlock> inDependentBlock;
 
     public BlockBuilderGuineaPig(DependentBlock dependentBlock, Object dependentBlockKey) {
         this.inDependentBlock = null;
@@ -16,7 +16,7 @@ public class BlockBuilderGuineaPig implements BlockBuilder {
         this.dependentBlockKey = dependentBlockKey;
     }
 
-    public BlockBuilderGuineaPig(ElementAndPosition<InDependentBlock> inDependentBlock) {
+    public BlockBuilderGuineaPig(ElementAndPosition<IndependentBlock> inDependentBlock) {
         this.inDependentBlock = inDependentBlock;
         this.dependentBlock = null;
         this.dependentBlockKey = null;

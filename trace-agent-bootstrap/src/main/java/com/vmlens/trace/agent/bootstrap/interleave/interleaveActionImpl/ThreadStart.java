@@ -6,10 +6,12 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPo
 import com.vmlens.trace.agent.bootstrap.interleave.block.*;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class ThreadStart implements InterleaveAction, InDependentBlock {
+public class ThreadStart implements InterleaveAction, IndependentBlock {
+    private final int threadIndex;
     private final int startedThreadIndex;
 
-    public ThreadStart(int startedThreadIndex) {
+    public ThreadStart(int threadIndex, int startedThreadIndex) {
+        this.threadIndex = threadIndex;
         this.startedThreadIndex = startedThreadIndex;
     }
 
@@ -18,7 +20,12 @@ public class ThreadStart implements InterleaveAction, InDependentBlock {
     public void blockBuilderAdd(Position myPosition,
                                 MapContainingStack mapContainingStack,
                                 MapOfBlocks result) {
-        result.addInDependent(new ElementAndPosition<InDependentBlock>(this, myPosition));
+        result.addInDependent(new ElementAndPosition<IndependentBlock>(this, myPosition));
+    }
+
+    @Override
+    public int threadIndex() {
+        return threadIndex;
     }
 
     @Override

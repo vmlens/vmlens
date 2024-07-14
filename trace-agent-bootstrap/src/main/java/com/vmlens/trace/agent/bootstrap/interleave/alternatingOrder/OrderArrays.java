@@ -34,12 +34,6 @@ public class OrderArrays {
         return result;
     }
 
-    public void debug(AgentLogger agentLogger) {
-        if (agentLogger.isDebugEnabled()) {
-            agentLogger.debug(this.getClass(), "fixed:" + Arrays.toString(fixedOrderArray));
-            agentLogger.debug(this.getClass(), "alternating:" + Arrays.toString(alternatingOrderArray));
-        }
-    }
 
     @Override
     public String toString() {

@@ -8,14 +8,14 @@ import gnu.trove.list.linked.TLinkedList;
 public class MapOfBlocks {
     private final KeyToThreadIdToElementList<Object, DependentBlock> dependentBlocks =
             new KeyToThreadIdToElementList<>();
-    private final TLinkedList<TLinkableWrapper<ElementAndPosition<InDependentBlock>>> inDependentBlockList =
+    private final TLinkedList<TLinkableWrapper<ElementAndPosition<IndependentBlock>>> inDependentBlockList =
             new TLinkedList<>();
 
     public void addDependent(Object key, DependentBlock dependentBlock) {
         dependentBlocks.put(key, dependentBlock);
     }
 
-    public void addInDependent(ElementAndPosition<InDependentBlock> inDependentBlockElement) {
+    public void addInDependent(ElementAndPosition<IndependentBlock> inDependentBlockElement) {
         inDependentBlockList.add(new TLinkableWrapper<>(inDependentBlockElement));
     }
 
@@ -23,7 +23,7 @@ public class MapOfBlocks {
         return dependentBlocks;
     }
 
-    public TLinkedList<TLinkableWrapper<ElementAndPosition<InDependentBlock>>> inDependentBlocks() {
+    public TLinkedList<TLinkableWrapper<ElementAndPosition<IndependentBlock>>> inDependentBlocks() {
         return inDependentBlockList;
     }
 

@@ -8,14 +8,12 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class LockOrMonitorExit implements InterleaveAction, DependentBlockElement {
 
+    private final int threadIndex;
     private final LockOrMonitor lockOrMonitor;
 
-    public LockOrMonitorExit(LockOrMonitor lockOrMonitor) {
+    public LockOrMonitorExit(int threadIndex, LockOrMonitor lockOrMonitor) {
+        this.threadIndex = threadIndex;
         this.lockOrMonitor = lockOrMonitor;
-    }
-
-    public static LockOrMonitorExit exit(LockOrMonitor lockOrMonitor) {
-        return new LockOrMonitorExit(lockOrMonitor);
     }
 
     @Override
@@ -32,6 +30,11 @@ public class LockOrMonitorExit implements InterleaveAction, DependentBlockElemen
     public boolean startsAlternatingOrder(DependentBlockElement interleaveAction) {
         LockOrMonitorEnterImpl other = (LockOrMonitorEnterImpl) interleaveAction;
         return lockOrMonitor.startsAlternatingOrder(other.lockOrMonitor());
+    }
+
+    @Override
+    public int threadIndex() {
+        return threadIndex;
     }
 
     @Override

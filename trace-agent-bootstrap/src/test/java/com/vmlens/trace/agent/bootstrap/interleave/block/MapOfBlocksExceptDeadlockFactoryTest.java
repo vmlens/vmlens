@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.block;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.DependentBlockElementGuineaPig;
-import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.InDependentBlockElementNoOpGuineaPig;
+import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.IndependentBlockElementNoOpGuineaPig;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.junit.Test;
@@ -57,10 +57,10 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
     @Test
     public void inDependentBlocks() {
         // Given
-        ElementAndPosition<InDependentBlock> first =
-                epos(new InDependentBlockElementNoOpGuineaPig(), 0, 0);
-        ElementAndPosition<InDependentBlock> second =
-                epos(new InDependentBlockElementNoOpGuineaPig(), 0, 2);
+        ElementAndPosition<IndependentBlock> first =
+                epos(new IndependentBlockElementNoOpGuineaPig(), 0, 0);
+        ElementAndPosition<IndependentBlock> second =
+                epos(new IndependentBlockElementNoOpGuineaPig(), 0, 2);
 
 
         TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> actualRun

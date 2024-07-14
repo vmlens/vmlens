@@ -1,26 +1,25 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-public class AlternatingOrderContainerFactory {
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.block.*;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 
-    /*
-    Fixme
-    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<InterleaveFactory>> actualRun) {
-        BlockBuilderAndCalculatedRunElementContainer container = new BlockBuilderAndCalculatedRunElementContainerFactory().create(actualRun);
-        return create(container.runWithPosition, container.run);
+public class AlternatingOrderContainerFactory<T extends BlockBuilderWithThreadIndex> {
+
+    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<T>> actualRun) {
+        BlockBuilderAndCalculatedRunElementContainer container = new BlockBuilderWithPositionFactory<T>().create(actualRun);
+
+        MapOfBlocks mapOfBlocksExceptDeadlock = new MapOfBlocksExceptDeadlockFactory().create(container.runWithPosition);
+
+        OrderArraysBuilder orderArraysBuilder = new OrderArraysBuilder();
+
+
+        new AddDependentBlocksToOrderArraysBuilder().add(mapOfBlocksExceptDeadlock.dependentBlocks(), orderArraysBuilder);
+        new AddIndependentBlocksToOrderArraysBuilder().add(mapOfBlocksExceptDeadlock.inDependentBlocks(),
+                container.run,
+                orderArraysBuilder);
+
+        return new AlternatingOrderContainer(orderArraysBuilder.build(), container.run);
     }
-
-
-    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
-                                            ThreadIndexToElementList<Position> run) {
-        return new AlternatingOrderContainer(new OrderArraysFactory().create(blockBuilderList, run), run);
-    }
-
-    public OrderArrays create(TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> blockBuilderList,
-                              ThreadIndexToMaxPosition threadIndexToMaxPosition) {
-        MapOfBlocks blockMap =
-                new MapOfBlocksExceptDeadlockFactory().create(blockBuilderList);
-        return create(blockMap, threadIndexToMaxPosition);
-    }
-
-     */
 }

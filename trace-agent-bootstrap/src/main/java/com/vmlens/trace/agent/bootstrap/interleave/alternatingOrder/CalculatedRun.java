@@ -22,7 +22,7 @@ public class CalculatedRun {
     }
 
     // Visible for Test
-    Position[] calculatedRunElementArray() {
+    public Position[] calculatedRunElementArray() {
         return calculatedRunElementArray;
     }
 

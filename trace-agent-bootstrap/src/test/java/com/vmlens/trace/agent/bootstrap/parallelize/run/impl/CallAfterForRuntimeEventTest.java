@@ -18,7 +18,7 @@ public class CallAfterForRuntimeEventTest {
         int FIELD_ID = 5;
         int OPERATION = 1;
         int THREAD_INDEX = 10;
-        InterleaveAction expectedInterleaveAction = new VolatileFieldAccess(FIELD_ID, OPERATION, THREAD_INDEX);
+        InterleaveAction expectedInterleaveAction = new VolatileFieldAccess(THREAD_INDEX, FIELD_ID, OPERATION);
 
         // Given
         VolatileAccessEvent runtimeEvent = new VolatileAccessEvent();

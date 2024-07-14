@@ -14,8 +14,10 @@ public class InterleaveActionBuilder implements RuntimeEventVisitor {
 
     @Override
     public void visit(VolatileAccessEvent volatileAccessEvent) {
-        interleaveAction = new VolatileFieldAccess(volatileAccessEvent.fieldId(),
-                volatileAccessEvent.operation(), volatileAccessEvent.threadIndex());
+        interleaveAction = new VolatileFieldAccess(
+                volatileAccessEvent.threadIndex(),
+                volatileAccessEvent.fieldId(),
+                volatileAccessEvent.operation());
     }
 
     @Override

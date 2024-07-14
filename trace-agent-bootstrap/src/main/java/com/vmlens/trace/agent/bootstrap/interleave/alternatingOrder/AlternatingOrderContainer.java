@@ -44,10 +44,6 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         return orderArrays.hashCode();
     }
 
-    public void debug(AgentLogger agentLogger) {
-        orderArrays.debug(agentLogger);
-    }
-
     @Override
     public String toString() {
         return "AlternatingOrderContainer{" +

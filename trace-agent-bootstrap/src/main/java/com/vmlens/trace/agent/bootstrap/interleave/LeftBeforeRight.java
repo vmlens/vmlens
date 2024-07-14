@@ -16,6 +16,11 @@ public class LeftBeforeRight implements Comparable<LeftBeforeRight> {
         return new LeftBeforeRight(pos(leftThreadIndex, leftPositionInThread), pos(rightThreadIndex, rightPositionInThread));
     }
 
+    public static LeftBeforeRight lbr(Position left,
+                                      Position right) {
+        return new LeftBeforeRight(left, right);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

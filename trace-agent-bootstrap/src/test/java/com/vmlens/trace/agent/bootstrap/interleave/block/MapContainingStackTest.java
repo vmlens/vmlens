@@ -18,8 +18,8 @@ public class MapContainingStackTest {
         Monitor givenMonitor = new Monitor(0);
 
         // When
-        mapContainingStack.push(new ElementAndPosition<LockOrMonitorEnter>(new LockOrMonitorEnterImpl(givenMonitor), p(0, 1)));
-        mapContainingStack.push(new ElementAndPosition<LockOrMonitorEnter>(new LockOrMonitorEnterImpl(givenMonitor), p(0, 5)));
+        mapContainingStack.push(new ElementAndPosition<LockOrMonitorEnter>(new LockOrMonitorEnterImpl(1, givenMonitor), p(0, 1)));
+        mapContainingStack.push(new ElementAndPosition<LockOrMonitorEnter>(new LockOrMonitorEnterImpl(1, givenMonitor), p(0, 5)));
 
         // Then
         assertThat(mapContainingStack.pop(givenMonitor.key()).position(), is(p(0, 5)));

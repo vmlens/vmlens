@@ -7,11 +7,11 @@ import gnu.trove.list.linked.TLinkedList;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
 
-public class BlockBuilderWithPositionFactory {
+public class BlockBuilderWithPositionFactory<T extends BlockBuilderWithThreadIndex> {
 
-    public BlockBuilderAndCalculatedRunElementContainer create(TLinkedList<TLinkableWrapper<BlockBuilderWithThreadIndex>> actualRun) {
+    public BlockBuilderAndCalculatedRunElementContainer create(TLinkedList<TLinkableWrapper<T>> actualRun) {
         BlockBuilderAndCalculatedRunElementContainer blockBuilderAndCalculatedRunElementContainer = new BlockBuilderAndCalculatedRunElementContainer();
-        for (TLinkableWrapper<BlockBuilderWithThreadIndex> syncAction : actualRun) {
+        for (TLinkableWrapper<T> syncAction : actualRun) {
             add(syncAction.element, blockBuilderAndCalculatedRunElementContainer);
         }
         return blockBuilderAndCalculatedRunElementContainer;

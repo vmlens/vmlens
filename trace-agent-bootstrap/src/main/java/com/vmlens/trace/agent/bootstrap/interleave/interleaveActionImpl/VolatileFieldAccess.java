@@ -11,14 +11,16 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class VolatileFieldAccess implements InterleaveAction, DependentBlockElement {
     private static final int MIN_OPERATION = 3;
+
+    private final int threadIndex;
     private final int fieldId;
     private final int operation;
-    private final int threadIndex;
 
-    public VolatileFieldAccess(int fieldId, int operation, int threadIndex) {
+
+    public VolatileFieldAccess(int threadIndex, int fieldId, int operation) {
+        this.threadIndex = threadIndex;
         this.fieldId = fieldId;
         this.operation = operation;
-        this.threadIndex = threadIndex;
     }
 
     @Override
@@ -34,6 +36,11 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
     public boolean startsAlternatingOrder(DependentBlockElement other) {
         VolatileFieldAccess otherVolatileFieldAccess = (VolatileFieldAccess) other;
         return (otherVolatileFieldAccess.operation | operation) >= MIN_OPERATION;
+    }
+
+    @Override
+    public int threadIndex() {
+        return threadIndex;
     }
 
     @Override
