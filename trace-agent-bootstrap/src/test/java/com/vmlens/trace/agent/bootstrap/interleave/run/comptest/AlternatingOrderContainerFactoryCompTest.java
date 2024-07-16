@@ -21,6 +21,11 @@ public class AlternatingOrderContainerFactoryCompTest {
 
     @Test
     public void volatileField() {
+        // Expected
+        Set<IntArray> threadIndices = new HashSet<>();
+        threadIndices.add(intArray(0, 1));
+        threadIndices.add(intArray(1, 0));
+
         // Given
         VolatileFieldAccessTestBuilder f1 = VolatileFieldAccessTestBuilder.firstVolatileField();
         ActualRunTestBuilder builder = new ActualRunTestBuilder();
@@ -50,11 +55,11 @@ public class AlternatingOrderContainerFactoryCompTest {
         AlternatingOrderContainer alternatingOrder = factory.create(actualRun);
 
         // Then
-        AssertAlternatingOrder assertAlternatingOrder = new AssertAlternatingOrder(expectedOrder);
-        assertAlternatingOrder.assertAlternatingOrder(alternatingOrder);
+        ThreadIndexSetBuilder threadIndexSetBuilder = new ThreadIndexSetBuilder();
+        threadIndexSetBuilder.execute(alternatingOrder);
 
-        assertThat(assertAlternatingOrder.expectedLeftBeforeRightIsEmpty(), is(true));
-        assertThat(assertAlternatingOrder.count(), is(2));
+        assertThat(threadIndexSetBuilder.executedTThreadIndexArray(), is(threadIndices));
+        assertThat(threadIndexSetBuilder.count(), is(2));
     }
 
     @Test
@@ -87,8 +92,6 @@ public class AlternatingOrderContainerFactoryCompTest {
         // Then
         ThreadIndexSetBuilder threadIndexSetBuilder = new ThreadIndexSetBuilder();
         threadIndexSetBuilder.execute(alternatingOrder);
-
-        System.out.println(threadIndexSetBuilder.executedTThreadIndexArray());
 
         assertThat(threadIndexSetBuilder.executedTThreadIndexArray(), is(threadIndices));
         assertThat(threadIndexSetBuilder.count(), is(3));
