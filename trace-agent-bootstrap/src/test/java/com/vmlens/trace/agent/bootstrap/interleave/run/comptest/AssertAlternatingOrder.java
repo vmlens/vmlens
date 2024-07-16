@@ -22,12 +22,14 @@ class AssertAlternatingOrder {
     public void assertAlternatingOrder(AlternatingOrderContainer alternatingOrderContainer) {
         Iterator<CalculatedRun> iter = alternatingOrderContainer.iterator();
         while (iter.hasNext()) {
-            count++;
-
             CalculatedRun calculatedRun = iter.next();
-            for (Position pos : calculatedRun.calculatedRunElementArray()) {
-                executed(pos);
+            if (calculatedRun != null) {
+                count++;
+                for (Position pos : calculatedRun.calculatedRunElementArray()) {
+                    executed(pos);
+                }
             }
+
             currentFoundLeft = new HashSet<>();
         }
     }

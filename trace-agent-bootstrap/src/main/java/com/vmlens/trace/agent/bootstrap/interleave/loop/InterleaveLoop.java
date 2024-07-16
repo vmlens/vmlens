@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
@@ -12,16 +11,14 @@ import java.util.Iterator;
 
 
 public class InterleaveLoop implements IteratorQueue {
-    private final AgentLogger agentLogger;
     private final THashSet<AlternatingOrderContainer> allAlternatingOrderContainer =
             new THashSet<>();
     private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> stillToBeProcessedAlternatingOrderContainer =
             new TLinkedList<>();
     private final InterleaveLoopIterator iterator;
 
-    public InterleaveLoop(AgentLogger agentLogger) {
-        this.agentLogger = agentLogger;
-        this.iterator = new InterleaveLoopIterator(this, agentLogger);
+    public InterleaveLoop() {
+        this.iterator = new InterleaveLoopIterator(this);
     }
 
     // Visible for Test

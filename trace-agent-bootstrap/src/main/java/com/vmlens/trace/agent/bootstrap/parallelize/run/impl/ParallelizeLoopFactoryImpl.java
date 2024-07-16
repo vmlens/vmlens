@@ -24,7 +24,7 @@ public class ParallelizeLoopFactoryImpl implements ParallelizeLoopFactory {
 
     @Override
     public ParallelizeLoop create(int loopId) {
-        return new ParallelizeLoop(loopId, new RunStateMachineFactoryImpl(), waitNotifyStrategy, new InterleaveLoop(agentLogger));
+        return new ParallelizeLoop(loopId, new RunStateMachineFactoryImpl(), waitNotifyStrategy, new InterleaveLoop());
     }
 
     public AgentLogger agentLogger() {
