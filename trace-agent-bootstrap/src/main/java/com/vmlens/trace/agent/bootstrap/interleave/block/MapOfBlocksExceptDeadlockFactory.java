@@ -14,7 +14,6 @@ public class MapOfBlocksExceptDeadlockFactory {
 
     public MapOfBlocks create(
             TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> actualRun) {
-
         ThreadIndexToElementList<ElementAndPosition<BlockBuilder>> threadIndexToElementList = new
                 ThreadIndexToElementList<>();
         for (TLinkableWrapper<ElementAndPosition<BlockBuilder>> blockBuilder : actualRun) {
@@ -31,7 +30,6 @@ public class MapOfBlocksExceptDeadlockFactory {
             while (perThreadIterator.hasNext()) {
                 TLinkableWrapper<ElementAndPosition<BlockBuilder>> current = perThreadIterator.next();
                 current.element.element().blockBuilderAdd(current.element.position(), mapContainingStack, result);
-
             }
         }
         return result;

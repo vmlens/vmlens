@@ -17,41 +17,25 @@ public class VolatileFieldAccessTestBuilder {
     }
 
     public InterleaveActionTestFactory read() {
-        return read(null);
+        return new VolatileFieldAccessFactory(fieldId, MemoryAccessType.IS_READ);
     }
 
     public InterleaveActionTestFactory write() {
-        return write(null);
-    }
-
-    public InterleaveActionTestFactory read(PositionTestBuilder positionTestBuilder) {
-        return new VolatileFieldAccessFactory(fieldId, MemoryAccessType.IS_READ, positionTestBuilder);
-    }
-
-    public InterleaveActionTestFactory write(PositionTestBuilder positionTestBuilder) {
-        return new VolatileFieldAccessFactory(fieldId, MemoryAccessType.IS_WRITE, positionTestBuilder);
+        return new VolatileFieldAccessFactory(fieldId, MemoryAccessType.IS_WRITE);
     }
 
     private static class VolatileFieldAccessFactory implements InterleaveActionTestFactory {
 
         private final int fieldId;
         private final int operation;
-        private final PositionTestBuilder positionTestBuilder;
 
-        public VolatileFieldAccessFactory(int fieldId, int operation,
-                                          PositionTestBuilder positionTestBuilder) {
+        public VolatileFieldAccessFactory(int fieldId, int operation) {
             this.fieldId = fieldId;
             this.operation = operation;
-            this.positionTestBuilder = positionTestBuilder;
         }
 
         @Override
-        public InterleaveAction create(int threadIndex, int positionInThread) {
-            if (positionTestBuilder != null) {
-                positionTestBuilder.setThreadIndex(threadIndex);
-                positionTestBuilder.setPositionInThread(positionInThread);
-            }
-
+        public InterleaveAction create(int threadIndex) {
             return new VolatileFieldAccess(threadIndex, fieldId, operation);
         }
     }

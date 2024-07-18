@@ -14,7 +14,6 @@ public class AlternatingOrderContainerFactory<T extends BlockBuilderWithThreadIn
 
         OrderArraysBuilder orderArraysBuilder = new OrderArraysBuilder();
 
-
         new AddDependentBlocksToOrderArraysBuilder().add(mapOfBlocksExceptDeadlock.dependentBlocks(), orderArraysBuilder);
         new AddIndependentBlocksToOrderArraysBuilder().add(mapOfBlocksExceptDeadlock.inDependentBlocks(),
                 container.run,

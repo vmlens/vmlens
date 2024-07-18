@@ -60,7 +60,7 @@ public class CreateCalculatedRun {
     private void removeConstraints(Position position) {
         for(int i = 0; i < currentOrder.length; i++) {
             if(currentOrder[i] != null) {
-                if(currentOrder[i].left.greaterOrEquals(position)) {
+                if (position.greaterOrEquals(currentOrder[i].left)) {
                     currentOrder[i] = null;
                 }
             }

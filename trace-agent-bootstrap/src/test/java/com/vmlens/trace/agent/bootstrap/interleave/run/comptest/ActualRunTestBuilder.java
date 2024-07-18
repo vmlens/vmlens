@@ -12,10 +12,8 @@ public class ActualRunTestBuilder {
     private int index;
 
     public void thread(InterleaveActionTestFactory... interleaveActionTestBuilderList) {
-        int positionInThread = 0;
         for (InterleaveActionTestFactory factory : interleaveActionTestBuilderList) {
-            actualRun.add(wrapp(factory.create(index, positionInThread)));
-            positionInThread++;
+            actualRun.add(wrapp(factory.create(index)));
         }
         index++;
     }
