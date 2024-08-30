@@ -9,17 +9,16 @@ import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
 
 public class BlockBuilderWithPositionFactory<T extends BlockBuilderWithThreadIndex> {
 
-    public BlockBuilderAndCalculatedRunElementContainer create(TLinkedList<TLinkableWrapper<T>> actualRun) {
-        BlockBuilderAndCalculatedRunElementContainer blockBuilderAndCalculatedRunElementContainer = new BlockBuilderAndCalculatedRunElementContainer();
+    public BlockBuilderAndThreadIndexToPositionLists create(TLinkedList<TLinkableWrapper<T>> actualRun) {
+        BlockBuilderAndThreadIndexToPositionLists blockBuilderAndCalculatedRunElementContainer = new BlockBuilderAndThreadIndexToPositionLists();
         for (TLinkableWrapper<T> syncAction : actualRun) {
             add(syncAction.element, blockBuilderAndCalculatedRunElementContainer);
         }
         return blockBuilderAndCalculatedRunElementContainer;
     }
 
-    private void add(BlockBuilderWithThreadIndex element, BlockBuilderAndCalculatedRunElementContainer container) {
+    private void add(BlockBuilderWithThreadIndex element, BlockBuilderAndThreadIndexToPositionLists container) {
         int position = container.getPositionAtThreadIndex(element.threadIndex());
         container.add(new ElementAndPosition<BlockBuilder>(element, pos(element.threadIndex(), position)));
     }
-
 }

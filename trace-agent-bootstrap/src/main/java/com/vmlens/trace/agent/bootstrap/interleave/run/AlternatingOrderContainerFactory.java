@@ -8,7 +8,7 @@ import gnu.trove.list.linked.TLinkedList;
 public class AlternatingOrderContainerFactory<T extends BlockBuilderWithThreadIndex> {
 
     public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<T>> actualRun) {
-        BlockBuilderAndCalculatedRunElementContainer container = new BlockBuilderWithPositionFactory<T>().create(actualRun);
+        BlockBuilderAndThreadIndexToPositionLists container = new BlockBuilderWithPositionFactory<T>().create(actualRun);
 
         MapOfBlocks mapOfBlocksExceptDeadlock = new MapOfBlocksExceptDeadlockFactory().create(container.runWithPosition);
 

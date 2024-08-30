@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderNoOpWithThreadIndexGuineaPig;
-import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndCalculatedRunElementContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderAndThreadIndexToPositionLists;
 import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderWithThreadIndex;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -29,7 +29,7 @@ public class BlockBuilderWithPositionFactoryTest {
 
         BlockBuilderWithPositionFactory blockBuilderFactory = new BlockBuilderWithPositionFactory();
         // When
-        BlockBuilderAndCalculatedRunElementContainer result = blockBuilderFactory.create(actualRun);
+        BlockBuilderAndThreadIndexToPositionLists result = blockBuilderFactory.create(actualRun);
 
         // Then
         assertThat(result.runWithPosition.get(0).element.element(), is((BlockBuilder) threadIndex_0_First));
