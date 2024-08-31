@@ -3,9 +3,9 @@ package com.vmlens.trace.agent.bootstrap.interleave.block.guineapig;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapContainingStack;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
-import com.vmlens.trace.agent.bootstrap.interleave.run.BlockBuilderWithThreadIndex;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class BlockBuilderNoOpWithThreadIndexGuineaPig implements BlockBuilderWithThreadIndex {
+public class BlockBuilderNoOpWithThreadIndexGuineaPig implements InterleaveAction {
 
     private final int threadIndex;
 

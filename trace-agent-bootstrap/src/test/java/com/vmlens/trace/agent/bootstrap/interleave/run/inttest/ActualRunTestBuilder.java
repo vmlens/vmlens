@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.run.comptest;
+package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;

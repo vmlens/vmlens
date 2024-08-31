@@ -2,9 +2,13 @@ package com.vmlens.trace.agent.bootstrap.interleave.block.guineapig;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.*;
+import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock;
+import com.vmlens.trace.agent.bootstrap.interleave.block.IndependentBlock;
+import com.vmlens.trace.agent.bootstrap.interleave.block.MapContainingStack;
+import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class BlockBuilderGuineaPig implements BlockBuilder {
+public class BlockBuilderGuineaPig implements InterleaveAction {
 
     private final DependentBlock dependentBlock;
     private final Object dependentBlockKey;
@@ -29,5 +33,10 @@ public class BlockBuilderGuineaPig implements BlockBuilder {
         } else {
             result.addInDependent(inDependentBlock);
         }
+    }
+
+    @Override
+    public int threadIndex() {
+        throw new RuntimeException("should not be called for this test");
     }
 }

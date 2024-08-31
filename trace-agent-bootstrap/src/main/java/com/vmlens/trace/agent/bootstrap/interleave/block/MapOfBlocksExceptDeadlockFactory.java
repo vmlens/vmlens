@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -13,22 +14,22 @@ import java.util.Iterator;
 public class MapOfBlocksExceptDeadlockFactory {
 
     public MapOfBlocks create(
-            TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> actualRun) {
-        ThreadIndexToElementList<ElementAndPosition<BlockBuilder>> threadIndexToElementList = new
+            TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>> actualRun) {
+        ThreadIndexToElementList<ElementAndPosition<InterleaveAction>> threadIndexToElementList = new
                 ThreadIndexToElementList<>();
-        for (TLinkableWrapper<ElementAndPosition<BlockBuilder>> blockBuilder : actualRun) {
+        for (TLinkableWrapper<ElementAndPosition<InterleaveAction>> blockBuilder : actualRun) {
             threadIndexToElementList.add(blockBuilder.element);
         }
         MapOfBlocks result = new MapOfBlocks();
         MapContainingStack mapContainingStack = new MapContainingStack();
-        Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>>> multipleThreadsIterator =
+        Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>>>> multipleThreadsIterator =
                 threadIndexToElementList.iterator();
         while (multipleThreadsIterator.hasNext()) {
-            TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<BlockBuilder>>>> thread =
+            TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>>> thread =
                     multipleThreadsIterator.next();
-            Iterator<TLinkableWrapper<ElementAndPosition<BlockBuilder>>> perThreadIterator = thread.element.iterator();
+            Iterator<TLinkableWrapper<ElementAndPosition<InterleaveAction>>> perThreadIterator = thread.element.iterator();
             while (perThreadIterator.hasNext()) {
-                TLinkableWrapper<ElementAndPosition<BlockBuilder>> current = perThreadIterator.next();
+                TLinkableWrapper<ElementAndPosition<InterleaveAction>> current = perThreadIterator.next();
                 current.element.element().blockBuilderAdd(current.element.position(), mapContainingStack, result);
             }
         }
