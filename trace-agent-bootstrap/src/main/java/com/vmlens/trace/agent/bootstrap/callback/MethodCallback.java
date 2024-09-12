@@ -4,9 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.method.MethodCallbackImpl;
 
 
 public class MethodCallback {
-
     private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl();
-
     public static void atomicMethodEnterWithCallback(int atomicId, int methodId) {
         methodCallbackImpl.atomicMethodEnterWithCallback(atomicId, methodId);
     }

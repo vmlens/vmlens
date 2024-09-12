@@ -14,7 +14,6 @@ class VolatileDirectMemoryEventGen(
                                     val threadIndex: Int
                                     , val methodCounter: Int
                                     , val objectHashCode: Long
-                                    , var stackTraceOrdinal: Int
                                     , val operation: Int
                                     , val order: Int
                                     , val loopId: Int
@@ -26,7 +25,6 @@ class VolatileDirectMemoryEventGen(
     text = text + ", threadIndex:" + threadIndex
     text = text + ", methodCounter:" + methodCounter
     text = text + ", objectHashCode:" + objectHashCode
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", operation:" + operation
     text = text + ", order:" + order
     text = text + ", loopId:" + loopId
@@ -45,9 +43,6 @@ class VolatileDirectMemoryEventGen(
           false;
         }
         else if (objectHashCode != that.objectHashCode) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (operation != that.operation) {
@@ -83,8 +78,6 @@ object VolatileDirectMemoryEventGen {
       data.getInt()
       ,
       data.getLong()
-      ,
-      0
       ,
       data.getInt()
       ,

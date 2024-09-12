@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.load
 
-import com.anarsoft.race.detection.event.gen.SyncActionsDeserializer
+import com.anarsoft.race.detection.event.gen.SyncActionsDeSerializer
 import com.anarsoft.race.detection.event.syncAction.LoadedSyncActionEvent
 import com.anarsoft.race.detection.testFixture.VolatileFixture
 import com.vmlens.trace.agent.bootstrap.event.gen.EventConstants.MAX_ARRAY_SIZE
@@ -26,7 +26,7 @@ class DeserializeEventsTest extends AnyFlatSpec with Matchers {
     val deserializeEvents = DeserializeEvents[LoadedSyncActionEvent]();
 
     // When
-    val serializedEvents = deserializeEvents.deserialize(byteBuffer, new SyncActionsDeserializer());
+    val serializedEvents = deserializeEvents.deserialize(byteBuffer, new SyncActionsDeSerializer());
 
     // Then
     serializedEvents.asScala.toList should be(testData.volatileAccessEvents);

@@ -9,11 +9,11 @@ import scala.collection.mutable.HashMap
 
 class SetStacktraceNodeInEventTest extends AnyFlatSpec with Matchers {
 
-  "SetStacktraceNodeInEvent" should "swt the stacktrace nodes" in {
+  "SetStacktraceNodeInEvent" should "set the stacktrace nodes" in {
     // Given
-    val firstEvent = new EventWithStacktraceNodeGuineaPig(1L, 3);
-    val secondEvent = new EventWithStacktraceNodeGuineaPig(10L, 2);
-    val thirdEvent = new EventWithStacktraceNodeGuineaPig(1L, 1);
+    val firstEvent = new EventWithStacktraceNodeGuineaPig(1, 3);
+    val secondEvent = new EventWithStacktraceNodeGuineaPig(10, 2);
+    val thirdEvent = new EventWithStacktraceNodeGuineaPig(1, 1);
 
     val eventArray = new EventArray[EventWithStacktraceNodeGuineaPig](Array(firstEvent, secondEvent, thirdEvent));
     val threadIdToStacktraceNodeArray = new HashMap[Long, Array[StacktraceNode]]();

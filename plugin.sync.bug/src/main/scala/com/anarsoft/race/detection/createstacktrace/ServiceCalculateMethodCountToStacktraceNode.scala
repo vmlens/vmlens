@@ -8,23 +8,23 @@ import scala.collection.mutable.{HashMap, ListBuffer, Map, Stack}
 class ServiceCalculateMethodCountToStacktraceNode {
 
 
-  def process(methodEventArray: EventArray[MethodEvent]): Map[Long, Array[StacktraceNode]] = {
-    val result = HashMap[Long, Array[StacktraceNode]]()
+  def process(methodEventArray: EventArray[MethodEvent]): Map[Int, Array[StacktraceNode]] = {
+    val result = HashMap[Int, Array[StacktraceNode]]()
     var currentList = ListBuffer[StacktraceNode]()
     var currentStack: Option[StacktraceNodeStack] = None;
 
     for (event <- methodEventArray) {
       currentStack = currentStack match {
         case None => {
-          Some(new StacktraceNodeStack(event.threadId))
+          Some(new StacktraceNodeStack(event.threadIndex))
         }
         case Some(x) => {
-          if (x.threadId == event.threadId) {
+          if (x.threadIndex == event.threadIndex) {
             Some(x);
           } else {
-            result.put(x.threadId, currentList.toArray)
+            result.put(x.threadIndex, currentList.toArray)
             currentList = ListBuffer[StacktraceNode]()
-            Some(new StacktraceNodeStack(event.threadId))
+            Some(new StacktraceNodeStack(event.threadIndex))
           }
         }
       }
@@ -34,7 +34,7 @@ class ServiceCalculateMethodCountToStacktraceNode {
     currentStack match {
       case None => {}
       case Some(x) => {
-        result.put(x.threadId, currentList.toArray)
+        result.put(x.threadIndex, currentList.toArray)
       }
     }
     result;

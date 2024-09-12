@@ -22,7 +22,6 @@ class EventBuilder(val runId: Int, val loopId: Int, val slidingWindowId: Int) {
   def add(volatileAccessEvent: VolatileAccessEventBuilder): Unit = {
     volatileAccessEvent.setRunId(runId);
     volatileAccessEvent.setLoopId(loopId);
-    volatileAccessEvent.setSlidingWindowId(slidingWindowId);
     volatileAccessEvent.setRunPosition(runPosition)
 
     volatileAccessEvent.setMethodCounter(methodCounter)
@@ -35,7 +34,6 @@ class EventBuilder(val runId: Int, val loopId: Int, val slidingWindowId: Int) {
   def add(methodEnterEvent: MethodEnterEventBuilder): Unit = {
     methodEnterEvent.setRunId(runId);
     methodEnterEvent.setLoopId(loopId);
-    methodEnterEvent.setSlidingWindowId(slidingWindowId);
 
     methodCounter = methodCounter + 1;
 

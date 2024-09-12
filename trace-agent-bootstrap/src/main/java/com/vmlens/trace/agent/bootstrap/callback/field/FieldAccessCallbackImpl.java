@@ -27,7 +27,10 @@ public class FieldAccessCallbackImpl {
 
     public Long field_access_from_generated_method(Object orig, Long offset, int
             fieldId, int methodId, int callbackId) {
-        return strategyArray[callbackId].field_access_from_generated_method(orig, offset, fieldId, methodId);
+        if (callbackId == 3) {
+            return strategyArray[callbackId].field_access_from_generated_method(orig, offset, fieldId, methodId);
+        }
+        return null;
     }
 
     public void field_access(Object orig, int fieldId, int methodId, int callbackId) {

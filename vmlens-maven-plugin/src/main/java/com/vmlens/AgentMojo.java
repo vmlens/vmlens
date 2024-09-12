@@ -72,8 +72,11 @@ public class AgentMojo
                 additionalArgs = "";
             }
 
-            projectProperties.setProperty(SUREFIRE_ARG_LINE, "-javaagent:\"" +
-                    agentDirectory.getAbsolutePath() + "/agent.jar\"  " + additionalArgs);
+            String agentVmArg = "-javaagent:\"" +
+                    agentDirectory.getAbsolutePath() + "/agent.jar\"  " + additionalArgs;
+            getLog().info(agentVmArg);
+
+            projectProperties.setProperty(SUREFIRE_ARG_LINE, agentVmArg);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

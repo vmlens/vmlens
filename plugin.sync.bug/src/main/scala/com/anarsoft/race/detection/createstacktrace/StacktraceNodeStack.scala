@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
 import scala.collection.mutable.{Map, Stack}
 
-class StacktraceNodeStack(val threadId: Long) {
+class StacktraceNodeStack(val threadIndex: Int) {
 
   private val stack = Stack[StacktraceNode]();
 

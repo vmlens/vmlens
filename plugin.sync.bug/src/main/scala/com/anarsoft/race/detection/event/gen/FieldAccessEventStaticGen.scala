@@ -17,7 +17,6 @@ class FieldAccessEventStaticGen(
                                  , val operation: Int
                                  , val methodId: Int
                                  , val stackTraceIncomplete: Boolean
-                                 , var stackTraceOrdinal: Int
                                  , val showSharedMemory: Boolean
                                  , val loopId: Int
                                  , val runId: Int
@@ -31,7 +30,6 @@ class FieldAccessEventStaticGen(
     text = text + ", operation:" + operation
     text = text + ", methodId:" + methodId
     text = text + ", stackTraceIncomplete:" + stackTraceIncomplete
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", showSharedMemory:" + showSharedMemory
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
@@ -58,9 +56,6 @@ class FieldAccessEventStaticGen(
           false;
         }
         else if (stackTraceIncomplete != that.stackTraceIncomplete) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (showSharedMemory != that.showSharedMemory) {
@@ -103,8 +98,6 @@ object FieldAccessEventStaticGen {
       } else {
         false
       }
-      ,
-      0
       ,
       if (data.get() == 1.asInstanceOf[Byte]) {
         true

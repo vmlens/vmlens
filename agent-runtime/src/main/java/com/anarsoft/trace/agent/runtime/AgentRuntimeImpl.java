@@ -72,86 +72,33 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				outputDir.mkdirs();
 			}
 
-
-
 			File dir = new File(outputFileName);
 
 			for (File file : dir.listFiles()) {
 				if (file.getName().endsWith(".vmlens")) {
 					file.delete();
 				}
-
 			}
 
 			LoadAtomicClassesFromClasspath.load();
 			Offset2FieldId.initialize();
 
-			String enableAgentLogException = properties.getProperty(AgentKeys.AGENT_LOG_EXCEPTION);
+            String enableAgentLogException = properties.getProperty(AgentKeys.AGENT_LOG_EXCEPTION);
 
+            if (enableAgentLogException != null && enableAgentLogException.trim().toLowerCase().equals("true")) {
+                AgentLogCallback.ENABLE_EXCEPTION_LOGGING = true;
+            }
 
-			if (enableAgentLogException != null && enableAgentLogException.trim().toLowerCase().equals("true")) {
-				AgentLogCallback.ENABLE_EXCEPTION_LOGGING = true;
-			}
-			
+            AgentController agentController = AgentController.create(outputFileName);
 
-
-			AgentController agentController = AgentController.create(outputFileName);
-
-            this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.Class2GetStateMap");
-			
-			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.getState.CreateGetState");
-			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.FieldAccessCallback");
-			this.getClass().getClassLoader()
-					.loadClass("com.vmlens.trace.agent.bootstrap.callback.SynchronizedStatementCallback");
-			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.ArrayAccessCallback");
-
-			this.getClass().getClassLoader()
-					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.CallbackObject");
-			this.getClass().getClassLoader()
-					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.CallbackStatic");
-			this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessAdapter");
-			this.getClass().getClassLoader()
-					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessImplNonVolatile");
-			this.getClass().getClassLoader()
-					.loadClass("com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessImplVolatile");
-
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.TLinkableAdapter");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.set.hash.THashSet");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.TLinkable");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.THashMap");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.TIntObjectHashMap");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.procedure.TIntObjectProcedure");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.set.hash.THashSet");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.TObjectIntHashMap");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.set.hash.THashSet");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.THashMap");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.set.hash.TIntHashSet");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.TObjectIntHashMap");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.TIntObjectHashMap");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.procedure.TIntObjectProcedure");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.procedure.TIntProcedure");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.set.hash.TIntHashSet");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.procedure.TIntObjectProcedure");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.TLinkable");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
-			this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.TObjectIntHashMap");
-			this.getClass().getClassLoader().loadClass("org.objectweb.asm.ConstantDynamic");
-			this.getClass().getClassLoader()
-			.loadClass("com.vmlens.trace.agent.bootstrap.callback.StackTraceBasedFilterCallback");
-			this.getClass().getClassLoader().loadClass("java.util.concurrent.locks.LockSupport");
+            new LoadClassesAtStart().loadClasses();
 
             instrument(inst, outputFileName);
             WriteEventToFile.startWriteEventToFileThread(outputFileName, agentController);
 
-
-		} catch (Throwable e) {
+        } catch (Throwable e) {
 			e.printStackTrace();
 		}
-
-
 	}
 
     private void retransform(Instrumentation inst,
@@ -209,7 +156,5 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		}
         inst.addTransformer(new AgentClassFileTransformer(false,
                 new WriteClassDescriptionNormal(), true, new HasGeneratedMethodsSetBased()), false);
-		
-
 	}
 }

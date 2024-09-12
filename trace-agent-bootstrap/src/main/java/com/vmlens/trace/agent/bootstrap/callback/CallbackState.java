@@ -18,7 +18,6 @@ public class CallbackState implements ParallelizeBridgeForCallback {
         }
     };
 
-
     @Override
     public void processRuntimeEventFactory(RuntimeEventFactory runtimeEventFactory) {
         callbackStateImpl.processRuntimeEventFactory(runtimeEventFactory,

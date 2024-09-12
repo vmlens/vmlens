@@ -15,7 +15,6 @@ class VolatileAccessEventStaticGen(
                                     , val order: Int
                                     , val fieldId: Int
                                     , val methodCounter: Int
-                                    , var stackTraceOrdinal: Int
                                     , val methodId: Int
                                     , val isWrite: Boolean
                                     , val loopId: Int
@@ -28,7 +27,6 @@ class VolatileAccessEventStaticGen(
     text = text + ", order:" + order
     text = text + ", fieldId:" + fieldId
     text = text + ", methodCounter:" + methodCounter
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", methodId:" + methodId
     text = text + ", isWrite:" + isWrite
     text = text + ", loopId:" + loopId
@@ -50,9 +48,6 @@ class VolatileAccessEventStaticGen(
           false;
         }
         else if (methodCounter != that.methodCounter) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (methodId != that.methodId) {
@@ -90,8 +85,6 @@ object VolatileAccessEventStaticGen {
       data.getInt()
       ,
       data.getInt()
-      ,
-      0
       ,
       data.getInt()
       ,

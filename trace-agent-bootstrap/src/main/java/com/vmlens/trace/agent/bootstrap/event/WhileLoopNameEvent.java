@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.util.Constants;
 
 import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
+import java.util.Objects;
 
 public class WhileLoopNameEvent implements SerializableEvent {
     private final int loopId;
@@ -26,5 +27,31 @@ public class WhileLoopNameEvent implements SerializableEvent {
     @Override
     public void serialize(ByteBuffer buffer) throws Exception {
         // ToDo
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WhileLoopNameEvent that = (WhileLoopNameEvent) o;
+
+        if (loopId != that.loopId) return false;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = loopId;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "WhileLoopNameEvent{" +
+                "loopId=" + loopId +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

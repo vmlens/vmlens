@@ -43,7 +43,7 @@ class DistributeEventsTest extends AnyFlatSpec with Matchers {
     captureLoopAndRunId.getAllValues.get(1) should be(LoopAndRunId(2, 2))
   }
 
-  private def event(loopId: Int, runId: Int) = new MethodEnterEventGen(1L, 1, 0,
+  private def event(loopId: Int, runId: Int) = new MethodEnterEventGen(1, 1, 0,
     loopId, runId, 0);
 
 }

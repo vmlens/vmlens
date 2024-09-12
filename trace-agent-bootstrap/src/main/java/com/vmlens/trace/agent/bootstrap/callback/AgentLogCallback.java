@@ -9,11 +9,11 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFac
 
 public class AgentLogCallback {
 
-	public static volatile boolean ENABLE_EXCEPTION_LOGGING = false;
-	
+    public static volatile boolean ENABLE_EXCEPTION_LOGGING = false;
 
-	public static void logException(Throwable exception)
-	{
+    private static volatile AgentApiCallbackImpl agentApiCallbackImpl = new AgentApiCallbackImpl();
+
+    public static void logException(Throwable exception) {
         if (ENABLE_EXCEPTION_LOGGING) {
 
             ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
@@ -50,16 +50,13 @@ public class AgentLogCallback {
 
     }
 
-    public static  void close(Object obj)
-	{
+    public static void close(Object obj) {
         ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-		parallelize().close(callbackStatePerThread, obj);
-	}
+        parallelize().close(callbackStatePerThread, obj);
+    }
 
-    public static boolean hasNext(Object obj)
-	{
-        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-		return parallelize().hasNext(callbackStatePerThread, obj);
-	}
+    public static boolean hasNext(Object obj) {
+        return agentApiCallbackImpl.hasNext(obj);
+    }
 
 }

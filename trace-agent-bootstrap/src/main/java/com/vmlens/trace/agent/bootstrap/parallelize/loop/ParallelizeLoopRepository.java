@@ -1,6 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
 import gnu.trove.map.hash.THashMap;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Adapter for the generic class @see gnu.trove.map.hash.THashMap
@@ -15,15 +17,16 @@ public class ParallelizeLoopRepository {
         this.parallelizeLoopFactory = parallelizeLoopFactory;
     }
 
-    public ParallelizeLoop getOrCreate(Object config) {
+    public Pair<ParallelizeLoop, Boolean> getOrCreate(Object config) {
         synchronized (lock) {
             ParallelizeLoop parallelizeLoop = object2ParallelizeLoop.get(config);
             if (parallelizeLoop == null) {
                 parallelizeLoop = parallelizeLoopFactory.create(maxLoopId);
                 maxLoopId++;
                 object2ParallelizeLoop.put(config, parallelizeLoop);
+                return new ImmutablePair(parallelizeLoop, true);
             }
-            return parallelizeLoop;
+            return new ImmutablePair(parallelizeLoop, false);
         }
     }
 

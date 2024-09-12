@@ -1,11 +1,9 @@
 package com.anarsoft.trace.agent.runtime.write;
 
-
 import com.anarsoft.trace.agent.runtime.process.AgentController;
 import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;
@@ -37,14 +35,12 @@ public class WriteEventToFile implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
     public void run() {
         testAndAddShutdownHook();
-        boolean process = false;
+        boolean process = true;
         while (process) {
             try {
                 Object in = CallbackState.eventQueue.queue().poll();
@@ -66,5 +62,4 @@ public class WriteEventToFile implements Runnable {
             close();
         }
     }
-
 }

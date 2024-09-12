@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.createstacktrace
 
 trait ThreadIdAndMethodCounter {
 
-  def threadId: Long;
+  def threadIndex: Int;
 
   def methodCounter: Int;
 

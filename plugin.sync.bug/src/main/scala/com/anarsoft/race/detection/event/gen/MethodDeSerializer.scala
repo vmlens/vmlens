@@ -10,10 +10,10 @@ import com.anarsoft.race.detection.event.syncAction.*
 
 import java.nio.ByteBuffer;
 
-class MethodDeSerializer extends LoadStrategy[LoadedMethodEvent] {
-  val blockSize = 25 * 10000;
-
+class MethodDeSerializer extends DeserializeStrategy[LoadedMethodEvent] {
   def eventArraySize() = 25
+
+  val blockSize = 25 * 10000;
 
 
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedMethodEvent = {

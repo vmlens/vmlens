@@ -8,7 +8,7 @@ class SetStacktraceNodeInEvent {
 
   def process(eventArray: EventArray[EventWithStacktraceNode], threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit = {
     for (event <- eventArray) {
-      event.setStacktraceNode(threadIdToStacktraceNodeArray.get(event.threadId).get.array(event.methodCounter));
+      event.setStacktraceNode(threadIdToStacktraceNodeArray.get(event.threadIndex).get.array(event.methodCounter));
     }
   }
 

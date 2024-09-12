@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.impl.{MethodEnterEventBuilder, Vol
 
 import scala.collection.mutable.Stack
 
-class EventBuilderForThread(private val threadId: Long, private val eventBuilder: EventBuilder) {
+class EventBuilderForThread(private val threadIndex: Int, private val eventBuilder: EventBuilder) {
 
   private val methodStack = new Stack[Int]();
   private var programCounter = 0;
@@ -15,7 +15,7 @@ class EventBuilderForThread(private val threadId: Long, private val eventBuilder
 
     val methodEnterEventBuilder = new MethodEnterEventBuilder();
     methodEnterEventBuilder.setMethodId(methodId);
-    methodEnterEventBuilder.setThreadId(threadId);
+    methodEnterEventBuilder.setThreadIndex(threadIndex);
     eventBuilder.add(methodEnterEventBuilder)
   }
 
@@ -31,7 +31,6 @@ class EventBuilderForThread(private val threadId: Long, private val eventBuilder
 
   private def addVolatileField(operation: Int, field: EventBuilderForSyncAction): Unit = {
     val event = new VolatileAccessEventBuilder();
-    event.setProgramCounter(programCounter);
     event.setOperation(operation);
 
     if (!methodStack.isEmpty) {

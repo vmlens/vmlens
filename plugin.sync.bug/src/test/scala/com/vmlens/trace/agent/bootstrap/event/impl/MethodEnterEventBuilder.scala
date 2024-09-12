@@ -7,13 +7,9 @@ class MethodEnterEventBuilder {
 
   val methodEnterEvent = new MethodEnterEvent();
 
-  def setSlidingWindowId(slidingWindowId: Int): MethodEnterEventBuilder = {
-    methodEnterEvent.setSlidingWindowId(slidingWindowId)
-    this
-  }
 
-  def setThreadId(threadId: Long): MethodEnterEventBuilder = {
-    methodEnterEvent.setThreadId(threadId)
+  def setThreadIndex(threadIndex: Int): MethodEnterEventBuilder = {
+    methodEnterEvent.setThreadIndex(threadIndex)
     this
   }
 
@@ -46,7 +42,7 @@ class MethodEnterEventBuilder {
 
 
   def buildScalaEvent(): MethodEnterEventGen = {
-    new MethodEnterEventGen(methodEnterEvent.threadId(),
+    new MethodEnterEventGen(methodEnterEvent.threadIndex(),
       methodEnterEvent.methodId(),
       methodEnterEvent.methodCounter(),
       methodEnterEvent.loopId(),

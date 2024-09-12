@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.impl.RunStartEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
@@ -46,8 +48,7 @@ public class ParallelizeLoop {
         }
     }
 
-    // Fixme erzeugen des in test thread local und test
-    public boolean hasNext(ThreadLocalForParallelize threadLocalForParallelize) {
+    public SerializableEvent hasNext(ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
             if (currentRun != null) {
@@ -62,10 +63,11 @@ public class ParallelizeLoop {
                             runContext, calculatedReun, actualRun), loopId, maxRunId);
                     threadLocalForParallelize.setThreadLocalDataWhenInTest(
                             runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
+                    int tempRunId = maxRunId;
                     maxRunId++;
-                    return true;
+                    return new RunStartEvent(loopId, tempRunId);
                 }
-                return false;
+                return null;
             } else {
                 ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
                 ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
@@ -73,8 +75,9 @@ public class ParallelizeLoop {
                         runContext, actualRun), loopId, maxRunId);
                 threadLocalForParallelize.setThreadLocalDataWhenInTest(
                         runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
+                int tempRunId = maxRunId;
                 maxRunId++;
-                return true;
+                return new RunStartEvent(loopId, tempRunId);
             }
         } finally {
             lock.unlock();
@@ -90,8 +93,7 @@ public class ParallelizeLoop {
         }
     }
 
-    // For Test
-    public Run currentRun() {
-        return currentRun;
+    public int loopId() {
+        return loopId;
     }
 }

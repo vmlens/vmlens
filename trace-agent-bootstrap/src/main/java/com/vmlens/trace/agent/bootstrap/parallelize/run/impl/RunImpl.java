@@ -30,7 +30,6 @@ public class RunImpl implements Run {
     public RuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
         lock.lock();
         try {
-            // Fixme send of the event better here?
             RuntimeEvent result = runStateMachine.after(action, threadLocalDataWhenInTest);
             if (result != null) {
                 result.setLoopId(loopId);
@@ -66,5 +65,6 @@ public class RunImpl implements Run {
     public ActualRun end(ThreadLocalForParallelize threadLocalForParallelize) {
         return runStateMachine.end(threadLocalForParallelize);
     }
+
 
 }

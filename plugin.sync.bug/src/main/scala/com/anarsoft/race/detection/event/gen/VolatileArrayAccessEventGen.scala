@@ -15,7 +15,6 @@ class VolatileArrayAccessEventGen(
                                    , val order: Int
                                    , val index: Long
                                    , val methodCounter: Int
-                                   , var stackTraceOrdinal: Int
                                    , val methodId: Int
                                    , val operation: Int
                                    , val objectHashCode: Long
@@ -29,7 +28,6 @@ class VolatileArrayAccessEventGen(
     text = text + ", order:" + order
     text = text + ", index:" + index
     text = text + ", methodCounter:" + methodCounter
-    text = text + ", stackTraceOrdinal:" + stackTraceOrdinal
     text = text + ", methodId:" + methodId
     text = text + ", operation:" + operation
     text = text + ", objectHashCode:" + objectHashCode
@@ -52,9 +50,6 @@ class VolatileArrayAccessEventGen(
           false;
         }
         else if (methodCounter != that.methodCounter) {
-          false;
-        }
-        else if (stackTraceOrdinal != that.stackTraceOrdinal) {
           false;
         }
         else if (methodId != that.methodId) {
@@ -95,8 +90,6 @@ object VolatileArrayAccessEventGen {
       data.getLong()
       ,
       data.getInt()
-      ,
-      0
       ,
       data.getInt()
       ,

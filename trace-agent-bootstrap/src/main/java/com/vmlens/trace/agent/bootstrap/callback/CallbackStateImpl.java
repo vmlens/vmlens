@@ -6,9 +6,7 @@ import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEventFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
-
 public class CallbackStateImpl {
-
     public void processRuntimeEventFactory(RuntimeEventFactory runtimeEventFactory,
                                            ThreadLocalForParallelize threadLocal,
                                            QueueIn queueIn) {
@@ -19,11 +17,9 @@ public class CallbackStateImpl {
                 if (serializableEvent != null) {
                     queueIn.offer(serializableEvent);
                 }
-
             } finally {
                 dataWhenInTest.stopCallbackProcessing();
             }
         }
     }
-
 }

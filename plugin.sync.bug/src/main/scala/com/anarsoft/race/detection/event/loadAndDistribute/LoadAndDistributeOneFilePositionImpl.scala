@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.loadAndDistribute
 
 import com.anarsoft.race.detection.event.distribute.{DistributeEvents, EventWithLoopAndRunId, LoadedEventContext}
-import com.anarsoft.race.detection.event.gen.MethodDeserializer
+import com.anarsoft.race.detection.event.gen.MethodDeSerializer
 import com.anarsoft.race.detection.event.load.{DeserializeEvents, DeserializeStrategy, FilePosition, LoadOneFilePosition}
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
 import com.anarsoft.race.detection.process.load.LoadAndDistributeOneFilePosition
@@ -32,7 +32,7 @@ class LoadAndDistributeOneFilePositionImpl[EVENT <: EventWithLoopAndRunId](val l
 
 object LoadAndDistributeOneFilePositionImpl {
 
-  def method(dir: Path): DirTypeNameAndLoadAndDistributeOneFilePosition = create[LoadedMethodEvent](dir, "method", new MethodDeserializer(),
+  def method(dir: Path): DirTypeNameAndLoadAndDistributeOneFilePosition = create[LoadedMethodEvent](dir, "method", new MethodDeSerializer(),
     () => {
       new LoadedMethodEventContext()
     });

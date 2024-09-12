@@ -222,68 +222,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
     }
 
-    /*
-                ClassReader classReader = new ClassReader(classfileBuffer); // | ClassWriter.COMPUTE_FRAMES
-            // ClassWriter.COMPUTE_MAXS
-            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS); // //
 
-            if (name.equals("java/lang/Thread")) {
-                ClassVisitorCreateDesc classVisitorCreateDesc = new ClassVisitorCreateDesc(name, filterList);
-                classReader.accept(classVisitorCreateDesc, 0);
-
-                ClassVisitor classVisitor = new ClassTransformerTraceClassThread(cw, name, filterList, callBackStrings,
-                        classVisitorCreateDesc, writeClassDescription);
-
-                classReader.accept(classVisitor, 0);
-                return cw.toByteArray();
-            }
-
-            if (name.equals("com/vmlens/api/AgentLog")) {
-                ClassVisitor classVisitor = new ClassTransformerTraceVmlensApi(cw);
-                classReader.accept(classVisitor, 0);
-                return cw.toByteArray();
-            }
-
-            if (name.equals("com/vmlens/api/Agent")) {
-                ClassVisitor classVisitor = new ClassTransformerTraceVmlensApi(cw);
-                classReader.accept(classVisitor, 0);
-                return cw.toByteArray();
-            }
-
-            if (name.equals("com/vmlens/api/AllInterleavings")) {
-                ClassVisitor classVisitor = new ClassTransformerTraceVmlensApi(cw);
-                classReader.accept(classVisitor, 0);
-                return cw.toByteArray();
-            }
-
-
-            if (doNotTraceIn(name)) {
-
-                ClassVisitorCreateDesc classVisitorCreateDesc = new ClassVisitorCreateDesc(name, filterList);
-
-                classReader.accept(classVisitorCreateDesc, 0);
-
-                ClassVisitor classVisitor = new ClassTransformerTraceClassLoader(cw, name, filterList, callBackStrings,
-                        classVisitorCreateDesc, writeClassDescription);
-                classReader.accept(classVisitor, 0);
-
-                return cw.toByteArray();
-            }
-
-            if (name.startsWith("java/util/concurrent/")) {
-
-                if (!transformConcurrent(classReader, cw, name, filterList)) {
-                    return null;
-                }
-
-            } else {
-                transform(classReader, cw, name, filterList);
-            }
-
-
-            return cw.toByteArray();
-
-     */
 
     private boolean transformConcurrent(ClassReader classReader, ClassWriter cw, String name) {
 

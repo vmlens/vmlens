@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event.impl
 
 import com.anarsoft.race.detection.event.gen.VolatileAccessEventGen
-import com.vmlens.trace.agent.bootstrap.event.SendEventContext
 
 class VolatileAccessEventBuilder {
 
@@ -24,16 +23,6 @@ class VolatileAccessEventBuilder {
 
   def setMethodCounter(methodCounter: Int): VolatileAccessEventBuilder = {
     volatileAccessEvent.setMethodCounter(methodCounter)
-    this
-  }
-
-  def setProgramCounter(programCounter: Int): VolatileAccessEventBuilder = {
-    volatileAccessEvent.setProgramCounter(programCounter)
-    this
-  }
-
-  def setSlidingWindowId(slidingWindowId: Int): VolatileAccessEventBuilder = {
-    volatileAccessEvent.setSlidingWindowId(slidingWindowId)
     this
   }
 
@@ -63,8 +52,8 @@ class VolatileAccessEventBuilder {
     this
   }
 
-  def setThreadId(threadId: Long): VolatileAccessEventBuilder = {
-    volatileAccessEvent.setThreadId(threadId)
+  def setThreadIndex(threadIndex: Int): VolatileAccessEventBuilder = {
+    volatileAccessEvent.setThreadIndex(threadIndex)
     this
   }
 
@@ -72,12 +61,10 @@ class VolatileAccessEventBuilder {
 
 
   def buildScalaEvent(): VolatileAccessEventGen = {
-    new VolatileAccessEventGen(volatileAccessEvent.threadId(),
-      volatileAccessEvent.programCounter(),
+    new VolatileAccessEventGen(volatileAccessEvent.threadIndex(),
       volatileAccessEvent.order(),
       volatileAccessEvent.fieldId(),
       volatileAccessEvent.methodCounter(),
-      volatileAccessEvent.slidingWindowId(),
       volatileAccessEvent.methodId(),
       volatileAccessEvent.operation(),
       volatileAccessEvent.objectHashCode(),

@@ -46,7 +46,6 @@ public class CallbackStateImplTest {
 
         // When
         eventList.clear();
-        ;
         callbackStateImpl.processRuntimeEventFactory(runtimeEventFactoryMock, threadLocalForParallelize, queueIn);
 
         // Then
