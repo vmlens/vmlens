@@ -32,7 +32,6 @@ public class RunStateMachineImplStartThreadTest {
         ThreadStartEvent threadStartEvent = (ThreadStartEvent) runtimeEvent;
         assertThat(threadStartEvent.threadIndex(), is(EXPECTED_THREAD_INDEX));
 
-
         assertThat(testFixture.runStateMachine().isActive(testFixture.mainTestThread()), is(false));
 
         // When
@@ -41,8 +40,5 @@ public class RunStateMachineImplStartThreadTest {
         // Then
         assertThat(startedThread.getThreadLocalDataWhenInTest(), is(notNullValue()));
         assertThat(startedThread.getThreadLocalDataWhenInTest().threadIndex(), is(expectedStartedThreadIndex));
-
-
     }
-
 }

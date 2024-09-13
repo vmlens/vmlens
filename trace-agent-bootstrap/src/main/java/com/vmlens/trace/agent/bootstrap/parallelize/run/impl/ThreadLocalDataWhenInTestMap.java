@@ -7,7 +7,6 @@ import gnu.trove.map.hash.TLongObjectHashMap;
 
 public class ThreadLocalDataWhenInTestMap {
     private int maxThreadIndex;
-
     // Package Visible for Test
     final TLongObjectHashMap<ThreadLocalDataWhenInTest> threadIdToState = new TLongObjectHashMap<>();
 
@@ -17,18 +16,14 @@ public class ThreadLocalDataWhenInTestMap {
         maxThreadIndex++;
         return threadLocalDataWhenInTest;
     }
-
     public ThreadLocalDataWhenInTest createForStartedThread(Run run, long threadId, int newThreadIndex) {
         ThreadLocalDataWhenInTest threadLocalDataWhenInTest = new ThreadLocalDataWhenInTest(run, newThreadIndex);
         threadIdToState.put(threadId, threadLocalDataWhenInTest);
         return threadLocalDataWhenInTest;
     }
-
     int getThreadIndexForNewTestThread() {
         int temp = maxThreadIndex;
         maxThreadIndex++;
         return temp;
     }
-
-
 }

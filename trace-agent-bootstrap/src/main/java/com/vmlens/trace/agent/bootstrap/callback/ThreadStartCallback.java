@@ -2,11 +2,9 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 public class ThreadStartCallback {
 
+    private static volatile ThreadStartCallbackImpl threadStartCallbackImpl = new ThreadStartCallbackImpl();
+
     public static void threadStart(Object newThread) {
-        // Fixme
-        //CallbackStatePerThreadForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-        //parallelize().beforeThreadStart(callbackStatePerThread, new RunnableOrThreadWrapper(newThread));
+        threadStartCallbackImpl.threadStart(newThread);
     }
-
-
 }

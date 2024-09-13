@@ -13,7 +13,6 @@ public interface RunStateMachine {
     ThreadLocalDataWhenInTest processNewTestTask(RunnableOrThreadWrapper newWrapper,
                                                  ThreadLocalForParallelize threadLocalForParallelize,
                                                  Run run);
-
     void setStateRecording();
 
     ActualRun end(ThreadLocalForParallelize threadLocalForParallelize);

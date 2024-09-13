@@ -1,10 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.action;
 
 
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ActionContext;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizeAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateAndRuntimeEvent;
 
 public class ParallelizeActionForThreadStart implements ParallelizeAction {
 
@@ -15,8 +16,6 @@ public class ParallelizeActionForThreadStart implements ParallelizeAction {
         this.startedThread = startedThread;
         this.threadIndex = threadIndex;
     }
-
-
     @Override
     public RunStateAndRuntimeEvent execute(ActionContext context) {
         ThreadStartEvent threadStartEvent = new ThreadStartEvent();
