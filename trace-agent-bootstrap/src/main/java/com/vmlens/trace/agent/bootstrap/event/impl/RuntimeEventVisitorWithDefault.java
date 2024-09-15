@@ -16,7 +16,5 @@ public abstract class RuntimeEventVisitorWithDefault implements RuntimeEventVisi
     public void visit(ThreadJoinedEvent threadJoinedEvent) {
         defaultMethod(threadJoinedEvent);
     }
-
     protected abstract void defaultMethod(RuntimeEvent runtimeEvent);
-
 }

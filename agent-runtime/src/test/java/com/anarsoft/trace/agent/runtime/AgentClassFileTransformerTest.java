@@ -1,9 +1,6 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.vmlens.trace.agent.bootstrap.callback.FieldAccessCallback;
-import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
-import com.vmlens.trace.agent.bootstrap.callback.SynchronizedStatementCallback;
-import com.vmlens.trace.agent.bootstrap.callback.SynchronizedStatementCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.*;
 import com.vmlens.trace.agent.bootstrap.callback.field.FieldAccessCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.method.MethodCallbackImpl;
@@ -39,7 +36,10 @@ public class AgentClassFileTransformerTest {
     @Test
     public void withAllInterleavings() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
+        AgentApiCallbackImpl agentApiCallbackImplMock = mock(AgentApiCallbackImpl.class);
+        AgentLogCallback.setAgentApiCallbackImpl(agentApiCallbackImplMock);
         runTest("WithAllInterleavings");
+        verify(agentApiCallbackImplMock).hasNext(any());
 
     }
 

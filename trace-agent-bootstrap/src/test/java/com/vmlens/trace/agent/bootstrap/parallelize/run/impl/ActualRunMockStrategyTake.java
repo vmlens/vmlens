@@ -6,6 +6,14 @@ public class ActualRunMockStrategyTake implements ActualRunMockStrategy {
 
     private int runPosition;
 
+    public ActualRunMockStrategyTake(int runPosition) {
+        this.runPosition = runPosition;
+    }
+
+    public ActualRunMockStrategyTake() {
+        this(0);
+    }
+
     @Override
     public InterleaveInfo cteateInterleaveInfo() {
         int temp = runPosition;

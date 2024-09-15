@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 public interface RunStateMachine {
     boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
 
-    RuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
+    RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
 
     ThreadLocalDataWhenInTest processNewTestTask(RunnableOrThreadWrapper newWrapper,
                                                  ThreadLocalForParallelize threadLocalForParallelize,

@@ -12,13 +12,7 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements RuntimeEv
         this.threadIndex = threadIndex;
     }
 
-    public long joinedThreadId() {
-        return joinedThreadId;
-    }
 
-    public void setJoinedThreadId(long joinedThreadId) {
-        this.joinedThreadId = joinedThreadId;
-    }
 
     public int methodCounter() {
         return methodCounter;

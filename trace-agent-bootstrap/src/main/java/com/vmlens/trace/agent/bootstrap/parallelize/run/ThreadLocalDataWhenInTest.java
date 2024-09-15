@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.action.ParallelizeActionForRuntimeEvent;
+
 
 /**
  * Set when the current thread is in a vmlens unit test
@@ -26,9 +26,9 @@ public class ThreadLocalDataWhenInTest extends PerThreadCounter {
     // Can be null when the runtime event should not be serialized
     public SerializableEvent after(RuntimeEvent runtimeEventIn) {
         runtimeEventIn.setThreadIndex(threadIndex);
-        RuntimeEvent result = run.after(new ParallelizeActionForRuntimeEvent(runtimeEventIn), this);
+        RuntimeEvent result = run.after(runtimeEventIn, this);
         if (result != null) {
-            result.setMethodCounter(incrementAndGetMethodCount());
+            result.accept(new SetMethodCounterVisitor(this));
         }
         return result;
     }
@@ -44,7 +44,6 @@ public class ThreadLocalDataWhenInTest extends PerThreadCounter {
     public void stopCallbackProcessing() {
         inCallbackProcessing = false;
     }
-
 
     // public for test
     public int threadIndex() {

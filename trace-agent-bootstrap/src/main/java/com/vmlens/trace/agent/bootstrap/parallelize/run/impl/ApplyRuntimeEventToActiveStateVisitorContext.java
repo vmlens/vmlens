@@ -1,8 +1,9 @@
-package com.vmlens.trace.agent.bootstrap.parallelize.run;
+package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
 
-public interface ActionContext {
+public interface ApplyRuntimeEventToActiveStateVisitorContext {
 
     RunState current();
 

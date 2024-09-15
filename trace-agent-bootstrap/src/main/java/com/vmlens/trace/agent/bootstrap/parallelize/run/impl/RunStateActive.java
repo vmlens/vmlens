@@ -1,11 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
+import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 
-public class RunStateActive implements RunState, ActionContext {
+public class RunStateActive implements RunState, ApplyRuntimeEventToActiveStateVisitorContext {
 
     private final ActualRun actualRun;
     private final ActiveStrategy activeStrategy;
@@ -29,10 +30,18 @@ public class RunStateActive implements RunState, ActionContext {
     }
 
     @Override
-    public RunStateAndRuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
-        RunStateAndRuntimeEvent result = action.execute(this);
+    public RunStateAndRuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        ApplyRuntimeEventToActiveStateVisitor visitor = new ApplyRuntimeEventToActiveStateVisitor(this);
+        runtimeEvent.accept(visitor);
+        RunStateAndRuntimeEvent result = visitor.result();
+
         return new RunStateAndRuntimeEvent(result.runState(),
-                callAfterForRuntimeEvent.after(result.runtimeEvent(), actualRun));
+                processRuntimeEvent(result.runtimeEvent()));
+    }
+
+    // for Test
+    public RuntimeEvent processRuntimeEvent(RuntimeEvent runtimeEvent) {
+        return callAfterForRuntimeEvent.after(runtimeEvent, actualRun);
     }
 
     @Override

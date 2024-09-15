@@ -1,18 +1,18 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.directMemory.*
-import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.monitor.*
-import com.anarsoft.race.detection.event.nonVolatileField.*
-import com.anarsoft.race.detection.event.syncAction.*
-
 import java.nio.ByteBuffer;
+
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.syncAction._;
+import com.anarsoft.race.detection.event.monitor._;
+import com.anarsoft.race.detection.event.nonVolatileField._;
+import com.anarsoft.race.detection.event.directMemory._;
+import com.anarsoft.race.detection.event.interleave._;
 
 
 class ThreadJoinedEventGen(
                             val threadIndex: Int
-                            , val joinedThreadId: Long
+                            , val joinedThreadIndex: Int
                             , val methodCounter: Int
                             , val loopId: Int
                             , val runId: Int
@@ -21,7 +21,7 @@ class ThreadJoinedEventGen(
   override def toString() = {
     var text = "ThreadJoinedEventGen"
     text = text + ", threadIndex:" + threadIndex
-    text = text + ", joinedThreadId:" + joinedThreadId
+    text = text + ", joinedThreadIndex:" + joinedThreadIndex
     text = text + ", methodCounter:" + methodCounter
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
@@ -35,7 +35,7 @@ class ThreadJoinedEventGen(
         if (threadIndex != that.threadIndex) {
           false;
         }
-        else if (joinedThreadId != that.joinedThreadId) {
+        else if (joinedThreadIndex != that.joinedThreadIndex) {
           false;
         }
         else if (methodCounter != that.methodCounter) {
@@ -65,7 +65,7 @@ object ThreadJoinedEventGen {
 
       data.getInt()
       ,
-      data.getLong()
+      data.getInt()
       ,
       data.getInt()
       ,

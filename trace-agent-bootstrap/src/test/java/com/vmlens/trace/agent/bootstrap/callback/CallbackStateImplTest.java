@@ -18,7 +18,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CallbackStateImplTest {
-
     @Test
     public void processRuntimeEvent() {
         // Given
@@ -31,7 +30,6 @@ public class CallbackStateImplTest {
         ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L);
         ThreadLocalDataWhenInTest threadLocalDataWhenInTest = new ThreadLocalDataWhenInTest(new RunMock(), THREAD_INDEX);
         threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalDataWhenInTest);
-
 
         List<SerializableEvent> eventList = new LinkedList<>();
         QueueIn queueIn = new QueueInMock(eventList);
@@ -50,10 +48,6 @@ public class CallbackStateImplTest {
 
         // Then
         volatileAccessEvent = (VolatileAccessEvent) eventList.get(0);
-        // Fixme wrong should be 0 only for method enter/exit 1
-        assertThat(volatileAccessEvent.methodCounter(), is(1));
-
+        assertThat(volatileAccessEvent.methodCounter(), is(0));
     }
-
-
 }

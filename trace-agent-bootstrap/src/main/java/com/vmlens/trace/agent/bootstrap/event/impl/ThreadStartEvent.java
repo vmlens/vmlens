@@ -1,8 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.event.impl;
 
 import com.vmlens.trace.agent.bootstrap.event.gen.ThreadStartEventGen;
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEvent {
+
+    private RunnableOrThreadWrapper startedThread;
+
+    public ThreadStartEvent(RunnableOrThreadWrapper startedThread) {
+        this.startedThread = startedThread;
+    }
 
     public int threadIndex() {
         return threadIndex;
@@ -12,14 +19,6 @@ public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEven
         this.threadIndex = threadIndex;
     }
 
-    public long startedThreadId() {
-        return startedThreadId;
-    }
-
-    public void setStartedThreadId(long startedThreadId) {
-        this.startedThreadId = startedThreadId;
-    }
-
     public int methodCounter() {
         return methodCounter;
     }
@@ -27,6 +26,15 @@ public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEven
     public void setMethodCounter(int methodCounter) {
         this.methodCounter = methodCounter;
     }
+
+    public int startedThreadIndex() {
+        return startedThreadIndex;
+    }
+
+    public void setStartedThreadIndex(int startedThreadIndex) {
+        this.startedThreadIndex = startedThreadIndex;
+    }
+
 
     public int loopId() {
         return loopId;
@@ -50,6 +58,10 @@ public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEven
 
     public void setRunPosition(int runPosition) {
         this.runPosition = runPosition;
+    }
+
+    public RunnableOrThreadWrapper startedThread() {
+        return startedThread;
     }
 
     @Override

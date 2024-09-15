@@ -14,8 +14,8 @@ public class RunTestAdapter implements Run {
     }
 
     @Override
-    public RuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
-        return runStateMachine.after(action, threadLocalDataWhenInTest);
+    public RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        return runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest);
     }
 
     @Override

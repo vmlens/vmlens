@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.action.ParallelizeActionForThreadStart;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import org.junit.Test;
 
@@ -24,13 +23,11 @@ public class RunStateMachineImplStartThreadTest {
         testFixture.runContext().getThreadIndexForNewTestThread();
         int expectedStartedThreadIndex = testFixture.runContext().getThreadIndexForNewTestThread() + 1;
 
-        // When
-        RuntimeEvent runtimeEvent = testFixture.runStateMachine().after(new ParallelizeActionForThreadStart(runnableOrThreadWrapper, EXPECTED_THREAD_INDEX),
-                testFixture.mainTestThread());
+        ThreadStartEvent startEvent = new ThreadStartEvent(runnableOrThreadWrapper);
 
-        // Then
-        ThreadStartEvent threadStartEvent = (ThreadStartEvent) runtimeEvent;
-        assertThat(threadStartEvent.threadIndex(), is(EXPECTED_THREAD_INDEX));
+        // When
+        RuntimeEvent runtimeEvent = testFixture.runStateMachine().after(startEvent,
+                testFixture.mainTestThread());
 
         assertThat(testFixture.runStateMachine().isActive(testFixture.mainTestThread()), is(false));
 

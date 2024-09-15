@@ -27,8 +27,8 @@ public class RunStateMachineImpl implements RunStateMachine {
     }
 
     @Override
-    public RuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
-        RunStateAndRuntimeEvent result = currentState.after(action, threadLocalDataWhenInTest);
+    public RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+        RunStateAndRuntimeEvent result = currentState.after(runtimeEvent, threadLocalDataWhenInTest);
         currentState = result.runState();
         return result.runtimeEvent();
     }

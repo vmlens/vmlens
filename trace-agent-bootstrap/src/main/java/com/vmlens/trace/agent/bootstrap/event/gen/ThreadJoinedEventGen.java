@@ -1,13 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-
 import java.nio.ByteBuffer;
+
+import com.vmlens.trace.agent.bootstrap.event.*;
+
+import java.io.DataOutputStream;
 
 public class ThreadJoinedEventGen {
 
     protected int threadIndex;
-    protected long joinedThreadId;
+    protected int joinedThreadIndex;
     protected int methodCounter;
     protected int loopId;
     protected int runId;
@@ -20,7 +22,7 @@ public class ThreadJoinedEventGen {
 
         ThreadJoinedEventGen that = (ThreadJoinedEventGen) o;
         if (threadIndex != that.threadIndex) return false;
-        if (joinedThreadId != that.joinedThreadId) return false;
+        if (joinedThreadIndex != that.joinedThreadIndex) return false;
         if (methodCounter != that.methodCounter) return false;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
@@ -32,7 +34,7 @@ public class ThreadJoinedEventGen {
     public String toString() {
         return "ThreadJoinedEventGen{" +
                 "threadIndex=" + threadIndex +
-                "joinedThreadId=" + joinedThreadId +
+                "joinedThreadIndex=" + joinedThreadIndex +
                 "methodCounter=" + methodCounter +
                 "loopId=" + loopId +
                 "runId=" + runId +
@@ -43,14 +45,14 @@ public class ThreadJoinedEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.syncActions.
-                getByteBuffer(29, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(25, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 19);
         buffer.putInt(threadIndex);
-        buffer.putLong(joinedThreadId);
+        buffer.putInt(joinedThreadIndex);
         buffer.putInt(methodCounter);
         buffer.putInt(loopId);
         buffer.putInt(runId);

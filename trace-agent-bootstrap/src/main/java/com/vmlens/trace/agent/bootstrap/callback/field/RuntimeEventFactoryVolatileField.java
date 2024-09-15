@@ -24,7 +24,7 @@ public class RuntimeEventFactoryVolatileField implements RuntimeEventFactory {
     }
 
     @Override
-    public RuntimeEvent create() {
+    public VolatileAccessEvent create() {
         ObjectState state = getAndUpdateVolatileObjectState.getOrCreate(orig);
         ObjectIdAndOrder objectIdAndOrder = state.getAndIncrementOrder(fieldId);
         VolatileAccessEvent volatileAccessEvent = new VolatileAccessEvent();

@@ -27,10 +27,10 @@ public class RunImpl implements Run {
         this.runId = runId;
     }
 
-    public RuntimeEvent after(ParallelizeAction action, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+    public RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
         lock.lock();
         try {
-            RuntimeEvent result = runStateMachine.after(action, threadLocalDataWhenInTest);
+            RuntimeEvent result = runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest);
             if (result != null) {
                 result.setLoopId(loopId);
                 result.setRunId(runId);

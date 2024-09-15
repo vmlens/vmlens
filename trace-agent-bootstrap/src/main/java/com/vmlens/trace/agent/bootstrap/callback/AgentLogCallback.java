@@ -13,6 +13,10 @@ public class AgentLogCallback {
 
     private static volatile AgentApiCallbackImpl agentApiCallbackImpl = new AgentApiCallbackImpl();
 
+    public static void setAgentApiCallbackImpl(AgentApiCallbackImpl agentApiCallbackImpl) {
+        AgentLogCallback.agentApiCallbackImpl = agentApiCallbackImpl;
+    }
+
     public static void logException(Throwable exception) {
         if (ENABLE_EXCEPTION_LOGGING) {
 
