@@ -14,6 +14,6 @@ public class SetMethodCounterVisitor extends RuntimeEventVisitorWithDefault {
 
     @Override
     protected void defaultMethod(RuntimeEvent runtimeEvent) {
-        runtimeEvent.setRunPosition(perThreadCounter.methodCount());
+        runtimeEvent.setMethodCounter(perThreadCounter.methodCount());
     }
 }
