@@ -28,7 +28,7 @@ public class ThreadLocalDataWhenInTest extends PerThreadCounter {
         runtimeEventIn.setThreadIndex(threadIndex);
         RuntimeEvent result = run.after(runtimeEventIn, this);
         if (result != null) {
-            result.accept(new SetMethodCounterVisitor(this));
+            result.accept(new SetValuesAfterParallelizeProcessingVisitor(this));
         }
         return result;
     }

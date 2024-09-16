@@ -64,6 +64,10 @@ public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEven
         return startedThread;
     }
 
+    public void setStartedThreadToNull() {
+        startedThread = null;
+    }
+
     @Override
     public void accept(RuntimeEventVisitor visitor) {
         visitor.visit(this);
