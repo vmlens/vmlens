@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import java.nio.ByteBuffer;
-
 import com.vmlens.trace.agent.bootstrap.event.*;
-
 import java.io.DataOutputStream;
 
 public class VolatileDirectMemoryEventGen {
@@ -51,7 +49,7 @@ public class VolatileDirectMemoryEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.directMemory.
-                getByteBuffer(37, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 37, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 

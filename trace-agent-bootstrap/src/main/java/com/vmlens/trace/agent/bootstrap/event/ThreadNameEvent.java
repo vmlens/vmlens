@@ -39,8 +39,4 @@ public class ThreadNameEvent implements SerializableEvent {
         stream.flush();
     }
 
-    @Override
-    public void serialize(ByteBuffer buffer) throws Exception {
-        // ToDo
-    }
 }

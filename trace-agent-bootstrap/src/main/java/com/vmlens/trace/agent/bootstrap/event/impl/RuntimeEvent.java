@@ -3,6 +3,8 @@ package com.vmlens.trace.agent.bootstrap.event.impl;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 
+import java.nio.ByteBuffer;
+
 public interface RuntimeEvent extends SerializableEvent {
 
 
@@ -17,5 +19,7 @@ public interface RuntimeEvent extends SerializableEvent {
     void setRunPosition(int runPosition);
 
     void accept(RuntimeEventVisitor visitor);
+
+    void serialize(ByteBuffer buffer) throws Exception;
 
 }

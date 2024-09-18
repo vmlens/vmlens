@@ -1,8 +1,8 @@
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UILoop.java
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UIStacktraceElement.java
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UIRunElement.java
 C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\dataView\MemoryAccessReportBuilder.java
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\process\CreateOneReport.java
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\dataView\SyncActionReportBuilder.java
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\dataView\StacktraceNodeView.java
 C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\dataView\MemoryAccessView.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\dataView\StacktraceNodeView.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\dataView\SyncActionReportBuilder.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UILoop.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UIRunElement.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UIStacktraceElement.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\process\CreateOneReport.java

@@ -20,8 +20,4 @@ public class AgentLogEvent implements SerializableEvent {
         stream.flush();
     }
 
-    @Override
-    public void serialize(ByteBuffer buffer) throws Exception {
-        // ToDo
-    }
 }

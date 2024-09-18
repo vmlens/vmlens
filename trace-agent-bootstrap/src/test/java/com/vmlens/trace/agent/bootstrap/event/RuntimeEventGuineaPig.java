@@ -54,17 +54,17 @@ public class RuntimeEventGuineaPig implements RuntimeEvent {
     }
 
     @Override
-    public void serialize(ByteBuffer buffer) throws Exception {
-
-    }
-
-    @Override
     public void setMethodCounter(int methodCounter) {
 
     }
 
     @Override
     public void accept(RuntimeEventVisitor visitor) {
+
+    }
+
+    @Override
+    public void serialize(ByteBuffer buffer) throws Exception {
 
     }
 }

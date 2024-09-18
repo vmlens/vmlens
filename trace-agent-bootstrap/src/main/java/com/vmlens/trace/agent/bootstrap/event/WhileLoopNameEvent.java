@@ -25,11 +25,6 @@ public class WhileLoopNameEvent implements SerializableEvent {
     }
 
     @Override
-    public void serialize(ByteBuffer buffer) throws Exception {
-        // ToDo
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

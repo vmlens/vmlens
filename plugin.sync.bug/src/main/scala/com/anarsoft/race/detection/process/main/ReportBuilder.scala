@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.process.main
 
-import com.anarsoft.race.detection.report.RunReportBuilder
+import com.anarsoft.race.detection.reportbuilder.RunReportBuilder
 
 /**
  *

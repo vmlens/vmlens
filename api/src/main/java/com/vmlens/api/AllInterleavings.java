@@ -28,7 +28,7 @@ package com.vmlens.api;
 public class AllInterleavings implements AutoCloseable {
 
 	/**
-	 * The name shown in the interleave report.
+     * The name shown in the interleave reportbuilder.
 	 * 
 	 */
 	public final String name;
@@ -78,8 +78,8 @@ public class AllInterleavings implements AutoCloseable {
 	/**
 	 * Creates a new AllInterleavings instance. To set non default values use {@link AllInterleavingsBuilder}
 	 * 
-	 * 
-	 * @param name The name shown in the interleave report.
+	 *
+     * @param name The name shown in the interleave reportbuilder.
 	 */
 	
 	public AllInterleavings(String name) {
@@ -109,8 +109,8 @@ public class AllInterleavings implements AutoCloseable {
 	/**
 	 * 
 	 * Create a new {@link AllInterleavingsBuilder}.
-	 * 
-	 * @param name The name shown in the interleave report.
+	 *
+     * @param name The name shown in the interleave reportbuilder.
 	 * @return A new {@link AllInterleavingsBuilder}
 	 */
 	

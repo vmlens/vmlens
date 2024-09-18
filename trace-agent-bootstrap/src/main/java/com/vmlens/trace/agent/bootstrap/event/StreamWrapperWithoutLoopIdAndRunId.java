@@ -7,12 +7,12 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 
-public class StreamWrapperWithoutSlidingWindow  extends AbstractStreamWrapper  {
+public class StreamWrapperWithoutLoopIdAndRunId extends AbstractStreamWrapper {
 	protected DataOutputStream stream;
 	protected final String eventDir;
 	protected final String name;
 
-    public StreamWrapperWithoutSlidingWindow(
+    public StreamWrapperWithoutLoopIdAndRunId(
             String eventDir, String name, TLinkedList<AbstractStreamWrapper> list) {
         super(list);
 

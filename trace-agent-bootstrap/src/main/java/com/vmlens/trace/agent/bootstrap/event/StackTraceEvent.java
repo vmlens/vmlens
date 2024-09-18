@@ -39,10 +39,4 @@ public class StackTraceEvent implements SerializableEvent {
         }
     }
 
-    @Override
-    public void serialize(ByteBuffer buffer) throws Exception {
-        // ToDo
-    }
-
-
 }

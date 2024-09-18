@@ -72,7 +72,7 @@ public class AllInterleavingsBuilder {
 	}
 	
 	/**
-	 * Show statements in the interleave report also when only one thread is currently running.
+     * Show statements in the interleave reportbuilder also when only one thread is currently running.
 	 * 
 	 * Statements are synchronization actions and when {@link #showNonVolatileSharedMemoryAccess} was called also non volatile memory access. 
 	 *
@@ -87,7 +87,7 @@ public class AllInterleavingsBuilder {
 	}
 	
 	/**
-	 * Show statements in the interleave report when inside one of the methods of classes implementing java.util.concurrent.Executor 
+     * Show statements in the interleave reportbuilder when inside one of the methods of classes implementing java.util.concurrent.Executor 
 	 * like java.util.concurrent.ThreadPoolExecutor or java.util.concurrent.ForkJoinPool
 	 * 
 	 * Statements are synchronization actions and when {@link #showNonVolatileSharedMemoryAccess} was called also non volatile memory access. 
@@ -103,8 +103,8 @@ public class AllInterleavingsBuilder {
 	
 	
 	/**
-	 * 
-	 * Also show non volatile memory access in the interleave report. 
+	 *
+     * Also show non volatile memory access in the interleave reportbuilder. 
 	 * 
 	 * @return This builder
 	 */

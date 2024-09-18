@@ -9,7 +9,7 @@ import scala.collection.mutable.ArrayBuffer
 
 class EventBuilder(val runId: Int, val loopId: Int, val slidingWindowId: Int) {
 
-  val javaSyncActions = new ArrayBuffer[SerializableEvent]();
+  val javaSyncActions = new ArrayBuffer[RuntimeEvent]();
   val volatileAccessEvents = new ArrayBuffer[VolatileAccessEventGen]();
 
   val methodJavaEvents = new ArrayBuffer[RuntimeEvent]();

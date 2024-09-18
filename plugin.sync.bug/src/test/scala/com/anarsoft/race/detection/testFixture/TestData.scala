@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent
 
 
-case class TestData(syncActionJavaEvents: List[SerializableEvent], volatileAccessEvents: List[VolatileAccessEventGen],
+case class TestData(syncActionJavaEvents: List[RuntimeEvent], volatileAccessEvents: List[VolatileAccessEventGen],
                     methodJavaEvents: List[RuntimeEvent], methodEvents: List[LoadedMethodEvent]) {
 
 }

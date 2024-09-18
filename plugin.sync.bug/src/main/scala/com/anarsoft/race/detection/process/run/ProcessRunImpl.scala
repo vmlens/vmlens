@@ -1,11 +1,12 @@
 package com.anarsoft.race.detection.process.run
 
 import com.anarsoft.race.detection.process.loopAndRunData.RunData
-import com.anarsoft.race.detection.report.LoopReportBuilder
+import com.anarsoft.race.detection.reportbuilder.RunReportBuilder
+import com.anarsoft.race.detection.process.main.ProcessRun
 
-class ProcessRun {
+class ProcessRunImpl extends ProcessRun {
 
-  def process(runData: RunData, loopReportBuilder: LoopReportBuilder): Unit = {
+  def process(runData: RunData, runReportBuilder: RunReportBuilder): Unit = {
     /*
     check run terminated (e.g. junit assertion failed)
     should process

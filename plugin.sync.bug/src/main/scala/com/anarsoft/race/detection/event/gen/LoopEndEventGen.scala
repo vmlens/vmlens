@@ -12,11 +12,13 @@ import com.anarsoft.race.detection.event.interleave._;
 
 class LoopEndEventGen(
                        val loopId: Int
+                       , val runId: Int
                        , val status: Int
                      ) extends LoopEndEvent {
   override def toString() = {
     var text = "LoopEndEventGen"
     text = text + ", loopId:" + loopId
+    text = text + ", runId:" + runId
     text = text + ", status:" + status
     text;
   }
@@ -25,6 +27,9 @@ class LoopEndEventGen(
     other match {
       case that: LoopEndEventGen => {
         if (loopId != that.loopId) {
+          false;
+        }
+        else if (runId != that.runId) {
           false;
         }
         else if (status != that.status) {
@@ -43,6 +48,8 @@ object LoopEndEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new LoopEndEventGen(
 
+      data.getInt()
+      ,
       data.getInt()
       ,
       data.getInt()

@@ -40,15 +40,6 @@ public class ClassDescription implements SerializableEvent {
         (new SerializeDescription()).serialize(this, streamRepository.description.getStream());
     }
 
-    @Override
-    public void serialize(ByteBuffer buffer) throws Exception {
-
-    }
-
-    public void writeToStream(DataOutputStream stream) throws Exception {
-        (new SerializeDescription()).serialize(this, stream);
-    }
-
     public MethodDescription[] getMethodArray() {
         return methodArray;
     }

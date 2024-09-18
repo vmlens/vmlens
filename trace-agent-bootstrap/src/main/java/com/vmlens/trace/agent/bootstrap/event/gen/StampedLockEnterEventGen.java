@@ -55,7 +55,7 @@ public class StampedLockEnterEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.syncActions.
-                getByteBuffer(38, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 38, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
