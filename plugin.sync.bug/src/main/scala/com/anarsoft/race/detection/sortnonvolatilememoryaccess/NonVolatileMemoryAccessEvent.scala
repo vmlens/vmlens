@@ -1,9 +1,16 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.processeventbytype.EventWithType
+import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
 import com.anarsoft.race.detection.util.WithPosition
-import com.vmlens.report.dataView.MemoryAccessView
+import org.apache.commons.lang3.BooleanUtils
 
-trait NonVolatileMemoryAccessEvent[EVENT] extends EventWithType[EVENT] with WithPosition with MemoryAccessView {
+
+trait NonVolatileMemoryAccessEvent[EVENT] extends EventWithType[EVENT] with WithPosition {
   def isRead: Boolean;
+
+  def addAsDataRace(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit;
+
+  def add(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit;
+  
 }

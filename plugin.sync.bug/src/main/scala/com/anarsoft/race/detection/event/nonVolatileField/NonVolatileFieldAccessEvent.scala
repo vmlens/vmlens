@@ -1,9 +1,10 @@
 package com.anarsoft.race.detection.event.nonVolatileField
 
+import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
 import com.anarsoft.race.detection.setstacktrace.EventWithStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
+import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
 
 trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
   with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEvent]
@@ -33,4 +34,14 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
   def isRead: Boolean = {
     (operation | MemoryAccessType.IS_READ) == 1;
   }
+
+  def add(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
+    builder.add(this);
+  }
+
+  def addAsDataRace(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
+    builder.addAsDataRace(this);
+  }
+  
+  
 }

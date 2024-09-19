@@ -2,6 +2,9 @@ package com.anarsoft.race.detection.process.run
 
 import com.anarsoft.race.detection.event.gen.FieldAccessEventGen
 import com.anarsoft.race.detection.event.nonVolatileField.NonVolatileFieldAccessEvent
+import com.anarsoft.race.detection.nonvolatilememoryaccessgroup.NonVolatileMemoryAccessElementForProcessBuilder
+import com.anarsoft.race.detection.process.loopAndRunData.{LoopAndRunId, RunData}
+import com.anarsoft.race.detection.reportbuilder.RunReportBuilder
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -21,6 +24,8 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     val loopId = 0;
     val runId = 0;
 
+    val loopIdAndRunId = LoopAndRunId(loopId, runId);
+
     val read = new FieldAccessEventGen(threadIndex, fieldId, methodCounter,
       MemoryAccessType.IS_READ, methodId, objectHashCode, loopId, runId, 0);
     val write = new FieldAccessEventGen(threadIndex, fieldId, methodCounter,
@@ -29,10 +34,18 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     val list = new util.LinkedList[NonVolatileFieldAccessEvent]();
     list.add(read)
     list.add(write);
+    val builder = new NonVolatileMemoryAccessElementForProcessBuilder();
 
+    val processRunImpl = new ProcessRunImpl();
+    val runReportBuilder = new RunReportBuilderMock();
+    
     // When
+    builder.add(list);
+    val nonVolatileElements = builder.build();
 
-
+    val runData = RunData.forLoopAndRun(loopIdAndRunId).copy(nonVolatileMemoryAccessElements = nonVolatileElements);
+    processRunImpl.process(runData, runReportBuilder);
+    
     //Then
 
   }

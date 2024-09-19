@@ -1,10 +1,10 @@
 package com.anarsoft.race.detection.nonvolatilememoryaccessgroup
 
+import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
 import com.anarsoft.race.detection.setstacktrace.{EventWithStacktraceNode, SetStacktraceNodeInEvent}
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.{NonVolatileMemoryAccessEvent, PartialOrder, SortNonVolatileMemoryAccess}
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
-import com.vmlens.report.dataView.MemoryAccessReportBuilder
 
 class NonVolatileMemoryAccessElementForProcessImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT] with EventWithStacktraceNode]
 (eventArray: EventArray[EVENT]) extends NonVolatileMemoryAccessElementForProcess {
@@ -13,7 +13,7 @@ class NonVolatileMemoryAccessElementForProcessImpl[EVENT <: NonVolatileMemoryAcc
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
   }
 
-  def sort(partialOrder: PartialOrder, sortedListBuilder: MemoryAccessReportBuilder): Unit = {
+  def sort(partialOrder: PartialOrder, sortedListBuilder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
     new SortNonVolatileMemoryAccess[EVENT]().sort(eventArray, partialOrder, sortedListBuilder);
   }
 

@@ -1,6 +1,7 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
-import com.vmlens.report.dataView.{MemoryAccessReportBuilder, MemoryAccessView}
+import com.anarsoft.race.detection.event.nonVolatileField.NonVolatileFieldAccessEvent
+import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -8,21 +9,21 @@ import scala.collection.mutable.ArrayBuffer
 
 class SortedMemoryAccessListTest extends AnyFlatSpec with Matchers {
 
-  private class MemoryAccessReportBuilderMock extends MemoryAccessReportBuilder {
+  private class RunReportForNonVolatileMemoryAccessBuilderMock extends RunReportForNonVolatileMemoryAccessBuilder {
     val dataRaceList = new ArrayBuffer[Boolean]();
 
-    override def addMemoryAccess(event: MemoryAccessView): Unit = {
+    override def add(event: NonVolatileFieldAccessEvent): Unit = {
       dataRaceList.append(false);
     }
 
-    override def addDataRace(event: MemoryAccessView): Unit = {
+    override def addAsDataRace(event: NonVolatileFieldAccessEvent): Unit = {
       dataRaceList.append(true);
     }
   }
 
   "SortedMemoryAccessList" should "swt a data race in both memory access events" in {
     // Given
-    val memoryAccessReportBuilder = new MemoryAccessReportBuilderMock();
+    val memoryAccessReportBuilder = new RunReportForNonVolatileMemoryAccessBuilderMock();
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder();
     val sortedMemoryAccessList = new SortedMemoryAccessList[NonVolatileMemoryAccessEventGuineaPig]()
 
