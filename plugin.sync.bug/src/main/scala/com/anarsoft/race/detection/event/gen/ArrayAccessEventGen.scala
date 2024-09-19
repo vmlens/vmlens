@@ -1,13 +1,13 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.monitor.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.monitor._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class ArrayAccessEventGen(
@@ -16,11 +16,9 @@ class ArrayAccessEventGen(
                            , val methodCounter: Int
                            , val operation: Int
                            , val methodId: Int
-                           , val stackTraceIncomplete: Boolean
                            , val objectHashCode: Long
                            , val position: Int
                            , val classId: Int
-                           , val showSharedMemory: Boolean
                            , val loopId: Int
                            , val runId: Int
                            , val runPosition: Int
@@ -32,11 +30,9 @@ class ArrayAccessEventGen(
     text = text + ", methodCounter:" + methodCounter
     text = text + ", operation:" + operation
     text = text + ", methodId:" + methodId
-    text = text + ", stackTraceIncomplete:" + stackTraceIncomplete
     text = text + ", objectHashCode:" + objectHashCode
     text = text + ", position:" + position
     text = text + ", classId:" + classId
-    text = text + ", showSharedMemory:" + showSharedMemory
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
     text = text + ", runPosition:" + runPosition
@@ -61,9 +57,6 @@ class ArrayAccessEventGen(
         else if (methodId != that.methodId) {
           false;
         }
-        else if (stackTraceIncomplete != that.stackTraceIncomplete) {
-          false;
-        }
         else if (objectHashCode != that.objectHashCode) {
           false;
         }
@@ -71,9 +64,6 @@ class ArrayAccessEventGen(
           false;
         }
         else if (classId != that.classId) {
-          false;
-        }
-        else if (showSharedMemory != that.showSharedMemory) {
           false;
         }
         else if (loopId != that.loopId) {
@@ -108,23 +98,11 @@ object ArrayAccessEventGen {
       ,
       data.getInt()
       ,
-      if (data.get() == 1.asInstanceOf[Byte]) {
-        true
-      } else {
-        false
-      }
-      ,
       data.getLong()
       ,
       data.getInt()
       ,
       data.getInt()
-      ,
-      if (data.get() == 1.asInstanceOf[Byte]) {
-        true
-      } else {
-        false
-      }
       ,
       data.getInt()
       ,

@@ -37,7 +37,7 @@ class EventArray[+EVENT](private[this] val array: Array[EVENT]) {
     case _ => false
   }
 
-  private def canEqual(other: Any): Boolean = other.isInstanceOf[EventArray[EVENT]]
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[EventArray[_]]
 
   private def arrayLength() = array.length;
 

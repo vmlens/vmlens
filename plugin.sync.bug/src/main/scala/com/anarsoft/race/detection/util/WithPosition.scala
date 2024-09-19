@@ -2,8 +2,8 @@ package com.anarsoft.race.detection.util
 
 trait WithPosition {
 
-  def threadId: Long;
+  def threadIndex: Int;
 
-  def positionInRun: Int;
+  def runPosition: Int;
 
 }

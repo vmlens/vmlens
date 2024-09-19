@@ -5,7 +5,7 @@ class SyncActionEventOrdering[EVENT <: SyncActionEvent[EVENT]] extends Ordering[
     if (x.compareType(y) != 0) {
       x.compareType(y)
     } else {
-      x.positionInRun.compare(y.positionInRun);
+      x.runPosition.compare(y.runPosition);
     }
   }
 }

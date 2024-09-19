@@ -3,15 +3,15 @@ package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 class MemoryAccessEventBuilder {
 
   var positionInRun = 0;
-  var threadId = 1L;
+  var threadIndex = 1;
   var typeId = 1;
 
   def incrementPositionInRun(delta: Int): Unit = {
     positionInRun = positionInRun + delta;
   }
 
-  def threadId(threadId: Long): MemoryAccessEventBuilder = {
-    this.threadId = threadId;
+  def threadId(threadIndex: Int): MemoryAccessEventBuilder = {
+    this.threadIndex = threadIndex;
     this;
   }
 
@@ -21,13 +21,13 @@ class MemoryAccessEventBuilder {
   }
 
   def read(): NonVolatileMemoryAccessEventGuineaPig = {
-    val result = new NonVolatileMemoryAccessEventGuineaPig(typeId, true, positionInRun, threadId);
+    val result = new NonVolatileMemoryAccessEventGuineaPig(typeId, true, positionInRun, threadIndex);
     positionInRun = positionInRun + 1;
     result;
   }
 
   def write(): NonVolatileMemoryAccessEventGuineaPig = {
-    val result = new NonVolatileMemoryAccessEventGuineaPig(typeId, false, positionInRun, threadId);
+    val result = new NonVolatileMemoryAccessEventGuineaPig(typeId, false, positionInRun, threadIndex);
     positionInRun = positionInRun + 1;
     result;
   }

@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
 import java.nio.ByteBuffer;
-import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class ArrayAccessEventGen {
 
@@ -11,11 +12,9 @@ public class ArrayAccessEventGen {
     protected int methodCounter;
     protected int operation;
     protected int methodId;
-    protected boolean stackTraceIncomplete;
     protected long objectHashCode;
     protected int position;
     protected int classId;
-    protected boolean showSharedMemory;
     protected int loopId;
     protected int runId;
     protected int runPosition;
@@ -31,11 +30,9 @@ public class ArrayAccessEventGen {
         if (methodCounter != that.methodCounter) return false;
         if (operation != that.operation) return false;
         if (methodId != that.methodId) return false;
-        if (stackTraceIncomplete != that.stackTraceIncomplete) return false;
         if (objectHashCode != that.objectHashCode) return false;
         if (position != that.position) return false;
         if (classId != that.classId) return false;
-        if (showSharedMemory != that.showSharedMemory) return false;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
         if (runPosition != that.runPosition) return false;
@@ -50,11 +47,9 @@ public class ArrayAccessEventGen {
                 "methodCounter=" + methodCounter +
                 "operation=" + operation +
                 "methodId=" + methodId +
-                "stackTraceIncomplete=" + stackTraceIncomplete +
                 "objectHashCode=" + objectHashCode +
                 "position=" + position +
                 "classId=" + classId +
-                "showSharedMemory=" + showSharedMemory +
                 "loopId=" + loopId +
                 "runId=" + runId +
                 "runPosition=" + runPosition +
@@ -64,7 +59,7 @@ public class ArrayAccessEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.field.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 51, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 49, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
@@ -75,11 +70,9 @@ public class ArrayAccessEventGen {
         buffer.putInt(methodCounter);
         buffer.putInt(operation);
         buffer.putInt(methodId);
-        buffer.put((byte) (stackTraceIncomplete ? 1 : 0));
         buffer.putLong(objectHashCode);
         buffer.putInt(position);
         buffer.putInt(classId);
-        buffer.put((byte) (showSharedMemory ? 1 : 0));
         buffer.putInt(loopId);
         buffer.putInt(runId);
         buffer.putInt(runPosition);

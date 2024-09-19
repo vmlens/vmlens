@@ -7,12 +7,12 @@ import scala.collection.mutable.HashMap
 
 class FindTransitiveLeftBeforeRightAlgorithm(private val partialOrderContainer: PartialOrderContainer) {
 
-  private val alreadySeen = new HashMap[Long, Int]();
-  private var processInNextStep = new HashMap[Long, Int]();
+  private val alreadySeen = new HashMap[Int, Int]();
+  private var processInNextStep = new HashMap[Int, Int]();
 
   /**
    * Algorithm: Start with right. Use all related left threads. Process till
-   * positionInRun is smaller than left.positionInRun or an order was found
+   * runPosition is smaller than left.runPosition or an order was found
    *
    */
   def isLeftBeforeRight(left: WithPosition, right: WithPosition) = {
@@ -21,12 +21,12 @@ class FindTransitiveLeftBeforeRightAlgorithm(private val partialOrderContainer: 
 
     while (!processInNextStep.isEmpty && !relationFound) {
       val current = processInNextStep;
-      processInNextStep = new HashMap[Long, Int]()
+      processInNextStep = new HashMap[Int, Int]()
       for (elem <- current) {
         partialOrderContainer.foreachMaxDirectBefore(pos(elem._2, elem._1),
           (currentLeft) => {
-            if (currentLeft.threadId == left.threadId) {
-              if (currentLeft.positionInRun >= left.positionInRun) {
+            if (currentLeft.threadIndex == left.threadIndex) {
+              if (currentLeft.runPosition >= left.runPosition) {
                 relationFound = true
               }
             } else {
@@ -40,16 +40,16 @@ class FindTransitiveLeftBeforeRightAlgorithm(private val partialOrderContainer: 
   }
 
   private def next(pos: WithPosition): Unit = {
-    alreadySeen.get(pos.threadId) match {
+    alreadySeen.get(pos.threadIndex) match {
       case None => {
-        processInNextStep.put(pos.threadId, pos.positionInRun)
-        alreadySeen.put(pos.threadId, pos.positionInRun)
+        processInNextStep.put(pos.threadIndex, pos.runPosition)
+        alreadySeen.put(pos.threadIndex, pos.runPosition)
       }
 
       case Some(x) => {
-        if (x < pos.positionInRun) {
-          processInNextStep.put(pos.threadId, pos.positionInRun)
-          alreadySeen.put(pos.threadId, pos.positionInRun)
+        if (x < pos.runPosition) {
+          processInNextStep.put(pos.threadIndex, pos.runPosition)
+          alreadySeen.put(pos.threadIndex, pos.runPosition)
         }
       }
     }

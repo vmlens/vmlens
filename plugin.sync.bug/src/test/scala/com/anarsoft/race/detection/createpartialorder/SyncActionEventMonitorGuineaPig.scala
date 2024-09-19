@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.createpartialorder
 
-class SyncActionEventMonitorGuineaPig(val isEnter: Boolean, val positionInRun: Int,
-                                      val threadId: Long) extends SyncActionEvent[SyncActionEventMonitorGuineaPig] {
+class SyncActionEventMonitorGuineaPig(val isEnter: Boolean, val runPosition: Int,
+                                      val threadIndex: Int) extends SyncActionEvent[SyncActionEventMonitorGuineaPig] {
 
   override def compareType(other: SyncActionEventMonitorGuineaPig): Int = 0
 
@@ -9,15 +9,15 @@ class SyncActionEventMonitorGuineaPig(val isEnter: Boolean, val positionInRun: I
     case that: SyncActionEventMonitorGuineaPig =>
       (that canEqual this) &&
         isEnter == that.isEnter &&
-        positionInRun == that.positionInRun &&
-        threadId == that.threadId
+        runPosition == that.runPosition &&
+        threadIndex == that.threadIndex
     case _ => false
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[SyncActionEventMonitorGuineaPig]
 
   override def hashCode(): Int = {
-    val state = Seq(isEnter, positionInRun, threadId)
+    val state = Seq(isEnter, runPosition, threadIndex)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 }

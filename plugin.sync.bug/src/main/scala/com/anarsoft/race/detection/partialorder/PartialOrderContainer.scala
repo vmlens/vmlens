@@ -7,26 +7,26 @@ import scala.collection.mutable.{HashMap, HashSet}
 
 class PartialOrderContainer {
 
-  private val allLeftThreadIds = new HashSet[Long]();
-  private val threadIdToPartialOrderBetweenTwoThreads = new HashMap[LeftRightThreadId, LeftBeforeRightPerThread]();
+  private val allLeftThreadIndices = new HashSet[Int]();
+  private val threadIndexToPartialOrderBetweenTwoThreads = new HashMap[LeftRightThreadIndex, LeftBeforeRightPerThread]();
 
 
   def foreachMaxDirectBefore(right: WithPosition, f: (WithPosition) => Unit): Unit = {
-    for (leftThreadId <- allLeftThreadIds) {
-      if (right.threadId != leftThreadId) {
-        threadIdToPartialOrderBetweenTwoThreads
-          .get(LeftRightThreadId(leftThreadId, right.threadId))
-          .foreach(order => order.maxPositionForKeyBefore(right.positionInRun)
-            .foreach(posInRun => f(pos(posInRun, leftThreadId))));
+    for (leftThreadIndex <- allLeftThreadIndices) {
+      if (right.threadIndex != leftThreadIndex) {
+        threadIndexToPartialOrderBetweenTwoThreads
+          .get(LeftRightThreadIndex(leftThreadIndex, right.threadIndex))
+          .foreach(order => order.maxPositionForKeyBefore(right.runPosition)
+            .foreach(posInRun => f(pos(posInRun, leftThreadIndex))));
       }
     }
   }
 
   def addLeftBeforeRight(left: WithPosition, right: WithPosition): Unit = {
-    allLeftThreadIds.add(left.threadId);
-    val order = threadIdToPartialOrderBetweenTwoThreads
-      .getOrElseUpdate(LeftRightThreadId(left.threadId, right.threadId), new LeftBeforeRightPerThread());
-    order.addLeftBeforeRight(left.positionInRun, right.positionInRun);
+    allLeftThreadIndices.add(left.threadIndex);
+    val order = threadIndexToPartialOrderBetweenTwoThreads
+      .getOrElseUpdate(LeftRightThreadIndex(left.threadIndex, right.threadIndex), new LeftBeforeRightPerThread());
+    order.addLeftBeforeRight(left.runPosition, right.runPosition);
   }
 
 }

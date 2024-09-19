@@ -12,27 +12,27 @@ class ThreadIdToLastSortableEventTest extends AnyFlatSpec with Matchers {
 
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder();
 
-    val firstReadThreadOne = memoryAccessEventBuilder.threadId(1L).read();
+    val firstReadThreadOne = memoryAccessEventBuilder.threadId(1).read();
     threadIdToLastSortableEvent.foreachOppositeAndPut(firstReadThreadOne, (previous) => {
       fail();
     })
 
-    val firstReadThreadTwo = memoryAccessEventBuilder.threadId(10L).read();
+    val firstReadThreadTwo = memoryAccessEventBuilder.threadId(10).read();
     threadIdToLastSortableEvent.foreachOppositeAndPut(firstReadThreadTwo, (previous) => {
       fail();
     })
 
-    val firstWriteThreadOne = memoryAccessEventBuilder.threadId(1L).write();
+    val firstWriteThreadOne = memoryAccessEventBuilder.threadId(1).write();
     threadIdToLastSortableEvent.foreachOppositeAndPut(firstWriteThreadOne, (previous) => {
       previous should be(firstReadThreadTwo)
     })
 
-    val secondWriteThreadOne = memoryAccessEventBuilder.threadId(1L).write();
+    val secondWriteThreadOne = memoryAccessEventBuilder.threadId(1).write();
     threadIdToLastSortableEvent.foreachOppositeAndPut(secondWriteThreadOne, (previous) => {
       previous should be(firstReadThreadTwo)
     })
 
-    val secondReadThreadTwo = memoryAccessEventBuilder.threadId(10L).read();
+    val secondReadThreadTwo = memoryAccessEventBuilder.threadId(10).read();
     threadIdToLastSortableEvent.foreachOppositeAndPut(secondReadThreadTwo, (previous) => {
       previous should be(secondWriteThreadOne)
     })

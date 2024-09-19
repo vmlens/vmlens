@@ -15,7 +15,7 @@ private class SortedMemoryAccessList[EVENT] {
   def addDataRace(alreadyAdded: NonVolatileMemoryAccessEvent[EVENT],
                   newMemoryAccess: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
     for (elem <- list) {
-      if (elem.positionInRun == alreadyAdded.positionInRun) {
+      if (elem.positionInRun == alreadyAdded.runPosition) {
         elem.isDataRace = true;
       }
     }

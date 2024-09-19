@@ -10,9 +10,9 @@ class CreatePartialOrderTest extends AnyFlatSpec with Matchers {
 
   "CreatePartialOrder" should "call PartialOrderBuilder for monitor enter after exit" in {
     // Given
-    val monitorEnterMainThread = new SyncActionEventMonitorGuineaPig(true, 1, 1L);
-    val monitorExitMainThread = new SyncActionEventMonitorGuineaPig(false, 2, 1L);
-    val monitorEnterWorkerThread = new SyncActionEventMonitorGuineaPig(true, 3, 10L);
+    val monitorEnterMainThread = new SyncActionEventMonitorGuineaPig(true, 1, 1);
+    val monitorExitMainThread = new SyncActionEventMonitorGuineaPig(false, 2, 1);
+    val monitorEnterWorkerThread = new SyncActionEventMonitorGuineaPig(true, 3, 10);
 
     val eventArray = new EventArray[SyncActionEventMonitorGuineaPig](Array(monitorEnterWorkerThread, monitorEnterMainThread, monitorExitMainThread));
     val partialOrderBuilderMock = mock(classOf[PartialOrderBuilder]);

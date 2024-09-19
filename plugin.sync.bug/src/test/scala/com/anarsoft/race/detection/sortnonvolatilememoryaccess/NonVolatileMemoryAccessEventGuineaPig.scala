@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 class NonVolatileMemoryAccessEventGuineaPig(val typeId: Int, val isRead: Boolean,
-                                            val positionInRun: Int, val threadId: Long)
+                                            val runPosition: Int, val threadIndex: Int)
   extends NonVolatileMemoryAccessEvent[NonVolatileMemoryAccessEventGuineaPig] {
 
   override def compareType(other: NonVolatileMemoryAccessEventGuineaPig): Int = typeId.compareTo(other.typeId)

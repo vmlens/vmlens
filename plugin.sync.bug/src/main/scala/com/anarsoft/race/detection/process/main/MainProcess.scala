@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.process.main
 
 class MainProcess(val loadDescription: LoadDescription,
                   val processDescription: ProcessDescription,
-                  val loadEvents: LoadRuns,
+                  val loadRuns: LoadRuns,
                   val processRun: ProcessRun,
                   val reportBuilder: ReportBuilder) {
   def process(): Unit = {
@@ -11,5 +11,4 @@ class MainProcess(val loadDescription: LoadDescription,
 
 
   }
-
 }
