@@ -16,13 +16,12 @@ class ProcessEventByTypeTest extends AnyFlatSpec with Matchers {
     processEventByType.process(new EventArray(array));
 
     // Then
-    algorithmForEventMock.createdAlgorithm(0).processed should be(1);
-    algorithmForEventMock.createdAlgorithm(1).processed should be(1);
+    algorithmForEventMock.createdAlgorithm(0).processed should be(2);
+    algorithmForEventMock.createdAlgorithm(1).processed should be(2);
   }
 
-
   private def event(category: Int, position: Int): EventWithTypeGuineaPig = {
-    new EventWithTypeGuineaPig(category, position, true)
+    new EventWithTypeGuineaPig(category, position)
   }
 
 }
