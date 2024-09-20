@@ -8,7 +8,7 @@ class CreatePartialOrder[EVENT <: SyncActionEvent[EVENT]](val createContainer: (
 
   def process(syncActionEvents: EventArray[EVENT], partialOrderBuilder: PartialOrderBuilder): Unit = {
     syncActionEvents.sort(new SyncActionEventOrdering[EVENT]);
-    val algorithm = new AlgorithmForEventCreatePartialOrder[EVENT](partialOrderBuilder, createContainer);
+    val algorithm = new AlgorithmForOneTypeFactoryCreatePartialOrder[EVENT](partialOrderBuilder, createContainer);
     val process = new ProcessEventByType[EVENT](algorithm);
     process.process(syncActionEvents);
   }

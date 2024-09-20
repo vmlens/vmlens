@@ -13,7 +13,8 @@ class ThreadIdToLastSortableEvent[EVENT <: WithPosition](newContainer: (EVENT) =
     put(elem);
   }
 
-  private def foreachOpposite(elem: EVENT, f: (EVENT) => Unit): Unit = {
+
+  def foreachOpposite(elem: EVENT, f: (EVENT) => Unit): Unit = {
     map.foreach((tuple) => {
       if (tuple._1 != elem.threadIndex) {
         tuple._2.foreachOpposite(elem, f);
@@ -22,7 +23,7 @@ class ThreadIdToLastSortableEvent[EVENT <: WithPosition](newContainer: (EVENT) =
     );
   }
 
-  private def put(elem: EVENT): Unit = {
+  def put(elem: EVENT): Unit = {
     val newElement =
       map.get(elem.threadIndex) match {
         case None => {

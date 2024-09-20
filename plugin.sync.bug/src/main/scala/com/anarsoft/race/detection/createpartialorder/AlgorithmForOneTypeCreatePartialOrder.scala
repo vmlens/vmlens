@@ -10,12 +10,13 @@ class AlgorithmForOneTypeCreatePartialOrder[EVENT <: SyncActionEvent[EVENT]]
 
   val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[EVENT](createContainer);
 
-  override def prozess(event: EVENT): Boolean = {
+  override def prozess(event: EVENT): Unit = {
     threadIdToLastSortableEvent.foreachOppositeAndPut(event, previous => {
       partialOrderBuilder.addLeftBeforeRight(previous, event);
     });
-    true;
   }
 
+  override def stop(): Unit = {
 
+  }
 }

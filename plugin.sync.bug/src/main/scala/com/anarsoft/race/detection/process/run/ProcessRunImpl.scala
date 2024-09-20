@@ -1,8 +1,9 @@
 package com.anarsoft.race.detection.process.run
 
+import com.anarsoft.race.detection.partialorder.{PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.loopAndRunData.RunData
-import com.anarsoft.race.detection.reportbuilder.RunReportBuilder
 import com.anarsoft.race.detection.process.main.ProcessRun
+import com.anarsoft.race.detection.reportbuilder.RunReportBuilder
 
 class ProcessRunImpl extends ProcessRun {
 
@@ -19,7 +20,11 @@ class ProcessRunImpl extends ProcessRun {
     add runBuilder to loop builder
      */
 
+    val partialOrder = new PartialOrderImpl(new PartialOrderContainer());
 
+    for (nonVolatileElement <- runData.nonVolatileMemoryAccessElements) {
+      nonVolatileElement.sort(partialOrder, runReportBuilder)
+    }
   }
 
 }

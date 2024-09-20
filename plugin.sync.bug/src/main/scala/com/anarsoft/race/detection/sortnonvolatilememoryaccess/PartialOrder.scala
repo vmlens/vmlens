@@ -4,6 +4,6 @@ import com.anarsoft.race.detection.util.WithPosition
 
 trait PartialOrder {
 
-  def leftBeforeRight(left: WithPosition, right: WithPosition): Boolean;
+  def isLeftBeforeRight(left: WithPosition, right: WithPosition): Boolean;
 
 }

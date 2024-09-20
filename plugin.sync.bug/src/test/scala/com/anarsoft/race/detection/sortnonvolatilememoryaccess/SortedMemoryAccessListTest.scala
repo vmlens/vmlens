@@ -36,7 +36,9 @@ class SortedMemoryAccessListTest extends AnyFlatSpec with Matchers {
 
     sortedMemoryAccessList.add(memoryAccessEventBuilder.read());
     memoryAccessEventBuilder.incrementPositionInRun(12);
-    sortedMemoryAccessList.addDataRace(firstDataRaceElement, memoryAccessEventBuilder.read());
+    sortedMemoryAccessList.setDataRace(firstDataRaceElement);
+    sortedMemoryAccessList.addDataRace(memoryAccessEventBuilder.read());
+
     sortedMemoryAccessList.add(memoryAccessEventBuilder.read());
 
     sortedMemoryAccessList.buildResult(memoryAccessReportBuilder)

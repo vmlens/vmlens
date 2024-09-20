@@ -7,20 +7,23 @@ import scala.collection.mutable.ArrayBuffer
 
 private class SortedMemoryAccessList[EVENT] {
 
-  private val list = new ArrayBuffer[SortedMemoryAccessListElement[EVENT]]();
+  // Visible for test
+  val list = new ArrayBuffer[SortedMemoryAccessListElement[EVENT]]();
 
   def add(memoryAccess: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
     list.append(new SortedMemoryAccessListElement[EVENT](false, memoryAccess));
   }
 
-  def addDataRace(alreadyAdded: NonVolatileMemoryAccessEvent[EVENT],
-                  newMemoryAccess: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
+  def addDataRace(memoryAccess: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
+    list.append(new SortedMemoryAccessListElement[EVENT](true, memoryAccess));
+  }
+
+  def setDataRace(alreadyAdded: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
     for (elem <- list) {
       if (elem.positionInRun == alreadyAdded.runPosition) {
         elem.isDataRace = true;
       }
     }
-    list.append(new SortedMemoryAccessListElement[EVENT](true, newMemoryAccess));
   }
 
   def buildResult(accessReportBuilder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {

@@ -1,15 +1,14 @@
 package com.anarsoft.race.detection.processeventbytype
 
-class AlgorithmForOneTypeMock(val expectedCategory: Int) extends AlgorithmForOneType[EventWithTypeGuineaPig] {
-
+class AlgorithmForOneTypeMock() extends AlgorithmForOneType[EventWithTypeGuineaPig] {
 
   var processed = 0;
 
-  override def prozess(event: EventWithTypeGuineaPig): Boolean = {
-    assert(event.category == expectedCategory)
+  override def prozess(event: EventWithTypeGuineaPig): Unit = {
     processed = processed + 1;
-    event.keepProcessing;
   }
 
+  override def stop(): Unit = {
 
+  }
 }

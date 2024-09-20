@@ -1,5 +1,5 @@
 package com.anarsoft.race.detection.reportbuilder
 
-trait RunReportBuilder {
+trait RunReportBuilder extends RunReportForNonVolatileMemoryAccessBuilder {
 
 }
