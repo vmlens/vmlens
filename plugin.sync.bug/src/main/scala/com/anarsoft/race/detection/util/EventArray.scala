@@ -1,6 +1,8 @@
 package com.anarsoft.race.detection.util
 
+import java.util
 import scala.math.Ordering.Implicits.*
+import scala.reflect.ClassTag
 
 class EventArray[+EVENT](private[this] val array: Array[EVENT]) {
 
@@ -60,6 +62,21 @@ class EventArray[+EVENT](private[this] val array: Array[EVENT]) {
   override def hashCode(): Int = {
     val state = Seq(array)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
+}
+
+object EventArray {
+
+  def apply[EVENT: ClassTag](list: util.List[EVENT]): EventArray[EVENT] = {
+    val array = Array.ofDim[EVENT](list.size());
+    var index = 0;
+    val iter = list.iterator();
+    while (iter.hasNext) {
+      array(index) = iter.next();
+      index = index + 1;
+    }
+    new EventArray[EVENT](array);
   }
 
 }

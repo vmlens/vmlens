@@ -2,15 +2,15 @@ package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.sortutil.EventContainer
 
-class NonVolatileMemoryAccessEventContainer[EVENT <: NonVolatileMemoryAccessEvent[EVENT]]
+class EventContainerForNonVolatileMemoryAccess[EVENT <: NonVolatileMemoryAccessEvent[EVENT]]
 (private var read: Option[EVENT],
  private var write: Option[EVENT]) extends EventContainer[EVENT] {
 
   override def getOrCreateElement(event: EVENT): EventContainer[EVENT] = {
     if (event.isRead) {
-      new NonVolatileMemoryAccessEventContainer(Some(event), write);
+      new EventContainerForNonVolatileMemoryAccess(Some(event), write);
     } else {
-      new NonVolatileMemoryAccessEventContainer(read, Some(event));
+      new EventContainerForNonVolatileMemoryAccess(read, Some(event));
     }
   }
 
@@ -23,13 +23,13 @@ class NonVolatileMemoryAccessEventContainer[EVENT <: NonVolatileMemoryAccessEven
   }
 }
 
-object NonVolatileMemoryAccessEventContainer {
+object EventContainerForNonVolatileMemoryAccess {
 
-  def apply[EVENT <: NonVolatileMemoryAccessEvent[EVENT]](event: EVENT): NonVolatileMemoryAccessEventContainer[EVENT] = {
+  def apply[EVENT <: NonVolatileMemoryAccessEvent[EVENT]](event: EVENT): EventContainerForNonVolatileMemoryAccess[EVENT] = {
     if (event.isRead) {
-      new NonVolatileMemoryAccessEventContainer(Some(event), None);
+      new EventContainerForNonVolatileMemoryAccess(Some(event), None);
     } else {
-      new NonVolatileMemoryAccessEventContainer(None, Some(event));
+      new EventContainerForNonVolatileMemoryAccess(None, Some(event));
     }
   }
 }

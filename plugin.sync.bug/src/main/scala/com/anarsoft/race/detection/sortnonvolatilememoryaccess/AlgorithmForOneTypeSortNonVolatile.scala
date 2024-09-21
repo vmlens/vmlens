@@ -12,7 +12,7 @@ private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAcces
   val sortedMemoryAccessList = new SortedMemoryAccessList[EVENT]();
   
   val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[EVENT](
-    (event) => NonVolatileMemoryAccessEventContainer[EVENT](event));
+    (event) => EventContainerForNonVolatileMemoryAccess[EVENT](event));
 
   override def prozess(event: EVENT): Unit = {
     var sortable = true;
