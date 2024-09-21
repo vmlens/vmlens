@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.processeventbytype.AlgorithmForOneType
 import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
-import com.anarsoft.race.detection.sortutil.ThreadIdToLastSortableEvent
+import com.anarsoft.race.detection.sortutil.{EventContainerForMemoryAccess, ThreadIdToLastSortableEvent}
 
 private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAccessEvent[EVENT]]
 (private val partialOrder: PartialOrder, val reportBuilder: RunReportForNonVolatileMemoryAccessBuilder)
@@ -12,7 +12,7 @@ private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAcces
   val sortedMemoryAccessList = new SortedMemoryAccessList[EVENT]();
   
   val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[EVENT](
-    (event) => EventContainerForNonVolatileMemoryAccess[EVENT](event));
+    (event) => EventContainerForMemoryAccess[EVENT](event));
 
   override def prozess(event: EVENT): Unit = {
     var sortable = true;

@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.sortutil
 
-import com.anarsoft.race.detection.sortnonvolatilememoryaccess.{EventContainerForNonVolatileMemoryAccess, MemoryAccessEventBuilder, NonVolatileMemoryAccessEventGuineaPig}
+import com.anarsoft.race.detection.sortnonvolatilememoryaccess.{MemoryAccessEventBuilder, NonVolatileMemoryAccessEventGuineaPig}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -8,7 +8,7 @@ class ThreadIdToLastSortableEventTest extends AnyFlatSpec with Matchers {
 
   "ThreadIdToLastSortableEvent" should "store non volatile field access events" in {
     val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[NonVolatileMemoryAccessEventGuineaPig](
-      (event) => EventContainerForNonVolatileMemoryAccess(event))
+      (event) => EventContainerForMemoryAccess(event))
 
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder();
 

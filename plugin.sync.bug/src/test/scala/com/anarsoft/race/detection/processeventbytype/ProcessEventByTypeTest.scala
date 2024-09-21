@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 
 class ProcessEventByTypeTest extends AnyFlatSpec with Matchers {
 
-  "ProcessEventByType" should "getOrCreateElement a new AlgorithmForOneType for each type" in {
+  "ProcessEventByType" should "put a new AlgorithmForOneType for each type" in {
     // Given
     val array = Array(event(0, 0), event(0, 1), event(1, 0), event(1, 1));
     val algorithmForEventMock = new AlgorithmForOneTypeFactoryMock();

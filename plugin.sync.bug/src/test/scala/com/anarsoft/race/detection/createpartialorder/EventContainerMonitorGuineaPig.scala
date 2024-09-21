@@ -3,7 +3,7 @@ package com.anarsoft.race.detection.createpartialorder
 import com.anarsoft.race.detection.sortutil.EventContainer
 
 class EventContainerMonitorGuineaPig(private val monitorExitEvent: Option[SyncActionEventMonitorGuineaPig]) extends EventContainer[SyncActionEventMonitorGuineaPig] {
-  override def getOrCreateElement(event: SyncActionEventMonitorGuineaPig):
+  override def put(event: SyncActionEventMonitorGuineaPig):
   EventContainer[SyncActionEventMonitorGuineaPig] = {
     if (event.isEnter) {
       this
