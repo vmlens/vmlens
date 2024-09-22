@@ -26,7 +26,7 @@ class SetStacktraceNodeInEventTest extends AnyFlatSpec with Matchers {
     setStacktraceNodeInEvent.process(eventArray, threadIdToStacktraceNodeArray.toMap)
 
     // Then
-    firstEvent.node should be(new StacktraceNodeGuineaPig(3));
+    firstEvent.node.get should be(new StacktraceNodeGuineaPig(3));
 
   }
 

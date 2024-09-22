@@ -9,10 +9,7 @@ import org.apache.commons.lang3.BooleanUtils
 
 trait NonVolatileMemoryAccessEvent[EVENT] extends MemoryAccessEvent[EVENT] with EventWithType[EVENT] with WithPosition {
 
-  override def isWrite: Boolean = !isRead
-
   def addAsDataRace(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit;
-
   def add(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit;
   
 }

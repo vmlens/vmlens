@@ -20,6 +20,10 @@ public class MemoryAccessType {
         return ((operation & IS_WRITE) == IS_WRITE) || ((operation & IS_ATOMIC) == IS_ATOMIC);
     }
 
+    public static boolean containsRead(int operation) {
+        return ((operation & IS_READ) == IS_READ) || ((operation & IS_ATOMIC) == IS_ATOMIC);
+    }
+
     public static String asString(int operation) {
         if (operation == IS_READ) {
             return "read";

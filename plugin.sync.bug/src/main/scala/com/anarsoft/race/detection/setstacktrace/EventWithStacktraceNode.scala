@@ -1,10 +1,14 @@
 package com.anarsoft.race.detection.setstacktrace
 
-import com.anarsoft.race.detection.createstacktrace.ThreadIdAndMethodCounter
+import com.anarsoft.race.detection.createstacktrace.ThreadIndexAndMethodCounter
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
-trait EventWithStacktraceNode extends ThreadIdAndMethodCounter {
+trait EventWithStacktraceNode extends ThreadIndexAndMethodCounter {
 
-  def setStacktraceNode(node: StacktraceNode): Unit
+  var node: Option[StacktraceNode] = None;
+
+  final def setStacktraceNode(node: StacktraceNode): Unit = {
+    this.node = Some(node);
+  }
 
 }

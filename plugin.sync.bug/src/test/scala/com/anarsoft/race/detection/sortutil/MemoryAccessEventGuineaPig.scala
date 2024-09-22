@@ -1,14 +1,18 @@
 package com.anarsoft.race.detection.sortutil
 
-case class MemoryAccessEventGuineaPig(isRead: Boolean, isWrite: Boolean) extends MemoryAccessEvent[MemoryAccessEventGuineaPig] {
+import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
+
+case class MemoryAccessEventGuineaPig(operation: Int) extends MemoryAccessEvent[MemoryAccessEventGuineaPig] {
 
 }
 
 object MemoryAccessEventGuineaPig {
 
-  def read() = new MemoryAccessEventGuineaPig(true, false);
+  def read() = new MemoryAccessEventGuineaPig(MemoryAccessType.IS_READ);
 
-  def write() = new MemoryAccessEventGuineaPig(false, true);
+  def write() = new MemoryAccessEventGuineaPig(MemoryAccessType.IS_WRITE);
 
-  def atomic() = new MemoryAccessEventGuineaPig(true, true);
+  def readWrite() = new MemoryAccessEventGuineaPig(MemoryAccessType.IS_READ_WRITE);
+
+  def atomic() = new MemoryAccessEventGuineaPig(MemoryAccessType.IS_ATOMIC);
 }

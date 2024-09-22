@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
 
-class NonVolatileMemoryAccessEventGuineaPig(val typeId: Int, val isRead: Boolean,
+class NonVolatileMemoryAccessEventGuineaPig(val typeId: Int, val operation: Int,
                                             val runPosition: Int, val threadIndex: Int)
   extends NonVolatileMemoryAccessEvent[NonVolatileMemoryAccessEventGuineaPig] {
 
@@ -15,5 +15,4 @@ class NonVolatileMemoryAccessEventGuineaPig(val typeId: Int, val isRead: Boolean
   def addAsDataRace(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
     builder.addAsDataRace(null);
   }
-
 }

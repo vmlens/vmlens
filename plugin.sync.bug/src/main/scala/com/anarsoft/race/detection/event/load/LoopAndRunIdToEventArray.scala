@@ -1,12 +1,12 @@
 package com.anarsoft.race.detection.event.load
 
-import com.anarsoft.race.detection.createstacktrace.ThreadIdAndMethodCounter
+import com.anarsoft.race.detection.createstacktrace.ThreadIndexAndMethodCounter
 import com.anarsoft.race.detection.event.load.LoopAndRunIdAndEventArray
 import com.anarsoft.race.detection.util.EventArray
 
 import scala.collection.mutable.Stack
 
-class LoopAndRunIdToEventArray[EVENT <: ThreadIdAndMethodCounter] {
+class LoopAndRunIdToEventArray[EVENT <: ThreadIndexAndMethodCounter] {
 
   private val loopAndRunIdToEventArray = Stack[LoopAndRunIdAndEventArray[EVENT]]();
 

@@ -10,18 +10,8 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
   with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEvent]
   with EventWithStacktraceNode {
 
-  var stackTraceNode: StacktraceNode = null;
-
   def fieldId: Int
-
   def objectHashCode: Long
-
-  def operation: Int
-
-
-  def setStacktraceNode(node: StacktraceNode): Unit = {
-    stackTraceNode = node;
-  }
 
   def compareType(other: NonVolatileFieldAccessEvent): Int = {
     if (objectHashCode != other.objectHashCode) {
@@ -31,14 +21,9 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
     }
   }
 
-  def isRead: Boolean = {
-    (operation | MemoryAccessType.IS_READ) == MemoryAccessType.IS_READ;
-  }
-
   def add(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
     builder.add(this);
   }
-
   def addAsDataRace(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
     builder.addAsDataRace(this);
   }
