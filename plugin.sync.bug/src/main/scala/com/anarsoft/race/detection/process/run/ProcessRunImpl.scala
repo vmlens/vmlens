@@ -20,7 +20,13 @@ class ProcessRunImpl extends ProcessRun {
     add runBuilder to loop builder
      */
 
-    val partialOrder = new PartialOrderImpl(new PartialOrderContainer());
+    val partialOrderContainer = new PartialOrderContainer();
+
+    for (syncActionElement <- runData.syncActionElements) {
+      syncActionElement.addToPartialOrderBuilder(partialOrderContainer);
+    }
+
+    val partialOrder = new PartialOrderImpl(partialOrderContainer);
 
     for (nonVolatileElement <- runData.nonVolatileMemoryAccessElements) {
       nonVolatileElement.sort(partialOrder, runReportBuilder)

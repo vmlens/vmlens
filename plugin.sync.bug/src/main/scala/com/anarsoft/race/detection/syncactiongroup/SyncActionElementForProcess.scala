@@ -6,7 +6,7 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 trait SyncActionElementForProcess {
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit;
 
-  def createPartialOrder(partialOrderBuilder: PartialOrderBuilder): Unit;
+  def addToPartialOrderBuilder(partialOrderBuilder: PartialOrderBuilder): Unit;
 
   def addToReport(): Unit;
 }

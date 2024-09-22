@@ -13,7 +13,6 @@ class EventContainerForMemoryAccessTest extends AnyFlatSpec with Matchers {
 
     val secondRead = read();
 
-
     // after adding read a second read has no opposite
     var eventContainer = EventContainerForMemoryAccess(firstRead)
     oppositeCalled(eventContainer, secondRead) should be(false)

@@ -1,7 +1,32 @@
 package com.anarsoft.race.detection.event.syncAction
 
-trait VolatileAccessEvent extends LoadedSyncActionEvent {
+import com.anarsoft.race.detection.createpartialorder.SyncActionEvent
+import com.anarsoft.race.detection.event.nonVolatileField.NonVolatileFieldAccessEvent
+import com.anarsoft.race.detection.setstacktrace.EventWithStacktraceNode
+import com.anarsoft.race.detection.stacktrace.StacktraceNode
+
+trait VolatileAccessEvent extends VolatileMemoryAccessEvent[VolatileAccessEvent]
+  with SyncActionEvent[VolatileAccessEvent]
+  with EventWithStacktraceNode
+  with LoadedSyncActionEvent {
+
+  def fieldId: Int
+
+  def objectHashCode: Long
+  
   override def addToContext(context: LoadedSyncActionContext): Unit = {
     context.addVolatileAccessEvent(this);
+  }
+
+  override def setStacktraceNode(node: StacktraceNode): Unit = {
+
+  }
+
+  def compareType(other: VolatileAccessEvent): Int = {
+    if (objectHashCode != other.objectHashCode) {
+      objectHashCode.compareTo(other.objectHashCode)
+    } else {
+      fieldId.compareTo(other.fieldId)
+    }
   }
 }

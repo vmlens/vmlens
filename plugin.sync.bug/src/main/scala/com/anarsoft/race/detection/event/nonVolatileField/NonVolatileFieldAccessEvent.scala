@@ -32,7 +32,7 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
   }
 
   def isRead: Boolean = {
-    (operation | MemoryAccessType.IS_READ) == 1;
+    (operation | MemoryAccessType.IS_READ) == MemoryAccessType.IS_READ;
   }
 
   def add(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {

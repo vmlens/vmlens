@@ -1,16 +1,15 @@
 package com.anarsoft.race.detection.partialorder
 
+import com.anarsoft.race.detection.createpartialorder.PartialOrderBuilder
 import com.anarsoft.race.detection.partialorder.WithPositionImpl.pos
 import com.anarsoft.race.detection.util.WithPosition
 
 import scala.collection.mutable.{HashMap, HashSet}
 
-class PartialOrderContainer {
+class PartialOrderContainer extends PartialOrderBuilder {
 
   private val allLeftThreadIndices = new HashSet[Int]();
   private val threadIndexToPartialOrderBetweenTwoThreads = new HashMap[LeftRightThreadIndex, LeftBeforeRightPerThread]();
-
-
   def foreachMaxDirectBefore(right: WithPosition, f: (WithPosition) => Unit): Unit = {
     for (leftThreadIndex <- allLeftThreadIndices) {
       if (right.threadIndex != leftThreadIndex) {
@@ -22,11 +21,11 @@ class PartialOrderContainer {
     }
   }
 
-  def addLeftBeforeRight(left: WithPosition, right: WithPosition): Unit = {
+  override def addLeftBeforeRight(left: WithPosition, right: WithPosition): Unit = {
     allLeftThreadIndices.add(left.threadIndex);
     val order = threadIndexToPartialOrderBetweenTwoThreads
-      .getOrElseUpdate(LeftRightThreadIndex(left.threadIndex, right.threadIndex), new LeftBeforeRightPerThread());
+      .getOrElseUpdate(LeftRightThreadIndex(left.threadIndex, right.threadIndex),
+        new LeftBeforeRightPerThread());
     order.addLeftBeforeRight(left.runPosition, right.runPosition);
   }
-
 }
