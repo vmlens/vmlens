@@ -1,10 +1,12 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
-import com.anarsoft.trace.agent.runtime.*;
+import com.anarsoft.trace.agent.description.ClassDescription;
+import com.anarsoft.trace.agent.description.FieldInClassDescription;
+import com.anarsoft.trace.agent.description.MethodDescription;
+import com.anarsoft.trace.agent.runtime.AgentClassFileTransformer;
+import com.anarsoft.trace.agent.runtime.ClassVisitorCreateDesc;
+import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
-import com.anarsoft.trace.agent.serialization.ClassDescription;
-import com.anarsoft.trace.agent.serialization.MethodDescription;
-import com.anarsoft.trace.agent.serialization.SerializedFieldDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
@@ -91,11 +93,11 @@ public abstract class ClassTransformerAbstract  extends ClassVisitor {
 
         }
 
-        SerializedFieldDescription[] fieldArray = new SerializedFieldDescription[classVisitorCreateDesc.fieldDescriptionList.size()];
+        FieldInClassDescription[] fieldArray = new FieldInClassDescription[classVisitorCreateDesc.fieldDescriptionList.size()];
 
         index = 0;
 
-        for (SerializedFieldDescription serializedFieldDescription : classVisitorCreateDesc.fieldDescriptionList) {
+        for (FieldInClassDescription serializedFieldDescription : classVisitorCreateDesc.fieldDescriptionList) {
             fieldArray[index] = serializedFieldDescription;
             index++;
 

@@ -1,0 +1,8 @@
+com\vmlens\report\domain\UiClass.class
+com\vmlens\report\domain\UiTestLoop.class
+com\vmlens\report\domain\UiStacktraceElement.class
+com\vmlens\report\domain\UiThread.class
+com\vmlens\report\domain\UiField.class
+com\vmlens\report\domain\UiMethod.class
+com\vmlens\report\domain\UiRunElement.class
+com\vmlens\report\process\CreateOneReport.class

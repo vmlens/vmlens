@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
+import com.anarsoft.trace.agent.description.FieldAccessDescription;
 import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
 import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
@@ -10,7 +11,6 @@ import com.anarsoft.trace.agent.runtime.transformer.template.Add2TemplateMethodD
 import com.anarsoft.trace.agent.runtime.transformer.template.ApplyMethodTemplate;
 import com.anarsoft.trace.agent.runtime.transformer.template.ApplyMethodTemplateBeforeAfter;
 import com.anarsoft.trace.agent.runtime.transformer.template.TemplateMethodDesc;
-import com.anarsoft.trace.agent.serialization.FieldAccessDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.FieldIdAndTyp;
 import com.vmlens.trace.agent.bootstrap.FieldTyp;

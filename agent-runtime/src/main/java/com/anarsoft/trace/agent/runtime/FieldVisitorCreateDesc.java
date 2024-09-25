@@ -1,20 +1,16 @@
 package com.anarsoft.trace.agent.runtime;
 
+import com.anarsoft.trace.agent.description.FieldInClassDescription;
+import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.FieldIdRepository;
 import com.vmlens.trace.agent.bootstrap.FieldTyp;
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Attribute;
 import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.Opcodes;
-
-
-import com.anarsoft.trace.agent.serialization.SerializedFieldDescription;
 
 public class FieldVisitorCreateDesc extends FieldVisitor {
 
-	private final  TLinkedList<SerializedFieldDescription> fieldDescriptionList;
+    private final TLinkedList<FieldInClassDescription> fieldDescriptionList;
 	private final String className;
 	private final String fieldName;
 	private final int access;
@@ -23,9 +19,9 @@ public class FieldVisitorCreateDesc extends FieldVisitor {
 	
 	
 	private boolean hasSuppressAnnotation;
-	
-	
-	public FieldVisitorCreateDesc( TLinkedList<SerializedFieldDescription> fieldDescriptionList, String className, String fieldName,int access,String desc, String signature ) {
+
+
+    public FieldVisitorCreateDesc(TLinkedList<FieldInClassDescription> fieldDescriptionList, String className, String fieldName, int access, String desc, String signature) {
 		super(AgentClassFileTransformer.ASM_API_VERSION );
 		this.fieldDescriptionList = fieldDescriptionList;
 		this.className = className;
@@ -59,8 +55,8 @@ public class FieldVisitorCreateDesc extends FieldVisitor {
 		if(hasSuppressAnnotation)
 		{
 			  int fieldId = FieldIdRepository.create(className, fieldName,FieldTyp.FINAL).id;
-				
-				fieldDescriptionList.add(new SerializedFieldDescription( fieldId ,  access,  fieldName,  desc,
+
+            fieldDescriptionList.add(new FieldInClassDescription(fieldId, access, fieldName, desc,
 						 signature));
 			
 			
@@ -69,8 +65,8 @@ public class FieldVisitorCreateDesc extends FieldVisitor {
 		else
 		{
 			  int fieldId = FieldIdRepository.create(className, fieldName,FieldTyp.NON_VOLATILE).id;
-				
-				fieldDescriptionList.add(new SerializedFieldDescription( fieldId ,  access,  fieldName,  desc,
+
+            fieldDescriptionList.add(new FieldInClassDescription(fieldId, access, fieldName, desc,
 						 signature));
 		}
 		

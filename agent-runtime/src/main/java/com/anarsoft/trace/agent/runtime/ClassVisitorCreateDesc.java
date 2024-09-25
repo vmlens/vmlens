@@ -1,24 +1,16 @@
 package com.anarsoft.trace.agent.runtime;
 
 
-
-
+import com.anarsoft.trace.agent.description.FieldInClassDescription;
 import com.anarsoft.trace.agent.runtime.atomic.CreateAtomic;
 import com.anarsoft.trace.agent.runtime.atomic.CreateIsAtomic;
 import com.anarsoft.trace.agent.runtime.atomic.CreateNotAtomic;
+import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.trace.agent.bootstrap.ClassInheritanceRepository;
 import com.vmlens.trace.agent.bootstrap.FieldIdRepository;
 import com.vmlens.trace.agent.bootstrap.FieldTyp;
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-
-import org.objectweb.asm.AnnotationVisitor;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-
-import com.anarsoft.trace.agent.serialization.SerializedFieldDescription;
+import org.objectweb.asm.*;
 
 
 public class ClassVisitorCreateDesc extends ClassVisitor {
@@ -29,7 +21,7 @@ public class ClassVisitorCreateDesc extends ClassVisitor {
 	public boolean hasUnsafeAccess = false; 
 	public boolean hasFinalFields = false;
 	public String source = "";
-	public TLinkedList<SerializedFieldDescription> fieldDescriptionList = new TLinkedList<SerializedFieldDescription>();
+    public TLinkedList<FieldInClassDescription> fieldDescriptionList = new TLinkedList<FieldInClassDescription>();
 	public boolean callbackMethodNotGenerated = true;
 
 	public CreateAtomic createAtomic = new CreateNotAtomic();
@@ -114,14 +106,14 @@ public class ClassVisitorCreateDesc extends ClassVisitor {
         if ((access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL) {
             hasFinalFields = true;
             int fieldId = FieldIdRepository.create(className, name, FieldTyp.FINAL).id;
-            fieldDescriptionList.add(new SerializedFieldDescription(fieldId, access, name, desc,
+            fieldDescriptionList.add(new FieldInClassDescription(fieldId, access, name, desc,
                     signature));
             return null;
         }
 
         if ((access & Opcodes.ACC_VOLATILE) == Opcodes.ACC_VOLATILE) {
             int fieldId = FieldIdRepository.create(className, name, FieldTyp.VOLATILE).id;
-            fieldDescriptionList.add(new SerializedFieldDescription(fieldId, access, name, desc,
+            fieldDescriptionList.add(new FieldInClassDescription(fieldId, access, name, desc,
                     signature));
             return null;
         }

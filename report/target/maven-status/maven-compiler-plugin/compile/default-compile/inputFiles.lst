@@ -1,4 +1,8 @@
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UILoop.java
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UIRunElement.java
-C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UIStacktraceElement.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UiClass.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UiField.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UiMethod.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UiRunElement.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UiStacktraceElement.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UiTestLoop.java
+C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\domain\UiThread.java
 C:\git-repo\vmlens\report\src\main\java\com\vmlens\report\process\CreateOneReport.java

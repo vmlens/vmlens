@@ -1,18 +1,12 @@
 package com.anarsoft.trace.agent.runtime.write;
 
 
-
-import com.anarsoft.trace.agent.serialization.ClassDescription;
+import com.anarsoft.trace.agent.description.ClassDescription;
 
 
 
 public interface WriteClassDescription {
 
-
-
-	public   void write(ClassDescription classDescription);
-	
-
-
+    void write(ClassDescription classDescription);
 
 }

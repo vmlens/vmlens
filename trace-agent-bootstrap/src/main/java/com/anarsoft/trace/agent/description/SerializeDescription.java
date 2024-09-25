@@ -1,17 +1,12 @@
-package com.anarsoft.trace.agent.serialization;
+package com.anarsoft.trace.agent.description;
 
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class SerializeDescription {
-	
-	
 
-	
-	
-	public void serialize(ClassDescription description, DataOutputStream out  ) throws IOException
-	{
+	public void serialize(ClassDescription description, DataOutputStream out) throws IOException {
 		out.writeUTF(description.name);
 		out.writeUTF(description.source);
 		out.writeInt(description.exceptArray.length );
@@ -29,69 +24,38 @@ public class SerializeDescription {
         }
 
 		out.writeInt(description.getMethodArray().length);
-
-        for (MethodDescription md : description.getMethodArray()) {
+		for (MethodDescription md : description.getMethodArray()) {
             serialize(md, out);
         }
 		
 		out.writeInt(description.getSerializedFieldDescriptionArray().length);
-
-        for (SerializedFieldDescription md : description.getSerializedFieldDescriptionArray()) {
+		for (FieldInClassDescription md : description.getSerializedFieldDescriptionArray()) {
             serialize(md, out);
         }
-		
-		
 		out.flush();
-		
-		
 	}
-	
-	
-	
 
-	
-	
-	
-	private void serialize(MethodDescription description, DataOutputStream out )  throws IOException
-	{
+	private void serialize(MethodDescription description, DataOutputStream out) throws IOException {
 		out.writeUTF(description.getName());
 		out.writeInt(description.getId());
 		out.writeUTF(description.getDesc());
 		out.writeInt(description.getAccess());
 		out.writeInt(description.getLineNumber());
-		
-		
 		out.writeInt(description.getFieldArray().length);
-		
-		for(  FieldAccessDescription md : description.getFieldArray()  )
-		{
+
+		for (FieldAccessDescription md : description.getFieldArray()) {
 			serialize(md,out);
 		}
-		
-		
-		
 	}
-	
-	
 
-	
-	
-	
-	private void serialize(SerializedFieldDescription description, DataOutputStream out )  throws IOException
-	{
+	private void serialize(FieldInClassDescription description, DataOutputStream out) throws IOException {
 		out.writeUTF(description.getName());
 		out.writeInt(description.getId());
 		out.writeUTF(description.getDesc());
 		out.writeInt(description.getAccess());
-		
-		
 	}
-	
-	
 
-	
-	private void serialize(FieldAccessDescription description, DataOutputStream out )  throws IOException
-	{
+	private void serialize(FieldAccessDescription description, DataOutputStream out) throws IOException {
 		out.writeUTF(description.getName());
 		out.writeUTF(description.getOwner());
 		out.writeInt(description.getId());
@@ -100,6 +64,4 @@ public class SerializeDescription {
 		out.writeBoolean(description.isTraced());
 		out.writeBoolean(description.isFinal());
 	}
-	
-	
 }

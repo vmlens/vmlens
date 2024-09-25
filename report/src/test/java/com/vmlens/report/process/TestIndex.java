@@ -2,7 +2,7 @@ package com.vmlens.report.process;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.patch.Patch;
-import com.vmlens.report.domain.UILoop;
+import com.vmlens.report.domain.UiTestLoop;
 import org.junit.Test;
 
 import java.io.*;
@@ -11,23 +11,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class TestIndex {
 
     @Test
     public void createReport() throws IOException {
         // Given
-        UILoop uiLoop = mock(UILoop.class);
+        UiTestLoop uiLoop = new UiTestLoop();
 
-        when(uiLoop.getImagePath()).thenReturn("imagePath");
-        when(uiLoop.getLink()).thenReturn("link");
-        when(uiLoop.getName()).thenReturn("name");
-        when(uiLoop.getResultText()).thenReturn("resultText");
+        uiLoop.setImagePath("imagePath");
+        uiLoop.setLink("link");
+        uiLoop.setName("name");
+        uiLoop.setResultText("resultText");
+
+
 
         CreateOneReport createOneReport = new CreateOneReport("index");
-        List<UILoop> list = Collections.singletonList(uiLoop);
+        List<UiTestLoop> list = Collections.singletonList(uiLoop);
 
         // When
         StringWriter writer = new StringWriter();

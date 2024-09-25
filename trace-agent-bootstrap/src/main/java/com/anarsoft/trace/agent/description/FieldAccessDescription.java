@@ -1,6 +1,4 @@
-package com.anarsoft.trace.agent.serialization;
-
-
+package com.anarsoft.trace.agent.description;
 
 public class FieldAccessDescription {
 	private String name;
@@ -23,13 +21,9 @@ public class FieldAccessDescription {
 		this.isFinal = isFinal;
 	}
 
-
-
-
 	public FieldAccessDescription() {
 		super();
 	}
-
 
 	@Override
 	public String toString() {
@@ -57,24 +51,12 @@ public class FieldAccessDescription {
 		return isWrite;
 	}
 
-
-
-
 	public boolean isTraced() {
 		return isTraced;
 	}
 
-
-
-
 	public boolean isFinal() {
 		return isFinal;
 	}
-
-
-
-
-
-
 
 }

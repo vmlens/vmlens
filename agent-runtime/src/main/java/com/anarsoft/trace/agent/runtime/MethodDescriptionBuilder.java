@@ -1,13 +1,10 @@
 package com.anarsoft.trace.agent.runtime;
 
 
-
-
+import com.anarsoft.trace.agent.description.FieldAccessDescription;
+import com.anarsoft.trace.agent.description.MethodDescription;
 import com.vmlens.shaded.gnu.trove.list.TLinkable;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-
-import com.anarsoft.trace.agent.serialization.FieldAccessDescription;
-import com.anarsoft.trace.agent.serialization.MethodDescription;
 
 public class MethodDescriptionBuilder implements TLinkable<MethodDescriptionBuilder> {
 

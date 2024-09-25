@@ -1,6 +1,7 @@
 package com.anarsoft.trace.agent.runtime;
 
 
+import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsAlwaysFalse;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
@@ -9,7 +10,6 @@ import com.anarsoft.trace.agent.runtime.util.AgentKeys;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
 import com.anarsoft.trace.agent.runtime.write.WriteEventToFile;
-import com.anarsoft.trace.agent.serialization.ClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;

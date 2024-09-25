@@ -1,4 +1,4 @@
 package com.vmlens.report.domain;
 
-public interface UIRunElement {
+public class UiThread {
 }

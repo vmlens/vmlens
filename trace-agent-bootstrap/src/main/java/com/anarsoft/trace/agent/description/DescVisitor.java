@@ -1,4 +1,4 @@
-package com.anarsoft.trace.agent.serialization;
+package com.anarsoft.trace.agent.description;
 
 public interface DescVisitor {
 	

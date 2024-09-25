@@ -25,6 +25,11 @@
             <version>0.9.11</version>
         </dependency>
         <dependency>
+            <groupId>com.vmlens</groupId>
+            <artifactId>trace-agent-bootstrap</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>

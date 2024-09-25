@@ -1,16 +1,16 @@
-package com.anarsoft.trace.agent.serialization;
+package com.anarsoft.trace.agent.description;
 
-import com.vmlens.shaded.gnu.trove.list.TLinkableAdapter;
+import gnu.trove.list.TLinkableAdapter;
 
-public class SerializedFieldDescription  extends TLinkableAdapter<SerializedFieldDescription> {
+public class FieldInClassDescription extends TLinkableAdapter<FieldInClassDescription> {
 	
 	private final int id;
 	private final int access;
 	private final String name;
 	private final String desc;
 	private final String signature;
-	
-	public SerializedFieldDescription( int id , int access, String name, String desc, String signature) {
+
+    public FieldInClassDescription(int id, int access, String name, String desc, String signature) {
 		super();
 		this.id = id;
 		this.access = access;
@@ -38,10 +38,5 @@ public class SerializedFieldDescription  extends TLinkableAdapter<SerializedFiel
 	public int getId() {
 		return id;
 	}
-	
-	
-	
-	
-	
-	
+
 }
