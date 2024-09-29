@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.syncAction
 
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
-import com.anarsoft.race.detection.process.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 
 import java.util.*
 

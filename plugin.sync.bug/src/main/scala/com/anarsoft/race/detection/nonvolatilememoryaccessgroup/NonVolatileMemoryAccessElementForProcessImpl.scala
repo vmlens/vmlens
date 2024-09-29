@@ -13,8 +13,10 @@ class NonVolatileMemoryAccessElementForProcessImpl[EVENT <: NonVolatileMemoryAcc
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
   }
 
-  def sort(partialOrder: PartialOrder, sortedListBuilder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
-    new SortNonVolatileMemoryAccess[EVENT]().sort(eventArray, partialOrder, sortedListBuilder);
+  def sort(partialOrder: PartialOrder): NonVolatileMemoryAccessElementForResult = {
+    val sorted = new SortNonVolatileMemoryAccess[EVENT]().sort(eventArray, partialOrder);
+    NonVolatileMemoryAccessElementForResult(sorted);
   }
+
 
 }

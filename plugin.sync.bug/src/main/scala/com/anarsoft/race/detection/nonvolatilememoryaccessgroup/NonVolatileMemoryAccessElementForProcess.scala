@@ -8,6 +8,8 @@ trait NonVolatileMemoryAccessElementForProcess {
 
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit;
 
-  def sort(partialOrder: PartialOrder, sortedListBuilder: RunReportForNonVolatileMemoryAccessBuilder): Unit;
+  def sort(partialOrder: PartialOrder): NonVolatileMemoryAccessElementForResult;
 
+
+  
 }

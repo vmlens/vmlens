@@ -1,13 +1,16 @@
 package com.anarsoft.race.detection.process.run
 
+import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult}
+import com.anarsoft.race.detection.nonvolatilememoryaccessgroup.NonVolatileMemoryAccessElementForResult
 import com.anarsoft.race.detection.partialorder.{PartialOrderContainer, PartialOrderImpl}
-import com.anarsoft.race.detection.process.loopAndRunData.RunData
 import com.anarsoft.race.detection.process.main.ProcessRun
-import com.anarsoft.race.detection.reportbuilder.RunReportBuilder
+import com.anarsoft.race.detection.reportbuilder.RunReportBuilderAdapter
+
+import scala.collection.mutable.ArrayBuffer
 
 class ProcessRunImpl extends ProcessRun {
 
-  def process(runData: RunData, runReportBuilder: RunReportBuilder): Unit = {
+  def process(runData: RunData): RunResult = {
     /*
     check run terminated (e.g. junit assertion failed)
     should process
@@ -28,9 +31,12 @@ class ProcessRunImpl extends ProcessRun {
 
     val partialOrder = new PartialOrderImpl(partialOrderContainer);
 
+    val nonVolatileResult = new ArrayBuffer[NonVolatileMemoryAccessElementForResult]();
+    
     for (nonVolatileElement <- runData.nonVolatileMemoryAccessElements) {
-      nonVolatileElement.sort(partialOrder, runReportBuilder)
+      nonVolatileResult.append(nonVolatileElement.sort(partialOrder));
     }
-  }
 
+    RunResult(runData.loopAndRunId, nonVolatileResult.toList);
+  }
 }

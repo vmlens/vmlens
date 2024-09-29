@@ -8,5 +8,5 @@ trait SyncActionElementForProcess {
 
   def addToPartialOrderBuilder(partialOrderBuilder: PartialOrderBuilder): Unit;
 
-  def addToReport(): Unit;
+  def asResult(): SyncActionElementForResult;
 }

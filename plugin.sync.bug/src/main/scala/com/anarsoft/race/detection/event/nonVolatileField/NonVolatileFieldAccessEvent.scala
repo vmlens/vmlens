@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.nonVolatileField
 
-import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
+import com.anarsoft.race.detection.reportbuilder.{FieldId, RunReportForNonVolatileMemoryAccessBuilder}
 import com.anarsoft.race.detection.setstacktrace.EventWithStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
@@ -20,6 +20,8 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
       fieldId.compareTo(other.fieldId)
     }
   }
+
+  def staticMemoryAccessId() = new FieldId(fieldId);
 
   def add(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
     builder.add(this);

@@ -1,16 +1,17 @@
-package com.vmlens.trace.agent.bootstrap.event;
+package com.anarsoft.trace.agent.description;
 
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
 
 import java.io.DataOutputStream;
-import java.nio.ByteBuffer;
 import java.util.Objects;
 
-public class WhileLoopNameEvent implements SerializableEvent {
+public class WhileLoopDescription implements SerializableEvent {
     private final int loopId;
     private final String name;
 
-    public WhileLoopNameEvent(int loopId, String name) {
+    public WhileLoopDescription(int loopId, String name) {
         super();
         this.loopId = loopId;
         this.name = name;
@@ -29,7 +30,7 @@ public class WhileLoopNameEvent implements SerializableEvent {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        WhileLoopNameEvent that = (WhileLoopNameEvent) o;
+        WhileLoopDescription that = (WhileLoopDescription) o;
 
         if (loopId != that.loopId) return false;
         return Objects.equals(name, that.name);

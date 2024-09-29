@@ -18,8 +18,7 @@ class SyncActionElementForProcessImpl[EVENT <: SyncActionEvent[EVENT] with Event
     new AddToPartialOrderBuilder(createContainer).process(eventArray, partialOrderBuilder);
   }
 
-  def addToReport(): Unit = {
-
+  def asResult() = {
+    new SyncActionElementForResult();
   }
-
 }

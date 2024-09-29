@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
+import com.anarsoft.trace.agent.description.WhileLoopDescription;
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.WhileLoopNameEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.RunStartEvent;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
@@ -23,7 +23,7 @@ public class AgentApiCallbackImplIntegTest {
         AllInterleavings givenAllInterleavings = new AllInterleavings(givenName);
 
         RunStartEvent expectedRunStartEvent = new RunStartEvent(0, 0);
-        WhileLoopNameEvent expectedWhileLoopNameEvent = new WhileLoopNameEvent(0, givenName);
+        WhileLoopDescription expectedWhileLoopNameEvent = new WhileLoopDescription(0, givenName);
 
         // Initial should lead to true
         ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(1L);
@@ -37,16 +37,16 @@ public class AgentApiCallbackImplIntegTest {
 
         // and two events
         RunStartEvent runStartEvent;
-        WhileLoopNameEvent whileLoopNameEvent;
+        WhileLoopDescription whileLoopNameEvent;
 
         assertThat(eventList.size(), is(2));
 
         if (eventList.get(0) instanceof RunStartEvent) {
             runStartEvent = (RunStartEvent) eventList.get(0);
-            whileLoopNameEvent = (WhileLoopNameEvent) eventList.get(1);
+            whileLoopNameEvent = (WhileLoopDescription) eventList.get(1);
         } else {
             runStartEvent = (RunStartEvent) eventList.get(1);
-            whileLoopNameEvent = (WhileLoopNameEvent) eventList.get(0);
+            whileLoopNameEvent = (WhileLoopDescription) eventList.get(0);
         }
 
         assertThat(runStartEvent, is(expectedRunStartEvent));

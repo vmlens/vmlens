@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.distribute
 
-import com.anarsoft.race.detection.process.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 
 class LoopAndRunIdAndContextProcessing[EVENT <: EventWithLoopAndRunId]
 (val loopAndRunId: LoopAndRunId, val context: LoadedEventContext[EVENT])

@@ -4,8 +4,8 @@ import com.anarsoft.race.detection.event.distribute.{DistributeEvents, EventWith
 import com.anarsoft.race.detection.event.gen.MethodDeSerializer
 import com.anarsoft.race.detection.event.load.{DeserializeEvents, DeserializeStrategy, FilePosition, LoadOneFilePosition}
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
+import com.anarsoft.race.detection.loopAndRunData.RunDataListBuilder
 import com.anarsoft.race.detection.process.load.LoadAndDistributeOneFilePosition
-import com.anarsoft.race.detection.process.loopAndRunData.RunDataListBuilder
 import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
 
 import java.io.RandomAccessFile

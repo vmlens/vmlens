@@ -1,6 +1,6 @@
 package com.vmlens.report.domain;
 
-public class UiTestLoop {
+public class UITestLoop {
 
     private String link;
     private int index;

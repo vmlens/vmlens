@@ -3,8 +3,8 @@ package com.anarsoft.race.detection.process.run
 import com.anarsoft.race.detection.event.gen.{FieldAccessEventGen, VolatileAccessEventGen}
 import com.anarsoft.race.detection.event.nonVolatileField.NonVolatileFieldAccessEvent
 import com.anarsoft.race.detection.event.syncAction.VolatileAccessEvent
+import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunData}
 import com.anarsoft.race.detection.nonvolatilememoryaccessgroup.NonVolatileMemoryAccessElementForProcessBuilder
-import com.anarsoft.race.detection.process.loopAndRunData.{LoopAndRunId, RunData}
 import com.anarsoft.race.detection.syncactiongroup.SyncActionElementForProcessBuilder
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
 import org.scalatest.flatspec.AnyFlatSpec
@@ -22,16 +22,15 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     val loopIdAndRunId = LoopAndRunId(loopId, runId);
 
     val processRunImpl = new ProcessRunImpl();
-    val runReportBuilder = new RunReportBuilderMock();
 
     val nonVolatileElements = nonVolatileReadWrite(loopIdAndRunId);
 
     // When
     val runData = RunData.forLoopAndRun(loopIdAndRunId).copy(nonVolatileMemoryAccessElements = nonVolatileElements);
-    processRunImpl.process(runData, runReportBuilder);
-    
+    val runResult = processRunImpl.process(runData);
+
     //Then
-    runReportBuilder.dataRaceNonVolatileFieldAccessEventList.size should be(2)
+    runResult.nonVolatileMemoryAccessElements(0).dataRaces.size should be(1)
   }
 
   "a read and write to/from a normal field separated by a read/write to a volatile field" should "not lead to a data race" in {
@@ -58,15 +57,14 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     builder.add(list);
 
     val processRunImpl = new ProcessRunImpl();
-    val runReportBuilder = new RunReportBuilderMock();
+
     // When
     val runData = RunData.forLoopAndRun(loopIdAndRunId).copy(nonVolatileMemoryAccessElements = nonVolatileReadWrite(loopIdAndRunId),
       syncActionElements = builder.build());
-    processRunImpl.process(runData, runReportBuilder);
+    val runResult = processRunImpl.process(runData);
 
     //Then
-    runReportBuilder.dataRaceNonVolatileFieldAccessEventList.size should be(0)
-    runReportBuilder.nonVolatileFieldAccessEventList.size should be(2)
+    runResult.nonVolatileMemoryAccessElements(0).dataRaces.size should be(0)
   }
 
   private def nonVolatileReadWrite(loopIdAndRunId: LoopAndRunId) = {

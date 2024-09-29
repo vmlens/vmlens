@@ -4,12 +4,14 @@ import com.anarsoft.race.detection.processeventbytype.AlgorithmForOneType
 import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
 import com.anarsoft.race.detection.sortutil.{EventContainerForMemoryAccess, ThreadIdToLastSortableEvent}
 
+import scala.collection.mutable.ArrayBuffer
+
 private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAccessEvent[EVENT]]
-(private val partialOrder: PartialOrder, val reportBuilder: RunReportForNonVolatileMemoryAccessBuilder)
+(private val partialOrder: PartialOrder, val result: ArrayBuffer[SortedMemoryAccessList])
   extends AlgorithmForOneType[EVENT] {
 
   // visible for test 
-  val sortedMemoryAccessList = new SortedMemoryAccessList[EVENT]();
+  val sortedMemoryAccessList = new SortedMemoryAccessList();
   
   val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[EVENT](
     (event) => EventContainerForMemoryAccess[EVENT](event));
@@ -31,6 +33,9 @@ private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAcces
   }
 
   override def stop(): Unit = {
-    sortedMemoryAccessList.buildResult(reportBuilder);
+    if (sortedMemoryAccessList.dataRaces.nonEmpty) {
+      result.append(sortedMemoryAccessList);
+    }
+    
   }
 }

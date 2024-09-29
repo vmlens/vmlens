@@ -2,7 +2,7 @@ package com.vmlens.report.process;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.patch.Patch;
-import com.vmlens.report.domain.UiTestLoop;
+import com.vmlens.report.domain.UITestLoop;
 import org.junit.Test;
 
 import java.io.*;
@@ -17,7 +17,7 @@ public class TestIndex {
     @Test
     public void createReport() throws IOException {
         // Given
-        UiTestLoop uiLoop = new UiTestLoop();
+        UITestLoop uiLoop = new UITestLoop();
 
         uiLoop.setImagePath("imagePath");
         uiLoop.setLink("link");
@@ -27,7 +27,7 @@ public class TestIndex {
 
 
         CreateOneReport createOneReport = new CreateOneReport("index");
-        List<UiTestLoop> list = Collections.singletonList(uiLoop);
+        List<UITestLoop> list = Collections.singletonList(uiLoop);
 
         // When
         StringWriter writer = new StringWriter();

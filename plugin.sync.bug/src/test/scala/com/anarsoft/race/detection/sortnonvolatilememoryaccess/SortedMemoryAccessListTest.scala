@@ -25,7 +25,7 @@ class SortedMemoryAccessListTest extends AnyFlatSpec with Matchers {
     // Given
     val memoryAccessReportBuilder = new RunReportForNonVolatileMemoryAccessBuilderMock();
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder();
-    val sortedMemoryAccessList = new SortedMemoryAccessList[NonVolatileMemoryAccessEventGuineaPig]()
+    val sortedMemoryAccessList = new SortedMemoryAccessList()
 
     // When
     sortedMemoryAccessList.add(memoryAccessEventBuilder.read());

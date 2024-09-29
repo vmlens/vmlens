@@ -2,10 +2,10 @@ package com.vmlens.report.domain;
 
 import com.anarsoft.trace.agent.description.MethodDescription;
 
-public class UiMethod {
+public class UIMethod {
 
     // all fields can be null
-    private UiClass uiClass;
+    private UIClass uiClass;
     private MethodDescription methodDescription;
 
 }

@@ -1,4 +1,4 @@
 package com.vmlens.report.domain;
 
-public class UiThread {
+public class UIThread {
 }

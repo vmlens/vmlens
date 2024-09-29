@@ -1,24 +1,29 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 
-import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
+import com.anarsoft.race.detection.reportbuilder.{NonVolatileEventForReport, RunReportForNonVolatileMemoryAccessBuilder, StaticMemoryAccessId}
 
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-private class SortedMemoryAccessList[EVENT] {
+class SortedMemoryAccessList {
 
   // Visible for test
-  val list = new ArrayBuffer[SortedMemoryAccessListElement[EVENT]]();
+  val list = new ArrayBuffer[SortedMemoryAccessListElement]();
 
-  def add(memoryAccess: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
-    list.append(new SortedMemoryAccessListElement[EVENT](false, memoryAccess));
+  val dataRaces = new mutable.HashSet[StaticMemoryAccessId]();
+
+  def add(memoryAccess: NonVolatileEventForReport): Unit = {
+    list.append(new SortedMemoryAccessListElement(false, memoryAccess));
   }
 
-  def addDataRace(memoryAccess: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
-    list.append(new SortedMemoryAccessListElement[EVENT](true, memoryAccess));
+  def addDataRace(memoryAccess: NonVolatileEventForReport): Unit = {
+    list.append(new SortedMemoryAccessListElement(true, memoryAccess));
+    dataRaces.add(memoryAccess.staticMemoryAccessId())
   }
 
-  def setDataRace(alreadyAdded: NonVolatileMemoryAccessEvent[EVENT]): Unit = {
+  def setDataRace(alreadyAdded: NonVolatileEventForReport): Unit = {
+    dataRaces.add(alreadyAdded.staticMemoryAccessId())
     for (elem <- list) {
       if (elem.positionInRun == alreadyAdded.runPosition) {
         elem.isDataRace = true;

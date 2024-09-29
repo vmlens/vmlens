@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
+import com.anarsoft.trace.agent.description.WhileLoopDescription;
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.WhileLoopNameEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopRepository;
@@ -56,7 +56,7 @@ public class ParallelizeFacade {
 
         if (currentLoopAndNewFlag.getRight()) {
             serializableEventList.add(TLinkableWrapper.<SerializableEvent>wrapp(
-                    new WhileLoopNameEvent(currentLoop.loopId(), ((AllInterleavings) obj).name)));
+                    new WhileLoopDescription(currentLoop.loopId(), ((AllInterleavings) obj).name)));
         }
 
         serializableEventList.add(TLinkableWrapper.wrapp(newRunEvent));

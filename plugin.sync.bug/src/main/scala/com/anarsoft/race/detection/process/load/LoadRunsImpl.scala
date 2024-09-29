@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.process.load
 
-import com.anarsoft.race.detection.process.loopAndRunData.{RunData, RunDataListBuilder}
+import com.anarsoft.race.detection.loopAndRunData.{RunData, RunDataListBuilder}
 import com.anarsoft.race.detection.process.main.LoadRuns
 
 

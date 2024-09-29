@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.process.loopAndRunData
+package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.nonvolatilememoryaccessgroup.NonVolatileMemoryAccessElementForProcess

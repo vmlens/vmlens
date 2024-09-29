@@ -1,14 +1,15 @@
-package com.vmlens.trace.agent.bootstrap.event;
+package com.anarsoft.trace.agent.description;
 
 import com.vmlens.trace.agent.bootstrap.OptionalByte;
 import com.vmlens.trace.agent.bootstrap.OptionalShort;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
 
 import java.io.DataOutputStream;
-import java.nio.ByteBuffer;
 
 
-public class ThreadNameEvent implements SerializableEvent {
+public class ThreadNameDescription implements SerializableEvent {
 
     private final long threadId;
     private final String threadName;
@@ -17,7 +18,7 @@ public class ThreadNameEvent implements SerializableEvent {
     private final boolean hasShortThreadId;
     private final short shortThreadId;
 
-    public ThreadNameEvent(long threadId, String threadName, OptionalByte optionalByte, OptionalShort optionalShort) {
+    public ThreadNameDescription(long threadId, String threadName, OptionalByte optionalByte, OptionalShort optionalShort) {
         super();
         this.threadId = threadId;
         this.threadName = threadName;
