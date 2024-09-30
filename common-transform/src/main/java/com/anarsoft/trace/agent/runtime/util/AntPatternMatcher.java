@@ -280,7 +280,7 @@ public class AntPatternMatcher {
 	      return true;
 	    }
 
-	    // process pattern between stars. padIdxStart and patIdxEnd point
+          // createreport pattern between stars. padIdxStart and patIdxEnd point
 	    // always to a '*'.
 	    while (patIdxStart != patIdxEnd && strIdxStart <= strIdxEnd) {
 	      int patIdxTmp = -1;

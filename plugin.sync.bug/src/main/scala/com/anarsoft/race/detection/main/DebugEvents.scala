@@ -1,7 +1,9 @@
 package com.anarsoft.race.detection.main
 
-object ProcessEvents {
+object DebugEvents {
+
   def main(args: Array[String]): Unit = {
 
   }
+
 }

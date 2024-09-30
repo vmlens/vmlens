@@ -1,4 +1,4 @@
-package com.vmlens.report.process;
+package com.vmlens.report.createreport;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.patch.Patch;

@@ -1,4 +1,4 @@
-package com.vmlens.report.process;
+package com.vmlens.report.createreport;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
