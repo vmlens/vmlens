@@ -8,7 +8,7 @@ import java.nio.channels.FileChannel;
 public class StreamWrapperWithLoopIdAndRunId extends AbstractStreamWrapper {
 
     public static final String EVENT_FILE_POSTFIX = ".vmlens";
-    public static final String STATISTIC_FILE_POSTFIX = "Statistic.vmlens";
+    public static final String STATISTIC_FILE_POSTFIX = "statistic.vmlens";
     protected final String eventDir;
     protected final String name;
 

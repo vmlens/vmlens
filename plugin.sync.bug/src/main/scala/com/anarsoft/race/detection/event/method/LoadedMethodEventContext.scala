@@ -9,13 +9,13 @@ import java.util
 
 class LoadedMethodEventContext extends LoadedEventContext[LoadedMethodEvent] {
 
-  private[this] val eventList = new util.ArrayList[MethodEvent]();
+  private[this] val eventList = new util.LinkedList[MethodEvent]();
 
   override def addLoadedEvent(event: LoadedMethodEvent): Unit = {
     eventList.add(event)
   }
 
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
-    builder.add(loopAndRunId, new EventArray[MethodEvent](eventList.toArray(Array.ofDim[MethodEvent](0))))
+    builder.add(loopAndRunId, eventList)
   }
 }

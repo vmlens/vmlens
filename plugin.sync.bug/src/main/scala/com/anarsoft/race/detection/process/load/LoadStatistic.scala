@@ -1,23 +1,24 @@
 package com.anarsoft.race.detection.process.load
 
 import com.anarsoft.race.detection.event.load.FilePosition
+import com.anarsoft.race.detection.loopAndRunData.LoopAndRunId
 
 import java.io.DataInputStream
-import scala.collection.mutable.HashMap;
+import scala.collection.mutable
 
 class LoadStatistic(val stream: DataInputStream) {
 
-  def loadAndClose(): SlidingWindowIdToFilePosition = {
-    val slidingWindowIdToFilePosition = new HashMap[Int, FilePosition]();
+  def loadAndClose(): LoopAndRunIdToFilePosition = {
+    val loopAndRunIdToFilePosition = new mutable.HashMap[LoopAndRunId, FilePosition]();
     var previous = 0L;
-    var maxSlidingWindow = -1;
+
     try {
       while (true) {
-        val slidingWindow = stream.readInt();
+        val loopId = stream.readInt();
+        val runId = stream.readInt();
         val position = stream.readLong();
         val current = FilePosition(previous, (position - previous).toInt);
-        slidingWindowIdToFilePosition.put(slidingWindow, current);
-        maxSlidingWindow = Math.max(maxSlidingWindow, slidingWindow);
+        loopAndRunIdToFilePosition.put(LoopAndRunId(loopId, runId), current);
         previous = position;
       }
     } catch {
@@ -26,7 +27,7 @@ class LoadStatistic(val stream: DataInputStream) {
     finally {
       stream.close();
     }
-    SlidingWindowIdToFilePosition(maxSlidingWindow, slidingWindowIdToFilePosition.toMap);
+    LoopAndRunIdToFilePosition(loopAndRunIdToFilePosition.toMap);
   }
 
 }

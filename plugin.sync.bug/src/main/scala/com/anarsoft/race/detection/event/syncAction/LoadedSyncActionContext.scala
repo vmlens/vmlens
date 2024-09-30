@@ -2,12 +2,15 @@ package com.anarsoft.race.detection.event.syncAction
 
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess
+import com.anarsoft.race.detection.syncactiongroup.SyncActionElementForProcessImpl
+import com.anarsoft.race.detection.util.EventArray
 
-import java.util.*
+import java.util
 
 class LoadedSyncActionContext extends LoadedEventContext[LoadedSyncActionEvent] {
 
-  val volatileAccessEvents = new ArrayList[VolatileAccessEvent]();
+  val volatileAccessEvents = new util.LinkedList[VolatileAccessEvent]();
 
   def addLoadedEvent(event: LoadedSyncActionEvent): Unit = {
     event.addToContext(this);
@@ -18,6 +21,10 @@ class LoadedSyncActionContext extends LoadedEventContext[LoadedSyncActionEvent] 
   }
 
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
-    // ToDo
+    val elements = List(new SyncActionElementForProcessImpl[VolatileAccessEvent](
+      EventArray[VolatileAccessEvent](volatileAccessEvents),
+      event => EventContainerForMemoryAccess(event)
+    ))
+    builder.add(loopAndRunId, elements)
   }
 }

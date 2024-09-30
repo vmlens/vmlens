@@ -11,7 +11,7 @@ import org.mockito.Mockito.{mock, times, verify}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-import java.util.ArrayList;
+import java.util
 
 class DistributeEventsTest extends AnyFlatSpec with Matchers {
 
@@ -19,13 +19,16 @@ class DistributeEventsTest extends AnyFlatSpec with Matchers {
     // Mocks
     val loopAndRunDataBuilderMock = mock(classOf[RunDataListBuilder]);
     val captureLoopAndRunId = ArgumentCaptor.forClass(classOf[LoopAndRunId]);
-    val captureEventArray = ArgumentCaptor.forClass(classOf[EventArray[MethodEvent]]);
+    val captureEventArray = ArgumentCaptor.forClass(classOf[util.List[MethodEvent]]);
 
     // Expected
-    val expectedEventArrayOne = new EventArray[MethodEvent](Array(event(1, 1), event(1, 1)));
+    val expectedEventArrayOne = new util.LinkedList[MethodEvent]();
+    expectedEventArrayOne.add(event(1, 1));
+    expectedEventArrayOne.add(event(1, 1));
+
 
     // Given
-    val methodEvents = new ArrayList[LoadedMethodEvent]();
+    val methodEvents = new util.LinkedList[LoadedMethodEvent]();
     methodEvents.add(event(2, 2));
     methodEvents.add(event(1, 1));
     methodEvents.add(event(2, 2));

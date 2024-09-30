@@ -5,6 +5,8 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 
+import static com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX;
+
 public class StreamWrapperWithoutLoopIdAndRunId extends AbstractStreamWrapper {
 	protected DataOutputStream stream;
 	protected final String eventDir;
@@ -19,7 +21,7 @@ public class StreamWrapperWithoutLoopIdAndRunId extends AbstractStreamWrapper {
 	public DataOutputStream getStream() throws Exception {
         if (stream == null) {
             stream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(
-                    eventDir + "/" + name + ".vmlens")));
+                    eventDir + "/" + name + EVENT_FILE_POSTFIX)));
         }
 
         return stream;

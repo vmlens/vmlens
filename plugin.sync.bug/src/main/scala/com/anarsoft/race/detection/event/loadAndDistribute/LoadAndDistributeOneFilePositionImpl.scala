@@ -1,16 +1,16 @@
 package com.anarsoft.race.detection.event.loadAndDistribute
 
 import com.anarsoft.race.detection.event.distribute.{DistributeEvents, EventWithLoopAndRunId, LoadedEventContext}
-import com.anarsoft.race.detection.event.gen.MethodDeSerializer
+import com.anarsoft.race.detection.event.gen.{MethodDeSerializer, SyncActionsDeSerializer}
 import com.anarsoft.race.detection.event.load.{DeserializeEvents, DeserializeStrategy, FilePosition, LoadOneFilePosition}
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
+import com.anarsoft.race.detection.event.syncAction.{LoadedSyncActionContext, LoadedSyncActionEvent}
 import com.anarsoft.race.detection.loopAndRunData.RunDataListBuilder
 import com.anarsoft.race.detection.process.load.LoadAndDistributeOneFilePosition
 import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
 
 import java.io.RandomAccessFile
 import java.nio.file.{Files, Path}
-
 
 class LoadAndDistributeOneFilePositionImpl[EVENT <: EventWithLoopAndRunId](val loadOneFilePosition: LoadOneFilePosition,
                                                                            val deserializeEvents: DeserializeEvents[EVENT],
@@ -32,20 +32,26 @@ class LoadAndDistributeOneFilePositionImpl[EVENT <: EventWithLoopAndRunId](val l
 
 object LoadAndDistributeOneFilePositionImpl {
 
-  def method(dir: Path): DirTypeNameAndLoadAndDistributeOneFilePosition = create[LoadedMethodEvent](dir, "method", new MethodDeSerializer(),
+  def method(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedMethodEvent](dir, typeName,
+    new MethodDeSerializer(),
     () => {
       new LoadedMethodEventContext()
     });
 
-
   private def create[EVENT <: EventWithLoopAndRunId](dir: Path, typeName: String, deserializeStrategy: DeserializeStrategy[EVENT],
-                                                     createContext: () => LoadedEventContext[EVENT]): DirTypeNameAndLoadAndDistributeOneFilePosition = {
+                                                     createContext: () => LoadedEventContext[EVENT]): LoadAndDistributeOneFilePosition = {
     val loadOneFilePosition = new LoadOneFilePosition(new RandomAccessFile(dir.resolve(typeName + EVENT_FILE_POSTFIX).toFile, "r"))
     val deserializeEvents = new DeserializeEvents[EVENT]();
     val distributeEvents = new DistributeEvents[EVENT]();
-    DirTypeNameAndLoadAndDistributeOneFilePosition(dir, typeName,
-      new LoadAndDistributeOneFilePositionImpl(loadOneFilePosition, deserializeEvents, deserializeStrategy, distributeEvents, createContext));
+
+    new LoadAndDistributeOneFilePositionImpl(loadOneFilePosition, deserializeEvents, deserializeStrategy, distributeEvents, createContext);
   }
+
+  def syncAction(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedSyncActionEvent](dir, typeName,
+    new SyncActionsDeSerializer(),
+    () => {
+      new LoadedSyncActionContext()
+    });
 
 
 }

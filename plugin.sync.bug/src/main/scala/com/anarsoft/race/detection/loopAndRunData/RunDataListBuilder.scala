@@ -1,17 +1,25 @@
 package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
+import com.anarsoft.race.detection.event.syncAction.VolatileAccessEvent
+import com.anarsoft.race.detection.syncactiongroup.SyncActionElementForProcess
 import com.anarsoft.race.detection.util.EventArray
 
+import java.util
 import scala.collection.mutable.{ArrayBuffer, HashMap}
 
 class RunDataListBuilder {
 
   private[this] val loopAndRunIdToRunDataBuilder = new HashMap[LoopAndRunId, RunData]();
 
-  def add(loopAndRunId: LoopAndRunId, methodEventArray: EventArray[MethodEvent]): Unit = {
+  def add(loopAndRunId: LoopAndRunId, methodEventList: util.List[MethodEvent]): Unit = {
     val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
-    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(methodEventArray = methodEventArray))
+    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(methodEventArray = EventArray[MethodEvent](methodEventList)))
+  }
+
+  def add(loopAndRunId: LoopAndRunId, syncActionElements: List[SyncActionElementForProcess]): Unit = {
+    val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
+    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(syncActionElements = syncActionElements))
   }
 
   def build(): List[RunData] = {
