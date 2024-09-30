@@ -4,10 +4,12 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
-public class WhileLoopDescription implements SerializableEvent {
+public class WhileLoopDescription implements SerializableEvent, ThreadOrLoopDescription {
     private final int loopId;
     private final String name;
 
@@ -17,12 +19,29 @@ public class WhileLoopDescription implements SerializableEvent {
         this.name = name;
     }
 
+    static WhileLoopDescription deserialize(DataInputStream inputStream) throws IOException {
+        int loopId = inputStream.readInt();
+        String name = inputStream.readUTF();
+
+        return new WhileLoopDescription(loopId, name);
+    }
+
     @Override
     public void serialize(StreamRepository streamRepository) throws Exception {
         DataOutputStream stream = streamRepository.threadName.getStream();
-        stream.writeInt(Constants.TYPE_WHILE_LOOP_NAME_EVENT);
+        serialize(stream);
+    }
+
+    @Override
+    public void serialize(DataOutputStream stream) throws IOException {
+        stream.writeInt(Constants.TYPE_WHILE_LOOP_DESCRIPTION);
         stream.writeInt(loopId);
         stream.writeUTF(name);
+    }
+
+    @Override
+    public void accept(ThreadOrLoopDescriptionVisitor visitor) {
+        visitor.visit(this);
     }
 
     @Override

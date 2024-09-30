@@ -28,6 +28,7 @@ public class ClassDescription implements SerializableEvent {
         this.interfaces = interfaces;
     }
 
+    @Override
     public void serialize(StreamRepository streamRepository) throws Exception {
         (new SerializeAndDeserializeClassDescription()).serialize(this,
                 streamRepository.description.getStream());
