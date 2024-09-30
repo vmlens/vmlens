@@ -4,23 +4,24 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class ClassDescription implements SerializableEvent {
 
-    final String name;
-    final String source;
-    final String[] exceptArray;
-    final String superClass;
-    final String[] interfaces;
+    private final String name;
+    private final String source;
+    private final String superClass;
+    private final String[] interfaces;
     private final FieldInClassDescription[] serializedFieldDescriptionArray;
     private MethodDescription[] methodArray;
 
-	public ClassDescription(String name, String source, String[] exceptArray, MethodDescription[] methodArray,
-                            FieldInClassDescription[] serializedFieldDescriptionArray, String superClass, String[] interfaces) {
+    public ClassDescription(String name, String source,
+                            MethodDescription[] methodArray,
+                            FieldInClassDescription[] serializedFieldDescriptionArray,
+                            String superClass, String[] interfaces) {
         super();
         this.name = name;
         this.source = source;
-        this.exceptArray = exceptArray;
         this.methodArray = methodArray;
         this.serializedFieldDescriptionArray = serializedFieldDescriptionArray;
         this.superClass = superClass;
@@ -28,15 +29,31 @@ public class ClassDescription implements SerializableEvent {
     }
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        (new SerializeDescription()).serialize(this,
+        (new SerializeAndDeserializeClassDescription()).serialize(this,
                 streamRepository.description.getStream());
     }
 
-    public MethodDescription[] getMethodArray() {
+    public String name() {
+        return name;
+    }
+
+    public String source() {
+        return source;
+    }
+
+    public String superClass() {
+        return superClass;
+    }
+
+    public String[] interfaces() {
+        return interfaces;
+    }
+
+    public MethodDescription[] methodArray() {
         return methodArray;
     }
 
-    public FieldInClassDescription[] getSerializedFieldDescriptionArray() {
+    public FieldInClassDescription[] serializedFieldDescriptionArray() {
 		return serializedFieldDescriptionArray;
 	}
 
@@ -45,4 +62,27 @@ public class ClassDescription implements SerializableEvent {
 		return "ClassAnalyzedEvent [name=" + name + ", methodArray="
 				+ Arrays.toString(methodArray) + "]";
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ClassDescription that = (ClassDescription) o;
+        return Objects.equals(name, that.name) && Objects.equals(source, that.source)
+                && Objects.equals(superClass, that.superClass) && Arrays.equals(interfaces, that.interfaces)
+                && Arrays.equals(serializedFieldDescriptionArray, that.serializedFieldDescriptionArray)
+                && Arrays.equals(methodArray, that.methodArray);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(name);
+        result = 31 * result + Objects.hashCode(source);
+        result = 31 * result + Objects.hashCode(superClass);
+        result = 31 * result + Arrays.hashCode(interfaces);
+        result = 31 * result + Arrays.hashCode(serializedFieldDescriptionArray);
+        result = 31 * result + Arrays.hashCode(methodArray);
+        return result;
+    }
 }

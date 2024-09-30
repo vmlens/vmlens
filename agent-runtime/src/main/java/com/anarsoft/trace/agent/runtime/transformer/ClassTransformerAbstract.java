@@ -104,7 +104,7 @@ public abstract class ClassTransformerAbstract  extends ClassVisitor {
         }
 
         ClassDescription classAnalyzedEvent = new ClassDescription(className, classVisitorCreateDesc.source,
-                classVisitorCreateDesc.except, methodArray, fieldArray, classVisitorCreateDesc.superName, classVisitorCreateDesc.interfaces);
+                methodArray, fieldArray, classVisitorCreateDesc.superName, classVisitorCreateDesc.interfaces);
 
         return classAnalyzedEvent;
     }

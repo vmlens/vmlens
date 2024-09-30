@@ -5,12 +5,21 @@ import gnu.trove.list.linked.TLinkedList;
 import java.util.Iterator;
 
 public class StreamRepository {
+
+    public static final String THREAD_AND_LOOP_DESCRIPTION = "threadandloop";
+    public static final String DESCRIPTION = "description";
+    public static final String AGENTLOG = "agentlog";
+    public static final String METHOD_EVENTS = "method";
+    public static final String SYNC_ACTIONS = "syncactions";
+    public static final String FIELD_EVENTS = "field";
+    public static final String MONITOR = "monitor";
+    public static final String DIRECT_MEMORY = "directmemory";
+    public static final String INTERLEAVE = "interleave";
+
+
     public final StreamWrapperWithoutLoopIdAndRunId threadName;
     public final StreamWrapperWithoutLoopIdAndRunId description;
-    public final StreamWrapperWithoutLoopIdAndRunId stackTrace;
     public final StreamWrapperWithoutLoopIdAndRunId agentLog;
-    public final StreamWrapperWithoutLoopIdAndRunId className;
-    public final StreamWrapperWithLoopIdAndRunId firstWrite;
     public final StreamWrapperWithLoopIdAndRunId method;
     public final StreamWrapperWithLoopIdAndRunId syncActions;
     public final StreamWrapperWithLoopIdAndRunId field;
@@ -21,20 +30,16 @@ public class StreamRepository {
     private final TLinkedList<AbstractStreamWrapper> streamList = new TLinkedList<AbstractStreamWrapper>();
 
     public StreamRepository(String eventDir) {
-        this.threadName = new StreamWrapperWithoutLoopIdAndRunId(eventDir, "threadName", streamList);
-        this.description = new StreamWrapperWithoutLoopIdAndRunId(eventDir, "description", streamList);
-        this.stackTrace = new StreamWrapperWithoutLoopIdAndRunId(eventDir, "stackTrace", streamList);
-        this.agentLog = new StreamWrapperWithoutLoopIdAndRunId(eventDir, "agentLog", streamList);
-        this.className = new StreamWrapperWithoutLoopIdAndRunId(eventDir, "className", streamList);
+        this.threadName = create(eventDir, THREAD_AND_LOOP_DESCRIPTION, streamList);
+        this.description = create(eventDir, DESCRIPTION, streamList);
+        this.agentLog = create(eventDir, AGENTLOG, streamList);
 
-        this.firstWrite = new StreamWrapperWithLoopIdAndRunId(eventDir, "firstWrite", streamList);
-        this.method = new StreamWrapperWithLoopIdAndRunId(eventDir, "method", streamList);
-        this.syncActions = new StreamWrapperWithLoopIdAndRunId(eventDir, "syncActions", streamList);
-        this.field = new StreamWrapperWithLoopIdAndRunId(eventDir, "field", streamList);
-        this.monitor = new StreamWrapperWithLoopIdAndRunId(eventDir, "monitor", streamList);
-        this.directMemory = new StreamWrapperWithLoopIdAndRunId(eventDir, "directMemory", streamList);
-
-        this.interleave = new StreamWrapperWithLoopIdAndRunId(eventDir, "interleave", streamList);
+        this.method = createWithLoopIdAndRunId(eventDir, METHOD_EVENTS, streamList);
+        this.syncActions = createWithLoopIdAndRunId(eventDir, SYNC_ACTIONS, streamList);
+        this.field = createWithLoopIdAndRunId(eventDir, FIELD_EVENTS, streamList);
+        this.monitor = createWithLoopIdAndRunId(eventDir, MONITOR, streamList);
+        this.directMemory = createWithLoopIdAndRunId(eventDir, DIRECT_MEMORY, streamList);
+        this.interleave = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
     }
 
     public void flush() throws Exception {
@@ -51,4 +56,23 @@ public class StreamRepository {
             iterator.next().close();
         }
     }
+
+    //
+
+    private static StreamWrapperWithLoopIdAndRunId
+    createWithLoopIdAndRunId(String eventDir, String name,
+                             TLinkedList<AbstractStreamWrapper> streamList) {
+        StreamWrapperWithLoopIdAndRunId stream = new StreamWrapperWithLoopIdAndRunId(eventDir, name);
+        streamList.add(stream);
+        return stream;
+    }
+
+    private static StreamWrapperWithoutLoopIdAndRunId
+    create(String eventDir, String name,
+           TLinkedList<AbstractStreamWrapper> streamList) {
+        StreamWrapperWithoutLoopIdAndRunId stream = new StreamWrapperWithoutLoopIdAndRunId(eventDir, name);
+        streamList.add(stream);
+        return stream;
+    }
+
 }

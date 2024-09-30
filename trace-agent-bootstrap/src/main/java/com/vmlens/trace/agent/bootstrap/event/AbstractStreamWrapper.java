@@ -1,21 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
 import gnu.trove.list.TLinkable;
-import gnu.trove.list.linked.TLinkedList;
 
 public abstract class AbstractStreamWrapper implements TLinkable<AbstractStreamWrapper>  {
 
 	private AbstractStreamWrapper previous;
 	private AbstractStreamWrapper next;
 
-    public AbstractStreamWrapper( TLinkedList<AbstractStreamWrapper> list) {
-		super();
-		list.add(this);
-	}
-	public AbstractStreamWrapper() {
-		super();
-	
-	}
 	public abstract void flush() throws Exception;
 	public abstract void close() throws Exception;
 

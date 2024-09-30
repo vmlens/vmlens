@@ -29,8 +29,6 @@ public class ClassVisitorCreateDesc extends ClassVisitor {
 	public boolean containsNative = false;
 	public boolean potentialSingelton = false;
 	public boolean isAbstract = false;
-	public boolean isStateless = false;
-	public String[] except = new String[0];
 	public String superName;
 	public String[] interfaces;
 

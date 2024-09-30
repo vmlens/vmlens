@@ -1,8 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
 
-import gnu.trove.list.linked.TLinkedList;
-
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -19,13 +17,6 @@ public class StreamWrapperWithLoopIdAndRunId extends AbstractStreamWrapper {
     private DataOutputStream streamStatistic;
     private ByteBuffer mappedByteBuffer;
     private FileChannel fileChannel;
-
-    public StreamWrapperWithLoopIdAndRunId(
-            String eventDir, String name, TLinkedList<AbstractStreamWrapper> list) {
-        super(list);
-        this.eventDir = eventDir;
-        this.name = name;
-    }
 
     public StreamWrapperWithLoopIdAndRunId(
             String eventDir, String name) {

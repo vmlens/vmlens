@@ -2,6 +2,8 @@ package com.anarsoft.trace.agent.description;
 
 import gnu.trove.list.TLinkableAdapter;
 
+import java.util.Objects;
+
 public class FieldInClassDescription extends TLinkableAdapter<FieldInClassDescription> {
 	
 	private final int id;
@@ -19,24 +21,43 @@ public class FieldInClassDescription extends TLinkableAdapter<FieldInClassDescri
 		this.signature = signature;
 	}
 
-	public int getAccess() {
+	public int access() {
 		return access;
 	}
 
-	public String getName() {
+	public String name() {
 		return name;
 	}
 
-	public String getDesc() {
+	public String desc() {
 		return desc;
 	}
 
-	public String getSignature() {
+	public String signature() {
 		return signature;
 	}
 
-	public int getId() {
+	public int id() {
 		return id;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		FieldInClassDescription that = (FieldInClassDescription) o;
+		return id == that.id && access == that.access && Objects.equals(name, that.name)
+				&& Objects.equals(desc, that.desc) && Objects.equals(signature, that.signature);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id;
+		result = 31 * result + access;
+		result = 31 * result + Objects.hashCode(name);
+		result = 31 * result + Objects.hashCode(desc);
+		result = 31 * result + Objects.hashCode(signature);
+		return result;
+	}
 }
