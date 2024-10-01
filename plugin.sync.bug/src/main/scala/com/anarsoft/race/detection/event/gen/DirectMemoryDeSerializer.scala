@@ -4,16 +4,14 @@ import java.nio.ByteBuffer
 
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.monitor._;
 import com.anarsoft.race.detection.event.nonVolatileField._;
 import com.anarsoft.race.detection.event.directMemory._;
 import com.anarsoft.race.detection.event.interleave._;
 import com.anarsoft.race.detection.event.load._;
 
 class DirectMemoryDeSerializer extends DeserializeStrategy[LoadedDirectMemoryEvent] {
-  def eventArraySize() = 37
-
-  val blockSize = 37 * 10000;
+  val eventArraySize: Int = 37
+  val blockSize: Int = 37 * 10000;
 
 
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedDirectMemoryEvent = {

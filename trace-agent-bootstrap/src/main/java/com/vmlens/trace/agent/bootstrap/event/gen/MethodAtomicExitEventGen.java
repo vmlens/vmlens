@@ -45,7 +45,7 @@ public class MethodAtomicExitEventGen {
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.interleave.
+        serialize(streamRepository.syncActions.
                 getByteBuffer(new LoopIdAndRunId(loopId, runId), 26, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }

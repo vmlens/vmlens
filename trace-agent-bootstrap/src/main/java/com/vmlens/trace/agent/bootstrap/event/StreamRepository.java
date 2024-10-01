@@ -12,7 +12,6 @@ public class StreamRepository {
     public static final String METHOD_EVENTS = "method";
     public static final String SYNC_ACTIONS = "syncactions";
     public static final String FIELD_EVENTS = "field";
-    public static final String MONITOR = "monitor";
     public static final String DIRECT_MEMORY = "directmemory";
     public static final String INTERLEAVE = "interleave";
 
@@ -23,7 +22,6 @@ public class StreamRepository {
     public final StreamWrapperWithLoopIdAndRunId method;
     public final StreamWrapperWithLoopIdAndRunId syncActions;
     public final StreamWrapperWithLoopIdAndRunId field;
-    public final StreamWrapperWithLoopIdAndRunId monitor;
     public final StreamWrapperWithLoopIdAndRunId directMemory;
     public final StreamWrapperWithLoopIdAndRunId interleave;
 
@@ -37,7 +35,6 @@ public class StreamRepository {
         this.method = createWithLoopIdAndRunId(eventDir, METHOD_EVENTS, streamList);
         this.syncActions = createWithLoopIdAndRunId(eventDir, SYNC_ACTIONS, streamList);
         this.field = createWithLoopIdAndRunId(eventDir, FIELD_EVENTS, streamList);
-        this.monitor = createWithLoopIdAndRunId(eventDir, MONITOR, streamList);
         this.directMemory = createWithLoopIdAndRunId(eventDir, DIRECT_MEMORY, streamList);
         this.interleave = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
     }

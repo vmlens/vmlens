@@ -51,7 +51,7 @@ public class MonitorExitEventGen {
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.monitor.
+        serialize(streamRepository.syncActions.
                 getByteBuffer(new LoopIdAndRunId(loopId, runId), 37, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
