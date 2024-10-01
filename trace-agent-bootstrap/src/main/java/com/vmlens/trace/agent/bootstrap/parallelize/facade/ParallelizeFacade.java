@@ -1,15 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
-import com.anarsoft.trace.agent.description.WhileLoopDescription;
-import com.vmlens.api.AllInterleavings;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.loop.HasNextResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopRepository;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ParallelizeLoopFactoryImpl;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Pair;
 
 
@@ -45,23 +41,7 @@ public class ParallelizeFacade {
         Pair<ParallelizeLoop, Boolean> currentLoopAndNewFlag = parallelizeLoopRepository.getOrCreate(obj);
         currentLoop = currentLoopAndNewFlag.getLeft();
 
-        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEventList =
-                new TLinkedList<>();
-
-        SerializableEvent newRunEvent = currentLoop.hasNext(threadLocalWrapperForParallelize);
-
-        if (newRunEvent == null) {
-            return new HasNextResult(false, serializableEventList);
-        }
-
-        if (currentLoopAndNewFlag.getRight()) {
-            serializableEventList.add(TLinkableWrapper.<SerializableEvent>wrapp(
-                    new WhileLoopDescription(currentLoop.loopId(), ((AllInterleavings) obj).name)));
-        }
-
-        serializableEventList.add(TLinkableWrapper.wrapp(newRunEvent));
-
-        return new HasNextResult(true, serializableEventList);
+        return currentLoop.hasNext(threadLocalWrapperForParallelize, obj);
     }
 
     public void close(ThreadLocalForParallelize threadLocalWrapperForParallelize, Object obj) {

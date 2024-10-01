@@ -4,12 +4,8 @@ import com.anarsoft.trace.agent.description.{ClassDescription, ThreadOrLoopDescr
 
 trait DescriptionBuilder {
 
-  def addClassDescription(classDescription: ClassDescription): Unit = {
+  def addClassDescription(classDescription: ClassDescription): Unit;
 
-  }
-
-  def addThreadOrLoopDescription(threadOrLoopDescription: ThreadOrLoopDescription): Unit = {
-
-  }
+  def addThreadOrLoopDescription(threadOrLoopDescription: ThreadOrLoopDescription): Unit;
 
 }

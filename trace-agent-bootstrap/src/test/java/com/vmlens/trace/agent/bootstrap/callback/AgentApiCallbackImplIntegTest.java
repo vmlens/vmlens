@@ -52,13 +52,13 @@ public class AgentApiCallbackImplIntegTest {
         assertThat(runStartEvent, is(expectedRunStartEvent));
         assertThat(whileLoopNameEvent, is(expectedWhileLoopNameEvent));
 
-        // the second call should lead to zero events and false
+        // the second call should lead to one event and false
         eventList = new LinkedList<>();
         hasNext = agentApiCallbackImpl.hasNext(givenAllInterleavings,
                 new QueueInMock(eventList),
                 threadLocalForParallelize);
 
         assertThat(hasNext, is(false));
-        assertThat(eventList.size(), is(0));
+        assertThat(eventList.size(), is(1));
     }
 }

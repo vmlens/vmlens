@@ -58,11 +58,17 @@ public class ClassDescription implements SerializableEvent {
 		return serializedFieldDescriptionArray;
 	}
 
-	@Override
-	public String toString() {
-		return "ClassAnalyzedEvent [name=" + name + ", methodArray="
-				+ Arrays.toString(methodArray) + "]";
-	}
+    @Override
+    public String toString() {
+        return "ClassDescription{" +
+                "name='" + name + '\'' +
+                ", source='" + source + '\'' +
+                ", superClass='" + superClass + '\'' +
+                ", interfaces=" + Arrays.toString(interfaces) +
+                ", serializedFieldDescriptionArray=" + Arrays.toString(serializedFieldDescriptionArray) +
+                ", methodArray=" + Arrays.toString(methodArray) +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {

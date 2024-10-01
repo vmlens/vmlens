@@ -49,11 +49,17 @@ public class MethodDescription {
 		return access;
 	}
 
-    @Override
-    public String toString() {
-        return "MethodDescription [name=" + name + ", id=" + id
-                + ", fieldArray=" + "]";
-    }
+	@Override
+	public String toString() {
+		return "MethodDescription{" +
+				"name='" + name + '\'' +
+				", desc='" + desc + '\'' +
+				", id=" + id +
+				", access=" + access +
+				", lineNumber=" + lineNumber +
+				", fieldArray=" + Arrays.toString(fieldArray) +
+				'}';
+	}
 
 	@Override
 	public boolean equals(Object o) {

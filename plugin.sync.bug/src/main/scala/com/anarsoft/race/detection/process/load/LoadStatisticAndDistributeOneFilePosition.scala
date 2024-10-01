@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.event.loadAndDistribute.DirTypeNameAndLoadAnd
 import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.STATISTIC_FILE_POSTFIX
 
 import java.io.DataInputStream
-import java.nio.file.{Files, Path}
+import java.nio.file.Files
 
 class LoadStatisticAndDistributeOneFilePosition(val loadStatistic: LoadStatistic,
                                                 val loadAndSerializeOneFilePosition: LoadAndDistributeOneFilePosition) {

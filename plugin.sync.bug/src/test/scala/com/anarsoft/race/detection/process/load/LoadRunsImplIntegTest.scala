@@ -27,18 +27,13 @@ class LoadRunsImplIntegTest extends AnyFlatSpec with Matchers {
     first.setLoopId(2)
     first.setRunId(0)
 
-
     val second = new VolatileAccessEvent();
     second.setLoopId(1)
     second.setRunId(1)
 
-
     val third = new VolatileAccessEvent();
     third.setLoopId(1)
     third.setRunId(2)
-
-
-
 
     // When
     first.serialize(streamRepository)
@@ -56,6 +51,9 @@ class LoadRunsImplIntegTest extends AnyFlatSpec with Matchers {
 
     // Then
     runAndLoopIdSet should be(expectedLoopAndRunIds)
+
+    // Fixme delete does not work
+    //FileUtils.deleteDirectory(tempDirectory.toFile)
 
   }
 

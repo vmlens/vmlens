@@ -46,6 +46,7 @@ public class WriteEventToFile implements Runnable {
                 Object in = CallbackState.eventQueue.queue().poll();
                 if (in != null) {
                     if (in instanceof PoisonedEvent) {
+                        close();
                         process = false;
                     } else if (in instanceof SerializableEvent) {
                         SerializableEvent staticEvent = (SerializableEvent) in;
@@ -59,7 +60,6 @@ public class WriteEventToFile implements Runnable {
             } catch (Throwable e) {
                 e.printStackTrace();
             }
-            close();
         }
     }
 }

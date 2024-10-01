@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.distribute.DistributeEvents
 import com.anarsoft.race.detection.event.gen.MethodEnterEventGen
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
-import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilderImpl}
 import com.anarsoft.race.detection.util.EventArray
 import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.{mock, times, verify}
@@ -17,7 +17,7 @@ class DistributeEventsTest extends AnyFlatSpec with Matchers {
 
   "DistributeEvents" should "distribute method events based on loop and run id" in {
     // Mocks
-    val loopAndRunDataBuilderMock = mock(classOf[RunDataListBuilder]);
+    val loopAndRunDataBuilderMock = mock(classOf[RunDataListBuilderImpl]);
     val captureLoopAndRunId = ArgumentCaptor.forClass(classOf[LoopAndRunId]);
     val captureEventArray = ArgumentCaptor.forClass(classOf[util.List[MethodEvent]]);
 

@@ -2,10 +2,11 @@ package com.vmlens.trace.agent.bootstrap.event.impl;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.event.gen.RunStartEventGen;
+import com.vmlens.trace.agent.bootstrap.event.gen.RunEndEventGen;
 
-public class RunStartEvent extends RunStartEventGen implements SerializableEvent {
-    public RunStartEvent(int loopId, int runId) {
+public class RunEndEvent extends RunEndEventGen implements SerializableEvent {
+
+    public RunEndEvent(int loopId, int runId) {
         this.loopId = loopId;
         this.runId = runId;
     }

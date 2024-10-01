@@ -66,5 +66,8 @@ public class RunImpl implements Run {
         return runStateMachine.end(threadLocalForParallelize);
     }
 
-
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

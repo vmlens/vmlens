@@ -8,14 +8,14 @@ import java.io.IOException;
 public class SerializeAndDeserializeClassDescription {
 
     public void serialize(ClassDescription description, DataOutputStream out) throws IOException {
-        out.writeUTF(description.name());
+        out.writeUTF(convertNullToBlank(description.name()));
         out.writeUTF(description.source());
 
-        out.writeUTF(description.superClass());
+        out.writeUTF(convertNullToBlank(description.superClass()));
         out.writeInt(description.interfaces().length);
 
         for (String name : description.interfaces()) {
-            out.writeUTF(name);
+            out.writeUTF(convertNullToBlank(name));
         }
 
         out.writeInt(description.methodArray().length);
@@ -61,9 +61,9 @@ public class SerializeAndDeserializeClassDescription {
     }
 
     private void serialize(MethodDescription description, DataOutputStream out) throws IOException {
-        out.writeUTF(description.name());
+        out.writeUTF(convertNullToBlank(description.name()));
         out.writeInt(description.id());
-        out.writeUTF(description.desc());
+        out.writeUTF(convertNullToBlank(description.desc()));
         out.writeInt(description.access());
         out.writeInt(description.lineNumber());
 
@@ -92,11 +92,11 @@ public class SerializeAndDeserializeClassDescription {
     }
 
     private void serialize(FieldInClassDescription description, DataOutputStream out) throws IOException {
-        out.writeUTF(description.name());
+        out.writeUTF(convertNullToBlank(description.name()));
         out.writeInt(description.id());
-        out.writeUTF(description.desc());
+        out.writeUTF(convertNullToBlank(description.desc()));
         out.writeInt(description.access());
-        out.writeUTF(description.signature());
+        out.writeUTF(convertNullToBlank(description.signature()));
     }
 
     private FieldInClassDescription deserializeField(DataInputStream in) throws IOException {
@@ -110,8 +110,8 @@ public class SerializeAndDeserializeClassDescription {
     }
 
     private void serialize(FieldAccessDescription description, DataOutputStream out) throws IOException {
-        out.writeUTF(description.name());
-        out.writeUTF(description.owner());
+        out.writeUTF(convertNullToBlank(description.name()));
+        out.writeUTF(convertNullToBlank(description.owner()));
         out.writeInt(description.id());
         out.writeBoolean(description.isStatic());
         out.writeBoolean(description.isWrite());
@@ -131,4 +131,12 @@ public class SerializeAndDeserializeClassDescription {
         return new FieldAccessDescription(name, owner, id,
                 isStatic, isWrite, isTraced, isFinal);
     }
+
+    private String convertNullToBlank(String in) {
+        if (in == null) {
+            return "";
+        }
+        return in;
+    }
+
 }

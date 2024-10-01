@@ -1,6 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
+import com.anarsoft.trace.agent.description.WhileLoopDescription;
+import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.impl.RunEndEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.RunStartEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
@@ -48,10 +51,12 @@ public class ParallelizeLoop {
         }
     }
 
-    public SerializableEvent hasNext(ThreadLocalForParallelize threadLocalForParallelize) {
+    public HasNextResult hasNext(ThreadLocalForParallelize threadLocalForParallelize, Object obj) {
         lock.lock();
         try {
             if (currentRun != null) {
+                RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
+
                 ActualRun previous = currentRun.end(threadLocalForParallelize);
                 interleaveLoop.addActualRun(previous);
 
@@ -65,9 +70,9 @@ public class ParallelizeLoop {
                             runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
                     int tempRunId = maxRunId;
                     maxRunId++;
-                    return new RunStartEvent(loopId, tempRunId);
+                    return new HasNextResult(true, new SerializableEvent[]{endEvent, new RunStartEvent(loopId, tempRunId)});
                 }
-                return null;
+                return new HasNextResult(false, new SerializableEvent[]{endEvent});
             } else {
                 ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
                 ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
@@ -77,7 +82,8 @@ public class ParallelizeLoop {
                         runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
                 int tempRunId = maxRunId;
                 maxRunId++;
-                return new RunStartEvent(loopId, tempRunId);
+                return new HasNextResult(true, new SerializableEvent[]{new RunStartEvent(loopId, tempRunId),
+                        new WhileLoopDescription(loopId, ((AllInterleavings) obj).name)});
             }
         } finally {
             lock.unlock();

@@ -6,6 +6,9 @@ import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 
 public interface Run {
+
+    int runId();
+
     RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest);
 
     void newTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize);

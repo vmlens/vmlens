@@ -42,6 +42,17 @@ public class FieldInClassDescription extends TLinkableAdapter<FieldInClassDescri
 	}
 
 	@Override
+	public String toString() {
+		return "FieldInClassDescription{" +
+				"id=" + id +
+				", access=" + access +
+				", name='" + name + '\'' +
+				", desc='" + desc + '\'' +
+				", signature='" + signature + '\'' +
+				'}';
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

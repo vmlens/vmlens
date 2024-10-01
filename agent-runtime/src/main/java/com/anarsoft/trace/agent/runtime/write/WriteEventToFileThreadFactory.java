@@ -9,9 +9,7 @@ public class WriteEventToFileThreadFactory implements ThreadFactory {
 
     @Override
     public Thread newThread(Runnable arg0) {
-        Thread thread = new Thread(arg0, ThreadLocalForParallelize.ANARSOFT_THREAD_NAME);
-        thread.setDaemon(true);
-        return thread;
+        return new Thread(arg0, ThreadLocalForParallelize.ANARSOFT_THREAD_NAME);
     }
 
 }
