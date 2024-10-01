@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.syncactiongroup
+package com.anarsoft.race.detection.groupsyncaction
 
 class SyncActionElementForResult {
   def addToReport(): Unit = {

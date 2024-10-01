@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.syncactiongroup
+package com.anarsoft.race.detection.groupsyncaction
 
 import com.anarsoft.race.detection.createpartialorder.{AddToPartialOrderBuilder, PartialOrderBuilder, SyncActionEvent}
 import com.anarsoft.race.detection.setstacktrace.{EventWithStacktraceNode, SetStacktraceNodeInEvent}

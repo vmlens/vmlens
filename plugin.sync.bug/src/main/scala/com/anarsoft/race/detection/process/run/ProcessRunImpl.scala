@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.process.run
 
+import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForResult
 import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult}
-import com.anarsoft.race.detection.nonvolatilememoryaccessgroup.NonVolatileMemoryAccessElementForResult
 import com.anarsoft.race.detection.partialorder.{PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.main.ProcessRun
 import com.anarsoft.race.detection.reportbuilder.RunReportBuilderAdapter

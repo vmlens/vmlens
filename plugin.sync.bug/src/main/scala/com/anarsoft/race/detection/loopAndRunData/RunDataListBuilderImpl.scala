@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.syncAction.VolatileAccessEvent
-import com.anarsoft.race.detection.syncactiongroup.SyncActionElementForProcess
+import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcess
 import com.anarsoft.race.detection.util.EventArray
 
 import java.util

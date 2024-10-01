@@ -1,8 +1,8 @@
 package com.anarsoft.race.detection.debug
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
+import com.anarsoft.race.detection.groupsyncaction.{SyncActionElementForProcess, SyncActionElementForProcessImpl}
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
-import com.anarsoft.race.detection.syncactiongroup.{SyncActionElementForProcess, SyncActionElementForProcessImpl}
 
 import java.util
 

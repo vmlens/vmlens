@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.syncactiongroup
+package com.anarsoft.race.detection.groupsyncaction
 
 import com.anarsoft.race.detection.event.syncAction.VolatileAccessEvent
 import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess

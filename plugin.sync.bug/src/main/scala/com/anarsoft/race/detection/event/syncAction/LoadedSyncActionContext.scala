@@ -1,9 +1,9 @@
 package com.anarsoft.race.detection.event.syncAction
 
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
+import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcessImpl
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess
-import com.anarsoft.race.detection.syncactiongroup.SyncActionElementForProcessImpl
 import com.anarsoft.race.detection.util.EventArray
 
 import java.util

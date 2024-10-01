@@ -3,9 +3,9 @@ package com.anarsoft.race.detection.process.run
 import com.anarsoft.race.detection.event.gen.{FieldAccessEventGen, VolatileAccessEventGen}
 import com.anarsoft.race.detection.event.nonVolatileField.NonVolatileFieldAccessEvent
 import com.anarsoft.race.detection.event.syncAction.VolatileAccessEvent
+import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForProcessBuilder
+import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcessBuilder
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunData}
-import com.anarsoft.race.detection.nonvolatilememoryaccessgroup.NonVolatileMemoryAccessElementForProcessBuilder
-import com.anarsoft.race.detection.syncactiongroup.SyncActionElementForProcessBuilder
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

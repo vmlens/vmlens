@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.syncactiongroup
+package com.anarsoft.race.detection.groupsyncaction
 
 import com.anarsoft.race.detection.createpartialorder.PartialOrderBuilder
 import com.anarsoft.race.detection.stacktrace.StacktraceNode

@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
-import com.anarsoft.race.detection.syncactiongroup.SyncActionElementForProcess
+import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcess
 
 import java.util
 

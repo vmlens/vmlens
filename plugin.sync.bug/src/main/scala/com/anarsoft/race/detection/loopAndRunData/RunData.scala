@@ -1,8 +1,8 @@
 package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
-import com.anarsoft.race.detection.nonvolatilememoryaccessgroup.NonVolatileMemoryAccessElementForProcess
-import com.anarsoft.race.detection.syncactiongroup.SyncActionElementForProcess
+import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForProcess
+import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcess
 import com.anarsoft.race.detection.util.EventArray
 
 case class RunData(loopAndRunId: LoopAndRunId,
