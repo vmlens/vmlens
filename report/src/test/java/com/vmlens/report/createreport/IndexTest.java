@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.fail;
 
-public class TestIndex {
+public class IndexTest {
 
     @Test
     public void createReport() throws IOException {
@@ -23,8 +23,6 @@ public class TestIndex {
         uiLoop.setLink("link");
         uiLoop.setName("name");
         uiLoop.setResultText("resultText");
-
-
 
         CreateOneReport createOneReport = new CreateOneReport("index");
         List<UITestLoop> list = Collections.singletonList(uiLoop);
@@ -62,6 +60,4 @@ public class TestIndex {
         }
         return list;
     }
-
-
 }

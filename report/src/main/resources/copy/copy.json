@@ -1,8 +1,4 @@
-{
-  "targets": [
-    {
-      "name": "mvnHtmlReport",
-      "copyFiles": [
+[
         {
           "path": "copy/mvnHtmlReport/css/bootstrap-theme.css",
           "dir": "css",
@@ -343,7 +339,5 @@
           "dir": "js",
           "name": "report.js"
         }
-      ]
-    }
-  ]
-}
+]
+
