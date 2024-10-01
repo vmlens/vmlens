@@ -14,7 +14,7 @@ public class QueueInMock implements QueueIn {
     }
 
     @Override
-    public void offer(Object element) {
+    public void offer(SerializableEvent element) {
         eventList.add((SerializableEvent) element);
     }
 

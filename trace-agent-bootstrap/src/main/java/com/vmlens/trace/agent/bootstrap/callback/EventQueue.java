@@ -2,30 +2,31 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import org.jctools.queues.MpscArrayQueue;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrapp;
 
 
 public class EventQueue implements QueueIn {
 
-    private final MpscArrayQueue queue;
+    private final TLinkedList<TLinkableWrapper<SerializableEvent>> queue;
 
     public EventQueue() {
         super();
-        queue = new MpscArrayQueue(5000);
+        queue = new TLinkedList<>();
     }
 
-
-    int writeEventCount = 0;
-
-    public void offer(Object element) {
-        ThreadLocalForParallelize callbackStatePerThread = CallbackState.callbackStatePerThread.get();
-
-        queue.offer(element);
-
+    public synchronized void offer(SerializableEvent element) {
+        queue.addFirst(wrapp(element));
     }
 
-    public MpscArrayQueue queue() {
-        return queue;
+    public synchronized SerializableEvent take() {
+        TLinkableWrapper<SerializableEvent> result = queue.removeLast();
+        if (result != null) {
+            return result.element;
+        }
+        return null;
     }
 }

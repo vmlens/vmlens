@@ -4,18 +4,23 @@ import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
 public class ShutdownHook extends Thread {
-    public ShutdownHook() {
+
+    private final WriteEventToFile writeEventToFile;
+
+    public ShutdownHook(WriteEventToFile writeEventToFile) {
         super(ThreadLocalForParallelize.ANARSOFT_THREAD_NAME);
+        this.writeEventToFile = writeEventToFile;
     }
 
-    public static synchronized void addShutdownHook() {
-        ShutdownHook shutdownHook = new ShutdownHook();
+    public static synchronized void addShutdownHook(WriteEventToFile writeEventToFile) {
+        ShutdownHook shutdownHook = new ShutdownHook(writeEventToFile);
         Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
 
     public void stopProcessing() {
         try {
             CallbackState.eventQueue.offer(new PoisonedEvent());
+            writeEventToFile.waitForPoisonedEventReceived();
         } catch (Exception e) {
             e.printStackTrace();
         }

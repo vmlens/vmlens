@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event.impl;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 import com.vmlens.trace.agent.bootstrap.event.gen.RunStartEventGen;
 
 public class RunStartEvent extends RunStartEventGen implements SerializableEvent {
@@ -10,9 +9,4 @@ public class RunStartEvent extends RunStartEventGen implements SerializableEvent
         this.runId = runId;
     }
 
-    @Override
-    public void serialize(StreamRepository streamRepository) throws Exception {
-        super.serialize(streamRepository);
-        streamRepository.flush();
-    }
 }

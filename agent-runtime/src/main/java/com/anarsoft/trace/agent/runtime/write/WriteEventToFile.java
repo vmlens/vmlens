@@ -9,6 +9,8 @@ public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;
     private final AgentController agentController;
     private boolean shutdownHookAdded = false;
+    private final Object poisonedEventReceivedMonitor = new Object();
+    private boolean poisonedEventReceived = false;
 
     private WriteEventToFile(StreamRepository streamRepository, AgentController agentController) {
         super();
@@ -24,7 +26,7 @@ public class WriteEventToFile implements Runnable {
     private void testAndAddShutdownHook() {
         if (!this.shutdownHookAdded) {
             this.shutdownHookAdded = true;
-            ShutdownHook.addShutdownHook();
+            ShutdownHook.addShutdownHook(this);
         }
     }
 
@@ -43,16 +45,14 @@ public class WriteEventToFile implements Runnable {
         boolean process = true;
         while (process) {
             try {
-                Object in = CallbackState.eventQueue.queue().poll();
+                SerializableEvent in = CallbackState.eventQueue.take();
                 if (in != null) {
                     if (in instanceof PoisonedEvent) {
                         close();
                         process = false;
-                    } else if (in instanceof SerializableEvent) {
-                        SerializableEvent staticEvent = (SerializableEvent) in;
-                        staticEvent.serialize(streamRepository);
+                        setPoisonedEventReceived();
                     } else {
-                        throw new RuntimeException("unknown " + in.getClass());
+                        in.serialize(streamRepository);
                     }
                 } else {
                     Thread.yield();
@@ -62,4 +62,21 @@ public class WriteEventToFile implements Runnable {
             }
         }
     }
+
+    private void setPoisonedEventReceived() {
+        synchronized (poisonedEventReceivedMonitor) {
+            poisonedEventReceived = true;
+            poisonedEventReceivedMonitor.notifyAll();
+        }
+    }
+
+    public void waitForPoisonedEventReceived() throws InterruptedException {
+        synchronized (poisonedEventReceivedMonitor) {
+            while (!poisonedEventReceived) {
+                poisonedEventReceivedMonitor.wait();
+                ;
+            }
+        }
+    }
+
 }
