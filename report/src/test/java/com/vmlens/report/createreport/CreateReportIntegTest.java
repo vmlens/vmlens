@@ -1,10 +1,15 @@
 package com.vmlens.report.createreport;
 
+import com.vmlens.report.uielement.UILoopAndRunElements;
+import com.vmlens.report.uielement.UIStacktraceElement;
+import com.vmlens.report.uielement.UIStacktraceRoot;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CreateReportIntegTest {
 
@@ -14,7 +19,20 @@ public class CreateReportIntegTest {
         System.out.println("writing report to " + outputDir);
 
         CreateReport createReport = new CreateReport(outputDir);
-        createReport.createReport(null);
+
+        List<UIStacktraceElement> stacktraceElements = new LinkedList<>();
+        UIStacktraceElement first = new UIStacktraceElement();
+        first.setText("org.apache.commons.text.StringEscapeUtils.escapeHtml3");
+        stacktraceElements.add(first);
+
+        UIStacktraceRoot root = new UIStacktraceRoot(stacktraceElements);
+
+        List<UIStacktraceRoot> rootNodes = new LinkedList<>();
+        rootNodes.add(root);
+
+        List<UILoopAndRunElements> uiLoopAndRunElementsList = new LinkedList<>();
+
+        createReport.createReport(rootNodes, uiLoopAndRunElementsList);
     }
 
 }

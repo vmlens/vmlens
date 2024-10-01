@@ -1,4 +1,4 @@
-package com.vmlens.report.domain;
+package com.vmlens.report.uielement;
 
 public class UILoopAndRunElements {
 }

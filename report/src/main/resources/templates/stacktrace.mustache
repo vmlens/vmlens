@@ -2,14 +2,10 @@
 
 <!-- stacktrace.mustache -->
 <div class="container">
-    {{#issues}}
+    {{#elements}}
         <div class="row text-left">
-            {{#imagePath}}
-                <img src="../{{{imagePath}}}"/>
-            {{/imagePath}}
-            {{#hasLink}}<a href="{{link}}"> {{{nameWithHtml}}} </a> {{/hasLink}}
-            {{^hasLink}} {{{nameWithHtml}}} {{/hasLink}}
+            {{{text}}}
         </div>
-    {{/issues}}
+    {{/elements}}
 </div>
 {{>footer.mustache}}

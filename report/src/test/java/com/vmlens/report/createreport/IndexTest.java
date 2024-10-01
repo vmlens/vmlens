@@ -2,7 +2,7 @@ package com.vmlens.report.createreport;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.patch.Patch;
-import com.vmlens.report.domain.UITestLoop;
+import com.vmlens.report.uielement.UITestLoop;
 import org.junit.Test;
 
 import java.io.*;
@@ -29,7 +29,7 @@ public class IndexTest {
 
         // When
         StringWriter writer = new StringWriter();
-        createOneReport.create(list, writer);
+        createOneReport.createUITestLoop(list, writer);
 
         // Then
         BufferedReader actual = new BufferedReader(new StringReader(writer.toString()));
