@@ -39,7 +39,7 @@ class DistributeEventsTest extends AnyFlatSpec with Matchers {
     distribute.distribute(methodEvents, () => new LoadedMethodEventContext(), loopAndRunDataBuilderMock);
 
     // Then
-    verify(loopAndRunDataBuilderMock, times(2)).add(captureLoopAndRunId.capture(), captureEventArray.capture());
+    verify(loopAndRunDataBuilderMock, times(2)).addMethodEvents(captureLoopAndRunId.capture(), captureEventArray.capture());
     captureLoopAndRunId.getAllValues.get(0) should be(LoopAndRunId(1, 1))
     captureEventArray.getAllValues.get(0) should be(expectedEventArrayOne)
 

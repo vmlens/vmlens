@@ -5,7 +5,7 @@ import org.scalatest.matchers.should.Matchers
 
 class AlgorithmForOneTypeSortNonVolatileTest extends AnyFlatSpec with Matchers {
 
-  "AlgorithmForOneTypeSortNonVolatile" should "add events with the same thread index to the list" in {
+  "AlgorithmForOneTypeSortNonVolatile" should "addMethodEvents events with the same thread index to the list" in {
     // Given
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder();
     val algorithm = new AlgorithmForOneTypeSortNonVolatile[NonVolatileMemoryAccessEventGuineaPig](null, null);

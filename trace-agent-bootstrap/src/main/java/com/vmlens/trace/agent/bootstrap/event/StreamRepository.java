@@ -45,16 +45,12 @@ public class StreamRepository {
             iterator.next().flush();
         }
     }
-
-
     public void close() throws Exception {
         Iterator<AbstractStreamWrapper> iterator = streamList.iterator();
         while (iterator.hasNext()) {
             iterator.next().close();
         }
     }
-
-    //
 
     private static StreamWrapperWithLoopIdAndRunId
     createWithLoopIdAndRunId(String eventDir, String name,
@@ -63,7 +59,6 @@ public class StreamRepository {
         streamList.add(stream);
         return stream;
     }
-
     private static StreamWrapperWithoutLoopIdAndRunId
     create(String eventDir, String name,
            TLinkedList<AbstractStreamWrapper> streamList) {
@@ -71,5 +66,4 @@ public class StreamRepository {
         streamList.add(stream);
         return stream;
     }
-
 }

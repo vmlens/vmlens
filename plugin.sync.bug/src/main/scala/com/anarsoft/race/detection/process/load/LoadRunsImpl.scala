@@ -34,7 +34,6 @@ class LoadRunsImpl(val loadStatisticAndSerializeOneFilePositionList
         }
       }
     }
-
     for (elem <- statisticAndSerializeOneFilePositionList) {
       elem.loadAndSerializeOneFilePosition.close()
     }

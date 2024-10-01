@@ -14,8 +14,15 @@ class LoadStatisticAndDistributeOneFilePosition(val loadStatistic: LoadStatistic
 
 object LoadStatisticAndDistributeOneFilePosition {
   def apply(data: DirTypeNameAndLoadAndDistributeOneFilePosition): LoadStatisticAndDistributeOneFilePosition = {
-    val statisticStream = new DataInputStream(Files.newInputStream(data.dir.resolve(data.typeName + STATISTIC_FILE_POSTFIX)));
-    val loadStatistic = new LoadStatistic(statisticStream);
-    new LoadStatisticAndDistributeOneFilePosition(loadStatistic, data.loadAndDistributeOneFilePosition);
+    val path = data.dir.resolve(data.typeName + STATISTIC_FILE_POSTFIX);
+
+    if (!Files.exists(path)) {
+      new LoadStatisticAndDistributeOneFilePosition(new LoadStatisticNoOp(), data.loadAndDistributeOneFilePosition)
+    } else {
+      val statisticStream = new DataInputStream(Files.newInputStream(path));
+      val loadStatistic = new LoadStatisticImpl(statisticStream);
+      new LoadStatisticAndDistributeOneFilePosition(loadStatistic, data.loadAndDistributeOneFilePosition)
+
+    }
   }
 }

@@ -16,6 +16,6 @@ class LoadedMethodEventContext extends LoadedEventContext[LoadedMethodEvent] {
   }
 
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
-    builder.add(loopAndRunId, eventList)
+    builder.addMethodEvents(loopAndRunId, eventList)
   }
 }

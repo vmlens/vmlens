@@ -1,12 +1,16 @@
 package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
+import com.anarsoft.race.detection.event.interleave.InterleaveEvent
 import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcess
 
 import java.util
 
 trait RunDataListBuilder {
-  def add(loopAndRunId: LoopAndRunId, methodEventList: util.List[MethodEvent]): Unit;
 
-  def add(loopAndRunId: LoopAndRunId, syncActionElements: List[SyncActionElementForProcess]): Unit;
+  def addInterleaveEvents(loopAndRunId: LoopAndRunId, interleaveEventList: List[InterleaveEvent]): Unit;
+
+  def addMethodEvents(loopAndRunId: LoopAndRunId, methodEventList: util.List[MethodEvent]): Unit;
+
+  def addSyncActionElements(loopAndRunId: LoopAndRunId, syncActionElements: List[SyncActionElementForProcess]): Unit;
 }

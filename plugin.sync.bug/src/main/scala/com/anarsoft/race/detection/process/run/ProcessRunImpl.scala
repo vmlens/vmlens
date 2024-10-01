@@ -19,8 +19,8 @@ class ProcessRunImpl extends ProcessRun {
     should createreport further
     createreport methods
     set stacktraces
-    add to runBuilder
-    add runBuilder to loop builder
+    addMethodEvents to runBuilder
+    addMethodEvents runBuilder to loop builder
      */
 
     val partialOrderContainer = new PartialOrderContainer();

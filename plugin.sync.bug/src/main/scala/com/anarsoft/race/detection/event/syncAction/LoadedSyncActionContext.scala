@@ -25,6 +25,6 @@ class LoadedSyncActionContext extends LoadedEventContext[LoadedSyncActionEvent] 
       EventArray[VolatileAccessEvent](volatileAccessEvents),
       event => EventContainerForMemoryAccess(event)
     ))
-    builder.add(loopAndRunId, elements)
+    builder.addSyncActionElements(loopAndRunId, elements)
   }
 }

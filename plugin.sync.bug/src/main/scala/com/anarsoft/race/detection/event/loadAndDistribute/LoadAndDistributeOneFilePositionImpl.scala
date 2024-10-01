@@ -1,7 +1,8 @@
 package com.anarsoft.race.detection.event.loadAndDistribute
 
 import com.anarsoft.race.detection.event.distribute.{DistributeEvents, EventWithLoopAndRunId, LoadedEventContext}
-import com.anarsoft.race.detection.event.gen.{MethodDeSerializer, SyncActionsDeSerializer}
+import com.anarsoft.race.detection.event.gen.{InterleaveDeSerializer, MethodDeSerializer, SyncActionsDeSerializer}
+import com.anarsoft.race.detection.event.interleave.{LoadedInterleaveContext, LoadedInterleaveEvent}
 import com.anarsoft.race.detection.event.load.{DeserializeEvents, DeserializeStrategy, FilePosition, LoadOneFilePosition}
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
 import com.anarsoft.race.detection.event.syncAction.{LoadedSyncActionContext, LoadedSyncActionEvent}
@@ -38,20 +39,32 @@ object LoadAndDistributeOneFilePositionImpl {
       new LoadedMethodEventContext()
     });
 
-  private def create[EVENT <: EventWithLoopAndRunId](dir: Path, typeName: String, deserializeStrategy: DeserializeStrategy[EVENT],
-                                                     createContext: () => LoadedEventContext[EVENT]): LoadAndDistributeOneFilePosition = {
-    val loadOneFilePosition = new LoadOneFilePosition(new RandomAccessFile(dir.resolve(typeName + EVENT_FILE_POSTFIX).toFile, "r"))
-    val deserializeEvents = new DeserializeEvents[EVENT]();
-    val distributeEvents = new DistributeEvents[EVENT]();
-
-    new LoadAndDistributeOneFilePositionImpl(loadOneFilePosition, deserializeEvents, deserializeStrategy, distributeEvents, createContext);
-  }
-
   def syncAction(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedSyncActionEvent](dir, typeName,
     new SyncActionsDeSerializer(),
     () => {
       new LoadedSyncActionContext()
     });
 
+  def interleave(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedInterleaveEvent](dir, typeName,
+    new InterleaveDeSerializer(),
+    () => {
+      new LoadedInterleaveContext()
+    });
 
+
+  private def create[EVENT <: EventWithLoopAndRunId](dir: Path, typeName: String, deserializeStrategy: DeserializeStrategy[EVENT],
+                                                     createContext: () => LoadedEventContext[EVENT]): LoadAndDistributeOneFilePosition = {
+    val path = dir.resolve(typeName + EVENT_FILE_POSTFIX);
+
+    if (!Files.exists(path)) {
+      new LoadAndDistributeOneFilePositionNoOp();
+    }
+    else {
+      val loadOneFilePosition = new LoadOneFilePosition(new RandomAccessFile(path.toFile, "r"))
+      val deserializeEvents = new DeserializeEvents[EVENT]();
+      val distributeEvents = new DistributeEvents[EVENT]();
+      new LoadAndDistributeOneFilePositionImpl(loadOneFilePosition, deserializeEvents, deserializeStrategy, distributeEvents, createContext);
+    }
+
+  }
 }

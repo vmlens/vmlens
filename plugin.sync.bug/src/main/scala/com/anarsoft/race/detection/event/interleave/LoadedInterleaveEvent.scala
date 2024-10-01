@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.event.interleave
 
-trait LoadedInterleaveEvent {
+
+trait LoadedInterleaveEvent extends InterleaveEvent {
 
 }
