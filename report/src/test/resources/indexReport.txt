@@ -22,7 +22,7 @@
 
 <!-- index.mustache -->
 
-<div class="container">
+<div class="container-fluid">
 
     <table class="table table-striped">
         <tr>
@@ -32,17 +32,17 @@
             <th>Result</th>
         </tr>
             <tr>
-                <td><a href=""> </a></td>
-                <td><a href=""></a></td>
-                <td><a href=""></a></td>
-                <td><a href=""> <img src=""/>  </a></td>
+                <td>0</td>
+                <td><a href="link">name</a></td>
+                <td>0</td>
+                <td>resultText</td>
             </tr>
     </table>
 </div>
 
 <footer class="navbar navbar-static-bottom">
     <div class="container-fluid" style="margin-top : 100px;">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <!-- skipAtCompare --> <p class="navbar-text navbar-right">Created by <a href="https://vmlens.com/"
                                                                                              class="navbar-link">vmlens </a></p>

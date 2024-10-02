@@ -24,28 +24,46 @@ public class CreateReport {
 
         createStacktraceReport(container.rootNodes());
         createRunReport(container.uiLoopAndRunElementsList());
+        createIndex(container.uiLoopAndRunElementsList());
+    }
 
+    private void createIndex(List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementWithStacktraceRoots) throws IOException {
+        int index = 0;
+        List<UITestLoop> uiTestLoops = new LinkedList<>();
+        for (UILoopAndRunElementWithStacktraceRoots loop : uiLoopAndRunElementWithStacktraceRoots) {
+            loop.uiTestLoop().setIndex(index);
+            uiTestLoops.add(loop.uiTestLoop());
+            index++;
+        }
+        String fileName = "index" + HTML_FILE;
+        CreateOneReport createOneReport = new CreateOneReport("index");
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
+        createOneReport.createUITestLoop(uiTestLoops, writer);
+        writer.close();
     }
 
     private void createRunReport(List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementWithStacktraceRoots)
             throws IOException {
 
+        CreateOneReport createOneReport = new CreateOneReport("run");
         int index = 0;
         for (UILoopAndRunElementWithStacktraceRoots loop : uiLoopAndRunElementWithStacktraceRoots) {
             String fileName = "run" + index + HTML_FILE;
             loop.uiTestLoop().setLink(fileName);
+            index++;
 
             List<UIRunElement> uiRunElements = new LinkedList<>();
             for (UIRunElementWithStacktraceRoot element : loop.uiRunElementWithStacktraceRoots()) {
-                uiRunElements.add(element.runElement());
+                UIRunElement runElement = element.runElement();
+                runElement.setLink(element.stacktraceRoot().reportLink());
+                uiRunElements.add(runElement);
             }
 
             OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
-
-            CreateOneReport createOneReport = new CreateOneReport("run");
             createOneReport.createUIRun(uiRunElements, writer);
             writer.close();
         }
+
 
     }
 
@@ -58,6 +76,7 @@ public class CreateReport {
             OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
             createOneReport.createUIStacktraceElement(root.stacktraceElements(), writer);
             writer.close();
+            index++;
         }
     }
 

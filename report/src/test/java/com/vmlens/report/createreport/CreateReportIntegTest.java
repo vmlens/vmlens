@@ -1,6 +1,7 @@
 package com.vmlens.report.createreport;
 
 import com.vmlens.report.uielement.*;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class CreateReportIntegTest {
 
         List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementsList = new LinkedList<>();
 
-        UITestLoop uiLoop = new UITestLoop(0, "name", 0, "imagePath", "resultText");
+        UITestLoop uiLoop = new UITestLoop("name", 0, "resultText");
         List<UIRunElementWithStacktraceRoot> uiRunElementWithStacktraceRoots = new
                 LinkedList<>();
 
@@ -44,6 +45,8 @@ public class CreateReportIntegTest {
 
 
         createReport.createReport(new UILoopAndStacktraceRoots(rootNodes, uiLoopAndRunElementsList));
+
+        FileUtils.deleteDirectory(outputDir.toFile());
     }
 
 }

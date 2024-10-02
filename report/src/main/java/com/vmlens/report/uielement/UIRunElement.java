@@ -15,6 +15,11 @@ public class UIRunElement {
         this.threadId = threadId;
     }
 
+    public void setLink(String link) {
+        this.link = link;
+        this.hasLink = true;
+    }
+
     public String operation() {
         return operation;
     }

@@ -17,8 +17,7 @@ public class IndexTest {
     @Test
     public void createReport() throws IOException {
         // Given
-        // (int index, String name, int count, String imagePath, String resultText)
-        UITestLoop uiLoop = new UITestLoop(0, "name", 0, "imagePath", "resultText");
+        UITestLoop uiLoop = new UITestLoop("name", 0, "resultText");
         uiLoop.setLink("link");
 
         CreateOneReport createOneReport = new CreateOneReport("index");
@@ -30,7 +29,9 @@ public class IndexTest {
 
         // Then
         BufferedReader actual = new BufferedReader(new StringReader(writer.toString()));
-        BufferedReader expected = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("indexReport.txt")));
+        BufferedReader expected = new BufferedReader(new InputStreamReader(getClass()
+                .getClassLoader()
+                .getResourceAsStream("indexReport.txt")));
 
         List<String> expectedList = toLineList(expected);
         List<String> actualList = toLineList(actual);
