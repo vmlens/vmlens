@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 
-import com.anarsoft.race.detection.reportbuilder.{NonVolatileEventForReport, RunReportForNonVolatileMemoryAccessBuilder, StaticMemoryAccessId}
+import com.anarsoft.race.detection.reportbuilder.{EventForRunElement, NonVolatileEventForReport, StaticMemoryAccessId}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -25,19 +25,14 @@ class SortedMemoryAccessList {
   def setDataRace(alreadyAdded: NonVolatileEventForReport): Unit = {
     dataRaces.add(alreadyAdded.staticMemoryAccessId())
     for (elem <- list) {
-      if (elem.positionInRun == alreadyAdded.runPosition) {
+      if (elem.runPosition == alreadyAdded.runPosition) {
         elem.isDataRace = true;
       }
     }
   }
 
-  def buildResult(accessReportBuilder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
-    for (elem <- list) {
-      if (elem.isDataRace) {
-        elem.event.addAsDataRace(accessReportBuilder);
-      } else {
-        elem.event.add(accessReportBuilder)
-      }
-    }
+  def foreach(f: (EventForRunElement) => Unit): Unit = {
+
   }
+  
 }

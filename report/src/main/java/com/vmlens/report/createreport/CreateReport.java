@@ -18,7 +18,7 @@ public class CreateReport {
         this.reportDir = reportDir;
     }
 
-    public void createReport(UILoopAndStacktraceRoots container)
+    public void createReport(UILoopsAndStacktraceLeafs container)
             throws IOException {
         new CopyStaticFiles(reportDir).copy();
 
@@ -27,10 +27,10 @@ public class CreateReport {
         createIndex(container.uiLoopAndRunElementsList());
     }
 
-    private void createIndex(List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementWithStacktraceRoots) throws IOException {
+    private void createIndex(List<UILoopAndRunElementWithStacktraceLeafs> uiLoopAndRunElementWithStacktraceRoots) throws IOException {
         int index = 0;
         List<UITestLoop> uiTestLoops = new LinkedList<>();
-        for (UILoopAndRunElementWithStacktraceRoots loop : uiLoopAndRunElementWithStacktraceRoots) {
+        for (UILoopAndRunElementWithStacktraceLeafs loop : uiLoopAndRunElementWithStacktraceRoots) {
             loop.uiTestLoop().setIndex(index);
             uiTestLoops.add(loop.uiTestLoop());
             index++;
@@ -42,20 +42,20 @@ public class CreateReport {
         writer.close();
     }
 
-    private void createRunReport(List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementWithStacktraceRoots)
+    private void createRunReport(List<UILoopAndRunElementWithStacktraceLeafs> uiLoopAndRunElementWithStacktraceRoots)
             throws IOException {
 
         CreateOneReport createOneReport = new CreateOneReport("run");
         int index = 0;
-        for (UILoopAndRunElementWithStacktraceRoots loop : uiLoopAndRunElementWithStacktraceRoots) {
+        for (UILoopAndRunElementWithStacktraceLeafs loop : uiLoopAndRunElementWithStacktraceRoots) {
             String fileName = "run" + index + HTML_FILE;
             loop.uiTestLoop().setLink(fileName);
             index++;
 
             List<UIRunElement> uiRunElements = new LinkedList<>();
-            for (UIRunElementWithStacktraceRoot element : loop.uiRunElementWithStacktraceRoots()) {
+            for (UIRunElementWithStacktraceLeaf element : loop.uiRunElementWithStacktraceRoots()) {
                 UIRunElement runElement = element.runElement();
-                runElement.setLink(element.stacktraceRoot().reportLink());
+                runElement.setLink(element.stacktraceLeaf().reportLink());
                 uiRunElements.add(runElement);
             }
 
@@ -67,10 +67,10 @@ public class CreateReport {
 
     }
 
-    private void createStacktraceReport(List<UIStacktraceRoot> rootNodes) throws IOException {
+    private void createStacktraceReport(List<UIStacktraceLeaf> rootNodes) throws IOException {
         CreateOneReport createOneReport = new CreateOneReport("stacktrace");
         int index = 0;
-        for (UIStacktraceRoot root : rootNodes) {
+        for (UIStacktraceLeaf root : rootNodes) {
             String fileName = "stack" + index + HTML_FILE;
             root.setReportLink(fileName);
             OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));

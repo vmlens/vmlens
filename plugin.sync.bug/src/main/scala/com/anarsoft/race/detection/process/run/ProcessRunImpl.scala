@@ -1,10 +1,10 @@
 package com.anarsoft.race.detection.process.run
 
 import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForResult
+import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForResult
 import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult}
 import com.anarsoft.race.detection.partialorder.{PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.main.ProcessRun
-import com.anarsoft.race.detection.reportbuilder.RunReportBuilderAdapter
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -30,13 +30,16 @@ class ProcessRunImpl extends ProcessRun {
     }
 
     val partialOrder = new PartialOrderImpl(partialOrderContainer);
-
     val nonVolatileResult = new ArrayBuffer[NonVolatileMemoryAccessElementForResult]();
-    
     for (nonVolatileElement <- runData.nonVolatileMemoryAccessElements) {
       nonVolatileResult.append(nonVolatileElement.sort(partialOrder));
     }
 
-    RunResult(runData.loopAndRunId, nonVolatileResult.toList);
+    val syncActionResult = new ArrayBuffer[SyncActionElementForResult]();
+    for (syncAction <- runData.syncActionElements) {
+      syncActionResult.append(syncAction.asResult())
+    }
+
+    RunResult(runData.loopAndRunId, nonVolatileResult.toList, runData.interleaveEvents, syncActionResult.toList);
   }
 }

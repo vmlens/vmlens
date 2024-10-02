@@ -2,12 +2,12 @@ package com.vmlens.report.uielement;
 
 import java.util.List;
 
-public class UIStacktraceRoot {
+public class UIStacktraceLeaf {
 
     private final List<UIStacktraceElement> stacktraceElements;
     private String reportLink;
 
-    public UIStacktraceRoot(List<UIStacktraceElement> stacktraceElements) {
+    public UIStacktraceLeaf(List<UIStacktraceElement> stacktraceElements) {
         this.stacktraceElements = stacktraceElements;
     }
 

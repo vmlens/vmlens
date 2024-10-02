@@ -1,10 +1,10 @@
 package com.anarsoft.race.detection.event.nonVolatileField
 
-import com.anarsoft.race.detection.reportbuilder.{FieldId, RunReportForNonVolatileMemoryAccessBuilder}
+import com.anarsoft.race.detection.reportbuilder.FieldId
 import com.anarsoft.race.detection.setstacktrace.EventWithStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
-import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType;
+import com.vmlens.report.element.{FieldAccessTextFactory, OperationTextFactory}
+import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
 
 trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
   with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEvent]
@@ -23,12 +23,7 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
 
   def staticMemoryAccessId() = new FieldId(fieldId);
 
-  def add(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
-    builder.add(this);
+  override def createOperationTextFactory(prefix: String): OperationTextFactory = {
+    new FieldAccessTextFactory(prefix + MemoryAccessType.asString(operation) + " ", fieldId)
   }
-  def addAsDataRace(builder: RunReportForNonVolatileMemoryAccessBuilder): Unit = {
-    builder.addAsDataRace(this);
-  }
-  
-  
 }

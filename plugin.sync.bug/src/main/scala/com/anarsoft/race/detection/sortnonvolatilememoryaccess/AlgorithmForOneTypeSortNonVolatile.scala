@@ -1,7 +1,6 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.processeventbytype.AlgorithmForOneType
-import com.anarsoft.race.detection.reportbuilder.RunReportForNonVolatileMemoryAccessBuilder
 import com.anarsoft.race.detection.sortutil.{EventContainerForMemoryAccess, ThreadIdToLastSortableEvent}
 
 import scala.collection.mutable.ArrayBuffer

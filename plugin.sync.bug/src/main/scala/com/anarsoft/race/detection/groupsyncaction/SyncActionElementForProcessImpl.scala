@@ -19,6 +19,6 @@ class SyncActionElementForProcessImpl[EVENT <: SyncActionEvent[EVENT] with Event
   }
 
   def asResult() = {
-    new SyncActionElementForResult();
+    new SyncActionElementForResult(eventArray);
   }
 }

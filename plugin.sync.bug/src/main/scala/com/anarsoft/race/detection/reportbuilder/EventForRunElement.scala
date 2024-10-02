@@ -1,19 +1,20 @@
 package com.anarsoft.race.detection.reportbuilder
 
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.anarsoft.race.detection.util.WithPosition
 import com.vmlens.report.element.OperationTextFactory
 
-trait NonVolatileEventForReport extends WithPosition {
+trait EventForRunElement {
 
-  def staticMemoryAccessId(): StaticMemoryAccessId;
+  def threadIndex: Int
 
   def loopId: Int
 
   def runId: Int
 
+  def runPosition: Int
+
   def stacktraceNode: Option[StacktraceNode];
 
-  def createOperationTextFactory(prefix: String): OperationTextFactory;
-  
+  def operationTextFactory: OperationTextFactory;
+
 }

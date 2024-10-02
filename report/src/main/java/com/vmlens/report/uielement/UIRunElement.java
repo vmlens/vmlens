@@ -4,12 +4,12 @@ public class UIRunElement {
 
     private final String operation;
     private final String method;
-    private final long threadId;
+    private final String threadId;
 
     private boolean hasLink;
     private String link;
 
-    public UIRunElement(String operation, String method, long threadId) {
+    public UIRunElement(String operation, String method, String threadId) {
         this.operation = operation;
         this.method = method;
         this.threadId = threadId;
@@ -28,7 +28,7 @@ public class UIRunElement {
         return method;
     }
 
-    public long threadId() {
+    public String threadId() {
         return threadId;
     }
 

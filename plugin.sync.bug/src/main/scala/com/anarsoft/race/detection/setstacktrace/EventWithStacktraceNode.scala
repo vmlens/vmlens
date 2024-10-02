@@ -5,10 +5,10 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
 trait EventWithStacktraceNode extends ThreadIndexAndMethodCounter {
 
-  var node: Option[StacktraceNode] = None;
+  var stacktraceNode: Option[StacktraceNode] = None;
 
   final def setStacktraceNode(node: StacktraceNode): Unit = {
-    this.node = Some(node);
+    this.stacktraceNode = Some(node);
   }
 
 }

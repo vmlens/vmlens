@@ -3,13 +3,14 @@ package com.anarsoft.race.detection.createstacktrace
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
 
-import scala.collection.mutable.{HashMap, ListBuffer, Map, Stack}
+import scala.collection.mutable
+import scala.collection.mutable.{ListBuffer, Stack}
 
 class ServiceCalculateMethodCountToStacktraceNode {
 
 
-  def process(methodEventArray: EventArray[MethodEvent]): Map[Int, Array[StacktraceNode]] = {
-    val result = HashMap[Int, Array[StacktraceNode]]()
+  def process(methodEventArray: EventArray[MethodEvent]): mutable.Map[Int, Array[StacktraceNode]] = {
+    val result = mutable.HashMap[Int, Array[StacktraceNode]]()
     var currentList = ListBuffer[StacktraceNode]()
     var currentStack: Option[StacktraceNodeStack] = None;
 

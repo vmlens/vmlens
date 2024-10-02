@@ -14,9 +14,9 @@
         {{#loops}}
             <tr>
                 <td>{{index}}</td>
-                <td><a href="{{link}}">{{{name}}}</a></td>
+                <td><a href="{{link}}">{{name}}</a></td>
                 <td>{{count}}</td>
-                <td>{{resultText}}</td>
+                <td {{{resultStyle}}}>{{resultText}}</td>
             </tr>
         {{/loops}}
     </table>

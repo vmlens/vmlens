@@ -24,27 +24,27 @@ public class CreateReportIntegTest {
         first.setText("org.apache.commons.text.StringEscapeUtils.escapeHtml3");
         stacktraceElements.add(first);
 
-        UIStacktraceRoot root = new UIStacktraceRoot(stacktraceElements);
+        UIStacktraceLeaf root = new UIStacktraceLeaf(stacktraceElements);
 
-        List<UIStacktraceRoot> rootNodes = new LinkedList<>();
+        List<UIStacktraceLeaf> rootNodes = new LinkedList<>();
         rootNodes.add(root);
 
-        List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementsList = new LinkedList<>();
+        List<UILoopAndRunElementWithStacktraceLeafs> uiLoopAndRunElementsList = new LinkedList<>();
 
-        UITestLoop uiLoop = new UITestLoop("name", 0, "resultText");
-        List<UIRunElementWithStacktraceRoot> uiRunElementWithStacktraceRoots = new
+        UITestLoop uiLoop = new UITestLoop("name", 0, "resultText", "style=\"color: red;\"");
+        List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceRoots = new
                 LinkedList<>();
 
-        UIRunElement uiRunElement = new UIRunElement("operation", "method", 4L);
-        uiRunElementWithStacktraceRoots.add(new UIRunElementWithStacktraceRoot(uiRunElement, root));
+        UIRunElement uiRunElement = new UIRunElement("<b>operation</b> for field", "method", "4");
+        uiRunElementWithStacktraceRoots.add(new UIRunElementWithStacktraceLeaf(uiRunElement, root));
 
-        UILoopAndRunElementWithStacktraceRoots uiLoopAndRunElementWithStacktraceRoots =
-                new UILoopAndRunElementWithStacktraceRoots(uiLoop, uiRunElementWithStacktraceRoots);
+        UILoopAndRunElementWithStacktraceLeafs uiLoopAndRunElementWithStacktraceRoots =
+                new UILoopAndRunElementWithStacktraceLeafs(uiLoop, uiRunElementWithStacktraceRoots);
 
         uiLoopAndRunElementsList.add(uiLoopAndRunElementWithStacktraceRoots);
 
 
-        createReport.createReport(new UILoopAndStacktraceRoots(rootNodes, uiLoopAndRunElementsList));
+        createReport.createReport(new UILoopsAndStacktraceLeafs(rootNodes, uiLoopAndRunElementsList));
 
         FileUtils.deleteDirectory(outputDir.toFile());
     }

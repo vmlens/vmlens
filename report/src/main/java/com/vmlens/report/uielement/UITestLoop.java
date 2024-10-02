@@ -7,14 +7,17 @@ public class UITestLoop {
     private final String name;
     private final int count;
     private final String resultText;
+    private final String resultStyle;
 
     private int index;
     private String link;
 
-    public UITestLoop(String name, int count, String resultText) {
+    public UITestLoop(String name, int count, String resultText,
+                      String resultStyle) {
         this.name = name;
         this.count = count;
         this.resultText = resultText;
+        this.resultStyle = resultStyle;
     }
 
     public void setLink(String link) {
@@ -37,6 +40,10 @@ public class UITestLoop {
         return resultText;
     }
 
+    public String resultStyle() {
+        return resultStyle;
+    }
+
     public int index() {
         return index;
     }
@@ -44,4 +51,5 @@ public class UITestLoop {
     public String link() {
         return link;
     }
+
 }

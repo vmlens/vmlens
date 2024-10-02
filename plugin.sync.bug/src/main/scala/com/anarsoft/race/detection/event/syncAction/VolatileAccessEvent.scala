@@ -5,6 +5,8 @@ import com.anarsoft.race.detection.event.nonVolatileField.NonVolatileFieldAccess
 import com.anarsoft.race.detection.setstacktrace.EventWithStacktraceNode
 import com.anarsoft.race.detection.sortutil.MemoryAccessEvent
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
+import com.vmlens.report.element.{FieldAccessTextFactory, OperationTextFactory}
+import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
 
 trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]
   with SyncActionEvent[VolatileAccessEvent]
@@ -25,4 +27,9 @@ trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]
       fieldId.compareTo(other.fieldId)
     }
   }
+
+  override def operationTextFactory: OperationTextFactory = {
+    new FieldAccessTextFactory(MemoryAccessType.asString(operation) + " ", fieldId);
+  }
+  
 }
