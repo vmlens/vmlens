@@ -12,25 +12,29 @@ import java.util.Objects;
 
 public class ThreadDescription implements SerializableEvent, ThreadOrLoopDescription {
 
+    private final int loopId;
+    private final int runId;
     private final int threadIndex;
     private final long threadId;
     private final String threadName;
 
 
-    public ThreadDescription(int threadIndex, long threadId, String threadName) {
-        super();
+    public ThreadDescription(int loopId, int runId, int threadIndex, long threadId, String threadName) {
+        this.loopId = loopId;
+        this.runId = runId;
         this.threadIndex = threadIndex;
         this.threadId = threadId;
         this.threadName = threadName;
-
     }
 
     static ThreadDescription deserialize(DataInputStream inputStream) throws IOException {
+        int loopId = inputStream.readInt();
+        int runId = inputStream.readInt();
         int threadIndex = inputStream.readInt();
         long threadId = inputStream.readLong();
         String threadName = inputStream.readUTF();
 
-        return new ThreadDescription(threadIndex, threadId, threadName);
+        return new ThreadDescription(loopId, runId, threadIndex, threadId, threadName);
     }
 
     @Override
@@ -42,6 +46,8 @@ public class ThreadDescription implements SerializableEvent, ThreadOrLoopDescrip
     @Override
     public void serialize(DataOutputStream stream) throws IOException {
         stream.writeInt(Constants.TYPE_THREAD_DESCRIPTION);
+        stream.writeInt(loopId);
+        stream.writeInt(runId);
         stream.writeInt(threadIndex);
         stream.writeLong(threadId);
         stream.writeUTF(threadName);
@@ -58,16 +64,16 @@ public class ThreadDescription implements SerializableEvent, ThreadOrLoopDescrip
         if (o == null || getClass() != o.getClass()) return false;
 
         ThreadDescription that = (ThreadDescription) o;
-        return threadIndex == that.threadIndex && threadId == that.threadId
-                && Objects.equals(threadName, that.threadName);
+        return loopId == that.loopId && runId == that.runId && threadIndex == that.threadIndex && threadId == that.threadId && Objects.equals(threadName, that.threadName);
     }
 
     @Override
     public int hashCode() {
-        int result = threadIndex;
+        int result = loopId;
+        result = 31 * result + runId;
+        result = 31 * result + threadIndex;
         result = 31 * result + (int) (threadId ^ (threadId >>> 32));
         result = 31 * result + Objects.hashCode(threadName);
         return result;
     }
-
 }

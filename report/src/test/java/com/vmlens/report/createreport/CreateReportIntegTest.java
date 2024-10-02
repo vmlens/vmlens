@@ -1,6 +1,6 @@
 package com.vmlens.report.createreport;
 
-import com.vmlens.report.uielement.UILoopAndRunElements;
+import com.vmlens.report.uielement.UILoopAndRunElementWithStacktraceRoots;
 import com.vmlens.report.uielement.UIStacktraceElement;
 import com.vmlens.report.uielement.UIStacktraceRoot;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class CreateReportIntegTest {
         List<UIStacktraceRoot> rootNodes = new LinkedList<>();
         rootNodes.add(root);
 
-        List<UILoopAndRunElements> uiLoopAndRunElementsList = new LinkedList<>();
+        List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementsList = new LinkedList<>();
 
         createReport.createReport(rootNodes, uiLoopAndRunElementsList);
     }

@@ -1,6 +1,6 @@
 package com.vmlens.report.createreport;
 
-import com.vmlens.report.uielement.UILoopAndRunElements;
+import com.vmlens.report.uielement.UILoopAndRunElementWithStacktraceRoots;
 import com.vmlens.report.uielement.UIStacktraceRoot;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class CreateReport {
         this.reportDir = reportDir;
     }
 
-    public void createReport(List<UIStacktraceRoot> rootNodes, List<UILoopAndRunElements> uiLoopAndRunElementsList)
+    public void createReport(List<UIStacktraceRoot> rootNodes, List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementsList)
             throws IOException {
         new CopyStaticFiles(reportDir).copy();
 

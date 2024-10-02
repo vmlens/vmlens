@@ -18,7 +18,7 @@ public class DeserializeThreadAndLoopDescription {
                 if (type == Constants.TYPE_THREAD_DESCRIPTION) {
                     threadOrLoopDescriptions.add(ThreadDescription.deserialize(inputStream));
                 } else if (type == Constants.TYPE_WHILE_LOOP_DESCRIPTION) {
-                    threadOrLoopDescriptions.add(WhileLoopDescription.deserialize(inputStream));
+                    threadOrLoopDescriptions.add(TestLoopDescription.deserialize(inputStream));
                 } else {
                     throw new RuntimeException("unknown type: " + type);
                 }

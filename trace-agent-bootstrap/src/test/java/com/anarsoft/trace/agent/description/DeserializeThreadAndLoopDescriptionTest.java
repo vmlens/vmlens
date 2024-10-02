@@ -15,11 +15,11 @@ public class DeserializeThreadAndLoopDescriptionTest {
     public void serializeDeserialize() throws IOException {
         // Given
         List<ThreadOrLoopDescription> threadOrLoopDescription = new LinkedList<>();
-        threadOrLoopDescription.add(new ThreadDescription(0, 5L, "threadName"));
-        threadOrLoopDescription.add(new WhileLoopDescription(2, "name"));
-        threadOrLoopDescription.add(new ThreadDescription(0, 5L, "threadName"));
-        threadOrLoopDescription.add(new ThreadDescription(0, 5L, "threadName"));
-        threadOrLoopDescription.add(new WhileLoopDescription(2, "name"));
+        threadOrLoopDescription.add(new ThreadDescription(0, 0, 0, 5L, "threadName"));
+        threadOrLoopDescription.add(new TestLoopDescription(2, "name"));
+        threadOrLoopDescription.add(new ThreadDescription(3, 3, 0, 5L, "threadName"));
+        threadOrLoopDescription.add(new ThreadDescription(2, 2, 0, 5L, "threadName"));
+        threadOrLoopDescription.add(new TestLoopDescription(2, "name"));
 
         // When
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

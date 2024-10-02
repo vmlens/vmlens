@@ -9,21 +9,21 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-public class WhileLoopDescription implements SerializableEvent, ThreadOrLoopDescription {
+public class TestLoopDescription implements SerializableEvent, ThreadOrLoopDescription {
     private final int loopId;
     private final String name;
 
-    public WhileLoopDescription(int loopId, String name) {
+    public TestLoopDescription(int loopId, String name) {
         super();
         this.loopId = loopId;
         this.name = name;
     }
 
-    static WhileLoopDescription deserialize(DataInputStream inputStream) throws IOException {
+    static TestLoopDescription deserialize(DataInputStream inputStream) throws IOException {
         int loopId = inputStream.readInt();
         String name = inputStream.readUTF();
 
-        return new WhileLoopDescription(loopId, name);
+        return new TestLoopDescription(loopId, name);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class WhileLoopDescription implements SerializableEvent, ThreadOrLoopDesc
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        WhileLoopDescription that = (WhileLoopDescription) o;
+        TestLoopDescription that = (TestLoopDescription) o;
 
         if (loopId != that.loopId) return false;
         return Objects.equals(name, that.name);
