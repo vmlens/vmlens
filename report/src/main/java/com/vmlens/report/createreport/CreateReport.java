@@ -1,12 +1,12 @@
 package com.vmlens.report.createreport;
 
-import com.vmlens.report.uielement.UILoopAndRunElementWithStacktraceRoots;
-import com.vmlens.report.uielement.UIStacktraceRoot;
+import com.vmlens.report.uielement.*;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CreateReport {
@@ -18,20 +18,47 @@ public class CreateReport {
         this.reportDir = reportDir;
     }
 
-    public void createReport(List<UIStacktraceRoot> rootNodes, List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementsList)
+    public void createReport(UILoopAndStacktraceRoots container)
             throws IOException {
         new CopyStaticFiles(reportDir).copy();
 
+        createStacktraceReport(container.rootNodes());
+        createRunReport(container.uiLoopAndRunElementsList());
 
-        CreateOneReport createOneReport = new CreateOneReport("stacktrace");
+    }
+
+    private void createRunReport(List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementWithStacktraceRoots)
+            throws IOException {
+
         int index = 0;
+        for (UILoopAndRunElementWithStacktraceRoots loop : uiLoopAndRunElementWithStacktraceRoots) {
+            String fileName = "run" + index + HTML_FILE;
+            loop.uiTestLoop().setLink(fileName);
 
-        for (UIStacktraceRoot root : rootNodes) {
-            String fileName = "stack" + index + HTML_FILE;
-            OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName).toFile().toPath()));
-            createOneReport.createUIStacktraceElement(root.stacktraceElements(), writer);
+            List<UIRunElement> uiRunElements = new LinkedList<>();
+            for (UIRunElementWithStacktraceRoot element : loop.uiRunElementWithStacktraceRoots()) {
+                uiRunElements.add(element.runElement());
+            }
+
+            OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
+
+            CreateOneReport createOneReport = new CreateOneReport("run");
+            createOneReport.createUIRun(uiRunElements, writer);
             writer.close();
         }
 
     }
+
+    private void createStacktraceReport(List<UIStacktraceRoot> rootNodes) throws IOException {
+        CreateOneReport createOneReport = new CreateOneReport("stacktrace");
+        int index = 0;
+        for (UIStacktraceRoot root : rootNodes) {
+            String fileName = "stack" + index + HTML_FILE;
+            root.setReportLink(fileName);
+            OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
+            createOneReport.createUIStacktraceElement(root.stacktraceElements(), writer);
+            writer.close();
+        }
+    }
+
 }

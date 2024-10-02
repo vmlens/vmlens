@@ -2,58 +2,23 @@ package com.vmlens.report.uielement;
 
 public class UITestLoop {
 
-    private String link;
-    private int index;
-    private String name;
-    private int count;
-    private String imagePath;
-    private String resultText;
 
-    public String link() {
-        return link;
+    private final int index;
+    private final String name;
+    private final int count;
+    private final String imagePath;
+    private final String resultText;
+    private String link;
+
+    public UITestLoop(int index, String name, int count, String imagePath, String resultText) {
+        this.index = index;
+        this.name = name;
+        this.count = count;
+        this.imagePath = imagePath;
+        this.resultText = resultText;
     }
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public int index() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public String name() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int count() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public String imagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public String resultText() {
-        return resultText;
-    }
-
-    public void setResultText(String resultText) {
-        this.resultText = resultText;
     }
 }

@@ -2,6 +2,7 @@ package com.vmlens.report.createreport;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
+import com.vmlens.report.uielement.UIRunElement;
 import com.vmlens.report.uielement.UIStacktraceElement;
 import com.vmlens.report.uielement.UITestLoop;
 
@@ -24,6 +25,13 @@ public class CreateOneReport {
         context.put("loops", uiElements);
         template.execute(writer, context);
     }
+
+    public void createUIRun(List<UIRunElement> uiElements, Writer writer) {
+        Map<String, Object> context = new HashMap<>();
+        context.put("elements", uiElements);
+        template.execute(writer, context);
+    }
+
 
     public void createUIStacktraceElement(List<UIStacktraceElement> uiElements, Writer writer) {
         Map<String, Object> context = new HashMap<>();

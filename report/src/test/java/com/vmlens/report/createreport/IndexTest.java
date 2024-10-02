@@ -17,12 +17,9 @@ public class IndexTest {
     @Test
     public void createReport() throws IOException {
         // Given
-        UITestLoop uiLoop = new UITestLoop();
-
-        uiLoop.setImagePath("imagePath");
+        // (int index, String name, int count, String imagePath, String resultText)
+        UITestLoop uiLoop = new UITestLoop(0, "name", 0, "imagePath", "resultText");
         uiLoop.setLink("link");
-        uiLoop.setName("name");
-        uiLoop.setResultText("resultText");
 
         CreateOneReport createOneReport = new CreateOneReport("index");
         List<UITestLoop> list = Collections.singletonList(uiLoop);

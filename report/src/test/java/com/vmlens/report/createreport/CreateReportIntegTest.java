@@ -1,8 +1,6 @@
 package com.vmlens.report.createreport;
 
-import com.vmlens.report.uielement.UILoopAndRunElementWithStacktraceRoots;
-import com.vmlens.report.uielement.UIStacktraceElement;
-import com.vmlens.report.uielement.UIStacktraceRoot;
+import com.vmlens.report.uielement.*;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -32,7 +30,20 @@ public class CreateReportIntegTest {
 
         List<UILoopAndRunElementWithStacktraceRoots> uiLoopAndRunElementsList = new LinkedList<>();
 
-        createReport.createReport(rootNodes, uiLoopAndRunElementsList);
+        UITestLoop uiLoop = new UITestLoop(0, "name", 0, "imagePath", "resultText");
+        List<UIRunElementWithStacktraceRoot> uiRunElementWithStacktraceRoots = new
+                LinkedList<>();
+
+        UIRunElement uiRunElement = new UIRunElement("operation", "method", 4L);
+        uiRunElementWithStacktraceRoots.add(new UIRunElementWithStacktraceRoot(uiRunElement, root));
+
+        UILoopAndRunElementWithStacktraceRoots uiLoopAndRunElementWithStacktraceRoots =
+                new UILoopAndRunElementWithStacktraceRoots(uiLoop, uiRunElementWithStacktraceRoots);
+
+        uiLoopAndRunElementsList.add(uiLoopAndRunElementWithStacktraceRoots);
+
+
+        createReport.createReport(new UILoopAndStacktraceRoots(rootNodes, uiLoopAndRunElementsList));
     }
 
 }

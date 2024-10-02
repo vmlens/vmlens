@@ -32,15 +32,24 @@
             <th>Result</th>
         </tr>
             <tr>
-                <td><a href="link">0 </a></td>
-                <td><a href="link">name</a></td>
-                <td><a href="link">0</a></td>
-                <td><a href="link"> <img src="imagePath"/> resultText </a></td>
+                <td><a href=""> </a></td>
+                <td><a href=""></a></td>
+                <td><a href=""></a></td>
+                <td><a href=""> <img src=""/>  </a></td>
             </tr>
     </table>
 </div>
 
-
+<footer class="navbar navbar-static-bottom">
+    <div class="container-fluid" style="margin-top : 100px;">
+        <div class="container">
+            <div class="row">
+                <!-- skipAtCompare --> <p class="navbar-text navbar-right">Created by <a href="https://vmlens.com/"
+                                                                                             class="navbar-link">vmlens </a></p>
+            </div>
+        </div>
+    </div>
+</footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.11.3.min.js"></script>
 

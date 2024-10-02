@@ -2,60 +2,26 @@
 
 <!-- run.mustache -->
 
-<div class="{{containerTyp}}">
+<div class="container-fluid">
     <div class="row text-left">
         <table class="table table-striped">
             <tr>
-                <th>*</th>
+                <th>Thread Id</th>
                 <th>Operation</th>
                 <th>Method</th>
-                <th>Thread Id</th>
             </tr>
-            {{#issues}}
-                {{#statement}}
-                    <!-- skipAtCompare -->
-                    <tr  {{{trStyle}}}>
+            {{#elements}}
+                <tr>
+                    <td>{{threadId}}</td>
                         <td>
+                            {{{operation}}}
                         </td>
-                        <!-- skipAtCompare -->
-                        <td><a href="{{link}}">
-                            <img src="{{root}}{{{imagePath}}}"/>  {{{operation}}}
-                            <!-- skipAtCompare --> {{objectId}}
-                        </a>
-                        </td>
-                        <!-- skipAtCompare -->
                         <td>    {{#hasLink}}<a href="{{link}}">
                             {{{method}}} </a> {{/hasLink}}
                             {{^hasLink}}  {{{method}}} {{/hasLink}}  </td>
-                        <!-- skipAtCompare -->
-                        <td>{{threadId}}</td>
+
                     </tr>
-                {{/statement}}
-                {{#loop}}
-                    <!-- skipAtCompare -->
-                <tr  {{{trStyle}}}>
-                    <td {{{tdStyle}}}  >{{loopCount}}</td>
-                    {{#list}}
-                        {{#needsTrStart}}
-                            <!-- skipAtCompare -->
-                        <tr  {{{trStyle}}}>
-                        {{/needsTrStart}}
-                        <!-- skipAtCompare -->
-                        <td {{{tdStyle}}}  ><a href="{{link}}">
-                            <img src="{{root}}{{{imagePath}}}"/>  {{{operation}}}
-                            <!-- skipAtCompare --> {{objectId}}
-                        </a>
-                        </td>
-                        <!-- skipAtCompare -->
-                        <td {{{tdStyle}}}  >    {{#hasLink}}<a href="{{link}}">
-                            {{{method}}} </a> {{/hasLink}}
-                            {{^hasLink}}  {{{method}}} {{/hasLink}}  </td>
-                        <!-- skipAtCompare -->
-                        <td {{{tdStyle}}}  >{{threadId}}</td>
-                    </tr>
-                    {{/list}}
-                {{/loop}}
-            {{/issues}}
+            {{/elements}}
         </table>
     </div>
 </div>
