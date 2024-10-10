@@ -1,12 +1,11 @@
 package com.anarsoft.race.detection.event.syncAction
 
 import com.anarsoft.race.detection.createpartialorder.SyncActionEvent
-import com.anarsoft.race.detection.event.nonVolatileField.NonVolatileFieldAccessEvent
 import com.anarsoft.race.detection.setstacktrace.EventWithStacktraceNode
 import com.anarsoft.race.detection.sortutil.MemoryAccessEvent
-import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.report.element.{FieldAccessTextFactory, OperationTextFactory}
+import com.vmlens.report.element.{FieldAccessTextFactory, MemoryAccessModifier, OperationTextFactory}
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
+
 
 trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]
   with SyncActionEvent[VolatileAccessEvent]
@@ -29,7 +28,7 @@ trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]
   }
 
   override def operationTextFactory: OperationTextFactory = {
-    new FieldAccessTextFactory(MemoryAccessType.asString(operation) + " ", fieldId);
+    FieldAccessTextFactory.create(MemoryAccessModifier.Volatile, operation, fieldId, objectHashCode);
   }
   
 }

@@ -3,9 +3,10 @@ package com.anarsoft.race.detection.process.main
 import com.anarsoft.race.detection.reportbuilder.DescriptionBuilder
 
 
-trait LoopReportBuilder extends DescriptionBuilder {
+trait LoopReportBuilder {
 
-  def addRunResult(runResult: RunCountAndResult): Unit;
+  def addRunResult(runResult: RunCountAndResult): Unit
 
+  def build(): DescriptionBuilderForReport
 
 }

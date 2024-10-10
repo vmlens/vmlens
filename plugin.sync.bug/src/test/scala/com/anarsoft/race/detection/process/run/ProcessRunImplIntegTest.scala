@@ -30,7 +30,7 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     val runResult = processRunImpl.process(runData);
 
     //Then
-    runResult.nonVolatileMemoryAccessElements(0).dataRaces.size should be(1)
+    runResult.dataRaceCount should be(1)
   }
 
   "a read and write to/from a normal field separated by a read/write to a volatile field" should "not lead to a data race" in {
@@ -64,7 +64,7 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     val runResult = processRunImpl.process(runData);
 
     //Then
-    runResult.nonVolatileMemoryAccessElements(0).dataRaces.size should be(0)
+    runResult.dataRaceCount should be(0)
   }
 
   private def nonVolatileReadWrite(loopIdAndRunId: LoopAndRunId) = {

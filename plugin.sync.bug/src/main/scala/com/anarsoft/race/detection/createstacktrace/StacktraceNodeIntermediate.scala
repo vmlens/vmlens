@@ -4,6 +4,7 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
 class StacktraceNodeIntermediate(val methodId: Int, val parent: StacktraceNode) extends StacktraceNode {
 
+  override def getParent: Option[StacktraceNode] = Some(parent);
 
   override def equals(other: Any): Boolean = other match {
     case that: StacktraceNodeIntermediate =>

@@ -4,6 +4,11 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
 class StacktraceNodeGuineaPig(val forMethodCounter: Int) extends StacktraceNode {
 
+  def getParent: Option[StacktraceNode] = None;
+
+  def methodId: Int = 0;
+
+
   override def equals(other: Any): Boolean = other match {
     case that: StacktraceNodeGuineaPig =>
       (that canEqual this) &&

@@ -20,9 +20,9 @@ object ProcessEvents {
     val loopReportBuilder = new LoopReportBuilderImpl(new ReportBuilder());
 
     val mainProcess = new MainProcess(loadDescription, loadRuns, processRun, loopReportBuilder);
-    mainProcess.process();
+    val reportBuilder = mainProcess.process();
 
     val createReports = new CreateReport(reportDir);
-    createReports.createReport(loopReportBuilder.build())
+    createReports.createReport(reportBuilder.build())
   }
 }

@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.reportbuilder
 
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.WithPosition
-import com.vmlens.report.element.OperationTextFactory
+import com.vmlens.report.element.{MemoryAccessModifier, OperationTextFactory}
 
 trait NonVolatileEventForReport extends WithPosition {
 
@@ -14,6 +14,6 @@ trait NonVolatileEventForReport extends WithPosition {
 
   def stacktraceNode: Option[StacktraceNode];
 
-  def createOperationTextFactory(prefix: String): OperationTextFactory;
+  def createOperationTextFactory(memoryAccessModifier: MemoryAccessModifier): OperationTextFactory;
   
 }

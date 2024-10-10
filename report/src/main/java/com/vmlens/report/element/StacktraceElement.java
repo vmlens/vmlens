@@ -7,4 +7,8 @@ public class StacktraceElement {
     public StacktraceElement(int methodId) {
         this.methodId = methodId;
     }
+
+    public int methodId() {
+        return methodId;
+    }
 }

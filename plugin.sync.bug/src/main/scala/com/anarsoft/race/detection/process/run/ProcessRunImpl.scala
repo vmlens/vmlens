@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.process.run
 
 import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForResult
 import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForResult
-import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult}
+import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult, RunResultImpl}
 import com.anarsoft.race.detection.partialorder.{PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.main.ProcessRun
 
@@ -40,6 +40,6 @@ class ProcessRunImpl extends ProcessRun {
       syncActionResult.append(syncAction.asResult())
     }
 
-    RunResult(runData.loopAndRunId, nonVolatileResult.toList, runData.interleaveEvents, syncActionResult.toList);
+    new RunResultImpl(runData.loopAndRunId, nonVolatileResult.toList, runData.interleaveEvents, syncActionResult.toList);
   }
 }

@@ -7,8 +7,8 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
 
 class SyncActionElementForProcessImpl[EVENT <: SyncActionEvent[EVENT] with EventWithStacktraceNode]
-(val eventArray: EventArray[EVENT],
- val createContainer: (EVENT) => EventContainer[EVENT]) extends SyncActionElementForProcess {
+(val eventArray: EventArray[EVENT], val createContainer: (EVENT) => EventContainer[EVENT])
+  extends SyncActionElementForProcess {
 
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit = {
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
@@ -18,7 +18,7 @@ class SyncActionElementForProcessImpl[EVENT <: SyncActionEvent[EVENT] with Event
     new AddToPartialOrderBuilder(createContainer).process(eventArray, partialOrderBuilder);
   }
 
-  def asResult() = {
+  def asResult(): SyncActionElementForResult = {
     new SyncActionElementForResult(eventArray);
   }
 }

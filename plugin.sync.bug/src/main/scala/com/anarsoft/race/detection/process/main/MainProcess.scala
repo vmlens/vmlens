@@ -8,7 +8,7 @@ class MainProcess(private val loadDescription: LoadDescription,
                   private val loadRuns: LoadRuns,
                   private val processRun: ProcessRun,
                   private val loopReportBuilder: LoopReportBuilder) {
-  def process(): Unit = {
+  def process(): DescriptionBuilderForReport = {
 
     val loopResultCollection = new LoopResultCollection();
 
@@ -17,6 +17,8 @@ class MainProcess(private val loadDescription: LoadDescription,
     }
 
     loopResultCollection.addToBuilder(loopReportBuilder);
-    loadDescription.load(loopReportBuilder);
+    val descriptionBuilder = loopReportBuilder.build();
+    loadDescription.load(descriptionBuilder);
+    descriptionBuilder;
   }
 }

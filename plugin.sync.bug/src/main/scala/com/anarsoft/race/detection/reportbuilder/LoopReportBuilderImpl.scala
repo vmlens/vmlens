@@ -1,12 +1,10 @@
 package com.anarsoft.race.detection.reportbuilder
 
 
-import com.anarsoft.race.detection.process.main.{LoopReportBuilder, RunCountAndResult}
+import com.anarsoft.race.detection.process.main.{DescriptionBuilderForReport, LoopReportBuilder, RunCountAndResult}
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.anarsoft.trace.agent.description.{ClassDescription, ThreadOrLoopDescription}
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.element.*
-import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs
 
 import java.util
 import scala.collection.mutable
@@ -14,68 +12,78 @@ import scala.collection.mutable.ArrayBuffer
 
 class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuilder {
 
-  val stacktraceLeafsMap = new mutable.HashMap[StacktraceNode, Option[StacktraceLeaf]]();
-  val runCountAndResultList = new ArrayBuffer[RunCountAndResult]();
+  private val runCountAndResultList = new ArrayBuffer[RunCountAndResult]();
 
   override def addRunResult(runResult: RunCountAndResult): Unit = {
-    // collect all stacktrace leafs in a set
-    for (eventForReport <- runResult.runResult) {
-      eventForReport.stacktraceNode.foreach(node => stacktraceLeafsMap.put(node, None))
-    }
     runCountAndResultList.append(runResult)
   }
 
-  override def addClassDescription(classDescription: ClassDescription): Unit = {
-
-  }
-
-  override def addThreadOrLoopDescription(threadOrLoopDescription: ThreadOrLoopDescription): Unit = {
-
-  }
-
-  def build(): UILoopsAndStacktraceLeafs = {
-    /*
-     // and add the elemnts to the run
-      RunElement(LoopRunAndThreadIndex loopRunAndThreadIndex, int runPosition, StacktraceLeaf stacktraceLeaf,
-        OperationTextFactory operationTextFactory)
-
-     */
+  def build(): DescriptionBuilderForReport = {
+    val stacktraceLeafsMap = new mutable.HashMap[StacktraceNode, StacktraceLeaf]();
 
     // add the loops to the report builder
     for (loopAndRun <- runCountAndResultList) {
-
       val runResult = loopAndRun.runResult;
-
       val run = new util.LinkedList[RunElement]()
 
       for (eventForReport <- runResult) {
         run.add(
           new RunElement(new LoopRunAndThreadIndex(eventForReport.loopId, eventForReport.runId, eventForReport.threadIndex),
-            eventForReport.runPosition, stacktraceLeaf(eventForReport.stacktraceNode), eventForReport.operationTextFactory))
+            eventForReport.runPosition, stacktraceLeaf(eventForReport.stacktraceNode, stacktraceLeafsMap), eventForReport.operationTextFactory))
       }
 
-
-      val textAndStyle = if (runResult.isFailure && runResult.dataRaceCount > 0) {
-        Tuple2("Failure and data race", "style=\"color: red;\"")
+      val result = if (runResult.isFailure && runResult.dataRaceCount > 0) {
+        TestResult.FAILURE_AND_DATA_RACE
       } else if (runResult.isFailure) {
-        Tuple2("Failure", "style=\"color: red;\"")
+        TestResult.FAILURE
       } else if (runResult.dataRaceCount > 0) {
-        Tuple2("Data race", "style=\"color: red;\"")
+        TestResult.DATA_RACE
       } else {
-        Tuple2("Success", "")
+        TestResult.SUCCESS
       }
 
-      reportBuilder.addLoopAndRun(new TestLoop(runResult.loopAndRunId.loopId, textAndStyle._1, textAndStyle._2,
+      reportBuilder.addLoopAndRun(new TestLoop(runResult.loopId, result,
         loopAndRun.count + 1), run);
     }
 
     // add the stacktrace leafs to the builder
+    for (elem <- stacktraceLeafsMap) {
+      reportBuilder.addStacktraceLeaf(elem._2)
+    }
 
-    reportBuilder.build();
+
+    new DescriptionBuilderForReportImpl(reportBuilder);
   }
 
-  private def stacktraceLeaf(stacktraceNode: Option[StacktraceNode]): StacktraceLeaf = {
-    new StacktraceLeaf(-1, new util.LinkedList[StacktraceElement]());
+  private def stacktraceLeaf(stacktraceNode: Option[StacktraceNode],
+                             stacktraceLeafsMap: mutable.HashMap[StacktraceNode, StacktraceLeaf]): StacktraceLeaf = {
+    stacktraceNode match {
+
+      case Some(x) => {
+        stacktraceLeafsMap.get(x) match {
+
+          case Some(stacktraceLeaf) => stacktraceLeaf;
+
+          case None => {
+            val stacktraces = new util.LinkedList[StacktraceElement]()
+
+            var current: Option[StacktraceNode] = Some(x);
+            while (current.nonEmpty) {
+              stacktraces.add(new StacktraceElement(current.get.methodId))
+              current = current.get.getParent
+            }
+
+            val stacktraceLeaf = new StacktraceLeaf(stacktraces);
+            stacktraceLeafsMap.put(stacktraceNode.get, stacktraceLeaf)
+            stacktraceLeaf
+          }
+        }
+      }
+
+      case None => {
+        new StacktraceLeaf(new util.LinkedList[StacktraceElement]());
+      }
+    }
   }
 
 }

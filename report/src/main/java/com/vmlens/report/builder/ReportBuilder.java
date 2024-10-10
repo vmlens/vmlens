@@ -1,8 +1,6 @@
 package com.vmlens.report.builder;
 
-import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.description.TestLoopDescription;
-import com.anarsoft.trace.agent.description.ThreadDescription;
+import com.anarsoft.trace.agent.description.*;
 import com.vmlens.report.element.*;
 import com.vmlens.report.uielement.*;
 
@@ -12,8 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-
-public class ReportBuilder {
+public class ReportBuilder implements NeedsDescriptionCallback {
 
     private final Map<Integer, FieldContainer> idToFieldContainer = new HashMap<>();
     private final Map<Integer, MethodContainer> idToMethodContainer = new HashMap<>();
@@ -21,13 +18,45 @@ public class ReportBuilder {
     private final Map<Integer, TestLoopDescription> idToTestLoopDescription = new HashMap<>();
 
     private final List<LoopAndRun> loopAndRuns = new LinkedList<>();
+    private final List<StacktraceLeaf> stacktraceLeafs = new LinkedList<>();
 
     public void addClassDescription(ClassDescription classDescription) {
+        for (FieldInClassDescription fieldInClassDescription : classDescription.serializedFieldDescriptionArray()) {
+            FieldContainer fieldContainer = idToFieldContainer.get(fieldInClassDescription.id());
+            if (fieldContainer != null) {
+                fieldContainer.setClassDescription(classDescription);
+                fieldContainer.setFieldInClassDescription(fieldInClassDescription);
+            }
+        }
+        for (MethodDescription methodDescription : classDescription.methodArray()) {
+            for (FieldAccessDescription fieldAccessDescription : methodDescription.fieldArray()) {
+                FieldContainer fieldContainer = idToFieldContainer.get(fieldAccessDescription.id());
+                if (fieldContainer != null) {
+                    fieldContainer.setFieldAccessDescription(fieldAccessDescription);
+                }
+            }
 
+            MethodContainer methodContainer = idToMethodContainer.get(methodDescription.id());
+            if (methodContainer != null) {
+                methodContainer.setMethodDescription(methodDescription);
+                methodContainer.setClassDescription(classDescription);
+            }
+        }
     }
 
     public void addLoopAndRun(TestLoop testLoop, List<RunElement> run) {
+        for (RunElement element : run) {
+            element.operationTextFactory().addToNeedsDescription(this);
+        }
         loopAndRuns.add(new LoopAndRun(testLoop, run));
+    }
+
+    public void addStacktraceLeaf(StacktraceLeaf stacktraceLeaf) {
+        stacktraceLeafs.add(stacktraceLeaf);
+
+        for (StacktraceElement stacktraceElement : stacktraceLeaf.stacktraceElements()) {
+            idToMethodContainer.put(stacktraceElement.methodId(), new MethodContainer());
+        }
     }
 
 
@@ -38,11 +67,12 @@ public class ReportBuilder {
         for (LoopAndRun loopAndRun : loopAndRuns) {
             UITestLoop uiTestLoop = new UITestLoop("name",
                     loopAndRun.loop().count(),
-                    loopAndRun.loop().resultText(), loopAndRun.loop().resultStyle());
+                    loopAndRun.loop().testResult().text(), loopAndRun.loop().testResult().style());
 
+
+            loopAndRun.runElements().sort(new RunElementByRunPositionComparator());
+            
             List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceLeafs = new LinkedList<>();
-
-            // Fixme sort  loopAndRun.runElements() by runPosition
 
             for (RunElement runElement : loopAndRun.runElements()) {
                 // (String operation, String method, String threadId)
@@ -61,5 +91,10 @@ public class ReportBuilder {
                     new UILoopAndRunElementWithStacktraceLeafs(uiTestLoop, uiRunElementWithStacktraceLeafs));
         }
         return new UILoopsAndStacktraceLeafs(leafNodes, uiLoopAndRunElementsList);
+    }
+
+    @Override
+    public void needsField(int fieldId) {
+        idToFieldContainer.put(fieldId, new FieldContainer());
     }
 }

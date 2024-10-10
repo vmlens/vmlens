@@ -10,13 +10,11 @@ class LoopResultCollection {
   private val loopIdToResult = new mutable.HashMap[Int, RunCountAndResult]
 
   def put(runResult: RunResult): Unit = {
-    val loopId = runResult.loopAndRunId.loopId
+    val loopId = runResult.loopId
 
     loopIdToResult.get(loopId) match {
-
       case Some(x) => {
-        val count = Math.max(x.count, runResult.loopAndRunId.runId)
-
+        val count = Math.max(x.count, runResult.runId)
         if (runResult.compare(x.runResult) > 0) {
           loopIdToResult.put(loopId, RunCountAndResult(count, runResult))
         } else {
@@ -25,7 +23,7 @@ class LoopResultCollection {
       }
 
       case None => {
-        loopIdToResult.put(loopId, RunCountAndResult(runResult.loopAndRunId.runId, runResult))
+        loopIdToResult.put(loopId, RunCountAndResult(runResult.runId, runResult))
       }
     }
   }
