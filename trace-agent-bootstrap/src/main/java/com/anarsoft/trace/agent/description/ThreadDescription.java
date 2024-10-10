@@ -18,7 +18,6 @@ public class ThreadDescription implements SerializableEvent, ThreadOrLoopDescrip
     private final long threadId;
     private final String threadName;
 
-
     public ThreadDescription(int loopId, int runId, int threadIndex, long threadId, String threadName) {
         this.loopId = loopId;
         this.runId = runId;
@@ -56,6 +55,26 @@ public class ThreadDescription implements SerializableEvent, ThreadOrLoopDescrip
     @Override
     public void accept(ThreadOrLoopDescriptionVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public int loopId() {
+        return loopId;
+    }
+
+    public int runId() {
+        return runId;
+    }
+
+    public int threadIndex() {
+        return threadIndex;
+    }
+
+    public long threadId() {
+        return threadId;
+    }
+
+    public String threadName() {
+        return threadName;
     }
 
     @Override

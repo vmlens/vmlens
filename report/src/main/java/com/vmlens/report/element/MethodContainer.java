@@ -3,7 +3,7 @@ package com.vmlens.report.element;
 import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.description.MethodDescription;
 
-public class MethodContainer {
+public class MethodContainer implements Container {
 
     // all fields can be null
     private ClassDescription classDescription;
@@ -15,5 +15,11 @@ public class MethodContainer {
 
     public void setMethodDescription(MethodDescription methodDescription) {
         this.methodDescription = methodDescription;
+    }
+
+
+    @Override
+    public String getName() {
+        return null;
     }
 }

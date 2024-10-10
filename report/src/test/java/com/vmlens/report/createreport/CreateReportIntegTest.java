@@ -20,8 +20,7 @@ public class CreateReportIntegTest {
         CreateReport createReport = new CreateReport(outputDir);
 
         List<UIStacktraceElement> stacktraceElements = new LinkedList<>();
-        UIStacktraceElement first = new UIStacktraceElement();
-        first.setText("org.apache.commons.text.StringEscapeUtils.escapeHtml3");
+        UIStacktraceElement first = new UIStacktraceElement("org.apache.commons.text.StringEscapeUtils.escapeHtml3");
         stacktraceElements.add(first);
 
         UIStacktraceLeaf root = new UIStacktraceLeaf(stacktraceElements);
@@ -42,8 +41,6 @@ public class CreateReportIntegTest {
                 new UILoopAndRunElementWithStacktraceLeafs(uiLoop, uiRunElementWithStacktraceRoots);
 
         uiLoopAndRunElementsList.add(uiLoopAndRunElementWithStacktraceRoots);
-
-
         createReport.createReport(new UILoopsAndStacktraceLeafs(rootNodes, uiLoopAndRunElementsList));
 
         FileUtils.deleteDirectory(outputDir.toFile());

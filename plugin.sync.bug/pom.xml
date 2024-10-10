@@ -70,11 +70,6 @@
             <version>${asm.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.6</version>
-        </dependency>
-        <dependency>
             <groupId>com.typesafe.scala-logging</groupId>
             <artifactId>scala-logging_2.13</artifactId>
             <version>3.9.3</version>

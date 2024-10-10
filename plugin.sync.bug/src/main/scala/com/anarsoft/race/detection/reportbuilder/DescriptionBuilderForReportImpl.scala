@@ -12,7 +12,7 @@ class DescriptionBuilderForReportImpl(reportBuilder: ReportBuilder) extends Desc
   }
 
   override def addThreadOrLoopDescription(threadOrLoopDescription: ThreadOrLoopDescription): Unit = {
-
+    reportBuilder.addThreadOrLoopDescription(threadOrLoopDescription);
   }
 
   def build(): UILoopsAndStacktraceLeafs = {

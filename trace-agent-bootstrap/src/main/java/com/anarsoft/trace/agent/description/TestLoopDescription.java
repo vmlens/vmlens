@@ -44,6 +44,14 @@ public class TestLoopDescription implements SerializableEvent, ThreadOrLoopDescr
         visitor.visit(this);
     }
 
+    public int loopId() {
+        return loopId;
+    }
+
+    public String name() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
