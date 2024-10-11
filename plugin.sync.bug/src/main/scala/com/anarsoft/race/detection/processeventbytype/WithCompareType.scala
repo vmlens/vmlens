@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.processeventbytype
 
 
-trait EventWithType[EVENT] {
+trait WithCompareType[EVENT] {
   def compareType(other: EVENT): Int;
 }

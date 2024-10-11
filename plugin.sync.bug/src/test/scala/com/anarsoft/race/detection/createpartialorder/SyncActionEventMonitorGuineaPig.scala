@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.vmlens.report.element.OperationTextFactory
 
 class SyncActionEventMonitorGuineaPig(val isEnter: Boolean, val runPosition: Int,
-                                      val threadIndex: Int) extends SyncActionEvent[SyncActionEventMonitorGuineaPig] {
+                                      val threadIndex: Int) extends SyncActionEventWithCompareType[SyncActionEventMonitorGuineaPig] {
 
   override def compareType(other: SyncActionEventMonitorGuineaPig): Int = 0
 

@@ -38,7 +38,6 @@ class EventBuilder(val runId: Int, val loopId: Int, val slidingWindowId: Int) {
     methodCounter = methodCounter + 1;
 
     methodEnterEvent.setMethodCounter(methodCounter)
-    methodEnterEvent.setRunPosition(runPosition)
     runPosition = runPosition + 1;
     methodEvents += methodEnterEvent.buildScalaEvent();
     methodJavaEvents += methodEnterEvent.buildJavaEvent();

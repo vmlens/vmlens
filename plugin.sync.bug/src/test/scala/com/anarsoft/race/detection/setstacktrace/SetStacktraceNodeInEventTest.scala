@@ -11,11 +11,11 @@ class SetStacktraceNodeInEventTest extends AnyFlatSpec with Matchers {
 
   "SetStacktraceNodeInEvent" should "set the stacktrace nodes" in {
     // Given
-    val firstEvent = new EventWithStacktraceNodeGuineaPig(1, 3);
-    val secondEvent = new EventWithStacktraceNodeGuineaPig(10, 2);
-    val thirdEvent = new EventWithStacktraceNodeGuineaPig(1, 1);
+    val firstEvent = new WithSetStacktraceNodeGuineaPig(1, 3);
+    val secondEvent = new WithSetStacktraceNodeGuineaPig(10, 2);
+    val thirdEvent = new WithSetStacktraceNodeGuineaPig(1, 1);
 
-    val eventArray = new EventArray[EventWithStacktraceNodeGuineaPig](Array(firstEvent, secondEvent, thirdEvent));
+    val eventArray = new EventArray[WithSetStacktraceNodeGuineaPig](Array(firstEvent, secondEvent, thirdEvent));
     val threadIdToStacktraceNodeArray = new HashMap[Long, Array[StacktraceNode]]();
     threadIdToStacktraceNodeArray.put(1L, buildStacktraceNodeArray());
     threadIdToStacktraceNodeArray.put(10L, buildStacktraceNodeArray());

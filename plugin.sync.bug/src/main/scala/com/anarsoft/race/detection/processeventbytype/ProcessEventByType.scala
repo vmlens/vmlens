@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.processeventbytype
 
 import com.anarsoft.race.detection.util.EventArray
 
-class ProcessEventByType[EVENT <: EventWithType[EVENT]](val lifecycle: AlgorithmForOneTypeFactory[EVENT]) {
+class ProcessEventByType[EVENT <: WithCompareType[EVENT]](val lifecycle: AlgorithmForOneTypeFactory[EVENT]) {
 
   def process(array: EventArray[EVENT]) = {
     val iter = array.iterator();

@@ -14,17 +14,17 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
 
     private static final String ID_NOT_FOUND = "missing %s";
 
-    private final Map<Integer, FieldContainer> idToFieldContainer = new HashMap<>();
-    private final Map<Integer, MethodContainer> idToMethodContainer = new HashMap<>();
-    private final Map<LoopRunAndThreadIndex, ThreadContainer> indexToThreadDescription = new HashMap<>();
-    private final Map<Integer, TestLoopContainer> idToTestLoopDescription = new HashMap<>();
+    private final Map<Integer, ContainerForField> idToFieldContainer = new HashMap<>();
+    private final Map<Integer, ContainerForMethod> idToMethodContainer = new HashMap<>();
+    private final Map<LoopRunAndThreadIndex, ContainerForThread> indexToThreadDescription = new HashMap<>();
+    private final Map<Integer, ContainerForTestLoop> idToTestLoopDescription = new HashMap<>();
 
     private final List<LoopAndRun> loopAndRuns = new LinkedList<>();
     private final List<StacktraceLeaf> stacktraceLeafs = new LinkedList<>();
 
     public void addClassDescription(ClassDescription classDescription) {
         for (FieldInClassDescription fieldInClassDescription : classDescription.serializedFieldDescriptionArray()) {
-            FieldContainer fieldContainer = idToFieldContainer.get(fieldInClassDescription.id());
+            ContainerForField fieldContainer = idToFieldContainer.get(fieldInClassDescription.id());
             if (fieldContainer != null) {
                 fieldContainer.setClassDescription(classDescription);
                 fieldContainer.setFieldInClassDescription(fieldInClassDescription);
@@ -32,13 +32,13 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
         }
         for (MethodDescription methodDescription : classDescription.methodArray()) {
             for (FieldAccessDescription fieldAccessDescription : methodDescription.fieldArray()) {
-                FieldContainer fieldContainer = idToFieldContainer.get(fieldAccessDescription.id());
+                ContainerForField fieldContainer = idToFieldContainer.get(fieldAccessDescription.id());
                 if (fieldContainer != null) {
                     fieldContainer.setFieldAccessDescription(fieldAccessDescription);
                 }
             }
 
-            MethodContainer methodContainer = idToMethodContainer.get(methodDescription.id());
+            ContainerForMethod methodContainer = idToMethodContainer.get(methodDescription.id());
             if (methodContainer != null) {
                 methodContainer.setMethodDescription(methodDescription);
                 methodContainer.setClassDescription(classDescription);
@@ -56,13 +56,13 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
         LoopRunAndThreadIndex loopRunAndThreadIndex = new LoopRunAndThreadIndex(threadDescription.loopId(),
                 threadDescription.runId(),
                 threadDescription.threadIndex());
-        indexToThreadDescription.put(loopRunAndThreadIndex, new ThreadContainer(threadDescription));
+        indexToThreadDescription.put(loopRunAndThreadIndex, new ContainerForThread(threadDescription));
 
     }
 
     @Override
     public void visit(TestLoopDescription whileLoopDescription) {
-        idToTestLoopDescription.put(whileLoopDescription.loopId(), new TestLoopContainer(whileLoopDescription));
+        idToTestLoopDescription.put(whileLoopDescription.loopId(), new ContainerForTestLoop(whileLoopDescription));
     }
 
     public void addLoopAndRun(TestLoop testLoop, List<RunElement> run) {
@@ -76,7 +76,7 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
         stacktraceLeafs.add(stacktraceLeaf);
 
         for (StacktraceElement stacktraceElement : stacktraceLeaf.stacktraceElements()) {
-            idToMethodContainer.put(stacktraceElement.methodId(), new MethodContainer());
+            idToMethodContainer.put(stacktraceElement.methodId(), new ContainerForMethod());
         }
     }
 
@@ -124,7 +124,7 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
 
     @Override
     public void needsField(int fieldId) {
-        idToFieldContainer.put(fieldId, new FieldContainer());
+        idToFieldContainer.put(fieldId, new ContainerForField());
     }
 
     private String getMethodNameByMethodId(int methodId) {
@@ -141,7 +141,7 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
 
     private String getName(Object index, Map<?, ? extends Container> idToContainer) {
         String result = null;
-        Container container = idToMethodContainer.get(index);
+        Container container = idToContainer.get(index);
         if (container != null) {
             result = container.getName();
         }

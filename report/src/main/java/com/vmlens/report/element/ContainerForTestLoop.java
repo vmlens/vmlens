@@ -2,11 +2,11 @@ package com.vmlens.report.element;
 
 import com.anarsoft.trace.agent.description.TestLoopDescription;
 
-public class TestLoopContainer implements Container {
+public class ContainerForTestLoop implements Container {
 
     private final TestLoopDescription testLoopDescription;
 
-    public TestLoopContainer(TestLoopDescription testLoopDescription) {
+    public ContainerForTestLoop(TestLoopDescription testLoopDescription) {
         this.testLoopDescription = testLoopDescription;
     }
 

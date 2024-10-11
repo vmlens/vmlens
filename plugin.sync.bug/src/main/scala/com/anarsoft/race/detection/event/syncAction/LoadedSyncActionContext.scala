@@ -11,13 +11,10 @@ import java.util
 class LoadedSyncActionContext extends LoadedEventContext[LoadedSyncActionEvent] {
 
   val volatileAccessEvents = new util.LinkedList[VolatileAccessEvent]();
+  val threadStartEvents = new util.LinkedList[ThreadStartEvent]();
 
   def addLoadedEvent(event: LoadedSyncActionEvent): Unit = {
     event.addToContext(this);
-  }
-
-  def addVolatileAccessEvent(event: VolatileAccessEvent): Unit = {
-    volatileAccessEvents.add(event);
   }
 
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {

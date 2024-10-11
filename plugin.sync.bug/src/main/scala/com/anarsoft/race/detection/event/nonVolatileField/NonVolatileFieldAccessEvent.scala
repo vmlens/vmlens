@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.nonVolatileField
 
 import com.anarsoft.race.detection.reportbuilder.FieldId
-import com.anarsoft.race.detection.setstacktrace.EventWithStacktraceNode
+import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
 import com.vmlens.report.element.{FieldAccessTextFactory, MemoryAccessModifier, OperationTextFactory}
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
@@ -9,7 +9,7 @@ import org.apache.commons.text.StringEscapeUtils
 
 trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
   with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEvent]
-  with EventWithStacktraceNode {
+  with WithSetStacktraceNode {
 
   def fieldId: Int
   def objectHashCode: Long

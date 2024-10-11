@@ -1,15 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.event.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.gen.MethodEnterEventGen;
+import com.vmlens.trace.agent.bootstrap.event.gen.MethodExitEventGen;
 
-public class MethodEnterEvent extends MethodEnterEventGen implements RuntimeEvent {
+public class MethodExitEvent extends MethodExitEventGen implements RuntimeEvent {
 
-    public MethodEnterEvent(int methodId) {
+    public MethodExitEvent(int methodId) {
         this.methodId = methodId;
-    }
-
-    public int methodCounter() {
-        return methodCounter;
     }
 
     public int threadIndex() {
@@ -26,6 +22,10 @@ public class MethodEnterEvent extends MethodEnterEventGen implements RuntimeEven
 
     public void setMethodCounter(int methodCounter) {
         this.methodCounter = methodCounter;
+    }
+
+    public int methodCounter() {
+        return methodCounter;
     }
 
     public int loopId() {

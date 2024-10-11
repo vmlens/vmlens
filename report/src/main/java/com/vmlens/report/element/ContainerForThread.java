@@ -2,11 +2,11 @@ package com.vmlens.report.element;
 
 import com.anarsoft.trace.agent.description.ThreadDescription;
 
-public class ThreadContainer implements Container {
+public class ContainerForThread implements Container {
 
     private final ThreadDescription threadDescription;
 
-    public ThreadContainer(ThreadDescription threadDescription) {
+    public ContainerForThread(ThreadDescription threadDescription) {
         this.threadDescription = threadDescription;
     }
 

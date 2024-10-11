@@ -10,7 +10,7 @@ class ProcessEventByTypeTest extends AnyFlatSpec with Matchers {
     // Given
     val array = Array(event(0, 0), event(0, 1), event(1, 0), event(1, 1));
     val algorithmForEventMock = new AlgorithmForOneTypeFactoryMock();
-    val processEventByType = new ProcessEventByType[EventWithTypeGuineaPig](algorithmForEventMock);
+    val processEventByType = new ProcessEventByType[WithCompareTypeGuineaPig](algorithmForEventMock);
 
     // When
     processEventByType.process(new EventArray(array));
@@ -20,8 +20,8 @@ class ProcessEventByTypeTest extends AnyFlatSpec with Matchers {
     algorithmForEventMock.createdAlgorithm(1).processed should be(2);
   }
 
-  private def event(category: Int, position: Int): EventWithTypeGuineaPig = {
-    new EventWithTypeGuineaPig(category, position)
+  private def event(category: Int, position: Int): WithCompareTypeGuineaPig = {
+    new WithCompareTypeGuineaPig(category, position)
   }
 
 }

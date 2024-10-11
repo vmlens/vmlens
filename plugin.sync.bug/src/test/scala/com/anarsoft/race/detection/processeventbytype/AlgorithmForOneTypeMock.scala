@@ -1,10 +1,10 @@
 package com.anarsoft.race.detection.processeventbytype
 
-class AlgorithmForOneTypeMock() extends AlgorithmForOneType[EventWithTypeGuineaPig] {
+class AlgorithmForOneTypeMock() extends AlgorithmForOneType[WithCompareTypeGuineaPig] {
 
   var processed = 0;
 
-  override def prozess(event: EventWithTypeGuineaPig): Unit = {
+  override def prozess(event: WithCompareTypeGuineaPig): Unit = {
     processed = processed + 1;
   }
 

@@ -3,7 +3,7 @@ package com.vmlens.report.element;
 import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.description.MethodDescription;
 
-public class MethodContainer implements Container {
+public class ContainerForMethod implements Container {
 
     // all fields can be null
     private ClassDescription classDescription;

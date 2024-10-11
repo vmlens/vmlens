@@ -47,6 +47,6 @@ class DistributeEventsTest extends AnyFlatSpec with Matchers {
   }
 
   private def event(loopId: Int, runId: Int) = new MethodEnterEventGen(1, 1, 0,
-    loopId, runId, 0);
+    loopId, runId);
 
 }

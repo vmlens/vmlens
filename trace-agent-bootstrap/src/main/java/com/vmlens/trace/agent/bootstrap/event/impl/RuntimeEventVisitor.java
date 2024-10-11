@@ -8,4 +8,7 @@ public interface RuntimeEventVisitor {
 
     void visit(ThreadJoinedEvent threadJoinedEvent);
 
+    void visit(MethodEnterEvent methodEnterEvent);
+
+    void visit(MethodExitEvent methodExitEvent);
 }

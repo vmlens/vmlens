@@ -1,22 +1,22 @@
 package com.anarsoft.race.detection.event.syncAction
 
-import com.anarsoft.race.detection.createpartialorder.SyncActionEvent
-import com.anarsoft.race.detection.setstacktrace.EventWithStacktraceNode
+import com.anarsoft.race.detection.createpartialorder.SyncActionEventWithCompareType
+import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.MemoryAccessEvent
 import com.vmlens.report.element.{FieldAccessTextFactory, MemoryAccessModifier, OperationTextFactory}
 import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
 
 
 trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]
-  with SyncActionEvent[VolatileAccessEvent]
-  with EventWithStacktraceNode
+  with SyncActionEventWithCompareType[VolatileAccessEvent]
+  with WithSetStacktraceNode
   with LoadedSyncActionEvent {
 
   def fieldId: Int
   def objectHashCode: Long
   
   override def addToContext(context: LoadedSyncActionContext): Unit = {
-    context.addVolatileAccessEvent(this);
+    context.volatileAccessEvents.add(this);
   }
 
   def compareType(other: VolatileAccessEvent): Int = {

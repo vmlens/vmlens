@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
 import java.nio.ByteBuffer;
-import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
 
 public class MethodExitEventGen {
 
@@ -11,7 +12,6 @@ public class MethodExitEventGen {
     protected int methodCounter;
     protected int loopId;
     protected int runId;
-    protected int runPosition;
 
     @Override
     public boolean equals(Object o) {
@@ -24,7 +24,6 @@ public class MethodExitEventGen {
         if (methodCounter != that.methodCounter) return false;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
-        if (runPosition != that.runPosition) return false;
         return true;
     }
 
@@ -36,14 +35,13 @@ public class MethodExitEventGen {
                 "methodCounter=" + methodCounter +
                 "loopId=" + loopId +
                 "runId=" + runId +
-                "runPosition=" + runPosition +
                 '}';
     }
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.method.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 25, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 21, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
@@ -54,7 +52,6 @@ public class MethodExitEventGen {
         buffer.putInt(methodCounter);
         buffer.putInt(loopId);
         buffer.putInt(runId);
-        buffer.putInt(runPosition);
     }
 
 

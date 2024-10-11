@@ -4,10 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.RunMock;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMock;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMockStrategyTake;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunImpl;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateActive;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
@@ -42,24 +39,6 @@ public class RuntimeEventTest {
         assertThat(result, CoreMatchers.<RuntimeEvent>is(runtimeEvent));
         assertThat(runtimeEvent.loopId(), is(LOOP_ID));
         assertThat(runtimeEvent.runId(), is(RUN_ID));
-    }
-
-    @Test
-    public void runPosition() {
-        // Given
-        int RUN_POSITION = 7;
-
-        RuntimeEventGuineaPig runtimeEvent = new RuntimeEventGuineaPig();
-        ActualRunMockStrategyTake actualRunMockStrategyTake = new ActualRunMockStrategyTake(RUN_POSITION);
-        RunStateActive runStateActive = new RunStateActive(new ActualRunMock(actualRunMockStrategyTake),
-                null, null);
-
-        // When
-        RuntimeEvent result = runStateActive.processRuntimeEvent(runtimeEvent);
-
-        // Then
-        assertThat(result, CoreMatchers.<RuntimeEvent>is(runtimeEvent));
-        assertThat(runtimeEvent.runPosition(), is(RUN_POSITION));
     }
 
     @Test

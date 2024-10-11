@@ -4,7 +4,8 @@ public abstract class PerThreadCounter {
     private int methodCount;
 
     public int incrementAndGetMethodCount() {
-        return methodCount++;
+        methodCount++;
+        return methodCount;
     }
 
     public int methodCount() {

@@ -1,12 +1,12 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directMemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.nonVolatileField.*
+import com.anarsoft.race.detection.event.syncAction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class MethodExitEventGen(
@@ -15,7 +15,6 @@ class MethodExitEventGen(
                           , val methodCounter: Int
                           , val loopId: Int
                           , val runId: Int
-                          , val runPosition: Int
                         ) extends MethodExitEvent {
   override def toString() = {
     var text = "MethodExitEventGen"
@@ -24,7 +23,6 @@ class MethodExitEventGen(
     text = text + ", methodCounter:" + methodCounter
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
-    text = text + ", runPosition:" + runPosition
     text;
   }
 
@@ -46,9 +44,6 @@ class MethodExitEventGen(
         else if (runId != that.runId) {
           false;
         }
-        else if (runPosition != that.runPosition) {
-          false;
-        }
         else
           true;
       }
@@ -62,8 +57,6 @@ object MethodExitEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new MethodExitEventGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getInt()

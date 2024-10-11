@@ -14,14 +14,14 @@ class ServiceCalculateMethodCountToStacktraceNodeTest extends AnyFlatSpec with M
     val expected = Array(root, new StacktraceNodeIntermediate(5, root), root, root);
 
     // Given
-    val methodEnterRoot = new MethodEnterEventGen(1, 1, 0,
+    val methodEnterRoot = new MethodEnterEventGen(1, 1, 
       0, 0, 0);
     val methodEnterChild = new MethodEnterEventGen(1, 5, 1,
-      0, 0, 0);
+      0, 0);
     val methodExitChild = new MethodExitEventGen(1, 5, 2,
-      0, 0, 0);
+      0, 0);
     val methodExitRoot = new MethodExitEventGen(1, 1, 3,
-      0, 0, 0);
+      0, 0);
 
     val array = Array(methodEnterRoot, methodEnterChild, methodExitChild, methodExitRoot);
 

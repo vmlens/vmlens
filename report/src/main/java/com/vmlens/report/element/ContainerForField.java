@@ -4,7 +4,7 @@ import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.description.FieldAccessDescription;
 import com.anarsoft.trace.agent.description.FieldInClassDescription;
 
-public class FieldContainer implements Container {
+public class ContainerForField implements Container {
 
     // all fields can be null
     private ClassDescription classDescription;

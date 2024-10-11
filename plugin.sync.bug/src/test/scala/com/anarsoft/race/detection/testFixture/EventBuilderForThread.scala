@@ -14,7 +14,6 @@ class EventBuilderForThread(private val threadIndex: Int, private val eventBuild
     methodStack.push(methodId);
 
     val methodEnterEventBuilder = new MethodEnterEventBuilder();
-    methodEnterEventBuilder.setMethodId(methodId);
     methodEnterEventBuilder.setThreadIndex(threadIndex);
     eventBuilder.add(methodEnterEventBuilder)
   }

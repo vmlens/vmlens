@@ -5,16 +5,11 @@ import com.anarsoft.race.detection.event.gen.MethodEnterEventGen
 
 class MethodEnterEventBuilder {
 
-  val methodEnterEvent = new MethodEnterEvent();
+  val methodEnterEvent = new MethodEnterEvent(6);
 
 
   def setThreadIndex(threadIndex: Int): MethodEnterEventBuilder = {
     methodEnterEvent.setThreadIndex(threadIndex)
-    this
-  }
-
-  def setMethodId(methodId: Int): MethodEnterEventBuilder = {
-    methodEnterEvent.setMethodId(methodId)
     this
   }
 
@@ -33,11 +28,6 @@ class MethodEnterEventBuilder {
     this
   }
 
-  def setRunPosition(runPosition: Int): MethodEnterEventBuilder = {
-    methodEnterEvent.setRunPosition(runPosition)
-    this
-  }
-
   def buildJavaEvent() = methodEnterEvent;
 
 
@@ -46,8 +36,7 @@ class MethodEnterEventBuilder {
       methodEnterEvent.methodId(),
       methodEnterEvent.methodCounter(),
       methodEnterEvent.loopId(),
-      methodEnterEvent.runId(),
-      methodEnterEvent.runPosition()
+      methodEnterEvent.runId()
     );
   }
 

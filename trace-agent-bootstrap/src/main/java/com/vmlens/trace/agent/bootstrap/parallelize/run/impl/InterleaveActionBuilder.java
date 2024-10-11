@@ -1,16 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEventVisitor;
-import com.vmlens.trace.agent.bootstrap.event.impl.ThreadJoinedEvent;
-import com.vmlens.trace.agent.bootstrap.event.impl.ThreadStartEvent;
-import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
+import com.vmlens.trace.agent.bootstrap.event.impl.*;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class InterleaveActionBuilder implements RuntimeEventVisitor {
 
     private InterleaveAction interleaveAction;
-
 
     @Override
     public void visit(VolatileAccessEvent volatileAccessEvent) {
@@ -30,6 +26,17 @@ public class InterleaveActionBuilder implements RuntimeEventVisitor {
         // Fixme
     }
 
+    @Override
+    public void visit(MethodEnterEvent methodEnterEvent) {
+        // nothing to do
+    }
+
+    @Override
+    public void visit(MethodExitEvent methodExitEvent) {
+        // nothing to do
+    }
+
+    // can be null for example for method enter events
     public InterleaveAction build() {
         return interleaveAction;
     }

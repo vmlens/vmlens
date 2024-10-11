@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.createstacktrace
 
-trait ThreadIndexAndMethodCounter {
+trait WithMethodCounter {
 
   def threadIndex: Int;
 

@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 import com.vmlens.trace.agent.bootstrap.callback.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEventVisitorWithDefault;
-import com.vmlens.trace.agent.bootstrap.event.impl.ThreadStartEvent;
+import com.vmlens.trace.agent.bootstrap.event.impl.*;
 
 public class SetValuesAfterParallelizeProcessingVisitor extends RuntimeEventVisitorWithDefault {
 
@@ -17,6 +15,16 @@ public class SetValuesAfterParallelizeProcessingVisitor extends RuntimeEventVisi
     public void visit(ThreadStartEvent threadStartEvent) {
         threadStartEvent.setMethodCounter(perThreadCounter.methodCount());
         threadStartEvent.setStartedThreadToNull();
+    }
+
+    @Override
+    public void visit(MethodEnterEvent methodEnterEvent) {
+        methodEnterEvent.setMethodCounter(perThreadCounter.incrementAndGetMethodCount());
+    }
+
+    @Override
+    public void visit(MethodExitEvent methodExitEvent) {
+        methodExitEvent.setMethodCounter(perThreadCounter.incrementAndGetMethodCount());
     }
 
     @Override
