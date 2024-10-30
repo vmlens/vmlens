@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
-import com.vmlens.trace.agent.bootstrap.callback.PerThreadCounter;
+import com.vmlens.trace.agent.bootstrap.callbackdeprecated.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.impl.*;
 
 public class SetValuesAfterParallelizeProcessingVisitor extends RuntimeEventVisitorWithDefault {

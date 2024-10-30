@@ -19,7 +19,7 @@ public class TLinkableWrapper<T> implements TLinkable<TLinkableWrapper<T>> {
     }
 
 
-    public static <T> TLinkableWrapper<T> wrapp(T element) {
+    public static <T> TLinkableWrapper<T> wrap(T element) {
         return new TLinkableWrapper<T>(element);
     }
 

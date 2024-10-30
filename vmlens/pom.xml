@@ -53,6 +53,7 @@
 
 
     <modules>
+        <module>../test-util</module>
         <module>../api</module>
         <module>../common-callback</module>
         <module>../common-transform</module>

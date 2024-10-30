@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.write;
 
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 public class ShutdownHook extends Thread {
 
@@ -19,7 +19,7 @@ public class ShutdownHook extends Thread {
 
     public void stopProcessing() {
         try {
-            CallbackState.eventQueue.offer(new PoisonedEvent());
+            ParallelizeBridgeForCallbackImpl.eventQueue.offer(new PoisonedEvent());
             writeEventToFile.waitForPoisonedEventReceived();
         } catch (Exception e) {
             e.printStackTrace();

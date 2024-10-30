@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.sortutil
 
-import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
+import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType
 
 case class MemoryAccessEventGuineaPig(operation: Int) extends MemoryAccessEvent[MemoryAccessEventGuineaPig] {
 

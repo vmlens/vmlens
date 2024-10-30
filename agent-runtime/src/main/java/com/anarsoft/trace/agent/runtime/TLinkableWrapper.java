@@ -9,10 +9,6 @@ public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELE
 	private  TLinkableWrapper<ELEMENT> next;
 	private  TLinkableWrapper<ELEMENT> previous;
 
-
-
-
-
 	public ELEMENT getElement() {
 		return element;
 	}
@@ -21,6 +17,10 @@ public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELE
 		super();
 		this.element = element;
 	}
+
+    public static <ELEMENT> TLinkableWrapper<ELEMENT> wrap(ELEMENT element) {
+        return new TLinkableWrapper<>(element);
+    }
 
 	@Override
 	public TLinkableWrapper<ELEMENT> getNext() {

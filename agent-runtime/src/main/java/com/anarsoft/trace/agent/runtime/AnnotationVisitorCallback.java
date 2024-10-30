@@ -1,11 +1,9 @@
 package com.anarsoft.trace.agent.runtime;
 
+import com.anarsoft.trace.agent.runtime.repositorydeprecated.MethodInClassIdentifier;
 import com.vmlens.trace.agent.bootstrap.typeDesc.AtomicMethodWithCallback;
-
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Type;
-
-import com.anarsoft.trace.agent.runtime.repository.MethodInClassIdentifier;
 
 
 public class AnnotationVisitorCallback extends AnnotationVisitor  {

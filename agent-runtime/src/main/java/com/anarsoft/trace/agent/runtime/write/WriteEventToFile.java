@@ -1,9 +1,9 @@
 package com.anarsoft.trace.agent.runtime.write;
 
 import com.anarsoft.trace.agent.runtime.process.AgentController;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;
@@ -45,7 +45,7 @@ public class WriteEventToFile implements Runnable {
         boolean process = true;
         while (process) {
             try {
-                SerializableEvent in = CallbackState.eventQueue.take();
+                SerializableEvent in = ParallelizeBridgeForCallbackImpl.eventQueue.take();
                 if (in != null) {
                     if (in instanceof PoisonedEvent) {
                         close();

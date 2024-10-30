@@ -36,11 +36,11 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
         TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>> actualRun
                 = new TLinkedList<>();
 
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrapp(ElementAndPosition.<BlockBuilder>epos(
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
                 new BlockBuilderGuineaPig(firstBlock, firstKey), 0, 0)));
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrapp(ElementAndPosition.<BlockBuilder>epos(
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
                 new BlockBuilderGuineaPig(secondBlock, firstKey), 0, 2)));
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrapp(ElementAndPosition.<BlockBuilder>epos(
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
                 new BlockBuilderGuineaPig(thirdBlock, secondKey), 0, 2)));
 
         MapOfBlocksExceptDeadlockFactory factory = new MapOfBlocksExceptDeadlockFactory();
@@ -67,9 +67,9 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
         TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>> actualRun
                 = new TLinkedList<>();
 
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrapp(ElementAndPosition.<BlockBuilder>epos(
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
                 new BlockBuilderGuineaPig(first), 0, 0)));
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrapp(ElementAndPosition.<BlockBuilder>epos(
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
                 new BlockBuilderGuineaPig(second), 0, 2)));
 
         MapOfBlocksExceptDeadlockFactory factory = new MapOfBlocksExceptDeadlockFactory();

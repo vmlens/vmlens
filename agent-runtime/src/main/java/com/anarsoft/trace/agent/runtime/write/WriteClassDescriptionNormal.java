@@ -2,11 +2,11 @@ package com.anarsoft.trace.agent.runtime.write;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
+import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 public class WriteClassDescriptionNormal implements WriteClassDescription {
 
     public void write(final ClassDescription classDescription) {
-        CallbackState.eventQueue.offer(classDescription);
+        ParallelizeBridgeForCallbackImpl.eventQueue.offer(classDescription);
     }
 }

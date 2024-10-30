@@ -1,13 +1,10 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
-import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.MethodVisitor;
-
-
 import com.anarsoft.trace.agent.runtime.AgentClassFileTransformer;
 import com.anarsoft.trace.agent.runtime.MethodIdentifier;
+import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
 
 
 
@@ -26,35 +23,14 @@ public class ClassTransformerTraceMethod extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc,
 			String signature, String[] exceptions) {
-
-		// MethodIdentifier(String name, String desc)
 		 MethodIdentifier i = new  MethodIdentifier( name,  desc) ;
 
 		 FactoryMethodTransformer factoryMethodTransformer =  methodName2Transformer.get(i);
 
-		 if( factoryMethodTransformer != null )
-		 {
+        if (factoryMethodTransformer != null) {
 			 return factoryMethodTransformer.create(super.visitMethod(access, name, desc, signature, exceptions));
-		 }
-		 else
-		 {
+		 } else {
 			 return super.visitMethod(access, name, desc, signature, exceptions);
 		 }
-
-
-
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

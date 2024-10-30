@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
-import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
+import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType
 
 class MemoryAccessEventBuilder {
 

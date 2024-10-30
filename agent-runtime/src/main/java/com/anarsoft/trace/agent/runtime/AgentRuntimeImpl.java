@@ -2,10 +2,11 @@ package com.anarsoft.trace.agent.runtime;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
+import com.anarsoft.trace.agent.runtime.applyclassarraytransformer.ApplyClassArrayTransformerFactory;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsAlwaysFalse;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
-import com.anarsoft.trace.agent.runtime.repository.LoadAtomicClassesFromClasspath;
+import com.anarsoft.trace.agent.runtime.repositorydeprecated.LoadAtomicClassesFromClasspath;
 import com.anarsoft.trace.agent.runtime.util.AgentKeys;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
@@ -14,8 +15,8 @@ import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
-import com.vmlens.trace.agent.bootstrap.callback.CallbackState;
+import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
+import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -108,7 +109,8 @@ public class AgentRuntimeImpl implements AgentRuntime {
                 classAnalyzedEventList);
 
         AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
-                skipJavaUtil, writeClassDescriptionDuringStartup, false, new HasGeneratedMethodsAlwaysFalse());
+				writeClassDescriptionDuringStartup, new HasGeneratedMethodsAlwaysFalse(),
+				ApplyClassArrayTransformerFactory.retransform());
 
         inst.addTransformer(classRetransformer, true);
 
@@ -116,8 +118,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		for (Class cl : inst.getAllLoadedClasses()) {
 			if (inst.isModifiableClass(cl)) {
 				String correctedClassName = cl.getName().replace('.', '/');
-				if ((AgentClassFileTransformer.shouldBeTransformed(skipJavaUtil, correctedClassName))
-						&& (!cl.isInterface())) {
+				if (!cl.isInterface()) {
 					if (!alreadyTransformed.contains(correctedClassName)) {
 						transformableClasses.add(new TLinkableWrapper(cl));
 						alreadyTransformed.add(correctedClassName);
@@ -128,6 +129,9 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		Class[] toBeRetransformed = new Class[transformableClasses.size()];
 		int i = 0;
 		for (TLinkableWrapper<Class> cl : transformableClasses) {
+			if (cl.getElement().getName().startsWith("java/lang")) {
+				System.out.println(cl.getElement().getName());
+			}
 			toBeRetransformed[i] = ((Class) cl.getElement());
 			i++;
 		}
@@ -144,7 +148,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
         retransform(inst, classAnalyzedEventList, true, alreadyTransformed);
         for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-            CallbackState.eventQueue.offer(classAnalyzedEvent.getElement());
+			ParallelizeBridgeForCallbackImpl.eventQueue.offer(classAnalyzedEvent.getElement());
 
         }
         classAnalyzedEventList = new TLinkedList();
@@ -152,9 +156,10 @@ public class AgentRuntimeImpl implements AgentRuntime {
         retransform(inst, classAnalyzedEventList, false, alreadyTransformed);
 		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-            CallbackState.eventQueue.offer(classAnalyzedEvent.getElement());
+			ParallelizeBridgeForCallbackImpl.eventQueue.offer(classAnalyzedEvent.getElement());
 		}
-        inst.addTransformer(new AgentClassFileTransformer(false,
-                new WriteClassDescriptionNormal(), true, new HasGeneratedMethodsSetBased()), false);
+		inst.addTransformer(new AgentClassFileTransformer(
+						new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassArrayTransformerFactory.retransform()),
+				false);
 	}
 }

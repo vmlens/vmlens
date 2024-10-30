@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
-import com.vmlens.trace.agent.bootstrap.callback.AgentLogCallback;
+import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 
 public class AgentLoggerNoOp implements AgentLogger {

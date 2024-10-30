@@ -9,7 +9,7 @@ public class CallAfterForRuntimeEvent {
 
     public RuntimeEvent after(RuntimeEvent runtimeEvent, ActualRun actualRun) {
 
-        InterleaveActionBuilder interleaveActionBuilder = new InterleaveActionBuilder();
+        BuildInterleaveActionRuntimeEventVisitor interleaveActionBuilder = new BuildInterleaveActionRuntimeEventVisitor();
         runtimeEvent.accept(interleaveActionBuilder);
         InterleaveAction interleaveAction = interleaveActionBuilder.build();
         if (interleaveAction == null) {

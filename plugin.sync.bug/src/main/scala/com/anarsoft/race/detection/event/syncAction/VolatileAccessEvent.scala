@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.createpartialorder.SyncActionEventWithCompare
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.MemoryAccessEvent
 import com.vmlens.report.element.{FieldAccessTextFactory, MemoryAccessModifier, OperationTextFactory}
-import com.vmlens.trace.agent.bootstrap.callback.field.MemoryAccessType
+import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType
 
 
 trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]

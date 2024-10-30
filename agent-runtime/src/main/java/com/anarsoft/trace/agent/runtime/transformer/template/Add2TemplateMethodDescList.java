@@ -1,12 +1,10 @@
 package com.anarsoft.trace.agent.runtime.transformer.template;
 
+import com.anarsoft.trace.agent.runtime.repositorydeprecated.MethodInClassIdentifier;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
-
 import org.objectweb.asm.Opcodes;
-
-import com.anarsoft.trace.agent.runtime.repository.MethodInClassIdentifier;
 
 public class Add2TemplateMethodDescList implements  Opcodes {
 

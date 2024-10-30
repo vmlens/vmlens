@@ -3,6 +3,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.loop;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.AlternatingOrderContainerFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.set.hash.THashSet;
@@ -36,21 +38,16 @@ public class InterleaveLoop implements IteratorQueue {
     }
 
     public void addActualRun(ActualRun actualRun) {
-        // Fixme
-        // addActualRun(actualRun.run());
+        addActualRun(actualRun.run());
     }
 
-
-    // Visible for Test
-    /*
-    void addActualRun(TLinkedList<TLinkableWrapper<InterleaveFactory>> run) {
+    void addActualRun(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
         AlternatingOrderContainer container = new AlternatingOrderContainerFactory().create(run);
-        container.debug(agentLogger);
         if (!allAlternatingOrderContainer.contains(container)) {
             allAlternatingOrderContainer.add(container);
             stillToBeProcessedAlternatingOrderContainer
                     .add(new TLinkableWrapper<>(container));
         }
     }
-*/
+
 }

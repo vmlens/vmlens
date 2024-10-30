@@ -28,6 +28,11 @@ public class ThreadStart implements InterleaveAction, IndependentBlock {
         return threadIndex;
     }
 
+    // Visible for test
+    public int startedThreadIndex() {
+        return startedThreadIndex;
+    }
+
     @Override
     public void addFixedOrder(Position myPosition, OrderArraysBuilder orderArraysBuilder, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         orderArraysBuilder.addFixedOrder(new LeftBeforeRight(myPosition, new Position(startedThreadIndex, 0)));

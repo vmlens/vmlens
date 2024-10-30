@@ -14,6 +14,9 @@ public class CalculatedRun {
     }
 
     public boolean isActive(int threadIndex) {
+        if (currentPosInArray >= calculatedRunElementArray.length) {
+            return true;
+        }
         return calculatedRunElementArray[currentPosInArray].threadIndex() == threadIndex;
     }
 

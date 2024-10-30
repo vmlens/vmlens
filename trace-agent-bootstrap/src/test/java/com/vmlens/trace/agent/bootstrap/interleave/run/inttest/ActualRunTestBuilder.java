@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrapp;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ActualRunTestBuilder {
 
@@ -13,7 +13,7 @@ public class ActualRunTestBuilder {
 
     public void thread(InterleaveActionTestFactory... interleaveActionTestBuilderList) {
         for (InterleaveActionTestFactory factory : interleaveActionTestBuilderList) {
-            actualRun.add(wrapp(factory.create(index)));
+            actualRun.add(wrap(factory.create(index)));
         }
         index++;
     }

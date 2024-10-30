@@ -42,7 +42,7 @@ public class MethodTransformerThreadStart  extends MethodTransformerAbstract {
 	
 	protected void onMethodReturn() {
 
-		  this.mv.visitMethodInsn(INVOKESTATIC, "com/vmlens/trace/agent/bootstrap/parallelize/facade/ParallelizeCallback", "afterThreadStart", "()V");
+        this.mv.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS_THREAD_START, "afterThreadStart", "()V");
 
 	}
 

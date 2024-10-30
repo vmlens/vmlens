@@ -1,13 +1,16 @@
 package com.anarsoft.trace.agent.runtime;
 
+import com.anarsoft.trace.agent.runtime.applyclassarraytransformer.ApplyClassArrayTransformerFactory;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
-import org.apache.commons.io.IOUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.util.TraceClassVisitor;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.lang.instrument.IllegalClassFormatException;
 
 public class ClassLoaderForTransformation extends ClassLoader {
@@ -21,8 +24,8 @@ public class ClassLoaderForTransformation extends ClassLoader {
     }
 
     AgentClassFileTransformer createTransformer() {
-        return new AgentClassFileTransformer(false,
-                new WriteClassDescriptionNormal(), true, new HasGeneratedMethodsSetBased());
+        return new AgentClassFileTransformer(
+                new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassArrayTransformerFactory.retransform());
     }
 
     @Override
@@ -38,10 +41,8 @@ public class ClassLoaderForTransformation extends ClassLoader {
         try {
 
 
-            String resourceName = name.replace('.', '/') + ".class";
-            InputStream stream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
-
-            byte[] targetArray = IOUtils.toByteArray(stream);
+            byte[] targetArray = new LoadClassArray().load(name);
+            
             AgentClassFileTransformer transformer = createTransformer();
 
             byte[] transformed = transformer.transform(null, name.replace('.', '/'), null, null, targetArray);

@@ -11,7 +11,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrapp;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -25,9 +25,9 @@ public class InterleaveActionWithPositionFactoryTest {
         InterleaveAction threadIndex_0_Second = new BlockBuilderNoOpWithThreadIndexGuineaPig(0);
 
         TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = new TLinkedList<>();
-        actualRun.add(wrapp(threadIndex_0_First));
-        actualRun.add(wrapp(threadIndex_1_First));
-        actualRun.add(wrapp((threadIndex_0_Second)));
+        actualRun.add(wrap(threadIndex_0_First));
+        actualRun.add(wrap(threadIndex_1_First));
+        actualRun.add(wrap((threadIndex_0_Second)));
 
         InterleaveActionWithPositionFactory blockBuilderFactory = new InterleaveActionWithPositionFactory();
         // When
