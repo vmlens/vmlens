@@ -1,11 +1,18 @@
 package com.anarsoft.trace.agent.runtime.classarraytransformer.plan;
 
+import com.anarsoft.trace.agent.runtime.classarraytransformer.CallbackCallFactory;
+
 public class ApplyAfterOperationMethodCallTarget implements ApplyAfterOperation {
 
     private final int forMethodId;
 
     public ApplyAfterOperationMethodCallTarget(int forMethodId) {
         this.forMethodId = forMethodId;
+    }
+
+    @Override
+    public void afterOperation(CallbackCallFactory callbackCallFactory) {
+        callbackCallFactory.afterMethodCallTarget(forMethodId);
     }
 
     @Override

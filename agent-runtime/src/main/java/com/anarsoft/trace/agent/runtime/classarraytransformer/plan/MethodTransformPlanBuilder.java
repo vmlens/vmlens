@@ -16,6 +16,10 @@ public class MethodTransformPlanBuilder {
         planElementList.add(wrap(planElement));
     }
 
+    public MethodTransformPlan build() {
+        return new MethodTransformPlan(planElementList);
+    }
+
     // Visible for Tests
     public TLinkedList<TLinkableWrapper<PlanElement>> planElementList() {
         return planElementList;

@@ -1,8 +1,8 @@
 package com.anarsoft.trace.agent.runtime.classarraytransformer.plan;
 
+import com.anarsoft.trace.agent.runtime.classarraytransformer.CallbackCallFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import org.objectweb.asm.MethodVisitor;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
@@ -22,8 +22,10 @@ public class PlanElement {
         afterOperationList.clear();
     }
 
-    public void afterOperation(MethodVisitor methodVisitor) {
-
+    public void afterOperation(CallbackCallFactory callbackCallFactory) {
+        for (TLinkableWrapper<ApplyAfterOperation> elem : afterOperationList) {
+            elem.element.afterOperation(callbackCallFactory);
+        }
     }
 
     @Override

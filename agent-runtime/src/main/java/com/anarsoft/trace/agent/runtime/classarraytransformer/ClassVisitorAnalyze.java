@@ -11,7 +11,8 @@ public class ClassVisitorAnalyze extends ClassVisitor {
     private final THashMap<MethodId, MethodTransformPlanBuilder> methodIdToPlan;
     private final MethodCallIdMap methodCallIdMap;
 
-    public ClassVisitorAnalyze(THashMap<MethodId, MethodTransformPlanBuilder> methodIdToPlan, MethodCallIdMap methodCallIdMap) {
+    public ClassVisitorAnalyze(THashMap<MethodId, MethodTransformPlanBuilder> methodIdToPlan,
+                               MethodCallIdMap methodCallIdMap) {
         super(ASMConstants.ASM_API_VERSION);
         this.methodIdToPlan = methodIdToPlan;
         this.methodCallIdMap = methodCallIdMap;

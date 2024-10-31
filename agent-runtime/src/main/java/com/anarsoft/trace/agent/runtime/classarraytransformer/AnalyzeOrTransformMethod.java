@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime.classarraytransformer;
 
 public interface AnalyzeOrTransformMethod {
 
-    void afterLocalLoad(boolean isLongOrDouble);
+    void afterLocalLoad(int size);
 
     void beforeMethodCall(int callArgumentSize, int returnSize, boolean isConstructorCall,
                           int methodCallId);
@@ -13,5 +13,5 @@ public interface AnalyzeOrTransformMethod {
     void afterNew();
 
     // only for transform
-    void afterMethodCall(int methodCallId);
+    void afterMethodCall(int returnSize, int methodCallId);
 }

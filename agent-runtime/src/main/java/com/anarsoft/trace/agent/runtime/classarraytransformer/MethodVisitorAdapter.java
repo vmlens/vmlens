@@ -33,7 +33,7 @@ public class MethodVisitorAdapter extends MethodVisitor {
         int methodId = methodCallIdMap.asInt(new MethodCallId(owner, name, descriptor));
         adapted.beforeMethodCall(argumentSize, arguments.getReturnType().getSize(), isConstructorCall, methodId);
         super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
-        adapted.afterMethodCall(methodId);
+        adapted.afterMethodCall(arguments.getReturnType().getSize(), methodId);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MethodVisitorAdapter extends MethodVisitor {
 
         switch (opcode) {
             case ALOAD: {
-                adapted.afterLocalLoad(false);
+                adapted.afterLocalLoad(1);
                 break;
             }
 

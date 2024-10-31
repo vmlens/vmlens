@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 public class MethodCallback {
 
-    public static void targetOfMethodCall(Object object) {
+    public static void targetOfMethodCall(Object object, int methodId) {
 
     }
 
@@ -15,7 +15,7 @@ public class MethodCallback {
 
     }
 
-    public static void afterMethodCall() {
+    public static void afterMethodCall(int methodId) {
 
     }
 

@@ -25,7 +25,7 @@ public class AnalyzeMethod implements AnalyzeOrTransformMethod {
     }
 
     @Override
-    public void afterLocalLoad(boolean isLongOrDouble) {
+    public void afterLocalLoad(int size) {
         PlanElement planElement = new PlanElement();
         methodTransformPlan.add(planElement);
         callStack.push(new StackElement(planElement));
@@ -66,7 +66,7 @@ public class AnalyzeMethod implements AnalyzeOrTransformMethod {
     }
 
     @Override
-    public void afterMethodCall(int methodCallId) {
+    public void afterMethodCall(int returnSize, int methodCallId) {
         // Nothing to do for analyze
     }
 }
