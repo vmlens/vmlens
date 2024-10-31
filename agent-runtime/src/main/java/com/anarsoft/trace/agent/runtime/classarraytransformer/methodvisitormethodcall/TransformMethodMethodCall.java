@@ -1,24 +1,30 @@
-package com.anarsoft.trace.agent.runtime.classarraytransformer;
+package com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitormethodcall;
 
+import com.anarsoft.trace.agent.runtime.classarraytransformer.CallbackCallFactory;
+import com.anarsoft.trace.agent.runtime.classarraytransformer.MethodVisitorAdapter;
 import com.anarsoft.trace.agent.runtime.classarraytransformer.plan.MethodTransformPlan;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
 import org.objectweb.asm.MethodVisitor;
 
-public class TransformMethod implements AnalyzeOrTransformMethod {
+public class TransformMethodMethodCall implements AnalyzeOrTransformMethodMethodCall {
 
     private final MethodTransformPlan methodTransformPlan;
     private final CallbackCallFactory callbackCallFactory;
+    private final int inMethodId;
+    private int position;
 
-    public TransformMethod(MethodTransformPlan methodTransformPlan, CallbackCallFactory callbackCallFactory) {
+    public TransformMethodMethodCall(MethodTransformPlan methodTransformPlan, CallbackCallFactory callbackCallFactory, int inMethodId) {
         this.methodTransformPlan = methodTransformPlan;
         this.callbackCallFactory = callbackCallFactory;
+        this.inMethodId = inMethodId;
     }
 
     public static MethodVisitor asMethodVisitor(MethodCallIdMap methodCallIdMap,
                                                 MethodTransformPlan methodTransformPlan,
-                                                MethodVisitor methodVisitor) {
-        return new MethodVisitorAdapter(methodVisitor, methodCallIdMap, new TransformMethod(methodTransformPlan,
-                new CallbackCallFactory(methodVisitor)));
+                                                MethodVisitor methodVisitor,
+                                                int inMethodId) {
+        return new MethodVisitorAdapter(methodVisitor, methodCallIdMap, new TransformMethodMethodCall(methodTransformPlan,
+                new CallbackCallFactory(methodVisitor), inMethodId));
     }
 
     @Override
@@ -29,13 +35,14 @@ public class TransformMethod implements AnalyzeOrTransformMethod {
     @Override
     public void beforeMethodCall(int callArgumentSize, int returnSize,
                                  boolean isConstructorCall, int methodCallId) {
-        callbackCallFactory.beforeMethodCall(methodCallId);
+        callbackCallFactory.beforeMethodCall(inMethodId, position, methodCallId);
     }
 
     @Override
     public void afterMethodCall(int returnSize, int methodCallId) {
-        callbackCallFactory.afterMethodCall(methodCallId);
+        callbackCallFactory.afterMethodCall(inMethodId, position, methodCallId);
         methodTransformPlan.apply(callbackCallFactory);
+        position++;
     }
 
 

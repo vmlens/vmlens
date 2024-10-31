@@ -1,6 +1,6 @@
-package com.anarsoft.trace.agent.runtime.classarraytransformer;
+package com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitormethodcall;
 
-public interface AnalyzeOrTransformMethod {
+public interface AnalyzeOrTransformMethodMethodCall {
 
     void afterLocalLoad(int size);
 

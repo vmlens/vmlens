@@ -12,7 +12,7 @@ public class CallbackCallFactory {
     private final String AFTER_METHOD_CALL = "afterMethodCall";
     private final String METHOD_CALL_TARGET = "targetOfMethodCall";
 
-    private final String METHOD_DESCRIPTOR_INT_ARGUMENT = "(I)V";
+    private final String METHOD_DESCRIPTOR_INT_INT_INT_ARGUMENT = "(III)V";
     private final String METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT = "(Ljava/lang/Object;I)V";
 
     private final MethodVisitor methodVisitor;
@@ -21,19 +21,23 @@ public class CallbackCallFactory {
         this.methodVisitor = methodVisitor;
     }
 
-    public void beforeMethodCall(int methodId) {
-        methodCall(methodId, BEFORE_METHOD_CALL, METHOD_DESCRIPTOR_INT_ARGUMENT);
+    public void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
+        methodVisitor.visitLdcInsn(inMethodId);
+        methodVisitor.visitLdcInsn(position);
+        methodCall(calledMethodId, BEFORE_METHOD_CALL, METHOD_DESCRIPTOR_INT_INT_INT_ARGUMENT);
     }
 
 
-    public void afterMethodCall(int methodId) {
-        methodCall(methodId, AFTER_METHOD_CALL, METHOD_DESCRIPTOR_INT_ARGUMENT);
+    public void afterMethodCall(int inMethodId, int position, int calledMethodId) {
+        methodVisitor.visitLdcInsn(inMethodId);
+        methodVisitor.visitLdcInsn(position);
+        methodCall(calledMethodId, AFTER_METHOD_CALL, METHOD_DESCRIPTOR_INT_INT_INT_ARGUMENT);
     }
 
 
-    public void afterMethodCallTarget(int methodId) {
+    public void afterMethodCallTarget(int calledMethodId) {
         methodVisitor.visitInsn(DUP);
-        methodCall(methodId, METHOD_CALL_TARGET, METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT);
+        methodCall(calledMethodId, METHOD_CALL_TARGET, METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT);
     }
 
     private void methodCall(int id, String methodName, String methodDescriptor) {

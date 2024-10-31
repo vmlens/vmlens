@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classarraytransformer;
 
+import com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitormethodcall.AnalyzeMethodMethodCall;
 import com.anarsoft.trace.agent.runtime.classarraytransformer.plan.MethodTransformPlanBuilder;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
@@ -24,6 +25,6 @@ public class ClassVisitorAnalyze extends ClassVisitor {
         MethodTransformPlanBuilder methodTransformPlan = new MethodTransformPlanBuilder();
         MethodId methodId = new MethodId(access, name, descriptor, signature, exceptions);
         methodIdToPlan.put(methodId, methodTransformPlan);
-        return AnalyzeMethod.asMethodVisitor(methodCallIdMap, methodTransformPlan);
+        return AnalyzeMethodMethodCall.asMethodVisitor(methodCallIdMap, methodTransformPlan);
     }
 }

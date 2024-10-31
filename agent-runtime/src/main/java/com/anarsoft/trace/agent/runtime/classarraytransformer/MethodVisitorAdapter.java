@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classarraytransformer;
 
+import com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitormethodcall.AnalyzeOrTransformMethodMethodCall;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
 import org.objectweb.asm.MethodVisitor;
@@ -11,11 +12,11 @@ import static org.objectweb.asm.Opcodes.*;
 public class MethodVisitorAdapter extends MethodVisitor {
 
     private final MethodCallIdMap methodCallIdMap;
-    private final AnalyzeOrTransformMethod adapted;
+    private final AnalyzeOrTransformMethodMethodCall adapted;
 
     public MethodVisitorAdapter(MethodVisitor methodVisitor,
                                 MethodCallIdMap methodCallIdMap,
-                                AnalyzeOrTransformMethod adapted) {
+                                AnalyzeOrTransformMethodMethodCall adapted) {
         super(ASM_API_VERSION, methodVisitor);
         this.methodCallIdMap = methodCallIdMap;
         this.adapted = adapted;

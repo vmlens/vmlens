@@ -6,6 +6,7 @@ import com.anarsoft.trace.agent.runtime.classarraytransformer.plan.MethodTransfo
 import com.anarsoft.trace.agent.runtime.classarraytransformer.plan.PlanElement;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
+import com.vmlens.trace.agent.bootstrap.repository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
@@ -21,15 +22,18 @@ public class ClassVisitorAnalyzeTest {
     @Test
     public void threadStart() throws IOException {
         // Expected
+        MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
+        int calledMethodId = methodCallIdMap.asInt(new MethodCallId("java/lang/Thread", "start", "()V"));
+
         MethodId expectedMethodId = new MethodId(1, "call", "()V", null, null);
         TLinkedList<TLinkableWrapper<PlanElement>> expectedPlanElementList = new TLinkedList<>();
         PlanElement transformed = new PlanElement();
-        transformed.addApplyAfterOperation(new ApplyAfterOperationMethodCallTarget(0));
+        transformed.addApplyAfterOperation(new ApplyAfterOperationMethodCallTarget(calledMethodId));
         expectedPlanElementList.add(TLinkableWrapper.<PlanElement>wrap(transformed));
         expectedPlanElementList.add(TLinkableWrapper.<PlanElement>wrap(new PlanElement()));
 
         // Given
-        MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
+
         THashMap<MethodId, MethodTransformPlanBuilder> methodIdToPlan =
                 new THashMap<>();
 
