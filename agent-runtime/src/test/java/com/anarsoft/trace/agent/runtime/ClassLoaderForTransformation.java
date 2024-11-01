@@ -1,8 +1,11 @@
 package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.runtime.applyclassarraytransformer.ApplyClassArrayTransformerFactory;
+import com.anarsoft.trace.agent.runtime.classarraytransformer.ClassArrayTransformer;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
+import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.util.TraceClassVisitor;
@@ -11,7 +14,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.lang.instrument.IllegalClassFormatException;
 
 public class ClassLoaderForTransformation extends ClassLoader {
 
@@ -42,10 +44,13 @@ public class ClassLoaderForTransformation extends ClassLoader {
 
 
             byte[] targetArray = new LoadClassArray().load(name);
-            
-            AgentClassFileTransformer transformer = createTransformer();
+            MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
+            FieldIdMap fieldIdMap = new FieldIdMap();
+            ClassArrayTransformer classArrayTransformer = new ClassArrayTransformer(methodCallIdMap, fieldIdMap);
 
-            byte[] transformed = transformer.transform(null, name.replace('.', '/'), null, null, targetArray);
+
+            byte[] transformed = classArrayTransformer.transform(targetArray,
+                    name.replace('.', '/'));
             if (transformed == null) {
                 System.out.println("not transformed " + name);
                 return defineClass(name, targetArray, 0, targetArray.length);
@@ -62,8 +67,6 @@ public class ClassLoaderForTransformation extends ClassLoader {
 
             return defineClass(name, transformed, 0, transformed.length);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalClassFormatException e) {
             throw new RuntimeException(e);
         }
     }

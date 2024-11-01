@@ -6,7 +6,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 public class FieldCallbackFactory {
 
-    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/MethodCallback";
+    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/FieldCallback";
 
     private final String BEFORE_FIELD_READ = "beforeFieldRead";
     private final String BEFORE_FIELD_WRITE = "beforeFieldWrite";

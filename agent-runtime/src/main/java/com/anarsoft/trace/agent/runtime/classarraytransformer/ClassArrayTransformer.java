@@ -1,14 +1,21 @@
 package com.anarsoft.trace.agent.runtime.classarraytransformer;
 
+import com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitor.AddFieldAccessCall;
+import com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitor.AddMonitorCall;
 import com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitor.MethodVisitorFactory;
 import com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitormethodcall.TransformMethodMethodCallFactory;
+import com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitormethodcall.TransformMethodMethodCallFactoryImpl;
 import com.anarsoft.trace.agent.runtime.classarraytransformer.plan.MethodTransformPlanBuilder;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
+import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.ClassWriter;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ClassArrayTransformer {
 
@@ -24,15 +31,24 @@ public class ClassArrayTransformer {
         this.methodVisitorFactoryList = methodVisitorFactoryList;
     }
 
+    public ClassArrayTransformer(MethodCallIdMap methodCallIdMap, FieldIdMap fieldIdMap) {
+        this.methodCallIdMap = methodCallIdMap;
+        this.transformMethodMethodCallFactory = new TransformMethodMethodCallFactoryImpl(methodCallIdMap);
+        this.methodVisitorFactoryList = new TLinkedList<>();
+        methodVisitorFactoryList.add(wrap(AddFieldAccessCall.factory(fieldIdMap)));
+        methodVisitorFactoryList.add(wrap(AddMonitorCall.factory()));
+    }
+
     public static String normalize(String name) {
         return name.replace('.', '/');
     }
 
     public byte[] transform(byte[] classfileBuffer, String name) {
 
-        new ClassReader(classfileBuffer);
+        ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        transform(classfileBuffer, name, classWriter);
 
-        return null;
+        return classWriter.toByteArray();
     }
 
     // Visible for test

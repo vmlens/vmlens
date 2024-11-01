@@ -1,39 +1,42 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.FieldAccessCallback;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.FieldAccessCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.method.MethodCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.obj.HashMapCallback;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.obj.ObjectCallbackState;
+
+import com.vmlens.trace.agent.bootstrap.callback.FieldCallback;
+import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
+import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
+import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 // Fixme activate tests
 public class AgentClassFileTransformerIntegTest {
 
     private static final int CALLBACK_ID_WRITE_VOLATILE = 3;
 
-    //@Test
+    @Test
     public void transformVolatileField() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
 
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-        com.vmlens.trace.agent.bootstrap.callbackdeprecated.MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
 
-        FieldAccessCallbackImpl fieldAccessCallbackImplMock = mock(FieldAccessCallbackImpl.class);
-        FieldAccessCallback.setFieldAccessCallbackImpl(fieldAccessCallbackImplMock);
+        FieldCallbackImpl fieldCallbackImplMock = mock(FieldCallbackImpl.class);
+        FieldCallback.setFieldCallbackImpl(fieldCallbackImplMock);
+
+
         runTest("VolatileFieldAccess");
-        verify(fieldAccessCallbackImplMock).field_access_from_generated_method(any(), nullable(Long.class), anyInt(),
-                anyInt(), eq(CALLBACK_ID_WRITE_VOLATILE));
-
+        verify(fieldCallbackImplMock).beforeFieldRead(any(), anyInt(), anyInt(), anyInt());
+        verify(fieldCallbackImplMock).beforeFieldWrite(any(), anyInt(), anyInt(), anyInt());
+        verify(fieldCallbackImplMock, times(2)).afterFieldAccess();
     }
 
+    /*
     //@Test
     public void withAllInterleavings() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
@@ -73,6 +76,9 @@ public class AgentClassFileTransformerIntegTest {
         runTest("CallToHashMap");
         verify(state).access(any(), eq(MemoryAccessType.IS_READ_WRITE), anyInt());
     }
+
+
+     */
 
     private void runTest(String className) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
