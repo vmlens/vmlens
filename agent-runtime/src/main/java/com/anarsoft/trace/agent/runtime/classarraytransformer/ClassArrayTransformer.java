@@ -24,15 +24,15 @@ public class ClassArrayTransformer {
         this.methodVisitorFactoryList = methodVisitorFactoryList;
     }
 
+    public static String normalize(String name) {
+        return name.replace('.', '/');
+    }
+
     public byte[] transform(byte[] classfileBuffer, String name) {
 
         new ClassReader(classfileBuffer);
 
         return null;
-    }
-
-    public static String normalize(String name) {
-        return name.replace('.', '/');
     }
 
     // Visible for test

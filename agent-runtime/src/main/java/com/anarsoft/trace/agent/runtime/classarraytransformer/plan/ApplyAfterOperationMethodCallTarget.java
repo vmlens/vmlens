@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classarraytransformer.plan;
 
-import com.anarsoft.trace.agent.runtime.classarraytransformer.CallbackCallFactory;
+import com.anarsoft.trace.agent.runtime.classarraytransformer.MethodCallbackFactory;
 
 public class ApplyAfterOperationMethodCallTarget implements ApplyAfterOperation {
 
@@ -11,7 +11,7 @@ public class ApplyAfterOperationMethodCallTarget implements ApplyAfterOperation 
     }
 
     @Override
-    public void afterOperation(CallbackCallFactory callbackCallFactory) {
+    public void afterOperation(MethodCallbackFactory callbackCallFactory) {
         callbackCallFactory.afterMethodCallTarget(forMethodId);
     }
 

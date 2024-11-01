@@ -5,9 +5,9 @@ import org.objectweb.asm.MethodVisitor;
 import static org.objectweb.asm.Opcodes.DUP;
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
-public class CallbackCallFactory {
+public class MethodCallbackFactory {
 
-    private final String METHOD_CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/MethodCallback";
+    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/MethodCallback";
     private final String BEFORE_METHOD_CALL = "beforeMethodCall";
     private final String AFTER_METHOD_CALL = "afterMethodCall";
     private final String METHOD_CALL_TARGET = "targetOfMethodCall";
@@ -17,7 +17,7 @@ public class CallbackCallFactory {
 
     private final MethodVisitor methodVisitor;
 
-    public CallbackCallFactory(MethodVisitor methodVisitor) {
+    public MethodCallbackFactory(MethodVisitor methodVisitor) {
         this.methodVisitor = methodVisitor;
     }
 
@@ -42,7 +42,7 @@ public class CallbackCallFactory {
 
     private void methodCall(int id, String methodName, String methodDescriptor) {
         methodVisitor.visitLdcInsn(id);
-        methodVisitor.visitMethodInsn(INVOKESTATIC, METHOD_CALLBACK_CLASS,
+        methodVisitor.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS,
                 methodName, methodDescriptor, false);
     }
 

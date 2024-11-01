@@ -2,19 +2,23 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 public class FieldCallback {
 
-    public static void fieldRead(Object fromObject, int fieldId) {
+    public static void beforeFieldRead(Object fromObject, int fieldId, int position, int inMethodId) {
 
     }
 
-    public static void fieldWrite(Object fromObject, int fieldId) {
+    public static void beforeFieldWrite(Object fromObject, int fieldId, int position, int inMethodId) {
 
     }
 
-    public static void staticFieldRead(int fieldId) {
+    public static void beforeStaticFieldRead(int fieldId, int position, int inMethodId) {
 
     }
 
-    public static void staticFieldWrite(int fieldId) {
+    public static void beforeStaticFieldWrite(int fieldId, int position, int inMethodId) {
+
+    }
+
+    public static void afterFieldAccess() {
 
     }
 

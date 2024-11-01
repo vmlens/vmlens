@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classarraytransformer.methodvisitormethodcall;
 
-import com.anarsoft.trace.agent.runtime.classarraytransformer.CallbackCallFactory;
+import com.anarsoft.trace.agent.runtime.classarraytransformer.MethodCallbackFactory;
 import com.anarsoft.trace.agent.runtime.classarraytransformer.MethodVisitorAdapter;
 import com.anarsoft.trace.agent.runtime.classarraytransformer.plan.MethodTransformPlan;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
@@ -9,11 +9,11 @@ import org.objectweb.asm.MethodVisitor;
 public class TransformMethodMethodCall implements AnalyzeOrTransformMethodMethodCall {
 
     private final MethodTransformPlan methodTransformPlan;
-    private final CallbackCallFactory callbackCallFactory;
+    private final MethodCallbackFactory callbackCallFactory;
     private final int inMethodId;
     private int position;
 
-    public TransformMethodMethodCall(MethodTransformPlan methodTransformPlan, CallbackCallFactory callbackCallFactory, int inMethodId) {
+    public TransformMethodMethodCall(MethodTransformPlan methodTransformPlan, MethodCallbackFactory callbackCallFactory, int inMethodId) {
         this.methodTransformPlan = methodTransformPlan;
         this.callbackCallFactory = callbackCallFactory;
         this.inMethodId = inMethodId;
@@ -24,7 +24,7 @@ public class TransformMethodMethodCall implements AnalyzeOrTransformMethodMethod
                                                 MethodVisitor methodVisitor,
                                                 int inMethodId) {
         return new MethodVisitorAdapter(methodVisitor, methodCallIdMap, new TransformMethodMethodCall(methodTransformPlan,
-                new CallbackCallFactory(methodVisitor), inMethodId));
+                new MethodCallbackFactory(methodVisitor), inMethodId));
     }
 
     @Override
