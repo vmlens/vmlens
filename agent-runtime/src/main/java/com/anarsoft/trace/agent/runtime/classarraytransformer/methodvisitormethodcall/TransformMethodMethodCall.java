@@ -35,7 +35,7 @@ public class TransformMethodMethodCall implements AnalyzeOrTransformMethodMethod
     @Override
     public void beforeMethodCall(int callArgumentSize, int returnSize,
                                  boolean isConstructorCall, int methodCallId) {
-        callbackCallFactory.beforeMethodCall(inMethodId, position, methodCallId);
+        callbackCallFactory.beforeMethodCall(methodCallId);
     }
 
     @Override

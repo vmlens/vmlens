@@ -9,10 +9,8 @@ public class com/vmlens/test/guineaPig/ThreadStart {
    L0
     LINENUMBER 3 L0
     ALOAD 0
-    LDC 0
-    LDC 0
     LDC 2
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (III)V
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (I)V
     INVOKESPECIAL java/lang/Object.<init> ()V
     LDC 0
     LDC 0
@@ -30,10 +28,8 @@ public class com/vmlens/test/guineaPig/ThreadStart {
     LINENUMBER 6 L0
     NEW java/lang/Thread
     DUP
-    LDC 1
-    LDC 0
     LDC 3
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (III)V
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (I)V
     INVOKESPECIAL java/lang/Thread.<init> ()V
     LDC 1
     LDC 0
@@ -42,10 +38,8 @@ public class com/vmlens/test/guineaPig/ThreadStart {
     DUP
     LDC 4
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.targetOfMethodCall (Ljava/lang/Object;I)V
-    LDC 1
-    LDC 1
     LDC 4
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (III)V
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (I)V
     INVOKEVIRTUAL java/lang/Thread.start ()V
     LDC 1
     LDC 1
