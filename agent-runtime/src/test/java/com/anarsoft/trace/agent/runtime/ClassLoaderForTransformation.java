@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.anarsoft.trace.agent.runtime.applyclassarraytransformer.ApplyClassArrayTransformerFactory;
-import com.anarsoft.trace.agent.runtime.classarraytransformer.ClassArrayTransformer;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerElementFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.ClassTransformer;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
 import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
@@ -27,7 +27,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
 
     AgentClassFileTransformer createTransformer() {
         return new AgentClassFileTransformer(
-                new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassArrayTransformerFactory.retransform());
+                new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerElementFactory.retransform());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
             byte[] targetArray = new LoadClassArray().load(name);
             MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
             FieldIdMap fieldIdMap = new FieldIdMap();
-            ClassArrayTransformer classArrayTransformer = new ClassArrayTransformer(methodCallIdMap, fieldIdMap);
+            ClassTransformer classArrayTransformer = new ClassTransformer(methodCallIdMap, fieldIdMap);
 
 
             byte[] transformed = classArrayTransformer.transform(targetArray,

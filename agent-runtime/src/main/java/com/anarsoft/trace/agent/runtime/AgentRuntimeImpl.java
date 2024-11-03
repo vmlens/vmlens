@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.runtime.applyclassarraytransformer.ApplyClassArrayTransformerFactory;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerElementFactory;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsAlwaysFalse;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
@@ -110,7 +110,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
         AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
 				writeClassDescriptionDuringStartup, new HasGeneratedMethodsAlwaysFalse(),
-				ApplyClassArrayTransformerFactory.retransform());
+				ApplyClassTransformerElementFactory.retransform());
 
         inst.addTransformer(classRetransformer, true);
 
@@ -159,7 +159,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			ParallelizeBridgeForCallbackImpl.eventQueue.offer(classAnalyzedEvent.getElement());
 		}
 		inst.addTransformer(new AgentClassFileTransformer(
-						new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassArrayTransformerFactory.retransform()),
+						new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerElementFactory.retransform()),
 				false);
 	}
 }
