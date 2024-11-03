@@ -26,17 +26,17 @@ public class com/vmlens/test/guineaPig/StaticFieldAccess {
     LDC 0
     LDC 0
     LDC 2
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeStaticFieldRead (III)V
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/FieldCallback.beforeStaticFieldRead (III)V
     GETSTATIC com/vmlens/test/guineaPig/StaticFieldAccess.field : I
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.afterFieldAccess ()V
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/FieldCallback.afterFieldAccess ()V
     ICONST_1
     IADD
     LDC 0
     LDC 0
     LDC 2
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeStaticFieldWrite (III)V
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/FieldCallback.beforeStaticFieldWrite (III)V
     PUTSTATIC com/vmlens/test/guineaPig/StaticFieldAccess.field : I
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.afterFieldAccess ()V
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/FieldCallback.afterFieldAccess ()V
    L1
     LINENUMBER 8 L1
     RETURN

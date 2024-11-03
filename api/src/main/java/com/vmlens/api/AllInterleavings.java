@@ -148,10 +148,9 @@ public class AllInterleavings implements AutoCloseable {
 	{
 		return false;
 	}
-	
-	
-	private static void close(Object obj)
-	{
+
+
+	private static void close(Object obj) {
 		
 	}
 	

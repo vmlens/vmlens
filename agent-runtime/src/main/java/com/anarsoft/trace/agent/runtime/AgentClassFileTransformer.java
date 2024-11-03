@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollection;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerElementFactory;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
@@ -23,7 +23,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
     public AgentClassFileTransformer(WriteClassDescription writeClassDescription,
                                      HasGeneratedMethods hasGeneratedMethods,
-                                     ApplyClassTransformerElementFactory classArrayTransformerFactory) {
+                                     ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
         super();
         this.writeClassDescription = writeClassDescription;
         this.hasGeneratedMethods = hasGeneratedMethods;
@@ -61,5 +61,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             AgentLogCallback.logException(e);
             return null;
         }
+
+        return null;
     }
 }

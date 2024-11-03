@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerElementFactory;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.ClassTransformer;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
@@ -27,7 +27,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
 
     AgentClassFileTransformer createTransformer() {
         return new AgentClassFileTransformer(
-                new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerElementFactory.retransform());
+                new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerCollectionFactory.retransform());
     }
 
     @Override

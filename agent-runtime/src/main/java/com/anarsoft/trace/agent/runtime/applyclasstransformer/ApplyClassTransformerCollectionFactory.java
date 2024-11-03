@@ -4,20 +4,20 @@ import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 
 
-public class ApplyClassTransformerElementFactory {
+public class ApplyClassTransformerCollectionFactory {
 
     private final TransformerTypes transformerTypes;
 
-    public ApplyClassTransformerElementFactory(TransformerTypes transformerTypes) {
+    public ApplyClassTransformerCollectionFactory(TransformerTypes transformerTypes) {
         this.transformerTypes = transformerTypes;
     }
 
-    public static ApplyClassTransformerElementFactory instrument() {
-        return new ApplyClassTransformerElementFactory(new TransformerTypes());
+    public static ApplyClassTransformerCollectionFactory instrument() {
+        return new ApplyClassTransformerCollectionFactory(new TransformerTypes());
     }
 
-    public static ApplyClassTransformerElementFactory retransform() {
-        return new ApplyClassTransformerElementFactory(new TransformerTypes());
+    public static ApplyClassTransformerCollectionFactory retransform() {
+        return new ApplyClassTransformerCollectionFactory(new TransformerTypes());
     }
 
     private void appendVMLensApi(TLinkedList<TLinkableWrapper<ApplyClassTransformerElement>> result) {

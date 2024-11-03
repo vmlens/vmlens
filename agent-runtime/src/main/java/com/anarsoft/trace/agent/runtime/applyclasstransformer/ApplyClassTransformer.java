@@ -9,7 +9,7 @@ public class ApplyClassTransformer {
     private final ApplyClassTransformerCollection classArrayTransformerCollection;
 
     public ApplyClassTransformer(WriteClassDescription writeClassDescription,
-                                 ApplyClassTransformerElementFactory classArrayTransformerFactory) {
+                                 ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
         super();
         this.writeClassDescription = writeClassDescription;
         this.classArrayTransformerCollection = classArrayTransformerFactory.create();
