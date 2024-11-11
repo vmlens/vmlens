@@ -1,14 +1,21 @@
 package com.anarsoft.trace.agent.runtime.classtransformervmlensapi;
 
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 
-public class ClassTransformerVmlensApi {
+public class ClassTransformerVmlensApi implements TransformerStrategy {
 
-    public byte[] transform(byte[] classfileBuffer, String name) {
+    @Override
+    public byte[] transform(TransformerContext context) {
+        return transform(context.classfileBuffer());
+    }
 
-        ClassWriter classWriter = new ClassWriter(0);
+    public byte[] transform(byte[] classfileBuffer) {
+
+        ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         transform(classfileBuffer, classWriter);
 
         return classWriter.toByteArray();
@@ -21,5 +28,6 @@ public class ClassTransformerVmlensApi {
         ClassVisitorVmlensApi classVisitorTransform = new ClassVisitorVmlensApi(classWriter);
         readerForTransform.accept(classVisitorTransform, 0);
     }
+
 
 }

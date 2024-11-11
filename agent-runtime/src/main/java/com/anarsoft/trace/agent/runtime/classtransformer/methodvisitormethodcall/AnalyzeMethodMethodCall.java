@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.MethodVisitorAdapter;
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.ApplyAfterOperationMethodCallTarget;
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.MethodTransformPlanBuilder;
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.PlanElement;

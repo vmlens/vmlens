@@ -123,7 +123,7 @@ public class com/vmlens/api/AllInterleavings implements java/lang/AutoCloseable 
    L0
     LINENUMBER 132 L0
     ALOAD 0
-    INVOKESTATIC com/vmlens/api/AllInterleavings.hasNext (Ljava/lang/Object;)Z
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.hasNext (Ljava/lang/Object;)Z
     IRETURN
    L1
     LOCALVARIABLE this Lcom/vmlens/api/AllInterleavings; L0 L1 0
@@ -135,7 +135,7 @@ public class com/vmlens/api/AllInterleavings implements java/lang/AutoCloseable 
    L0
     LINENUMBER 142 L0
     ALOAD 0
-    INVOKESTATIC com/vmlens/api/AllInterleavings.close (Ljava/lang/Object;)V
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.close (Ljava/lang/Object;)V
    L1
     LINENUMBER 143 L1
     RETURN
@@ -146,9 +146,6 @@ public class com/vmlens/api/AllInterleavings implements java/lang/AutoCloseable 
 
   // access flags 0xA
   private static hasNext(Ljava/lang/Object;)Z
-    ALOAD 0
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.hasNext (Ljava/lang/Object;)Z
-    IRETURN
    L0
     LINENUMBER 149 L0
     ICONST_0
@@ -160,8 +157,6 @@ public class com/vmlens/api/AllInterleavings implements java/lang/AutoCloseable 
 
   // access flags 0xA
   private static close(Ljava/lang/Object;)V
-    ALOAD 0
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.close (Ljava/lang/Object;)V
    L0
     LINENUMBER 155 L0
     RETURN

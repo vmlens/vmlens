@@ -3,8 +3,12 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.vmlens.trace.agent.bootstrap.callback.FieldCallback;
 import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
+import com.vmlens.trace.agent.bootstrap.callback.MonitorCallback;
+import com.vmlens.trace.agent.bootstrap.callback.VmlensApiCallback;
 import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.impl.MonitorCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.impl.VmlensApiCallbackImpl;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +18,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-// Fixme activate tests
 public class AgentClassFileTransformerIntegTest {
 
     private static final int CALLBACK_ID_WRITE_VOLATILE = 3;
@@ -29,56 +32,47 @@ public class AgentClassFileTransformerIntegTest {
         FieldCallbackImpl fieldCallbackImplMock = mock(FieldCallbackImpl.class);
         FieldCallback.setFieldCallbackImpl(fieldCallbackImplMock);
 
-
         runTest("VolatileFieldAccess");
         verify(fieldCallbackImplMock).beforeFieldRead(any(), anyInt(), anyInt(), anyInt());
         verify(fieldCallbackImplMock).beforeFieldWrite(any(), anyInt(), anyInt(), anyInt());
         verify(fieldCallbackImplMock, times(2)).afterFieldAccess();
     }
 
-    /*
-    //@Test
+    @Test
     public void withAllInterleavings() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
-        com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentApiCallbackImpl agentApiCallbackImplMock = mock(com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentApiCallbackImpl.class);
-        com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback.setAgentApiCallbackImpl(agentApiCallbackImplMock);
+
+        VmlensApiCallbackImpl vmlensApiCallbackImplMock = mock(VmlensApiCallbackImpl.class);
+        VmlensApiCallback.setVmlensApiCallback(vmlensApiCallbackImplMock);
+
         runTest("WithAllInterleavings");
-        verify(agentApiCallbackImplMock).hasNext(any());
+        verify(vmlensApiCallbackImplMock).hasNext(any());
 
     }
 
-    //@Test
+    @Test
+    public void monitorAndWaitNotify() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException, InterruptedException {
+        MonitorCallbackImpl monitorCallbackImplMock = mock(MonitorCallbackImpl.class);
+        MonitorCallback.setMonitorCallbackImpl(monitorCallbackImplMock);
+        runTest("MonitorBlock");
+        verify(monitorCallbackImplMock).afterMonitorEnter(any(), anyInt(), anyInt());
+        verify(monitorCallbackImplMock).afterMonitorExit(any(), anyInt(), anyInt());
+
+    }
+
+    @Test
     public void methodCall() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-        com.vmlens.trace.agent.bootstrap.callbackdeprecated.MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+
+        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+
         runTest("MethodCall");
-        verify(methodCallbackImplMock).methodEnter(anyInt());
-        verify(methodCallbackImplMock).methodExit(anyInt());
+        verify(methodCallbackImplMock).methodEnter(any(), anyInt());
+        verify(methodCallbackImplMock, times(2)).methodExit(anyInt());
     }
 
-    //@Test
-    public void monitorAndWaitNotify() throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException, InvocationTargetException, InterruptedException {
-        com.vmlens.trace.agent.bootstrap.callbackdeprecated.SynchronizedStatementCallbackImpl synchronizedStatementCallbackImplMock = mock(com.vmlens.trace.agent.bootstrap.callbackdeprecated.SynchronizedStatementCallbackImpl.class);
-        com.vmlens.trace.agent.bootstrap.callbackdeprecated.SynchronizedStatementCallback.setImpl(synchronizedStatementCallbackImplMock);
-        runTest("MonitorAndWaitNotify");
-        verify(synchronizedStatementCallbackImplMock).monitorEnter(any(), anyInt(), anyInt());
-        verify(synchronizedStatementCallbackImplMock).monitorExit(any(), anyInt(), anyInt());
-        verify(synchronizedStatementCallbackImplMock).waitCall(any(), anyLong(), anyInt());
-    }
-
-    //@Test
-    public void callToHashMap() throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
-        ObjectCallbackState state = mock(ObjectCallbackState.class);
-        HashMapCallback.setObjectCallbackState(state);
-        runTest("CallToHashMap");
-        verify(state).access(any(), eq(MemoryAccessType.IS_READ_WRITE), anyInt());
-    }
-
-
-     */
 
     private void runTest(String className) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {

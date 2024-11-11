@@ -3,14 +3,11 @@ package com.anarsoft.trace.agent.runtime.classtransformer;
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMonitorCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.TransformMethodMethodCallFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.plan.MethodTransformPlan;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
-import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.util.TraceClassVisitor;
 
 import java.io.IOException;
@@ -27,14 +24,7 @@ public class AddMonitorCallTest {
         factoryList.add(wrap(methodVisitorFactory));
 
         return new ClassTransformer(methodCallIdMap,
-                new TransformMethodMethodCallFactory() {
-                    @Override
-                    public MethodVisitor create(int methodId,
-                                                MethodTransformPlan methodTransformPlan,
-                                                MethodVisitor previous) {
-                        return previous;
-                    }
-                },
+                new TLinkedList<>(),
                 factoryList);
     }
 

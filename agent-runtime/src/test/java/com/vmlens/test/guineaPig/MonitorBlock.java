@@ -1,11 +1,10 @@
 package com.vmlens.test.guineaPig;
 
-public class MonitorAndWaitNotify {
+public class MonitorBlock {
 
     public void update() throws InterruptedException {
         synchronized (this) {
-            this.notify();
-            this.wait(1);
+
         }
     }
 }

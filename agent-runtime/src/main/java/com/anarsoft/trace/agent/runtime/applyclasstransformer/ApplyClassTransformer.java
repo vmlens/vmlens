@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.TransformerContext;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 
 public class ApplyClassTransformer {
@@ -43,8 +42,7 @@ public class ApplyClassTransformer {
 
         ApplyClassTransformerElement transformer = classArrayTransformerCollection.get(name);
         if (transformer != null) {
-            TransformerContext context = new TransformerContext(classfileBuffer, name,
-                    writeClassDescription, null);
+            TransformerContext context = new TransformerContext(classfileBuffer, name, writeClassDescription);
             return transformer.transform(context);
         }
         return null;

@@ -26,6 +26,10 @@ public class MethodCallback {
         methodCallbackImpl.staticMethodEnter(methodId);
     }
 
+    public static void constructorMethodEnter(int methodId) {
+        methodCallbackImpl.constructorMethodEnter(methodId);
+    }
+
     public static void methodExit(int methodId) {
         methodCallbackImpl.methodExit(methodId);
     }

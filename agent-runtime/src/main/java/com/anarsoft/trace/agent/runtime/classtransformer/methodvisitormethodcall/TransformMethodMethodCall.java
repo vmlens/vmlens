@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.MethodVisitorAdapter;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.MethodTransformPlan;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
@@ -23,7 +22,8 @@ public class TransformMethodMethodCall implements AnalyzeOrTransformMethodMethod
                                                 MethodTransformPlan methodTransformPlan,
                                                 MethodVisitor methodVisitor,
                                                 int inMethodId) {
-        return new MethodVisitorAdapter(methodVisitor, methodCallIdMap, new TransformMethodMethodCall(methodTransformPlan,
+        return new MethodVisitorAdapter(methodVisitor, methodCallIdMap,
+                new TransformMethodMethodCall(methodTransformPlan,
                 new MethodCallbackFactory(methodVisitor), inMethodId));
     }
 

@@ -2,14 +2,10 @@ package com.anarsoft.trace.agent.runtime;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
-import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsAlwaysFalse;
-import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
 import com.anarsoft.trace.agent.runtime.repositorydeprecated.LoadAtomicClassesFromClasspath;
 import com.anarsoft.trace.agent.runtime.util.AgentKeys;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
 import com.anarsoft.trace.agent.runtime.write.WriteEventToFile;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
@@ -108,12 +104,12 @@ public class AgentRuntimeImpl implements AgentRuntime {
         WriteClassDescriptionDuringStartup writeClassDescriptionDuringStartup = new WriteClassDescriptionDuringStartup(
                 classAnalyzedEventList);
 
-        AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
+     /*   AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
 				writeClassDescriptionDuringStartup, new HasGeneratedMethodsAlwaysFalse(),
 				ApplyClassTransformerCollectionFactory.retransform());
 
         inst.addTransformer(classRetransformer, true);
-
+*/
 		TLinkedList<TLinkableWrapper<Class>> transformableClasses = new TLinkedList();
 		for (Class cl : inst.getAllLoadedClasses()) {
 			if (inst.isModifiableClass(cl)) {
@@ -138,7 +134,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		if (toBeRetransformed.length > 0) {
 			inst.retransformClasses(toBeRetransformed);
 		}
-		inst.removeTransformer(classRetransformer);
+        //	inst.removeTransformer(classRetransformer);
 	}
 
     protected void instrument(Instrumentation inst, String outputFileName) throws Exception {
@@ -158,8 +154,10 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
 			ParallelizeBridgeForCallbackImpl.eventQueue.offer(classAnalyzedEvent.getElement());
 		}
-		inst.addTransformer(new AgentClassFileTransformer(
+	/*	inst.addTransformer(new AgentClassFileTransformer(
 						new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerCollectionFactory.retransform()),
 				false);
+	*/
 	}
+
 }

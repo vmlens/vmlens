@@ -1,0 +1,74 @@
+// class version 52.0 (52)
+// access flags 0x21
+public class com/vmlens/test/guineaPig/StaticFieldAccess {
+
+  // compiled from: StaticFieldAccess.java
+
+  // access flags 0xA
+  private static I field
+
+  // access flags 0x1
+  public <init>()V
+    LDC 0
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.constructorMethodEnter (I)V
+   L0
+   L1
+    LINENUMBER 3 L1
+    ALOAD 0
+    LDC 1
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (I)V
+    INVOKESPECIAL java/lang/Object.<init> ()V
+    LDC 0
+    LDC 0
+    LDC 1
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.afterMethodCall (III)V
+    LDC 0
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit (I)V
+    RETURN
+   L2
+    LOCALVARIABLE this Lcom/vmlens/test/guineaPig/StaticFieldAccess; L1 L2 0
+   L3
+   FRAME FULL [com/vmlens/test/guineaPig/ThreadStart] [java/lang/Throwable]
+    LDC 0
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit (I)V
+    ATHROW
+    MAXSTACK = 1
+    MAXLOCALS = 1
+
+  // access flags 0x1
+  public update()V
+    ALOAD 0
+    LDC 2
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodEnter (Ljava/lang/Object;I)V
+   L0
+   L1
+    LINENUMBER 7 L1
+    LDC 0
+    LDC 0
+    LDC 2
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/FieldCallback.beforeStaticFieldRead (III)V
+    GETSTATIC com/vmlens/test/guineaPig/StaticFieldAccess.field : I
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/FieldCallback.afterFieldAccess ()V
+    ICONST_1
+    IADD
+    LDC 0
+    LDC 0
+    LDC 2
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/FieldCallback.beforeStaticFieldWrite (III)V
+    PUTSTATIC com/vmlens/test/guineaPig/StaticFieldAccess.field : I
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/FieldCallback.afterFieldAccess ()V
+   L2
+    LINENUMBER 8 L2
+    LDC 2
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit (I)V
+    RETURN
+   L3
+    LOCALVARIABLE this Lcom/vmlens/test/guineaPig/StaticFieldAccess; L1 L3 0
+   L4
+   FRAME FULL [com/vmlens/test/guineaPig/ThreadStart] [java/lang/Throwable]
+    LDC 2
+    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit (I)V
+    ATHROW
+    MAXSTACK = 2
+    MAXLOCALS = 1
+}

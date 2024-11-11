@@ -1,9 +1,9 @@
 package com.anarsoft.trace.agent.runtime;
 
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformer;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.ClassTransformer;
-import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethodsSetBased;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionNormal;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
+import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
 import org.objectweb.asm.ClassReader;
@@ -25,11 +25,6 @@ public class ClassLoaderForTransformation extends ClassLoader {
         this.testClassLoader = testClassLoader;
     }
 
-    AgentClassFileTransformer createTransformer() {
-        return new AgentClassFileTransformer(
-                new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerCollectionFactory.retransform());
-    }
-
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         if (name.startsWith("com.vmlens.trace.agent")) {
@@ -41,15 +36,14 @@ public class ClassLoaderForTransformation extends ClassLoader {
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
-
-
             byte[] targetArray = new LoadClassArray().load(name);
-            MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
-            FieldIdMap fieldIdMap = new FieldIdMap();
-            ClassTransformer classArrayTransformer = new ClassTransformer(methodCallIdMap, fieldIdMap);
+            ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodCallIdMap(),
+                    new FieldIdMap());
+            ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(
+                    new WriteClassDescriptionDuringStartup(new TLinkedList<>()),
+                    factory);
 
-
-            byte[] transformed = classArrayTransformer.transform(targetArray,
+            byte[] transformed = applyClassTransformer.transform(targetArray,
                     name.replace('.', '/'));
             if (transformed == null) {
                 System.out.println("not transformed " + name);

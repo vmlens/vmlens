@@ -1,6 +1,5 @@
-package com.anarsoft.trace.agent.runtime.classtransformer;
+package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.AnalyzeOrTransformMethodMethodCall;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
 import org.objectweb.asm.MethodVisitor;
@@ -44,6 +43,7 @@ public class MethodVisitorAdapter extends MethodVisitor {
         switch (opcode) {
             case DUP: {
                 adapted.afterStackOperation(opcode);
+                break;
             }
 
             default: {

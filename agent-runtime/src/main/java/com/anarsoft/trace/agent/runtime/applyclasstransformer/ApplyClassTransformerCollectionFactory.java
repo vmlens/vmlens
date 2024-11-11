@@ -1,47 +1,46 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
+import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyAll;
+import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.ClassTransformerVmlensApi;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+
+import static com.anarsoft.trace.agent.runtime.TLinkableWrapper.wrap;
 
 
 public class ApplyClassTransformerCollectionFactory {
 
-    private final TransformerTypes transformerTypes;
 
-    public ApplyClassTransformerCollectionFactory(TransformerTypes transformerTypes) {
-        this.transformerTypes = transformerTypes;
+    private final MethodCallIdMap methodCallIdMap;
+    private final FieldIdMap fieldIdMap;
+    private final TLinkedList<TLinkableWrapper<ApplyClassTransformerElement>> result = new TLinkedList<>();
+
+    public ApplyClassTransformerCollectionFactory(MethodCallIdMap methodCallIdMap, FieldIdMap fieldIdMap) {
+        this.methodCallIdMap = methodCallIdMap;
+        this.fieldIdMap = fieldIdMap;
     }
 
-    public static ApplyClassTransformerCollectionFactory instrument() {
-        return new ApplyClassTransformerCollectionFactory(new TransformerTypes());
+    // Visible for Test
+    // From specific to generic
+    void add(String name, TransformerStrategy transformerStrategy) {
+        result.add(wrap(new ApplyClassTransformerElement(name, transformerStrategy)));
     }
 
-    public static ApplyClassTransformerCollectionFactory retransform() {
-        return new ApplyClassTransformerCollectionFactory(new TransformerTypes());
-    }
-
-    private void appendVMLensApi(TLinkedList<TLinkableWrapper<ApplyClassTransformerElement>> result) {
-        result.add(new TLinkableWrapper(new ApplyClassTransformerElement("com/vmlens/api/AllInterleavings",
-                transformerTypes.vmlensApi())));
-    }
-
-    private void appendThread(TLinkedList<TLinkableWrapper<ApplyClassTransformerElement>> result) {
-        result.add(new TLinkableWrapper(new ApplyClassTransformerElement("java/lang/Thread",
-                transformerTypes.java())));
-    }
-
-    private void appendNormal(TLinkedList<TLinkableWrapper<ApplyClassTransformerElement>> result) {
-        result.add(new TLinkableWrapper(new ApplyClassTransformerElement("com/vmlens/test",
-                transformerTypes.normal())));
+    // Visible for Test
+    ApplyClassTransformerCollection createInternal() {
+        return new ApplyClassTransformerCollection(result);
     }
 
     public ApplyClassTransformerCollection create() {
-        TLinkedList<TLinkableWrapper<ApplyClassTransformerElement>> result = new TLinkedList<>();
 
-        appendVMLensApi(result);
-        // appendThread(result);
-        appendNormal(result);
 
-        return new ApplyClassTransformerCollection(result);
+        add("com/vmlens/api/AllInterleavingsBuilder", new TransformerStrategyFilter());
+        add("com/vmlens/api/AllInterleavings", new ClassTransformerVmlensApi());
+        add("", new TransformerStrategyAll(methodCallIdMap, fieldIdMap));
+
+        return createInternal();
     }
+
 }

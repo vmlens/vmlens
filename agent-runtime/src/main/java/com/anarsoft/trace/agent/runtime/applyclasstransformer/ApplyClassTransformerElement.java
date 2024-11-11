@@ -1,7 +1,5 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.TransformerContext;
-
 public class ApplyClassTransformerElement {
     private final String classNameStartsWith;
     private final TransformerStrategy transformStrategy;

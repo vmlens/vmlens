@@ -26,4 +26,7 @@ public class MethodCallbackImpl {
 
     }
 
+    public void constructorMethodEnter(int methodId) {
+
+    }
 }
