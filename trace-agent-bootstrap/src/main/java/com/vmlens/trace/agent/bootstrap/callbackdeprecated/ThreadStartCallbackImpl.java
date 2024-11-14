@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.CallbackActionCreateThreadStartEvent;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.CallbackActionSetStartedThread;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.CallbackActionCreateThreadStartEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.CallbackActionSetStartedThread;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallback;
 
 public class ThreadStartCallbackImpl {
 

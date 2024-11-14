@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime.write;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 public class WriteClassDescriptionNormal implements WriteClassDescription {
 

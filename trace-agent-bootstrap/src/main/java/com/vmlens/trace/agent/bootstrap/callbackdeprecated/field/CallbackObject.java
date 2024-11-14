@@ -2,9 +2,9 @@ package com.vmlens.trace.agent.bootstrap.callbackdeprecated.field;
 
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.OffsetAndClassName;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.VolatileArrayAccessCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 
 public class CallbackObject {

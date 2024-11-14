@@ -1,10 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.RunMock;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunImpl;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ThreadLocalDataWhenInTest;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 

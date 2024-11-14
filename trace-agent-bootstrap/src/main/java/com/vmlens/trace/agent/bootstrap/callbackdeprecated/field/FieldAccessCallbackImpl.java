@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.field;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallback;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallback;
 
 public class FieldAccessCallbackImpl {
     private final FieldAccess[] strategyArray;

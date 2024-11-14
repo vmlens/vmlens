@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ThreadLocalDataWhenInTest;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;

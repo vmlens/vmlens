@@ -1,14 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.CallbackActionApplyRuntimeEventFactory;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.CallbackState;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEventFactory;
 import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.CallbackActionApplyRuntimeEventFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.CallbackState;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ThreadLocalDataWhenInTest;
 import org.junit.Test;
 
 import java.util.LinkedList;

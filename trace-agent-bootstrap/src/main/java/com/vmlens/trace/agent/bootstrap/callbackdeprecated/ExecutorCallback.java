@@ -2,9 +2,9 @@ package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
 
 import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 import java.util.concurrent.*;
 

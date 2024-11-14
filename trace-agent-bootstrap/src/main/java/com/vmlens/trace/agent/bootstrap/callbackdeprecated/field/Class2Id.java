@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.field;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 public class Class2Id {

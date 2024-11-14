@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.parallelize.threadlocal;
+package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 public interface ParallelizeBridgeForCallback {
     void process(CallbackAction callbackAction);

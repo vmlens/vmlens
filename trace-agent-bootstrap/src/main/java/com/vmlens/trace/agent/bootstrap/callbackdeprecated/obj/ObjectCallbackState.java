@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.obj;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AnarsoftWeakHashMap;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.CallbackObject;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.state.StateAccess;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.state.StateHolder;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 public class ObjectCallbackState {
 	private final int fieldId;

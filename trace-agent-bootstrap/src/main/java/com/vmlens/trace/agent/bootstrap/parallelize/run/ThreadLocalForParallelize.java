@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AnarsoftWeakHashMap;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ThreadLocalDataWhenInTest;
 
 public class ThreadLocalForParallelize {
 

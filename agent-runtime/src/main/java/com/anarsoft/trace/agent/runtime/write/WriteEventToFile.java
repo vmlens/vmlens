@@ -1,9 +1,9 @@
 package com.anarsoft.trace.agent.runtime.write;
 
 import com.anarsoft.trace.agent.runtime.process.AgentController;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;

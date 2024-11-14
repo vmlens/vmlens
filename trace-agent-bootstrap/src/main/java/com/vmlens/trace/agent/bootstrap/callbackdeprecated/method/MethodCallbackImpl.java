@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.method;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.CallbackActionApplyRuntimeEventFactory;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallback;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.CallbackActionApplyRuntimeEventFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallback;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade.parallelize;
 

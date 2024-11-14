@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.ModeStateFieldAccess;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.state.ArrayState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 public class ArrayAccessCallback {
 	private static final AnarsoftWeakHashMap<ArrayState> arrayAccessedInOtherThread = new AnarsoftWeakHashMap<ArrayState>();

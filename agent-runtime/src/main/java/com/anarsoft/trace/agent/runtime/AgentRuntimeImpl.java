@@ -11,8 +11,8 @@ import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ParallelizeBridgeForCallbackImpl;
 
 import java.io.File;
 import java.io.FileInputStream;

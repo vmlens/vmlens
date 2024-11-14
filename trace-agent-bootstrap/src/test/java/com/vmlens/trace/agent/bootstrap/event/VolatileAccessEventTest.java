@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.RunMock;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.GetOrCreateObjectState;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.GetOrCreateObjectStateMockMapBased;
@@ -10,7 +11,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.Volatile
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMockStrategyTake;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateActive;
-import com.vmlens.trace.agent.bootstrap.parallelize.threadlocal.ThreadLocalDataWhenInTest;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
