@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunState;
@@ -11,7 +11,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateAndRuntimeEvent;
  */
 public class RunStateEnd implements RunState {
     @Override
-    public boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+    public boolean isActive(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return true;
     }
 
@@ -22,7 +22,7 @@ public class RunStateEnd implements RunState {
 
 
     @Override
-    public RunStateAndRuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+    public RunStateAndRuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return new RunStateAndRuntimeEvent(this, null);
     }
 

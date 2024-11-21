@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
@@ -9,7 +9,7 @@ public class RunStateMachineImplTestFixture {
 
     private final Run run;
     private final RunStateMachine runStateMachine;
-    private final ThreadLocalDataWhenInTest mainTestThread;
+    private final ThreadLocalWhenInTest mainTestThread;
     private final ThreadLocalDataWhenInTestMap runContext;
     private final ActualRunMock actualRunMock;
 
@@ -19,7 +19,7 @@ public class RunStateMachineImplTestFixture {
         ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
         RunStateMachine runStateMachine = factory.create(runContext);
         Run run = new RunTestAdapter(runStateMachine);
-        ThreadLocalDataWhenInTest mainTestThread = runContext.createForMainTestThread(run, 1L);
+        ThreadLocalWhenInTest mainTestThread = runContext.createForMainTestThread(run, 1L);
 
         this.run = run;
         this.runStateMachine = runStateMachine;
@@ -57,7 +57,7 @@ public class RunStateMachineImplTestFixture {
         return runStateMachine;
     }
 
-    public ThreadLocalDataWhenInTest mainTestThread() {
+    public ThreadLocalWhenInTest mainTestThread() {
         return mainTestThread;
     }
 

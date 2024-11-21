@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.HasNextResult;
@@ -11,7 +11,7 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFac
 public class AgentApiCallbackImpl {
 
     public boolean hasNext(Object obj) {
-        return hasNext(obj, ParallelizeBridgeForCallbackImpl.eventQueue, ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get());
+        return hasNext(obj, ThreadLocalWhenInTestAdapterImpl.eventQueue, ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get());
     }
 
     public boolean hasNext(Object obj, QueueIn queueIn, ThreadLocalForParallelize callbackStatePerThread) {

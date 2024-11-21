@@ -1,25 +1,25 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.EventQueue;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProviderImpl;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
-public class ParallelizeBridgeForCallbackImpl implements ParallelizeBridgeForCallback {
+public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAdapter {
 
     public static final EventQueue eventQueue = new EventQueue();
-    private final CallbackState callbackState = new CallbackState();
 
     private final ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider;
     private final QueueIn eventQueueInternal;
 
-    public ParallelizeBridgeForCallbackImpl() {
+    public ThreadLocalWhenInTestAdapterImpl() {
         this(new ThreadLocalForParallelizeProviderImpl(), eventQueue);
     }
 
-    public ParallelizeBridgeForCallbackImpl(ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider,
+    public ThreadLocalWhenInTestAdapterImpl(ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider,
                                             QueueIn eventQueueInternal) {
         this.threadLocalForParallelizeProvider = threadLocalForParallelizeProvider;
         this.eventQueueInternal = eventQueueInternal;
@@ -35,9 +35,19 @@ public class ParallelizeBridgeForCallbackImpl implements ParallelizeBridgeForCal
 
     @Override
     public void process(CallbackAction callbackAction) {
-        callbackState.process(callbackAction,
-                threadLocalForParallelizeProvider.threadLocalForParallelize(),
-                eventQueueInternal);
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider
+                .threadLocalForParallelize();
+
+        ThreadLocalWhenInTest dataWhenInTest = threadLocal.startCallbackProcessing();
+        if (dataWhenInTest != null) {
+            try {
+                callbackAction.execute(dataWhenInTest, eventQueueInternal);
+            } finally {
+                dataWhenInTest.stopCallbackProcessing();
+            }
+        }
+
+
     }
 
 

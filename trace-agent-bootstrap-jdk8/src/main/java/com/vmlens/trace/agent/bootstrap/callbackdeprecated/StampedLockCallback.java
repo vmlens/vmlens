@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.state.LockIdAndOrder;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.Constants;
@@ -26,7 +26,7 @@ public class StampedLockCallback {
 
     public static long readLock(StampedLock lock, int methodId) {
 
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
         try {
             return lock.readLock();
@@ -43,7 +43,7 @@ public class StampedLockCallback {
 
     public static void unlockRead(StampedLock lock, long stamp, int methodId) {
 
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
         try {
             lock.unlockRead(stamp);
@@ -60,7 +60,7 @@ public class StampedLockCallback {
 
     public static long writeLock(StampedLock lock, int methodId) {
 
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
         try {
             return lock.writeLock();
@@ -77,7 +77,7 @@ public class StampedLockCallback {
 
     public static void unlockWrite(StampedLock lock, long stamp, int methodId) {
 
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
         try {
             lock.unlockWrite(stamp);
@@ -94,7 +94,7 @@ public class StampedLockCallback {
 
     public static void unlock(StampedLock lock, long stamp, int methodId) {
 
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
         try {
             lock.unlock(stamp);
@@ -149,7 +149,7 @@ public class StampedLockCallback {
 
 
     public static void unstampedUnlockWrite(StampedLock lock, int methodId) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
         try {
             call(lock, "unstampedUnlockWrite");
@@ -163,7 +163,7 @@ public class StampedLockCallback {
 
 
     public static void unstampedUnlockRead(StampedLock lock, int methodId) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
         try {
             call(lock, "unstampedUnlockRead");

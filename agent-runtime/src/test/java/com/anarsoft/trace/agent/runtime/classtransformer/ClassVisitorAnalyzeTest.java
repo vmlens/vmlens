@@ -9,8 +9,8 @@ import com.anarsoft.trace.agent.runtime.classtransformer.plan.ApplyAfterOperatio
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.MethodTransformPlanBuilder;
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.PlanElement;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;

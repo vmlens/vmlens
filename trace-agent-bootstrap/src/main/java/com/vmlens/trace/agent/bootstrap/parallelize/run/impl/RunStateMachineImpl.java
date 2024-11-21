@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
@@ -23,24 +23,24 @@ public class RunStateMachineImpl implements RunStateMachine {
     }
 
     @Override
-    public boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+    public boolean isActive(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return currentState.isActive(threadLocalDataWhenInTest);
     }
 
     @Override
-    public RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+    public RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         RunStateAndRuntimeEvent result = currentState.after(runtimeEvent, threadLocalDataWhenInTest);
         currentState = result.runState();
         return result.runtimeEvent();
     }
 
     @Override
-    public ThreadLocalDataWhenInTest processNewTestTask(RunnableOrThreadWrapper newWrapper,
-                                                        ThreadLocalForParallelize threadLocalForParallelize, Run run) {
+    public ThreadLocalWhenInTest processNewTestTask(RunnableOrThreadWrapper newWrapper,
+                                                    ThreadLocalForParallelize threadLocalForParallelize, Run run) {
         if (!currentState.isNewTestTask(newWrapper)) {
             return null;
         }
-        ThreadLocalDataWhenInTest threadLocalDataWhenInTest = runContext.createForStartedThread(
+        ThreadLocalWhenInTest threadLocalDataWhenInTest = runContext.createForStartedThread(
                 run, threadLocalForParallelize.threadId(), currentState.getStartedThreadIndex());
         currentState = stateAfterNewThreadStarted;
         threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalDataWhenInTest);

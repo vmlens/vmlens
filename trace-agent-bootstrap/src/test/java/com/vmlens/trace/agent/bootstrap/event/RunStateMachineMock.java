@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
@@ -10,17 +10,17 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParalleliz
 
 public class RunStateMachineMock implements RunStateMachine {
     @Override
-    public boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+    public boolean isActive(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return false;
     }
 
     @Override
-    public RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+    public RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return runtimeEvent;
     }
 
     @Override
-    public ThreadLocalDataWhenInTest processNewTestTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize, Run run) {
+    public ThreadLocalWhenInTest processNewTestTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize, Run run) {
         return null;
     }
 

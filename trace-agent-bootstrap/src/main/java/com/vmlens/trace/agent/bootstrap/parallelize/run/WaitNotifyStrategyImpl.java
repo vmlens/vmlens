@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AgentLogger;
 
 import java.util.concurrent.TimeUnit;
@@ -16,7 +16,7 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
     }
 
     @Override
-    public void notifyAndWaitTillActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest, RunStateMachine runStateMachine, Condition threadActiveCondition)
+    public void notifyAndWaitTillActive(ThreadLocalWhenInTest threadLocalDataWhenInTest, RunStateMachine runStateMachine, Condition threadActiveCondition)
             throws TestBlockedException {
         try {
             threadActiveCondition.signalAll();

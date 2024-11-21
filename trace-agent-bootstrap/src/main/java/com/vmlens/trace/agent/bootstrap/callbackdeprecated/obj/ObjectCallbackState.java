@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.obj;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AnarsoftWeakHashMap;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.CallbackObject;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.state.StateAccess;
@@ -18,7 +18,7 @@ public class ObjectCallbackState {
 	}
 
     public void access(Object obj, int operation, int methodId) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
         StateAccess objectState = null;
         synchronized (LOCK) {
             objectState = object2State.get(obj);

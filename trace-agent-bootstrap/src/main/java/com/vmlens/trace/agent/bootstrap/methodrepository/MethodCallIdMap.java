@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.repository;
+package com.vmlens.trace.agent.bootstrap.methodrepository;
 
 import gnu.trove.map.hash.THashMap;
 

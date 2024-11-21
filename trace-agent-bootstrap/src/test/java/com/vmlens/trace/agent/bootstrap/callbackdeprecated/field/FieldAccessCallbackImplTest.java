@@ -22,7 +22,7 @@ public class FieldAccessCallbackImplTest {
     public void testVolatileWrite() {
         // Given
         int CALLBACK_ID_VOLATILE_WRITE = 3;
-        ParallelizeBridgeForCallbackMock parallelizeBridgeForCallback = new ParallelizeBridgeForCallbackMock();
+        ThreadLocalWhenInTestAdapterMock parallelizeBridgeForCallback = new ThreadLocalWhenInTestAdapterMock();
         GetOrCreateObjectStateMockMapBased getOrCreateObjectStateMockMapBased = new GetOrCreateObjectStateMockMapBased();
         FieldAccessCallbackImpl fieldAccessCallbackImpl = new FieldAccessCallbackImpl
                 (getOrCreateObjectStateMockMapBased, parallelizeBridgeForCallback);

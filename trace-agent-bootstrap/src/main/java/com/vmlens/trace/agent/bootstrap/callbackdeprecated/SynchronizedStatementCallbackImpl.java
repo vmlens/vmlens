@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.state.MonitorIdAndOrder;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import gnu.trove.map.hash.TIntIntHashMap;
@@ -39,7 +39,7 @@ public class SynchronizedStatementCallbackImpl {
 
     public void synchronizedMethod(Object objectKey, int methodId) {
         try {
-            ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
             monitorEnterInternal(objectKey, methodId, 0);
 
         } catch (Throwable e) {

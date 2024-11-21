@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.RunMock;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.GetOrCreateObjectState;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.GetOrCreateObjectStateMockMapBased;
@@ -56,7 +56,7 @@ public class VolatileAccessEventTest {
     public void methodCounter() {
         // Given
         VolatileAccessEvent event = new VolatileAccessEvent();
-        ThreadLocalDataWhenInTest threadLocalDataWhenInTest = new ThreadLocalDataWhenInTest(new RunMock(), 0);
+        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(new RunMock(), 0);
         threadLocalDataWhenInTest.incrementAndGetMethodCount();
 
         // When

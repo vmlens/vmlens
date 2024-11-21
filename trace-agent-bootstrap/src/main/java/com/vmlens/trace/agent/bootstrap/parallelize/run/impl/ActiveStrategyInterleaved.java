@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 
 public class ActiveStrategyInterleaved implements ActiveStrategy {
@@ -12,7 +12,7 @@ public class ActiveStrategyInterleaved implements ActiveStrategy {
     }
 
     @Override
-    public boolean isActive(ThreadLocalDataWhenInTest threadLocalDataWhenInTest) {
+    public boolean isActive(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return calculatedRun.isActive(threadLocalDataWhenInTest.threadIndex());
     }
 }

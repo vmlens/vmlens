@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.method.MethodCallbackImpl;
 
 
 public class MethodCallback {
-    private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(new ParallelizeBridgeForCallbackImpl());
+    private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(new ThreadLocalWhenInTestAdapterImpl());
 
     public static void atomicMethodEnterWithCallback(int atomicId, int methodId) {
         methodCallbackImpl.atomicMethodEnterWithCallback(atomicId, methodId);

@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.ModeStateFieldAccess;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.state.ArrayState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
@@ -12,7 +12,7 @@ public class ArrayAccessCallback {
 	private static final Object DUMMY_OBJECT = new Object();
 
 	public static void newArray(Object theArray) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
         // Fixme Callback
         // we could filter threads which can not be tested (finalizer...)
         //callbackStatePerThread.arraysInThisThread.put(theArray, DUMMY_OBJECT);
@@ -27,7 +27,7 @@ public class ArrayAccessCallback {
 	}
 
 	private static void accessField(Object theArray, int index, int methodId, boolean isWrite, int position) {
-        ThreadLocalForParallelize callbackStatePerThread = (ThreadLocalForParallelize) ParallelizeBridgeForCallbackImpl.callbackStatePerThread
+        ThreadLocalForParallelize callbackStatePerThread = (ThreadLocalForParallelize) ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread
                 .get();
         ArrayState state = null;
 		synchronized (LOCK_WEAK_HASHMAP) {

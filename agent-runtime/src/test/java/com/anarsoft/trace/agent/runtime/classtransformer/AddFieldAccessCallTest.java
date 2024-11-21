@@ -3,8 +3,8 @@ package com.anarsoft.trace.agent.runtime.classtransformer;
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddFieldAccessCall;
 import com.vmlens.test.util.DiffText;
-import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;
 

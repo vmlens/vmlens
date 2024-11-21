@@ -8,8 +8,8 @@ import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethod.Met
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallAnalyzeAndTransformFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallFactoryFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;

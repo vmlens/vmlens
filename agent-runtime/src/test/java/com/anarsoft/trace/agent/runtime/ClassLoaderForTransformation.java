@@ -4,8 +4,8 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransfor
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.util.TraceClassVisitor;

@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
 import java.io.PrintWriter;
@@ -21,7 +21,7 @@ public class AgentLogCallback {
     public static void logException(Throwable exception) {
         if (ENABLE_EXCEPTION_LOGGING) {
 
-            ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
             StringWriter stringWriter = new StringWriter();
             PrintWriter writer = new PrintWriter(stringWriter);
             exception.printStackTrace(writer);
@@ -34,7 +34,7 @@ public class AgentLogCallback {
 	{
 		if(ENABLE_EXCEPTION_LOGGING) {
 
-            ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
             StringWriter stringWriter = new StringWriter();
             PrintWriter writer = new PrintWriter(stringWriter);
             new Exception().printStackTrace(writer);
@@ -49,14 +49,14 @@ public class AgentLogCallback {
 	public static void log(Class location, String text) {
         String message = location.getSimpleName() + ":" + text;
 
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
         // Fixme
         //  callbackStatePerThread.offer(new AgentLogEvent(message));
 
     }
 
     public static void close(Object obj) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
         parallelize().close(callbackStatePerThread, obj);
     }
 

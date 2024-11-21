@@ -5,7 +5,7 @@ import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMonito
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;

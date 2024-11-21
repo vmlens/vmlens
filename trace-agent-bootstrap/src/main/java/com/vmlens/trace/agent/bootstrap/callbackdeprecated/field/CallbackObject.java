@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callbackdeprecated.field;
 
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.OffsetAndClassName;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.VolatileArrayAccessCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
@@ -37,7 +37,7 @@ public class CallbackObject {
 
 	private static ThreadLocalForParallelize non_volatile_filter_and_apply_waitpoints(Object orig, int fieldId,
 																					  boolean isWrite) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
 	/*	int slidingWindowId = CallbackState.traceFields(callbackStatePerThread);
 
@@ -200,7 +200,7 @@ public class CallbackObject {
 
 
 	private static ThreadLocalForParallelize volatile_filter_and_apply_waitpoints(Object orig, int fieldId) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 	/*	int slidingWindowId = CallbackState.traceSyncStatements(callbackStatePerThread);
 		if (!CallbackState.isSlidingWindowTrace(slidingWindowId)) {
 			return null;

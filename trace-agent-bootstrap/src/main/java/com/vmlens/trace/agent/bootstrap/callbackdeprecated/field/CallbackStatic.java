@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.field;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
 
@@ -8,7 +8,7 @@ public class CallbackStatic {
 
 
     public static void volatile_access(int fieldId, int methodId, boolean isWrite) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 		 volatile_access_internal(callbackStatePerThread, fieldId, methodId, isWrite);
 	 }
 
@@ -65,7 +65,7 @@ public class CallbackStatic {
 	 
 	  public static void non_volatile_access( int fieldId, int methodId, boolean isWrite) 
 	  {
-          ThreadLocalForParallelize callbackStatePerThread = (ThreadLocalForParallelize) ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+          ThreadLocalForParallelize callbackStatePerThread = (ThreadLocalForParallelize) ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 	    non_volatile_access_internal(callbackStatePerThread , fieldId, methodId,  isWrite) ;
 	  }
 

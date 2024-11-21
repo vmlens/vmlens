@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.RunMock;
 import com.vmlens.trace.agent.bootstrap.event.impl.MethodEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.MethodExitEvent;
@@ -20,7 +20,7 @@ public class MethodEventTest {
         // Given
         MethodEnterEvent methodEnterEventOne = new MethodEnterEvent(6);
         MethodEnterEvent methodEnterEventTwo = new MethodEnterEvent(6);
-        ThreadLocalDataWhenInTest threadLocalDataWhenInTest = new ThreadLocalDataWhenInTest(new RunMock(), 0);
+        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(new RunMock(), 0);
 
         // When
         SerializableEvent resultOne = threadLocalDataWhenInTest.after(methodEnterEventOne);
@@ -37,7 +37,7 @@ public class MethodEventTest {
         // Given
         MethodExitEvent methodEventOne = new MethodExitEvent(6);
         MethodExitEvent methodEventTwo = new MethodExitEvent(6);
-        ThreadLocalDataWhenInTest threadLocalDataWhenInTest = new ThreadLocalDataWhenInTest(new RunMock(), 0);
+        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(new RunMock(), 0);
 
         // When
         SerializableEvent resultOne = threadLocalDataWhenInTest.after(methodEventOne);

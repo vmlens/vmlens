@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.instanceOf;

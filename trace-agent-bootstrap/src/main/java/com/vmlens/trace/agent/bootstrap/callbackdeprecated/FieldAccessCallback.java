@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.FieldAccessCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.GetOrCreateObjectState;
 
@@ -10,7 +10,7 @@ public class FieldAccessCallback {
 
     private static volatile FieldAccessCallbackImpl fieldAccessCallbackImpl = new FieldAccessCallbackImpl(
             new GetOrCreateObjectState(),
-            new ParallelizeBridgeForCallbackImpl());
+            new ThreadLocalWhenInTestAdapterImpl());
 
     public static void field_access_static(int fieldId, int methodId, int callbackId) {
         fieldAccessCallbackImpl.field_access_static(fieldId, methodId, callbackId);

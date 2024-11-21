@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
 
 import com.vmlens.trace.agent.bootstrap.AtomicClassRepo;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
@@ -18,7 +18,7 @@ public class ExecutorCallback {
         // Fixme Callback
         // ParallelizeFacade.beforeExecutorStart(CallbackState.callbackStatePerThread.get(), runnable);
 
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
 
     }
@@ -39,7 +39,7 @@ public class ExecutorCallback {
 
     public static void forkJoinTaskForkExit() {
         ThreadLocalForParallelize callbackStatePerThread =
-                ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+                ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
     }
 
@@ -59,7 +59,7 @@ public class ExecutorCallback {
 
         if (task instanceof Thread) {
 
-            ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
 // Fixme Callback
             // ParallelizeFacade.beginThreadMethodExit(callbackStatePerThread);
@@ -69,7 +69,7 @@ public class ExecutorCallback {
 
 
     public static void execAfter() {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
 
         // Fixme Callback
@@ -81,7 +81,7 @@ public class ExecutorCallback {
     public static void execBefore(ForkJoinTask task) {
 
 
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
 
 
@@ -117,7 +117,7 @@ public class ExecutorCallback {
 
 
     public static void run(Runnable runnable, int methodId) {
-        ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+        ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
 
         parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(runnable));
         try {
@@ -143,7 +143,7 @@ public class ExecutorCallback {
             return future.get();
         } finally {
             if (future instanceof FutureTask) {
-                ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+                ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
                 // Fixme Callback
                 // ParallelizeFacade.afterFutureGet(callbackStatePerThread, future);
             }

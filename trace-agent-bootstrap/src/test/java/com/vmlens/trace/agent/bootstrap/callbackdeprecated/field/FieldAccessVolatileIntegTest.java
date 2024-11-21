@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.field;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
@@ -34,7 +34,7 @@ public class FieldAccessVolatileIntegTest {
                 .createInitial(threadLocalDataWhenInTestMap, actualRunMock);
 
         Run run = new RunTestAdapter(runStateMachine);
-        ThreadLocalDataWhenInTest threadLocalDataWhenInTest = new ThreadLocalDataWhenInTest(run, 1);
+        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, 1);
         ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(1L);
         threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalDataWhenInTest);
 
@@ -44,7 +44,7 @@ public class FieldAccessVolatileIntegTest {
         GetOrCreateObjectStateMockMapBased getOrCreateObjectStateMockMapBased
                 = new GetOrCreateObjectStateMockMapBased();
         FieldAccessVolatile fieldAccessVolatile = new FieldAccessVolatile(MemoryAccessType.IS_READ,
-                getOrCreateObjectStateMockMapBased, new ParallelizeBridgeForCallbackImpl(threadLocalForParallelizeProvider,
+                getOrCreateObjectStateMockMapBased, new ThreadLocalWhenInTestAdapterImpl(threadLocalForParallelizeProvider,
                 new QueueInMock(eventList)));
 
         // When

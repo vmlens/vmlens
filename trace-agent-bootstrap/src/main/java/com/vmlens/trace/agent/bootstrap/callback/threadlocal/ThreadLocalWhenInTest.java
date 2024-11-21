@@ -10,17 +10,18 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.SetValuesAfterParalleliz
 
 
 /**
- * Set when the current thread is in a vmlens unit test
+ * Data Structure, only state no behaviour
+ *
  */
 
-public class ThreadLocalDataWhenInTest extends PerThreadCounter {
+public class ThreadLocalWhenInTest extends PerThreadCounter {
     private final Run run;
     private final int threadIndex;
 
     private boolean inCallbackProcessing = false;
     private RunnableOrThreadWrapper startedThread;
 
-    public ThreadLocalDataWhenInTest(Run run, int threadIndex) {
+    public ThreadLocalWhenInTest(Run run, int threadIndex) {
         this.run = run;
         this.threadIndex = threadIndex;
     }
@@ -35,7 +36,7 @@ public class ThreadLocalDataWhenInTest extends PerThreadCounter {
         return result;
     }
 
-    public ThreadLocalDataWhenInTest startCallbackProcessing() {
+    public ThreadLocalWhenInTest startCallbackProcessing() {
         if (!inCallbackProcessing) {
             inCallbackProcessing = true;
             return this;

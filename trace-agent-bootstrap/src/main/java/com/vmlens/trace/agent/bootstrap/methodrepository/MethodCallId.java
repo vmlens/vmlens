@@ -1,14 +1,13 @@
-package com.vmlens.trace.agent.bootstrap.repository;
+package com.vmlens.trace.agent.bootstrap.methodrepository;
 
 import java.util.Objects;
 
-public class FieldId {
-
+public class MethodCallId {
     private final String owner;
     private final String name;
     private final String descriptor;
 
-    public FieldId(String owner, String name, String descriptor) {
+    public MethodCallId(String owner, String name, String descriptor) {
         this.owner = owner;
         this.name = name;
         this.descriptor = descriptor;
@@ -19,8 +18,9 @@ public class FieldId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FieldId fieldId = (FieldId) o;
-        return Objects.equals(owner, fieldId.owner) && Objects.equals(name, fieldId.name) && Objects.equals(descriptor, fieldId.descriptor);
+        MethodCallId that = (MethodCallId) o;
+        return Objects.equals(owner, that.owner) && Objects.equals(name, that.name) &&
+                Objects.equals(descriptor, that.descriptor);
     }
 
     @Override

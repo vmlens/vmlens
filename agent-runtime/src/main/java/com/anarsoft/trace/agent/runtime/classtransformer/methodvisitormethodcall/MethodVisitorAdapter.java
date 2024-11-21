@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall;
 
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 

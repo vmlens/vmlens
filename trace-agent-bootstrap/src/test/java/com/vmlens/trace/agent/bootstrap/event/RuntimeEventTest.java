@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalDataWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.RunMock;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
@@ -46,7 +46,7 @@ public class RuntimeEventTest {
         // Given
         int THREAD_INDEX = 99;
         RuntimeEventGuineaPig runtimeEvent = new RuntimeEventGuineaPig();
-        ThreadLocalDataWhenInTest threadLocalDataWhenInTest = new ThreadLocalDataWhenInTest(new RunMock(), THREAD_INDEX);
+        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(new RunMock(), THREAD_INDEX);
 
         // When
         SerializableEvent result = threadLocalDataWhenInTest.after(runtimeEvent);

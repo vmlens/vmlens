@@ -1,5 +1,6 @@
-package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
@@ -14,7 +15,7 @@ public class CallbackActionApplyRuntimeEventFactory implements CallbackAction {
     }
 
     public static void applyToRuntimeEvent(RuntimeEvent runtimeEvent,
-                                           ThreadLocalDataWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+                                           ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
         SerializableEvent serializableEvent = threadLocalDataWhenInTest.after(runtimeEvent);
         if (serializableEvent != null) {
             queueIn.offer(serializableEvent);
@@ -22,7 +23,7 @@ public class CallbackActionApplyRuntimeEventFactory implements CallbackAction {
     }
 
     @Override
-    public void execute(ThreadLocalDataWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
         applyToRuntimeEvent(runtimeEventFactory.create(), threadLocalDataWhenInTest, queueIn);
     }
 

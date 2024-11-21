@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcal
 
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.MethodTransformPlan;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import org.objectweb.asm.MethodVisitor;
 
 public class TransformMethodMethodCall implements AnalyzeOrTransformMethodMethodCall {

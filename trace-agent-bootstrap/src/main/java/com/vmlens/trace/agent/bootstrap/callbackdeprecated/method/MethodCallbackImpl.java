@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.method;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.CallbackActionApplyRuntimeEventFactory;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallback;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionApplyRuntimeEventFactory;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
@@ -11,15 +11,15 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFac
 
 public class MethodCallbackImpl {
 
-    private final ParallelizeBridgeForCallback parallelizeBridgeForCallback;
+    private final ThreadLocalWhenInTestAdapter parallelizeBridgeForCallback;
 
-    public MethodCallbackImpl(ParallelizeBridgeForCallback parallelizeBridgeForCallback) {
+    public MethodCallbackImpl(ThreadLocalWhenInTestAdapter parallelizeBridgeForCallback) {
         this.parallelizeBridgeForCallback = parallelizeBridgeForCallback;
     }
 
     public void atomicMethodEnterWithCallback(int atomicId, int methodId) {
         try {
-            ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
             // Fixme Callback
 
         } catch (Throwable e) {
@@ -31,7 +31,7 @@ public class MethodCallbackImpl {
 
     public void atomicMethodEnterWithoutCallback(int atomicId, int methodId) {
         try {
-            ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
             // Fixme Callback
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
@@ -43,7 +43,7 @@ public class MethodCallbackImpl {
 
     public void atomicMethodExitWithCallback(int atomicId, int methodId) {
         try {
-            ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
             // Fixme Callback
 
         } catch (Throwable e) {
@@ -68,7 +68,7 @@ public class MethodCallbackImpl {
 
     public void methodEnterThreadRun(int methodId) {
         try {
-            ThreadLocalForParallelize callbackStatePerThread = ParallelizeBridgeForCallbackImpl.callbackStatePerThread.get();
+            ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
             Thread thread = Thread.currentThread();
             parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(thread));
             parallelizeBridgeForCallback.process(new CallbackActionApplyRuntimeEventFactory(

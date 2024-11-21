@@ -4,8 +4,8 @@ import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyAll;
 import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.ClassTransformerVmlensApi;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.repository.FieldIdMap;
-import com.vmlens.trace.agent.bootstrap.repository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 
 import static com.anarsoft.trace.agent.runtime.TLinkableWrapper.wrap;
 

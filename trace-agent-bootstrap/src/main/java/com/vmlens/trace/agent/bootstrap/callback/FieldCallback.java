@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
 
 public class FieldCallback {
 
-    private static volatile FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl();
+    private static volatile FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(null, null, null);
 
     public static void beforeFieldRead(Object fromObject, int fieldId, int position, int inMethodId) {
         fieldCallbackImpl.beforeFieldRead(fromObject, fieldId, position, inMethodId);

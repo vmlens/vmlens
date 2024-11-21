@@ -11,7 +11,7 @@ import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ParallelizeBridgeForCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
 
 import java.io.File;
@@ -144,7 +144,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
         retransform(inst, classAnalyzedEventList, true, alreadyTransformed);
         for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-			ParallelizeBridgeForCallbackImpl.eventQueue.offer(classAnalyzedEvent.getElement());
+            ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.getElement());
 
         }
         classAnalyzedEventList = new TLinkedList();
@@ -152,7 +152,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
         retransform(inst, classAnalyzedEventList, false, alreadyTransformed);
 		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-			ParallelizeBridgeForCallbackImpl.eventQueue.offer(classAnalyzedEvent.getElement());
+            ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.getElement());
 		}
 	/*	inst.addTransformer(new AgentClassFileTransformer(
 						new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerCollectionFactory.retransform()),
