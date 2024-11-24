@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event.impl;
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+
 public abstract class RuntimeEventVisitorWithDefault implements RuntimeEventVisitor {
 
     @Override

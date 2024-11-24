@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.util;
 
 import gnu.trove.list.TLinkable;
+import gnu.trove.list.linked.TLinkedList;
 
 public class TLinkableWrapper<T> implements TLinkable<TLinkableWrapper<T>> {
 
@@ -9,18 +10,17 @@ public class TLinkableWrapper<T> implements TLinkable<TLinkableWrapper<T>> {
 
     public final T element;
 
-    public static <T> TLinkableWrapper l(T element) {
-        return new TLinkableWrapper(element);
+    public static <T> TLinkableWrapper<T> wrap(T element) {
+        return new TLinkableWrapper<T>(element);
+    }
+
+    public static <T> TLinkedList<TLinkableWrapper<T>> emptyList() {
+        return new TLinkedList<>();
     }
 
     public TLinkableWrapper(T element) {
         super();
         this.element = element;
-    }
-
-
-    public static <T> TLinkableWrapper<T> wrap(T element) {
-        return new TLinkableWrapper<T>(element);
     }
 
     public TLinkableWrapper<T> getNext() {

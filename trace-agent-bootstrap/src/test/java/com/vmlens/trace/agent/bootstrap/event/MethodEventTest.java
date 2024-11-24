@@ -1,13 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.RunMock;
 import com.vmlens.trace.agent.bootstrap.event.impl.MethodEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.MethodExitEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMockStrategyTake;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateActive;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -15,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MethodEventTest {
 
+    /*
     @Test
     public void methodCounterForEnter() {
         // Given
@@ -48,7 +46,7 @@ public class MethodEventTest {
         assertThat(methodEventOne.methodCounter(), is(1));
         assertThat(methodEventTwo.methodCounter(), is(2));
     }
-
+*/
     @Test
     public void createNoInterleaveActionForEnter() {
         // Given

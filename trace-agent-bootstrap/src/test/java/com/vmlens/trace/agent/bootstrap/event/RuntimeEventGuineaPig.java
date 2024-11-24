@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEventVisitor;
 
 import java.nio.ByteBuffer;

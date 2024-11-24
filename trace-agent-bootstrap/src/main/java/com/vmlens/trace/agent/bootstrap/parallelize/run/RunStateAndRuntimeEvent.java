@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 
 public class RunStateAndRuntimeEvent {
 

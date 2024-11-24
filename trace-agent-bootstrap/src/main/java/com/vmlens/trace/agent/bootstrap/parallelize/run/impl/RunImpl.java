@@ -1,13 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings.withRuntimeEvent;
 
 public class RunImpl implements Run {
     private final ReentrantLock lock;
@@ -23,25 +25,22 @@ public class RunImpl implements Run {
         this.runStateMachine = runStateMachine;
         this.lock = lock;
         this.threadActiveCondition = lock.newCondition();
-
         this.loopId = loopId;
         this.runId = runId;
     }
 
-    public RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public RuntimeEventAndWarnings after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         lock.lock();
         try {
+            runtimeEvent.setLoopId(loopId);
+            runtimeEvent.setRunId(runId);
             RuntimeEvent result = runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest);
-            if (result != null) {
-                result.setLoopId(loopId);
-                result.setRunId(runId);
-            }
             try {
                 waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
             } catch (TestBlockedException e) {
                 runStateMachine.setStateRecording();
             }
-            return result;
+            return withRuntimeEvent(result);
         } finally {
             lock.unlock();
         }

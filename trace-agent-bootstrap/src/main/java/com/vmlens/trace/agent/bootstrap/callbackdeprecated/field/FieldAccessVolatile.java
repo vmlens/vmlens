@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.field;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionApplyRuntimeEventFactory;
+
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 
 public class FieldAccessVolatile implements FieldAccess {
@@ -18,9 +18,7 @@ public class FieldAccessVolatile implements FieldAccess {
 
     @Override
     public Long field_access_from_generated_method(Object orig, Long offset, int fieldId, int methodId) {
-        parallelizeBridgeForCallback.process(new CallbackActionApplyRuntimeEventFactory(
-                new RuntimeEventFactoryVolatileField(orig, fieldId,
-                        methodId, operation, getAndUpdateVolatileObjectState)));
+
         return offset;
     }
 }

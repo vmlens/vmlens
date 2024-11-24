@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated.method;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionApplyRuntimeEventFactory;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
@@ -71,8 +70,7 @@ public class MethodCallbackImpl {
             ThreadLocalForParallelize callbackStatePerThread = ThreadLocalWhenInTestAdapterImpl.callbackStatePerThread.get();
             Thread thread = Thread.currentThread();
             parallelize().beginThreadMethodEnter(callbackStatePerThread, new RunnableOrThreadWrapper(thread));
-            parallelizeBridgeForCallback.process(new CallbackActionApplyRuntimeEventFactory(
-                    new RuntimeEventFactoryMethodEnter(methodId)));
+
         } catch (Throwable e) {
             AgentLogCallback.logException(e);
             e.printStackTrace();
@@ -82,38 +80,16 @@ public class MethodCallbackImpl {
     }
 
     public void methodExitThreadRun(int methodId) {
-        try {
-            parallelizeBridgeForCallback.process(new CallbackActionApplyRuntimeEventFactory(
-                    new RuntimeEventFactoryMethodExit(methodId)));
-        } catch (Throwable e) {
-            AgentLogCallback.logException(e);
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+
 
     }
 
     public void methodEnter(int methodId) {
-        try {
-            parallelizeBridgeForCallback.process(new CallbackActionApplyRuntimeEventFactory(
-                    new RuntimeEventFactoryMethodEnter(methodId)));
-        } catch (Throwable e) {
-            AgentLogCallback.logException(e);
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
 
     }
 
     public void methodExit(int methodId) {
-        try {
-            parallelizeBridgeForCallback.process(new CallbackActionApplyRuntimeEventFactory(
-                    new RuntimeEventFactoryMethodExit(methodId)));
-        } catch (Throwable e) {
-            AgentLogCallback.logException(e);
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+
 
     }
 

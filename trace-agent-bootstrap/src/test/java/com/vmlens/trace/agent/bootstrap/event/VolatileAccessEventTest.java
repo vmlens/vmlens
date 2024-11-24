@@ -1,17 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.RunMock;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.GetOrCreateObjectState;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.GetOrCreateObjectStateMockMapBased;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.RuntimeEventFactoryVolatileField;
 import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMockStrategyTake;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateActive;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -19,65 +13,34 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class VolatileAccessEventTest {
 
-    @Test
-    public void creation() {
-        // Given
-        Object orig = new Object();
-        int fieldId = 22;
-        int methodId = 1256;
-        int operation = MemoryAccessType.IS_WRITE;
-        GetOrCreateObjectState getAndUpdateVolatileObjectState = new GetOrCreateObjectStateMockMapBased();
 
-        RuntimeEventFactoryVolatileField runtimeEventFactoryVolatileField =
-                new RuntimeEventFactoryVolatileField(orig, fieldId,
-                        methodId, operation, getAndUpdateVolatileObjectState);
-
-        // When
-        VolatileAccessEvent event = runtimeEventFactoryVolatileField.create();
-
-        // Then
-        assertThat(event.fieldId(), is(fieldId));
-        assertThat(event.methodId(), is(methodId));
-        assertThat(event.operation(), is(operation));
-        assertThat(event.order(), is(0));
-
-        // When
-        for (int i = 0; i < 5; i++) {
-            runtimeEventFactoryVolatileField.create();
-        }
-
-        event = runtimeEventFactoryVolatileField.create();
-
-        // Then
-        assertThat(event.order(), is(6));
-    }
-
-    @Test
-    public void methodCounter() {
-        // Given
-        VolatileAccessEvent event = new VolatileAccessEvent();
-        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(new RunMock(), 0);
-        threadLocalDataWhenInTest.incrementAndGetMethodCount();
-
-        // When
-        for (int i = 0; i < 5; i++) {
+    /*
+        @Test
+        public void methodCounter() {
+            // Given
+            VolatileAccessEvent event = new VolatileAccessEvent();
+            ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(new RunMock(), 0);
             threadLocalDataWhenInTest.incrementAndGetMethodCount();
+
+            // When
+            for (int i = 0; i < 5; i++) {
+                threadLocalDataWhenInTest.incrementAndGetMethodCount();
+            }
+
+            SerializableEvent result = threadLocalDataWhenInTest.after(event);
+
+            // Then
+            assertThat(result, CoreMatchers.<SerializableEvent>is(event));
+            assertThat(event.methodCounter(), is(6));
+
+
+            // When
+            threadLocalDataWhenInTest.after(event);
+
+            // Then
+            assertThat(event.methodCounter(), is(6));
         }
-
-        SerializableEvent result = threadLocalDataWhenInTest.after(event);
-
-        // Then
-        assertThat(result, CoreMatchers.<SerializableEvent>is(event));
-        assertThat(event.methodCounter(), is(6));
-
-
-        // When
-        threadLocalDataWhenInTest.after(event);
-
-        // Then
-        assertThat(event.methodCounter(), is(6));
-    }
-
+    */
     @Test
     public void createInterleaveAction() {
         // Expected

@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionCreateThreadStartEvent;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionSetStartedThread;
+
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 public class ThreadStartCallbackImpl {
 
@@ -15,11 +13,10 @@ public class ThreadStartCallbackImpl {
 
 
     public void threadStart(Object newThread) {
-        parallelizeBridgeForCallback.process(new CallbackActionSetStartedThread(
-                new RunnableOrThreadWrapper(newThread)));
+
     }
 
     public void afterThreadStart() {
-        parallelizeBridgeForCallback.process(new CallbackActionCreateThreadStartEvent());
+
     }
 }

@@ -2,11 +2,11 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.PerThreadCounter;
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.SetValuesAfterParallelizeProcessingVisitor;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 
 
 /**
@@ -15,25 +15,19 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.SetValuesAfterParalleliz
  */
 
 public class ThreadLocalWhenInTest extends PerThreadCounter {
-    private final Run run;
+    private final RunAdapter runAdapter;
     private final int threadIndex;
 
     private boolean inCallbackProcessing = false;
-    private RunnableOrThreadWrapper startedThread;
 
     public ThreadLocalWhenInTest(Run run, int threadIndex) {
-        this.run = run;
+        this.runAdapter = new RunAdapter(run);
         this.threadIndex = threadIndex;
     }
 
     // Can be null when the runtime event should not be serialized
-    public SerializableEvent after(RuntimeEvent runtimeEventIn) {
-        runtimeEventIn.setThreadIndex(threadIndex);
-        RuntimeEvent result = run.after(runtimeEventIn, this);
-        if (result != null) {
-            result.accept(new SetValuesAfterParallelizeProcessingVisitor(this));
-        }
-        return result;
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> after(RuntimeEvent runtimeEventIn) {
+        return runAdapter.after(runtimeEventIn, this);
     }
 
     public ThreadLocalWhenInTest startCallbackProcessing() {
@@ -48,21 +42,8 @@ public class ThreadLocalWhenInTest extends PerThreadCounter {
         inCallbackProcessing = false;
     }
 
-    // public for test
     public int threadIndex() {
         return threadIndex;
     }
 
-    // visible for test
-    public Run getRun() {
-        return run;
-    }
-
-    public void setStartedThread(RunnableOrThreadWrapper startedThread) {
-        this.startedThread = startedThread;
-    }
-
-    public RunnableOrThreadWrapper startedThread() {
-        return startedThread;
-    }
 }

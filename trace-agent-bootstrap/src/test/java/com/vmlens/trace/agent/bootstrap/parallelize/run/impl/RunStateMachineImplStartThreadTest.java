@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.impl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadStart;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;

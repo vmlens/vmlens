@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event.impl;
 
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodExitEventGen;
 
 public class MethodExitEvent extends MethodExitEventGen implements RuntimeEvent {

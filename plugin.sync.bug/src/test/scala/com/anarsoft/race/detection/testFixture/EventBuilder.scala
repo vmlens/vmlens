@@ -2,8 +2,8 @@ package com.anarsoft.race.detection.testFixture
 
 import com.anarsoft.race.detection.event.gen.VolatileAccessEventGen
 import com.anarsoft.race.detection.event.method.LoadedMethodEvent
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent
-import com.vmlens.trace.agent.bootstrap.event.impl.{MethodEnterEventBuilder, RuntimeEvent, VolatileAccessEvent, VolatileAccessEventBuilder}
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent
+import com.vmlens.trace.agent.bootstrap.event.impl.{MethodEnterEventBuilder, VolatileAccessEventBuilder}
 
 import scala.collection.mutable.ArrayBuffer
 
