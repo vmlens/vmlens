@@ -1,0 +1,47 @@
+package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates;
+
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ProcessRuntimeEventCallback;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunState;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
+
+public abstract class RunStateAtomicOperationAbstract implements RunState {
+
+    protected final int threadIndexOfAtomicOperation;
+
+    public RunStateAtomicOperationAbstract(int threadIndexOfAtomicOperation) {
+        this.threadIndexOfAtomicOperation = threadIndexOfAtomicOperation;
+    }
+
+    @Override
+    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+        return threadLocalDataWhenInTest.threadIndex() == threadIndexOfAtomicOperation;
+    }
+
+    @Override
+    public RunState startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+        throw new IllegalStateException("should not be called");
+    }
+
+    @Override
+    public RunStateAndResult<RuntimeEvent> after(ProcessRuntimeEventCallback processRuntimeEventCallback,
+                                                 RuntimeEvent runtimeEvent,
+                                                 ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+        return RunStateAndResult.of(this,
+                processRuntimeEventCallback.callAfterFromState(runtimeEvent, threadLocalDataWhenInTest));
+    }
+
+    @Override
+    public RunState startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
+                                                      RunnableOrThreadWrapper newThread, ThreadLocalDataWhenInTestMap runContext) {
+        throw new IllegalStateException("should not be called");
+    }
+
+    @Override
+    public boolean isStartAtomicOperationPossible() {
+        return false;
+    }
+}

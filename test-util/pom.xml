@@ -35,6 +35,12 @@
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
         </dependency>
+        <!-- vmlens versions -->
+        <dependency>
+            <groupId>com.vmlens</groupId>
+            <artifactId>trace-agent-bootstrap</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

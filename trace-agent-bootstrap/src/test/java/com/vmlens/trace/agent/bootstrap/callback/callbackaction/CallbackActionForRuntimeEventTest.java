@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 import com.vmlens.trace.agent.bootstrap.callback.RunMock;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.impl.MethodEnterEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.junit.Test;
@@ -29,6 +29,5 @@ public class CallbackActionForRuntimeEventTest {
 
         // Then
         assertThat(serializableEvents.size(), is(1));
-        assertThat(methodEnterEvent.threadIndex(), is(THREAD_INDEX));
     }
 }

@@ -1,7 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.event.impl.RuntimeEventVisitor;
-
 import java.nio.ByteBuffer;
 
 public class RuntimeEventGuineaPig implements RuntimeEvent {
@@ -53,12 +51,7 @@ public class RuntimeEventGuineaPig implements RuntimeEvent {
     }
 
     @Override
-    public void setMethodCounter(int methodCounter) {
-
-    }
-
-    @Override
-    public void accept(RuntimeEventVisitor visitor) {
+    public void setMethodCounter(PerThreadCounter perThreadCounter) {
 
     }
 

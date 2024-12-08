@@ -54,5 +54,4 @@ public class MethodEnterEventGen {
         buffer.putInt(runId);
     }
 
-
 }

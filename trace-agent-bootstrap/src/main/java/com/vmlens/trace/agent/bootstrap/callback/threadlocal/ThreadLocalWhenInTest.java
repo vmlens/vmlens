@@ -1,10 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.PerThreadCounter;
+import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -14,7 +15,7 @@ import gnu.trove.list.linked.TLinkedList;
  *
  */
 
-public class ThreadLocalWhenInTest extends PerThreadCounter {
+public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLocalWhenInTestForParallelize {
     private final RunAdapter runAdapter;
     private final int threadIndex;
 
@@ -42,6 +43,7 @@ public class ThreadLocalWhenInTest extends PerThreadCounter {
         inCallbackProcessing = false;
     }
 
+    @Override
     public int threadIndex() {
         return threadIndex;
     }

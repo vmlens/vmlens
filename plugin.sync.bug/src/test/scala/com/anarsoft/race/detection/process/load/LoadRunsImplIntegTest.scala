@@ -3,7 +3,7 @@ package com.anarsoft.race.detection.process.load
 import com.anarsoft.race.detection.loopAndRunData.LoopAndRunId
 import com.anarsoft.race.detection.main.LoadRunsFactory
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository
-import com.vmlens.trace.agent.bootstrap.event.impl.VolatileAccessEvent
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

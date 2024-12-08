@@ -1,15 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
-import com.vmlens.trace.agent.bootstrap.event.impl.MethodEnterEvent;
-import com.vmlens.trace.agent.bootstrap.event.impl.MethodExitEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMock;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ActualRunMockStrategyTake;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateActive;
-import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 public class MethodEventTest {
 
     /*
@@ -47,36 +37,6 @@ public class MethodEventTest {
         assertThat(methodEventTwo.methodCounter(), is(2));
     }
 */
-    @Test
-    public void createNoInterleaveActionForEnter() {
-        // Given
-        MethodEnterEvent methodEvent = new MethodEnterEvent(6);
 
-        ActualRunMock actualRunMock = new ActualRunMock(new ActualRunMockStrategyTake());
-        RunStateActive runStateActive = new RunStateActive(actualRunMock,
-                null, null);
-
-        // When
-        runStateActive.after(methodEvent, null);
-
-        // Then
-        assertThat(actualRunMock.interleaveActions().size(), is(0));
-    }
-
-    @Test
-    public void createInterleaveActionForExit() {
-        // Given
-        MethodExitEvent methodEvent = new MethodExitEvent(6);
-
-        ActualRunMock actualRunMock = new ActualRunMock(new ActualRunMockStrategyTake());
-        RunStateActive runStateActive = new RunStateActive(actualRunMock,
-                null, null);
-
-        // When
-        runStateActive.after(methodEvent, null);
-
-        // Then
-        assertThat(actualRunMock.interleaveActions().size(), is(0));
-    }
 
 }

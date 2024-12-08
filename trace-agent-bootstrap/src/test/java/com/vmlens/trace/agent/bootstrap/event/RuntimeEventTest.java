@@ -1,16 +1,20 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunImpl;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
 
 import java.util.concurrent.locks.ReentrantLock;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests the values which are the same for all RuntimeEvent
@@ -18,6 +22,10 @@ import static org.mockito.Mockito.mock;
  */
 
 public class RuntimeEventTest {
+
+    private static Object answer(InvocationOnMock invocation) {
+        return invocation.getArguments()[0];
+    }
 
     @Test
     public void runIdAndLoopId() {
@@ -28,7 +36,9 @@ public class RuntimeEventTest {
         RuntimeEventGuineaPig runtimeEvent = new RuntimeEventGuineaPig();
         ReentrantLock reentrantLock = new ReentrantLock();
         WaitNotifyStrategy waitNotifyStrategy = mock(WaitNotifyStrategy.class);
-        RunImpl run = new RunImpl(reentrantLock, waitNotifyStrategy, new RunStateMachineMock(), LOOP_ID, RUN_ID);
+        RunStateMachine runStateMachineMock = mock(RunStateMachine.class);
+        when(runStateMachineMock.after(any(), any())).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
+        RunImpl run = new RunImpl(reentrantLock, waitNotifyStrategy, runStateMachineMock, LOOP_ID, RUN_ID);
 
         // When
         RuntimeEventAndWarnings runtimeEventAndWarning = run.after(runtimeEvent, null);

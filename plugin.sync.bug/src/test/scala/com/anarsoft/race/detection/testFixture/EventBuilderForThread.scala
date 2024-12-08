@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.testFixture
 
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType
-import com.vmlens.trace.agent.bootstrap.event.impl.{MethodEnterEventBuilder, VolatileAccessEventBuilder}
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.{MethodEnterEventBuilder, VolatileAccessEventBuilder}
 
 import scala.collection.mutable.Stack
 

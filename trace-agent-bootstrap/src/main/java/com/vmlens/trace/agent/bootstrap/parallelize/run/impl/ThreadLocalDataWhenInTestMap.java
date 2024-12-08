@@ -22,7 +22,8 @@ public class ThreadLocalDataWhenInTestMap {
         threadIdToState.put(threadId, threadLocalDataWhenInTest);
         return threadLocalDataWhenInTest;
     }
-    int getThreadIndexForNewTestThread() {
+
+    public int getThreadIndexForNewTestThread() {
         int temp = maxThreadIndex;
         maxThreadIndex++;
         return temp;

@@ -4,7 +4,6 @@ import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.SetValuesAfterParallelizeProcessingVisitor;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -26,8 +25,7 @@ public class RunAdapter {
         TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents = emptyList();
 
         if (runtimeEventAndWarning.runtimeEvent() != null) {
-            runtimeEventAndWarning.runtimeEvent()
-                    .accept(new SetValuesAfterParallelizeProcessingVisitor(threadLocalWhenInTest));
+            runtimeEventAndWarning.runtimeEvent().setMethodCounter(threadLocalWhenInTest);
             serializableEvents.add(wrap((SerializableEvent) runtimeEventAndWarning.runtimeEvent()));
         }
         runtimeEventAndWarning.addWarnings(serializableEvents);

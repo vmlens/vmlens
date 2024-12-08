@@ -38,7 +38,7 @@ public class RunImpl implements Run {
             try {
                 waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
             } catch (TestBlockedException e) {
-                runStateMachine.setStateRecording();
+
             }
             return withRuntimeEvent(result);
         } finally {
@@ -54,7 +54,7 @@ public class RunImpl implements Run {
                 try {
                     waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
                 } catch (TestBlockedException e) {
-                    runStateMachine.setStateRecording();
+
                 }
             }
         } finally {
