@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AtomicOperation;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
@@ -18,7 +18,7 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
     private final int threadIndex;
 
     private boolean inCallbackProcessing = false;
-    private AtomicOperation atomicOperation;
+    private CallbackAction atomicOperation;
 
     public ThreadLocalWhenInTest(Run run, int threadIndex) {
         this.runAdapter = new RunAdapter(run);
@@ -47,11 +47,11 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
         return threadIndex;
     }
 
-    public AtomicOperation atomicOperation() {
+    public CallbackAction atomicOperation() {
         return atomicOperation;
     }
 
-    public void setAtomicOperation(AtomicOperation atomicOperation) {
+    public void setAtomicOperation(CallbackAction atomicOperation) {
         this.atomicOperation = atomicOperation;
     }
 

@@ -9,9 +9,9 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
 
 public class CallbackActionStartAtomicVolatileFieldAccess implements CallbackAction {
 
-    private final AtomicOperation atomicOperation;
+    private final CallbackAction atomicOperation;
 
-    public CallbackActionStartAtomicVolatileFieldAccess(AtomicOperation atomicOperation) {
+    public CallbackActionStartAtomicVolatileFieldAccess(CallbackAction atomicOperation) {
         this.atomicOperation = atomicOperation;
     }
 

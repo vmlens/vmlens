@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -23,10 +22,11 @@ public class CallbackActionEndAtomicOperationTest {
         Run runMock = mock(Run.class);
         when(runMock.after(any(), any())).thenReturn(empty());
 
-        RuntimeEvent runtimeEvent = mock(RuntimeEvent.class);
+        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEventList =
+                mock(TLinkedList.class);
 
-        AtomicOperation atomicOperation = mock(AtomicOperation.class);
-        when(atomicOperation.create()).thenReturn(runtimeEvent);
+        CallbackAction atomicOperation = mock(CallbackAction.class);
+        when(atomicOperation.execute(any())).thenReturn(serializableEventList);
 
         CallbackActionEndAtomicOperation callbackActionEndAtomicOperation =
                 new CallbackActionEndAtomicOperation();
@@ -39,9 +39,8 @@ public class CallbackActionEndAtomicOperationTest {
                 callbackActionEndAtomicOperation.execute(threadLocalWhenInTest);
 
         // Then
-        verify(runMock).after(runtimeEvent, threadLocalWhenInTest);
+        verify(atomicOperation).execute(any());
         assertThat(threadLocalWhenInTest.atomicOperation(), is(nullValue()));
-        assertThat(serializableEvents.size(), is(0));
+        assertThat(serializableEvents, is(serializableEventList));
     }
-
 }
