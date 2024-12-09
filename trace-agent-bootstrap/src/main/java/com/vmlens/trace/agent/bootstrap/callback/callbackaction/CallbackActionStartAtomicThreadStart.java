@@ -1,4 +1,4 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
-public class CallbackActionStartVolatileFieldAccess {
+public class CallbackActionStartAtomicThreadStart {
 }

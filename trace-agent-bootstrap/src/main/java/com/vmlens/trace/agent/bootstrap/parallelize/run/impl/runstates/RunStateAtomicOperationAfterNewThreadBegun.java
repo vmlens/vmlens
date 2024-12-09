@@ -34,7 +34,7 @@ public class RunStateAtomicOperationAfterNewThreadBegun extends RunStateAtomicOp
                                                               RuntimeEvent runtimeEvent,
                                                               ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
         ThreadStartEvent threadStartEvent = (ThreadStartEvent) runtimeEvent;
-        threadStartEvent.setThreadIndex(newThreadIndex);
+        threadStartEvent.setStartedThreadIndex(newThreadIndex);
         return RunStateAndResult.of(nextState,
                 processRuntimeEventCallback.callAfterFromState(runtimeEvent, threadLocalDataWhenInTest));
     }

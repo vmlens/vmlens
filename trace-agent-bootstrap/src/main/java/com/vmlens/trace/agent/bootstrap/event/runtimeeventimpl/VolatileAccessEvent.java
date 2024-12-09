@@ -11,7 +11,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
  * a data structure
  */
 
-public class VolatileAccessEvent extends VolatileAccessEventGen implements RuntimeEvent, InterleaveActionFactory {
+public class VolatileAccessEvent extends VolatileAccessEventGen implements RuntimeEvent,
+        InterleaveActionFactory, WithObjectHashCodeAndOrder<ObjectHashCodeAndFieldId> {
 
     public void setThreadIndex(int threadIndex) {
         this.threadIndex = threadIndex;
@@ -59,5 +60,10 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements Runti
                 threadIndex,
                 fieldId,
                 operation);
+    }
+
+    @Override
+    public ObjectHashCodeAndFieldId keyForOrderMap() {
+        return new ObjectHashCodeAndFieldId(objectHashCode, fieldId);
     }
 }

@@ -1,19 +1,19 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionAfterFieldAccess;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionEndAtomicOperation;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdToStrategy;
-import com.vmlens.trace.agent.bootstrap.volatileaccessrepository.VolatileAccessRepository;
+import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public class FieldCallbackImpl {
 
     private final FieldIdToStrategy fieldIdToStrategy;
-    private final VolatileAccessRepository volatileAccessRepository;
+    private final OrderMap volatileAccessRepository;
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
 
     public FieldCallbackImpl(FieldIdToStrategy fieldIdToStrategy,
-                             VolatileAccessRepository volatileAccessRepository,
+                             OrderMap volatileAccessRepository,
                              ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
         this.fieldIdToStrategy = fieldIdToStrategy;
         this.volatileAccessRepository = volatileAccessRepository;
@@ -49,6 +49,6 @@ public class FieldCallbackImpl {
     }
 
     public void afterFieldAccess() {
-        threadLocalWhenInTestAdapter.process(new CallbackActionAfterFieldAccess());
+        threadLocalWhenInTestAdapter.process(new CallbackActionEndAtomicOperation());
     }
 }

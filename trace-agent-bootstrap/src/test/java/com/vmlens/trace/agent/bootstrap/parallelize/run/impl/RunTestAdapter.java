@@ -4,12 +4,9 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings.withRuntimeEvent;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings.of;
 
 public class RunTestAdapter implements Run {
 
@@ -21,7 +18,7 @@ public class RunTestAdapter implements Run {
 
     @Override
     public RuntimeEventAndWarnings after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        return withRuntimeEvent(runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest));
+        return of(runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest));
     }
 
     @Override
@@ -37,5 +34,15 @@ public class RunTestAdapter implements Run {
     @Override
     public int runId() {
         return 0;
+    }
+
+    @Override
+    public void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+
+    }
+
+    @Override
+    public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
+
     }
 }

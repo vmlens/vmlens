@@ -9,7 +9,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings.withRuntimeEvent;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings.of;
 
 public class RunImpl implements Run {
     private final ReentrantLock lock;
@@ -40,7 +40,7 @@ public class RunImpl implements Run {
             } catch (TestBlockedException e) {
 
             }
-            return withRuntimeEvent(result);
+            return of(result);
         } finally {
             lock.unlock();
         }
@@ -69,5 +69,15 @@ public class RunImpl implements Run {
     @Override
     public int runId() {
         return runId;
+    }
+
+    @Override
+    public void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+
+    }
+
+    @Override
+    public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
+
     }
 }

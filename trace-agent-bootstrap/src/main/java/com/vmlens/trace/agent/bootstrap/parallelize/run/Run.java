@@ -13,6 +13,11 @@ public interface Run {
     RuntimeEventAndWarnings after(RuntimeEvent runtimeEvent,
                                   ThreadLocalWhenInTest threadLocalDataWhenInTest);
 
+    void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
+
+    void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
+                                           RunnableOrThreadWrapper newThread);
+
     void newTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize);
 
     ActualRun end(ThreadLocalForParallelize threadLocalForParallelize);

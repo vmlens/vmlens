@@ -1,0 +1,3 @@
+com\vmlens\trace\agent\bootstrap\event\runtimeeventimpl\MethodEnterEventForTest.class
+com\vmlens\trace\agent\bootstrap\event\runtimeeventimpl\VolatileAccessEventForTest.class
+com\vmlens\test\util\DiffText.class

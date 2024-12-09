@@ -54,7 +54,7 @@ public class RunStateAtomicOperationWithNewThreadStarted extends RunStateAtomicO
                                                               ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
         int newThreadIndex = runContext.getThreadIndexForNewTestThread();
         ThreadStartEvent threadStartEvent = (ThreadStartEvent) runtimeEvent;
-        threadStartEvent.setThreadIndex(newThreadIndex);
+        threadStartEvent.setStartedThreadIndex(newThreadIndex);
 
         return RunStateAndResult.of(new RunStateNewThreadStarted(startedThread, runContext, newThreadIndex, nextState),
                 processRuntimeEventCallback.callAfterFromState(runtimeEvent, threadLocalDataWhenInTest));

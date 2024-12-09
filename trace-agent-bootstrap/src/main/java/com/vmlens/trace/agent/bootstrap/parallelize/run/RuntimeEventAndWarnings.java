@@ -19,8 +19,12 @@ public class RuntimeEventAndWarnings {
         this.warnings = warnings;
     }
 
-    public static RuntimeEventAndWarnings withRuntimeEvent(RuntimeEvent runtimeEvent) {
-        return new RuntimeEventAndWarnings(runtimeEvent, new TLinkedList<TLinkableWrapper<Warning>>());
+    public static RuntimeEventAndWarnings empty() {
+        return new RuntimeEventAndWarnings(null, new TLinkedList<>());
+    }
+
+    public static RuntimeEventAndWarnings of(RuntimeEvent runtimeEvent) {
+        return new RuntimeEventAndWarnings(runtimeEvent, new TLinkedList<>());
     }
 
     public RuntimeEvent runtimeEvent() {

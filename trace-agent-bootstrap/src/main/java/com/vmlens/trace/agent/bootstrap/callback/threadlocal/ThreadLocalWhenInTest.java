@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AtomicOperation;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
@@ -9,17 +9,16 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestFor
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-
 /**
  * Data Structure, only state no behaviour
  *
  */
-
 public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLocalWhenInTestForParallelize {
     private final RunAdapter runAdapter;
     private final int threadIndex;
 
     private boolean inCallbackProcessing = false;
+    private AtomicOperation atomicOperation;
 
     public ThreadLocalWhenInTest(Run run, int threadIndex) {
         this.runAdapter = new RunAdapter(run);
@@ -48,4 +47,15 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
         return threadIndex;
     }
 
+    public AtomicOperation atomicOperation() {
+        return atomicOperation;
+    }
+
+    public void setAtomicOperation(AtomicOperation atomicOperation) {
+        this.atomicOperation = atomicOperation;
+    }
+
+    public RunAdapter runAdapter() {
+        return runAdapter;
+    }
 }
