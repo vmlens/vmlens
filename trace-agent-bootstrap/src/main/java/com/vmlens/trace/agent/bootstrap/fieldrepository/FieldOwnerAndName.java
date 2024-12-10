@@ -2,16 +2,14 @@ package com.vmlens.trace.agent.bootstrap.fieldrepository;
 
 import java.util.Objects;
 
-public class FieldId {
+public class FieldOwnerAndName {
 
     private final String owner;
     private final String name;
-    private final String descriptor;
 
-    public FieldId(String owner, String name, String descriptor) {
+    public FieldOwnerAndName(String owner, String name) {
         this.owner = owner;
         this.name = name;
-        this.descriptor = descriptor;
     }
 
     @Override
@@ -19,15 +17,14 @@ public class FieldId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FieldId fieldId = (FieldId) o;
-        return Objects.equals(owner, fieldId.owner) && Objects.equals(name, fieldId.name) && Objects.equals(descriptor, fieldId.descriptor);
+        FieldOwnerAndName that = (FieldOwnerAndName) o;
+        return Objects.equals(owner, that.owner) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hashCode(owner);
         result = 31 * result + Objects.hashCode(name);
-        result = 31 * result + Objects.hashCode(descriptor);
         return result;
     }
 }

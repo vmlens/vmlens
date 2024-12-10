@@ -2,8 +2,8 @@ package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FieldCallbackFactory;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldId;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 
@@ -11,17 +11,17 @@ import static org.objectweb.asm.Opcodes.*;
 
 public class AddFieldAccessCall extends MethodVisitor {
 
-    private final FieldIdMap fieldIdMap;
+    private final FieldOwnerAndNameToIntMap fieldIdMap;
     private final FieldCallbackFactory fieldCallbackFactory;
     int position = 0;
 
-    public AddFieldAccessCall(MethodVisitor methodVisitor, FieldIdMap fieldIdMap, int inMethodId) {
+    public AddFieldAccessCall(MethodVisitor methodVisitor, FieldOwnerAndNameToIntMap fieldIdMap, int inMethodId) {
         super(ASMConstants.ASM_API_VERSION, methodVisitor);
         this.fieldIdMap = fieldIdMap;
         this.fieldCallbackFactory = new FieldCallbackFactory(methodVisitor, inMethodId);
     }
 
-    public static MethodVisitorFactory factory(FieldIdMap fieldIdMap) {
+    public static MethodVisitorFactory factory(FieldOwnerAndNameToIntMap fieldIdMap) {
         return new MethodVisitorFactory() {
             @Override
             public MethodVisitor create(int methodId, MethodVisitor previous) {
@@ -32,7 +32,7 @@ public class AddFieldAccessCall extends MethodVisitor {
 
     @Override
     public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
-        int fieldId = fieldIdMap.asInt(new FieldId(owner, name, descriptor));
+        int fieldId = fieldIdMap.asInt(new FieldOwnerAndName(owner, name));
 
         switch (opcode) {
             case PUTFIELD:

@@ -47,7 +47,7 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
                 TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents =
                         callbackAction.execute(dataWhenInTest);
                 for (TLinkableWrapper<SerializableEvent> event : serializableEvents) {
-                    eventQueue.offer(event.element);
+                    eventQueueInternal.offer(event.element);
                 }
             } finally {
                 dataWhenInTest.stopCallbackProcessing();

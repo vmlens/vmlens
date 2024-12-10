@@ -5,16 +5,17 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAnd
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 import com.vmlens.trace.agent.bootstrap.strategy.FieldStrategy;
 
-public class VolatileFieldStrategy implements FieldStrategy {
+public class NormalFieldStrategy implements FieldStrategy {
     @Override
-    public void onAccess(Object fromObject, int fieldId, int position, int inMethodId, int memoryAccessType,
-                         OrderMap<ObjectHashCodeAndFieldId> volatileFieldOrder,
+    public void onAccess(Object fromObject, int fieldId, int position, int inMethodId,
+                         int memoryAccessType, OrderMap<ObjectHashCodeAndFieldId> volatileFieldOrder,
                          ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
 
     }
 
     @Override
-    public void onStaticAccess(int fieldId, int position, int inMethodId, int memoryAccessType,
+    public void onStaticAccess(int fieldId, int position, int inMethodId,
+                               int memoryAccessType,
                                OrderMap<Integer> staticVolatileFieldOrder,
                                ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
 

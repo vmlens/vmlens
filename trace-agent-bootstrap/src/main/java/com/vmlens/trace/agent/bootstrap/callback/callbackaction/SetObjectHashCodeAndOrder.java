@@ -7,14 +7,16 @@ public class SetObjectHashCodeAndOrder<KEY, EVENT extends WithObjectHashCodeAndO
         implements SetFieldsStrategy<EVENT> {
 
     private final OrderMap<KEY> orderMap;
+    private final Object object;
 
-    public SetObjectHashCodeAndOrder(OrderMap<KEY> orderMap) {
+    public SetObjectHashCodeAndOrder(OrderMap<KEY> orderMap, Object object) {
         this.orderMap = orderMap;
+        this.object = object;
     }
 
     @Override
     public void setFields(EVENT event) {
-        long hashCode = System.identityHashCode(event);
+        long hashCode = System.identityHashCode(object);
         event.setObjectHashCode(hashCode);
         int order = orderMap.getAndIncrementOrder(event.keyForOrderMap());
         event.setOrder(order);

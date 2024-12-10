@@ -4,7 +4,7 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransfor
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -38,7 +38,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
             ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodCallIdMap(),
-                    new FieldIdMap());
+                    new FieldOwnerAndNameToIntMap());
             ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(
                     new WriteClassDescriptionDuringStartup(new TLinkedList<>()),
                     factory);

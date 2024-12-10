@@ -2,14 +2,11 @@ package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,6 +26,7 @@ public class SetObjectHashCodeAndOrderTest {
         // Given
         final int THREAD_INDEX = 5;
         final int ORDER = 7;
+        final Object onObject = new Object();
 
         Run runMock = mock(Run.class);
         when(runMock.after(any(), any())).thenAnswer(invocationOnMock ->
@@ -41,15 +39,14 @@ public class SetObjectHashCodeAndOrderTest {
 
         CallbackActionForRuntimeEvent<VolatileAccessEvent> callbackActionForRuntimeEvent =
                 new CallbackActionForRuntimeEvent<>(volatileAccessEvent,
-                        new SetObjectHashCodeAndOrder<>(orderMapMock));
+                        new SetObjectHashCodeAndOrder<>(orderMapMock, onObject));
 
         // When
-        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents =
-                callbackActionForRuntimeEvent.execute(new ThreadLocalWhenInTest(runMock, THREAD_INDEX));
+        callbackActionForRuntimeEvent.execute(new ThreadLocalWhenInTest(runMock, THREAD_INDEX));
 
         // Then
         VolatileAccessEvent expected = new VolatileAccessEvent();
-        expected.setObjectHashCode(System.identityHashCode(volatileAccessEvent));
+        expected.setObjectHashCode(System.identityHashCode(onObject));
         expected.setOrder(ORDER);
         expected.setThreadIndex(THREAD_INDEX);
 

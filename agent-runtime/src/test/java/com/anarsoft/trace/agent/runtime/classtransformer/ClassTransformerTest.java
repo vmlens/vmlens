@@ -5,7 +5,7 @@ import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVis
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallFactoryFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -47,7 +47,7 @@ public class ClassTransformerTest {
     @Test
     public void testAll() throws IOException {
         MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
-        FieldIdMap fieldIdMap = new FieldIdMap();
+        FieldOwnerAndNameToIntMap fieldIdMap = new FieldOwnerAndNameToIntMap();
 
         byte[] classArray = new LoadClassArray().load("com.vmlens.test.guineaPig.StaticFieldAccess");
 

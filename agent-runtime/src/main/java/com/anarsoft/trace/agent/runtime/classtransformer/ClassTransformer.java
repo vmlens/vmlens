@@ -8,7 +8,7 @@ import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethod.Met
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallAnalyzeAndTransformFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallFactoryFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassReader;
@@ -34,7 +34,7 @@ public class ClassTransformer {
     }
 
 
-    public static ClassTransformer createAll(MethodCallIdMap methodCallIdMap, FieldIdMap fieldIdMap) {
+    public static ClassTransformer createAll(MethodCallIdMap methodCallIdMap, FieldOwnerAndNameToIntMap fieldIdMap) {
         MethodCallAnalyzeAndTransformFactory methodCallFactory = new MethodCallAnalyzeAndTransformFactory(methodCallIdMap);
 
         TLinkedList<TLinkableWrapper<MethodVisitorFactoryFactory>>
