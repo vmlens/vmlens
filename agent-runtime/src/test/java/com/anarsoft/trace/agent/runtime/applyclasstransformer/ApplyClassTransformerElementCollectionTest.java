@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -12,8 +12,8 @@ public class ApplyClassTransformerElementCollectionTest {
     @Test
     public void order() {
         // Given
-        ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodCallIdMap(),
-                new FieldOwnerAndNameToIntMap());
+        ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodRepository(),
+                new FieldRepository());
 
         // When
         factory.add("java/lang/util/HashMap", new TransformerStrategyGuineaPig());

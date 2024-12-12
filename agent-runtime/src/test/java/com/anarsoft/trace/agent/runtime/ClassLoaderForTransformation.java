@@ -4,8 +4,8 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransfor
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.util.TraceClassVisitor;
@@ -37,8 +37,8 @@ public class ClassLoaderForTransformation extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
-            ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodCallIdMap(),
-                    new FieldOwnerAndNameToIntMap());
+            ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodRepository(),
+                    new FieldRepository());
             ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(
                     new WriteClassDescriptionDuringStartup(new TLinkedList<>()),
                     factory);

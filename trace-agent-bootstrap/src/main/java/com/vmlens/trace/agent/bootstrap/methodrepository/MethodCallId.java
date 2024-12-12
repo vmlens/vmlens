@@ -30,4 +30,12 @@ public class MethodCallId {
         result = 31 * result + Objects.hashCode(descriptor);
         return result;
     }
+
+    public String name() {
+        return name;
+    }
+
+    public String descriptor() {
+        return descriptor;
+    }
 }

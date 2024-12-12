@@ -6,6 +6,7 @@ import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVis
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;
@@ -30,7 +31,7 @@ public class AddMonitorCallTest {
 
     @Test
     public void monitor() throws IOException {
-        MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
+        MethodCallIdMap methodCallIdMap = new MethodRepository();
 
 
         byte[] classArray = new LoadClassArray().load("com.vmlens.test.guineaPig.SynchronizedBlock");

@@ -1,4 +1,4 @@
 package com.vmlens.trace.agent.bootstrap.strategy;
 
-public interface MethodCallStrategy {
+public interface OnMethodExit {
 }

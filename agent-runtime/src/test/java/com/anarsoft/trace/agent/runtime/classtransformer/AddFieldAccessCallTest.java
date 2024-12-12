@@ -4,7 +4,9 @@ import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddFieldAccessCall;
 import com.vmlens.test.util.DiffText;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;
 
@@ -18,8 +20,8 @@ public class AddFieldAccessCallTest {
 
     @Test
     public void staticField() throws IOException {
-        MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
-        FieldOwnerAndNameToIntMap fieldIdMap = new FieldOwnerAndNameToIntMap();
+        MethodCallIdMap methodCallIdMap = new MethodRepository();
+        FieldOwnerAndNameToIntMap fieldIdMap = new FieldRepository();
 
         byte[] classArray = new LoadClassArray().load("com.vmlens.test.guineaPig.StaticFieldAccess");
 

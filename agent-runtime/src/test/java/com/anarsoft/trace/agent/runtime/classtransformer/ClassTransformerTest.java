@@ -6,8 +6,10 @@ import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;
@@ -22,7 +24,7 @@ public class ClassTransformerTest {
 
     @Test
     public void threadStart() throws IOException {
-        MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
+        MethodCallIdMap methodCallIdMap = new MethodRepository();
 
         methodCallIdMap.asInt(new MethodCallId("com/vmlens/test/guineaPig/ThreadStart", "<init>", "()V"));
         methodCallIdMap.asInt(new MethodCallId("com/vmlens/test/guineaPig/ThreadStart", "call", "()V"));
@@ -46,8 +48,8 @@ public class ClassTransformerTest {
 
     @Test
     public void testAll() throws IOException {
-        MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
-        FieldOwnerAndNameToIntMap fieldIdMap = new FieldOwnerAndNameToIntMap();
+        MethodCallIdMap methodCallIdMap = new MethodRepository();
+        FieldOwnerAndNameToIntMap fieldIdMap = new FieldRepository();
 
         byte[] classArray = new LoadClassArray().load("com.vmlens.test.guineaPig.StaticFieldAccess");
 

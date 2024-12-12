@@ -11,6 +11,7 @@ import com.anarsoft.trace.agent.runtime.classtransformer.plan.PlanElement;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
@@ -27,7 +28,7 @@ public class ClassVisitorAnalyzeTest {
     @Test
     public void threadStart() throws IOException {
         // Expected
-        MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
+        MethodCallIdMap methodCallIdMap = new MethodRepository();
         int calledMethodId = methodCallIdMap.asInt(new MethodCallId("java/lang/Thread", "start", "()V"));
 
         MethodId expectedMethodId = new MethodId(1, "call", "()V", null, null);

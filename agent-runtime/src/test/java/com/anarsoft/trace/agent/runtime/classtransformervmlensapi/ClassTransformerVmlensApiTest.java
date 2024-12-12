@@ -2,8 +2,6 @@ package com.anarsoft.trace.agent.runtime.classtransformervmlensapi;
 
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.vmlens.test.util.DiffText;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;
 
@@ -15,9 +13,6 @@ public class ClassTransformerVmlensApiTest {
 
     @Test
     public void transform() throws IOException {
-        MethodCallIdMap methodCallIdMap = new MethodCallIdMap();
-        FieldOwnerAndNameToIntMap fieldIdMap = new FieldOwnerAndNameToIntMap();
-
         byte[] classArray = new LoadClassArray().load("com.vmlens.api.AllInterleavings");
 
         ClassTransformerVmlensApi classArrayTransformer = new ClassTransformerVmlensApi();
