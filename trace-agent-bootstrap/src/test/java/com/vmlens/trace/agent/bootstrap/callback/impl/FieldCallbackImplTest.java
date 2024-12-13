@@ -21,7 +21,6 @@ public class FieldCallbackImplTest {
         FieldStrategy fieldStrategy = mock(FieldStrategy.class);
         when(fieldIdToStrategy.get(GIVEN_FIELD_ID)).thenReturn(fieldStrategy);
 
-
         FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldIdToStrategy, null,
                 null, null);
 
