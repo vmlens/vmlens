@@ -1,10 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 
 public class MethodCallback {
 
-    private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl();
+    private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(
+            MethodRepositorySingleton.INSTANCE,
+            new ThreadLocalWhenInTestAdapterImpl());
 
     public static void targetOfMethodCall(Object object, int calledMethodId) {
         methodCallbackImpl.targetOfMethodCall(object, calledMethodId);

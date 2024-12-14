@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.strategy.BeforeMethodCallStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.beforemethodcallstrategyimpl.BeforeNoOp;
+import com.vmlens.trace.agent.bootstrap.strategy.beforemethodcallstrategyimpl.BeforeNormalMethod;
 import com.vmlens.trace.agent.bootstrap.strategy.beforemethodcallstrategyimpl.BeforeThreadStart;
 import com.vmlens.trace.agent.bootstrap.strategy.methodenterandexitstrategyimpl.RunMethodEnterStrategy;
 
@@ -12,7 +12,7 @@ public class MethodCallIdToStrategyDefaultValues implements MethodCallIdToStrate
     // Visible for Test
     static final RunMethodEnterStrategy RUN_METHOD_ENTER_STRATEGY = new RunMethodEnterStrategy();
     static final BeforeMethodCallStrategy BEFORE_THREAD_START = new BeforeThreadStart();
-    static final BeforeMethodCallStrategy BEFORE_NO_OP = new BeforeNoOp();
+    static final BeforeMethodCallStrategy BEFORE_NO_OP = new BeforeNormalMethod();
 
     private final MethodCallIdToStrategy resourceMap;
     private final MethodCallIdToStrategy analyzeMap;

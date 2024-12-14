@@ -5,12 +5,12 @@ import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public interface MethodEnterStrategy {
 
-    OnMethodExit onMethodEnter(Object object,
+    void onMethodEnter(Object object,
                                int methodId,
                                OrderMap<Long> monitorOrder,
                                ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter);
 
-    OnMethodExit onStaticMethodEnter(int methodId,
+    void onStaticMethodEnter(int methodId,
                                      OrderMap<Integer> staticMonitorOrder,
                                      ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter);
 

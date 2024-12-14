@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.BeforeMethodCallStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterStrategy;
 import gnu.trove.map.hash.THashMap;
 
-public class MethodRepository implements MethodCallIdMap {
+public class MethodRepository implements MethodCallIdMap, MethodIdToStrategy {
 
     private final MethodCallIdToStrategyDefaultValues methodCallIdToStrategyDefaultValues;
     private final MethodCallIdToStrategyFromAnalyze methodCallIdToStrategyFromAnalyze;
