@@ -15,7 +15,6 @@ import static org.objectweb.asm.Opcodes.ACC_STATIC;
 
 public class ClassVisitorTransform extends ClassVisitor {
 
-
     private final MethodCallIdMap methodCallIdMap;
     private final String className;
     private final TLinkedList<TLinkableWrapper<MethodVisitorFactory>> methodVisitorFactoryList;
@@ -63,7 +62,7 @@ public class ClassVisitorTransform extends ClassVisitor {
                 transformFactoryContext.setConstructor("<init>".equals(name));
                 transformFactoryContext.setDescription(descriptor);
                 transformFactoryContext.setPrevious(previous);
-                transformFactoryContext.setStatic((access | ACC_STATIC) == ACC_STATIC);
+                transformFactoryContext.setStatic((access & ACC_STATIC) == ACC_STATIC);
                 transformFactoryContext.setUseExpandedFrames(useExpandedFrames());
 
                 previous = element.element.createTransform(transformFactoryContext);
@@ -76,6 +75,4 @@ public class ClassVisitorTransform extends ClassVisitor {
         int major = classVersion & 0xFF;
         return major < Opcodes.V1_6;
     }
-
-
 }

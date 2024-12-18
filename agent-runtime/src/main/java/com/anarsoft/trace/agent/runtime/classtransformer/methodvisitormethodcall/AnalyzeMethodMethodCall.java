@@ -33,22 +33,32 @@ public class AnalyzeMethodMethodCall implements AnalyzeOrTransformMethodMethodCa
 
     @Override
     public void beforeMethodCall(int callArgumentSize, int returnSize,
-                                 boolean isConstructorCall, int methodCallId) {
-
-        // bei remove
-        StackElement stackElement = callStack.backward(callArgumentSize);
-        callStack.remove(callArgumentSize + 1);
-        PlanElement planElement = new PlanElement();
-
-        if (isConstructorCall) {
-            stackElement.setForwardTo(planElement);
-        } else {
-            stackElement.addApplyAfterOperation(new ApplyAfterOperationMethodCallTarget(methodCallId));
+                                 CallType callType, int methodCallId) {
+        StackElement stackElement = null;
+        switch (callType) {
+            case NORMAL:
+            case CONSTRUCTOR:
+                stackElement = callStack.backward(callArgumentSize);
+                callStack.remove(callArgumentSize + 1);
+                break;
+            case STATIC:
+                callStack.remove(callArgumentSize + 1);
+                break;
         }
 
+        PlanElement planElement = new PlanElement();
 
+        switch (callType) {
+            case STATIC:
+                break;
+            case NORMAL:
+                stackElement.addApplyAfterOperation(new ApplyAfterOperationMethodCallTarget(methodCallId));
+                break;
+            case CONSTRUCTOR:
+                stackElement.setForwardTo(planElement);
+                break;
+        }
         methodTransformPlan.add(planElement);
-
         if (returnSize > 0) {
             callStack.push(new StackElement(planElement));
         }

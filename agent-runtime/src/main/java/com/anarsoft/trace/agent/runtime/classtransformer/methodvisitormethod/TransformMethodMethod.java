@@ -60,15 +60,16 @@ public class TransformMethodMethod extends MethodVisitor {
     @Override
     public void visitCode() {
         super.visitCode();
-        if (isStatic) {
-            methodCallbackFactory.staticMethodEnter(inMethodId);
-        } else if (isConstructor) {
+        if (isConstructor) {
             methodCallbackFactory.constructorMethodEnter(inMethodId);
         } else {
-            super.visitVarInsn(ALOAD, 0);
+            if (isStatic) {
+                super.visitLdcInsn(Type.getType("L" + className + ";"));
+            } else {
+                super.visitVarInsn(ALOAD, 0);
+            }
             methodCallbackFactory.methodEnter(inMethodId);
         }
-
         super.visitLabel(startLabel);
     }
 
@@ -95,17 +96,15 @@ public class TransformMethodMethod extends MethodVisitor {
                     new Object[]{"java/lang/Throwable"});
         }
 
-        methodCallbackFactory.methodExit(inMethodId);
-        super.visitInsn(ATHROW);
+        createMethodExitCall();
 
+        super.visitInsn(ATHROW);
         super.visitMaxs(maxStack, maxLocals);
     }
 
     @Override
     public final void visitInsn(int inst) {
-
         switch (inst) {
-
             case RETURN:
             case IRETURN:
             case FRETURN:
@@ -113,16 +112,24 @@ public class TransformMethodMethod extends MethodVisitor {
             case DRETURN:
             case ARETURN:
             case ATHROW:
-                methodCallbackFactory.methodExit(inMethodId);
+                createMethodExitCall();
                 break;
-
             default:
                 break;
 
         }
-
         super.visitInsn(inst);
     }
+
+    private void createMethodExitCall() {
+        if (isStatic) {
+            super.visitLdcInsn(Type.getType("L" + className + ";"));
+        } else {
+            super.visitVarInsn(ALOAD, 0);
+        }
+        methodCallbackFactory.methodExit(inMethodId);
+    }
+
 
     private Object[] buildLocalVariables() {
         TLinkedList<TLinkableWrapper<Object>> parameterList = new TLinkedList<TLinkableWrapper<Object>>();

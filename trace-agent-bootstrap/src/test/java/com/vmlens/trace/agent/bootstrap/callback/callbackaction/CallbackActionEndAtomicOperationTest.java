@@ -32,7 +32,7 @@ public class CallbackActionEndAtomicOperationTest {
                 new CallbackActionEndAtomicOperation();
 
         ThreadLocalWhenInTest threadLocalWhenInTest = new ThreadLocalWhenInTest(runMock, THREAD_INDEX);
-        threadLocalWhenInTest.setAtomicOperation(atomicOperation);
+        threadLocalWhenInTest.setAtomicVolatileFieldAccess(atomicOperation);
 
         // When
         TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents =

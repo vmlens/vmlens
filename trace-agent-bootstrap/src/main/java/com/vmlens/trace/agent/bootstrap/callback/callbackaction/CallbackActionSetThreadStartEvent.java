@@ -8,23 +8,25 @@ import gnu.trove.list.linked.TLinkedList;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
 
-public class CallbackActionAfterMethodCall implements CallbackAction {
+public class CallbackActionSetThreadStartEvent implements CallbackAction {
 
-    private final int inMethodId;
-    private final int position;
+    private final ThreadStartEvent threadStartEvent;
 
-    public CallbackActionAfterMethodCall(int inMethodId, int position) {
-        this.inMethodId = inMethodId;
-        this.position = position;
+    private CallbackActionSetThreadStartEvent(ThreadStartEvent threadStartEvent) {
+        this.threadStartEvent = threadStartEvent;
+    }
+
+    public static CallbackAction setToNull() {
+        return new CallbackActionSetThreadStartEvent(null);
+    }
+
+    public static CallbackAction setTo(ThreadStartEvent threadStartEvent) {
+        return new CallbackActionSetThreadStartEvent(threadStartEvent);
     }
 
     @Override
     public TLinkedList<TLinkableWrapper<SerializableEvent>> execute(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        ThreadStartEvent threadStart = threadLocalDataWhenInTest.threadStartEvent();
-        threadLocalDataWhenInTest.setThreadStartEvent(null);
-        if (threadStart != null) {
-            return threadLocalDataWhenInTest.after(threadStart);
-        }
+        threadLocalDataWhenInTest.setThreadStartEvent(threadStartEvent);
         return emptyList();
     }
 }

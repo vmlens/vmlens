@@ -15,7 +15,7 @@ public class CallbackActionEndAtomicOperation implements CallbackAction {
         }
         TLinkedList<TLinkableWrapper<SerializableEvent>> result =
                 threadLocalDataWhenInTest.atomicOperation().execute(threadLocalDataWhenInTest);
-        threadLocalDataWhenInTest.setAtomicOperation(null);
+        threadLocalDataWhenInTest.setAtomicVolatileFieldAccess(null);
         return result;
     }
 }

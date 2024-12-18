@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -18,7 +19,8 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
     private final int threadIndex;
 
     private boolean inCallbackProcessing = false;
-    private CallbackAction atomicOperation;
+    private CallbackAction atomicVolatileFieldAccess;
+    private ThreadStartEvent threadStartEvent;
 
     public ThreadLocalWhenInTest(Run run, int threadIndex) {
         this.runAdapter = new RunAdapter(run);
@@ -48,14 +50,22 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
     }
 
     public CallbackAction atomicOperation() {
-        return atomicOperation;
+        return atomicVolatileFieldAccess;
     }
 
-    public void setAtomicOperation(CallbackAction atomicOperation) {
-        this.atomicOperation = atomicOperation;
+    public void setAtomicVolatileFieldAccess(CallbackAction atomicVolatileFieldAccess) {
+        this.atomicVolatileFieldAccess = atomicVolatileFieldAccess;
     }
 
     public RunAdapter runAdapter() {
         return runAdapter;
+    }
+
+    public ThreadStartEvent threadStartEvent() {
+        return threadStartEvent;
+    }
+
+    public void setThreadStartEvent(ThreadStartEvent threadStartEvent) {
+        this.threadStartEvent = threadStartEvent;
     }
 }

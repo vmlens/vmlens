@@ -2,11 +2,12 @@ package com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy
 
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.strategy.BeforeMethodCallStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterExitStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyDefaultValues.*;
+import static com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyDefaultValues.BEFORE_NO_OP;
+import static com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyDefaultValues.BEFORE_THREAD_START;
 import static com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyFromAnalyze.NORMAL_METHOD_ENTER_STRATEGY;
 import static com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyFromAnalyze.SYNCHRONIZED_METHOD_ENTER_STRATEGY;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,7 +28,7 @@ public class MethodCallIdToStrategyTest {
     @Test
     public void normalMethod() {
         MethodCallId normalMethod = new MethodCallId("com/test/Test", "normal", "(I)V");
-        MethodEnterStrategy strategy = methodCallIdToStrategyDefaultValues.methodEnterStrategy(normalMethod);
+        MethodEnterExitStrategy strategy = methodCallIdToStrategyDefaultValues.methodEnterStrategy(normalMethod);
         assertThat(strategy, is(NORMAL_METHOD_ENTER_STRATEGY));
     }
 
@@ -35,15 +36,15 @@ public class MethodCallIdToStrategyTest {
     public void synchronizedMethod() {
         MethodCallId synchronizedMethod = new MethodCallId("com/test/Test", "synchronized", "(I)V");
         methodCallIdToStrategyFromAnalyze.setMethodIsSynchronized(synchronizedMethod);
-        MethodEnterStrategy strategy = methodCallIdToStrategyDefaultValues.methodEnterStrategy(synchronizedMethod);
+        MethodEnterExitStrategy strategy = methodCallIdToStrategyDefaultValues.methodEnterStrategy(synchronizedMethod);
         assertThat(strategy, is(SYNCHRONIZED_METHOD_ENTER_STRATEGY));
     }
 
     @Test
     public void threadRun() {
         MethodCallId threadRun = new MethodCallId("java/lang/Thread", "run", "()V");
-        MethodEnterStrategy strategy = methodCallIdToStrategyDefaultValues.methodEnterStrategy(threadRun);
-        assertThat(strategy, is(RUN_METHOD_ENTER_STRATEGY));
+        MethodEnterExitStrategy strategy = methodCallIdToStrategyDefaultValues.methodEnterStrategy(threadRun);
+        assertThat(strategy, is(methodCallIdToStrategyDefaultValues.runMethodEnterStrategy()));
     }
 
     @Test

@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.methodrepository;
 
 import com.vmlens.trace.agent.bootstrap.strategy.BeforeMethodCallStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterExitStrategy;
 
 public interface MethodIdToStrategy {
 
-    MethodEnterStrategy methodEnterStrategy(int methodId);
+    MethodEnterExitStrategy methodEnterStrategy(int methodId);
 
     BeforeMethodCallStrategy beforeMethodCallStrategy(int methodId);
 

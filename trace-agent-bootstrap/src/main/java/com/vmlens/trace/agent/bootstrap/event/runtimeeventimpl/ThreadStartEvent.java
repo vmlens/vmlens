@@ -6,8 +6,23 @@ import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.ThreadStartEventGen;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadStart;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEvent, InterleaveActionFactory {
+
+    private RunnableOrThreadWrapper runnableOrThreadWrapper;
+
+    public ThreadStartEvent(RunnableOrThreadWrapper runnableOrThreadWrapper) {
+        this.runnableOrThreadWrapper = runnableOrThreadWrapper;
+    }
+
+    public RunnableOrThreadWrapper runnableOrThreadWrapper() {
+        return runnableOrThreadWrapper;
+    }
+
+    public void setRunnableOrThreadWrapperToNull() {
+        this.runnableOrThreadWrapper = null;
+    }
 
     public void setThreadIndex(int threadIndex) {
         this.threadIndex = threadIndex;

@@ -11,12 +11,9 @@ public class MethodCallbackFactory {
     private final String BEFORE_METHOD_CALL = "beforeMethodCall";
     private final String AFTER_METHOD_CALL = "afterMethodCall";
     private final String METHOD_CALL_TARGET = "targetOfMethodCall";
-
-    private final String STATIC_METHOD_ENTER = "staticMethodEnter";
     private final String CONSTRUCTOR_METHOD_ENTER = "constructorMethodEnter";
     private final String METHOD_ENTER = "methodEnter";
     private final String METHOD_EXIT = "methodExit";
-
     private final String METHOD_DESCRIPTOR_INT_INT_INT_ARGUMENT = "(III)V";
     private final String METHOD_DESCRIPTOR_INT_ARGUMENT = "(I)V";
     private final String METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT = "(Ljava/lang/Object;I)V";
@@ -44,10 +41,6 @@ public class MethodCallbackFactory {
         methodCall(calledMethodId, METHOD_CALL_TARGET, METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT);
     }
 
-    public void staticMethodEnter(int inMethodId) {
-        methodCall(inMethodId, STATIC_METHOD_ENTER, METHOD_DESCRIPTOR_INT_ARGUMENT);
-    }
-
     public void constructorMethodEnter(int inMethodId) {
         methodCall(inMethodId, CONSTRUCTOR_METHOD_ENTER, METHOD_DESCRIPTOR_INT_ARGUMENT);
     }
@@ -57,7 +50,7 @@ public class MethodCallbackFactory {
     }
 
     public void methodExit(int inMethodId) {
-        methodCall(inMethodId, METHOD_EXIT, METHOD_DESCRIPTOR_INT_ARGUMENT);
+        methodCall(inMethodId, METHOD_EXIT, METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT);
     }
 
 

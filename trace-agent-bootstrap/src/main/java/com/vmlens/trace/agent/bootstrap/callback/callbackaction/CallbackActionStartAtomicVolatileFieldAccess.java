@@ -26,7 +26,7 @@ public class CallbackActionStartAtomicVolatileFieldAccess implements CallbackAct
 
     @Override
     public TLinkedList<TLinkableWrapper<SerializableEvent>> execute(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        threadLocalDataWhenInTest.setAtomicOperation(atomicOperation);
+        threadLocalDataWhenInTest.setAtomicVolatileFieldAccess(atomicOperation);
         threadLocalDataWhenInTest.runAdapter().startAtomicOperation(threadLocalDataWhenInTest);
         return emptyList();
     }

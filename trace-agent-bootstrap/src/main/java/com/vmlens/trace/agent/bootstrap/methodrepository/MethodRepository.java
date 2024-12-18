@@ -1,10 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.methodrepository;
 
+import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyDefaultValues;
 import com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyFromAnalyze;
 import com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyFromResource;
 import com.vmlens.trace.agent.bootstrap.strategy.BeforeMethodCallStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterExitStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.methodenterandexitstrategyimpl.CheckIsThreadRun;
 import gnu.trove.map.hash.THashMap;
 
 public class MethodRepository implements MethodCallIdMap, MethodIdToStrategy {
@@ -20,6 +22,15 @@ public class MethodRepository implements MethodCallIdMap, MethodIdToStrategy {
         methodCallIdToStrategyFromAnalyze = new MethodCallIdToStrategyFromAnalyze();
         methodCallIdToStrategyDefaultValues = new MethodCallIdToStrategyDefaultValues(
                 new MethodCallIdToStrategyFromResource(), methodCallIdToStrategyFromAnalyze);
+    }
+
+    public MethodRepository(CheckIsThreadRun checkIsThreadRun,
+                            ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider) {
+        methodCallIdToStrategyFromAnalyze = new MethodCallIdToStrategyFromAnalyze();
+        methodCallIdToStrategyDefaultValues = new MethodCallIdToStrategyDefaultValues(
+                new MethodCallIdToStrategyFromResource(), methodCallIdToStrategyFromAnalyze,
+                checkIsThreadRun,
+                threadLocalForParallelizeProvider);
     }
 
     public synchronized int asInt(MethodCallId methodCallId) {
@@ -42,7 +53,7 @@ public class MethodRepository implements MethodCallIdMap, MethodIdToStrategy {
         return methodCallIdToStrategyDefaultValues.beforeMethodCallStrategy(methodCallId);
     }
 
-    public synchronized MethodEnterStrategy methodEnterStrategy(int methodId) {
+    public synchronized MethodEnterExitStrategy methodEnterStrategy(int methodId) {
         MethodCallId methodCallId = integerToMethodCallId.get(methodId);
         return methodCallIdToStrategyDefaultValues.methodEnterStrategy(methodCallId);
     }

@@ -9,6 +9,7 @@ import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.impl.MonitorCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.impl.VmlensApiCallbackImpl;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -70,17 +71,42 @@ public class AgentClassFileTransformerIntegTest {
 
         runTest("MethodCall");
         verify(methodCallbackImplMock).methodEnter(any(), anyInt());
-        verify(methodCallbackImplMock, times(2)).methodExit(anyInt());
+        verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
+    }
+
+    @Test
+    public void staticMethodCall() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
+
+        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+
+        runTest("StaticMethodCall");
+        verify(methodCallbackImplMock, times(2)).methodEnter(any(), anyInt());
+        verify(methodCallbackImplMock, times(3)).methodExit(any(), anyInt());
+    }
+
+    @Test
+    @Ignore
+    public void staticMethodCallWithSynchronizedBlock() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
+
+        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+
+        runTest("StaticMethodCallWithSynchronizedBlock");
+        verify(methodCallbackImplMock, times(2)).methodEnter(any(), anyInt());
+        verify(methodCallbackImplMock, times(3)).methodExit(any(), anyInt());
     }
 
 
     private void runTest(String className) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         ClassLoader cl = new ClassLoaderForTransformation(this.getClass().getClassLoader());
-        Object testTwoVolatileFields = cl.loadClass("com.vmlens.test.guineaPig." + className).newInstance();
-        for (Method m : testTwoVolatileFields.getClass().getMethods()) {
+        Object objectUnderTest = cl.loadClass("com.vmlens.test.guineaPig." + className).newInstance();
+        for (Method m : objectUnderTest.getClass().getMethods()) {
             if (m.getName().equals("update")) {
-                m.invoke(testTwoVolatileFields);
+                m.invoke(objectUnderTest);
             }
         }
     }

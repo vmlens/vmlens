@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
@@ -35,10 +36,12 @@ public class RunImpl implements Run {
             runtimeEvent.setLoopId(loopId);
             runtimeEvent.setRunId(runId);
             RuntimeEvent result = runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest);
-            try {
-                waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
-            } catch (TestBlockedException e) {
+            if (runtimeEvent instanceof InterleaveActionFactory) {
+                try {
+                    waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
+                } catch (TestBlockedException e) {
 
+                }
             }
             return of(result);
         } finally {

@@ -6,6 +6,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 
 import static com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants.ASM_API_VERSION;
+import static com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.CallType.*;
 import static org.objectweb.asm.Opcodes.*;
 
 public class MethodVisitorAdapter extends MethodVisitor {
@@ -29,9 +30,14 @@ public class MethodVisitorAdapter extends MethodVisitor {
         for (Type argType : arguments.getArgumentTypes()) {
             argumentSize += argType.getSize();
         }
-        boolean isConstructorCall = "<init>".equals(name);
+        CallType callType = NORMAL;
+        if (opcode == INVOKESTATIC) {
+            callType = STATIC;
+        } else if ("<init>".equals(name)) {
+            callType = CONSTRUCTOR;
+        }
         int methodId = methodCallIdMap.asInt(new MethodCallId(owner, name, descriptor));
-        adapted.beforeMethodCall(argumentSize, arguments.getReturnType().getSize(), isConstructorCall, methodId);
+        adapted.beforeMethodCall(argumentSize, arguments.getReturnType().getSize(), callType, methodId);
         super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
         adapted.afterMethodCall(arguments.getReturnType().getSize(), methodId);
     }

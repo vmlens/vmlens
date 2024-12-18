@@ -4,7 +4,7 @@ public interface AnalyzeOrTransformMethodMethodCall {
 
     void afterLocalLoad(int size);
 
-    void beforeMethodCall(int callArgumentSize, int returnSize, boolean isConstructorCall,
+    void beforeMethodCall(int callArgumentSize, int returnSize, CallType callType,
                           int methodCallId);
 
     // only for analyze

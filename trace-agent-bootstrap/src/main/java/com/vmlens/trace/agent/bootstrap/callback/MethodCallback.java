@@ -3,11 +3,13 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.ordermap.OrderMapSingleton;
 
 public class MethodCallback {
 
     private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(
             MethodRepositorySingleton.INSTANCE,
+            OrderMapSingleton.MONITOR_ORDER,
             new ThreadLocalWhenInTestAdapterImpl());
 
     public static void targetOfMethodCall(Object object, int calledMethodId) {
@@ -26,16 +28,13 @@ public class MethodCallback {
         methodCallbackImpl.methodEnter(object, methodId);
     }
 
-    public static void staticMethodEnter(int methodId) {
-        methodCallbackImpl.staticMethodEnter(methodId);
-    }
 
     public static void constructorMethodEnter(int methodId) {
         methodCallbackImpl.constructorMethodEnter(methodId);
     }
 
-    public static void methodExit(int methodId) {
-        methodCallbackImpl.methodExit(methodId);
+    public static void methodExit(Object object, int methodId) {
+        methodCallbackImpl.methodExit(object, methodId);
     }
 
     // Visible for Test
