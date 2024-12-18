@@ -7,22 +7,35 @@ public class ApplyClassTransformerCollection {
 
     private final TLinkedList<TLinkableWrapper<ApplyClassTransformerElement>> classArrayTransformerList;
 
+    private static String normalize(String name) {
+        return name.replace('.', '/');
+    }
+
     public ApplyClassTransformerCollection(TLinkedList<TLinkableWrapper<ApplyClassTransformerElement>> classArrayTransformerList) {
         this.classArrayTransformerList = classArrayTransformerList;
     }
 
     /**
-     * @param name
+     * @param notNormalizedName
      * @return null when no ClassArrayTransformer could be found
      */
-    public ApplyClassTransformerElement get(String name) {
-        if (name == null) {
+    public ApplyClassTransformerElement get(String notNormalizedName) {
+        if (notNormalizedName == null) {
             return null;
         }
+
+        String name = normalize(notNormalizedName);
+
         if (name.indexOf('[') > -1) {
             return null;
         }
         if (name.startsWith("com/vmlens/shaded")) {
+            return null;
+        }
+        if (name.startsWith("com/vmlens/trace/agent/bootstrap")) {
+            return null;
+        }
+        if (name.startsWith("com/anarsoft/trace/agent")) {
             return null;
         }
 
