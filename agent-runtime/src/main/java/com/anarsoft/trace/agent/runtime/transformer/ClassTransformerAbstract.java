@@ -97,11 +97,7 @@ public abstract class ClassTransformerAbstract  extends ClassVisitor {
 
         index = 0;
 
-        for (FieldInClassDescription serializedFieldDescription : classVisitorCreateDesc.fieldDescriptionList) {
-            fieldArray[index] = serializedFieldDescription;
-            index++;
 
-        }
 
         ClassDescription classAnalyzedEvent = new ClassDescription(className, classVisitorCreateDesc.source,
                 methodArray, fieldArray, classVisitorCreateDesc.superName, classVisitorCreateDesc.interfaces);

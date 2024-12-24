@@ -1,10 +1,9 @@
 package com.anarsoft.trace.agent.description;
 
-import gnu.trove.list.TLinkableAdapter;
 
 import java.util.Objects;
 
-public class FieldInClassDescription extends TLinkableAdapter<FieldInClassDescription> {
+public class FieldInClassDescription {
 	
 	private final int id;
 	private final int access;

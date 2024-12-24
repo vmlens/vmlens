@@ -10,7 +10,7 @@ import org.objectweb.asm.FieldVisitor;
 
 public class FieldVisitorCreateDesc extends FieldVisitor {
 
-    private final TLinkedList<FieldInClassDescription> fieldDescriptionList;
+    private final TLinkedList<TLinkableWrapper<FieldInClassDescription>> fieldDescriptionList;
 	private final String className;
 	private final String fieldName;
 	private final int access;
@@ -21,7 +21,7 @@ public class FieldVisitorCreateDesc extends FieldVisitor {
 	private boolean hasSuppressAnnotation;
 
 
-    public FieldVisitorCreateDesc(TLinkedList<FieldInClassDescription> fieldDescriptionList, String className, String fieldName, int access, String desc, String signature) {
+    public FieldVisitorCreateDesc(TLinkedList<TLinkableWrapper<FieldInClassDescription>> fieldDescriptionList, String className, String fieldName, int access, String desc, String signature) {
 		super(AgentClassFileTransformer.ASM_API_VERSION );
 		this.fieldDescriptionList = fieldDescriptionList;
 		this.className = className;
@@ -56,19 +56,14 @@ public class FieldVisitorCreateDesc extends FieldVisitor {
 		{
 			  int fieldId = FieldIdRepository.create(className, fieldName,FieldTyp.FINAL).id;
 
-            fieldDescriptionList.add(new FieldInClassDescription(fieldId, access, fieldName, desc,
-						 signature));
-			
-			
-			
-		}
+
+        }
 		else
 		{
 			  int fieldId = FieldIdRepository.create(className, fieldName,FieldTyp.NON_VOLATILE).id;
 
-            fieldDescriptionList.add(new FieldInClassDescription(fieldId, access, fieldName, desc,
-						 signature));
-		}
+
+        }
 		
 		
 		

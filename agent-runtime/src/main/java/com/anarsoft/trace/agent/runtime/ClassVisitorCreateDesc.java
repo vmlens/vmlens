@@ -21,7 +21,7 @@ public class ClassVisitorCreateDesc extends ClassVisitor {
 	public boolean hasUnsafeAccess = false; 
 	public boolean hasFinalFields = false;
 	public String source = "";
-    public TLinkedList<FieldInClassDescription> fieldDescriptionList = new TLinkedList<FieldInClassDescription>();
+    public TLinkedList<TLinkableWrapper<FieldInClassDescription>> fieldDescriptionList = new TLinkedList<>();
 	public boolean callbackMethodNotGenerated = true;
 
 	public CreateAtomic createAtomic = new CreateNotAtomic();
@@ -104,15 +104,13 @@ public class ClassVisitorCreateDesc extends ClassVisitor {
         if ((access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL) {
             hasFinalFields = true;
             int fieldId = FieldIdRepository.create(className, name, FieldTyp.FINAL).id;
-            fieldDescriptionList.add(new FieldInClassDescription(fieldId, access, name, desc,
-                    signature));
+
             return null;
         }
 
         if ((access & Opcodes.ACC_VOLATILE) == Opcodes.ACC_VOLATILE) {
             int fieldId = FieldIdRepository.create(className, name, FieldTyp.VOLATILE).id;
-            fieldDescriptionList.add(new FieldInClassDescription(fieldId, access, name, desc,
-                    signature));
+
             return null;
         }
         return new FieldVisitorCreateDesc(fieldDescriptionList, className, name, access, desc, signature);

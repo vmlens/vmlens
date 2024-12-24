@@ -1,8 +1,6 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
-import com.anarsoft.trace.agent.description.FieldAccessDescription;
 import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
-import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
 import com.anarsoft.trace.agent.runtime.repositorydeprecated.CallbackFactory;
 import com.anarsoft.trace.agent.runtime.repositorydeprecated.FieldRepositoryFacade;
@@ -310,8 +308,7 @@ public class MethodTransformer extends MethodTransformerAbstract {
 
         }
 
-        this.methodDescriptionBuilder.getFieldDescriptionList().add(new TLinkableWrapper(
-                new FieldAccessDescription(name, owner, typAndId.id, isStatic, isWrite, isTraced, isFinal)));
+
     }
 
     protected void onMonitorEnter() {

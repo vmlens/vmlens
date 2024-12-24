@@ -21,7 +21,7 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
         try {
             threadActiveCondition.signalAll();
             long started = System.currentTimeMillis();
-            while (!runStateMachine.isActive(threadLocalDataWhenInTest)) {
+            while (!runStateMachine.canProcessEndOfOperation(threadLocalDataWhenInTest)) {
                 threadActiveCondition.await(10, TimeUnit.MICROSECONDS);
                 if ((System.currentTimeMillis() - started) > DEFAULT_WAIT_TIME) {
                     agentLogger.debug(this.getClass(), "blocked:" + threadLocalDataWhenInTest.threadIndex());

@@ -43,8 +43,8 @@ public class RunStateMachineTestWrapper {
     }
 
     public void assertBehavesAsRunStateEnd() {
-        assertThat(runStateMachine.isActive(eventThread), is(true));
-        assertThat(runStateMachine.isActive(otherThread), is(true));
+        assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
+        assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(true));
         assertThat(runStateMachine.after(mock(RuntimeEvent.class), eventThread), is(nullValue()));
         assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L), run),
                 is(nullValue()));
@@ -53,37 +53,37 @@ public class RunStateMachineTestWrapper {
 
     public void assertBehavesAsRunStateActiveActiveStrategyRecording() {
         RuntimeEvent runtimeEvent = mock(RuntimeEvent.class);
-        assertThat(runStateMachine.isActive(eventThread), is(true));
-        assertThat(runStateMachine.isActive(otherThread), is(true));
+        assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
+        assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(true));
         assertThat(runStateMachine.after(runtimeEvent, eventThread), is(runtimeEvent));
         assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L), run),
                 is(nullValue()));
-        assertThat(runStateMachine.isStartAtomicOperationPossible(), is(true));
+        assertThat(runStateMachine.canStartAtomicOperation(), is(true));
     }
 
     public void assertBehavesAsRunStateAtomicOperation() {
         RuntimeEvent runtimeEvent = mock(RuntimeEvent.class);
-        assertThat(runStateMachine.isActive(eventThread), is(true));
-        assertThat(runStateMachine.isActive(otherThread), is(false));
+        assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
+        assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(false));
         assertThat(runStateMachine.after(runtimeEvent, eventThread), is(runtimeEvent));
         assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L), run),
                 is(nullValue()));
-        assertThat(runStateMachine.isStartAtomicOperationPossible(), is(false));
+        assertThat(runStateMachine.canStartAtomicOperation(), is(false));
     }
 
     public void assertBehavesAsRunStateNewThreadStarted() {
-        assertThat(runStateMachine.isActive(eventThread), is(false));
-        assertThat(runStateMachine.isActive(otherThread), is(false));
+        assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(false));
+        assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(false));
         assertThat(runStateMachine.after(mock(RuntimeEvent.class), eventThread), is(notNullValue()));
-        assertThat(runStateMachine.isStartAtomicOperationPossible(), is(false));
+        assertThat(runStateMachine.canStartAtomicOperation(), is(false));
     }
 
     public void assertBehavesAsRunStateAtomicOperationWithNewThreadStarted() {
         RuntimeEvent runtimeEvent = mock(RuntimeEvent.class);
-        assertThat(runStateMachine.isActive(eventThread), is(true));
-        assertThat(runStateMachine.isActive(otherThread), is(false));
+        assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
+        assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(false));
         assertThat(runStateMachine.after(runtimeEvent, eventThread), is(runtimeEvent));
-        assertThat(runStateMachine.isStartAtomicOperationPossible(), is(false));
+        assertThat(runStateMachine.canStartAtomicOperation(), is(false));
     }
 
     public void assertNewThreadIndex(int threadIndex) {
@@ -111,5 +111,15 @@ public class RunStateMachineTestWrapper {
         runStateMachine.end(threadLocalForParallelize);
     }
 
+    public RunStateMachine runStateMachine() {
+        return runStateMachine;
+    }
 
+    public ThreadLocalWhenInTestForParallelize eventThread() {
+        return eventThread;
+    }
+
+    public ThreadLocalWhenInTestForParallelize otherThread() {
+        return otherThread;
+    }
 }

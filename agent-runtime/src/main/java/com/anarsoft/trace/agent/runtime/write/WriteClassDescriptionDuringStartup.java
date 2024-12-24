@@ -6,8 +6,7 @@ import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 
 public class WriteClassDescriptionDuringStartup  implements WriteClassDescription  {
 
-    private TLinkedList<
-            TLinkableWrapper<ClassDescription>> classAnalyzedEventList;
+    private TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList;
 	
 	public WriteClassDescriptionDuringStartup(
 			TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList) {
@@ -17,7 +16,8 @@ public class WriteClassDescriptionDuringStartup  implements WriteClassDescriptio
 
 	@Override
 	public void write(ClassDescription classDescription) {
-		classAnalyzedEventList.add( new TLinkableWrapper<ClassDescription>( classDescription ));
+        classAnalyzedEventList.add(new TLinkableWrapper<>(classDescription));
 		
 	}
+
 }

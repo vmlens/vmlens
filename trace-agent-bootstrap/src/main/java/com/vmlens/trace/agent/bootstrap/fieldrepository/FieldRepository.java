@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.StaticVolatil
 import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.VolatileFieldStrategy;
 import gnu.trove.map.hash.THashMap;
 
-public class FieldRepository implements FieldIdToStrategy, FieldOwnerAndNameToIntMap, FieldOwnerAndNameToStrategyStorage {
+public class FieldRepository implements FieldIdToStrategy, FieldRepositoryForAnalyze {
 
     static final FieldStrategy VOLATILE_FIELD_STRATEGY = new VolatileFieldStrategy();
     static final FieldStrategy STATIC_VOLATILE_FIELD_STRATEGY = new StaticVolatileFieldStrategy();
@@ -19,7 +19,7 @@ public class FieldRepository implements FieldIdToStrategy, FieldOwnerAndNameToIn
 
     private int maxIndex = 0;
 
-    public int asInt(FieldOwnerAndName fieldId) {
+    public synchronized int asInt(FieldOwnerAndName fieldId) {
         if (fieldIdIdToInt.contains(fieldId)) {
             return fieldIdIdToInt.get(fieldId);
         }
@@ -29,30 +29,33 @@ public class FieldRepository implements FieldIdToStrategy, FieldOwnerAndNameToIn
         return temp;
     }
 
-
     @Override
-    public FieldStrategy get(int fieldId) {
+    public synchronized FieldStrategy get(int fieldId) {
         return idToStrategy.get(fieldId);
     }
 
     @Override
-    public void setFieldIsVolatile(FieldOwnerAndName fieldOwnerAndName) {
+    public synchronized int getIdAndSetFieldIsVolatile(FieldOwnerAndName fieldOwnerAndName) {
         setStrategy(fieldOwnerAndName, VOLATILE_FIELD_STRATEGY);
+        return asInt(fieldOwnerAndName);
     }
 
     @Override
-    public void setFieldIsVolatileStatic(FieldOwnerAndName fieldOwnerAndName) {
+    public synchronized int getIdAndSetFieldIsVolatileStatic(FieldOwnerAndName fieldOwnerAndName) {
         setStrategy(fieldOwnerAndName, STATIC_VOLATILE_FIELD_STRATEGY);
+        return asInt(fieldOwnerAndName);
     }
 
     @Override
-    public void setFieldIsNormal(FieldOwnerAndName fieldOwnerAndName) {
+    public synchronized int getIdAndSetFieldIsNormal(FieldOwnerAndName fieldOwnerAndName) {
         setStrategy(fieldOwnerAndName, NORMAL_FIELD_STRATEGY);
+        return asInt(fieldOwnerAndName);
     }
 
     @Override
-    public void setFieldIsStatic(FieldOwnerAndName fieldOwnerAndName) {
+    public synchronized int getIdAndSetFieldIsStatic(FieldOwnerAndName fieldOwnerAndName) {
         setStrategy(fieldOwnerAndName, STATIC_FIELD_STRATEGY);
+        return asInt(fieldOwnerAndName);
     }
 
     private void setStrategy(FieldOwnerAndName fieldId, FieldStrategy fieldStrategy) {

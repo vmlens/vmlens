@@ -1,7 +1,6 @@
 package com.anarsoft.trace.agent.description;
 
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class MethodDescription {
@@ -12,15 +11,12 @@ public class MethodDescription {
 	private final int access;
 	private final int lineNumber;
 
-	private FieldAccessDescription[]  fieldArray;
-
-	public MethodDescription(String name, int id, FieldAccessDescription[] fieldArray,
+    public MethodDescription(String name, int id,
 							 String desc, int access, int lineNumber) {
 		super();
 		this.name = name;
 		this.desc = desc;
 		this.id = id;
-		this.fieldArray = fieldArray;
 		this.access = access;
 		this.lineNumber = lineNumber;
 	}
@@ -37,9 +33,7 @@ public class MethodDescription {
 		return id;
 	}
 
-	public FieldAccessDescription[] fieldArray() {
-		return fieldArray;
-	}
+
 
 	public String desc() {
 		return desc;
@@ -57,7 +51,6 @@ public class MethodDescription {
 				", id=" + id +
 				", access=" + access +
 				", lineNumber=" + lineNumber +
-				", fieldArray=" + Arrays.toString(fieldArray) +
 				'}';
 	}
 
@@ -68,8 +61,7 @@ public class MethodDescription {
 
 		MethodDescription that = (MethodDescription) o;
 		return id == that.id && access == that.access && lineNumber == that.lineNumber
-				&& Objects.equals(name, that.name) && Objects.equals(desc, that.desc)
-				&& Arrays.equals(fieldArray, that.fieldArray);
+                && Objects.equals(name, that.name) && Objects.equals(desc, that.desc);
 	}
 
 	@Override
@@ -79,7 +71,6 @@ public class MethodDescription {
 		result = 31 * result + id;
 		result = 31 * result + access;
 		result = 31 * result + lineNumber;
-		result = 31 * result + Arrays.hashCode(fieldArray);
 		return result;
 	}
 }

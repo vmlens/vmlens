@@ -67,10 +67,6 @@ public class SerializeAndDeserializeClassDescription {
         out.writeInt(description.access());
         out.writeInt(description.lineNumber());
 
-        out.writeInt(description.fieldArray().length);
-        for (FieldAccessDescription md : description.fieldArray()) {
-            serialize(md, out);
-        }
     }
 
     private MethodDescription deserializeMethod(DataInputStream in) throws IOException {
@@ -80,14 +76,7 @@ public class SerializeAndDeserializeClassDescription {
         int access = in.readInt();
         int lineNumber = in.readInt();
 
-        int fieldArrayLength = in.readInt();
-        FieldAccessDescription[] fieldArray = new FieldAccessDescription[fieldArrayLength];
-
-        for (int i = 0; i < fieldArrayLength; i++) {
-            fieldArray[i] = deserializeFieldAccess(in);
-        }
-
-        return new MethodDescription(name, id, fieldArray,
+        return new MethodDescription(name, id,
                 desc, access, lineNumber);
     }
 
@@ -109,28 +98,8 @@ public class SerializeAndDeserializeClassDescription {
         return new FieldInClassDescription(id, access, name, desc, signature);
     }
 
-    private void serialize(FieldAccessDescription description, DataOutputStream out) throws IOException {
-        out.writeUTF(convertNullToBlank(description.name()));
-        out.writeUTF(convertNullToBlank(description.owner()));
-        out.writeInt(description.id());
-        out.writeBoolean(description.isStatic());
-        out.writeBoolean(description.isWrite());
-        out.writeBoolean(description.isTraced());
-        out.writeBoolean(description.isFinal());
-    }
 
-    private FieldAccessDescription deserializeFieldAccess(DataInputStream in) throws IOException {
-        String name = in.readUTF();
-        String owner = in.readUTF();
-        int id = in.readInt();
-        boolean isStatic = in.readBoolean();
-        boolean isWrite = in.readBoolean();
-        boolean isTraced = in.readBoolean();
-        boolean isFinal = in.readBoolean();
 
-        return new FieldAccessDescription(name, owner, id,
-                isStatic, isWrite, isTraced, isFinal);
-    }
 
     private String convertNullToBlank(String in) {
         if (in == null) {

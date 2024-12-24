@@ -9,7 +9,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterExitStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.methodenterandexitstrategyimpl.CheckIsThreadRun;
 import gnu.trove.map.hash.THashMap;
 
-public class MethodRepository implements MethodCallIdMap, MethodIdToStrategy {
+public class MethodRepository implements MethodRepositoryForAnalyze, MethodIdToStrategy {
 
     private final MethodCallIdToStrategyDefaultValues methodCallIdToStrategyDefaultValues;
     private final MethodCallIdToStrategyFromAnalyze methodCallIdToStrategyFromAnalyze;
@@ -56,5 +56,11 @@ public class MethodRepository implements MethodCallIdMap, MethodIdToStrategy {
     public synchronized MethodEnterExitStrategy methodEnterStrategy(int methodId) {
         MethodCallId methodCallId = integerToMethodCallId.get(methodId);
         return methodCallIdToStrategyDefaultValues.methodEnterStrategy(methodCallId);
+    }
+
+    @Override
+    public synchronized int getIdAndSetMethodIsSynchronized(MethodCallId methodCallId) {
+        methodCallIdToStrategyFromAnalyze.setMethodIsSynchronized(methodCallId);
+        return asInt(methodCallId);
     }
 }

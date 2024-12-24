@@ -1,13 +1,10 @@
 package com.anarsoft.trace.agent.runtime.classtransformervmlensapi;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants;
+import com.anarsoft.trace.agent.runtime.classtransformerall.ASMConstants;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 
 public class ClassVisitorVmlensApi extends ClassVisitor {
-
-    public static final String CALLBACK_CLASS_VMLENS_API =
-            "com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback";
 
     public ClassVisitorVmlensApi(ClassVisitor classVisitor) {
         super(ASMConstants.ASM_API_VERSION, classVisitor);
@@ -21,7 +18,5 @@ public class ClassVisitorVmlensApi extends ClassVisitor {
                 super.visitMethod(access, name, descriptor, signature, exceptions));
 
     }
-
-
 
 }

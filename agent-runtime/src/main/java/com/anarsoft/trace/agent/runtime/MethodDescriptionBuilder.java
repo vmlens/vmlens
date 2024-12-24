@@ -1,14 +1,13 @@
 package com.anarsoft.trace.agent.runtime;
 
 
-import com.anarsoft.trace.agent.description.FieldAccessDescription;
+
 import com.anarsoft.trace.agent.description.MethodDescription;
 import com.vmlens.shaded.gnu.trove.list.TLinkable;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 
 public class MethodDescriptionBuilder implements TLinkable<MethodDescriptionBuilder> {
 
-	private TLinkedList<TLinkableWrapper<FieldAccessDescription>> fieldDescriptionList = new TLinkedList<TLinkableWrapper<FieldAccessDescription>>();
 	private TLinkedList<TLinkableWrapper<String>> annotationList = new TLinkedList<TLinkableWrapper<String>>();
 
     private final String name;
@@ -34,9 +33,6 @@ public class MethodDescriptionBuilder implements TLinkable<MethodDescriptionBuil
 
 
 
-	public TLinkedList<TLinkableWrapper<FieldAccessDescription>> getFieldDescriptionList() {
-		return fieldDescriptionList;
-	}
 
 
    public void addAnnotation(String name)
@@ -64,19 +60,11 @@ public class MethodDescriptionBuilder implements TLinkable<MethodDescriptionBuil
 	public MethodDescription build() {
 
 
-		FieldAccessDescription[] array = new FieldAccessDescription[fieldDescriptionList.size()];
 
 		//array = fieldDescriptionList.toArray(array);
 
 		int index = 0;
 
-		for(TLinkableWrapper<FieldAccessDescription> f :  fieldDescriptionList  )
-		{
-
-			array[index] = f.getElement();
-
-			index++;
-		}
 
 
         String[] annotationArray = new String[annotationList.size()];		
@@ -91,11 +79,8 @@ public class MethodDescriptionBuilder implements TLinkable<MethodDescriptionBuil
 				index++;
 			}
 
-			
-	    
-			
 
-		return new MethodDescription(name, id , array , desc, access , lineNumber  );
+        return new MethodDescription(name, id, desc, access, lineNumber);
 
 
 	}

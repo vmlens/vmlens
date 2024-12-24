@@ -27,8 +27,8 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
     public void blockBuilderAdd(Position myPosition,
                                 MapContainingStack mapContainingStack,
                                 MapOfBlocks result) {
-        DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<DependentBlockElement>(this, myPosition),
-                new ElementAndPosition<DependentBlockElement>(this, myPosition));
+        DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<>(this, myPosition),
+                new ElementAndPosition<>(this, myPosition));
         result.addDependent(new VolatileFieldAccessKey(fieldId), dependentBlock);
     }
 

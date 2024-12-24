@@ -13,14 +13,7 @@ public class ClassDescriptionTest {
     @Test
     public void serializeDeserialize() throws IOException {
         // Given
-        FieldAccessDescription fieldAccessDescription = new FieldAccessDescription("name", "owner",
-                5, false, true, false, true);
-
-        FieldAccessDescription[] fieldAccessDescriptionArray = new FieldAccessDescription[2];
-        fieldAccessDescriptionArray[0] = fieldAccessDescription;
-        fieldAccessDescriptionArray[1] = fieldAccessDescription;
-
-        MethodDescription methodDescription = new MethodDescription("name", 22, fieldAccessDescriptionArray,
+        MethodDescription methodDescription = new MethodDescription("name", 22,
                 "desc", 2, 4);
 
         MethodDescription[] methodDescriptionArray = new MethodDescription[3];

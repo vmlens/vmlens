@@ -2,6 +2,7 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformer;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
@@ -15,8 +16,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import static org.mockito.Mockito.mock;
+
 public class ClassLoaderForTransformation extends ClassLoader {
 
+    private static final boolean TRACE_CLASSES = false;
     private final ClassLoader testClassLoader;
 
 
@@ -37,8 +41,9 @@ public class ClassLoaderForTransformation extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
+            WriteClassDescription writeClassDescription = mock(WriteClassDescription.class);
             ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodRepository(),
-                    new FieldRepository());
+                    new FieldRepository(), writeClassDescription);
             ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(
                     new WriteClassDescriptionDuringStartup(new TLinkedList<>()),
                     factory);
@@ -54,10 +59,12 @@ public class ClassLoaderForTransformation extends ClassLoader {
             ClassVisitor visitor = new TraceClassVisitor(new PrintWriter(System.out));
             classReader.accept(visitor, ClassReader.EXPAND_FRAMES);
 
-            String fileName = name.substring(name.lastIndexOf("/") + 1);
-            OutputStream outTransformed = new FileOutputStream(fileName + "_trans.class");
-            outTransformed.write(transformed);
-            outTransformed.close();
+            if (TRACE_CLASSES) {
+                String fileName = name.substring(name.lastIndexOf("/") + 1);
+                OutputStream outTransformed = new FileOutputStream(fileName + "_trans.class");
+                outTransformed.write(transformed);
+                outTransformed.close();
+            }
 
             return defineClass(name, transformed, 0, transformed.length);
         } catch (IOException e) {

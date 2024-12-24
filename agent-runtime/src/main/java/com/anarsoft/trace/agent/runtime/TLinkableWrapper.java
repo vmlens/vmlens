@@ -1,6 +1,9 @@
 package com.anarsoft.trace.agent.runtime;
 
 import com.vmlens.shaded.gnu.trove.list.TLinkable;
+import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+
+import java.lang.reflect.Array;
 
 public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELEMENT>> {
 
@@ -21,6 +24,18 @@ public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELE
     public static <ELEMENT> TLinkableWrapper<ELEMENT> wrap(ELEMENT element) {
         return new TLinkableWrapper<>(element);
     }
+
+    public static <ELEMENT> ELEMENT[] toArray(Class<ELEMENT> clazz, TLinkedList<TLinkableWrapper<ELEMENT>> list) {
+        ELEMENT[] array = (ELEMENT[]) Array.newInstance(clazz, list.size());
+        int index = 0;
+        for (TLinkableWrapper<ELEMENT> elem : list) {
+            array[index] = elem.element;
+            index++;
+        }
+
+        return array;
+    }
+
 
 	@Override
 	public TLinkableWrapper<ELEMENT> getNext() {

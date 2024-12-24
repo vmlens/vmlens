@@ -67,7 +67,7 @@ public class FieldCallbackImplIntegTest {
     @Test
     public void volatileField() {
         FieldOwnerAndName volatileField = new FieldOwnerAndName("test.Class", "volatile");
-        fieldRepository.setFieldIsVolatile(volatileField);
+        fieldRepository.getIdAndSetFieldIsVolatile(volatileField);
         int fieldId = fieldRepository.asInt(volatileField);
         accessField(fieldId);
         assertThat(eventList.get(0), instanceOf(VolatileAccessEvent.class));

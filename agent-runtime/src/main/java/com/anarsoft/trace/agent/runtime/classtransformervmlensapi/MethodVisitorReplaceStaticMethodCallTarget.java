@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime.classtransformervmlensapi;
 
 import org.objectweb.asm.MethodVisitor;
 
-import static com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants.ASM_API_VERSION;
+import static com.anarsoft.trace.agent.runtime.classtransformerall.ASMConstants.ASM_API_VERSION;
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 public class MethodVisitorReplaceStaticMethodCallTarget extends MethodVisitor {

@@ -31,12 +31,7 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
             }
         }
         for (MethodDescription methodDescription : classDescription.methodArray()) {
-            for (FieldAccessDescription fieldAccessDescription : methodDescription.fieldArray()) {
-                ContainerForField fieldContainer = idToFieldContainer.get(fieldAccessDescription.id());
-                if (fieldContainer != null) {
-                    fieldContainer.setFieldAccessDescription(fieldAccessDescription);
-                }
-            }
+
 
             ContainerForMethod methodContainer = idToMethodContainer.get(methodDescription.id());
             if (methodContainer != null) {

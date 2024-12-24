@@ -8,24 +8,26 @@ import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 public interface RunStateMachine {
 
-    boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
-
     RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
 
     ThreadLocalWhenInTest processNewTestTask(RunnableOrThreadWrapper newWrapper,
                                              ThreadLocalForParallelize threadLocalForParallelize,
                                              Run run);
 
+    boolean canProcessEndOfOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
+
+
     void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
 
     void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
                                            RunnableOrThreadWrapper newThread);
+
+    boolean canStartAtomicOperation();
 
     RuntimeEvent endAtomicOperation(RuntimeEvent runtimeEvent,
                                     ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
 
     ActualRun end(ThreadLocalForParallelize threadLocalForParallelize);
 
-    boolean isStartAtomicOperationPossible();
 
 }

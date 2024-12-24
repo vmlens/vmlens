@@ -1,0 +1,37 @@
+package com.anarsoft.trace.agent.runtime.classanalyzer;
+
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
+
+public class OnFieldAccess {
+
+    private final FieldRepositoryForAnalyze fieldRepositoryForAnalyze;
+    private final FieldOwnerAndName fieldOwnerAndName;
+    private int id;
+
+    public OnFieldAccess(FieldRepositoryForAnalyze fieldRepositoryForAnalyze,
+                         FieldOwnerAndName fieldOwnerAndName) {
+        this.fieldRepositoryForAnalyze = fieldRepositoryForAnalyze;
+        this.fieldOwnerAndName = fieldOwnerAndName;
+    }
+
+    public void onNormal() {
+        id = fieldRepositoryForAnalyze.getIdAndSetFieldIsNormal(fieldOwnerAndName);
+    }
+
+    public void onStatic() {
+        id = fieldRepositoryForAnalyze.getIdAndSetFieldIsStatic(fieldOwnerAndName);
+    }
+
+    public void onVolatile() {
+        id = fieldRepositoryForAnalyze.getIdAndSetFieldIsVolatile(fieldOwnerAndName);
+    }
+
+    public void onVolatileStatic() {
+        id = fieldRepositoryForAnalyze.getIdAndSetFieldIsVolatileStatic(fieldOwnerAndName);
+    }
+
+    public int id() {
+        return id;
+    }
+}

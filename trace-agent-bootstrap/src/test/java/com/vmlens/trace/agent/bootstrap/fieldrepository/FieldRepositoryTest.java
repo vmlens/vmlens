@@ -47,10 +47,10 @@ public class FieldRepositoryTest {
     }
 
     private void analyze(FieldRepository fieldRepository) {
-        fieldRepository.setFieldIsVolatile(volatileField);
-        fieldRepository.setFieldIsVolatileStatic(staticVolatileField);
-        fieldRepository.setFieldIsNormal(normalField);
-        fieldRepository.setFieldIsStatic(staticField);
+        fieldRepository.getIdAndSetFieldIsVolatile(volatileField);
+        fieldRepository.getIdAndSetFieldIsVolatileStatic(staticVolatileField);
+        fieldRepository.getIdAndSetFieldIsNormal(normalField);
+        fieldRepository.getIdAndSetFieldIsStatic(staticField);
     }
 
     private void transform(FieldRepository fieldRepository) {

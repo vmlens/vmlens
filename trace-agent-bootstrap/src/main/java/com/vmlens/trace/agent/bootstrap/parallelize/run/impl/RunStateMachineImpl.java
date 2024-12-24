@@ -27,7 +27,7 @@ public class RunStateMachineImpl implements RunStateMachine, ProcessRuntimeEvent
     }
 
     @Override
-    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+    public boolean canProcessEndOfOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
         return currentState.isActive(threadLocalDataWhenInTest);
     }
 
@@ -89,7 +89,7 @@ public class RunStateMachineImpl implements RunStateMachine, ProcessRuntimeEvent
     }
 
     @Override
-    public boolean isStartAtomicOperationPossible() {
+    public boolean canStartAtomicOperation() {
         return currentState.isStartAtomicOperationPossible();
     }
 }
