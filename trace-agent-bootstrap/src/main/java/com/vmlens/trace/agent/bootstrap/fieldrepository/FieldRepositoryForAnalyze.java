@@ -10,4 +10,6 @@ public interface FieldRepositoryForAnalyze extends FieldOwnerAndNameToIntMap {
 
     int getIdAndSetFieldIsStatic(FieldOwnerAndName fieldOwnerAndName);
 
+    int getIdAndSetFieldIsFinal(FieldOwnerAndName fieldOwnerAndName);
+
 }

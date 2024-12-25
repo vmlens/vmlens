@@ -1,10 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.fieldrepository;
 
 import com.vmlens.trace.agent.bootstrap.strategy.FieldStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.NormalFieldStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.StaticFieldStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.StaticVolatileFieldStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.VolatileFieldStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.*;
 import gnu.trove.map.hash.THashMap;
 
 public class FieldRepository implements FieldIdToStrategy, FieldRepositoryForAnalyze {
@@ -13,6 +10,7 @@ public class FieldRepository implements FieldIdToStrategy, FieldRepositoryForAna
     static final FieldStrategy STATIC_VOLATILE_FIELD_STRATEGY = new StaticVolatileFieldStrategy();
     static final FieldStrategy NORMAL_FIELD_STRATEGY = new NormalFieldStrategy();
     static final FieldStrategy STATIC_FIELD_STRATEGY = new StaticFieldStrategy();
+    static final FieldStrategy FINAL_FIELD_STRATEGY = new FinalFieldStrategy();
 
     private final THashMap<FieldOwnerAndName, Integer> fieldIdIdToInt = new THashMap<>();
     private final THashMap<Integer, FieldStrategy> idToStrategy = new THashMap<>();
@@ -55,6 +53,12 @@ public class FieldRepository implements FieldIdToStrategy, FieldRepositoryForAna
     @Override
     public synchronized int getIdAndSetFieldIsStatic(FieldOwnerAndName fieldOwnerAndName) {
         setStrategy(fieldOwnerAndName, STATIC_FIELD_STRATEGY);
+        return asInt(fieldOwnerAndName);
+    }
+
+    @Override
+    public synchronized int getIdAndSetFieldIsFinal(FieldOwnerAndName fieldOwnerAndName) {
+        setStrategy(fieldOwnerAndName, FINAL_FIELD_STRATEGY);
         return asInt(fieldOwnerAndName);
     }
 

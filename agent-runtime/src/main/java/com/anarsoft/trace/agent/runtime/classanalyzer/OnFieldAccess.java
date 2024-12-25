@@ -31,6 +31,10 @@ public class OnFieldAccess {
         id = fieldRepositoryForAnalyze.getIdAndSetFieldIsVolatileStatic(fieldOwnerAndName);
     }
 
+    public void onFinal() {
+        id = fieldRepositoryForAnalyze.getIdAndSetFieldIsFinal(fieldOwnerAndName);
+    }
+
     public int id() {
         return id;
     }
