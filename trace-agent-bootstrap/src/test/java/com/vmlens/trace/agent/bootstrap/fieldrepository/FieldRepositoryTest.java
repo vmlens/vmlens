@@ -48,9 +48,9 @@ public class FieldRepositoryTest {
 
     private void analyze(FieldRepository fieldRepository) {
         fieldRepository.getIdAndSetFieldIsVolatile(volatileField);
-        fieldRepository.getIdAndSetFieldIsVolatileStatic(staticVolatileField);
+        fieldRepository.getIdAndSetFieldIsVolatile(staticVolatileField);
         fieldRepository.getIdAndSetFieldIsNormal(normalField);
-        fieldRepository.getIdAndSetFieldIsStatic(staticField);
+        fieldRepository.getIdAndSetFieldIsNormal(staticField);
     }
 
     private void transform(FieldRepository fieldRepository) {
@@ -62,9 +62,9 @@ public class FieldRepositoryTest {
 
     private void use(FieldRepository fieldRepository) {
         assertThat(fieldRepository.get(volatileFieldId), is(FieldRepository.VOLATILE_FIELD_STRATEGY));
-        assertThat(fieldRepository.get(staticVolatileFieldId), is(FieldRepository.STATIC_VOLATILE_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(staticVolatileFieldId), is(FieldRepository.VOLATILE_FIELD_STRATEGY));
         assertThat(fieldRepository.get(normalFieldId), is(FieldRepository.NORMAL_FIELD_STRATEGY));
-        assertThat(fieldRepository.get(staticFieldId), is(FieldRepository.STATIC_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(staticFieldId), is(FieldRepository.NORMAL_FIELD_STRATEGY));
     }
 
 }

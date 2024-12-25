@@ -29,6 +29,6 @@ public class VolatileFieldStrategy implements FieldStrategy {
     public void onStaticAccess(int fieldId, int position, int inMethodId, int memoryAccessType,
                                OrderMap<Integer> staticVolatileFieldOrder,
                                ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
-        throw new IllegalStateException("onStaticAccess called on not static field");
+
     }
 }

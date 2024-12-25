@@ -1,15 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.fieldrepository;
 
 import com.vmlens.trace.agent.bootstrap.strategy.FieldStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.*;
+import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.FinalFieldStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.NormalFieldStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategyimpl.VolatileFieldStrategy;
 import gnu.trove.map.hash.THashMap;
 
 public class FieldRepository implements FieldIdToStrategy, FieldRepositoryForAnalyze {
 
     static final FieldStrategy VOLATILE_FIELD_STRATEGY = new VolatileFieldStrategy();
-    static final FieldStrategy STATIC_VOLATILE_FIELD_STRATEGY = new StaticVolatileFieldStrategy();
     static final FieldStrategy NORMAL_FIELD_STRATEGY = new NormalFieldStrategy();
-    static final FieldStrategy STATIC_FIELD_STRATEGY = new StaticFieldStrategy();
     static final FieldStrategy FINAL_FIELD_STRATEGY = new FinalFieldStrategy();
 
     private final THashMap<FieldOwnerAndName, Integer> fieldIdIdToInt = new THashMap<>();
@@ -39,20 +39,8 @@ public class FieldRepository implements FieldIdToStrategy, FieldRepositoryForAna
     }
 
     @Override
-    public synchronized int getIdAndSetFieldIsVolatileStatic(FieldOwnerAndName fieldOwnerAndName) {
-        setStrategy(fieldOwnerAndName, STATIC_VOLATILE_FIELD_STRATEGY);
-        return asInt(fieldOwnerAndName);
-    }
-
-    @Override
     public synchronized int getIdAndSetFieldIsNormal(FieldOwnerAndName fieldOwnerAndName) {
         setStrategy(fieldOwnerAndName, NORMAL_FIELD_STRATEGY);
-        return asInt(fieldOwnerAndName);
-    }
-
-    @Override
-    public synchronized int getIdAndSetFieldIsStatic(FieldOwnerAndName fieldOwnerAndName) {
-        setStrategy(fieldOwnerAndName, STATIC_FIELD_STRATEGY);
         return asInt(fieldOwnerAndName);
     }
 
@@ -72,6 +60,5 @@ public class FieldRepository implements FieldIdToStrategy, FieldRepositoryForAna
         fieldIdIdToInt.put(fieldId, temp);
         idToStrategy.put(temp, fieldStrategy);
     }
-
 
 }

@@ -1,6 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classanalyzer;
 
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.ACC_FINAL;
+import static org.objectweb.asm.Opcodes.ACC_VOLATILE;
 
 public class AnalyzeFieldAccess {
 
@@ -11,30 +12,15 @@ public class AnalyzeFieldAccess {
     }
 
     public void analyze(int access) {
-
-        if ((access & ACC_FINAL) == ACC_FINAL) {
-            onFieldAccess.onFinal();
-            return;
-        }
-
         boolean isVolatile = (access & ACC_VOLATILE) == ACC_VOLATILE;
-        boolean isStatic = (access & ACC_STATIC) == ACC_STATIC;
+        boolean isFinal = (access & ACC_FINAL) == ACC_FINAL;
 
-        if (isVolatile) {
-            if (isStatic) {
-                onFieldAccess.onVolatileStatic();
-            } else {
-                onFieldAccess.onVolatile();
-            }
+        if (isFinal) {
+            onFieldAccess.onFinal();
+        } else if (isVolatile) {
+            onFieldAccess.onVolatile();
         } else {
-            if (isStatic) {
-                onFieldAccess.onStatic();
-            } else {
-                onFieldAccess.onNormal();
-            }
+            onFieldAccess.onNormal();
         }
-
     }
-
-
 }

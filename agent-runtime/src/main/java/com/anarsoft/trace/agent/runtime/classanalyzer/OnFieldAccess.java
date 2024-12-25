@@ -19,16 +19,8 @@ public class OnFieldAccess {
         id = fieldRepositoryForAnalyze.getIdAndSetFieldIsNormal(fieldOwnerAndName);
     }
 
-    public void onStatic() {
-        id = fieldRepositoryForAnalyze.getIdAndSetFieldIsStatic(fieldOwnerAndName);
-    }
-
     public void onVolatile() {
         id = fieldRepositoryForAnalyze.getIdAndSetFieldIsVolatile(fieldOwnerAndName);
-    }
-
-    public void onVolatileStatic() {
-        id = fieldRepositoryForAnalyze.getIdAndSetFieldIsVolatileStatic(fieldOwnerAndName);
     }
 
     public void onFinal() {

@@ -17,7 +17,7 @@ public class AnalyzeFieldAccessTest {
     @Test
     public void staticVolatileField() {
         OnFieldAccess onFieldAccess = analyze(ACC_PUBLIC | ACC_STATIC | ACC_VOLATILE);
-        verify(onFieldAccess).onVolatileStatic();
+        verify(onFieldAccess).onVolatile();
     }
 
     private OnFieldAccess analyze(int access) {
