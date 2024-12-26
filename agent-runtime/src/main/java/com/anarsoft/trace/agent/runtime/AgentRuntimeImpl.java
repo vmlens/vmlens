@@ -3,7 +3,6 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.runtime.process.AgentController;
-import com.anarsoft.trace.agent.runtime.repositorydeprecated.LoadAtomicClassesFromClasspath;
 import com.anarsoft.trace.agent.runtime.util.AgentKeys;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.anarsoft.trace.agent.runtime.write.WriteEventToFile;
@@ -78,7 +77,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				}
 			}
 
-			LoadAtomicClassesFromClasspath.load();
 			Offset2FieldId.initialize();
 
             String enableAgentLogException = properties.getProperty(AgentKeys.AGENT_LOG_EXCEPTION);

@@ -2,7 +2,6 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollection;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
-import com.anarsoft.trace.agent.runtime.filter.HasGeneratedMethods;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
 import org.objectweb.asm.Opcodes;
@@ -17,16 +16,14 @@ import java.security.ProtectionDomain;
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
     public static final int ASM_API_VERSION = Opcodes.ASM7;
-    private final HasGeneratedMethods hasGeneratedMethods;
+
     private final WriteClassDescription writeClassDescription;
     private final ApplyClassTransformerCollection classArrayTransformerCollection;
 
     public AgentClassFileTransformer(WriteClassDescription writeClassDescription,
-                                     HasGeneratedMethods hasGeneratedMethods,
                                      ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
         super();
         this.writeClassDescription = writeClassDescription;
-        this.hasGeneratedMethods = hasGeneratedMethods;
         this.classArrayTransformerCollection = classArrayTransformerFactory.create();
     }
 
