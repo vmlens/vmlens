@@ -1,10 +1,10 @@
 package com.anarsoft.trace.agent.runtime;
 
 
-
 import com.anarsoft.trace.agent.description.MethodDescription;
 import com.vmlens.shaded.gnu.trove.list.TLinkable;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 
 public class MethodDescriptionBuilder implements TLinkable<MethodDescriptionBuilder> {
 
@@ -74,7 +74,7 @@ public class MethodDescriptionBuilder implements TLinkable<MethodDescriptionBuil
 			for(TLinkableWrapper<String> f :  annotationList  )
 			{
 
-				annotationArray[index] = f.getElement();
+				annotationArray[index] = f.element();
 
 				index++;
 			}

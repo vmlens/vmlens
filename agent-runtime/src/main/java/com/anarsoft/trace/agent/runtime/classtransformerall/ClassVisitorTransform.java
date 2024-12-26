@@ -4,9 +4,9 @@ import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitor.Method
 import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitor.MethodVisitorFactory;
 import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitor.TransformFactoryContext;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -46,7 +46,7 @@ public class ClassVisitorTransform extends ClassVisitor {
 
         MethodVisitor previous = super.visitMethod(access, name, descriptor, signature, exceptions);
         for (TLinkableWrapper<MethodVisitorFactory> element : methodVisitorFactoryList) {
-            previous = element.element.create(inMethodId, previous);
+            previous = element.element().create(inMethodId, previous);
         }
 
 
@@ -65,7 +65,7 @@ public class ClassVisitorTransform extends ClassVisitor {
                 transformFactoryContext.setStatic((access & ACC_STATIC) == ACC_STATIC);
                 transformFactoryContext.setUseExpandedFrames(useExpandedFrames());
 
-                previous = element.element.createTransform(transformFactoryContext);
+                previous = element.element().createTransform(transformFactoryContext);
             }
         }
         return previous;

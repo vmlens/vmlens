@@ -1,10 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
 
 public class ActualRunTestBuilder {
 

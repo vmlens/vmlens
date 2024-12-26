@@ -2,9 +2,9 @@ package com.anarsoft.trace.agent.runtime.classtransformerall.plan;
 
 import com.anarsoft.trace.agent.runtime.classtransformerall.callbackfactory.MethodCallbackFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
 
 public class PlanElement {
 
@@ -17,14 +17,14 @@ public class PlanElement {
 
     void forwardTo(PlanElement forward) {
         for (TLinkableWrapper<ApplyAfterOperation> alem : afterOperationList) {
-            forward.addApplyAfterOperation(alem.element);
+            forward.addApplyAfterOperation(alem.element());
         }
         afterOperationList.clear();
     }
 
     public void afterOperation(MethodCallbackFactory callbackCallFactory) {
         for (TLinkableWrapper<ApplyAfterOperation> elem : afterOperationList) {
-            elem.element.afterOperation(callbackCallFactory);
+            elem.element().afterOperation(callbackCallFactory);
         }
     }
 

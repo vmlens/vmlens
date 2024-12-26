@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
@@ -32,8 +32,8 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
         for (TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> oneThread : threadList) {
             TLinkedList<TLinkableWrapper<ELEMENT>> clonedThread =
                     new TLinkedList<>();
-            for (TLinkableWrapper<ELEMENT> element : oneThread.element) {
-                clonedThread.add(new TLinkableWrapper<ELEMENT>(element.element));
+            for (TLinkableWrapper<ELEMENT> element : oneThread.element()) {
+                clonedThread.add(new TLinkableWrapper<ELEMENT>(element.element()));
             }
             clone.add(new TLinkableWrapper<>(clonedThread));
         }
@@ -45,14 +45,14 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
         while(threadList.size() <= element.threadIndex()) {
             threadList.add(new TLinkableWrapper(new TLinkedList()));
         }
-        threadList.get(element.threadIndex()).element.add(new TLinkableWrapper(element));
+        threadList.get(element.threadIndex()).element().add(new TLinkableWrapper(element));
     }
 
     public int getPositionAtThreadIndex(int threadIndex) {
         if( threadList.size() <= threadIndex ) {
             return 0;
         }
-        return  threadList.get(threadIndex).element.size();
+        return threadList.get(threadIndex).element().size();
     }
 
     public int maxThreadIndex() {
@@ -64,26 +64,26 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
     }
 
     public ELEMENT getAtIndex(int index) {
-        return threadList.get(index).element.get(0).element;
+        return threadList.get(index).element().get(0).element();
     }
 
     // For Tests
     public ELEMENT getElementNAtIndex(int index, int n) {
-        return threadList.get(index).element.get(n).element;
+        return threadList.get(index).element().get(n).element();
     }
 
 
     public ELEMENT getAndRemoveAtIndex(int index) {
-        return threadList.get(index).element.removeFirst().element;
+        return threadList.get(index).element().removeFirst().element();
     }
 
     public boolean isEmptyAtIndex(int index) {
-        return threadList.get(index).element.isEmpty();
+        return threadList.get(index).element().isEmpty();
     }
 
     public boolean isEmpty() {
         for(TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> list : threadList) {
-            if(! list.element.isEmpty()) {
+            if (!list.element().isEmpty()) {
                 return false;
             }
         }
@@ -117,7 +117,7 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
     }
 
     TLinkedList<TLinkableWrapper<ELEMENT>> listAt(int threadIndex) {
-        return threadList.get(threadIndex).element;
+        return threadList.get(threadIndex).element();
     }
 
 

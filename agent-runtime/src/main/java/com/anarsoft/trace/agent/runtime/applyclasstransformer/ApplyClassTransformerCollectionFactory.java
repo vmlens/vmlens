@@ -1,15 +1,15 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrategyimpl.ClassTransformerVmlensApi;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrategyimpl.TransformerStrategyAll;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrategyimpl.TransformerStrategyFilter;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
 
-import static com.anarsoft.trace.agent.runtime.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
 
 
 public class ApplyClassTransformerCollectionFactory {

@@ -3,10 +3,10 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.Warning;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
 
 public class RuntimeEventAndWarnings {
 
@@ -33,7 +33,7 @@ public class RuntimeEventAndWarnings {
 
     public void addWarnings(TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         for (TLinkableWrapper<Warning> warning : warnings) {
-            serializableEvents.add(wrap((SerializableEvent) warning.element));
+            serializableEvents.add(wrap((SerializableEvent) warning.element()));
         }
 
     }

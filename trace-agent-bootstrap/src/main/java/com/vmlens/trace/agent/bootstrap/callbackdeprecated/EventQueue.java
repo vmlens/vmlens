@@ -3,10 +3,10 @@ package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
 
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
 
 
 public class EventQueue implements QueueIn {
@@ -25,7 +25,7 @@ public class EventQueue implements QueueIn {
     public synchronized SerializableEvent take() {
         TLinkableWrapper<SerializableEvent> result = queue.removeLast();
         if (result != null) {
-            return result.element;
+            return result.element();
         }
         return null;
     }

@@ -7,8 +7,8 @@ import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParalle
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProviderImpl;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAdapter {
@@ -47,7 +47,7 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
                 TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents =
                         callbackAction.execute(dataWhenInTest);
                 for (TLinkableWrapper<SerializableEvent> event : serializableEvents) {
-                    eventQueueInternal.offer(event.element);
+                    eventQueueInternal.offer(event.element());
                 }
             } finally {
                 dataWhenInTest.stopCallbackProcessing();

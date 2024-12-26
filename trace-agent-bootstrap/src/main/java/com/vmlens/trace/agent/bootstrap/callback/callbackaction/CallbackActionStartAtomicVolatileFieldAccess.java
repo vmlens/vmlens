@@ -3,10 +3,10 @@ package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
+import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.emptyList;
 
 public class CallbackActionStartAtomicVolatileFieldAccess implements CallbackAction {
 

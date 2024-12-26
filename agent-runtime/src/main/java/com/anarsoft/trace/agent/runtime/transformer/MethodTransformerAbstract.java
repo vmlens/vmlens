@@ -1,8 +1,8 @@
 package com.anarsoft.trace.agent.runtime.transformer;
 
 import com.anarsoft.trace.agent.runtime.MethodDescriptionBuilder;
-import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -135,7 +135,7 @@ public abstract class MethodTransformerAbstract extends MethodTransformerTraceLi
 
 		while (it.hasNext()) {
 			TLinkableWrapper<Object> c = it.next();
-			result[index] = c.getElement();
+			result[index] = c.element();
 			index++;
 
 		}

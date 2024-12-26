@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 
 public class ApplyClassTransformerCollection {
 
@@ -40,7 +40,7 @@ public class ApplyClassTransformerCollection {
         }
 
         for (TLinkableWrapper<ApplyClassTransformerElement> transformerWrapper : classArrayTransformerList) {
-            ApplyClassTransformerElement transformer = transformerWrapper.getElement();
+            ApplyClassTransformerElement transformer = transformerWrapper.element();
             if (transformer.appliesTo(name)) {
                 return transformer;
             }

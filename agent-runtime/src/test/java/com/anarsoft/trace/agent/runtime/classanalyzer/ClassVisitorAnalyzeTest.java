@@ -2,11 +2,11 @@ package com.anarsoft.trace.agent.runtime.classanalyzer;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
-import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
@@ -35,7 +35,7 @@ public class ClassVisitorAnalyzeTest {
         classReader.accept(classVisitorAnalyze, 0);
 
         // Then
-        ClassDescription classDescription = classAnalyzedEventList.get(0).getElement();
+        ClassDescription classDescription = classAnalyzedEventList.get(0).element();
         assertThat(classDescription.name(), is("com/vmlens/test/guineaPig/VolatileFieldAccess"));
         assertThat(classDescription.methodArray()[1].name(), is("update"));
     }

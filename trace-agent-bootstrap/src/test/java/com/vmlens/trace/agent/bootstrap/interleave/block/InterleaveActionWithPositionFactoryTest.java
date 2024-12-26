@@ -5,13 +5,13 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPo
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderNoOpWithThreadIndexGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -35,9 +35,9 @@ public class InterleaveActionWithPositionFactoryTest {
                 result = blockBuilderFactory.create(actualRun);
 
         // Then
-        assertThat(result.getLeft().get(0).element.element(), is((InterleaveAction) threadIndex_0_First));
-        assertThat(result.getLeft().get(0).element.position(), is((pos(0, 0))));
-        assertThat(result.getLeft().get(1).element.position(), is((pos(1, 0))));
-        assertThat(result.getLeft().get(2).element.position(), is((pos(0, 1))));
+        assertThat(result.getLeft().get(0).element().element(), is((InterleaveAction) threadIndex_0_First));
+        assertThat(result.getLeft().get(0).element().position(), is((pos(0, 0))));
+        assertThat(result.getLeft().get(1).element().position(), is((pos(1, 0))));
+        assertThat(result.getLeft().get(2).element().position(), is((pos(0, 1))));
     }
 }

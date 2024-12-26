@@ -4,10 +4,10 @@ import com.anarsoft.trace.agent.description.FieldInClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.FieldIdRepository;
 import com.vmlens.trace.agent.bootstrap.FieldTyp;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Attribute;
 import org.objectweb.asm.FieldVisitor;
-
 public class FieldVisitorCreateDesc extends FieldVisitor {
 
     private final TLinkedList<TLinkableWrapper<FieldInClassDescription>> fieldDescriptionList;

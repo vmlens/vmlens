@@ -1,8 +1,8 @@
 package com.anarsoft.trace.agent.runtime.write;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 
 public class WriteClassDescriptionDuringStartup  implements WriteClassDescription  {
 

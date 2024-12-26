@@ -13,6 +13,7 @@ import com.vmlens.trace.agent.bootstrap.AgentRuntime;
 import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -125,10 +126,10 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		Class[] toBeRetransformed = new Class[transformableClasses.size()];
 		int i = 0;
 		for (TLinkableWrapper<Class> cl : transformableClasses) {
-			if (cl.getElement().getName().startsWith("java/lang")) {
-				System.out.println(cl.getElement().getName());
+			if (cl.element().getName().startsWith("java/lang")) {
+				System.out.println(cl.element().getName());
 			}
-			toBeRetransformed[i] = ((Class) cl.getElement());
+			toBeRetransformed[i] = ((Class) cl.element());
 			i++;
 		}
 		if (toBeRetransformed.length > 0) {
@@ -144,7 +145,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
         retransform(inst, classAnalyzedEventList, true, alreadyTransformed);
         for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-            ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.getElement());
+			ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.element());
 
         }
         classAnalyzedEventList = new TLinkedList();
@@ -152,7 +153,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
         retransform(inst, classAnalyzedEventList, false, alreadyTransformed);
 		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
-            ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.getElement());
+			ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.element());
 		}
 	/*	inst.addTransformer(new AgentClassFileTransformer(
 						new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerCollectionFactory.retransform()),

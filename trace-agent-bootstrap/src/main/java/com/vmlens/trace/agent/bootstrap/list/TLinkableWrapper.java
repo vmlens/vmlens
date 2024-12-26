@@ -1,9 +1,11 @@
-package com.anarsoft.trace.agent.runtime;
+package com.vmlens.trace.agent.bootstrap.list;
 
-import com.vmlens.shaded.gnu.trove.list.TLinkable;
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+
+import gnu.trove.list.TLinkable;
+import gnu.trove.list.linked.TLinkedList;
 
 import java.lang.reflect.Array;
+import java.util.Objects;
 
 public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELEMENT>> {
 
@@ -12,13 +14,17 @@ public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELE
 	private  TLinkableWrapper<ELEMENT> next;
 	private  TLinkableWrapper<ELEMENT> previous;
 
-	public ELEMENT getElement() {
-		return element;
+	public static <T> TLinkedList<TLinkableWrapper<T>> emptyList() {
+		return new TLinkedList<>();
 	}
 
 	public TLinkableWrapper(ELEMENT element) {
 		super();
 		this.element = element;
+	}
+
+	public ELEMENT element() {
+		return element;
 	}
 
     public static <ELEMENT> TLinkableWrapper<ELEMENT> wrap(ELEMENT element) {
@@ -61,8 +67,25 @@ public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELE
 
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
+		TLinkableWrapper<?> that = (TLinkableWrapper<?>) o;
 
+		return Objects.equals(element, that.element);
+	}
 
+	@Override
+	public int hashCode() {
+		return element != null ? element.hashCode() : 0;
+	}
 
+	@Override
+	public String toString() {
+		return "TLinkableWrapper{" +
+				"element=" + element +
+				'}';
+	}
 }

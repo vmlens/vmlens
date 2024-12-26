@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 public class ActualRun {

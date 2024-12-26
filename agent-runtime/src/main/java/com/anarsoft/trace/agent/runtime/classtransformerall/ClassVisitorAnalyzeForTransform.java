@@ -3,9 +3,9 @@ package com.anarsoft.trace.agent.runtime.classtransformerall;
 import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitor.MethodVisitorAnalyzeAndTransformFactory;
 import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitor.MethodVisitorFactoryFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 
@@ -41,7 +41,7 @@ public class ClassVisitorAnalyzeForTransform extends ClassVisitor {
 
         MethodVisitor previous = super.visitMethod(access, name, descriptor, signature, exceptions);
         for (TLinkableWrapper<MethodVisitorFactoryFactory> element : methodVisitorFactoryAnalyzeList) {
-            MethodVisitorAnalyzeAndTransformFactory factory = element.element.create(methodCallIdMap);
+            MethodVisitorAnalyzeAndTransformFactory factory = element.element().create(methodCallIdMap);
             methodIdToFactory.put(methodId, factory);
             previous = factory.createAnalyze(inMethodId, previous);
         }

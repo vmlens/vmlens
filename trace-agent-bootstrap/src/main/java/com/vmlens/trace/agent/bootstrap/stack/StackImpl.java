@@ -1,11 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.stack;
 
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
 
 public class StackImpl<ELEMENT> implements CallStack<ELEMENT>,
         LockOrMonitorStack<ELEMENT> {
@@ -23,7 +24,7 @@ public class StackImpl<ELEMENT> implements CallStack<ELEMENT>,
         if (list.isEmpty()) {
             return null;
         }
-        return list.removeLast().element;
+        return list.removeLast().element();
     }
 
     @Override
@@ -33,7 +34,7 @@ public class StackImpl<ELEMENT> implements CallStack<ELEMENT>,
 
     @Override
     public ELEMENT backward(int position) {
-        return list.get(list.size() - position - 1).element;
+        return list.get(list.size() - position - 1).element();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class StackImpl<ELEMENT> implements CallStack<ELEMENT>,
 
     @Override
     public void dup() {
-        ELEMENT toBeAdded = list.getLast().element;
+        ELEMENT toBeAdded = list.getLast().element();
         push(toBeAdded);
     }
 }

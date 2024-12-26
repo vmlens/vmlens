@@ -1,8 +1,8 @@
 package com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitormethod;
 
-import com.anarsoft.trace.agent.runtime.TLinkableWrapper;
 import com.anarsoft.trace.agent.runtime.classtransformerall.callbackfactory.MethodCallbackFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -148,7 +148,7 @@ public class TransformMethodMethod extends MethodVisitor {
 
         while (it.hasNext()) {
             TLinkableWrapper<Object> c = it.next();
-            result[index] = c.getElement();
+            result[index] = c.element();
             index++;
 
         }

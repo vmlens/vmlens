@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 public class AddIndependentBlocksToOrderArraysBuilder {
@@ -9,7 +9,7 @@ public class AddIndependentBlocksToOrderArraysBuilder {
                     ThreadIndexToMaxPosition threadIndexToMaxPosition,
                     OrderArraysBuilder builder) {
         for (TLinkableWrapper<ElementAndPosition<IndependentBlock>> independent : inDependentBlocks) {
-            independent.element.element().addFixedOrder(independent.element.position(), builder, threadIndexToMaxPosition);
+            independent.element().element().addFixedOrder(independent.element().position(), builder, threadIndexToMaxPosition);
         }
     }
 }

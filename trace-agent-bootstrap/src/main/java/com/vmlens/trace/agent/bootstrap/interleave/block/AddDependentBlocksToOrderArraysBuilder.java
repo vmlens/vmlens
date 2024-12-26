@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
@@ -13,14 +13,14 @@ public class AddDependentBlocksToOrderArraysBuilder {
                     OrderArraysBuilder builder) {
         for (ThreadIndexToElementList<DependentBlock> threadIndexToElementList : dependentBlocks) {
             for (TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>> oneThread : threadIndexToElementList) {
-                for (TLinkableWrapper<DependentBlock> current : oneThread.element) {
+                for (TLinkableWrapper<DependentBlock> current : oneThread.element()) {
                     Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>>> otherThreadBlocks =
-                            threadIndexToElementList.iteratorStartingAt(current.element.threadIndex() + 1);
+                            threadIndexToElementList.iteratorStartingAt(current.element().threadIndex() + 1);
                     while (otherThreadBlocks.hasNext()) {
-                        TLinkedList<TLinkableWrapper<DependentBlock>> otherThread = otherThreadBlocks.next().element;
+                        TLinkedList<TLinkableWrapper<DependentBlock>> otherThread = otherThreadBlocks.next().element();
                         // ToDo we should probably stop when more than n elements were created
                         for (TLinkableWrapper<DependentBlock> otherBlock : otherThread) {
-                            current.element.addAlternatingOrder(otherBlock.element, builder);
+                            current.element().addAlternatingOrder(otherBlock.element(), builder);
                         }
                     }
                 }

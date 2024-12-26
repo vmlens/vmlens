@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderG
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.DependentBlockElementGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.IndependentBlockElementNoOpGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.junit.Test;
 
@@ -78,8 +78,8 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
         MapOfBlocks result = factory.create(actualRun);
 
         // Test
-        assertThat(result.inDependentBlocks().get(0).element.element(), is(first.element()));
-        assertThat(result.inDependentBlocks().get(1).element.element(), is(second.element()));
+        assertThat(result.inDependentBlocks().get(0).element().element(), is(first.element()));
+        assertThat(result.inDependentBlocks().get(1).element().element(), is(second.element()));
     }
 
 

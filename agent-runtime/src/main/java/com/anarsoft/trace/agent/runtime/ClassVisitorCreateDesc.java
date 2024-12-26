@@ -10,8 +10,8 @@ import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.trace.agent.bootstrap.ClassInheritanceRepository;
 import com.vmlens.trace.agent.bootstrap.FieldIdRepository;
 import com.vmlens.trace.agent.bootstrap.FieldTyp;
+import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import org.objectweb.asm.*;
-
 
 public class ClassVisitorCreateDesc extends ClassVisitor {
 
