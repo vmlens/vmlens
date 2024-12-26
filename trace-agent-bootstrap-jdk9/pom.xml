@@ -55,7 +55,7 @@
   <dependencies>
   <dependency>
 			<groupId>com.vmlens</groupId>
-			<artifactId>trace-agent-bootstrap-jdk8</artifactId>
+      <artifactId>trace-agent-bootstrap</artifactId>
 			<version>${project.version}</version>
 		</dependency>
   </dependencies>
