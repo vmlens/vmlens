@@ -1,8 +1,6 @@
-package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
+package com.vmlens.trace.agent.bootstrap.event;
 
 
-import com.vmlens.trace.agent.bootstrap.event.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 

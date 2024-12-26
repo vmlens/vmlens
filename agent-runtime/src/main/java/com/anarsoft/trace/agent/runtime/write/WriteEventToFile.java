@@ -1,26 +1,24 @@
 package com.anarsoft.trace.agent.runtime.write;
 
-import com.anarsoft.trace.agent.runtime.process.AgentController;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;
-    private final AgentController agentController;
+
     private boolean shutdownHookAdded = false;
     private final Object poisonedEventReceivedMonitor = new Object();
     private boolean poisonedEventReceived = false;
 
-    private WriteEventToFile(StreamRepository streamRepository, AgentController agentController) {
+    private WriteEventToFile(StreamRepository streamRepository) {
         super();
         this.streamRepository = streamRepository;
-        this.agentController = agentController;
     }
 
-    public static void startWriteEventToFileThread(String eventDir, AgentController agentController) {
+    public static void startWriteEventToFileThread(String eventDir) {
         StreamRepository streamRepository = new StreamRepository(eventDir);
-        new WriteEventToFileThreadFactory().newThread(new WriteEventToFile(streamRepository, agentController)).start();
+        new WriteEventToFileThreadFactory().newThread(new WriteEventToFile(streamRepository)).start();
     }
 
     private void testAndAddShutdownHook() {
@@ -33,7 +31,6 @@ public class WriteEventToFile implements Runnable {
     public void close() {
         try {
             streamRepository.close();
-            agentController.writeStopState(0);
         } catch (Exception e) {
             e.printStackTrace();
         }

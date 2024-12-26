@@ -7,8 +7,6 @@ public class LoadClassesAtStartTest {
     @Test
     public void allClassesCanBeLoaded() throws ClassNotFoundException {
         new LoadClassesAtStart().loadClasses();
-        ;
     }
-
 
 }

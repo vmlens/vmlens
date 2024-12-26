@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType;
+import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock;

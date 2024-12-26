@@ -55,11 +55,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.vmlens</groupId>
-            <artifactId>common-transform</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-util</artifactId>
             <version>${asm.version}</version>

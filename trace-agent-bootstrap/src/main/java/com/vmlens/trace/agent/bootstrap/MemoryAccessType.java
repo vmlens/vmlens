@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.callbackdeprecated.field;
+package com.vmlens.trace.agent.bootstrap;
 
 public class MemoryAccessType {
 

@@ -84,18 +84,6 @@
         <!-- vmlens versions -->
         <dependency>
             <groupId>com.vmlens</groupId>
-            <artifactId>common-callback</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vmlens</groupId>
-            <artifactId>common-transform</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vmlens</groupId>
             <artifactId>report</artifactId>
             <version>${project.version}</version>
         </dependency>

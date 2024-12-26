@@ -2,9 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.EventQueue;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProvider;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProviderImpl;
+import com.vmlens.trace.agent.bootstrap.event.EventQueue;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;

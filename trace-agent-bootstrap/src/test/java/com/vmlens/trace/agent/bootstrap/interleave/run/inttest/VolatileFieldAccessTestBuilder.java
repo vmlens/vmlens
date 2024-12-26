@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType;
+import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 

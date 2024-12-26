@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;

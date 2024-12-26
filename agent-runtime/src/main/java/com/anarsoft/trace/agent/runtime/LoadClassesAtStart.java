@@ -2,19 +2,6 @@ package com.anarsoft.trace.agent.runtime;
 
 public class LoadClassesAtStart {
     public void loadClasses() throws ClassNotFoundException {
-        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callbackdeprecated.getstate.Class2GetStateMap");
-
-        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callbackdeprecated.getstate.CreateGetState");
-        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callbackdeprecated.FieldAccessCallback");
-        this.getClass().getClassLoader()
-                .loadClass("com.vmlens.trace.agent.bootstrap.callbackdeprecated.SynchronizedStatementCallback");
-        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callbackdeprecated.ArrayAccessCallback");
-
-        this.getClass().getClassLoader()
-                .loadClass("com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.CallbackObject");
-        this.getClass().getClassLoader()
-                .loadClass("com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.CallbackStatic");
-
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.TLinkableAdapter");
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.set.hash.THashSet");

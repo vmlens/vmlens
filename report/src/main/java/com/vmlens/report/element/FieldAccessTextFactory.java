@@ -1,6 +1,6 @@
 package com.vmlens.report.element;
 
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType;
+import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import org.apache.commons.text.StringEscapeUtils;
 
 public class FieldAccessTextFactory implements OperationTextFactory {

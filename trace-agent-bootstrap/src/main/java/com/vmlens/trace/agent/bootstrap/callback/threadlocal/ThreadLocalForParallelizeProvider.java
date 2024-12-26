@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.callbackdeprecated;
+package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 

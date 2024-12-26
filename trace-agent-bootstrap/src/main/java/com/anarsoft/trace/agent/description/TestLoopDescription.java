@@ -2,7 +2,6 @@ package com.anarsoft.trace.agent.description;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.util.Constants;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

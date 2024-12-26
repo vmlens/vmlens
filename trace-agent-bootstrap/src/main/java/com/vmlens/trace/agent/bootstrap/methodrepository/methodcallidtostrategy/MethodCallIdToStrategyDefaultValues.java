@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy;
 
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProvider;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.ThreadLocalForParallelizeProviderImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProviderImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.strategy.BeforeMethodCallStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterExitStrategy;

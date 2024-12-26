@@ -2,16 +2,12 @@ package com.anarsoft.trace.agent.runtime;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.runtime.process.AgentController;
-import com.anarsoft.trace.agent.runtime.util.AgentKeys;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
 import com.anarsoft.trace.agent.runtime.write.WriteEventToFile;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
-import com.vmlens.trace.agent.bootstrap.Offset2FieldId;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.AgentLogCallback;
 import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 
 import java.io.File;
@@ -77,20 +73,11 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				}
 			}
 
-			Offset2FieldId.initialize();
-
-            String enableAgentLogException = properties.getProperty(AgentKeys.AGENT_LOG_EXCEPTION);
-
-            if (enableAgentLogException != null && enableAgentLogException.trim().toLowerCase().equals("true")) {
-                AgentLogCallback.ENABLE_EXCEPTION_LOGGING = true;
-            }
-
-            AgentController agentController = AgentController.create(outputFileName);
 
             new LoadClassesAtStart().loadClasses();
 
             instrument(inst, outputFileName);
-            WriteEventToFile.startWriteEventToFileThread(outputFileName, agentController);
+            WriteEventToFile.startWriteEventToFileThread(outputFileName);
 
         } catch (Throwable e) {
 			e.printStackTrace();

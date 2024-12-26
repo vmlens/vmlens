@@ -6,7 +6,7 @@ import com.anarsoft.race.detection.event.syncAction.VolatileAccessEvent
 import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForProcessBuilder
 import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcessBuilder
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunData}
-import com.vmlens.trace.agent.bootstrap.callbackdeprecated.field.MemoryAccessType
+import com.vmlens.trace.agent.bootstrap.MemoryAccessType
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

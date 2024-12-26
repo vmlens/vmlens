@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.description;
 
-import com.vmlens.trace.agent.bootstrap.util.Constants;
 
 import java.io.DataInputStream;
 import java.io.EOFException;

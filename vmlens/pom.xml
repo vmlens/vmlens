@@ -55,8 +55,6 @@
     <modules>
         <module>../test-util</module>
         <module>../api</module>
-        <module>../common-callback</module>
-        <module>../common-transform</module>
         <module>../trace-agent-bootstrap</module>
         <module>../trace-agent-bootstrap-jdk8</module>
         <module>../trace-agent-bootstrap-jdk9</module>
