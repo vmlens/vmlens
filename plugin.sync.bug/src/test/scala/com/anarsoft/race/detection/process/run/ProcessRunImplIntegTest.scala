@@ -1,8 +1,8 @@
 package com.anarsoft.race.detection.process.run
 
 import com.anarsoft.race.detection.event.gen.{FieldAccessEventGen, VolatileAccessEventGen}
-import com.anarsoft.race.detection.event.nonVolatileField.NonVolatileFieldAccessEvent
-import com.anarsoft.race.detection.event.syncAction.VolatileAccessEvent
+import com.anarsoft.race.detection.event.nonvolatilefield.NonVolatileFieldAccessEvent
+import com.anarsoft.race.detection.event.syncaction.VolatileAccessEvent
 import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForProcessBuilder
 import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcessBuilder
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunData}

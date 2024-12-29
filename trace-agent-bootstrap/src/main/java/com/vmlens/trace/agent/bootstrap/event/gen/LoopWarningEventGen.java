@@ -1,13 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
+import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
 import java.nio.ByteBuffer;
-import com.vmlens.trace.agent.bootstrap.event.*;
-import java.io.DataOutputStream;
+
 
 public class LoopWarningEventGen {
 
     protected int loopId;
     protected int runId;
+    protected int messageId;
 
     @Override
     public boolean equals(Object o) {
@@ -17,6 +20,7 @@ public class LoopWarningEventGen {
         LoopWarningEventGen that = (LoopWarningEventGen) o;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
+        if (messageId != that.messageId) return false;
         return true;
     }
 
@@ -25,13 +29,14 @@ public class LoopWarningEventGen {
         return "LoopWarningEventGen{" +
                 "loopId=" + loopId +
                 "runId=" + runId +
+                "messageId=" + messageId +
                 '}';
     }
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.interleave.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 9, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 13, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
@@ -39,6 +44,7 @@ public class LoopWarningEventGen {
         buffer.put((byte) 28);
         buffer.putInt(loopId);
         buffer.putInt(runId);
+        buffer.putInt(messageId);
     }
 
 

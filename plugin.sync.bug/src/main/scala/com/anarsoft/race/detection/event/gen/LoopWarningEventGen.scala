@@ -1,22 +1,24 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import com.anarsoft.race.detection.event.directmemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.nonvolatilefield.*
+import com.anarsoft.race.detection.event.syncaction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
+import java.nio.ByteBuffer;
 
 
 class LoopWarningEventGen(
                            val loopId: Int
                            , val runId: Int
+                           , val messageId: Int
                          ) extends LoopWarningEvent {
   override def toString() = {
     var text = "LoopWarningEventGen"
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
+    text = text + ", messageId:" + messageId
     text;
   }
 
@@ -27,6 +29,9 @@ class LoopWarningEventGen(
           false;
         }
         else if (runId != that.runId) {
+          false;
+        }
+        else if (messageId != that.messageId) {
           false;
         }
         else
@@ -42,6 +47,8 @@ object LoopWarningEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new LoopWarningEventGen(
 
+      data.getInt()
+      ,
       data.getInt()
       ,
       data.getInt()

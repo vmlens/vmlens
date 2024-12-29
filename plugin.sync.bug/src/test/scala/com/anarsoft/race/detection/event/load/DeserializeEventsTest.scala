@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.load
 
 import com.anarsoft.race.detection.event.gen.SyncActionsDeSerializer
-import com.anarsoft.race.detection.event.syncAction.LoadedSyncActionEvent
+import com.anarsoft.race.detection.event.syncaction.LoadedSyncActionEvent
 import com.anarsoft.race.detection.testFixture.VolatileFixture
 import com.vmlens.trace.agent.bootstrap.event.gen.EventConstants.MAX_ARRAY_SIZE
 import org.scalatest.flatspec.AnyFlatSpec

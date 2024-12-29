@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 
 import java.nio.ByteBuffer;
 
+
 public class MethodEnterEventGen {
 
     protected int threadIndex;
@@ -53,5 +54,6 @@ public class MethodEnterEventGen {
         buffer.putInt(loopId);
         buffer.putInt(runId);
     }
+
 
 }

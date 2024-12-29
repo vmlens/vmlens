@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.main
 
-import com.anarsoft.race.detection.event.loadAndDistribute.DirTypeNameAndLoadAndDistributeOneFilePosition
-import com.anarsoft.race.detection.event.loadAndDistribute.LoadAndDistributeOneFilePositionImpl.{interleave, syncAction}
+import com.anarsoft.race.detection.event.loadanddistribute.DirTypeNameAndLoadAndDistributeOneFilePosition
+import com.anarsoft.race.detection.event.loadanddistribute.LoadAndDistributeOneFilePositionImpl.{interleave, syncAction}
 import com.anarsoft.race.detection.process.load.{LoadAndDistributeOneFilePosition, LoadRunsImpl, LoadStatisticAndDistributeOneFilePosition}
 import com.anarsoft.race.detection.process.main.LoadRuns
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository.{INTERLEAVE, SYNC_ACTIONS}

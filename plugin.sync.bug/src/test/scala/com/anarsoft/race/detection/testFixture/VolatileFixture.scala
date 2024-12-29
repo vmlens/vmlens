@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.testFixture
 
-import com.anarsoft.race.detection.event.syncAction.LoadedSyncActionEvent
+import com.anarsoft.race.detection.event.syncaction.LoadedSyncActionEvent
 
 class VolatileFixture {
   def volatileReadAndWrite(): TestData = {

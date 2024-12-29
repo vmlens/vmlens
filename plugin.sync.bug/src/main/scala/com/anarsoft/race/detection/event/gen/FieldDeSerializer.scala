@@ -1,13 +1,13 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer
+import com.anarsoft.race.detection.event.directmemory.*
+import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.load.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.nonvolatilefield.*
+import com.anarsoft.race.detection.event.syncaction.*
 
-import com.anarsoft.race.detection.event.method._
-import com.anarsoft.race.detection.event.syncAction._;
-import com.anarsoft.race.detection.event.nonVolatileField._;
-import com.anarsoft.race.detection.event.directMemory._;
-import com.anarsoft.race.detection.event.interleave._;
-import com.anarsoft.race.detection.event.load._;
+import java.nio.ByteBuffer;
 
 class FieldDeSerializer extends DeserializeStrategy[LoadedNonVolatileFieldEvent] {
   val eventArraySize: Int = 49

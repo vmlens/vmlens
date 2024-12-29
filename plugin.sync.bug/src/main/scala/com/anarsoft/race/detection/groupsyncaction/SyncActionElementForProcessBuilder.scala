@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.groupsyncaction
 
-import com.anarsoft.race.detection.event.syncAction.VolatileAccessEvent
+import com.anarsoft.race.detection.event.syncaction.VolatileAccessEvent
 import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess
 import com.anarsoft.race.detection.util.EventArray
 
