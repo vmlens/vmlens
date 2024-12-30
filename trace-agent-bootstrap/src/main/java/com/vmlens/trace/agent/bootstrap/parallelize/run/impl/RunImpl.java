@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.Warning;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
@@ -10,6 +11,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static com.vmlens.trace.agent.bootstrap.event.warning.Message.TEST_BLOCKED_MESSAGE;
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings.of;
 
 public class RunImpl implements Run {
@@ -36,11 +38,12 @@ public class RunImpl implements Run {
             runtimeEvent.setLoopId(loopId);
             runtimeEvent.setRunId(runId);
             RuntimeEvent result = runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest);
-            if (runtimeEvent instanceof InterleaveActionFactory) {
+            if (runtimeEvent.isInterleaveActionFactory()) {
                 try {
                     waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
                 } catch (TestBlockedException e) {
-
+                    Warning warning = new LoopWarningEvent(loopId, runId, TEST_BLOCKED_MESSAGE.id());
+                    return of(result, warning);
                 }
             }
             return of(result);

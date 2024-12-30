@@ -2,9 +2,9 @@ package com.anarsoft.trace.agent.runtime.classtransformerall.plan;
 
 import com.anarsoft.trace.agent.runtime.classtransformerall.callbackfactory.MethodCallbackFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
-import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class PlanElement {
 

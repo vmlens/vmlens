@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;

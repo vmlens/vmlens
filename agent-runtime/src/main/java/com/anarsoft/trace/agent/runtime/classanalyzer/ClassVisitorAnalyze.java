@@ -8,15 +8,15 @@ import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 
-import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.toArray;
-import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.toArray;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ClassVisitorAnalyze extends ClassVisitor {
 

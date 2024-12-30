@@ -2,11 +2,11 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.message.Warning;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.event.warning.Warning;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class RuntimeEventAndWarnings {
 
@@ -25,6 +25,12 @@ public class RuntimeEventAndWarnings {
 
     public static RuntimeEventAndWarnings of(RuntimeEvent runtimeEvent) {
         return new RuntimeEventAndWarnings(runtimeEvent, new TLinkedList<>());
+    }
+
+    public static RuntimeEventAndWarnings of(RuntimeEvent runtimeEvent, Warning warning) {
+        TLinkedList<TLinkableWrapper<Warning>> warnings = new TLinkedList<>();
+        warnings.add(wrap(warning));
+        return new RuntimeEventAndWarnings(runtimeEvent, warnings);
     }
 
     public RuntimeEvent runtimeEvent() {

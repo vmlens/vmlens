@@ -1,10 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveInfo;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
@@ -76,16 +74,10 @@ public class RunStateMachineImpl implements RunStateMachine, ProcessRuntimeEvent
     @Override
     public RuntimeEvent callAfterFromState(RuntimeEvent runtimeEvent,
                                            ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-        if (!(runtimeEvent instanceof InterleaveActionFactory)) {
-            return runtimeEvent;
-        }
-        InterleaveActionFactory interleaveActionFactory = (InterleaveActionFactory) runtimeEvent;
-        InterleaveInfo interleaveInfo = actualRun.after(interleaveActionFactory.create());
-        if (interleaveInfo != null) {
-            runtimeEvent.setRunPosition(interleaveInfo.runPosition());
-            return runtimeEvent;
-        }
-        return null;
+        RuntimeEventVisitorCallAfter runtimeEventVisitorCallAfter =
+                new RuntimeEventVisitorCallAfter(actualRun);
+        runtimeEvent.accept(runtimeEventVisitorCallAfter);
+        return runtimeEventVisitorCallAfter.result();
     }
 
     @Override

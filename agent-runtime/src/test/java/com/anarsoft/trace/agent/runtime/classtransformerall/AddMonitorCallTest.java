@@ -5,9 +5,9 @@ import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitor.AddMon
 import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitor.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class AddMonitorCallTest {
 

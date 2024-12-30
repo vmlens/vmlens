@@ -5,13 +5,13 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPo
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderNoOpWithThreadIndexGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
-import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 

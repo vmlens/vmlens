@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 public class ApplyClassTransformerCollection {
 

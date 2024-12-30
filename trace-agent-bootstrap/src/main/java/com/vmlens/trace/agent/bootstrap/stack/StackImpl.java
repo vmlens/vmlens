@@ -1,12 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.stack;
 
 
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
 
-import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class StackImpl<ELEMENT> implements CallStack<ELEMENT>,
         LockOrMonitorStack<ELEMENT> {

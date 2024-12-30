@@ -6,10 +6,10 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrateg
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
-import static com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 
 public class ApplyClassTransformerCollectionFactory {

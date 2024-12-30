@@ -1,10 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.RuntimeEventOnly;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodExitEventGen;
 
-public class MethodExitEvent extends MethodExitEventGen implements RuntimeEvent {
+
+public class MethodExitEvent extends MethodExitEventGen implements RuntimeEventOnly {
 
     public MethodExitEvent(int methodId) {
         this.methodId = methodId;
@@ -27,7 +28,6 @@ public class MethodExitEvent extends MethodExitEventGen implements RuntimeEvent 
     }
 
     public void setRunPosition(int runPosition) {
-        throw new RuntimeException("should not be called");
     }
 
 }

@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitormethod
 
 import com.anarsoft.trace.agent.runtime.classtransformerall.callbackfactory.MethodCallbackFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;

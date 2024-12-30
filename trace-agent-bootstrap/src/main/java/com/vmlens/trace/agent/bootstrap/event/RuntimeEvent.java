@@ -10,4 +10,8 @@ public interface RuntimeEvent extends SerializableEvent {
     void setRunId(int runId);
     void setRunPosition(int runPosition);
     void serialize(ByteBuffer buffer) throws Exception;
+
+    void accept(RuntimeEventVisitor runtimeEventVisitor);
+
+    boolean isInterleaveActionFactory();
 }

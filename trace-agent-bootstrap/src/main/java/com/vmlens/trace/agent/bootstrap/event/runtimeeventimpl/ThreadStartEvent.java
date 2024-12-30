@@ -2,13 +2,12 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
 import com.vmlens.trace.agent.bootstrap.event.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.ThreadStartEventGen;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadStart;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
-public class ThreadStartEvent extends ThreadStartEventGen implements RuntimeEvent, InterleaveActionFactory {
+public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveActionFactory {
 
     private RunnableOrThreadWrapper runnableOrThreadWrapper;
 

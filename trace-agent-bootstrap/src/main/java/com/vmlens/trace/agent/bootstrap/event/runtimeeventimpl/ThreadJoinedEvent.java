@@ -1,10 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
+import com.vmlens.trace.agent.bootstrap.event.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.gen.ThreadJoinedEventGen;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class ThreadJoinedEvent extends ThreadJoinedEventGen implements RuntimeEvent {
+public class ThreadJoinedEvent extends ThreadJoinedEventGen implements InterleaveActionFactory {
 
 
     public void setThreadIndex(int threadIndex) {
@@ -24,4 +25,8 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements RuntimeEv
         this.runPosition = runPosition;
     }
 
+    @Override
+    public InterleaveAction create() {
+        return null;
+    }
 }

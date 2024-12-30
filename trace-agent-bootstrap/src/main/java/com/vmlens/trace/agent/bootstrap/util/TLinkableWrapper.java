@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.list;
+package com.vmlens.trace.agent.bootstrap.util;
 
 
 import gnu.trove.list.TLinkable;

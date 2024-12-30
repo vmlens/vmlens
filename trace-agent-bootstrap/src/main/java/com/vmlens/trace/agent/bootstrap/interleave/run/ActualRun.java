@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-import com.vmlens.trace.agent.bootstrap.list.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 public class ActualRun {
@@ -15,7 +15,7 @@ public class ActualRun {
 
     /**
      * @param interleaveAction
-     * @return can be null
+     * @return
      */
     public InterleaveInfo after(InterleaveAction interleaveAction) {
         run.add(new TLinkableWrapper(interleaveAction));
@@ -25,6 +25,9 @@ public class ActualRun {
         return interleaveInfo;
     }
 
+    public int positionInRun() {
+        return positionInRun;
+    }
 
     public TLinkedList<TLinkableWrapper<InterleaveAction>> run() {
         return run;
