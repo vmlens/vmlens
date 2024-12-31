@@ -1,10 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+
 public interface RuntimeEventOnly extends RuntimeEvent {
 
     @Override
-    default void accept(RuntimeEventVisitor runtimeEventVisitor) {
-        runtimeEventVisitor.visit(this);
+    default RuntimeEvent after(ActualRun actualRun) {
+        setRunPosition(actualRun.positionInRun());
+        return this;
     }
 
     @Override

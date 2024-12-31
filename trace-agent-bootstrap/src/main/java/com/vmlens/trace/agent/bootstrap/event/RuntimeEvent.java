@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event;
 
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+
 import java.nio.ByteBuffer;
 
 public interface RuntimeEvent extends SerializableEvent {
@@ -11,7 +13,7 @@ public interface RuntimeEvent extends SerializableEvent {
     void setRunPosition(int runPosition);
     void serialize(ByteBuffer buffer) throws Exception;
 
-    void accept(RuntimeEventVisitor runtimeEventVisitor);
+    RuntimeEvent after(ActualRun actualRun);
 
     boolean isInterleaveActionFactory();
 }

@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEventOnly;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEventVisitor;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
@@ -12,14 +11,11 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParalleliz
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates.ActiveStrategyRecording;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates.RunStateActive;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class RunStateMachineTestWrapper {
 
@@ -51,45 +47,42 @@ public class RunStateMachineTestWrapper {
     public void assertBehavesAsRunStateEnd() {
         assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
         assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(true));
-        assertThat(runStateMachine.after(createRuntimeEventOnlyMock(), eventThread), is(nullValue()));
         assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L), run),
                 is(nullValue()));
         assertThat(runStateMachine.endAtomicOperation(mock(RuntimeEvent.class), eventThread), is(nullValue()));
+        assertRuntimeEventGetsNotProcessed();
     }
 
     public void assertBehavesAsRunStateActiveActiveStrategyRecording() {
-        RuntimeEvent runtimeEvent = createRuntimeEventOnlyMock();
         assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
         assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(true));
-        assertThat(runStateMachine.after(runtimeEvent, eventThread), is(runtimeEvent));
         assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L), run),
                 is(nullValue()));
         assertThat(runStateMachine.canStartAtomicOperation(), is(true));
+        assertRuntimeEventGetsProcessed();
     }
 
     public void assertBehavesAsRunStateAtomicOperation() {
-        RuntimeEvent runtimeEvent = createRuntimeEventOnlyMock();
         assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
         assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(false));
-        assertThat(runStateMachine.after(runtimeEvent, eventThread), is(runtimeEvent));
         assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L), run),
                 is(nullValue()));
         assertThat(runStateMachine.canStartAtomicOperation(), is(false));
+        assertRuntimeEventGetsProcessed();
     }
 
     public void assertBehavesAsRunStateNewThreadStarted() {
         assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(false));
         assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(false));
-        assertThat(runStateMachine.after(createRuntimeEventOnlyMock(), eventThread), is(notNullValue()));
         assertThat(runStateMachine.canStartAtomicOperation(), is(false));
+        assertRuntimeEventGetsProcessed();
     }
 
     public void assertBehavesAsRunStateAtomicOperationWithNewThreadStarted() {
-        RuntimeEvent runtimeEvent = createRuntimeEventOnlyMock();
         assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
         assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(false));
-        assertThat(runStateMachine.after(runtimeEvent, eventThread), is(runtimeEvent));
         assertThat(runStateMachine.canStartAtomicOperation(), is(false));
+        assertRuntimeEventGetsProcessed();
     }
 
     public void assertNewThreadIndex(int threadIndex) {
@@ -129,17 +122,17 @@ public class RunStateMachineTestWrapper {
         return otherThread;
     }
 
-
-    private RuntimeEvent createRuntimeEventOnlyMock() {
-        RuntimeEventOnly runtimeEvent = mock(RuntimeEventOnly.class);
-        doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                ((RuntimeEventVisitor) invocationOnMock.getArguments()[0])
-                        .visit((RuntimeEventOnly) invocationOnMock.getMock());
-                return null;
-            }
-        }).when(runtimeEvent).accept(any());
-        return runtimeEvent;
+    private void assertRuntimeEventGetsProcessed() {
+        RuntimeEvent runtimeEvent = mock(RuntimeEventOnly.class);
+        runStateMachine.after(runtimeEvent, eventThread);
+        verify(runtimeEvent).after(any());
     }
+
+    private void assertRuntimeEventGetsNotProcessed() {
+        RuntimeEvent runtimeEvent = mock(RuntimeEventOnly.class);
+        runStateMachine.after(runtimeEvent, eventThread);
+        verify(runtimeEvent, never()).after(any());
+    }
+
+
 }

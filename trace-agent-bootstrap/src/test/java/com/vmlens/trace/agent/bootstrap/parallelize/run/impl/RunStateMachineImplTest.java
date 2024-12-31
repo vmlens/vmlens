@@ -2,12 +2,9 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.InterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEventVisitor;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -23,7 +20,7 @@ public class RunStateMachineImplTest {
     public void threadBeginAfterRunStateAtomicOperationWithNewThreadStarted() {
         // Given
         ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L);
-        ThreadStartEvent runtimeEvent = createInterleaveActionFactoryMock(ThreadStartEvent.class);
+        ThreadStartEvent runtimeEvent = mock(ThreadStartEvent.class);
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
         // start atomic new thread start
@@ -38,7 +35,7 @@ public class RunStateMachineImplTest {
 
         // after thread start
         runStateMachineTestWrapper.eventEndAtomicOperation(runtimeEvent);
-        verify(runtimeEvent).create();
+        verify(runtimeEvent).after(any());
         verify(runtimeEvent).setStartedThreadIndex(anyInt());
         runStateMachineTestWrapper.assertBehavesAsRunStateActiveActiveStrategyRecording();
     }
@@ -47,7 +44,7 @@ public class RunStateMachineImplTest {
     public void threadBeginAfterRunStateNewThreadStarted() {
         // Given
         ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L);
-        ThreadStartEvent runtimeEvent = createInterleaveActionFactoryMock(ThreadStartEvent.class);
+        ThreadStartEvent runtimeEvent = mock(ThreadStartEvent.class);
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
         // start atomic new thread start
@@ -55,7 +52,7 @@ public class RunStateMachineImplTest {
 
         // after thread start
         runStateMachineTestWrapper.eventEndAtomicOperation(runtimeEvent);
-        verify(runtimeEvent).create();
+        verify(runtimeEvent).after(any());
         verify(runtimeEvent).setStartedThreadIndex(anyInt());
         runStateMachineTestWrapper.assertBehavesAsRunStateNewThreadStarted();
 
@@ -82,7 +79,7 @@ public class RunStateMachineImplTest {
     @Test
     public void atomicOperation() {
         // Given
-        InterleaveActionFactory runtimeEvent = createInterleaveActionFactoryMock(InterleaveActionFactory.class);
+        InterleaveActionFactory runtimeEvent = mock(InterleaveActionFactory.class);
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
         // start atomic
@@ -91,21 +88,9 @@ public class RunStateMachineImplTest {
 
         // after atomic operation
         runStateMachineTestWrapper.eventEndAtomicOperation(runtimeEvent);
-        verify(runtimeEvent).create();
+        verify(runtimeEvent).after(any());
         runStateMachineTestWrapper.assertBehavesAsRunStateActiveActiveStrategyRecording();
     }
 
-    private <EVENT extends InterleaveActionFactory> EVENT createInterleaveActionFactoryMock(Class<EVENT> mockClass) {
-        EVENT runtimeEvent = mock(mockClass);
-        doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                ((RuntimeEventVisitor) invocationOnMock.getArguments()[0])
-                        .visit((InterleaveActionFactory) invocationOnMock.getMock());
-                return null;
-            }
-        }).when(runtimeEvent).accept(any());
-        return runtimeEvent;
-    }
 
 }
