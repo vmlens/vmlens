@@ -21,7 +21,6 @@ public class DeserializeThreadAndLoopDescriptionTest {
         threadOrLoopDescription.add(new ThreadDescription(2, 2, 0, 5L, "threadName"));
         threadOrLoopDescription.add(new TestLoopDescription(2, "name"));
 
-        // When
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
 
