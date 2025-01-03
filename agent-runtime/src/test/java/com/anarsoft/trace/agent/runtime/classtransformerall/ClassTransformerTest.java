@@ -5,8 +5,8 @@ import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.classanalyzer.ClassVisitorAnalyze;
 import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitor.MethodVisitorFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformerall.methodvisitormethodcall.MethodCallFactoryFactory;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
@@ -67,7 +67,7 @@ public class ClassTransformerTest {
         MethodRepositoryForAnalyze methodRepositoryForAnalyze = mock(MethodRepositoryForAnalyze.class);
         FieldRepositoryForAnalyze fieldRepositoryForAnalyze = mock(FieldRepositoryForAnalyze.class);
         TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
-        WriteClassDescription writeClassDescription = new WriteClassDescriptionDuringStartup(classAnalyzedEventList);
+        WriteClassDescriptionAndWarning writeClassDescription = new WriteClassDescriptionAndWarningDuringStartup(classAnalyzedEventList, new TLinkedList<>());
         ClassVisitorAnalyze classVisitorAnalyze = new ClassVisitorAnalyze(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze, writeClassDescription);
 

@@ -1,13 +1,13 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 
 public class ApplyClassTransformer {
 
-    private final WriteClassDescription writeClassDescription;
+    private final WriteClassDescriptionAndWarning writeClassDescription;
     private final ApplyClassTransformerCollection classArrayTransformerCollection;
 
-    public ApplyClassTransformer(WriteClassDescription writeClassDescription,
+    public ApplyClassTransformer(WriteClassDescriptionAndWarning writeClassDescription,
                                  ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
         super();
         this.writeClassDescription = writeClassDescription;

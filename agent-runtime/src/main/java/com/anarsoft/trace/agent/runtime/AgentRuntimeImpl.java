@@ -2,12 +2,13 @@ package com.anarsoft.trace.agent.runtime;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.anarsoft.trace.agent.runtime.write.WriteEventToFile;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import java.io.File;
@@ -85,10 +86,13 @@ public class AgentRuntimeImpl implements AgentRuntime {
 	}
 
     private void retransform(Instrumentation inst,
-                             TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList, boolean skipJavaUtil,
+							 TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList,
+							 TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList,
+							 boolean skipJavaUtil,
                              THashSet<String> alreadyTransformed) throws UnmodifiableClassException {
-        WriteClassDescriptionDuringStartup writeClassDescriptionDuringStartup = new WriteClassDescriptionDuringStartup(
-                classAnalyzedEventList);
+		WriteClassDescriptionAndWarningDuringStartup writeClassDescriptionDuringStartup =
+				new WriteClassDescriptionAndWarningDuringStartup(
+						classAnalyzedEventList, infoMessageEventList);
 
      /*   AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
 				writeClassDescriptionDuringStartup, new HasGeneratedMethodsAlwaysFalse(),
@@ -124,10 +128,13 @@ public class AgentRuntimeImpl implements AgentRuntime {
 	}
 
     protected void instrument(Instrumentation inst, String outputFileName) throws Exception {
-        TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList();
+		TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
+		TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
         THashSet<String> alreadyTransformed = new THashSet();
 
-        retransform(inst, classAnalyzedEventList, true, alreadyTransformed);
+		retransform(inst, classAnalyzedEventList,
+				infoMessageEventList,
+				true, alreadyTransformed);
         for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
 			ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.element());
@@ -135,7 +142,8 @@ public class AgentRuntimeImpl implements AgentRuntime {
         }
         classAnalyzedEventList = new TLinkedList();
 
-        retransform(inst, classAnalyzedEventList, false, alreadyTransformed);
+		retransform(inst, classAnalyzedEventList, infoMessageEventList,
+				false, alreadyTransformed);
 		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
 
 			ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.element());

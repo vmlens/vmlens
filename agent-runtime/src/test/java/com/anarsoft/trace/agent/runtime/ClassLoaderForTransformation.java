@@ -2,8 +2,8 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformer;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
@@ -41,11 +41,11 @@ public class ClassLoaderForTransformation extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
-            WriteClassDescription writeClassDescription = mock(WriteClassDescription.class);
+            WriteClassDescriptionAndWarning writeClassDescription = mock(WriteClassDescriptionAndWarning.class);
             ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodRepository(),
                     new FieldRepository(), writeClassDescription);
             ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(
-                    new WriteClassDescriptionDuringStartup(new TLinkedList<>()),
+                    new WriteClassDescriptionAndWarningDuringStartup(new TLinkedList<>(), new TLinkedList<>()),
                     factory);
 
             byte[] transformed = applyClassTransformer.transform(targetArray,

@@ -2,8 +2,8 @@ package com.anarsoft.trace.agent.runtime.classanalyzer;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionDuringStartup;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
@@ -27,7 +27,7 @@ public class ClassVisitorAnalyzeTest {
         MethodRepositoryForAnalyze methodRepositoryForAnalyze = mock(MethodRepositoryForAnalyze.class);
         FieldRepositoryForAnalyze fieldRepositoryForAnalyze = mock(FieldRepositoryForAnalyze.class);
         TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
-        WriteClassDescription writeClassDescription = new WriteClassDescriptionDuringStartup(classAnalyzedEventList);
+        WriteClassDescriptionAndWarning writeClassDescription = new WriteClassDescriptionAndWarningDuringStartup(classAnalyzedEventList, new TLinkedList<>());
         ClassVisitorAnalyze classVisitorAnalyze = new ClassVisitorAnalyze(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze, writeClassDescription);
 

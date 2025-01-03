@@ -4,7 +4,7 @@ import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.description.FieldInClassDescription;
 import com.anarsoft.trace.agent.description.MethodDescription;
 import com.anarsoft.trace.agent.runtime.classtransformerall.ASMConstants;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
@@ -22,7 +22,7 @@ public class ClassVisitorAnalyze extends ClassVisitor {
 
     private final MethodRepositoryForAnalyze methodRepositoryForAnalyze;
     private final FieldRepositoryForAnalyze fieldRepositoryForAnalyze;
-    private final WriteClassDescription writeClassDescription;
+    private final WriteClassDescriptionAndWarning writeClassDescription;
     private final TLinkedList<TLinkableWrapper<FieldInClassDescription>> fieldDescriptionList = new TLinkedList<>();
     private final TLinkedList<TLinkableWrapper<MethodDescription>> methodDescriptionList = new TLinkedList<>();
     private String className;
@@ -32,7 +32,7 @@ public class ClassVisitorAnalyze extends ClassVisitor {
 
     public ClassVisitorAnalyze(MethodRepositoryForAnalyze methodRepositoryForAnalyze,
                                FieldRepositoryForAnalyze fieldRepositoryForAnalyze,
-                               WriteClassDescription writeClassDescription) {
+                               WriteClassDescriptionAndWarning writeClassDescription) {
         super(ASMConstants.ASM_API_VERSION);
         this.methodRepositoryForAnalyze = methodRepositoryForAnalyze;
         this.fieldRepositoryForAnalyze = fieldRepositoryForAnalyze;

@@ -23,9 +23,13 @@ package com.vmlens.api;
  * 
  * }</pre>
  *
+ *
  */
 
 public class AllInterleavings implements AutoCloseable {
+
+
+	private static volatile LogLevel logLevel = LogLevel.INFO;
 
 	/**
      * The name shown in the interleave reportbuilder.
@@ -87,13 +91,8 @@ public class AllInterleavings implements AutoCloseable {
 	}
 
 
-
-
-	
-	
-
 	AllInterleavings(String name, boolean showStatementsWhenSingleThreaded, boolean showStatementsInExecutor,
-			boolean showNonVolatileSharedMemoryAccess, int maximum_run_count, int maximum_operation_per_thread_count,Class[] testClassArray) {
+					 boolean showNonVolatileSharedMemoryAccess, int maximum_run_count, int maximum_operation_per_thread_count, Class[] testClassArray) {
 		super();
 		this.name = name;
 		this.showStatementsWhenSingleThreaded = showStatementsWhenSingleThreaded;
@@ -102,6 +101,14 @@ public class AllInterleavings implements AutoCloseable {
 		this.maximumRuns = maximum_run_count;
 		this.maximumSynchronizationActionsPerThread = maximum_operation_per_thread_count;
 		this.removeAtomicAnnotationFromClassArray = testClassArray;
+	}
+
+	public static LogLevel logLevel() {
+		return logLevel;
+	}
+
+	public static void setLogLevel(LogLevel logLevel) {
+		AllInterleavings.logLevel = logLevel;
 	}
 
 

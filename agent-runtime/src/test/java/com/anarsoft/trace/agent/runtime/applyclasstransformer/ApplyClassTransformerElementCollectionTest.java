@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrategyimpl.TransformerStrategyFilter;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
 import org.junit.Test;
@@ -15,7 +15,7 @@ public class ApplyClassTransformerElementCollectionTest {
     @Test
     public void order() {
         // Given
-        WriteClassDescription writeClassDescription = mock(WriteClassDescription.class);
+        WriteClassDescriptionAndWarning writeClassDescription = mock(WriteClassDescriptionAndWarning.class);
         ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodRepository(),
                 new FieldRepository(), writeClassDescription);
 

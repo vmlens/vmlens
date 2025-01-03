@@ -6,6 +6,7 @@ public enum Message {
     private final int id;
     private final String text;
 
+
     Message(int id, String text) {
         this.id = id;
         this.text = text;

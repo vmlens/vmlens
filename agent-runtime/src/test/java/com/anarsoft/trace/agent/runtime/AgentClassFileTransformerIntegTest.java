@@ -43,6 +43,8 @@ public class AgentClassFileTransformerIntegTest {
     public void withAllInterleavings() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
 
+        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
+        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
         VmlensApiCallbackImpl vmlensApiCallbackImplMock = mock(VmlensApiCallbackImpl.class);
         VmlensApiCallback.setVmlensApiCallback(vmlensApiCallbackImplMock);
 

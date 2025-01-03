@@ -1,15 +1,15 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 
 public class TransformerContext {
     private final byte[] classfileBuffer;
     private final String name;
-    private final WriteClassDescription writeClassDescription;
+    private final WriteClassDescriptionAndWarning writeClassDescription;
 
 
     public TransformerContext(byte[] classfileBuffer, String name,
-                              WriteClassDescription writeClassDescription) {
+                              WriteClassDescriptionAndWarning writeClassDescription) {
         this.classfileBuffer = classfileBuffer;
         this.name = name;
         this.writeClassDescription = writeClassDescription;
@@ -19,7 +19,7 @@ public class TransformerContext {
         return name;
     }
 
-    public WriteClassDescription writeClassDescription() {
+    public WriteClassDescriptionAndWarning writeClassDescription() {
         return writeClassDescription;
     }
 

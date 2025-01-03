@@ -4,7 +4,7 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.classanalyzer.ClassVisitorAnalyze;
 import com.anarsoft.trace.agent.runtime.classtransformerall.ClassTransformer;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
 import org.objectweb.asm.ClassVisitor;
@@ -13,11 +13,11 @@ public class TransformerStrategyAll implements TransformerStrategy {
 
     private final MethodRepositoryForAnalyze methodRepositoryForAnalyze;
     private final FieldRepositoryForAnalyze fieldRepositoryForAnalyze;
-    private final WriteClassDescription writeClassDescription;
+    private final WriteClassDescriptionAndWarning writeClassDescription;
 
     public TransformerStrategyAll(MethodRepositoryForAnalyze methodRepositoryForAnalyze,
                                   FieldRepositoryForAnalyze fieldRepositoryForAnalyze,
-                                  WriteClassDescription writeClassDescription) {
+                                  WriteClassDescriptionAndWarning writeClassDescription) {
         this.methodRepositoryForAnalyze = methodRepositoryForAnalyze;
         this.fieldRepositoryForAnalyze = fieldRepositoryForAnalyze;
         this.writeClassDescription = writeClassDescription;

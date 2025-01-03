@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollection;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescription;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import org.objectweb.asm.Opcodes;
 
 import java.io.FileOutputStream;
@@ -16,10 +16,10 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
     public static final int ASM_API_VERSION = Opcodes.ASM7;
 
-    private final WriteClassDescription writeClassDescription;
+    private final WriteClassDescriptionAndWarning writeClassDescription;
     private final ApplyClassTransformerCollection classArrayTransformerCollection;
 
-    public AgentClassFileTransformer(WriteClassDescription writeClassDescription,
+    public AgentClassFileTransformer(WriteClassDescriptionAndWarning writeClassDescription,
                                      ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
         super();
         this.writeClassDescription = writeClassDescription;
