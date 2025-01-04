@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.LogLevelSingleton;
 import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
 import com.vmlens.trace.agent.bootstrap.event.warning.Warning;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
@@ -43,7 +43,7 @@ public class RunImpl implements Run {
                 try {
                     waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
                 } catch (TestBlockedException e) {
-                    if (AllInterleavings.logLevel().isInfoEnabled()) {
+                    if (LogLevelSingleton.logLevel().isInfoEnabled()) {
                         Warning warning = new LoopWarningEvent(loopId, runId, TEST_BLOCKED_MESSAGE.id());
                         return of(result, warning);
                     }

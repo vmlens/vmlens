@@ -1,4 +1,4 @@
-package com.vmlens.api;
+package com.vmlens.trace.agent.bootstrap.event.warning;
 
 public enum LogLevel {
 
