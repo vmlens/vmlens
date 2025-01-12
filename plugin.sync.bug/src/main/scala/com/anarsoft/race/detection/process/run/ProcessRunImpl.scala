@@ -35,11 +35,8 @@ class ProcessRunImpl extends ProcessRun {
       nonVolatileResult.append(nonVolatileElement.sort(partialOrder));
     }
 
-    val syncActionResult = new ArrayBuffer[GroupInterleaveElementForResult]();
-    for (syncAction <- runData.syncActionElements) {
-      syncActionResult.append(syncAction.asResult())
-    }
 
-    new RunResultImpl(runData.loopAndRunId, nonVolatileResult.toList, runData.interleaveEvents, syncActionResult.toList);
+    new RunResultImpl(runData.loopAndRunId, nonVolatileResult.toList, runData.interleaveEvents,
+      runData.syncActionElements);
   }
 }

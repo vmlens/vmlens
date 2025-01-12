@@ -1,6 +1,7 @@
 package com.anarsoft.race.detection.groupinterleave
 
 import com.anarsoft.race.detection.createpartialordersyncaction.{AddToPartialOrderBuilder, PartialOrderBuilder, SyncActionEventWithCompareType}
+import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.{SetStacktraceNodeInEvent, WithSetStacktraceNode}
 import com.anarsoft.race.detection.sortutil.EventContainer
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
@@ -18,7 +19,7 @@ class GroupInterleaveElementForProcessImpl[EVENT <: SyncActionEventWithCompareTy
     new AddToPartialOrderBuilder(createContainer).process(eventArray, partialOrderBuilder);
   }
 
-  def asResult(): GroupInterleaveElementForResult = {
-    new GroupInterleaveElementForResult(eventArray);
+  def foreach(f: EventForReportElement => Unit): Unit = {
+    eventArray.foreach(f);
   }
 }
