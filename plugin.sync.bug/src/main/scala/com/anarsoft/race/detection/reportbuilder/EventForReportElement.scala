@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.WithPosition
 import com.vmlens.report.element.OperationTextFactory
 
-trait EventForRunElement extends WithPosition {
+trait EventForReportElement extends WithPosition {
   
   def loopId: Int
   def runId: Int

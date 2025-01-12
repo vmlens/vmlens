@@ -1,10 +1,9 @@
 package com.anarsoft.race.detection.event.syncaction
 
-import com.anarsoft.race.detection.createpartialorder.SyncActionEventWithCompareType
+import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.MemoryAccessEvent
 import com.vmlens.report.element.{FieldAccessTextFactory, MemoryAccessModifier, OperationTextFactory}
-import com.vmlens.trace.agent.bootstrap.MemoryAccessType
 
 
 trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]

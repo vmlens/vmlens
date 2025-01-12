@@ -1,12 +1,12 @@
-package com.anarsoft.race.detection.groupsyncaction
+package com.anarsoft.race.detection.groupinterleave
 
-import com.anarsoft.race.detection.createpartialorder.PartialOrderBuilder
+import com.anarsoft.race.detection.createpartialordersyncaction.PartialOrderBuilder
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
-trait SyncActionElementForProcess {
+trait GroupInterleaveElementForProcess {
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit;
 
   def addToPartialOrderBuilder(partialOrderBuilder: PartialOrderBuilder): Unit;
 
-  def asResult(): SyncActionElementForResult;
+  def asResult(): GroupInterleaveElementForResult;
 }

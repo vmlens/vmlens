@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.createpartialorder
+package com.anarsoft.race.detection.createpartialordersyncaction
 
 import com.anarsoft.race.detection.processeventbytype.ProcessEventByType
 import com.anarsoft.race.detection.sortutil.EventContainer

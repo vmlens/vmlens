@@ -7,9 +7,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlockElement;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapContainingStack;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class VolatileFieldAccess implements InterleaveAction, DependentBlockElement {
+public class VolatileFieldAccess extends InterleaveActionForDependentBlock {
     private static final int MIN_OPERATION = 3;
 
     private final int threadIndex;
@@ -30,6 +29,11 @@ public class VolatileFieldAccess implements InterleaveAction, DependentBlockElem
         DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<>(this, myPosition),
                 new ElementAndPosition<>(this, myPosition));
         result.addDependent(new VolatileFieldAccessKey(fieldId), dependentBlock);
+    }
+
+    @Override
+    protected Object blockKey() {
+        return new VolatileFieldAccessKey(fieldId);
     }
 
     @Override

@@ -2,25 +2,16 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.*;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
 
-public class ThreadStart implements InterleaveAction, IndependentBlock {
+public class ThreadStart extends InterleaveActionForInDependentBlock {
     private final int threadIndex;
     private final int startedThreadIndex;
 
     public ThreadStart(int threadIndex, int startedThreadIndex) {
         this.threadIndex = threadIndex;
         this.startedThreadIndex = startedThreadIndex;
-    }
-
-
-    @Override
-    public void blockBuilderAdd(Position myPosition,
-                                MapContainingStack mapContainingStack,
-                                MapOfBlocks result) {
-        result.addInDependent(new ElementAndPosition<IndependentBlock>(this, myPosition));
     }
 
     @Override

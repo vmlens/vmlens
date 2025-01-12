@@ -3,8 +3,8 @@ package com.anarsoft.race.detection.process.run
 import com.anarsoft.race.detection.event.gen.{FieldAccessEventGen, VolatileAccessEventGen}
 import com.anarsoft.race.detection.event.nonvolatilefield.NonVolatileFieldAccessEvent
 import com.anarsoft.race.detection.event.syncaction.VolatileAccessEvent
-import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForProcessBuilder
-import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcessBuilder
+import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementForProcessBuilder
+import com.anarsoft.race.detection.groupnonvolatilememoryaccess.GroupNonVolatileMemoryAccessElementForProcessBuilder
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunData}
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType
 import org.scalatest.flatspec.AnyFlatSpec
@@ -53,7 +53,7 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     list.add(read)
     list.add(write);
 
-    val builder = new SyncActionElementForProcessBuilder();
+    val builder = new GroupInterleaveElementForProcessBuilder();
     builder.add(list);
 
     val processRunImpl = new ProcessRunImpl();
@@ -82,7 +82,7 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     list.add(read)
     list.add(write);
 
-    val builder = new NonVolatileMemoryAccessElementForProcessBuilder();
+    val builder = new GroupNonVolatileMemoryAccessElementForProcessBuilder();
     builder.add(list);
     builder.build();
   }

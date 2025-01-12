@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.groupsyncaction
+package com.anarsoft.race.detection.groupinterleave
 
 import com.anarsoft.race.detection.event.syncaction.VolatileAccessEvent
 import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess
@@ -8,18 +8,18 @@ import java.util
 import scala.collection.mutable.ArrayBuffer
 
 
-class SyncActionElementForProcessBuilder {
+class GroupInterleaveElementForProcessBuilder {
 
-  val arrayBuffer = new ArrayBuffer[SyncActionElementForProcess]();
+  val arrayBuffer = new ArrayBuffer[GroupInterleaveElementForProcess]();
 
   def add(list: util.LinkedList[VolatileAccessEvent]): Unit = {
     arrayBuffer.append(
-      new SyncActionElementForProcessImpl[VolatileAccessEvent](
+      new GroupInterleaveElementForProcessImpl[VolatileAccessEvent](
         EventArray[VolatileAccessEvent](list),
         (event: VolatileAccessEvent) => EventContainerForMemoryAccess[VolatileAccessEvent](event)));
   }
 
-  def build(): List[SyncActionElementForProcess] = {
+  def build(): List[GroupInterleaveElementForProcess] = {
     arrayBuffer.toList
   }
 

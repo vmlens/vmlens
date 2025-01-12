@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 
-import com.anarsoft.race.detection.reportbuilder.{EventForRunElement, NonVolatileEventForReport, StaticMemoryAccessId}
+import com.anarsoft.race.detection.reportbuilder.{EventForReportElement, NonVolatileEventForReport, StaticMemoryAccessId}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -31,7 +31,7 @@ class SortedMemoryAccessList {
     }
   }
 
-  def foreach(f: (EventForRunElement) => Unit): Unit = {
+  def foreach(f: (EventForReportElement) => Unit): Unit = {
 
   }
   

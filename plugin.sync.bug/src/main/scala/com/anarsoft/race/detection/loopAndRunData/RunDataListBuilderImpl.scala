@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.interleave.InterleaveEvent
-import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcess
+import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementForProcess
 import com.anarsoft.race.detection.util.EventArray
 
 import java.util
@@ -23,7 +23,7 @@ class RunDataListBuilderImpl extends RunDataListBuilder {
     loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(methodEventArray = EventArray[MethodEvent](methodEventList)))
   }
 
-  def addSyncActionElements(loopAndRunId: LoopAndRunId, syncActionElements: List[SyncActionElementForProcess]): Unit = {
+  def addSyncActionElements(loopAndRunId: LoopAndRunId, syncActionElements: List[GroupInterleaveElementForProcess]): Unit = {
     val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
     loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(syncActionElements = syncActionElements))
   }

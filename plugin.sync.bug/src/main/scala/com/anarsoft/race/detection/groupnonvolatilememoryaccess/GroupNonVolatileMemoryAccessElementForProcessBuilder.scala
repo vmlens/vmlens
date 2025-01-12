@@ -8,16 +8,16 @@ import com.anarsoft.race.detection.util.EventArray
 import java.util
 import scala.collection.mutable.ArrayBuffer
 
-class NonVolatileMemoryAccessElementForProcessBuilder {
+class GroupNonVolatileMemoryAccessElementForProcessBuilder {
 
-  val arrayBuffer = new ArrayBuffer[NonVolatileMemoryAccessElementForProcess]();
+  val arrayBuffer = new ArrayBuffer[GroupNonVolatileMemoryAccessElementForProcess]();
 
   def add(list: util.List[NonVolatileFieldAccessEvent]): Unit = {
-    arrayBuffer.append(new NonVolatileMemoryAccessElementForProcessImpl(EventArray[NonVolatileFieldAccessEvent](list)));
+    arrayBuffer.append(new GroupNonVolatileMemoryAccessElementForProcessImpl(EventArray[NonVolatileFieldAccessEvent](list)));
   }
 
 
-  def build(): List[NonVolatileMemoryAccessElementForProcess] = {
+  def build(): List[GroupNonVolatileMemoryAccessElementForProcess] = {
     arrayBuffer.toList
   }
 

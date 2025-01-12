@@ -2,10 +2,10 @@ package com.anarsoft.race.detection.reportbuilder
 
 import com.anarsoft.race.detection.loopAndRunData.RunResult
 
-class RunResultMock(eventForRunElements: List[EventForRunElement], val isFailure: Boolean,
+class RunResultMock(eventForRunElements: List[EventForReportElement], val isFailure: Boolean,
                     val dataRaceCount: Int) extends RunResult {
 
-  override def foreach(f: EventForRunElement => Unit): Unit = {
+  override def foreach(f: EventForReportElement => Unit): Unit = {
     eventForRunElements.foreach(f);
   }
 

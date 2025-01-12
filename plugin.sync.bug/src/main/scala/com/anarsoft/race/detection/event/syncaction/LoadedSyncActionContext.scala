@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.syncaction
 
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
-import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForProcessImpl
+import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementForProcessImpl
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess
 import com.anarsoft.race.detection.util.EventArray
@@ -18,7 +18,7 @@ class LoadedSyncActionContext extends LoadedEventContext[LoadedSyncActionEvent] 
   }
 
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
-    val elements = List(new SyncActionElementForProcessImpl[VolatileAccessEvent](
+    val elements = List(new GroupInterleaveElementForProcessImpl[VolatileAccessEvent](
       EventArray[VolatileAccessEvent](volatileAccessEvents),
       event => EventContainerForMemoryAccess(event)
     ))

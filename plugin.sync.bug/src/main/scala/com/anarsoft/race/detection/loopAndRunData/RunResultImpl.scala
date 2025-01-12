@@ -2,22 +2,22 @@ package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.event.distribute.EventWithLoopAndRunId
 import com.anarsoft.race.detection.event.interleave.RunEndEvent
-import com.anarsoft.race.detection.groupnonvolatilememoryaccess.NonVolatileMemoryAccessElementForResult
-import com.anarsoft.race.detection.groupsyncaction.SyncActionElementForResult
-import com.anarsoft.race.detection.reportbuilder.{EventForRunElement, StaticMemoryAccessId}
+import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementForResult
+import com.anarsoft.race.detection.groupnonvolatilememoryaccess.GroupNonVolatileMemoryAccessElementForResult
+import com.anarsoft.race.detection.reportbuilder.{EventForReportElement, StaticMemoryAccessId}
 
 import scala.collection.mutable
 
 class RunResultImpl(loopAndRunId: LoopAndRunId,
-                    nonVolatileMemoryAccessElements: List[NonVolatileMemoryAccessElementForResult],
+                    nonVolatileMemoryAccessElements: List[GroupNonVolatileMemoryAccessElementForResult],
                     interleaveEvents: List[EventWithLoopAndRunId],
-                    syncActionElements: List[SyncActionElementForResult]) extends RunResult {
+                    syncActionElements: List[GroupInterleaveElementForResult]) extends RunResult {
 
   override def loopId: Int = loopAndRunId.loopId;
 
   override def runId: Int = loopAndRunId.runId;
 
-  override def foreach(f: EventForRunElement => Unit): Unit = {
+  override def foreach(f: EventForReportElement => Unit): Unit = {
     for (element <- nonVolatileMemoryAccessElements) {
       for (sortedList <- element.sortedLists) {
         sortedList.foreach(f)

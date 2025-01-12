@@ -6,16 +6,16 @@ import com.anarsoft.race.detection.sortnonvolatilememoryaccess.{NonVolatileMemor
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
 
-class NonVolatileMemoryAccessElementForProcessImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT] with WithSetStacktraceNode]
-(eventArray: EventArray[EVENT]) extends NonVolatileMemoryAccessElementForProcess {
+class GroupNonVolatileMemoryAccessElementForProcessImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT] with WithSetStacktraceNode]
+(eventArray: EventArray[EVENT]) extends GroupNonVolatileMemoryAccessElementForProcess {
 
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit = {
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
   }
 
-  def sort(partialOrder: PartialOrder): NonVolatileMemoryAccessElementForResult = {
+  def sort(partialOrder: PartialOrder): GroupNonVolatileMemoryAccessElementForResult = {
     val sorted = new SortNonVolatileMemoryAccess[EVENT]().sort(eventArray, partialOrder);
-    NonVolatileMemoryAccessElementForResult(sorted);
+    GroupNonVolatileMemoryAccessElementForResult(sorted);
   }
 
 
