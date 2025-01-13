@@ -8,18 +8,18 @@ import java.util
 import scala.collection.mutable.ArrayBuffer
 
 
-class GroupInterleaveElementForProcessBuilder {
+class GroupInterleaveElementBuilder {
 
-  val arrayBuffer = new ArrayBuffer[GroupInterleaveElementForProcess]();
+  val arrayBuffer = new ArrayBuffer[GroupInterleaveElement]();
 
   def add(list: util.LinkedList[VolatileAccessEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementForProcessImpl[VolatileAccessEvent](
+      new GroupInterleaveElementSyncActionImpl[VolatileAccessEvent](
         EventArray[VolatileAccessEvent](list),
         (event: VolatileAccessEvent) => EventContainerForMemoryAccess[VolatileAccessEvent](event)));
   }
 
-  def build(): List[GroupInterleaveElementForProcess] = {
+  def build(): List[GroupInterleaveElement] = {
     arrayBuffer.toList
   }
 

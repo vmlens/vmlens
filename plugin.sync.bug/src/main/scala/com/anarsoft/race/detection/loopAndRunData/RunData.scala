@@ -2,14 +2,14 @@ package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.interleave.InterleaveEvent
-import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementForProcess
+import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElement
 import com.anarsoft.race.detection.groupnonvolatilememoryaccess.GroupNonVolatileMemoryAccessElementForProcess
 import com.anarsoft.race.detection.util.EventArray
 
 case class RunData(loopAndRunId: LoopAndRunId,
                    methodEventArray: EventArray[MethodEvent],
                    nonVolatileMemoryAccessElements: List[GroupNonVolatileMemoryAccessElementForProcess],
-                   syncActionElements: List[GroupInterleaveElementForProcess],
+                   syncActionElements: List[GroupInterleaveElement],
                    interleaveEvents: List[InterleaveEvent]) {
   
 }

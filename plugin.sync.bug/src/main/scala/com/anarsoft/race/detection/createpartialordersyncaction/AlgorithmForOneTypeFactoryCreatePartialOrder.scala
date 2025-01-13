@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.createpartialordersyncaction
 
+import com.anarsoft.race.detection.partialorder.PartialOrderBuilder
 import com.anarsoft.race.detection.processeventbytype.{AlgorithmForOneType, AlgorithmForOneTypeFactory}
 import com.anarsoft.race.detection.sortutil.EventContainer
 

@@ -1,6 +1,5 @@
 package com.anarsoft.race.detection.partialorder
 
-import com.anarsoft.race.detection.createpartialordersyncaction.PartialOrderBuilder
 import com.anarsoft.race.detection.partialorder.WithPositionImpl.pos
 import com.anarsoft.race.detection.util.WithPosition
 

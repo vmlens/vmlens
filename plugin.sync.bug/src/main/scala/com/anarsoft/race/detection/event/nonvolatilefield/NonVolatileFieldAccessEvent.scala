@@ -3,7 +3,8 @@ package com.anarsoft.race.detection.event.nonvolatilefield
 import com.anarsoft.race.detection.reportbuilder.FieldId
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
-import com.vmlens.report.element.{FieldAccessTextFactory, MemoryAccessModifier, OperationTextFactory}
+import com.vmlens.report.element.operationtextfactoryimpl.FieldAccessTextFactory
+import com.vmlens.report.element.{MemoryAccessModifier, OperationTextFactory}
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType
 import org.apache.commons.text.StringEscapeUtils
 

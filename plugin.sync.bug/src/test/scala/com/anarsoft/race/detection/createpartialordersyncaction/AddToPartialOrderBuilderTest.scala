@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.createpartialordersyncaction
 
+import com.anarsoft.race.detection.partialorder.PartialOrderBuilder
 import com.anarsoft.race.detection.util.EventArray
 import org.mockito.Mockito.{mock, verify}
 import org.scalatest.flatspec.AnyFlatSpec

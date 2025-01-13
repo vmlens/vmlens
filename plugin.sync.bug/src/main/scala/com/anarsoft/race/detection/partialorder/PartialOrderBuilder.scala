@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.createpartialordersyncaction
+package com.anarsoft.race.detection.partialorder
 
 import com.anarsoft.race.detection.util.WithPosition
 

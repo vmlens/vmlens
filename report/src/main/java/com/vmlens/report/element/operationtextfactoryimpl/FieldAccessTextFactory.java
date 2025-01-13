@@ -1,5 +1,8 @@
-package com.vmlens.report.element;
+package com.vmlens.report.element.operationtextfactoryimpl;
 
+import com.vmlens.report.element.MemoryAccessModifier;
+import com.vmlens.report.element.NeedsDescriptionCallback;
+import com.vmlens.report.element.OperationTextFactory;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import org.apache.commons.text.StringEscapeUtils;
 
