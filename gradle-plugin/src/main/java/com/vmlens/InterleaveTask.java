@@ -1,16 +1,5 @@
 package com.vmlens;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-import org.gradle.api.GradleScriptException;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.Internal;
-import org.gradle.api.tasks.TaskAction;
-import org.gradle.api.tasks.testing.Test;
-
 import com.anarsoft.config.DefaultValues;
 import com.anarsoft.config.MavenMojo;
 import com.vmlens.api.callback.ApiCallbackParallize;
@@ -18,6 +7,16 @@ import com.vmlens.api.callback.ExtractAgentAndCheckLicence;
 import com.vmlens.api.callback.IssuesFoundException;
 import com.vmlens.api.internal.reports.ReportFacade$;
 import com.vmlens.maven.plugin.AbstractMavenPlugin;
+import org.apache.commons.io.FileUtils;
+import org.gradle.api.GradleScriptException;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.testing.Test;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 public class InterleaveTask extends Test {
 
@@ -33,7 +32,7 @@ public class InterleaveTask extends Test {
 	public InterleaveTask() {
 
 		agentDirectory = new File(getProject().getBuildDir().getAbsolutePath() + "/vmlens-agent");
-		reportDirectory = new File(getProject().getBuildDir().getAbsolutePath() + "/reports/tests/interleave");
+        reportDirectory = new File(getProject().getBuildDir().getAbsolutePath() + "/reports/tests/control");
 
 		DefaultValues defaultValues = new DefaultValues();
 

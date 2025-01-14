@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.event.syncaction
+package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.createpartialorderthreadoperation.ThreadOperation
 import com.anarsoft.race.detection.partialorder.{PartialOrderBuilder, WithPositionImpl}
@@ -8,12 +8,12 @@ import com.vmlens.report.element.OperationTextFactory
 import com.vmlens.report.element.operationtextfactoryimpl.ThreadOperationTextFactory
 
 
-trait ThreadStartEvent extends LoadedSyncActionEvent with ThreadOperation
+trait ThreadStartEvent extends LoadedInterleaveActionEvent with ThreadOperation
   with EventForReportElement with WithSetStacktraceNode {
 
   def startedThreadIndex: Int;
 
-  override def addToContext(context: LoadedSyncActionContext): Unit = {
+  override def addToContext(context: LoadedInterleaveActionContext): Unit = {
     context.threadStartEvents.add(this);
   }
 

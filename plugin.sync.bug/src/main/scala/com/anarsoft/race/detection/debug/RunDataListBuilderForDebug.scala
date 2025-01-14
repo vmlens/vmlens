@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.debug
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
-import com.anarsoft.race.detection.event.interleave.InterleaveEvent
+import com.anarsoft.race.detection.event.control.ControlEvent
 import com.anarsoft.race.detection.groupinterleave.{GroupInterleaveElement, GroupInterleaveElementSyncActionImpl}
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 
@@ -9,7 +9,7 @@ import java.util
 
 class RunDataListBuilderForDebug extends RunDataListBuilder {
 
-  override def addInterleaveEvents(loopAndRunId: LoopAndRunId, interleaveEventList: List[InterleaveEvent]): Unit = {
+  override def addControlEvents(loopAndRunId: LoopAndRunId, interleaveEventList: List[ControlEvent]): Unit = {
     for (elem <- interleaveEventList) {
       println(elem);
     }

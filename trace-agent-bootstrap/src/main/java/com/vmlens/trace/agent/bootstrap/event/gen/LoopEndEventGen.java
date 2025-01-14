@@ -35,7 +35,7 @@ public class LoopEndEventGen {
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.interleave.
+        serialize(streamRepository.control.
                 getByteBuffer(new LoopIdAndRunId(loopId, runId), 13, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }

@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.event.syncaction
+package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
@@ -10,12 +10,12 @@ import com.vmlens.report.element.{MemoryAccessModifier, OperationTextFactory}
 trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]
   with SyncActionEventWithCompareType[VolatileAccessEvent]
   with WithSetStacktraceNode
-  with LoadedSyncActionEvent {
+  with LoadedInterleaveActionEvent {
 
   def fieldId: Int
   def objectHashCode: Long
-  
-  override def addToContext(context: LoadedSyncActionContext): Unit = {
+
+  override def addToContext(context: LoadedInterleaveActionContext): Unit = {
     context.volatileAccessEvents.add(this);
   }
 

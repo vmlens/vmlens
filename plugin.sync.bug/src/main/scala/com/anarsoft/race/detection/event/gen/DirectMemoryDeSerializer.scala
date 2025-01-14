@@ -1,11 +1,11 @@
 package com.anarsoft.race.detection.event.gen;
 
+import com.anarsoft.race.detection.event.control.*
 import com.anarsoft.race.detection.event.directmemory.*
 import com.anarsoft.race.detection.event.interleave.*
 import com.anarsoft.race.detection.event.load.*
 import com.anarsoft.race.detection.event.method.*
 import com.anarsoft.race.detection.event.nonvolatilefield.*
-import com.anarsoft.race.detection.event.syncaction.*
 
 import java.nio.ByteBuffer;
 

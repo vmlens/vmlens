@@ -32,21 +32,21 @@ compileJava {
 
 pluginBundle {
     website = 'https://vmlens.com' 
-    vcsUrl = 'https://github.com/vmlens/vmlens' 
-    tags = ['interleave']     
+    vcsUrl = 'https://github.com/vmlens/vmlens'
+    tags = ['control']
 }
 
 dependencies {
     api gradleApi()
     implementation 'com.google.guava:guava:23.0'
-    api 'com.vmlens:interleave:' + version
+    api 'com.vmlens:control:' + version
     testImplementation 'junit:junit:4.12'
 }
 
 gradlePlugin {
     plugins {
         interleavePlugin {
-            id = 'com.vmlens.interleave'
+            id = 'com.vmlens.control'
          
             description = 'unit-testing multi-threaded applications on the JVM made easy' 
             implementationClass = 'com.vmlens.InterleavePlugin'

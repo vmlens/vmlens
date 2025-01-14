@@ -36,7 +36,7 @@ class ProcessRunImpl extends ProcessRun {
     }
 
 
-    new RunResultImpl(runData.loopAndRunId, nonVolatileResult.toList, runData.interleaveEvents,
+    new RunResultImpl(runData.loopAndRunId, nonVolatileResult.toList, runData.controlEvents,
       runData.syncActionElements);
   }
 }

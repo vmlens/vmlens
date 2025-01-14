@@ -8,7 +8,7 @@ import gnu.trove.list.linked.TLinkedList;
 import java.util.Iterator;
 
 /**
- * Creates blocks for each interleave action of an actual run. Interleave actions of different types are independent.
+ * Creates blocks for each control action of an actual run. Interleave actions of different types are independent.
  */
 
 public class MapOfBlocksExceptDeadlockFactory {

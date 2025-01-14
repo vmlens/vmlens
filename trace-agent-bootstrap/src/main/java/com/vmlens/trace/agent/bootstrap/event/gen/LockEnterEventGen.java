@@ -53,7 +53,7 @@ public class LockEnterEventGen {
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.syncActions.
+        serialize(streamRepository.interleave.
                 getByteBuffer(new LoopIdAndRunId(loopId, runId), 34, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }

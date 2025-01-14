@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.load
 
-import com.anarsoft.race.detection.event.gen.SyncActionsDeSerializer
-import com.anarsoft.race.detection.event.syncaction.LoadedSyncActionEvent
+import com.anarsoft.race.detection.event.gen.InterleaveDeSerializer
+import com.anarsoft.race.detection.event.interleave.LoadedInterleaveActionEvent
 import com.anarsoft.race.detection.testFixture.VolatileFixture
 import com.vmlens.trace.agent.bootstrap.event.gen.EventConstants
 import org.scalatest.flatspec.AnyFlatSpec
@@ -39,8 +39,8 @@ class LoadOneFilePositionTest extends AnyFlatSpec with Matchers {
     loadByteBuffer.close();
 
     // Then
-    val deserializeEvents = DeserializeEvents[LoadedSyncActionEvent]();
-    val serializedEvents = deserializeEvents.deserialize(loadedByteBuffer, new SyncActionsDeSerializer());
+    val deserializeEvents = DeserializeEvents[LoadedInterleaveActionEvent]();
+    val serializedEvents = deserializeEvents.deserialize(loadedByteBuffer, new InterleaveDeSerializer());
     serializedEvents.asScala.toList should be(testData.volatileAccessEvents);
 
 

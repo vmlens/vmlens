@@ -44,7 +44,7 @@ public class ThreadJoinedEventGen {
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.syncActions.
+        serialize(streamRepository.interleave.
                 getByteBuffer(new LoopIdAndRunId(loopId, runId), 25, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }

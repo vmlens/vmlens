@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.groupinterleave
 
-import com.anarsoft.race.detection.event.syncaction.VolatileAccessEvent
+import com.anarsoft.race.detection.event.interleave.VolatileAccessEvent
 import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess
 import com.anarsoft.race.detection.util.EventArray
 

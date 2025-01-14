@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.event.syncaction
+package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
 import com.anarsoft.race.detection.groupinterleave.{GroupInterleaveElementBuilder, GroupInterleaveElementSyncActionImpl}
@@ -8,12 +8,12 @@ import com.anarsoft.race.detection.util.EventArray
 
 import java.util
 
-class LoadedSyncActionContext extends LoadedEventContext[LoadedSyncActionEvent] {
+class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveActionEvent] {
 
   val volatileAccessEvents = new util.LinkedList[VolatileAccessEvent]();
   val threadStartEvents = new util.LinkedList[ThreadStartEvent]();
 
-  def addLoadedEvent(event: LoadedSyncActionEvent): Unit = {
+  def addLoadedEvent(event: LoadedInterleaveActionEvent): Unit = {
     event.addToContext(this);
   }
 

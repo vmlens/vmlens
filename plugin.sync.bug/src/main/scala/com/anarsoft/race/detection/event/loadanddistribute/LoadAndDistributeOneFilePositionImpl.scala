@@ -1,11 +1,11 @@
 package com.anarsoft.race.detection.event.loadanddistribute
 
+import com.anarsoft.race.detection.event.control.{LoadedControlContext, LoadedControlEvent}
 import com.anarsoft.race.detection.event.distribute.{DistributeEvents, EventWithLoopAndRunId, LoadedEventContext}
-import com.anarsoft.race.detection.event.gen.{InterleaveDeSerializer, MethodDeSerializer, SyncActionsDeSerializer}
-import com.anarsoft.race.detection.event.interleave.{LoadedInterleaveContext, LoadedInterleaveEvent}
+import com.anarsoft.race.detection.event.gen.{ControlDeSerializer, InterleaveDeSerializer, MethodDeSerializer}
+import com.anarsoft.race.detection.event.interleave.{LoadedInterleaveActionContext, LoadedInterleaveActionEvent}
 import com.anarsoft.race.detection.event.load.{DeserializeEvents, DeserializeStrategy, FilePosition, LoadOneFilePosition}
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
-import com.anarsoft.race.detection.event.syncaction.{LoadedSyncActionContext, LoadedSyncActionEvent}
 import com.anarsoft.race.detection.loopAndRunData.RunDataListBuilder
 import com.anarsoft.race.detection.process.load.LoadAndDistributeOneFilePosition
 import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
@@ -39,16 +39,16 @@ object LoadAndDistributeOneFilePositionImpl {
       new LoadedMethodEventContext()
     });
 
-  def syncAction(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedSyncActionEvent](dir, typeName,
-    new SyncActionsDeSerializer(),
-    () => {
-      new LoadedSyncActionContext()
-    });
-
-  def interleave(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedInterleaveEvent](dir, typeName,
+  def interleave(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedInterleaveActionEvent](dir, typeName,
     new InterleaveDeSerializer(),
     () => {
-      new LoadedInterleaveContext()
+      new LoadedInterleaveActionContext()
+    });
+
+  def control(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedControlEvent](dir, typeName,
+    new ControlDeSerializer(),
+    () => {
+      new LoadedControlContext()
     });
 
 

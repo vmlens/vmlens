@@ -10,20 +10,21 @@ public class StreamRepository {
     public static final String DESCRIPTION = "description";
     public static final String AGENTLOG = "agentlog";
     public static final String METHOD_EVENTS = "method";
-    public static final String SYNC_ACTIONS = "syncactions";
+    public static final String INTERLEAVE = "interleave";
     public static final String FIELD_EVENTS = "field";
     public static final String DIRECT_MEMORY = "directmemory";
-    public static final String INTERLEAVE = "interleave";
+    public static final String CONTROL = "control";
 
 
     public final StreamWrapperWithoutLoopIdAndRunId threadName;
     public final StreamWrapperWithoutLoopIdAndRunId description;
     public final StreamWrapperWithoutLoopIdAndRunId agentLog;
     public final StreamWrapperWithLoopIdAndRunId method;
-    public final StreamWrapperWithLoopIdAndRunId syncActions;
+
+    public final StreamWrapperWithLoopIdAndRunId interleave;
     public final StreamWrapperWithLoopIdAndRunId field;
     public final StreamWrapperWithLoopIdAndRunId directMemory;
-    public final StreamWrapperWithLoopIdAndRunId interleave;
+    public final StreamWrapperWithLoopIdAndRunId control;
 
     private final TLinkedList<AbstractStreamWrapper> streamList = new TLinkedList<AbstractStreamWrapper>();
 
@@ -33,10 +34,10 @@ public class StreamRepository {
         this.agentLog = create(eventDir, AGENTLOG, streamList);
 
         this.method = createWithLoopIdAndRunId(eventDir, METHOD_EVENTS, streamList);
-        this.syncActions = createWithLoopIdAndRunId(eventDir, SYNC_ACTIONS, streamList);
+        this.interleave = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
         this.field = createWithLoopIdAndRunId(eventDir, FIELD_EVENTS, streamList);
         this.directMemory = createWithLoopIdAndRunId(eventDir, DIRECT_MEMORY, streamList);
-        this.interleave = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
+        this.control = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
     }
 
     public void flush() throws Exception {
