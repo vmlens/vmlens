@@ -31,8 +31,6 @@ public class AddFieldAccessCallTest {
         PrintWriter writer = new PrintWriter(out);
 
         classArrayTransformer.transform(classArray, "com/vmlens/test/guineaPig/StaticFieldAccess", new TraceClassVisitor(writer));
-
         new DiffText().assertEquals("/staticFieldAccess.txt", out.toString());
     }
-
 }

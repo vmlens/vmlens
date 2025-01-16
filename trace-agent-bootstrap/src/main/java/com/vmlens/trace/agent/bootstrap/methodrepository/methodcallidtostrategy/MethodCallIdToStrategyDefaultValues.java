@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProviderImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.strategy.BeforeMethodCallStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterExitStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.beforemethodcallstrategyimpl.BeforeNormalMethod;
@@ -25,17 +26,18 @@ public class MethodCallIdToStrategyDefaultValues implements MethodCallIdToStrate
         this.resourceMap = resourceMap;
         this.analyzeMap = analyzeMap;
         this.runMethodEnterStrategy = new RunMethodEnterExitStrategy(new CheckIsThreadRun(),
-                new ThreadLocalForParallelizeProviderImpl());
+                new ThreadLocalForParallelizeProviderImpl(), ParallelizeFacade.parallelize());
     }
 
     public MethodCallIdToStrategyDefaultValues(MethodCallIdToStrategy resourceMap,
                                                MethodCallIdToStrategy analyzeMap,
                                                CheckIsThreadRun checkIsThreadRun,
-                                               ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider) {
+                                               ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider,
+                                               ParallelizeFacade parallelizeFacade) {
         this.resourceMap = resourceMap;
         this.analyzeMap = analyzeMap;
         this.runMethodEnterStrategy = new RunMethodEnterExitStrategy(checkIsThreadRun,
-                threadLocalForParallelizeProvider);
+                threadLocalForParallelizeProvider, parallelizeFacade);
     }
 
     @Override

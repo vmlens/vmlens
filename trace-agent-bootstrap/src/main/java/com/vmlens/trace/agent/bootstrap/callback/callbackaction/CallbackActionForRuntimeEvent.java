@@ -20,6 +20,6 @@ public class CallbackActionForRuntimeEvent<EVENT extends RuntimeEvent> implement
     @Override
     public TLinkedList<TLinkableWrapper<SerializableEvent>> execute(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         setFieldsStrategy.setFields(runtimeEvent);
-        return threadLocalDataWhenInTest.after(runtimeEvent);
+        return threadLocalDataWhenInTest.runAdapter().after(runtimeEvent, threadLocalDataWhenInTest);
     }
 }

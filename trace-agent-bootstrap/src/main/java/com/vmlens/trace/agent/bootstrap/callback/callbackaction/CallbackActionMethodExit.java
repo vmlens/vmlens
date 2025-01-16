@@ -17,6 +17,6 @@ public class CallbackActionMethodExit implements CallbackAction {
     @Override
     public TLinkedList<TLinkableWrapper<SerializableEvent>> execute(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         MethodExitEvent methodExitEvent = new MethodExitEvent(methodId);
-        return threadLocalDataWhenInTest.after(methodExitEvent);
+        return threadLocalDataWhenInTest.runAdapter().after(methodExitEvent, threadLocalDataWhenInTest);
     }
 }

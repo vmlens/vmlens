@@ -1,7 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
-import com.anarsoft.trace.agent.description.TestLoopDescription;
-import com.vmlens.api.AllInterleavings;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunEndEvent;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunStartEvent;
@@ -17,9 +15,13 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParalleliz
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 // Fixme synchonization herausziehen
 public class ParallelizeLoop {
@@ -51,11 +53,13 @@ public class ParallelizeLoop {
         }
     }
 
-    public HasNextResult hasNext(ThreadLocalForParallelize threadLocalForParallelize, Object obj) {
+    public boolean hasNext(ThreadLocalForParallelize threadLocalForParallelize,
+                           TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         lock.lock();
         try {
             if (currentRun != null) {
                 RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
+                serializableEvents.add(wrap(endEvent));
 
                 ActualRun previous = currentRun.end(threadLocalForParallelize);
                 interleaveLoop.addActualRun(previous);
@@ -70,9 +74,11 @@ public class ParallelizeLoop {
                             runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
                     int tempRunId = maxRunId;
                     maxRunId++;
-                    return new HasNextResult(true, new SerializableEvent[]{endEvent, new RunStartEvent(loopId, tempRunId)});
+
+                    serializableEvents.add(wrap(new RunStartEvent(loopId, tempRunId)));
+                    return true;
                 }
-                return new HasNextResult(false, new SerializableEvent[]{endEvent});
+                return false;
             } else {
                 ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
                 ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
@@ -82,8 +88,8 @@ public class ParallelizeLoop {
                         runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
                 int tempRunId = maxRunId;
                 maxRunId++;
-                return new HasNextResult(true, new SerializableEvent[]{new RunStartEvent(loopId, tempRunId),
-                        new TestLoopDescription(loopId, ((AllInterleavings) obj).name)});
+                serializableEvents.add(wrap(new RunStartEvent(loopId, tempRunId)));
+                return true;
             }
         } finally {
             lock.unlock();

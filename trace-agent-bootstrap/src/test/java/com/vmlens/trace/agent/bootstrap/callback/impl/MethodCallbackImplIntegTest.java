@@ -13,6 +13,7 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
@@ -46,6 +47,9 @@ public class MethodCallbackImplIntegTest {
         run = mock(Run.class);
         when(run.after(any(), any())).thenAnswer(invocationOnMock ->
                 RuntimeEventAndWarnings.of((RuntimeEvent) invocationOnMock.getArguments()[0]));
+        when(run.endAtomicOperation(any(), any())).thenAnswer(invocationOnMock ->
+                RuntimeEventAndWarnings.of((RuntimeEvent) invocationOnMock.getArguments()[0]));
+
 
         threadLocalWhenInTest = new ThreadLocalWhenInTest(run, 1);
 
@@ -130,10 +134,12 @@ public class MethodCallbackImplIntegTest {
         CheckIsThreadRun checkIsThreadRun = mock(CheckIsThreadRun.class);
         when(checkIsThreadRun.isThreadRun()).thenReturn(true);
 
+        ParallelizeFacade parallelizeFacade = mock(ParallelizeFacade.class);
+
         ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider = mock(ThreadLocalForParallelizeProvider.class);
 
         MethodRepository methodRepository = new MethodRepository(checkIsThreadRun,
-                threadLocalForParallelizeProvider);
+                threadLocalForParallelizeProvider, parallelizeFacade);
         MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(methodRepository,
                 monitorOrder,
                 threadLocalWhenInTestAdapter);
@@ -144,8 +150,6 @@ public class MethodCallbackImplIntegTest {
 
         // Then
         assertThat(eventList.get(0), instanceOf(MethodEnterEvent.class));
-        verify(run).newTask(any(), any());
+        verify(parallelizeFacade).beginThreadMethodEnter(any(), any());
     }
-
-
 }

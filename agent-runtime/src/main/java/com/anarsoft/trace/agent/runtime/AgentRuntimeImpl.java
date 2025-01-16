@@ -2,12 +2,13 @@ package com.anarsoft.trace.agent.runtime;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningNormal;
 import com.anarsoft.trace.agent.runtime.write.WriteEventToFile;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
@@ -19,17 +20,11 @@ import java.util.Properties;
 
 public class AgentRuntimeImpl implements AgentRuntime {
 
-	private void deleteFile(String fileName) {
-		File finished = new File(fileName);
-		if (finished.exists()) {
-			finished.delete();
-		}
-	}
 
 	public void run(String args, Instrumentation inst) {
 		try {
 			String inputFileName = args;
-			if ((args == null) || (args.trim().equals("")) || (args.trim().startsWith("startManually"))) {
+			if ((args == null) || (args.trim().equals(""))) {
 				File agentFile = new File(
 						AgentRuntimeImpl.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
 				String libPath = agentFile.toString().substring(0,
@@ -47,7 +42,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				if (new File(correctedName).exists()) {
 					inputFileName = correctedName;
 				}
-
 			}
 
 			Properties properties = new Properties();
@@ -59,7 +53,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			}
 
 			File outputDir = new File(outputFileName);
-
 			System.err.println("writing events to " + outputDir.getAbsolutePath());
 
 			if (!outputDir.exists()) {
@@ -74,9 +67,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				}
 			}
 
-
             new LoadClassesAtStart().loadClasses();
-
             instrument(inst, outputFileName);
             WriteEventToFile.startWriteEventToFileThread(outputFileName);
 
@@ -94,12 +85,11 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				new WriteClassDescriptionAndWarningDuringStartup(
 						classAnalyzedEventList, infoMessageEventList);
 
-     /*   AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
-				writeClassDescriptionDuringStartup, new HasGeneratedMethodsAlwaysFalse(),
-				ApplyClassTransformerCollectionFactory.retransform());
+		AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
+				new ApplyClassTransformerCollectionFactory(writeClassDescriptionDuringStartup));
 
         inst.addTransformer(classRetransformer, true);
-*/
+
 		TLinkedList<TLinkableWrapper<Class>> transformableClasses = new TLinkedList();
 		for (Class cl : inst.getAllLoadedClasses()) {
 			if (inst.isModifiableClass(cl)) {
@@ -124,34 +114,25 @@ public class AgentRuntimeImpl implements AgentRuntime {
 		if (toBeRetransformed.length > 0) {
 			inst.retransformClasses(toBeRetransformed);
 		}
-        //	inst.removeTransformer(classRetransformer);
+		inst.removeTransformer(classRetransformer);
 	}
 
     protected void instrument(Instrumentation inst, String outputFileName) throws Exception {
 		TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
 		TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
-        THashSet<String> alreadyTransformed = new THashSet();
+		THashSet<String> alreadyTransformed = new THashSet<>();
 
-		retransform(inst, classAnalyzedEventList,
-				infoMessageEventList,
-				true, alreadyTransformed);
-        for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
+		//	retransform(inst, classAnalyzedEventList,
+		//			infoMessageEventList,
+		//			true, alreadyTransformed);
 
-			ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.element());
+		classAnalyzedEventList = new TLinkedList<>();
 
-        }
-        classAnalyzedEventList = new TLinkedList();
+		//	retransform(inst, classAnalyzedEventList, infoMessageEventList,
+		//			false, alreadyTransformed);
 
-		retransform(inst, classAnalyzedEventList, infoMessageEventList,
-				false, alreadyTransformed);
-		for (final TLinkableWrapper<ClassDescription> classAnalyzedEvent : classAnalyzedEventList) {
-
-			ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(classAnalyzedEvent.element());
-		}
-	/*	inst.addTransformer(new AgentClassFileTransformer(
-						new WriteClassDescriptionNormal(), new HasGeneratedMethodsSetBased(), ApplyClassTransformerCollectionFactory.retransform()),
+		inst.addTransformer(new AgentClassFileTransformer(
+						new ApplyClassTransformerCollectionFactory(new WriteClassDescriptionAndWarningNormal())),
 				false);
-	*/
 	}
-
 }

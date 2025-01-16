@@ -37,7 +37,7 @@ public class StreamRepository {
         this.interleave = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
         this.field = createWithLoopIdAndRunId(eventDir, FIELD_EVENTS, streamList);
         this.directMemory = createWithLoopIdAndRunId(eventDir, DIRECT_MEMORY, streamList);
-        this.control = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
+        this.control = createWithLoopIdAndRunId(eventDir, CONTROL, streamList);
     }
 
     public void flush() throws Exception {

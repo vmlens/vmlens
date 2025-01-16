@@ -2,7 +2,8 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollection;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerElement;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext;
 import org.objectweb.asm.Opcodes;
 
 import java.io.FileOutputStream;
@@ -15,14 +16,10 @@ import java.security.ProtectionDomain;
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
     public static final int ASM_API_VERSION = Opcodes.ASM7;
-
-    private final WriteClassDescriptionAndWarning writeClassDescription;
     private final ApplyClassTransformerCollection classArrayTransformerCollection;
 
-    public AgentClassFileTransformer(WriteClassDescriptionAndWarning writeClassDescription,
-                                     ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
+    public AgentClassFileTransformer(ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
         super();
-        this.writeClassDescription = writeClassDescription;
         this.classArrayTransformerCollection = classArrayTransformerFactory.create();
     }
 
@@ -51,12 +48,19 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
             }
-
-
+            if (name.startsWith("com/vmlens/test") || name.startsWith("com/vmlens/api")) {
+                System.out.println();
+            }
+            ApplyClassTransformerElement transformer = classArrayTransformerCollection.get(name);
+            if (transformer != null) {
+                TransformerContext context = new TransformerContext(classfileBuffer, name);
+                byte[] transformed = transformer.transform(context);
+                logTransformedClass(name, transformed);
+                return transformed;
+            }
         } catch (Throwable e) {
             return null;
         }
-
         return null;
     }
 }

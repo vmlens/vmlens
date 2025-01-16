@@ -45,6 +45,11 @@ public class ClassVisitorTransform extends ClassVisitor {
         int inMethodId = methodCallIdMap.asInt(new MethodCallId(className, name, descriptor));
 
         MethodVisitor previous = super.visitMethod(access, name, descriptor, signature, exceptions);
+
+        if ("<init>".equals(name)) {
+            return previous;
+        }
+
         for (TLinkableWrapper<MethodVisitorFactory> element : methodVisitorFactoryList) {
             previous = element.element().create(inMethodId, previous);
         }

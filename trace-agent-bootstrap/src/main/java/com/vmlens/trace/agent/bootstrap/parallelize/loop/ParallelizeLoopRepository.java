@@ -1,8 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
+import com.anarsoft.trace.agent.description.TestLoopDescription;
+import com.vmlens.api.AllInterleavings;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+
 
 /**
  * Adapter for the generic class @see gnu.trove.map.hash.THashMap
@@ -17,16 +23,20 @@ public class ParallelizeLoopRepository {
         this.parallelizeLoopFactory = parallelizeLoopFactory;
     }
 
-    public Pair<ParallelizeLoop, Boolean> getOrCreate(Object config) {
+    public ParallelizeLoop getOrCreate(Object config, TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         synchronized (lock) {
             ParallelizeLoop parallelizeLoop = object2ParallelizeLoop.get(config);
             if (parallelizeLoop == null) {
                 parallelizeLoop = parallelizeLoopFactory.create(maxLoopId);
+
+                AllInterleavings allInterleavings = (AllInterleavings) config;
+                serializableEvents.add(wrap(new TestLoopDescription(maxLoopId, allInterleavings.name)));
+
                 maxLoopId++;
                 object2ParallelizeLoop.put(config, parallelizeLoop);
-                return new ImmutablePair(parallelizeLoop, true);
+                return parallelizeLoop;
             }
-            return new ImmutablePair(parallelizeLoop, false);
+            return parallelizeLoop;
         }
     }
 

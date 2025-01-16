@@ -1,8 +1,9 @@
 package com.anarsoft.trace.agent.runtime.write;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+
+import static com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton.eventQueue;
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;
@@ -42,7 +43,7 @@ public class WriteEventToFile implements Runnable {
         boolean process = true;
         while (process) {
             try {
-                SerializableEvent in = ThreadLocalWhenInTestAdapterImpl.eventQueue.take();
+                SerializableEvent in = eventQueue.take();
                 if (in != null) {
                     if (in instanceof PoisonedEvent) {
                         close();

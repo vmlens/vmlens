@@ -9,31 +9,13 @@ public class com/vmlens/test/guineaPig/StaticFieldAccess {
 
   // access flags 0x1
   public <init>()V
-    LDC 0
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.constructorMethodEnter (I)V
    L0
-   L1
-    LINENUMBER 3 L1
+    LINENUMBER 3 L0
     ALOAD 0
-    LDC 1
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (I)V
     INVOKESPECIAL java/lang/Object.<init> ()V
-    LDC 0
-    LDC 0
-    LDC 1
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.afterMethodCall (III)V
-    ALOAD 0
-    LDC 0
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit (Ljava/lang/Object;I)V
     RETURN
-   L2
-    LOCALVARIABLE this Lcom/vmlens/test/guineaPig/StaticFieldAccess; L1 L2 0
-   L3
-   FRAME FULL [com/vmlens/test/guineaPig/ThreadStart] [java/lang/Throwable]
-    ALOAD 0
-    LDC 0
-    INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit (Ljava/lang/Object;I)V
-    ATHROW
+   L1
+    LOCALVARIABLE this Lcom/vmlens/test/guineaPig/StaticFieldAccess; L0 L1 0
     MAXSTACK = 1
     MAXLOCALS = 1
 

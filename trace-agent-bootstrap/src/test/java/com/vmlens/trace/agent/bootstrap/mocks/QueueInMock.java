@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 
 import java.util.List;
 
-public class QueueInMock implements QueueIn {
+public class QueueInMock extends QueueIn {
 
     private final List<SerializableEvent> eventList;
 

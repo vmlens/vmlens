@@ -9,6 +9,9 @@ public interface RunForCallback {
     RuntimeEventAndWarnings after(RuntimeEvent runtimeEvent,
                                   ThreadLocalWhenInTest threadLocalDataWhenInTest);
 
+    RuntimeEventAndWarnings endAtomicOperation(RuntimeEvent runtimeEvent,
+                                               ThreadLocalWhenInTest threadLocalDataWhenInTest);
+
     void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
 
     void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,

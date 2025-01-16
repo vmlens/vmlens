@@ -1,7 +1,8 @@
 package com.anarsoft.trace.agent.runtime.write;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+
+import static com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton.eventQueue;
 
 public class ShutdownHook extends Thread {
 
@@ -19,7 +20,7 @@ public class ShutdownHook extends Thread {
 
     public void stopProcessing() {
         try {
-            ThreadLocalWhenInTestAdapterImpl.eventQueue.offer(new PoisonedEvent());
+            eventQueue.offer(new PoisonedEvent());
             writeEventToFile.waitForPoisonedEventReceived();
         } catch (Exception e) {
             e.printStackTrace();

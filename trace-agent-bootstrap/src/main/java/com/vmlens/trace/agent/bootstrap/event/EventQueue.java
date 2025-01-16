@@ -7,7 +7,7 @@ import gnu.trove.list.linked.TLinkedList;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 
-public class EventQueue implements QueueIn {
+public class EventQueue extends QueueIn {
 
     private final TLinkedList<TLinkableWrapper<SerializableEvent>> queue;
 

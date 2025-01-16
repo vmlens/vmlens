@@ -1,11 +1,19 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
+import com.vmlens.trace.agent.bootstrap.parallelize.loop.HasNextResult;
+
+import static com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton.eventQueue;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelizeSingleton.callbackStatePerThread;
+
 public class VmlensApiCallbackImpl {
 
     public void close(Object obj) {
     }
 
     public boolean hasNext(Object obj) {
-        return false;
+        HasNextResult result = ParallelizeFacade.parallelize().hasNext(callbackStatePerThread.get(), obj);
+        eventQueue.offer(result.serializableEvents());
+        return result.hasNext();
     }
 }

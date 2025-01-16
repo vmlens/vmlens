@@ -3,18 +3,12 @@ package com.anarsoft.trace.agent.runtime;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformer;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.util.TraceClassVisitor;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import static org.mockito.Mockito.mock;
 
@@ -44,9 +38,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
             WriteClassDescriptionAndWarning writeClassDescription = mock(WriteClassDescriptionAndWarning.class);
             ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodRepository(),
                     new FieldRepository(), writeClassDescription);
-            ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(
-                    new WriteClassDescriptionAndWarningDuringStartup(new TLinkedList<>(), new TLinkedList<>()),
-                    factory);
+            ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(factory);
 
             byte[] transformed = applyClassTransformer.transform(targetArray,
                     name.replace('.', '/'));
@@ -54,10 +46,6 @@ public class ClassLoaderForTransformation extends ClassLoader {
                 System.out.println("not transformed " + name);
                 return defineClass(name, targetArray, 0, targetArray.length);
             }
-
-            ClassReader classReader = new ClassReader(transformed);
-            ClassVisitor visitor = new TraceClassVisitor(new PrintWriter(System.out));
-            classReader.accept(visitor, ClassReader.EXPAND_FRAMES);
 
             if (TRACE_CLASSES) {
                 String fileName = name.substring(name.lastIndexOf("/") + 1);

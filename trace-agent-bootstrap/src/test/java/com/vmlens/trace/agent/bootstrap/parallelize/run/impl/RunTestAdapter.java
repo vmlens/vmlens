@@ -22,6 +22,11 @@ public class RunTestAdapter implements Run {
     }
 
     @Override
+    public RuntimeEventAndWarnings endAtomicOperation(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        return null;
+    }
+
+    @Override
     public void newTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize) {
         runStateMachine.processNewTestTask(newWrapper, threadLocalForParallelize, this);
     }

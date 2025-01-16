@@ -10,16 +10,16 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
 
 public class CallbackActionStartAtomicVolatileFieldAccess implements CallbackAction {
 
-    private final CallbackAction atomicOperation;
+    private final RuntimeEventAndSetFieldsStrategy atomicOperation;
 
-    public CallbackActionStartAtomicVolatileFieldAccess(CallbackAction atomicOperation) {
+    public CallbackActionStartAtomicVolatileFieldAccess(RuntimeEventAndSetFieldsStrategy atomicOperation) {
         this.atomicOperation = atomicOperation;
     }
 
     public static <EVENT extends RuntimeEvent> CallbackAction of(EVENT runtimeEvent,
                                                                  SetFieldsStrategy<EVENT> setFieldsStrategy) {
-        CallbackActionForRuntimeEvent<EVENT> callbackActionForRuntimeEvent =
-                new CallbackActionForRuntimeEvent<>(runtimeEvent, setFieldsStrategy);
+        RuntimeEventAndSetFieldsStrategyImpl<EVENT> callbackActionForRuntimeEvent =
+                new RuntimeEventAndSetFieldsStrategyImpl<>(runtimeEvent, setFieldsStrategy);
         return new CallbackActionStartAtomicVolatileFieldAccess(callbackActionForRuntimeEvent);
     }
 

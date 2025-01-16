@@ -2,16 +2,15 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
-import com.vmlens.trace.agent.bootstrap.event.EventQueue;
 import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAdapter {
+import static com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton.eventQueue;
 
-    public static final EventQueue eventQueue = new EventQueue();
+public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAdapter {
 
     private final ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider;
     private final QueueIn eventQueueInternal;
@@ -26,13 +25,6 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
         this.eventQueueInternal = eventQueueInternal;
     }
 
-    // Fixme  make private and move to ThreadLocalForParallelizeProviderImpl
-    public static final ThreadLocal<ThreadLocalForParallelize> callbackStatePerThread = new ThreadLocal<ThreadLocalForParallelize>() {
-        @Override
-        protected ThreadLocalForParallelize initialValue() {
-            return new ThreadLocalForParallelize(Thread.currentThread().getId());
-        }
-    };
 
     @Override
     public void process(CallbackAction callbackAction) {
@@ -44,9 +36,7 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
             try {
                 TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents =
                         callbackAction.execute(dataWhenInTest);
-                for (TLinkableWrapper<SerializableEvent> event : serializableEvents) {
-                    eventQueueInternal.offer(event.element());
-                }
+                eventQueueInternal.offer(serializableEvents);
             } finally {
                 dataWhenInTest.stopCallbackProcessing();
             }

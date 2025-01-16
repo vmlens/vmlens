@@ -13,7 +13,7 @@ public class BeforeThreadStart implements BeforeMethodCallStrategy {
     public void targetOfMethodCall(Object object,
                                    int calledMethodId,
                                    ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
-        if (Thread.class == object.getClass()) {
+        if (object instanceof Thread) {
             ThreadStartEvent threadStartEvent = new ThreadStartEvent(new RunnableOrThreadWrapper(object));
             threadLocalWhenInTestAdapter.process(setTo(threadStartEvent));
         } else {

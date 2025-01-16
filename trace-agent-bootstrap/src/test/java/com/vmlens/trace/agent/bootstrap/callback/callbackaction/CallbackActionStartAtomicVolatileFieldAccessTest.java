@@ -19,7 +19,7 @@ public class CallbackActionStartAtomicVolatileFieldAccessTest {
         // Given
         int THREAD_INDEX = 3;
         Run runMock = mock(Run.class);
-        CallbackAction atomicOperation = mock(CallbackAction.class);
+        RuntimeEventAndSetFieldsStrategy atomicOperation = mock(RuntimeEventAndSetFieldsStrategy.class);
         CallbackActionStartAtomicVolatileFieldAccess callbackActionStartAtomicVolatileFieldAccess =
                 new CallbackActionStartAtomicVolatileFieldAccess(atomicOperation);
 

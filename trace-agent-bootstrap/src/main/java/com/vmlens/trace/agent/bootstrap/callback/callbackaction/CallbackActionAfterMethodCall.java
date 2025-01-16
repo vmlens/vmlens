@@ -23,7 +23,7 @@ public class CallbackActionAfterMethodCall implements CallbackAction {
         ThreadStartEvent threadStart = threadLocalDataWhenInTest.threadStartEvent();
         threadLocalDataWhenInTest.setThreadStartEvent(null);
         if (threadStart != null) {
-            return threadLocalDataWhenInTest.after(threadStart);
+            return threadLocalDataWhenInTest.runAdapter().endAtomicOperation(threadStart, threadLocalDataWhenInTest);
         }
         return emptyList();
     }

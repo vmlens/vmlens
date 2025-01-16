@@ -6,7 +6,9 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrateg
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
@@ -29,6 +31,11 @@ public class ApplyClassTransformerCollectionFactory {
         this.writeClassDescription = writeClassDescription;
     }
 
+    public ApplyClassTransformerCollectionFactory(WriteClassDescriptionAndWarning writeClassDescription) {
+        this(MethodRepositorySingleton.INSTANCE,
+                FieldRepositorySingleton.INSTANCE, writeClassDescription);
+    }
+
     // Visible for Test
     // From specific to generic
     void add(String name, TransformerStrategy transformerStrategy) {
@@ -43,10 +50,9 @@ public class ApplyClassTransformerCollectionFactory {
     public ApplyClassTransformerCollection create() {
 
         add("com/vmlens/api/AllInterleavingsBuilder", new TransformerStrategyFilter());
-        add("com/vmlens/api/LogLevel", new TransformerStrategyFilter());
         add("com/vmlens/api/AllInterleavings", new ClassTransformerVmlensApi());
 
-        add("", new TransformerStrategyAll(methodRepositoryForAnalyze,
+        add("com/vmlens/test", new TransformerStrategyAll(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze,
                 writeClassDescription));
 

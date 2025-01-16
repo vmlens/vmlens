@@ -45,7 +45,7 @@ public class FieldCallbackImplIntegTest {
         eventList = new LinkedList<>();
         QueueInMock queueInMock = new QueueInMock(eventList);
         run = mock(Run.class);
-        when(run.after(any(), any())).thenAnswer(invocationOnMock ->
+        when(run.endAtomicOperation(any(), any())).thenAnswer(invocationOnMock ->
                 RuntimeEventAndWarnings.of((RuntimeEvent) invocationOnMock.getArguments()[0]));
 
         threadLocalWhenInTest = new ThreadLocalWhenInTest(run, 1);

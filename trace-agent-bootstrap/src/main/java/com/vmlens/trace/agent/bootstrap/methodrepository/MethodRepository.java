@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParal
 import com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyDefaultValues;
 import com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyFromAnalyze;
 import com.vmlens.trace.agent.bootstrap.methodrepository.methodcallidtostrategy.MethodCallIdToStrategyFromResource;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.strategy.BeforeMethodCallStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodEnterExitStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.methodenterandexitstrategyimpl.CheckIsThreadRun;
@@ -25,12 +26,13 @@ public class MethodRepository implements MethodRepositoryForAnalyze, MethodIdToS
     }
 
     public MethodRepository(CheckIsThreadRun checkIsThreadRun,
-                            ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider) {
+                            ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider,
+                            ParallelizeFacade parallelizeFacade) {
         methodCallIdToStrategyFromAnalyze = new MethodCallIdToStrategyFromAnalyze();
         methodCallIdToStrategyDefaultValues = new MethodCallIdToStrategyDefaultValues(
                 new MethodCallIdToStrategyFromResource(), methodCallIdToStrategyFromAnalyze,
                 checkIsThreadRun,
-                threadLocalForParallelizeProvider);
+                threadLocalForParallelizeProvider, parallelizeFacade);
     }
 
     public synchronized int asInt(MethodCallId methodCallId) {

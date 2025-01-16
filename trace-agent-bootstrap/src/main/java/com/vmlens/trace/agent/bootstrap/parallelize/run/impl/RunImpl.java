@@ -55,6 +55,29 @@ public class RunImpl implements Run {
         }
     }
 
+    public RuntimeEventAndWarnings endAtomicOperation(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        lock.lock();
+        try {
+            runtimeEvent.setLoopId(loopId);
+            runtimeEvent.setRunId(runId);
+            RuntimeEvent result = runStateMachine.endAtomicOperation(runtimeEvent, threadLocalDataWhenInTest);
+            if (runtimeEvent.isInterleaveActionFactory()) {
+                try {
+                    waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
+                } catch (TestBlockedException e) {
+                    if (LogLevelSingleton.logLevel().isInfoEnabled()) {
+                        Warning warning = new LoopWarningEvent(loopId, runId, TEST_BLOCKED_MESSAGE.id());
+                        return of(result, warning);
+                    }
+                }
+            }
+            return of(result);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+
     public void newTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
@@ -72,7 +95,12 @@ public class RunImpl implements Run {
     }
 
     public ActualRun end(ThreadLocalForParallelize threadLocalForParallelize) {
-        return runStateMachine.end(threadLocalForParallelize);
+        lock.lock();
+        try {
+            return runStateMachine.end(threadLocalForParallelize);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
@@ -82,11 +110,21 @@ public class RunImpl implements Run {
 
     @Override
     public void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-
+        lock.lock();
+        try {
+            runStateMachine.startAtomicOperation(threadLocalDataWhenInTest);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
     public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
-
+        lock.lock();
+        try {
+            runStateMachine.startAtomicOperationWithNewThread(threadLocalDataWhenInTest, newThread);
+        } finally {
+            lock.unlock();
+        }
     }
 }

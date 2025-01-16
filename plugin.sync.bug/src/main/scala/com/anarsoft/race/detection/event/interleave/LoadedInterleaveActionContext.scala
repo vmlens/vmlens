@@ -19,8 +19,8 @@ class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveA
 
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
     val groupBuilder = new GroupInterleaveElementBuilder();
-    groupBuilder.add(volatileAccessEvents);
-
+    groupBuilder.addVolatileAccessEvents(volatileAccessEvents);
+    groupBuilder.addThreadStartEvents(threadStartEvents);
 
     builder.addSyncActionElements(loopAndRunId, groupBuilder.build())
   }

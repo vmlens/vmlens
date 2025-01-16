@@ -54,7 +54,7 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     list.add(write);
 
     val builder = new GroupInterleaveElementBuilder();
-    builder.add(list);
+    builder.addVolatileAccessEvents(list);
 
     val processRunImpl = new ProcessRunImpl();
 

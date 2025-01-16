@@ -73,7 +73,19 @@ public class AgentClassFileTransformerIntegTest {
 
         runTest("MethodCall");
         verify(methodCallbackImplMock).methodEnter(any(), anyInt());
-        verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
+        verify(methodCallbackImplMock, times(1)).methodExit(any(), anyInt());
+    }
+
+    @Test
+    public void testVolatileField() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
+        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+
+        FieldCallbackImpl fieldCallbackImplMock = mock(FieldCallbackImpl.class);
+        FieldCallback.setFieldCallbackImpl(fieldCallbackImplMock);
+
+        runTest("TestVolatileField");
     }
 
     @Test
@@ -85,7 +97,7 @@ public class AgentClassFileTransformerIntegTest {
 
         runTest("StaticMethodCall");
         verify(methodCallbackImplMock, times(2)).methodEnter(any(), anyInt());
-        verify(methodCallbackImplMock, times(3)).methodExit(any(), anyInt());
+        verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
     }
 
     @Test
@@ -93,8 +105,8 @@ public class AgentClassFileTransformerIntegTest {
     public void staticMethodCallWithSynchronizedBlock() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-
         MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+
 
         runTest("StaticMethodCallWithSynchronizedBlock");
         verify(methodCallbackImplMock, times(2)).methodEnter(any(), anyInt());

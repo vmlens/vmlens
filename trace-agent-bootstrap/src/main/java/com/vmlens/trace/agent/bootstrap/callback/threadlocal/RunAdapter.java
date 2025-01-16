@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -35,6 +34,20 @@ public class RunAdapter {
         return serializableEvents;
     }
 
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> endAtomicOperation(RuntimeEvent runtimeEventIn,
+                                                                               ThreadLocalWhenInTest threadLocalWhenInTest) {
+        runtimeEventIn.setThreadIndex(threadLocalWhenInTest.threadIndex());
+        RuntimeEventAndWarnings runtimeEventAndWarning = run.endAtomicOperation(runtimeEventIn, threadLocalWhenInTest);
+        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents = emptyList();
+
+        if (runtimeEventAndWarning.runtimeEvent() != null) {
+            runtimeEventAndWarning.runtimeEvent().setMethodCounter(threadLocalWhenInTest);
+            serializableEvents.add(wrap(runtimeEventAndWarning.runtimeEvent()));
+        }
+        runtimeEventAndWarning.addWarnings(serializableEvents);
+        return serializableEvents;
+    }
+
     public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
                                                   RunnableOrThreadWrapper newThread) {
         run.startAtomicOperationWithNewThread(threadLocalDataWhenInTest, newThread);
@@ -44,7 +57,4 @@ public class RunAdapter {
         run.startAtomicOperation(threadLocalDataWhenInTest);
     }
 
-    public void newTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize) {
-        run.newTask(newWrapper, threadLocalForParallelize);
-    }
 }
