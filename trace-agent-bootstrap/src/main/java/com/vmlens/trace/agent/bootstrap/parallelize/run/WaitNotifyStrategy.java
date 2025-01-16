@@ -8,4 +8,10 @@ public interface WaitNotifyStrategy {
     void notifyAndWaitTillActive(ThreadLocalWhenInTest threadLocalDataWhenInTest, RunStateMachine runStateMachine,
                                  Condition threadActiveCondition)
             throws TestBlockedException;
+
+    void waitForCanStartAtomicOperation(RunStateMachine runStateMachine,
+                                        Condition threadActiveCondition)
+            throws TestBlockedException;
+
+
 }

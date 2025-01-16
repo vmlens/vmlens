@@ -29,4 +29,19 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
             Thread.currentThread().interrupt();
         }
     }
+
+    @Override
+    public void waitForCanStartAtomicOperation(RunStateMachine runStateMachine, Condition threadActiveCondition) throws TestBlockedException {
+        try {
+            long started = System.currentTimeMillis();
+            while (!runStateMachine.canStartAtomicOperation()) {
+                threadActiveCondition.await(10, TimeUnit.MICROSECONDS);
+                if ((System.currentTimeMillis() - started) > DEFAULT_WAIT_TIME) {
+                    throw new TestBlockedException();
+                }
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }

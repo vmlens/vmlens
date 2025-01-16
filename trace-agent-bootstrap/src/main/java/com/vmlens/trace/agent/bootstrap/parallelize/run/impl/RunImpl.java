@@ -112,6 +112,11 @@ public class RunImpl implements Run {
     public void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
         lock.lock();
         try {
+            try {
+                waitNotifyStrategy.waitForCanStartAtomicOperation(runStateMachine, threadActiveCondition);
+            } catch (TestBlockedException e) {
+                e.printStackTrace();
+            }
             runStateMachine.startAtomicOperation(threadLocalDataWhenInTest);
         } finally {
             lock.unlock();
@@ -122,6 +127,11 @@ public class RunImpl implements Run {
     public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
         lock.lock();
         try {
+            try {
+                waitNotifyStrategy.waitForCanStartAtomicOperation(runStateMachine, threadActiveCondition);
+            } catch (TestBlockedException e) {
+                e.printStackTrace();
+            }
             runStateMachine.startAtomicOperationWithNewThread(threadLocalDataWhenInTest, newThread);
         } finally {
             lock.unlock();
