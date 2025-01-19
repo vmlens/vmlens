@@ -1,8 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
+import com.anarsoft.trace.agent.description.ThreadDescription;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.TLongObjectHashMap;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 
 public class ThreadLocalDataWhenInTestMap {
@@ -10,16 +17,31 @@ public class ThreadLocalDataWhenInTestMap {
     // Package Visible for Test
     final TLongObjectHashMap<ThreadLocalWhenInTest> threadIdToState = new TLongObjectHashMap<>();
 
-    public ThreadLocalWhenInTest createForMainTestThread(Run run, long threadId) {
+    public ThreadLocalWhenInTest createForMainTestThread(Run run, ThreadLocalForParallelize threadLocalForParallelize,
+                                                         TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, maxThreadIndex);
-        threadIdToState.put(threadId, threadLocalDataWhenInTest);
+        threadIdToState.put(threadLocalForParallelize.threadId(), threadLocalDataWhenInTest);
+
+        ThreadDescription threadDescription = new
+                ThreadDescription(run.loopId(), run.runId(), maxThreadIndex, threadLocalForParallelize.threadId(),
+                threadLocalForParallelize.threadName());
+        serializableEvents.add(wrap(threadDescription));
+
         maxThreadIndex++;
         return threadLocalDataWhenInTest;
     }
 
-    public ThreadLocalWhenInTest createForStartedThread(Run run, long threadId, int newThreadIndex) {
+    public ThreadLocalWhenInTest createForStartedThread(Run run, ThreadLocalForParallelize threadLocalForParallelize,
+                                                        int newThreadIndex,
+                                                        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, newThreadIndex);
-        threadIdToState.put(threadId, threadLocalDataWhenInTest);
+        threadIdToState.put(threadLocalForParallelize.threadId(), threadLocalDataWhenInTest);
+
+        ThreadDescription threadDescription = new
+                ThreadDescription(run.loopId(), run.runId(), newThreadIndex, threadLocalForParallelize.threadId(),
+                threadLocalForParallelize.threadName());
+        serializableEvents.add(wrap(threadDescription));
+
         return threadLocalDataWhenInTest;
     }
 

@@ -1,4 +1,4 @@
-package com.vmlens.report.element;
+package com.vmlens.report.container;
 
 public interface Container {
 

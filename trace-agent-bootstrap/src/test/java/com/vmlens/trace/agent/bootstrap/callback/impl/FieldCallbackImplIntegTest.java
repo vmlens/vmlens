@@ -53,7 +53,7 @@ public class FieldCallbackImplIntegTest {
         ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider =
                 mock(ThreadLocalForParallelizeProvider.class);
 
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L);
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
         threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalWhenInTest);
 
         when(threadLocalForParallelizeProvider.threadLocalForParallelize())

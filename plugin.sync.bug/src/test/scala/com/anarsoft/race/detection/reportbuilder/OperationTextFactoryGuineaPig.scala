@@ -1,9 +1,10 @@
 package com.anarsoft.race.detection.reportbuilder
 
-import com.vmlens.report.element.{NeedsDescriptionCallback, OperationTextFactory}
+import com.vmlens.report.description.{DescriptionContext, NeedsDescriptionCallback}
+import com.vmlens.report.element.OperationTextFactory
 
 class OperationTextFactoryGuineaPig extends OperationTextFactory {
-  override def create(): String = "test"
+  override def create(context: DescriptionContext): String = "test"
 
   override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {
 

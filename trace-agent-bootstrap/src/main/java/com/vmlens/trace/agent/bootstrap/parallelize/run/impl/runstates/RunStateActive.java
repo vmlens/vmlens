@@ -1,16 +1,18 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ProcessRuntimeEventCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
+
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents.empty;
 
 public class RunStateActive implements RunState {
 
@@ -36,8 +38,8 @@ public class RunStateActive implements RunState {
     }
 
     @Override
-    public RunStateAndResult<ThreadLocalWhenInTest> processNewTestTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize, Run run) {
-        return RunStateAndResult.of(this);
+    public RunStateAndResult<ThreadLocalWhenInTestAndSerializableEvents> processNewTestTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize, Run run) {
+        return RunStateAndResult.of(this, empty());
     }
 
     @Override

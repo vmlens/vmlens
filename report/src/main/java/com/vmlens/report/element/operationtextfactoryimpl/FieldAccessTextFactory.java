@@ -1,34 +1,34 @@
 package com.vmlens.report.element.operationtextfactoryimpl;
 
+import com.vmlens.report.description.DescriptionContext;
+import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.element.MemoryAccessModifier;
-import com.vmlens.report.element.NeedsDescriptionCallback;
 import com.vmlens.report.element.OperationTextFactory;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import org.apache.commons.text.StringEscapeUtils;
 
 public class FieldAccessTextFactory implements OperationTextFactory {
 
-    private final String prefix;
+    private final String text;
     private final int fieldId;
-    private final String postfix;
 
-    public FieldAccessTextFactory(String prefix, int fieldId, String postfix) {
-        this.prefix = prefix;
+    public FieldAccessTextFactory(String text, int fieldId) {
+        this.text = text;
         this.fieldId = fieldId;
-        this.postfix = postfix;
     }
 
     public static FieldAccessTextFactory create(MemoryAccessModifier memoryAccessModifier, int operation,
                                                 int fieldId, long objectHashCode) {
         String prefix = memoryAccessModifier.postfix() + MemoryAccessType.asString(operation) + " " +
                 memoryAccessModifier.volatilePrefix();
-        return new FieldAccessTextFactory(prefix, fieldId,
-                StringEscapeUtils.escapeHtml4("@") + objectHashCode);
+
+        String text = prefix + " %s" + StringEscapeUtils.escapeHtml4("@") + objectHashCode;
+        return new FieldAccessTextFactory(text, fieldId);
     }
 
     @Override
-    public String create() {
-        return prefix + fieldId + postfix;
+    public String create(DescriptionContext context) {
+        return text;
     }
 
     @Override

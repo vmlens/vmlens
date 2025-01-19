@@ -4,7 +4,9 @@ public class ThreadLocalForParallelizeSingleton {
     public static final ThreadLocal<ThreadLocalForParallelize> callbackStatePerThread = new ThreadLocal<ThreadLocalForParallelize>() {
         @Override
         protected ThreadLocalForParallelize initialValue() {
-            return new ThreadLocalForParallelize(Thread.currentThread().getId());
+            Thread currentThread = Thread.currentThread();
+            return new ThreadLocalForParallelize(currentThread.getId(),
+                    currentThread.getName());
         }
     };
 

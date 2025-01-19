@@ -19,7 +19,7 @@ public class RunStateMachineImplTest {
     @Test
     public void threadBeginAfterRunStateAtomicOperationWithNewThreadStarted() {
         // Given
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L);
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
         ThreadStartEvent runtimeEvent = mock(ThreadStartEvent.class);
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
@@ -43,7 +43,7 @@ public class RunStateMachineImplTest {
     @Test
     public void threadBeginAfterRunStateNewThreadStarted() {
         // Given
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L);
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
         ThreadStartEvent runtimeEvent = mock(ThreadStartEvent.class);
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
@@ -67,7 +67,7 @@ public class RunStateMachineImplTest {
     @Test
     public void recordingToEnd() {
         // Given
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L);
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
         // end event

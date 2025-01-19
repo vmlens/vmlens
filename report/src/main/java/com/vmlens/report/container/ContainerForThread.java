@@ -1,4 +1,4 @@
-package com.vmlens.report.element;
+package com.vmlens.report.container;
 
 import com.anarsoft.trace.agent.description.ThreadDescription;
 
@@ -12,6 +12,6 @@ public class ContainerForThread implements Container {
 
     @Override
     public String getName() {
-        return Long.toString(threadDescription.threadId());
+        return threadDescription.threadName();
     }
 }

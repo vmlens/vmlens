@@ -44,10 +44,10 @@ public class ParallelizeLoop {
         this.interleaveLoop = interleaveLoop;
     }
 
-    public void beginThreadMethodEnter(ThreadLocalForParallelize threadLocalForParallelize, RunnableOrThreadWrapper beganTask) {
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> beginThreadMethodEnter(ThreadLocalForParallelize threadLocalForParallelize, RunnableOrThreadWrapper beganTask) {
         lock.lock();
         try {
-            currentRun.newTask(beganTask, threadLocalForParallelize);
+            return currentRun.newTask(beganTask, threadLocalForParallelize);
         } finally {
             lock.unlock();
         }
@@ -71,7 +71,7 @@ public class ParallelizeLoop {
                     currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createRunning(
                             runContext, calculatedReun, actualRun), loopId, maxRunId);
                     threadLocalForParallelize.setThreadLocalDataWhenInTest(
-                            runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
+                            runContext.createForMainTestThread(currentRun, threadLocalForParallelize, serializableEvents));
                     int tempRunId = maxRunId;
                     maxRunId++;
 
@@ -85,7 +85,7 @@ public class ParallelizeLoop {
                 currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
                         runContext, actualRun), loopId, maxRunId);
                 threadLocalForParallelize.setThreadLocalDataWhenInTest(
-                        runContext.createForMainTestThread(currentRun, threadLocalForParallelize.threadId()));
+                        runContext.createForMainTestThread(currentRun, threadLocalForParallelize, serializableEvents));
                 int tempRunId = maxRunId;
                 maxRunId++;
                 serializableEvents.add(wrap(new RunStartEvent(loopId, tempRunId)));

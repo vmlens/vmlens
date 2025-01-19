@@ -14,7 +14,7 @@ public class RunStateMachineImplCanTest {
         // Given
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
         RunStateMachine runStateMachine = runStateMachineTestWrapper.runStateMachine();
-        runStateMachineTestWrapper.eventEnd(new ThreadLocalForParallelize(6L));
+        runStateMachineTestWrapper.eventEnd(new ThreadLocalForParallelize(6L, "threadName"));
 
         // Then can* always returns true
         assertThat(runStateMachine.canProcessEndOfOperation(runStateMachineTestWrapper.eventThread()), is(true));

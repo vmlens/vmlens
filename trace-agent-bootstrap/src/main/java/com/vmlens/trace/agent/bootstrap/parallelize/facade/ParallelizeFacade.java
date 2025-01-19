@@ -10,6 +10,8 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ParallelizeLoopFact
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
+
 
 /**
  * Fixme synchronization
@@ -32,11 +34,12 @@ public class ParallelizeFacade {
         this.parallelizeLoopRepository = parallelizeLoopRepository;
     }
 
-    public void beginThreadMethodEnter(ThreadLocalForParallelize threadLocalWrapperForParallelize,
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> beginThreadMethodEnter(ThreadLocalForParallelize threadLocalWrapperForParallelize,
                                        RunnableOrThreadWrapper beganTask) {
         if (currentLoop != null) {
-            currentLoop.beginThreadMethodEnter(threadLocalWrapperForParallelize, beganTask);
+            return currentLoop.beginThreadMethodEnter(threadLocalWrapperForParallelize, beganTask);
         }
+        return emptyList();
     }
 
     public HasNextResult hasNext(ThreadLocalForParallelize threadLocalWrapperForParallelize, Object obj) {

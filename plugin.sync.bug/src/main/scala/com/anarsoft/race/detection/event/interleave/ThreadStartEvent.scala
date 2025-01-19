@@ -4,8 +4,8 @@ import com.anarsoft.race.detection.createpartialorderthreadoperation.ThreadOpera
 import com.anarsoft.race.detection.partialorder.{PartialOrderBuilder, WithPositionImpl}
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
-import com.vmlens.report.element.OperationTextFactory
 import com.vmlens.report.element.operationtextfactoryimpl.ThreadOperationTextFactory
+import com.vmlens.report.element.{LoopRunAndThreadIndex, OperationTextFactory}
 
 
 trait ThreadStartEvent extends LoadedInterleaveActionEvent with ThreadOperation
@@ -22,6 +22,6 @@ trait ThreadStartEvent extends LoadedInterleaveActionEvent with ThreadOperation
   }
 
   override def operationTextFactory: OperationTextFactory = {
-    new ThreadOperationTextFactory("start (%s)", startedThreadIndex);
+    new ThreadOperationTextFactory("start (%s)", new LoopRunAndThreadIndex(loopId, runId, startedThreadIndex));
   }
 }

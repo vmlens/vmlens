@@ -18,6 +18,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.strategy.methodenterandexitstrategyimpl.CheckIsThreadRun;
+import gnu.trove.list.linked.TLinkedList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,7 +57,7 @@ public class MethodCallbackImplIntegTest {
         ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider =
                 mock(ThreadLocalForParallelizeProvider.class);
 
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L);
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
         threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalWhenInTest);
 
         when(threadLocalForParallelizeProvider.threadLocalForParallelize())
@@ -135,6 +136,7 @@ public class MethodCallbackImplIntegTest {
         when(checkIsThreadRun.isThreadRun()).thenReturn(true);
 
         ParallelizeFacade parallelizeFacade = mock(ParallelizeFacade.class);
+        when(parallelizeFacade.beginThreadMethodEnter(any(), any())).thenReturn(new TLinkedList<>());
 
         ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider = mock(ThreadLocalForParallelizeProvider.class);
 

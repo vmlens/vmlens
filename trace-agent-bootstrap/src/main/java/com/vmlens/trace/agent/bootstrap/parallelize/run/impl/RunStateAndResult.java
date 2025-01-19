@@ -11,10 +11,6 @@ public class RunStateAndResult<RESULT> {
         this.result = result;
     }
 
-    public static <RESULT> RunStateAndResult<RESULT> of(RunState runState) {
-        return new RunStateAndResult<>(runState, null);
-    }
-
     public static <RESULT> RunStateAndResult<RESULT> of(RunState runState, RESULT result) {
         return new RunStateAndResult<>(runState, result);
     }

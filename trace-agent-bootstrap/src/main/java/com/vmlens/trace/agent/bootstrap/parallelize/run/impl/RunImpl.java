@@ -2,12 +2,15 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.warning.LogLevelSingleton;
 import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
 import com.vmlens.trace.agent.bootstrap.event.warning.Warning;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -77,18 +80,19 @@ public class RunImpl implements Run {
         }
     }
 
-
-    public void newTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize) {
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> newTask(RunnableOrThreadWrapper newWrapper,
+                                                                    ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
-            ThreadLocalWhenInTest threadLocalDataWhenInTest = runStateMachine.processNewTestTask(newWrapper, threadLocalForParallelize, this);
-            if (threadLocalDataWhenInTest != null) {
+            ThreadLocalWhenInTestAndSerializableEvents result = runStateMachine.processNewTestTask(newWrapper, threadLocalForParallelize, this);
+            if (result.threadLocalWhenInTest() != null) {
                 try {
-                    waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest, runStateMachine, threadActiveCondition);
+                    waitNotifyStrategy.notifyAndWaitTillActive(result.threadLocalWhenInTest(), runStateMachine, threadActiveCondition);
                 } catch (TestBlockedException e) {
 
                 }
             }
+            return result.serializableEvents();
         } finally {
             lock.unlock();
         }
@@ -106,6 +110,11 @@ public class RunImpl implements Run {
     @Override
     public int runId() {
         return runId;
+    }
+
+    @Override
+    public int loopId() {
+        return loopId;
     }
 
     @Override

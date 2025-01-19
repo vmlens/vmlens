@@ -11,9 +11,5 @@ public class SynchronizedMethodEnterExitStrategy implements MethodEnterExitStrat
                                       ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
     }
 
-    @Override
-    public void onMethodExit(Object object, int methodId, OrderMap<Long> monitorOrder,
-                             ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
 
-    }
 }

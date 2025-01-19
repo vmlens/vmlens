@@ -4,13 +4,14 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 
 public class ThreadLocalForParallelize {
 
-
     public static final String ANARSOFT_THREAD_NAME = "anarsoft";
     private final long threadId;
+    private final String threadName;
     private ThreadLocalWhenInTest parallelizedThreadLocal;
 
-    public ThreadLocalForParallelize(long threadId) {
+    public ThreadLocalForParallelize(long threadId, String threadName) {
         this.threadId = threadId;
+        this.threadName = threadName;
     }
 
     public ThreadLocalWhenInTest getThreadLocalDataWhenInTest() {
@@ -34,5 +35,9 @@ public class ThreadLocalForParallelize {
 
     public long threadId() {
         return threadId;
+    }
+
+    public String threadName() {
+        return threadName;
     }
 }

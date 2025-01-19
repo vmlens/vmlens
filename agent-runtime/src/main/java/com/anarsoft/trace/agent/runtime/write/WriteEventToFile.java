@@ -7,7 +7,6 @@ import static com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton.eventQu
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;
-
     private boolean shutdownHookAdded = false;
     private final Object poisonedEventReceivedMonitor = new Object();
     private boolean poisonedEventReceived = false;
@@ -60,14 +59,12 @@ public class WriteEventToFile implements Runnable {
             }
         }
     }
-
     private void setPoisonedEventReceived() {
         synchronized (poisonedEventReceivedMonitor) {
             poisonedEventReceived = true;
             poisonedEventReceivedMonitor.notifyAll();
         }
     }
-
     public void waitForPoisonedEventReceived() throws InterruptedException {
         synchronized (poisonedEventReceivedMonitor) {
             while (!poisonedEventReceived) {
@@ -76,5 +73,4 @@ public class WriteEventToFile implements Runnable {
             }
         }
     }
-
 }

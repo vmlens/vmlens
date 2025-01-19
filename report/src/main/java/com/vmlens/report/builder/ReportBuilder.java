@@ -1,8 +1,12 @@
 package com.vmlens.report.builder;
 
 import com.anarsoft.trace.agent.description.*;
+import com.vmlens.report.container.*;
+import com.vmlens.report.description.DescriptionContext;
+import com.vmlens.report.description.DescriptionContextImpl;
+import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.element.*;
-import com.vmlens.report.uielement.*;
+import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -76,45 +80,14 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
     }
 
     public UILoopsAndStacktraceLeafs build() {
-        List<UIStacktraceLeaf> leafNodes = new LinkedList<>();
-        List<UILoopAndRunElementWithStacktraceLeafs> uiLoopAndRunElementsList = new LinkedList<>();
-
-        for (LoopAndRun loopAndRun : loopAndRuns) {
-            UITestLoop uiTestLoop = new UITestLoop(getLoopNameByLoopId(loopAndRun.loop().loopId()),
-                    loopAndRun.loop().count(),
-                    loopAndRun.loop().testResult().text(), loopAndRun.loop().testResult().style());
+        DescriptionContext operationTextFactoryContext =
+                new DescriptionContextImpl(indexToThreadDescription,
+                        idToMethodContainer,
+                        idToFieldContainer,
+                        idToTestLoopDescription);
 
 
-            loopAndRun.runElements().sort(new RunElementByRunPositionComparator());
-            
-            List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceLeafs = new LinkedList<>();
-
-            for (RunElement runElement : loopAndRun.runElements()) {
-                String firstStacktraceMethodName = null;
-
-                List<UIStacktraceElement> stacktraceElements = new LinkedList<>();
-
-                for (StacktraceElement stacktraceElement : runElement.stacktraceLeaf().stacktraceElements()) {
-                    String methodName = getMethodNameByMethodId(stacktraceElement.methodId());
-                    if (firstStacktraceMethodName == null) {
-                        firstStacktraceMethodName = methodName;
-                    }
-                    stacktraceElements.add(new UIStacktraceElement(methodName));
-                }
-
-                UIRunElement uiRunElement = new UIRunElement(runElement.operationTextFactory().create(),
-                        firstStacktraceMethodName, getThreadIdByThreadIndex(runElement.loopRunAndThreadIndex()));
-
-                UIStacktraceLeaf uiStacktraceLeaf = new UIStacktraceLeaf(stacktraceElements);
-                UIRunElementWithStacktraceLeaf uiRunElementWithStacktraceLeaf =
-                        new UIRunElementWithStacktraceLeaf(uiRunElement, uiStacktraceLeaf);
-                uiRunElementWithStacktraceLeafs.add(uiRunElementWithStacktraceLeaf);
-            }
-
-            uiLoopAndRunElementsList.add(
-                    new UILoopAndRunElementWithStacktraceLeafs(uiTestLoop, uiRunElementWithStacktraceLeafs));
-        }
-        return new UILoopsAndStacktraceLeafs(leafNodes, uiLoopAndRunElementsList);
+        return new ReportBuildAlgo(loopAndRuns, stacktraceLeafs, operationTextFactoryContext).build();
     }
 
     @Override

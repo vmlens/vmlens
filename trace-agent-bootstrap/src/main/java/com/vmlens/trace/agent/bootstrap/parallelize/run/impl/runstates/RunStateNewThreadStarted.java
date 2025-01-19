@@ -2,14 +2,20 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ProcessRuntimeEventCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
+
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents.empty;
 
 
 public class RunStateNewThreadStarted implements RunState {
@@ -35,15 +41,18 @@ public class RunStateNewThreadStarted implements RunState {
     }
 
     @Override
-    public RunStateAndResult<ThreadLocalWhenInTest> processNewTestTask(RunnableOrThreadWrapper newWrapper, ThreadLocalForParallelize threadLocalForParallelize, Run run) {
+    public RunStateAndResult<ThreadLocalWhenInTestAndSerializableEvents> processNewTestTask(RunnableOrThreadWrapper newWrapper,
+                                                                                            ThreadLocalForParallelize threadLocalForParallelize, Run run) {
         if (!startedThread.equals(newWrapper)) {
-            return RunStateAndResult.of(this);
+            return RunStateAndResult.of(this, empty());
         }
+        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents = new TLinkedList<>();
         ThreadLocalWhenInTest threadLocalDataWhenInTest = runContext.createForStartedThread(
-                run, threadLocalForParallelize.threadId(), startedThreadIndex);
+                run, threadLocalForParallelize, startedThreadIndex, serializableEvents);
         threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalDataWhenInTest);
 
-        return RunStateAndResult.of(nextState, threadLocalDataWhenInTest);
+        return RunStateAndResult.of(nextState, new ThreadLocalWhenInTestAndSerializableEvents(
+                threadLocalDataWhenInTest, serializableEvents));
     }
 
     @Override

@@ -11,8 +11,4 @@ public interface MethodEnterExitStrategy {
                                ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter);
 
 
-    void onMethodExit(Object object,
-                      int methodId,
-                      OrderMap<Long> monitorOrder,
-                      ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter);
 }
