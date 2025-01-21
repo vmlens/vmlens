@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,7 +56,9 @@ public class CreateReport {
             List<UIRunElement> uiRunElements = new LinkedList<>();
             for (UIRunElementWithStacktraceLeaf element : loop.uiRunElementWithStacktraceRoots()) {
                 UIRunElement runElement = element.runElement();
-                runElement.setLink(element.stacktraceLeaf().reportLink());
+                if (element.stacktraceLeaf().reportLink() != null) {
+                    runElement.setLink(element.stacktraceLeaf().reportLink());
+                }
                 uiRunElements.add(runElement);
             }
 
@@ -63,11 +66,9 @@ public class CreateReport {
             createOneReport.createUIRun(uiRunElements, writer);
             writer.close();
         }
-
-
     }
 
-    private void createStacktraceReport(List<UIStacktraceLeaf> rootNodes) throws IOException {
+    private void createStacktraceReport(Collection<UIStacktraceLeaf> rootNodes) throws IOException {
         CreateOneReport createOneReport = new CreateOneReport("stacktrace");
         int index = 0;
         for (UIStacktraceLeaf root : rootNodes) {
@@ -79,5 +80,4 @@ public class CreateReport {
             index++;
         }
     }
-
 }

@@ -12,7 +12,7 @@ class GroupInterleaveElementSyncActionImpl[EVENT <: SyncActionEventWithCompareTy
 (val eventArray: EventArray[EVENT], val createContainer: (EVENT) => EventContainer[EVENT])
   extends GroupInterleaveElement {
 
-  def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit = {
+  def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Int, Array[StacktraceNode]]): Unit = {
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
   }
 

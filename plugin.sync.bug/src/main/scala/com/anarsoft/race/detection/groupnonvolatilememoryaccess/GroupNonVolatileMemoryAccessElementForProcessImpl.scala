@@ -9,7 +9,7 @@ import com.anarsoft.race.detection.util.EventArray
 class GroupNonVolatileMemoryAccessElementForProcessImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT] with WithSetStacktraceNode]
 (eventArray: EventArray[EVENT]) extends GroupNonVolatileMemoryAccessElementForProcess {
 
-  def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit = {
+  def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Int, Array[StacktraceNode]]): Unit = {
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
   }
 

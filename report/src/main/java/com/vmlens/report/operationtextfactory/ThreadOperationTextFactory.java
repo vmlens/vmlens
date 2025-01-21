@@ -1,9 +1,8 @@
-package com.vmlens.report.element.operationtextfactoryimpl;
+package com.vmlens.report.operationtextfactory;
 
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.element.LoopRunAndThreadIndex;
-import com.vmlens.report.element.OperationTextFactory;
 
 public class ThreadOperationTextFactory implements OperationTextFactory {
 

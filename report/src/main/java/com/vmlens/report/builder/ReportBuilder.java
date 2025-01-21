@@ -1,7 +1,10 @@
 package com.vmlens.report.builder;
 
 import com.anarsoft.trace.agent.description.*;
-import com.vmlens.report.container.*;
+import com.vmlens.report.container.ContainerForField;
+import com.vmlens.report.container.ContainerForMethod;
+import com.vmlens.report.container.ContainerForTestLoop;
+import com.vmlens.report.container.ContainerForThread;
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.DescriptionContextImpl;
 import com.vmlens.report.description.NeedsDescriptionCallback;
@@ -15,8 +18,6 @@ import java.util.Map;
 
 
 public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDescriptionVisitor {
-
-    private static final String ID_NOT_FOUND = "missing %s";
 
     private final Map<Integer, ContainerForField> idToFieldContainer = new HashMap<>();
     private final Map<Integer, ContainerForMethod> idToMethodContainer = new HashMap<>();
@@ -66,6 +67,7 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
 
     public void addLoopAndRun(TestLoop testLoop, List<RunElement> run) {
         for (RunElement element : run) {
+            idToMethodContainer.put(element.inMethodId(), new ContainerForMethod());
             element.operationTextFactory().addToNeedsDescription(this);
         }
         loopAndRuns.add(new LoopAndRun(testLoop, run));
@@ -87,7 +89,7 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
                         idToTestLoopDescription);
 
 
-        return new ReportBuildAlgo(loopAndRuns, stacktraceLeafs, operationTextFactoryContext).build();
+        return new ReportBuildAlgo(loopAndRuns, operationTextFactoryContext).build();
     }
 
     @Override
@@ -95,27 +97,6 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
         idToFieldContainer.put(fieldId, new ContainerForField());
     }
 
-    private String getMethodNameByMethodId(int methodId) {
-        return getName(methodId, idToMethodContainer);
-    }
 
-    private String getThreadIdByThreadIndex(LoopRunAndThreadIndex loopRunAndThreadIndex) {
-        return getName(loopRunAndThreadIndex, indexToThreadDescription);
-    }
 
-    private String getLoopNameByLoopId(int loopId) {
-        return getName(loopId, idToTestLoopDescription);
-    }
-
-    private String getName(Object index, Map<?, ? extends Container> idToContainer) {
-        String result = null;
-        Container container = idToContainer.get(index);
-        if (container != null) {
-            result = container.getName();
-        }
-        if (result != null) {
-            return result;
-        }
-        return String.format(ID_NOT_FOUND, index);
-    }
 }

@@ -1,4 +1,4 @@
-package com.vmlens.report.element;
+package com.vmlens.report.operationtextfactory;
 
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;

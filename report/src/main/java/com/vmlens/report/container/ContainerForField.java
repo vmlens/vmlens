@@ -9,11 +9,6 @@ public class ContainerForField implements Container {
     private ClassDescription classDescription;
     private FieldInClassDescription fieldInClassDescription;
 
-    public ClassDescription classDescription() {
-        return classDescription;
-    }
-
-
     public void setClassDescription(ClassDescription classDescription) {
         this.classDescription = classDescription;
     }
@@ -28,6 +23,10 @@ public class ContainerForField implements Container {
 
     @Override
     public String getName() {
-        return null;
+        if (classDescription == null || fieldInClassDescription == null) {
+            return null;
+        }
+
+        return classDescription.name() + "." + fieldInClassDescription.name();
     }
 }

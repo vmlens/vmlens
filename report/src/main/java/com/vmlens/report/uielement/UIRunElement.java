@@ -4,15 +4,15 @@ public class UIRunElement {
 
     private final String operation;
     private final String method;
-    private final String threadId;
+    private final String threadName;
 
     private boolean hasLink;
     private String link;
 
-    public UIRunElement(String operation, String method, String threadId) {
+    public UIRunElement(String operation, String method, String threadName) {
         this.operation = operation;
         this.method = method;
-        this.threadId = threadId;
+        this.threadName = threadName;
     }
 
     public void setLink(String link) {
@@ -28,8 +28,8 @@ public class UIRunElement {
         return method;
     }
 
-    public String threadId() {
-        return threadId;
+    public String threadName() {
+        return threadName;
     }
 
     public boolean hasLink() {

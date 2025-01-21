@@ -1,9 +1,8 @@
-package com.vmlens.report.element.operationtextfactoryimpl;
+package com.vmlens.report.operationtextfactory;
 
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.element.MemoryAccessModifier;
-import com.vmlens.report.element.OperationTextFactory;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import org.apache.commons.text.StringEscapeUtils;
 
@@ -28,7 +27,7 @@ public class FieldAccessTextFactory implements OperationTextFactory {
 
     @Override
     public String create(DescriptionContext context) {
-        return text;
+        return String.format(text, context.fieldName(fieldId));
     }
 
     @Override

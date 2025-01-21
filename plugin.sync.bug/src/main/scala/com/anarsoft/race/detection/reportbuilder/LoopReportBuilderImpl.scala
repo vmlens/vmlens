@@ -29,7 +29,8 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
       for (eventForReport <- runResult) {
         run.add(
           new RunElement(new LoopRunAndThreadIndex(eventForReport.loopId, eventForReport.runId, eventForReport.threadIndex),
-            eventForReport.runPosition, stacktraceLeaf(eventForReport.stacktraceNode, stacktraceLeafsMap), eventForReport.operationTextFactory))
+            eventForReport.runPosition, stacktraceLeaf(eventForReport.stacktraceNode, stacktraceLeafsMap), eventForReport.operationTextFactory,
+            eventForReport.methodId))
       }
 
       val result = if (runResult.isFailure && runResult.dataRaceCount > 0) {

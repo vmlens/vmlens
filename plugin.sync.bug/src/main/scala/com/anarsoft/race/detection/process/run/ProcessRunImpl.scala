@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.process.run
 
+import com.anarsoft.race.detection.createstacktrace.ServiceCalculateMethodCountToStacktraceNode
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementForResult
 import com.anarsoft.race.detection.groupnonvolatilememoryaccess.GroupNonVolatileMemoryAccessElementForResult
 import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult, RunResultImpl}
@@ -22,6 +23,13 @@ class ProcessRunImpl extends ProcessRun {
     addMethodEvents to runBuilder
     addMethodEvents runBuilder to loop builder
      */
+
+
+    val stackTraceIdToStacktrace = new ServiceCalculateMethodCountToStacktraceNode().process(runData.methodEventArray);
+    for (syncActionElement <- runData.syncActionElements) {
+      syncActionElement.setStacktraceNode(stackTraceIdToStacktrace.toMap)
+    }
+
 
     val partialOrderContainer = new PartialOrderContainer();
 

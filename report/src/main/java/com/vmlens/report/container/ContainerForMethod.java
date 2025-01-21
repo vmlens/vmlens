@@ -20,6 +20,10 @@ public class ContainerForMethod implements Container {
 
     @Override
     public String getName() {
-        return null;
+        if (classDescription == null || methodDescription == null) {
+            return null;
+        }
+
+        return classDescription.name() + "." + methodDescription.name();
     }
 }

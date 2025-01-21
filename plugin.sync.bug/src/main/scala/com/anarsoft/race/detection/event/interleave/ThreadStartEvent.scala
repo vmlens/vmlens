@@ -4,12 +4,14 @@ import com.anarsoft.race.detection.createpartialorderthreadoperation.ThreadOpera
 import com.anarsoft.race.detection.partialorder.{PartialOrderBuilder, WithPositionImpl}
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
-import com.vmlens.report.element.operationtextfactoryimpl.ThreadOperationTextFactory
-import com.vmlens.report.element.{LoopRunAndThreadIndex, OperationTextFactory}
+import com.vmlens.report.element.LoopRunAndThreadIndex
+import com.vmlens.report.operationtextfactory.{OperationTextFactory, ThreadOperationTextFactory}
 
 
 trait ThreadStartEvent extends LoadedInterleaveActionEvent with ThreadOperation
   with EventForReportElement with WithSetStacktraceNode {
+
+  def methodId: Int = 0;
 
   def startedThreadIndex: Int;
 

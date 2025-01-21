@@ -2,7 +2,8 @@ package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.reportbuilder.{FieldId, StaticMemoryAccessId}
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.report.element.{MemoryAccessModifier, OperationTextFactory}
+import com.vmlens.report.element.MemoryAccessModifier
+import com.vmlens.report.operationtextfactory.OperationTextFactory
 
 class NonVolatileMemoryAccessEventGuineaPig(val typeId: Int, val operation: Int,
                                             val runPosition: Int, val threadIndex: Int)
@@ -15,6 +16,8 @@ class NonVolatileMemoryAccessEventGuineaPig(val typeId: Int, val operation: Int,
   override def loopId: Int = 0
 
   override def runId: Int = 0
+
+  override def methodId: Int = 0
 
   override def stacktraceNode: Option[StacktraceNode] = None;
 

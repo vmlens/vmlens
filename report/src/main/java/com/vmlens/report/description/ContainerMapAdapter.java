@@ -13,7 +13,20 @@ public class ContainerMapAdapter<KEY, ELEMENT extends Container> {
     }
 
     public String getName(KEY key) {
-        return map.get(key).getName();
+        if (!map.containsKey(key)) {
+            return notFound(key);
+        }
+
+        String result = map.get(key).getName();
+
+        if (result == null) {
+            return notFound(key);
+        }
+
+        return result;
     }
 
+    private String notFound(KEY key) {
+        return String.format("not found (%s)", key);
+    }
 }

@@ -15,7 +15,5 @@ class ReportBuilderMock extends ReportBuilder {
     loopAndRunList.append(new LoopAndRun(testLoop, run));
   }
 
-  override def addStacktraceLeaf(stacktraceLeaf: StacktraceLeaf): Unit = {
-    stacktraceLeafList.append(stacktraceLeaf)
-  }
+
 }

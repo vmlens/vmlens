@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.createstacktrace
 
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
-import scala.collection.mutable.{Map, Stack}
+import scala.collection.mutable.Stack
 
 class StacktraceNodeStack(val threadIndex: Int) {
 
@@ -19,7 +19,7 @@ class StacktraceNodeStack(val threadIndex: Int) {
     newElement;
   }
 
-  def methodExit() = {
+  def methodExit(): StacktraceNode = {
     val current = stack.pop();
     if (stack.isEmpty) {
       current;

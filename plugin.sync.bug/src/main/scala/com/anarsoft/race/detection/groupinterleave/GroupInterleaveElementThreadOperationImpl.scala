@@ -13,7 +13,7 @@ class GroupInterleaveElementThreadOperationImpl[EVENT <: ThreadOperation with Wi
 (val eventArray: EventArray[EVENT])
   extends GroupInterleaveElement {
 
-  def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit = {
+  def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Int, Array[StacktraceNode]]): Unit = {
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
   }
 

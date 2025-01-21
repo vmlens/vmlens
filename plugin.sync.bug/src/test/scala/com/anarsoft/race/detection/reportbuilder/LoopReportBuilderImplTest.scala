@@ -23,6 +23,6 @@ class LoopReportBuilderImplTest extends AnyFlatSpec with Matchers {
 
     // Then
     reportBuilderMock.loopAndRunList.size should be(1)
-    reportBuilderMock.stacktraceLeafList.size should be(1)
+    reportBuilderMock.stacktraceLeafList.size should be(0)
   }
 }

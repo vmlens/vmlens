@@ -5,7 +5,7 @@ import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
 trait GroupNonVolatileMemoryAccessElementForProcess {
 
-  def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Long, Array[StacktraceNode]]): Unit;
+  def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Int, Array[StacktraceNode]]): Unit;
 
   def sort(partialOrder: PartialOrder): GroupNonVolatileMemoryAccessElementForResult;
 

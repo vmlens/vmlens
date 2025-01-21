@@ -16,9 +16,9 @@ class SetStacktraceNodeInEventTest extends AnyFlatSpec with Matchers {
     val thirdEvent = new WithSetStacktraceNodeGuineaPig(1, 1);
 
     val eventArray = new EventArray[WithSetStacktraceNodeGuineaPig](Array(firstEvent, secondEvent, thirdEvent));
-    val threadIdToStacktraceNodeArray = new HashMap[Long, Array[StacktraceNode]]();
-    threadIdToStacktraceNodeArray.put(1L, buildStacktraceNodeArray());
-    threadIdToStacktraceNodeArray.put(10L, buildStacktraceNodeArray());
+    val threadIdToStacktraceNodeArray = new HashMap[Int, Array[StacktraceNode]]();
+    threadIdToStacktraceNodeArray.put(1, buildStacktraceNodeArray());
+    threadIdToStacktraceNodeArray.put(10, buildStacktraceNodeArray());
 
     val setStacktraceNodeInEvent = new SetStacktraceNodeInEvent();
 
@@ -27,7 +27,6 @@ class SetStacktraceNodeInEventTest extends AnyFlatSpec with Matchers {
 
     // Then
     firstEvent.stacktraceNode.get should be(new StacktraceNodeGuineaPig(3));
-
   }
 
   def buildStacktraceNodeArray(): Array[StacktraceNode] = {

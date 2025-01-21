@@ -28,4 +28,13 @@ public class LoopRunAndThreadIndex {
         result = 31 * result + threadIndex;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "LoopRunAndThreadIndex{" +
+                "loopId=" + loopId +
+                ", runId=" + runId +
+                ", threadIndex=" + threadIndex +
+                '}';
+    }
 }

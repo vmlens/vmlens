@@ -5,6 +5,8 @@ import java.util.List;
 public class UIStacktraceLeaf {
 
     private final List<UIStacktraceElement> stacktraceElements;
+
+    // Is null when stacktraceElements is empty
     private String reportLink;
 
     public UIStacktraceLeaf(List<UIStacktraceElement> stacktraceElements) {
@@ -22,4 +24,5 @@ public class UIStacktraceLeaf {
     public void setReportLink(String reportLink) {
         this.reportLink = reportLink;
     }
+
 }
