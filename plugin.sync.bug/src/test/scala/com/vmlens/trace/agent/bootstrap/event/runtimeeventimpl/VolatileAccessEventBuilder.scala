@@ -62,6 +62,7 @@ class VolatileAccessEventBuilder {
 
   def buildScalaEvent(): VolatileAccessEventGen = {
     new VolatileAccessEventGen(volatileAccessEvent.threadIndex(),
+      volatileAccessEvent.bytecodePosition(),
       volatileAccessEvent.order(),
       volatileAccessEvent.fieldId(),
       volatileAccessEvent.methodCounter(),

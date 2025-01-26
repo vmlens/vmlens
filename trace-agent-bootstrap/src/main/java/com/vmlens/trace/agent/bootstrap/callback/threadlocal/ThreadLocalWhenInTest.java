@@ -14,25 +14,13 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
     private final RunAdapter runAdapter;
     private final int threadIndex;
 
-    private boolean inCallbackProcessing = false;
+
     private RuntimeEventAndSetFieldsStrategy atomicVolatileFieldAccess;
     private ThreadStartEvent threadStartEvent;
 
     public ThreadLocalWhenInTest(Run run, int threadIndex) {
         this.runAdapter = new RunAdapter(run);
         this.threadIndex = threadIndex;
-    }
-
-    public ThreadLocalWhenInTest startCallbackProcessing() {
-        if (!inCallbackProcessing) {
-            inCallbackProcessing = true;
-            return this;
-        }
-        return null;
-    }
-
-    public void stopCallbackProcessing() {
-        inCallbackProcessing = false;
     }
 
     @Override

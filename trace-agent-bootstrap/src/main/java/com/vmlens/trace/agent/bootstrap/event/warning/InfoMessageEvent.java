@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Arrays;
 
 public class InfoMessageEvent implements SerializableEvent {
@@ -35,6 +36,12 @@ public class InfoMessageEvent implements SerializableEvent {
         stream.writeInt(text.length);
         for (String line : text) {
             stream.writeUTF(line);
+        }
+    }
+
+    public void writeToStream(PrintStream output) {
+        for (String line : text) {
+            output.println(line);
         }
     }
 

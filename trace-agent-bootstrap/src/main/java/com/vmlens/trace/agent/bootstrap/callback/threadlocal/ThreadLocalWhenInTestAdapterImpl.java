@@ -38,7 +38,7 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
                         callbackAction.execute(dataWhenInTest);
                 eventQueueInternal.offer(serializableEvents);
             } finally {
-                dataWhenInTest.stopCallbackProcessing();
+                threadLocal.stopCallbackProcessing();
             }
         }
     }

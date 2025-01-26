@@ -1,9 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-
 import java.nio.ByteBuffer;
+
+import com.vmlens.trace.agent.bootstrap.event.*;
 
 
 public class VolatileDirectMemoryEventGen {

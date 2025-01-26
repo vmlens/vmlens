@@ -16,7 +16,7 @@ class ArrayAccessEventGen(
                            , val operation: Int
                            , val methodId: Int
                            , val objectHashCode: Long
-                           , val position: Int
+                           , val bytecodePosition: Int
                            , val classId: Int
                            , val loopId: Int
                            , val runId: Int
@@ -30,7 +30,7 @@ class ArrayAccessEventGen(
     text = text + ", operation:" + operation
     text = text + ", methodId:" + methodId
     text = text + ", objectHashCode:" + objectHashCode
-    text = text + ", position:" + position
+    text = text + ", bytecodePosition:" + bytecodePosition
     text = text + ", classId:" + classId
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
@@ -59,7 +59,7 @@ class ArrayAccessEventGen(
         else if (objectHashCode != that.objectHashCode) {
           false;
         }
-        else if (position != that.position) {
+        else if (bytecodePosition != that.bytecodePosition) {
           false;
         }
         else if (classId != that.classId) {

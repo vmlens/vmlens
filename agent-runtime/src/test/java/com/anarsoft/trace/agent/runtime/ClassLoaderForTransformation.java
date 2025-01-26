@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformer;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassNameAndTransformerStrategyCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
@@ -36,7 +36,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
             WriteClassDescriptionAndWarning writeClassDescription = mock(WriteClassDescriptionAndWarning.class);
-            ApplyClassTransformerCollectionFactory factory = new ApplyClassTransformerCollectionFactory(new MethodRepository(),
+            ClassNameAndTransformerStrategyCollectionFactory factory = new ClassNameAndTransformerStrategyCollectionFactory(new MethodRepository(),
                     new FieldRepository(), writeClassDescription);
             ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(factory);
 

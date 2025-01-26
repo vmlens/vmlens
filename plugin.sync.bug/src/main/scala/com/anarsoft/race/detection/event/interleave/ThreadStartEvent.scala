@@ -11,8 +11,6 @@ import com.vmlens.report.operationtextfactory.{OperationTextFactory, ThreadOpera
 trait ThreadStartEvent extends LoadedInterleaveActionEvent with ThreadOperation
   with EventForReportElement with WithSetStacktraceNode {
 
-  def methodId: Int = 0;
-
   def startedThreadIndex: Int;
 
   override def addToContext(context: LoadedInterleaveActionContext): Unit = {

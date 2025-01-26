@@ -10,6 +10,10 @@ public class VolatileAccessEventForTest extends VolatileAccessEvent {
         return order;
     }
 
+    public int bytecodePosition() {
+        return bytecodePosition;
+    }
+
     public int fieldId() {
         return fieldId;
     }

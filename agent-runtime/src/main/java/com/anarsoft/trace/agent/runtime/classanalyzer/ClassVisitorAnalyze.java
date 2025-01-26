@@ -3,7 +3,7 @@ package com.anarsoft.trace.agent.runtime.classanalyzer;
 import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.description.FieldInClassDescription;
 import com.anarsoft.trace.agent.description.MethodDescription;
-import com.anarsoft.trace.agent.runtime.classtransformerall.ASMConstants;
+import com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;

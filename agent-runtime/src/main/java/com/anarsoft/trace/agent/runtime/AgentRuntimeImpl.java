@@ -2,14 +2,15 @@ package com.anarsoft.trace.agent.runtime;
 
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningNormal;
-import com.anarsoft.trace.agent.runtime.write.WriteEventToFile;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilter;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassNameAndTransformerStrategyCollectionFactory;
+import com.anarsoft.trace.agent.runtime.write.*;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
+import com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import java.io.File;
@@ -51,6 +52,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			if (outputFileName == null) {
 				throw new RuntimeException("eventDir is missing in vmlens agent properties");
 			}
+            ClassFilter classFilter = ClassFilter.create(properties);
 
 			File outputDir = new File(outputFileName);
 			System.err.println("writing events to " + outputDir.getAbsolutePath());
@@ -68,8 +70,31 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			}
 
             new LoadClassesAtStart().loadClasses();
-            instrument(inst, outputFileName);
+
+            TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
+            TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
+
+            WriteClassDescriptionAndWarningDuringStartup writeClassDescriptionDuringStartup =
+                    new WriteClassDescriptionAndWarningDuringStartup(
+                            classAnalyzedEventList, infoMessageEventList);
+
+            WriteClassDescriptionAndWarningWrapper writeClassDescriptionAndWarningWrapper =
+                    new WriteClassDescriptionAndWarningWrapper(writeClassDescriptionDuringStartup);
+            AgentClassFileTransformer agentClassFileTransformer = new AgentClassFileTransformer(
+                    new ClassNameAndTransformerStrategyCollectionFactory(writeClassDescriptionAndWarningWrapper));
+
+            instrument(inst, agentClassFileTransformer, writeClassDescriptionDuringStartup, classFilter);
+            writeClassDescriptionAndWarningWrapper
+                    .setWriteClassDescriptionAndWarning(new WriteClassDescriptionAndWarningNormal());
+
             WriteEventToFile.startWriteEventToFileThread(outputFileName);
+
+            for (TLinkableWrapper<InfoMessageEvent> infoMessageEvent : infoMessageEventList) {
+                EventQueueSingleton.eventQueue.offer(infoMessageEvent.element());
+            }
+            for (TLinkableWrapper<ClassDescription> classDescription : classAnalyzedEventList) {
+                EventQueueSingleton.eventQueue.offer(classDescription.element());
+            }
 
         } catch (Throwable e) {
 			e.printStackTrace();
@@ -77,62 +102,53 @@ public class AgentRuntimeImpl implements AgentRuntime {
 	}
 
     private void retransform(Instrumentation inst,
-							 TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList,
-							 TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList,
-							 boolean skipJavaUtil,
-                             THashSet<String> alreadyTransformed) throws UnmodifiableClassException {
-		WriteClassDescriptionAndWarningDuringStartup writeClassDescriptionDuringStartup =
-				new WriteClassDescriptionAndWarningDuringStartup(
-						classAnalyzedEventList, infoMessageEventList);
-
-		AgentClassFileTransformer classRetransformer = new AgentClassFileTransformer(
-				new ApplyClassTransformerCollectionFactory(writeClassDescriptionDuringStartup));
-
-        inst.addTransformer(classRetransformer, true);
-
+                             THashSet<String> alreadyTransformed,
+                             WriteClassDescriptionAndWarning writeClassDescriptionAndWarning,
+                             ClassFilter classFilter) throws UnmodifiableClassException {
 		TLinkedList<TLinkableWrapper<Class>> transformableClasses = new TLinkedList();
 		for (Class cl : inst.getAllLoadedClasses()) {
 			if (inst.isModifiableClass(cl)) {
 				String correctedClassName = cl.getName().replace('.', '/');
 				if (!cl.isInterface()) {
-					if (!alreadyTransformed.contains(correctedClassName)) {
-						transformableClasses.add(new TLinkableWrapper(cl));
-						alreadyTransformed.add(correctedClassName);
-					}
-				}
+                    if (classFilter.take(correctedClassName)) {
+                        if (!alreadyTransformed.contains(correctedClassName)) {
+                            transformableClasses.add(new TLinkableWrapper(cl));
+                            alreadyTransformed.add(correctedClassName);
+                        }
+                    } else {
+                        InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
+                        builder.add("filtered:" + cl.getName());
+                        writeClassDescriptionAndWarning.write(builder.build());
+                    }
+                }
+            } else {
+                InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
+                builder.add("not transformable:" + cl.getName());
+                writeClassDescriptionAndWarning.write(builder.build());
 			}
 		}
 		Class[] toBeRetransformed = new Class[transformableClasses.size()];
 		int i = 0;
 		for (TLinkableWrapper<Class> cl : transformableClasses) {
-			if (cl.element().getName().startsWith("java/lang")) {
-				System.out.println(cl.element().getName());
-			}
-			toBeRetransformed[i] = ((Class) cl.element());
+            InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
+            builder.add(cl.element().getName());
+            writeClassDescriptionAndWarning.write(builder.build());
+
+            toBeRetransformed[i] = cl.element();
 			i++;
 		}
 		if (toBeRetransformed.length > 0) {
 			inst.retransformClasses(toBeRetransformed);
 		}
-		inst.removeTransformer(classRetransformer);
-	}
 
-    protected void instrument(Instrumentation inst, String outputFileName) throws Exception {
-		TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
-		TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
+    }
+
+    protected void instrument(Instrumentation inst,
+                              AgentClassFileTransformer agentClassFileTransformer,
+                              WriteClassDescriptionAndWarningDuringStartup writeClassDescriptionDuringStartup,
+                              ClassFilter classFilter) throws Exception {
+        inst.addTransformer(agentClassFileTransformer, true);
 		THashSet<String> alreadyTransformed = new THashSet<>();
-
-		//	retransform(inst, classAnalyzedEventList,
-		//			infoMessageEventList,
-		//			true, alreadyTransformed);
-
-		classAnalyzedEventList = new TLinkedList<>();
-
-		//	retransform(inst, classAnalyzedEventList, infoMessageEventList,
-		//			false, alreadyTransformed);
-
-		inst.addTransformer(new AgentClassFileTransformer(
-						new ApplyClassTransformerCollectionFactory(new WriteClassDescriptionAndWarningNormal())),
-				false);
+        retransform(inst, alreadyTransformed, writeClassDescriptionDuringStartup, classFilter);
 	}
 }

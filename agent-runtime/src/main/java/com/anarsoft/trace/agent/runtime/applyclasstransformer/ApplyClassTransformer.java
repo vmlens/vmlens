@@ -2,15 +2,15 @@ package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 public class ApplyClassTransformer {
 
-    private final ApplyClassTransformerCollection classArrayTransformerCollection;
+    private final ClassNameAndTransformerStrategyCollection classArrayTransformerCollection;
 
-    public ApplyClassTransformer(ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
+    public ApplyClassTransformer(ClassNameAndTransformerStrategyCollectionFactory classArrayTransformerFactory) {
         super();
         this.classArrayTransformerCollection = classArrayTransformerFactory.create();
     }
 
     public byte[] transform(byte[] classfileBuffer, String name) {
-        ApplyClassTransformerElement transformer = classArrayTransformerCollection.get(name);
+        ClassNameAndTransformerStrategy transformer = classArrayTransformerCollection.get(name);
         if (transformer != null) {
             TransformerContext context = new TransformerContext(classfileBuffer, name);
             return transformer.transform(context);

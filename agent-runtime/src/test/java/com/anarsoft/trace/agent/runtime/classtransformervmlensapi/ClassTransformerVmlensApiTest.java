@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformervmlensapi;
 
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrategyimpl.ClassTransformerVmlensApi;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrategyimpl.TransformerStrategyVmlensApi;
 import com.vmlens.test.util.DiffText;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;
@@ -16,7 +16,7 @@ public class ClassTransformerVmlensApiTest {
     public void transform() throws IOException {
         byte[] classArray = new LoadClassArray().load("com.vmlens.api.AllInterleavings");
 
-        ClassTransformerVmlensApi classArrayTransformer = new ClassTransformerVmlensApi();
+        TransformerStrategyVmlensApi classArrayTransformer = new TransformerStrategyVmlensApi();
         StringWriter out = new StringWriter();
         PrintWriter writer = new PrintWriter(out);
 

@@ -2,6 +2,7 @@ package com.anarsoft.race.detection.main
 
 import com.anarsoft.race.detection.debug.{DescriptionBuilderForDebug, RunDataListBuilderForDebug}
 import com.anarsoft.race.detection.process.load.LoadRunsImpl
+import com.anarsoft.race.detection.process.loadAgentLog.LoadAgentLog
 import com.anarsoft.race.detection.process.loadDescription.LoadDescriptionImpl
 
 import java.nio.file.Paths
@@ -17,6 +18,7 @@ object DebugEvents {
     loadEvents.load(runDataListBuilderForDebug)
 
     new LoadDescriptionImpl(dir).load(new DescriptionBuilderForDebug());
+    new LoadAgentLog(dir).load(System.out);
   }
 
 }

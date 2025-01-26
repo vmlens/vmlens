@@ -14,7 +14,7 @@ public class ArrayAccessEventGen {
     protected int operation;
     protected int methodId;
     protected long objectHashCode;
-    protected int position;
+    protected int bytecodePosition;
     protected int classId;
     protected int loopId;
     protected int runId;
@@ -32,7 +32,7 @@ public class ArrayAccessEventGen {
         if (operation != that.operation) return false;
         if (methodId != that.methodId) return false;
         if (objectHashCode != that.objectHashCode) return false;
-        if (position != that.position) return false;
+        if (bytecodePosition != that.bytecodePosition) return false;
         if (classId != that.classId) return false;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
@@ -49,7 +49,7 @@ public class ArrayAccessEventGen {
                 "operation=" + operation +
                 "methodId=" + methodId +
                 "objectHashCode=" + objectHashCode +
-                "position=" + position +
+                "bytecodePosition=" + bytecodePosition +
                 "classId=" + classId +
                 "loopId=" + loopId +
                 "runId=" + runId +
@@ -72,7 +72,7 @@ public class ArrayAccessEventGen {
         buffer.putInt(operation);
         buffer.putInt(methodId);
         buffer.putLong(objectHashCode);
-        buffer.putInt(position);
+        buffer.putInt(bytecodePosition);
         buffer.putInt(classId);
         buffer.putInt(loopId);
         buffer.putInt(runId);

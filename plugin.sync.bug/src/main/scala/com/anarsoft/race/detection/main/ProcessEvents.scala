@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.main
 
+import com.anarsoft.race.detection.process.loadAgentLog.LoadAgentLog
 import com.anarsoft.race.detection.process.loadDescription.LoadDescriptionImpl
 import com.anarsoft.race.detection.process.main.MainProcess
 import com.anarsoft.race.detection.process.run.ProcessRunImpl
@@ -7,6 +8,7 @@ import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.createreport.CreateReport
 
+import java.io.PrintStream
 import java.nio.file.Paths
 
 object ProcessEvents {
@@ -24,5 +26,9 @@ object ProcessEvents {
 
     val createReports = new CreateReport(reportDir);
     createReports.createReport(reportBuilder.build())
+
+    val printStream = new PrintStream(reportDir.resolve("agentlog.txt").toFile)
+    new LoadAgentLog(dir).load(printStream);
+    printStream.close();
   }
 }

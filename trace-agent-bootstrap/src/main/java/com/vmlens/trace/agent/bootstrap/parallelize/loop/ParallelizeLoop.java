@@ -23,7 +23,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
-// Fixme synchonization herausziehen
 public class ParallelizeLoop {
 
     private final ReentrantLock lock = new ReentrantLock();
@@ -56,6 +55,7 @@ public class ParallelizeLoop {
     public boolean hasNext(ThreadLocalForParallelize threadLocalForParallelize,
                            TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         lock.lock();
+        threadLocalForParallelize.setInCallbackProcessing();
         try {
             if (currentRun != null) {
                 RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
@@ -92,6 +92,7 @@ public class ParallelizeLoop {
                 return true;
             }
         } finally {
+            threadLocalForParallelize.stopCallbackProcessing();
             lock.unlock();
         }
     }

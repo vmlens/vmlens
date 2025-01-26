@@ -27,7 +27,7 @@ public class com/vmlens/test/guineaPig/SynchronizedBlock {
     ASTORE 1
     DUP
     MONITORENTER
-    LDC 1
+    LDC 0
     LDC 0
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MonitorCallback.afterMonitorEnter (Ljava/lang/Object;II)V
    L0
@@ -35,7 +35,7 @@ public class com/vmlens/test/guineaPig/SynchronizedBlock {
     ALOAD 1
     DUP
     MONITOREXIT
-    LDC 1
+    LDC 0
     LDC 1
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MonitorCallback.afterMonitorExit (Ljava/lang/Object;II)V
    L1
@@ -46,7 +46,7 @@ public class com/vmlens/test/guineaPig/SynchronizedBlock {
     ALOAD 1
     DUP
     MONITOREXIT
-    LDC 1
+    LDC 0
     LDC 2
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MonitorCallback.afterMonitorExit (Ljava/lang/Object;II)V
    L3

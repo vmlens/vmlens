@@ -62,6 +62,7 @@
         <module>../plugin.sync.bug</module>
         <module>../report</module>
         <module>../vmlens-maven-plugin</module>
+        <module>../test-vmlens-maven-plugin</module>
     </modules>
 
 

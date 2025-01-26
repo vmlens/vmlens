@@ -8,6 +8,7 @@ public class ThreadLocalForParallelize {
     private final long threadId;
     private final String threadName;
     private ThreadLocalWhenInTest parallelizedThreadLocal;
+    private boolean inCallbackProcessing = false;
 
     public ThreadLocalForParallelize(long threadId, String threadName) {
         this.threadId = threadId;
@@ -24,9 +25,17 @@ public class ThreadLocalForParallelize {
 
     public ThreadLocalWhenInTest startCallbackProcessing() {
         if (parallelizedThreadLocal != null) {
-            return parallelizedThreadLocal.startCallbackProcessing();
+            if (!inCallbackProcessing) {
+                inCallbackProcessing = true;
+                return parallelizedThreadLocal;
+            }
+            return null;
         }
         return null;
+    }
+
+    public void setInCallbackProcessing() {
+        inCallbackProcessing = true;
     }
 
     public void setParallelizedThreadLocalToNull() {
@@ -39,5 +48,9 @@ public class ThreadLocalForParallelize {
 
     public String threadName() {
         return threadName;
+    }
+
+    public void stopCallbackProcessing() {
+        inCallbackProcessing = false;
     }
 }

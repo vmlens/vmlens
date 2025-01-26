@@ -45,9 +45,9 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     val methodId = 0;
     val objectHashCode = 0L;
 
-    val write = new VolatileAccessEventGen(0, 0, fieldId, methodCounter,
+    val write = new VolatileAccessEventGen(0, 0, 0, fieldId, methodCounter,
       methodId, MemoryAccessType.IS_WRITE, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 0);
-    val read = new VolatileAccessEventGen(1, 1, fieldId, methodCounter,
+    val read = new VolatileAccessEventGen(1, 0, 1, fieldId, methodCounter,
       methodId, MemoryAccessType.IS_READ, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 3);
 
     list.add(read)

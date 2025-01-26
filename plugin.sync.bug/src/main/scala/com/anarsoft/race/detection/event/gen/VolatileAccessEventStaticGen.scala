@@ -1,16 +1,17 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.control.*
-import com.anarsoft.race.detection.event.directmemory.*
-import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.nonvolatilefield.*
-
 import java.nio.ByteBuffer;
+
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.control._;
+import com.anarsoft.race.detection.event.nonvolatilefield._;
+import com.anarsoft.race.detection.event.directmemory._;
+import com.anarsoft.race.detection.event.interleave._;
 
 
 class VolatileAccessEventStaticGen(
                                     val threadIndex: Int
+                                    , val bytecodePosition: Int
                                     , val order: Int
                                     , val fieldId: Int
                                     , val methodCounter: Int
@@ -23,6 +24,7 @@ class VolatileAccessEventStaticGen(
   override def toString() = {
     var text = "VolatileAccessEventStaticGen"
     text = text + ", threadIndex:" + threadIndex
+    text = text + ", bytecodePosition:" + bytecodePosition
     text = text + ", order:" + order
     text = text + ", fieldId:" + fieldId
     text = text + ", methodCounter:" + methodCounter
@@ -38,6 +40,9 @@ class VolatileAccessEventStaticGen(
     other match {
       case that: VolatileAccessEventStaticGen => {
         if (threadIndex != that.threadIndex) {
+          false;
+        }
+        else if (bytecodePosition != that.bytecodePosition) {
           false;
         }
         else if (order != that.order) {
@@ -77,6 +82,8 @@ object VolatileAccessEventStaticGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new VolatileAccessEventStaticGen(
 
+      data.getInt()
+      ,
       data.getInt()
       ,
       data.getInt()

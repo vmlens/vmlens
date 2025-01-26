@@ -1,8 +1,8 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollection;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerCollectionFactory;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformerElement;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassNameAndTransformerStrategy;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassNameAndTransformerStrategyCollection;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassNameAndTransformerStrategyCollectionFactory;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext;
 import org.objectweb.asm.Opcodes;
 
@@ -16,9 +16,10 @@ import java.security.ProtectionDomain;
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
     public static final int ASM_API_VERSION = Opcodes.ASM7;
-    private final ApplyClassTransformerCollection classArrayTransformerCollection;
+    private final ClassNameAndTransformerStrategyCollection classArrayTransformerCollection;
+    private final  ClassFilter ClassFilter;
 
-    public AgentClassFileTransformer(ApplyClassTransformerCollectionFactory classArrayTransformerFactory) {
+    public AgentClassFileTransformer(ClassNameAndTransformerStrategyCollectionFactory classArrayTransformerFactory) {
         super();
         this.classArrayTransformerCollection = classArrayTransformerFactory.create();
     }
@@ -48,10 +49,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
             }
-            if (name.startsWith("com/vmlens/test") || name.startsWith("com/vmlens/api")) {
-                System.out.println();
-            }
-            ApplyClassTransformerElement transformer = classArrayTransformerCollection.get(name);
+            ClassNameAndTransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 TransformerContext context = new TransformerContext(classfileBuffer, name);
                 byte[] transformed = transformer.transform(context);

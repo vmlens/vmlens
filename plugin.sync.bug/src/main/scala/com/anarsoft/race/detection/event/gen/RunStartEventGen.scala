@@ -1,8 +1,12 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.control.*
-
 import java.nio.ByteBuffer;
+
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.control._;
+import com.anarsoft.race.detection.event.nonvolatilefield._;
+import com.anarsoft.race.detection.event.directmemory._;
+import com.anarsoft.race.detection.event.interleave._;
 
 
 class RunStartEventGen(

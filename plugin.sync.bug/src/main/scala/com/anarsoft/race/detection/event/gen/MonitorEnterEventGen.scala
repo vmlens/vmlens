@@ -1,12 +1,12 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.control.*
-import com.anarsoft.race.detection.event.directmemory.*
-import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.nonvolatilefield.*
-
 import java.nio.ByteBuffer;
+
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.control._;
+import com.anarsoft.race.detection.event.nonvolatilefield._;
+import com.anarsoft.race.detection.event.directmemory._;
+import com.anarsoft.race.detection.event.interleave._;
 
 
 class MonitorEnterEventGen(
@@ -15,7 +15,7 @@ class MonitorEnterEventGen(
                             , val monitorId: Int
                             , val methodCounter: Int
                             , val methodId: Int
-                            , val position: Int
+                            , val bytecodePosition: Int
                             , val loopId: Int
                             , val runId: Int
                             , val runPosition: Int
@@ -27,7 +27,7 @@ class MonitorEnterEventGen(
     text = text + ", monitorId:" + monitorId
     text = text + ", methodCounter:" + methodCounter
     text = text + ", methodId:" + methodId
-    text = text + ", position:" + position
+    text = text + ", bytecodePosition:" + bytecodePosition
     text = text + ", loopId:" + loopId
     text = text + ", runId:" + runId
     text = text + ", runPosition:" + runPosition
@@ -52,7 +52,7 @@ class MonitorEnterEventGen(
         else if (methodId != that.methodId) {
           false;
         }
-        else if (position != that.position) {
+        else if (bytecodePosition != that.bytecodePosition) {
           false;
         }
         else if (loopId != that.loopId) {

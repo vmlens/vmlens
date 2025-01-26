@@ -22,22 +22,22 @@ public class com/vmlens/test/guineaPig/ThreadStart {
     LINENUMBER 6 L0
     NEW java/lang/Thread
     DUP
-    LDC 3
+    LDC 2
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (I)V
     INVOKESPECIAL java/lang/Thread.<init> ()V
     LDC 1
     LDC 0
-    LDC 3
+    LDC 2
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.afterMethodCall (III)V
     DUP
-    LDC 4
+    LDC 3
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.targetOfMethodCall (Ljava/lang/Object;I)V
-    LDC 4
+    LDC 3
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.beforeMethodCall (I)V
     INVOKEVIRTUAL java/lang/Thread.start ()V
     LDC 1
     LDC 1
-    LDC 4
+    LDC 3
     INVOKESTATIC com/vmlens/trace/agent/bootstrap/callback/MethodCallback.afterMethodCall (III)V
    L1
     LINENUMBER 7 L1

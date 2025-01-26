@@ -1,14 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-
 import java.nio.ByteBuffer;
+
+import com.vmlens.trace.agent.bootstrap.event.*;
 
 
 public class ThreadStartEventGen {
 
     protected int threadIndex;
+    protected int bytecodePosition;
+    protected int methodId;
     protected int startedThreadIndex;
     protected int methodCounter;
     protected int loopId;
@@ -22,6 +23,8 @@ public class ThreadStartEventGen {
 
         ThreadStartEventGen that = (ThreadStartEventGen) o;
         if (threadIndex != that.threadIndex) return false;
+        if (bytecodePosition != that.bytecodePosition) return false;
+        if (methodId != that.methodId) return false;
         if (startedThreadIndex != that.startedThreadIndex) return false;
         if (methodCounter != that.methodCounter) return false;
         if (loopId != that.loopId) return false;
@@ -34,6 +37,8 @@ public class ThreadStartEventGen {
     public String toString() {
         return "ThreadStartEventGen{" +
                 "threadIndex=" + threadIndex +
+                "bytecodePosition=" + bytecodePosition +
+                "methodId=" + methodId +
                 "startedThreadIndex=" + startedThreadIndex +
                 "methodCounter=" + methodCounter +
                 "loopId=" + loopId +
@@ -45,13 +50,15 @@ public class ThreadStartEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.interleave.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 25, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 33, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 18);
         buffer.putInt(threadIndex);
+        buffer.putInt(bytecodePosition);
+        buffer.putInt(methodId);
         buffer.putInt(startedThreadIndex);
         buffer.putInt(methodCounter);
         buffer.putInt(loopId);

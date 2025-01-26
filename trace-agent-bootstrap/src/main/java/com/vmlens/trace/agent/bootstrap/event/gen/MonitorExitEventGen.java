@@ -1,9 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
-
 import java.nio.ByteBuffer;
+
+import com.vmlens.trace.agent.bootstrap.event.*;
 
 
 public class MonitorExitEventGen {
@@ -13,7 +12,7 @@ public class MonitorExitEventGen {
     protected int monitorId;
     protected int methodCounter;
     protected int methodId;
-    protected int position;
+    protected int bytecodePosition;
     protected int loopId;
     protected int runId;
     protected int runPosition;
@@ -29,7 +28,7 @@ public class MonitorExitEventGen {
         if (monitorId != that.monitorId) return false;
         if (methodCounter != that.methodCounter) return false;
         if (methodId != that.methodId) return false;
-        if (position != that.position) return false;
+        if (bytecodePosition != that.bytecodePosition) return false;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
         if (runPosition != that.runPosition) return false;
@@ -44,7 +43,7 @@ public class MonitorExitEventGen {
                 "monitorId=" + monitorId +
                 "methodCounter=" + methodCounter +
                 "methodId=" + methodId +
-                "position=" + position +
+                "bytecodePosition=" + bytecodePosition +
                 "loopId=" + loopId +
                 "runId=" + runId +
                 "runPosition=" + runPosition +
@@ -65,7 +64,7 @@ public class MonitorExitEventGen {
         buffer.putInt(monitorId);
         buffer.putInt(methodCounter);
         buffer.putInt(methodId);
-        buffer.putInt(position);
+        buffer.putInt(bytecodePosition);
         buffer.putInt(loopId);
         buffer.putInt(runId);
         buffer.putInt(runPosition);

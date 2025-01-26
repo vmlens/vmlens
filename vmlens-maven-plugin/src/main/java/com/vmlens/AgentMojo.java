@@ -11,13 +11,13 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 
-/**
- *
- */
 @Mojo(name = "prepare-agent", defaultPhase = LifecyclePhase.INITIALIZE, requiresDependencyResolution = ResolutionScope.RUNTIME, threadSafe = true)
 public class AgentMojo
         extends AbstractMojo {
@@ -40,12 +40,10 @@ public class AgentMojo
                 agentDirectory.mkdirs();
             }
 
-
             for (String jar : jars) {
                 File toBeDeleted = new File(agentDirectory.getAbsolutePath() + "/" + jar);
                 FileUtils.deleteQuietly(toBeDeleted);
             }
-
 
             for (String jar : jars) {
                 FileOutputStream target = null;
@@ -78,12 +76,8 @@ public class AgentMojo
 
             projectProperties.setProperty(SUREFIRE_ARG_LINE, agentVmArg);
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
 }
