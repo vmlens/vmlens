@@ -55,6 +55,7 @@
     <modules>
         <module>../test-util</module>
         <module>../api</module>
+        <module>../pre-analyzed</module>
         <module>../trace-agent-bootstrap</module>
         <module>../trace-agent-bootstrap-jdk9</module>
         <module>../trace-agent</module>
@@ -64,7 +65,6 @@
         <module>../vmlens-maven-plugin</module>
         <module>../test-vmlens-maven-plugin</module>
     </modules>
-
 
     <profiles>
         <profile>

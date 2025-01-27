@@ -1,9 +1,11 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassNameAndTransformerStrategy;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassNameAndTransformerStrategyCollection;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassNameAndTransformerStrategyCollectionFactory;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.*;
+import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyClassTransformerThread;
+import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import org.objectweb.asm.Opcodes;
 
 import java.io.FileOutputStream;
@@ -17,11 +19,16 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
 
     public static final int ASM_API_VERSION = Opcodes.ASM7;
     private final ClassNameAndTransformerStrategyCollection classArrayTransformerCollection;
-    private final  ClassFilter ClassFilter;
+    private final ClassFilter classFilter;
+    private final WriteClassDescriptionAndWarning writeClassDescriptionAndWarning;
 
-    public AgentClassFileTransformer(ClassNameAndTransformerStrategyCollectionFactory classArrayTransformerFactory) {
+    public AgentClassFileTransformer(ClassNameAndTransformerStrategyCollectionFactory classArrayTransformerFactory,
+                                     ClassFilter classFilter,
+                                     WriteClassDescriptionAndWarning writeClassDescriptionAndWarning) {
         super();
         this.classArrayTransformerCollection = classArrayTransformerFactory.create();
+        this.classFilter = classFilter;
+        this.writeClassDescriptionAndWarning = writeClassDescriptionAndWarning;
     }
 
     private static void logTransformedClass(String className, byte[] transformedArray) {
@@ -49,14 +56,29 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
             }
+            if (!classFilter.take(name)) {
+                return null;
+            }
+            TransformerContext context = new TransformerContext(classfileBuffer, name);
+
+            if (name.equals("java/lang/Thread")) {
+                TransformerStrategy transformer = new TransformerStrategyClassTransformerThread(MethodRepositorySingleton.INSTANCE,
+                        FieldRepositorySingleton.INSTANCE, writeClassDescriptionAndWarning);
+                byte[] transformed = transformer.transform(context);
+                //  logTransformedClass(name, transformed);
+                return transformed;
+            }
+
             ClassNameAndTransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
-                TransformerContext context = new TransformerContext(classfileBuffer, name);
                 byte[] transformed = transformer.transform(context);
-                logTransformedClass(name, transformed);
+                //  logTransformedClass(name, transformed);
                 return transformed;
             }
         } catch (Throwable e) {
+            InfoMessageEventBuilder infoMessageEventBuilder = new InfoMessageEventBuilder();
+            infoMessageEventBuilder.add(e);
+            writeClassDescriptionAndWarning.write(infoMessageEventBuilder.build());
             return null;
         }
         return null;

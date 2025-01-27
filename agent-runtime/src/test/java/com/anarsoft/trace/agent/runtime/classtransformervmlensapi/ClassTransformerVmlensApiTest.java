@@ -1,7 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformervmlensapi;
 
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.transformerstrategyimpl.TransformerStrategyVmlensApi;
 import com.vmlens.test.util.DiffText;
 import org.junit.Test;
 import org.objectweb.asm.util.TraceClassVisitor;

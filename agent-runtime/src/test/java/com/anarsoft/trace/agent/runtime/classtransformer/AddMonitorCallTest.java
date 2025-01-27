@@ -1,6 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilterTakeAll;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMonitorCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
@@ -26,7 +27,7 @@ public class AddMonitorCallTest {
 
         return new ClassTransformer(methodCallIdMap,
                 new TLinkedList<>(),
-                factoryList, null);
+                factoryList, null, new MethodFilterTakeAll());
     }
 
     @Test

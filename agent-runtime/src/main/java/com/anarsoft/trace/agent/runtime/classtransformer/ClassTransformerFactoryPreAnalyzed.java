@@ -1,6 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.runtime.classanalyzer.ClassVisitorAnalyze;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilter;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodenterexit.MethodEnterExitAnalyzeAndTransformFactoryFactory;
@@ -30,19 +31,20 @@ public class ClassTransformerFactoryPreAnalyzed implements ClassTransformerFacto
     }
 
     @Override
-    public ClassTransformer create() {
+    public ClassTransformer create(MethodFilter methodFilter) {
         ClassVisitor classVisitor = new ClassVisitorAnalyze(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze,
                 writeClassDescription);
         return createPreAnalyzed(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze,
-                classVisitor);
+                classVisitor, methodFilter);
     }
 
     private ClassTransformer createPreAnalyzed(MethodCallIdMap methodCallIdMap,
                                                FieldOwnerAndNameToIntMap fieldIdMap,
                                                // can be null
-                                               ClassVisitor previousClassVisitor) {
+                                               ClassVisitor previousClassVisitor,
+                                               MethodFilter methodFilter) {
         TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>>
                 methodVisitorFactoryAnalyzeList = new TLinkedList<>();
         // The methodCallFactory must be added last, since it transforms method calls
@@ -50,7 +52,7 @@ public class ClassTransformerFactoryPreAnalyzed implements ClassTransformerFacto
         TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> methodVisitorFactoryList
                 = new TLinkedList<>();
         return new ClassTransformer(methodCallIdMap, methodVisitorFactoryAnalyzeList,
-                methodVisitorFactoryList, previousClassVisitor);
+                methodVisitorFactoryList, previousClassVisitor, methodFilter);
     }
 
 

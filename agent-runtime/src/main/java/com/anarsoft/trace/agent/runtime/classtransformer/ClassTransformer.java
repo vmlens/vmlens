@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
+import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilter;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
@@ -16,16 +17,18 @@ public class ClassTransformer {
             factoryFactoryList;
     private final TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> transformFactoryList;
     private final ClassVisitor previousClassVisitor;
+    private final MethodFilter methodFilter;
 
     // Visible for Tests
     public ClassTransformer(MethodCallIdMap methodCallIdMap,
                             TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>> factoryFactoryList,
                             TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> transformFactoryList,
-                            ClassVisitor previousClassVisitor) {
+                            ClassVisitor previousClassVisitor, MethodFilter methodFilter) {
         this.methodCallIdMap = methodCallIdMap;
         this.factoryFactoryList = factoryFactoryList;
         this.transformFactoryList = transformFactoryList;
         this.previousClassVisitor = previousClassVisitor;
+        this.methodFilter = methodFilter;
     }
 
     public byte[] transform(byte[] classfileBuffer, String name) {
@@ -55,7 +58,7 @@ public class ClassTransformer {
     private ClassVisitor createAnalyze(String className,
                                        MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory) {
         return ClassVisitorApplyMethodVisitor
-                .createAnalyze(previousClassVisitor, className, methodIdToFactory, factoryFactoryList, methodCallIdMap);
+                .createAnalyze(previousClassVisitor, className, methodIdToFactory, factoryFactoryList, methodCallIdMap, methodFilter);
     }
 
 
@@ -63,6 +66,6 @@ public class ClassTransformer {
                                          String className,
                                          MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory) {
         return ClassVisitorApplyMethodVisitor.createTransform(classWriter,
-                className, methodIdToFactory, methodCallIdMap, transformFactoryList);
+                className, methodIdToFactory, methodCallIdMap, transformFactoryList, methodFilter);
     }
 }

@@ -1,6 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilterTakeAll;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallAnalyzeAndTransformFactory;
@@ -21,8 +22,6 @@ import java.io.IOException;
 
 import static com.anarsoft.trace.agent.runtime.classtransformer.ClassVisitorApplyMethodVisitor.createAnalyze;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClassVisitorAnalyzeForTransformTest {
 
@@ -67,7 +66,7 @@ public class ClassVisitorAnalyzeForTransformTest {
         analyzeList.add(wrap(methodCallFactoryFactory));
 
         ClassVisitor classVisitorForTransform = createAnalyze(null,
-                className, methodIdToFactory, analyzeList, methodCallIdMap);
+                className, methodIdToFactory, analyzeList, methodCallIdMap, new MethodFilterTakeAll());
         ClassReader reader = new ClassReader(classArray);
         reader.accept(classVisitorForTransform, 0);
     }

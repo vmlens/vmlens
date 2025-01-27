@@ -1,6 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.runtime.classanalyzer.ClassVisitorAnalyze;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilter;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddFieldAccessCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMonitorCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
@@ -33,19 +34,20 @@ public class ClassTransformerFactoryAll implements ClassTransformerFactory {
     }
 
     @Override
-    public ClassTransformer create() {
+    public ClassTransformer create(MethodFilter methodFilter) {
         ClassVisitor classVisitor = new ClassVisitorAnalyze(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze,
                 writeClassDescription);
         return createAll(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze,
-                classVisitor);
+                classVisitor, methodFilter);
     }
 
     private ClassTransformer createAll(MethodCallIdMap methodCallIdMap,
                                        FieldOwnerAndNameToIntMap fieldIdMap,
                                        // can be null
-                                       ClassVisitor previousClassVisitor) {
+                                       ClassVisitor previousClassVisitor,
+                                       MethodFilter methodFilter) {
         TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>>
                 methodVisitorFactoryAnalyzeList = new TLinkedList<>();
         // The methodCallFactory must be added last, since it transforms method calls
@@ -59,6 +61,6 @@ public class ClassTransformerFactoryAll implements ClassTransformerFactory {
         methodVisitorFactoryList.add(wrap(AddMonitorCall.factory()));
 
         return new ClassTransformer(methodCallIdMap, methodVisitorFactoryAnalyzeList,
-                methodVisitorFactoryList, previousClassVisitor);
+                methodVisitorFactoryList, previousClassVisitor, methodFilter);
     }
 }

@@ -53,6 +53,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
 				throw new RuntimeException("eventDir is missing in vmlens agent properties");
 			}
             ClassFilter classFilter = ClassFilter.create(properties);
+            classFilter.take("test");
 
 			File outputDir = new File(outputFileName);
 			System.err.println("writing events to " + outputDir.getAbsolutePath());
@@ -81,7 +82,8 @@ public class AgentRuntimeImpl implements AgentRuntime {
             WriteClassDescriptionAndWarningWrapper writeClassDescriptionAndWarningWrapper =
                     new WriteClassDescriptionAndWarningWrapper(writeClassDescriptionDuringStartup);
             AgentClassFileTransformer agentClassFileTransformer = new AgentClassFileTransformer(
-                    new ClassNameAndTransformerStrategyCollectionFactory(writeClassDescriptionAndWarningWrapper));
+                    new ClassNameAndTransformerStrategyCollectionFactory(writeClassDescriptionAndWarningWrapper),
+                    classFilter, writeClassDescriptionAndWarningWrapper);
 
             instrument(inst, agentClassFileTransformer, writeClassDescriptionDuringStartup, classFilter);
             writeClassDescriptionAndWarningWrapper

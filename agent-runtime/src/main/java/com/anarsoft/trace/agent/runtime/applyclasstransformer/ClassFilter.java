@@ -40,6 +40,9 @@ public class ClassFilter {
     }
 
     public boolean take(String className) {
+        if (className.startsWith("java/lang/ThreadLocal")) {
+            return false;
+        }
         for (TLinkableWrapper<String> element : alwaysTake) {
             if (className.startsWith(element.element())) {
                 return true;

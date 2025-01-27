@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
+import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilter;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
@@ -24,18 +25,21 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
     private final MethodCallIdMap methodCallIdMap;
     private final MethodVisitorAnalyzeAndTransformFactoryMap
             methodIdToFactory;
+    private final MethodFilter methodFilter;
     private int classVersion;
 
     public ClassVisitorApplyMethodVisitor(ClassVisitor classVisitor,
                                           MethodVisitorFactory methodVisitorFactory,
                                           String className,
                                           MethodCallIdMap methodCallIdMap,
-                                          MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory) {
+                                          MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory,
+                                          MethodFilter methodFilter) {
         super(ASMConstants.ASM_API_VERSION, classVisitor);
         this.methodVisitorFactory = methodVisitorFactory;
         this.className = className;
         this.methodCallIdMap = methodCallIdMap;
         this.methodIdToFactory = methodIdToFactory;
+        this.methodFilter = methodFilter;
     }
 
     public static ClassVisitor createAnalyze(ClassVisitor previousClassVisitor,
@@ -43,19 +47,20 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
                                              MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory,
                                              TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>>
                                                      factoryFactoryList,
-                                             MethodCallIdMap methodCallIdMap) {
+                                             MethodCallIdMap methodCallIdMap, MethodFilter methodFilter) {
         return new ClassVisitorApplyMethodVisitor(previousClassVisitor,
-                new MethodVisitorFactoryForAnalyze(factoryFactoryList), className, methodCallIdMap, methodIdToFactory);
+                new MethodVisitorFactoryForAnalyze(factoryFactoryList), className, methodCallIdMap, methodIdToFactory, methodFilter);
     }
 
     public static ClassVisitor createTransform(ClassVisitor classWriter,
                                                String className,
                                                MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory,
                                                MethodCallIdMap methodCallIdMap,
-                                               TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> transformFactoryList) {
+                                               TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> transformFactoryList,
+                                               MethodFilter methodFilter) {
         return new ClassVisitorApplyMethodVisitor(classWriter,
                 new MethodVisitorFactoryForTransform(transformFactoryList),
-                className, methodCallIdMap, methodIdToFactory);
+                className, methodCallIdMap, methodIdToFactory, methodFilter);
     }
 
 
@@ -74,6 +79,9 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
             return previous;
         }
         if ((access & ACC_NATIVE) == ACC_NATIVE) {
+            return previous;
+        }
+        if (!methodFilter.take(name, descriptor)) {
             return previous;
         }
 

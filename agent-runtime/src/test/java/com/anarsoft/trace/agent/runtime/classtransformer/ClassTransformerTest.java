@@ -2,6 +2,7 @@ package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilterTakeAll;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
@@ -41,7 +42,7 @@ public class ClassTransformerTest {
 
         ClassTransformer classArrayTransformer = new ClassTransformer(methodCallIdMap,
                 factoryFactoryList,
-                new TLinkedList<>(), null);
+                new TLinkedList<>(), null, new MethodFilterTakeAll());
         StringWriter out = new StringWriter();
         PrintWriter writer = new PrintWriter(out);
 
@@ -77,7 +78,7 @@ public class ClassTransformerTest {
         byte[] classArray = new LoadClassArray().load("com.vmlens.test.guineaPig.StaticFieldAccess");
 
         ClassTransformer classArrayTransformer = new ClassTransformerFactoryAll(methodCallIdMap, fieldIdMap, writeClassDescriptionAndWarning)
-                .create();
+                .create(new MethodFilterTakeAll());
         StringWriter out = new StringWriter();
         PrintWriter writer = new PrintWriter(out);
 
