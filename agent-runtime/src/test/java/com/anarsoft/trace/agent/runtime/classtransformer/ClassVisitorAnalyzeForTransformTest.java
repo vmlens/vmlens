@@ -22,6 +22,8 @@ import java.io.IOException;
 
 import static com.anarsoft.trace.agent.runtime.classtransformer.ClassVisitorApplyMethodVisitor.createAnalyze;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClassVisitorAnalyzeForTransformTest {
 

@@ -1,4 +1,4 @@
 package com.anarsoft.trace.agent.preanalyzed.model;
 
-public class PackageOrClassType {
+public class MethodTypeCollection {
 }
