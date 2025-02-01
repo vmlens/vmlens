@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.model;
 
+import com.anarsoft.trace.agent.preanalyzed.builder.MethodBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.AbstractMethodType;
 
 import java.io.DataInputStream;
@@ -27,6 +28,9 @@ public class PreAnalyzedMethod {
         return new PreAnalyzedMethod(name, desc, methodType);
     }
 
+    public void add(MethodBuilder methodBuilder) {
+        methodType.add(name, desc, methodBuilder);
+    }
 
     public void serialize(DataOutputStream out) throws IOException {
         out.writeUTF(name);

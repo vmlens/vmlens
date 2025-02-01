@@ -9,6 +9,6 @@ public class MethodTypeThreadStart extends AbstractMethodType {
 
     @Override
     public void add(String name, String desc, MethodBuilder methodBuilder) {
-
+        methodBuilder.addThreadStart(name, desc);
     }
 }

@@ -4,4 +4,6 @@ public interface MethodBuilder {
 
     void addThreadStart(String name, String desc);
 
+    void doNothingWhenNotFound();
+
 }
