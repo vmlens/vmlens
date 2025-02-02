@@ -1,4 +1,4 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory;
 
-public interface MethodVisitorFactory {
+public class NameAndDescriptor {
 }

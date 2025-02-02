@@ -15,22 +15,22 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
-public class ClassNameAndTransformerStrategyCollectionFactory {
+public class ClassFilterAndTransformerStrategyCollectionFactory {
 
     private final MethodRepositoryForAnalyze methodRepositoryForAnalyze;
     private final FieldRepositoryForAnalyze fieldRepositoryForAnalyze;
     private final WriteClassDescriptionAndWarning writeClassDescription;
-    private final TLinkedList<TLinkableWrapper<ClassNameAndTransformerStrategy>> result = new TLinkedList<>();
+    private final TLinkedList<TLinkableWrapper<ClassFilterAndTransformerStrategy>> result = new TLinkedList<>();
 
-    public ClassNameAndTransformerStrategyCollectionFactory(MethodRepositoryForAnalyze methodRepositoryForAnalyze,
-                                                            FieldRepositoryForAnalyze fieldRepositoryForAnalyze,
-                                                            WriteClassDescriptionAndWarning writeClassDescription) {
+    public ClassFilterAndTransformerStrategyCollectionFactory(MethodRepositoryForAnalyze methodRepositoryForAnalyze,
+                                                              FieldRepositoryForAnalyze fieldRepositoryForAnalyze,
+                                                              WriteClassDescriptionAndWarning writeClassDescription) {
         this.methodRepositoryForAnalyze = methodRepositoryForAnalyze;
         this.fieldRepositoryForAnalyze = fieldRepositoryForAnalyze;
         this.writeClassDescription = writeClassDescription;
     }
 
-    public ClassNameAndTransformerStrategyCollectionFactory(WriteClassDescriptionAndWarning writeClassDescription) {
+    public ClassFilterAndTransformerStrategyCollectionFactory(WriteClassDescriptionAndWarning writeClassDescription) {
         this(MethodRepositorySingleton.INSTANCE,
                 FieldRepositorySingleton.INSTANCE, writeClassDescription);
     }
@@ -38,15 +38,15 @@ public class ClassNameAndTransformerStrategyCollectionFactory {
     // Visible for Test
     // From specific to generic
     void add(String name, TransformerStrategy transformerStrategy) {
-        result.add(wrap(new ClassNameAndTransformerStrategy(name, transformerStrategy)));
+        result.add(wrap(new ClassFilterAndTransformerStrategy(name, transformerStrategy)));
     }
 
     // Visible for Test
-    ClassNameAndTransformerStrategyCollection createInternal() {
-        return new ClassNameAndTransformerStrategyCollection(result);
+    ClassFilterAndTransformerStrategyCollection createInternal() {
+        return new ClassFilterAndTransformerStrategyCollection(result);
     }
 
-    public ClassNameAndTransformerStrategyCollection create() {
+    public ClassFilterAndTransformerStrategyCollection create() {
         ClassTransformerFactory classTransformerFactoryAll = new ClassTransformerFactoryAll(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze,
                 writeClassDescription);
@@ -56,7 +56,7 @@ public class ClassNameAndTransformerStrategyCollectionFactory {
                 writeClassDescription);
 
 
-        add("com/vmlens/api/AllInterleavingsBuilder", new TransformerStrategyFilter());
+        add("com/vmlens/api/AllInterleavingsBuilder", new TransformerStrategyNoOp());
         add("com/vmlens/api/AllInterleavings", new TransformerStrategyVmlensApi());
 
         add("com/vmlens/test", new TransformerStrategyClassTransformer(classTransformerFactoryAll));

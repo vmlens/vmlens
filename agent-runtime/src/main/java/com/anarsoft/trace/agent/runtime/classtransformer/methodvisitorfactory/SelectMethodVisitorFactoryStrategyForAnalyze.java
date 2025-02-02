@@ -8,18 +8,18 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.MethodVisitor;
 
-public class MethodVisitorFactoryForAnalyze implements MethodVisitorFactory {
+public class SelectMethodVisitorFactoryStrategyForAnalyze implements SelectMethodVisitorFactoryStrategy {
 
     private final TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>>
             methodVisitorFactoryAnalyzeList;
 
-    public MethodVisitorFactoryForAnalyze(TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>>
+    public SelectMethodVisitorFactoryStrategyForAnalyze(TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>>
                                                   methodVisitorFactoryAnalyzeList) {
         this.methodVisitorFactoryAnalyzeList = methodVisitorFactoryAnalyzeList;
     }
 
     @Override
-    public MethodVisitor create(MethodVisitorFactoryContext context,
+    public MethodVisitor create(FactoryContext context,
                                 MethodVisitor previous,
                                 MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory, MethodCallIdMap methodCallIdMap) {
         MethodVisitor current = previous;

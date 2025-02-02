@@ -1,8 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory;
 
-import org.objectweb.asm.MethodVisitor;
-
-public class MethodVisitorFactoryContext {
+public class FactoryContext {
 
     private int methodId;
     private boolean useExpandedFrames;

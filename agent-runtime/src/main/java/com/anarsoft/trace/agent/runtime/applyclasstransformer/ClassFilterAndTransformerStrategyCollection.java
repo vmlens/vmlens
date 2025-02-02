@@ -3,15 +3,15 @@ package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
-public class ClassNameAndTransformerStrategyCollection {
+public class ClassFilterAndTransformerStrategyCollection {
 
-    private final TLinkedList<TLinkableWrapper<ClassNameAndTransformerStrategy>> classArrayTransformerList;
+    private final TLinkedList<TLinkableWrapper<ClassFilterAndTransformerStrategy>> classArrayTransformerList;
 
     private static String normalize(String name) {
         return name.replace('.', '/');
     }
 
-    public ClassNameAndTransformerStrategyCollection(TLinkedList<TLinkableWrapper<ClassNameAndTransformerStrategy>> classArrayTransformerList) {
+    public ClassFilterAndTransformerStrategyCollection(TLinkedList<TLinkableWrapper<ClassFilterAndTransformerStrategy>> classArrayTransformerList) {
         this.classArrayTransformerList = classArrayTransformerList;
     }
 
@@ -19,7 +19,7 @@ public class ClassNameAndTransformerStrategyCollection {
      * @param notNormalizedName
      * @return null when no ClassArrayTransformer could be found
      */
-    public ClassNameAndTransformerStrategy get(String notNormalizedName) {
+    public ClassFilterAndTransformerStrategy get(String notNormalizedName) {
         if (notNormalizedName == null) {
             return null;
         }
@@ -39,8 +39,8 @@ public class ClassNameAndTransformerStrategyCollection {
             return null;
         }
 
-        for (TLinkableWrapper<ClassNameAndTransformerStrategy> transformerWrapper : classArrayTransformerList) {
-            ClassNameAndTransformerStrategy transformer = transformerWrapper.element();
+        for (TLinkableWrapper<ClassFilterAndTransformerStrategy> transformerWrapper : classArrayTransformerList) {
+            ClassFilterAndTransformerStrategy transformer = transformerWrapper.element();
             if (transformer.appliesTo(name)) {
                 return transformer;
             }

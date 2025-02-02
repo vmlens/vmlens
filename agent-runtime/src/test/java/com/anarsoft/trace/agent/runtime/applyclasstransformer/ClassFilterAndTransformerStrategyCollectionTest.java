@@ -9,23 +9,23 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class ClassNameAndTransformerStrategyCollectionTest {
+public class ClassFilterAndTransformerStrategyCollectionTest {
 
     @Test
     public void order() {
         // Given
         WriteClassDescriptionAndWarning writeClassDescription = mock(WriteClassDescriptionAndWarning.class);
-        ClassNameAndTransformerStrategyCollectionFactory factory = new ClassNameAndTransformerStrategyCollectionFactory(new MethodRepository(),
+        ClassFilterAndTransformerStrategyCollectionFactory factory = new ClassFilterAndTransformerStrategyCollectionFactory(new MethodRepository(),
                 new FieldRepository(), writeClassDescription);
 
         // When
         factory.add("java/lang/util/HashMap", new TransformerStrategyGuineaPig());
-        factory.add("java/lang/util", new TransformerStrategyFilter());
+        factory.add("java/lang/util", new TransformerStrategyNoOp());
 
 
-        ClassNameAndTransformerStrategyCollection collection = factory.createInternal();
+        ClassFilterAndTransformerStrategyCollection collection = factory.createInternal();
 
-        ClassNameAndTransformerStrategy transformer = collection.get("java/lang/util/HashMap");
+        ClassFilterAndTransformerStrategy transformer = collection.get("java/lang/util/HashMap");
 
         // Then
         assertThat(transformer.transformStrategy(), instanceOf(TransformerStrategyGuineaPig.class));
@@ -34,7 +34,7 @@ public class ClassNameAndTransformerStrategyCollectionTest {
         transformer = collection.get("java/lang/util/HashSet");
 
         // Then
-        assertThat(transformer.transformStrategy(), instanceOf(TransformerStrategyFilter.class));
+        assertThat(transformer.transformStrategy(), instanceOf(TransformerStrategyNoOp.class));
     }
 
 

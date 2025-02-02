@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-public class TransformerStrategyFilter implements TransformerStrategy {
+public class TransformerStrategyNoOp implements TransformerStrategy {
     @Override
     public byte[] transform(TransformerContext context) {
         return null;

@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.MethodId;
 import com.anarsoft.trace.agent.runtime.classtransformer.MethodVisitorAnalyzeAndTransformFactoryMap;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
@@ -9,18 +8,16 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.MethodVisitor;
 
-import static org.objectweb.asm.Opcodes.ACC_STATIC;
-
-public class MethodVisitorFactoryForTransform implements MethodVisitorFactory {
+public class SelectMethodVisitorFactoryStrategyForTransform implements SelectMethodVisitorFactoryStrategy {
 
     private final TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> methodVisitorFactoryList;
 
-    public MethodVisitorFactoryForTransform(TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> methodVisitorFactoryList) {
+    public SelectMethodVisitorFactoryStrategyForTransform(TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> methodVisitorFactoryList) {
         this.methodVisitorFactoryList = methodVisitorFactoryList;
     }
 
     @Override
-    public MethodVisitor create(MethodVisitorFactoryContext context,
+    public MethodVisitor create(FactoryContext context,
                                 MethodVisitor previous,
                                 MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory,
                                 MethodCallIdMap methodCallIdMap) {

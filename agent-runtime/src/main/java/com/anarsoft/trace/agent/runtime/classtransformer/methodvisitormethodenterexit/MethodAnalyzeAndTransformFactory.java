@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodenterexit;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactoryContext;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryContext;
 import org.objectweb.asm.MethodVisitor;
 
 public class MethodAnalyzeAndTransformFactory implements MethodVisitorAnalyzeAndTransformFactory {
@@ -13,7 +13,7 @@ public class MethodAnalyzeAndTransformFactory implements MethodVisitorAnalyzeAnd
     }
 
     @Override
-    public MethodVisitor createTransform(MethodVisitorFactoryContext transformFactoryContext, MethodVisitor current) {
+    public MethodVisitor createTransform(FactoryContext transformFactoryContext, MethodVisitor current) {
         return new TransformMethodMethod(transformFactoryContext.methodId(), tryCatchBlockCount, transformFactoryContext.useExpandedFrames(),
                 current, transformFactoryContext.isStatic(), transformFactoryContext.isConstructor(), transformFactoryContext.className(),
                 transformFactoryContext.description());

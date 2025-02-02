@@ -25,10 +25,10 @@ public class ClassTypeThreadTest {
         methods[0] = new PreAnalyzedMethod("start", "()V", MethodTypeThreadStart.SINGLETON);
 
         // When
-        classTypeThread.add("java.lang.String", methods, classBuilder);
+        classTypeThread.add("java.lang.Thread", methods, classBuilder);
 
         // Then
-        verify(classBuilder).createThread("java.lang.String");
+        verify(classBuilder).createThread("java.lang.Thread");
         verify(methodBuilder).addThreadStart("start", "()V");
         verify(methodBuilder).doNothingWhenNotFound();
     }

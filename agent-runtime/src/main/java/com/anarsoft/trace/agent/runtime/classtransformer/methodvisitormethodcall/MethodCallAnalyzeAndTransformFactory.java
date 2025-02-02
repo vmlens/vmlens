@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactoryContext;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryContext;
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.MethodTransformPlanBuilder;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
 import org.objectweb.asm.MethodVisitor;
@@ -16,7 +16,7 @@ public class MethodCallAnalyzeAndTransformFactory implements MethodVisitorAnalyz
     }
 
     @Override
-    public MethodVisitor createTransform(MethodVisitorFactoryContext transformFactoryContext, MethodVisitor current) {
+    public MethodVisitor createTransform(FactoryContext transformFactoryContext, MethodVisitor current) {
         return TransformMethodMethodCall.asMethodVisitor(methodCallIdMap, methodTransformPlanBuilder.build(),
                 current, transformFactoryContext.methodId());
     }

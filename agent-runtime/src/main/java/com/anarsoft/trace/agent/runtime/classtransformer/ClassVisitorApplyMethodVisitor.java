@@ -3,10 +3,10 @@ package com.anarsoft.trace.agent.runtime.classtransformer;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilter;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactoryContext;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactoryForAnalyze;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactoryForTransform;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryContext;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.SelectMethodVisitorFactoryStrategy;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.SelectMethodVisitorFactoryStrategyForAnalyze;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.SelectMethodVisitorFactoryStrategyForTransform;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
@@ -20,7 +20,7 @@ import static org.objectweb.asm.Opcodes.ACC_STATIC;
 
 public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
 
-    private final MethodVisitorFactory methodVisitorFactory;
+    private final SelectMethodVisitorFactoryStrategy methodVisitorFactory;
     private final String className;
     private final MethodCallIdMap methodCallIdMap;
     private final MethodVisitorAnalyzeAndTransformFactoryMap
@@ -29,7 +29,7 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
     private int classVersion;
 
     public ClassVisitorApplyMethodVisitor(ClassVisitor classVisitor,
-                                          MethodVisitorFactory methodVisitorFactory,
+                                          SelectMethodVisitorFactoryStrategy methodVisitorFactory,
                                           String className,
                                           MethodCallIdMap methodCallIdMap,
                                           MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory,
@@ -49,7 +49,7 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
                                                      factoryFactoryList,
                                              MethodCallIdMap methodCallIdMap, MethodFilter methodFilter) {
         return new ClassVisitorApplyMethodVisitor(previousClassVisitor,
-                new MethodVisitorFactoryForAnalyze(factoryFactoryList), className, methodCallIdMap, methodIdToFactory, methodFilter);
+                new SelectMethodVisitorFactoryStrategyForAnalyze(factoryFactoryList), className, methodCallIdMap, methodIdToFactory, methodFilter);
     }
 
     public static ClassVisitor createTransform(ClassVisitor classWriter,
@@ -59,7 +59,7 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
                                                TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> transformFactoryList,
                                                MethodFilter methodFilter) {
         return new ClassVisitorApplyMethodVisitor(classWriter,
-                new MethodVisitorFactoryForTransform(transformFactoryList),
+                new SelectMethodVisitorFactoryStrategyForTransform(transformFactoryList),
                 className, methodCallIdMap, methodIdToFactory, methodFilter);
     }
 
@@ -86,7 +86,7 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
         }
 
         int inMethodId = methodCallIdMap.asInt(new MethodCallId(className, name, descriptor));
-        MethodVisitorFactoryContext transformFactoryContext = new MethodVisitorFactoryContext();
+        FactoryContext transformFactoryContext = new FactoryContext();
         transformFactoryContext.setMethodId(inMethodId);
         transformFactoryContext.setClassName(className);
         transformFactoryContext.setConstructor("<init>".equals(name));

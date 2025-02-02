@@ -18,12 +18,12 @@ import java.security.ProtectionDomain;
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
     public static final int ASM_API_VERSION = Opcodes.ASM7;
-    private final ClassNameAndTransformerStrategyCollection classArrayTransformerCollection;
-    private final ClassFilter classFilter;
+    private final ClassFilterAndTransformerStrategyCollection classArrayTransformerCollection;
+    private final ClassFilterDeprecated classFilter;
     private final WriteClassDescriptionAndWarning writeClassDescriptionAndWarning;
 
-    public AgentClassFileTransformer(ClassNameAndTransformerStrategyCollectionFactory classArrayTransformerFactory,
-                                     ClassFilter classFilter,
+    public AgentClassFileTransformer(ClassFilterAndTransformerStrategyCollectionFactory classArrayTransformerFactory,
+                                     ClassFilterDeprecated classFilter,
                                      WriteClassDescriptionAndWarning writeClassDescriptionAndWarning) {
         super();
         this.classArrayTransformerCollection = classArrayTransformerFactory.create();
@@ -69,7 +69,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
                 return transformed;
             }
 
-            ClassNameAndTransformerStrategy transformer = classArrayTransformerCollection.get(name);
+            ClassFilterAndTransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
                 //  logTransformedClass(name, transformed);
