@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionAf
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionBeforeMethodCall;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionMethodExit;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodIdToStrategy;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodIdToStrategy;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public class MethodCallbackImpl {

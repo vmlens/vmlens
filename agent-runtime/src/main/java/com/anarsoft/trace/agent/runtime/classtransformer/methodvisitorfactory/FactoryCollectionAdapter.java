@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 public interface FactoryCollectionAdapter {
 
     TLinkedList<TLinkableWrapper<MethodVisitorFactory>> get(NameAndDescriptor nameAndDescriptor,
-                                                            boolean isSynchronized);
+                                                            boolean isSynchronized, int methodId);
 
 
 }

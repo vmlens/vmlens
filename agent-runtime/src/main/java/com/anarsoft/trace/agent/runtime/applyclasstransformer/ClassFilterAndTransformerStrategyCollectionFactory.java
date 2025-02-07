@@ -7,13 +7,11 @@ import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyClas
 import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ClassFilterAndTransformerStrategyCollectionFactory {
 
@@ -38,7 +36,7 @@ public class ClassFilterAndTransformerStrategyCollectionFactory {
     // Visible for Test
     // From specific to generic
     void add(String name, TransformerStrategy transformerStrategy) {
-        result.add(wrap(new ClassFilterAndTransformerStrategy(name, transformerStrategy)));
+        // result.add(wrap(new ClassFilterAndTransformerStrategy(name, transformerStrategy)));
     }
 
     // Visible for Test

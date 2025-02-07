@@ -4,8 +4,8 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilterForThread;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositoryForAnalyze;
 
 /**
  * methods of thread are used inside threadlocal for example:

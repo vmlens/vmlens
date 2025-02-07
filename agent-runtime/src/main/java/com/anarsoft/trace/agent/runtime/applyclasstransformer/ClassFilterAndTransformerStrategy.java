@@ -1,16 +1,16 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 public class ClassFilterAndTransformerStrategy {
-    private final String classNameStartsWith;
+    private final ClassFilter classFilter;
     private final TransformerStrategy transformStrategy;
 
-    public ClassFilterAndTransformerStrategy(String classNameStartsWith, TransformerStrategy transformStrategy) {
-        this.classNameStartsWith = classNameStartsWith;
+    public ClassFilterAndTransformerStrategy(ClassFilter classFilter, TransformerStrategy transformStrategy) {
+        this.classFilter = classFilter;
         this.transformStrategy = transformStrategy;
     }
 
     public boolean appliesTo(String name) {
-        return name.startsWith(classNameStartsWith);
+        return classFilter.take(name);
     }
 
     public byte[] transform(TransformerContext context) {

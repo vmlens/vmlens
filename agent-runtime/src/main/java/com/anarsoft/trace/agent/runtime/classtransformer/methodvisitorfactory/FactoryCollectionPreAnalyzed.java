@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
-public class FactoryCollectionPreAnalyzed {
+public class FactoryCollectionPreAnalyzed implements FactoryCollection {
 
     private final MapForList<AnalyzeFactoryFactory> analyzeFactoryFactoryMap;
     private final MapForList<TransformFactory> transformFactoryMap;
@@ -31,7 +31,8 @@ public class FactoryCollectionPreAnalyzed {
     }
 
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(NameAndDescriptor nameAndDescriptor,
-                                                                                          boolean isSynchronized) {
+                                                                                          boolean isSynchronized,
+                                                                                          int methodId) {
         TLinkedList<TLinkableWrapper<TransformFactory>> factoryList = transformFactoryMap.get(nameAndDescriptor);
         if (factoryList == null) {
             return TLinkableWrapper.emptyList();

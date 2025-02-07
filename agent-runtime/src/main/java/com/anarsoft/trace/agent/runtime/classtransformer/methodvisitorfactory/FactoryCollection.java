@@ -8,6 +8,7 @@ public interface FactoryCollection {
     TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor);
 
     TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(NameAndDescriptor nameAndDescriptor,
-                                                                                   boolean isSynchronized);
+                                                                                   boolean isSynchronized,
+                                                                                   int methodId);
 
 }

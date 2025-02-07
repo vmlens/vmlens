@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classanalyzer;
 
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallId;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositoryForAnalyze;
 
 public class OnMethodAccess {
 

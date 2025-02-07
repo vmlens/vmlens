@@ -2,18 +2,16 @@ package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.runtime.classanalyzer.ClassVisitorAnalyze;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilter;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddFieldAccessCall;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMonitorCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodenterexit.MethodEnterExitAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndNameToIntMap;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositoryForAnalyze;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
 
@@ -57,8 +55,8 @@ public class ClassTransformerFactoryAll implements ClassTransformerFactory {
 
         TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> methodVisitorFactoryList
                 = new TLinkedList<>();
-        methodVisitorFactoryList.add(wrap(AddFieldAccessCall.factory(fieldIdMap)));
-        methodVisitorFactoryList.add(wrap(AddMonitorCall.factory()));
+        //methodVisitorFactoryList.add(wrap(AddFieldAccessCall.factory(fieldIdMap)));
+        //methodVisitorFactoryList.add(wrap(AddMonitorCall.factory()));
 
         return new ClassTransformer(methodCallIdMap, methodVisitorFactoryAnalyzeList,
                 methodVisitorFactoryList, previousClassVisitor, methodFilter);

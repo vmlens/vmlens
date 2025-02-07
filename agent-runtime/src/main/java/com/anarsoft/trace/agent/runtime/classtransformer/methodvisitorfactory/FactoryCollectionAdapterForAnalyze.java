@@ -13,7 +13,7 @@ public class FactoryCollectionAdapterForAnalyze implements FactoryCollectionAdap
 
     @Override
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> get(NameAndDescriptor nameAndDescriptor,
-                                                                   boolean isSynchronized) {
+                                                                   boolean isSynchronized, int methodId) {
         return factoryCollection.getAnalyze(nameAndDescriptor);
     }
 }

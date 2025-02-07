@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classanalyzer;
 
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndName;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
 
 public class OnFieldAccess {
 

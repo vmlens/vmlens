@@ -4,8 +4,8 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.*;
 import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyClassTransformerThread;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositorySingleton;
 import org.objectweb.asm.Opcodes;
 
 import java.io.FileOutputStream;
@@ -61,15 +61,16 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             }
             TransformerContext context = new TransformerContext(classfileBuffer, name);
 
+            TransformerStrategy transformer;
             if (name.equals("java/lang/Thread")) {
-                TransformerStrategy transformer = new TransformerStrategyClassTransformerThread(MethodRepositorySingleton.INSTANCE,
+                transformer = new TransformerStrategyClassTransformerThread(MethodRepositorySingleton.INSTANCE,
                         FieldRepositorySingleton.INSTANCE, writeClassDescriptionAndWarning);
                 byte[] transformed = transformer.transform(context);
                 //  logTransformedClass(name, transformed);
                 return transformed;
             }
 
-            ClassFilterAndTransformerStrategy transformer = classArrayTransformerCollection.get(name);
+            transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
                 //  logTransformedClass(name, transformed);

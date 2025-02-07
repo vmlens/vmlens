@@ -12,6 +12,6 @@ public class ClassTypeFilter extends AbstractClassType {
 
     @Override
     public void add(String name, PreAnalyzedMethod[] methods, ClassBuilder classBuilder) {
-        classBuilder.createFilter(name);
+        classBuilder.addFilterStartsWith(name);
     }
 }

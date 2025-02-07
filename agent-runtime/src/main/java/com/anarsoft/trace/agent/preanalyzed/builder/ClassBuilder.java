@@ -1,11 +1,17 @@
 package com.anarsoft.trace.agent.preanalyzed.builder;
 
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryCollectionPreAnalyzedFactory;
+
 public interface ClassBuilder {
 
-    MethodBuilder createThread(String name);
+    MethodBuilder createMethodBuilder();
 
-    void createTraceAnonymousClass(String name);
+    void addPreAnalyzedEquals(String name, FactoryCollectionPreAnalyzedFactory factoryCollectionPreAnalyzedBuilder);
 
-    void createFilter(String name);
+    void addTraceStartsWith(String name);
+
+    void addFilterStartsWith(String name);
+
+    void addVmlensApi(String name);
 
 }

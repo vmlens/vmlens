@@ -1,8 +1,8 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepository;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepository;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -25,16 +25,17 @@ public class ClassFilterAndTransformerStrategyCollectionTest {
 
         ClassFilterAndTransformerStrategyCollection collection = factory.createInternal();
 
-        ClassFilterAndTransformerStrategy transformer = collection.get("java/lang/util/HashMap");
+
+        TransformerStrategy transformer = collection.get("java/lang/util/HashMap");
 
         // Then
-        assertThat(transformer.transformStrategy(), instanceOf(TransformerStrategyGuineaPig.class));
+        assertThat(transformer, instanceOf(TransformerStrategyGuineaPig.class));
 
         // When
         transformer = collection.get("java/lang/util/HashSet");
 
         // Then
-        assertThat(transformer.transformStrategy(), instanceOf(TransformerStrategyNoOp.class));
+        assertThat(transformer, instanceOf(TransformerStrategyNoOp.class));
     }
 
 

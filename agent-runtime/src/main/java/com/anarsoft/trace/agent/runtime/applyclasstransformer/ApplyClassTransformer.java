@@ -10,7 +10,7 @@ public class ApplyClassTransformer {
     }
 
     public byte[] transform(byte[] classfileBuffer, String name) {
-        ClassFilterAndTransformerStrategy transformer = classArrayTransformerCollection.get(name);
+        TransformerStrategy transformer = classArrayTransformerCollection.get(name);
         if (transformer != null) {
             TransformerContext context = new TransformerContext(classfileBuffer, name);
             return transformer.transform(context);

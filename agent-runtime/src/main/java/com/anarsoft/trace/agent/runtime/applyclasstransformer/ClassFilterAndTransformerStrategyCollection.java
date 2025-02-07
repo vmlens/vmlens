@@ -19,7 +19,7 @@ public class ClassFilterAndTransformerStrategyCollection {
      * @param notNormalizedName
      * @return null when no ClassArrayTransformer could be found
      */
-    public ClassFilterAndTransformerStrategy get(String notNormalizedName) {
+    public TransformerStrategy get(String notNormalizedName) {
         if (notNormalizedName == null) {
             return null;
         }
@@ -42,7 +42,7 @@ public class ClassFilterAndTransformerStrategyCollection {
         for (TLinkableWrapper<ClassFilterAndTransformerStrategy> transformerWrapper : classArrayTransformerList) {
             ClassFilterAndTransformerStrategy transformer = transformerWrapper.element();
             if (transformer.appliesTo(name)) {
-                return transformer;
+                return transformer.transformStrategy();
             }
         }
         return null;

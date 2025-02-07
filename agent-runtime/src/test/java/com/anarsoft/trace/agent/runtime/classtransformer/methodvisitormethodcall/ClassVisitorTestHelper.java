@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcal
 
 import com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants;
 import com.anarsoft.trace.agent.runtime.classtransformer.plan.MethodTransformPlanBuilder;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallIdMap;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 

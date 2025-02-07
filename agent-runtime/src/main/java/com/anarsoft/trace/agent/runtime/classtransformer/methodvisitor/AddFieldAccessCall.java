@@ -2,8 +2,9 @@ package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FieldCallbackFactory;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndName;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndNameToIntMap;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 
@@ -21,13 +22,8 @@ public class AddFieldAccessCall extends MethodVisitor {
         this.fieldCallbackFactory = new FieldCallbackFactory(methodVisitor, inMethodId);
     }
 
-    public static MethodVisitorForTransformFactory factory(FieldOwnerAndNameToIntMap fieldIdMap) {
-        return new MethodVisitorForTransformFactory() {
-            @Override
-            public MethodVisitor create(int methodId, MethodVisitor previous) {
-                return new AddFieldAccessCall(previous, fieldIdMap, methodId);
-            }
-        };
+    public static MethodVisitorFactory factory(FieldOwnerAndNameToIntMap fieldIdMap) {
+        return (factoryContext, previous) -> new AddFieldAccessCall(previous, fieldIdMap, factoryContext.methodId());
     }
 
     @Override

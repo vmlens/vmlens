@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionEndAtomicOperation;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdToStrategy;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldIdToStrategy;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public class FieldCallbackImpl {

@@ -3,8 +3,8 @@ package com.anarsoft.trace.agent.runtime;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformer;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterAndTransformerStrategyCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepository;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepository;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepository;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepository;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -7,10 +7,10 @@ import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVis
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodenterexit.MethodEnterExitAnalyzeAndTransformFactoryFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndNameToIntMap;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallIdMap;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndNameToIntMap;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositoryForAnalyze;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
 

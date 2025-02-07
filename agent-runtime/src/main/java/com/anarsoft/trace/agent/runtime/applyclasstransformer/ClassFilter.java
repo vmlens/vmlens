@@ -1,4 +1,7 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
-public class ClassFilter {
+public interface ClassFilter {
+
+    boolean take(String name);
+
 }

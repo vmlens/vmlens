@@ -21,7 +21,7 @@ public class MethodAnalyzeAndTransformFactory implements MethodVisitorAnalyzeAnd
 
     @Override
     public MethodVisitor createAnalyze(int methodId, MethodVisitor previous) {
-        return new AnalyzeMethodMethod(previous, this);
+        return null;
     }
 }
 

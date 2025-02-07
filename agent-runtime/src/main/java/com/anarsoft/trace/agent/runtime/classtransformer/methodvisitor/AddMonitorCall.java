@@ -2,6 +2,7 @@ package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MonitorCallbackFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.*;
@@ -15,13 +16,8 @@ public class AddMonitorCall extends MethodVisitor {
         monitorCallbackFactory = new MonitorCallbackFactory(methodVisitor, inMethodId);
     }
 
-    public static MethodVisitorForTransformFactory factory() {
-        return new MethodVisitorForTransformFactory() {
-            @Override
-            public MethodVisitor create(int methodId, MethodVisitor previous) {
-                return new AddMonitorCall(previous, methodId);
-            }
-        };
+    public static MethodVisitorFactory factory() {
+        return (factoryContext, previous) -> new AddMonitorCall(previous, factoryContext.methodId());
     }
 
     @Override

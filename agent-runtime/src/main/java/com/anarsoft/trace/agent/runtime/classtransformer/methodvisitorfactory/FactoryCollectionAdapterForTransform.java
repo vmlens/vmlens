@@ -13,7 +13,7 @@ public class FactoryCollectionAdapterForTransform implements FactoryCollectionAd
 
     @Override
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> get(NameAndDescriptor nameAndDescriptor,
-                                                                   boolean isSynchronized) {
-        return factoryCollection.getTransformAndSetStrategy(nameAndDescriptor, isSynchronized);
+                                                                   boolean isSynchronized, int methodId) {
+        return factoryCollection.getTransformAndSetStrategy(nameAndDescriptor, isSynchronized, methodId);
     }
 }
