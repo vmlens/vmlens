@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory;
 
+import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;

@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.model;
 
+import com.anarsoft.trace.agent.preanalyzed.builder.ClassBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.AbstractClassType;
 
 import java.io.DataInputStream;
@@ -33,6 +34,11 @@ public class PackageOrClass {
         return new PackageOrClass(name, classType, methods);
 
     }
+
+    public void addToBuilder(ClassBuilder classBuilder) {
+        classType.addToBuilder(name, methods, classBuilder);
+    }
+
 
     public void serialize(DataOutputStream out) throws IOException {
         out.writeUTF(name);

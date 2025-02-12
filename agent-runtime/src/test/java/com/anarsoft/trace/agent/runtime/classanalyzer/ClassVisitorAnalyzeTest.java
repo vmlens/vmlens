@@ -5,8 +5,8 @@ import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
@@ -24,8 +24,8 @@ public class ClassVisitorAnalyzeTest {
         // Given
         byte[] classArray = new LoadClassArray().load("com.vmlens.test.guineaPig.VolatileFieldAccess");
         ClassReader classReader = new ClassReader(classArray);
-        MethodRepositoryForAnalyze methodRepositoryForAnalyze = mock(MethodRepositoryForAnalyze.class);
-        FieldRepositoryForAnalyze fieldRepositoryForAnalyze = mock(FieldRepositoryForAnalyze.class);
+        MethodRepositoryForTransform methodRepositoryForAnalyze = mock(MethodRepositoryForTransform.class);
+        FieldRepositoryForTransform fieldRepositoryForAnalyze = mock(FieldRepositoryForTransform.class);
         TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
         WriteClassDescriptionAndWarning writeClassDescription = new WriteClassDescriptionAndWarningDuringStartup(classAnalyzedEventList, new TLinkedList<>());
         ClassVisitorAnalyze classVisitorAnalyze = new ClassVisitorAnalyze(methodRepositoryForAnalyze,

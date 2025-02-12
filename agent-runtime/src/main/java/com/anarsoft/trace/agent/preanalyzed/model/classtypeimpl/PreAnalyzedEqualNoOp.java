@@ -13,9 +13,9 @@ public class PreAnalyzedEqualNoOp extends AbstractClassType {
     }
 
     @Override
-    public void add(String name,
-                    PreAnalyzedMethod[] methods,
-                    ClassBuilder classBuilder) {
+    public void addToBuilder(String name,
+                             PreAnalyzedMethod[] methods,
+                             ClassBuilder classBuilder) {
         MethodBuilder methodBuilder = classBuilder.createMethodBuilder();
         for (PreAnalyzedMethod method : methods) {
             method.add(methodBuilder);

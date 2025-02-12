@@ -24,10 +24,10 @@ public class PreAnalyzedEqualNoOpTest {
         methods[0] = new PreAnalyzedMethod("start", "()V", MethodTypeThreadStart.SINGLETON);
 
         // When
-        classTypeThread.add("java.lang.Thread", methods, classBuilder);
+        classTypeThread.addToBuilder("java.lang.Thread", methods, classBuilder);
 
         // Then
-        verify(classBuilder).addPreAnalyzedEquals("java.lang.Thread", any());
+        verify(classBuilder).addPreAnalyzedEquals(eq("java.lang.Thread"), any());
         verify(methodBuilder).addThreadStart("start", "()V");
         verify(methodBuilder).noOpWhenMethodNotFound();
     }

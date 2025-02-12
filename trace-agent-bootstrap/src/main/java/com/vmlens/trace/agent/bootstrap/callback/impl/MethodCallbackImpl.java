@@ -4,16 +4,16 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionAf
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionBeforeMethodCall;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionMethodExit;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodIdToStrategy;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public class MethodCallbackImpl {
 
-    private final MethodIdToStrategy methodIdToStrategy;
+    private final MethodRepositoryForCallback methodIdToStrategy;
     private final OrderMap<Long> monitorOrder;
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
 
-    public MethodCallbackImpl(MethodIdToStrategy methodIdToStrategy,
+    public MethodCallbackImpl(MethodRepositoryForCallback methodIdToStrategy,
                               OrderMap<Long> monitorOrder,
                               ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
         this.methodIdToStrategy = methodIdToStrategy;
@@ -22,9 +22,7 @@ public class MethodCallbackImpl {
     }
 
     public void targetOfMethodCall(Object object, int calledMethodId) {
-        methodIdToStrategy
-                .beforeMethodCallStrategy(calledMethodId)
-                .targetOfMethodCall(object, calledMethodId, threadLocalWhenInTestAdapter);
+        // Fixme
     }
 
     public void beforeMethodCall(int calledMethodId) {
@@ -36,7 +34,7 @@ public class MethodCallbackImpl {
     }
 
     public void methodEnter(Object object, int methodId) {
-        methodIdToStrategy.methodEnterStrategy(methodId).onMethodEnter(object,
+        methodIdToStrategy.strategyAll(methodId).onMethodEnter(object,
                 methodId, monitorOrder, threadLocalWhenInTestAdapter);
     }
 

@@ -3,7 +3,6 @@ package com.anarsoft.trace.agent.runtime;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterAndTransformerStrategyCollectionFactory;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterDeprecated;
 import com.anarsoft.trace.agent.runtime.write.*;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
@@ -52,9 +51,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
 			if (outputFileName == null) {
 				throw new RuntimeException("eventDir is missing in vmlens agent properties");
 			}
-            ClassFilterDeprecated classFilter = ClassFilterDeprecated.create(properties);
-            classFilter.take("test");
-
 			File outputDir = new File(outputFileName);
 			System.err.println("writing events to " + outputDir.getAbsolutePath());
 
@@ -82,10 +78,10 @@ public class AgentRuntimeImpl implements AgentRuntime {
             WriteClassDescriptionAndWarningWrapper writeClassDescriptionAndWarningWrapper =
                     new WriteClassDescriptionAndWarningWrapper(writeClassDescriptionDuringStartup);
             AgentClassFileTransformer agentClassFileTransformer = new AgentClassFileTransformer(
-                    new ClassFilterAndTransformerStrategyCollectionFactory(writeClassDescriptionAndWarningWrapper),
-                    classFilter, writeClassDescriptionAndWarningWrapper);
+                    ClassFilterAndTransformerStrategyCollectionFactory.createFactory(writeClassDescriptionAndWarningWrapper),
+                    writeClassDescriptionAndWarningWrapper);
 
-            instrument(inst, agentClassFileTransformer, writeClassDescriptionDuringStartup, classFilter);
+            instrument(inst, agentClassFileTransformer, writeClassDescriptionDuringStartup);
             writeClassDescriptionAndWarningWrapper
                     .setWriteClassDescriptionAndWarning(new WriteClassDescriptionAndWarningNormal());
 
@@ -105,22 +101,15 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
     private void retransform(Instrumentation inst,
                              THashSet<String> alreadyTransformed,
-                             WriteClassDescriptionAndWarning writeClassDescriptionAndWarning,
-                             ClassFilterDeprecated classFilter) throws UnmodifiableClassException {
+                             WriteClassDescriptionAndWarning writeClassDescriptionAndWarning) throws UnmodifiableClassException {
 		TLinkedList<TLinkableWrapper<Class>> transformableClasses = new TLinkedList();
 		for (Class cl : inst.getAllLoadedClasses()) {
 			if (inst.isModifiableClass(cl)) {
 				String correctedClassName = cl.getName().replace('.', '/');
 				if (!cl.isInterface()) {
-                    if (classFilter.take(correctedClassName)) {
-                        if (!alreadyTransformed.contains(correctedClassName)) {
+                    if (!alreadyTransformed.contains(correctedClassName)) {
                             transformableClasses.add(new TLinkableWrapper(cl));
                             alreadyTransformed.add(correctedClassName);
-                        }
-                    } else {
-                        InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
-                        builder.add("filtered:" + cl.getName());
-                        writeClassDescriptionAndWarning.write(builder.build());
                     }
                 }
             } else {
@@ -147,10 +136,9 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
     protected void instrument(Instrumentation inst,
                               AgentClassFileTransformer agentClassFileTransformer,
-                              WriteClassDescriptionAndWarningDuringStartup writeClassDescriptionDuringStartup,
-                              ClassFilterDeprecated classFilter) throws Exception {
+                              WriteClassDescriptionAndWarningDuringStartup writeClassDescriptionDuringStartup) throws Exception {
         inst.addTransformer(agentClassFileTransformer, true);
 		THashSet<String> alreadyTransformed = new THashSet<>();
-        retransform(inst, alreadyTransformed, writeClassDescriptionDuringStartup, classFilter);
+        retransform(inst, alreadyTransformed, writeClassDescriptionDuringStartup);
 	}
 }

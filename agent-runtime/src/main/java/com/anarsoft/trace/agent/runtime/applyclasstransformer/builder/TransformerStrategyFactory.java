@@ -1,25 +1,26 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer.builder;
 
+import com.anarsoft.trace.agent.preanalyzed.builder.MethodBuilder;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategyNoOp;
-import com.anarsoft.trace.agent.runtime.classtransformer.ClassTransformerFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.ClassTransformerFactoryAll;
-import com.anarsoft.trace.agent.runtime.classtransformer.ClassTransformerFactoryPreAnalyzed;
-import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyClassTransformer;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyForClassTransformer;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionAllFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionPreAnalyzedFactory;
 import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 
 public class TransformerStrategyFactory {
 
-    private final MethodRepositoryForAnalyze methodRepositoryForAnalyze;
-    private final FieldRepositoryForAnalyze fieldRepositoryForAnalyze;
+    private final MethodRepositoryForTransform methodRepositoryForAnalyze;
+    private final FieldRepositoryForTransform fieldRepositoryForAnalyze;
     private final WriteClassDescriptionAndWarning writeClassDescription;
 
-    public TransformerStrategyFactory(MethodRepositoryForAnalyze methodRepositoryForAnalyze,
-                                      FieldRepositoryForAnalyze fieldRepositoryForAnalyze,
+
+    public TransformerStrategyFactory(MethodRepositoryForTransform methodRepositoryForAnalyze,
+                                      FieldRepositoryForTransform fieldRepositoryForAnalyze,
                                       WriteClassDescriptionAndWarning writeClassDescription) {
         this.methodRepositoryForAnalyze = methodRepositoryForAnalyze;
         this.fieldRepositoryForAnalyze = fieldRepositoryForAnalyze;
@@ -34,24 +35,19 @@ public class TransformerStrategyFactory {
         return new TransformerStrategyVmlensApi();
     }
 
-
     public TransformerStrategy createAll() {
-        ClassTransformerFactory classTransformerFactoryAll =
-                new ClassTransformerFactoryAll(methodRepositoryForAnalyze,
-                        fieldRepositoryForAnalyze,
-                        writeClassDescription);
-
-
-        return new TransformerStrategyClassTransformer(classTransformerFactoryAll);
+        FactoryCollectionFactory factoryCollectionFactory = new FactoryCollectionAllFactory(fieldRepositoryForAnalyze,
+                methodRepositoryForAnalyze);
+        return new TransformerStrategyForClassTransformer(factoryCollectionFactory,
+                methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
     public TransformerStrategy createPreAnalyzed(FactoryCollectionPreAnalyzedFactory factoryCollectionPreAnalyzedBuilder) {
-        ClassTransformerFactory classTransformerFactoryPreAnalyzed =
-                new ClassTransformerFactoryPreAnalyzed(methodRepositoryForAnalyze,
-                        fieldRepositoryForAnalyze,
-                        writeClassDescription);
+        return new TransformerStrategyForClassTransformer(factoryCollectionPreAnalyzedBuilder,
+                methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
+    }
 
-
-        return new TransformerStrategyClassTransformer(classTransformerFactoryPreAnalyzed);
+    public MethodBuilder createMethodBuilder() {
+        return new MethodBuilderImpl(methodRepositoryForAnalyze);
     }
 }

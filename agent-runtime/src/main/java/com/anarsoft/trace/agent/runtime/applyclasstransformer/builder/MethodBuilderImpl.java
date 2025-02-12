@@ -1,34 +1,41 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer.builder;
 
 import com.anarsoft.trace.agent.preanalyzed.builder.MethodBuilder;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryCollectionPreAnalyzedFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.NameAndDescriptor;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.methodnotfoundaction.MethodNotFoundAction;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.methodnotfoundaction.NoOpAction;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.methodnotfoundaction.WarningAction;
+import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.MethodNotFoundAction;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-import com.vmlens.trace.agent.bootstrap.strategy.preanalyzedstrategy.PreAnalyzedStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.preanalyzedstrategy.ThreadStartStrategy;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.ThreadStartStrategy;
+
+import static com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.MethodNotFoundAction.NO_OP;
+import static com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.MethodNotFoundAction.WARNING_AND_TRANSFORM;
 
 public class MethodBuilderImpl implements MethodBuilder {
 
-    private final THashMap<NameAndDescriptor, PreAnalyzedStrategy> methodToStrategy = new
+    private final THashMap<NameAndDescriptor, StrategyPreAnalyzed> methodToStrategy = new
             THashMap<>();
-    private MethodNotFoundAction methodNotFoundAction = new WarningAction();
+    private final MethodRepositoryForTransform methodCallIdMap;
+    private MethodNotFoundAction methodNotFoundAction = WARNING_AND_TRANSFORM;
+
+    public MethodBuilderImpl(MethodRepositoryForTransform methodCallIdMap) {
+        this.methodCallIdMap = methodCallIdMap;
+    }
 
 
     @Override
     public void addThreadStart(String name, String desc) {
-        methodToStrategy.put(new NameAndDescriptor(name, desc), new ThreadStartStrategy());
+        methodToStrategy.put(new NameAndDescriptor(name, desc), ThreadStartStrategy.SINGLETON);
     }
 
     @Override
     public void noOpWhenMethodNotFound() {
-        methodNotFoundAction = new NoOpAction();
+        methodNotFoundAction = NO_OP;
     }
 
     @Override
     public FactoryCollectionPreAnalyzedFactory build() {
-        return new FactoryCollectionPreAnalyzedFactory(methodToStrategy, methodNotFoundAction);
+        return new FactoryCollectionPreAnalyzedFactory(methodToStrategy, methodNotFoundAction, methodCallIdMap);
     }
 }

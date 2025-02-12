@@ -1,0 +1,17 @@
+class:com/vmlens/test/guineaPig/MethodCall
+method:<init>()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  RETURN
+method:update()V
+  ALOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW

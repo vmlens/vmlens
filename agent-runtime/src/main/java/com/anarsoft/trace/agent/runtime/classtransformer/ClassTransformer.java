@@ -1,34 +1,27 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilter;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallIdMap;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollection;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollectionadapter.FactoryCollectionAdapterForAnalyze;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollectionadapter.FactoryCollectionAdapterForTransform;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 
 public class ClassTransformer {
 
-    private final MethodCallIdMap methodCallIdMap;
-    private final TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>>
-            factoryFactoryList;
-    private final TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> transformFactoryList;
+    private final FactoryCollection factoryCollection;
+    private final MethodRepositoryForTransform methodCallIdMap;
     private final ClassVisitor previousClassVisitor;
-    private final MethodFilter methodFilter;
+
 
     // Visible for Tests
-    public ClassTransformer(MethodCallIdMap methodCallIdMap,
-                            TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>> factoryFactoryList,
-                            TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> transformFactoryList,
-                            ClassVisitor previousClassVisitor, MethodFilter methodFilter) {
+    public ClassTransformer(FactoryCollection factoryCollection,
+                            MethodRepositoryForTransform methodCallIdMap,
+                            ClassVisitor previousClassVisitor) {
+        this.factoryCollection = factoryCollection;
         this.methodCallIdMap = methodCallIdMap;
-        this.factoryFactoryList = factoryFactoryList;
-        this.transformFactoryList = transformFactoryList;
         this.previousClassVisitor = previousClassVisitor;
-        this.methodFilter = methodFilter;
     }
 
     public byte[] transform(byte[] classfileBuffer, String name) {
@@ -43,29 +36,28 @@ public class ClassTransformer {
                           String name,
                           ClassVisitor classWriter) {
 
-        MethodVisitorAnalyzeAndTransformFactoryMap
-                methodIdToFactory = new MethodVisitorAnalyzeAndTransformFactoryMap();
-
-        ClassVisitor classVisitorAnalyze = createAnalyze(name, methodIdToFactory);
+        String normalizedName = name.replace('.', '/');
+        ClassVisitor classVisitorAnalyze = createAnalyze(normalizedName);
         ClassReader readerForAnalyze = new ClassReader(classfileBuffer);
         readerForAnalyze.accept(classVisitorAnalyze, 0);
 
         ClassReader readerForTransform = new ClassReader(classfileBuffer);
-        ClassVisitor classVisitorTransform = createTransform(classWriter, name, methodIdToFactory);
+        ClassVisitor classVisitorTransform = createTransform(classWriter, normalizedName);
         readerForTransform.accept(classVisitorTransform, 0);
     }
 
-    private ClassVisitor createAnalyze(String className,
-                                       MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory) {
-        return ClassVisitorApplyMethodVisitor
-                .createAnalyze(previousClassVisitor, className, methodIdToFactory, factoryFactoryList, methodCallIdMap, methodFilter);
+    private ClassVisitor createAnalyze(String className) {
+        return new ClassVisitorApplyMethodVisitor(previousClassVisitor,
+                className,
+                methodCallIdMap,
+                new FactoryCollectionAdapterForAnalyze(factoryCollection));
     }
 
-
     private ClassVisitor createTransform(ClassVisitor classWriter,
-                                         String className,
-                                         MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory) {
-        return ClassVisitorApplyMethodVisitor.createTransform(classWriter,
-                className, methodIdToFactory, methodCallIdMap, transformFactoryList, methodFilter);
+                                         String className) {
+        return new ClassVisitorApplyMethodVisitor(classWriter,
+                className,
+                methodCallIdMap,
+                new FactoryCollectionAdapterForTransform(factoryCollection));
     }
 }

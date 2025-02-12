@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.NormalFieldStrate
 import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.VolatileFieldStrategy;
 import gnu.trove.map.hash.THashMap;
 
-public class FieldRepository implements FieldIdToStrategy, FieldRepositoryForAnalyze {
+public class FieldRepository implements FieldRepositoryForCallback, FieldRepositoryForTransform {
 
     static final FieldStrategy VOLATILE_FIELD_STRATEGY = new VolatileFieldStrategy();
     static final FieldStrategy NORMAL_FIELD_STRATEGY = new NormalFieldStrategy();

@@ -5,7 +5,7 @@ import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
 
 public class ClassTypeVmlensApi extends AbstractClassType {
     @Override
-    public void add(String name, PreAnalyzedMethod[] methods, ClassBuilder classBuilder) {
+    public void addToBuilder(String name, PreAnalyzedMethod[] methods, ClassBuilder classBuilder) {
         classBuilder.addVmlensApi(name);
     }
 }

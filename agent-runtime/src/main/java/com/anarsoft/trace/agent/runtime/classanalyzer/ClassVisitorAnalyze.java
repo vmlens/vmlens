@@ -7,9 +7,9 @@ import com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
@@ -17,11 +17,12 @@ import org.objectweb.asm.MethodVisitor;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.toArray;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static org.objectweb.asm.Opcodes.ACC_STATIC;
 
 public class ClassVisitorAnalyze extends ClassVisitor {
 
-    private final MethodRepositoryForAnalyze methodRepositoryForAnalyze;
-    private final FieldRepositoryForAnalyze fieldRepositoryForAnalyze;
+    private final MethodRepositoryForTransform methodRepositoryForTransform;
+    private final FieldRepositoryForTransform fieldRepositoryForAnalyze;
     private final WriteClassDescriptionAndWarning writeClassDescription;
     private final TLinkedList<TLinkableWrapper<FieldInClassDescription>> fieldDescriptionList = new TLinkedList<>();
     private final TLinkedList<TLinkableWrapper<MethodDescription>> methodDescriptionList = new TLinkedList<>();
@@ -30,11 +31,11 @@ public class ClassVisitorAnalyze extends ClassVisitor {
     private String superClass;
     private String[] interfaces;
 
-    public ClassVisitorAnalyze(MethodRepositoryForAnalyze methodRepositoryForAnalyze,
-                               FieldRepositoryForAnalyze fieldRepositoryForAnalyze,
+    public ClassVisitorAnalyze(MethodRepositoryForTransform methodRepositoryForTransform,
+                               FieldRepositoryForTransform fieldRepositoryForAnalyze,
                                WriteClassDescriptionAndWarning writeClassDescription) {
         super(ASMConstants.ASM_API_VERSION);
-        this.methodRepositoryForAnalyze = methodRepositoryForAnalyze;
+        this.methodRepositoryForTransform = methodRepositoryForTransform;
         this.fieldRepositoryForAnalyze = fieldRepositoryForAnalyze;
         this.writeClassDescription = writeClassDescription;
     }
@@ -68,10 +69,9 @@ public class ClassVisitorAnalyze extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         MethodCallId methodCallId = new MethodCallId(className, name, descriptor);
-        OnMethodAccess onMethodAccess = new OnMethodAccess(methodRepositoryForAnalyze, methodCallId);
-        new AnalyzeMethodAccess(onMethodAccess).analyze(access);
 
-        MethodDescription methodDescription = new MethodDescription(name, onMethodAccess.id(), descriptor, access, 0);
+        MethodDescription methodDescription = new MethodDescription(name, methodRepositoryForTransform.asInt(methodCallId),
+                descriptor, access, 0);
         methodDescriptionList.add(wrap(methodDescription));
 
         return super.visitMethod(access, name, descriptor, signature, exceptions);
@@ -86,4 +86,11 @@ public class ClassVisitorAnalyze extends ClassVisitor {
         writeClassDescription.write(classDescription);
 
     }
+
+    private boolean isStatic(int access) {
+        return (access & ACC_STATIC) == ACC_STATIC;
+    }
+
+
+
 }

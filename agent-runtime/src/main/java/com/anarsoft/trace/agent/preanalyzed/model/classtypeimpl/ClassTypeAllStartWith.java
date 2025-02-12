@@ -11,7 +11,7 @@ public class ClassTypeAllStartWith extends AbstractClassType {
     }
 
     @Override
-    public void add(String name, PreAnalyzedMethod[] methods, ClassBuilder classBuilder) {
+    public void addToBuilder(String name, PreAnalyzedMethod[] methods, ClassBuilder classBuilder) {
         classBuilder.addTraceStartsWith(name);
     }
 }

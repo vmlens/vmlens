@@ -1,15 +1,15 @@
 package com.anarsoft.trace.agent.runtime.classanalyzer;
 
 import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForAnalyze;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForTransform;
 
 public class OnFieldAccess {
 
-    private final FieldRepositoryForAnalyze fieldRepositoryForAnalyze;
+    private final FieldRepositoryForTransform fieldRepositoryForAnalyze;
     private final FieldOwnerAndName fieldOwnerAndName;
     private int id;
 
-    public OnFieldAccess(FieldRepositoryForAnalyze fieldRepositoryForAnalyze,
+    public OnFieldAccess(FieldRepositoryForTransform fieldRepositoryForAnalyze,
                          FieldOwnerAndName fieldOwnerAndName) {
         this.fieldRepositoryForAnalyze = fieldRepositoryForAnalyze;
         this.fieldOwnerAndName = fieldOwnerAndName;

@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldIdToStrategy;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.FieldStrategy;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class FieldCallbackImplTest {
         int GIVEN_POSITION = 1;
         int GIVEN_IN_METHOD_ID = 675;
 
-        FieldIdToStrategy fieldIdToStrategy = mock(FieldIdToStrategy.class);
+        FieldRepositoryForCallback fieldIdToStrategy = mock(FieldRepositoryForCallback.class);
         FieldStrategy fieldStrategy = mock(FieldStrategy.class);
         when(fieldIdToStrategy.get(GIVEN_FIELD_ID)).thenReturn(fieldStrategy);
 

@@ -4,17 +4,17 @@ import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionEndAtomicOperation;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldIdToStrategy;
+import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public class FieldCallbackImpl {
 
-    private final FieldIdToStrategy fieldIdToStrategy;
+    private final FieldRepositoryForCallback fieldIdToStrategy;
     private final OrderMap<ObjectHashCodeAndFieldId> volatileFieldOrder;
     private final OrderMap<Integer> staticVolatileFieldOrder;
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
 
-    public FieldCallbackImpl(FieldIdToStrategy fieldIdToStrategy,
+    public FieldCallbackImpl(FieldRepositoryForCallback fieldIdToStrategy,
                              OrderMap<ObjectHashCodeAndFieldId> volatileFieldOrder,
                              OrderMap<Integer> staticVolatileFieldOrder,
                              ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {

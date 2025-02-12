@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMapSingleton;
 
 public class MethodCallback {
@@ -12,11 +12,7 @@ public class MethodCallback {
             OrderMapSingleton.MONITOR_ORDER,
             new ThreadLocalWhenInTestAdapterImpl());
 
-    public static void targetOfMethodCall(Object object, int calledMethodId) {
-        methodCallbackImpl.targetOfMethodCall(object, calledMethodId);
-    }
-
-    public static void beforeMethodCall(int calledMethodId) {
+    public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
         methodCallbackImpl.beforeMethodCall(calledMethodId);
     }
 
@@ -26,11 +22,6 @@ public class MethodCallback {
 
     public static void methodEnter(Object object, int methodId) {
         methodCallbackImpl.methodEnter(object, methodId);
-    }
-
-
-    public static void constructorMethodEnter(int methodId) {
-        methodCallbackImpl.constructorMethodEnter(methodId);
     }
 
     public static void methodExit(Object object, int methodId) {

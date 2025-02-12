@@ -3,7 +3,7 @@ package com.anarsoft.trace.agent.runtime.applyclasstransformer.builder;
 import com.anarsoft.trace.agent.preanalyzed.builder.ClassBuilder;
 import com.anarsoft.trace.agent.preanalyzed.builder.MethodBuilder;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.*;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionPreAnalyzedFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
@@ -25,7 +25,7 @@ public class ClassBuilderImpl implements ClassBuilder {
 
     @Override
     public MethodBuilder createMethodBuilder() {
-        return new MethodBuilderImpl();
+        return transformerStrategyFactory.createMethodBuilder();
     }
 
     @Override

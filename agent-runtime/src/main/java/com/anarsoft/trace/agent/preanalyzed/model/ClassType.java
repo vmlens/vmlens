@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public interface ClassType {
 
-    void add(String name, PreAnalyzedMethod[] methods, ClassBuilder classBuilder);
+    void addToBuilder(String name, PreAnalyzedMethod[] methods, ClassBuilder classBuilder);
 
     void serialize(DataOutputStream out) throws IOException;
 }

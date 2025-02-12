@@ -1,32 +1,26 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilterTakeAll;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallIdMap;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepository;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
-
 public class AddMonitorCallTest {
+    /*
+        public static ClassTransformer classArrayTransformer(MethodRepositoryForTransform methodCallIdMap,
+                                                             MethodVisitorForTransformFactory methodVisitorFactory) {
+            TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> factoryList = new TLinkedList<>();
+            factoryList.add(wrap(methodVisitorFactory));
 
-    public static ClassTransformer classArrayTransformer(MethodCallIdMap methodCallIdMap,
-                                                         MethodVisitorForTransformFactory methodVisitorFactory) {
-        TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> factoryList = new TLinkedList<>();
-        factoryList.add(wrap(methodVisitorFactory));
-
-        return new ClassTransformer(methodCallIdMap,
-                new TLinkedList<>(),
-                factoryList, null, new MethodFilterTakeAll());
-    }
-
+            return null; //new ClassTransformer(methodCallIdMap,
+                    //new TLinkedList<>(),
+                    //factoryList, null, new MethodFilterTakeAll());
+        }
+    */
     @Test
     public void monitor() throws IOException {
-        MethodCallIdMap methodCallIdMap = new MethodRepository();
+        MethodRepositoryForTransform methodCallIdMap = MethodRepositoryImpl.create();
 
 // Fixme
         /*

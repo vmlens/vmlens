@@ -3,8 +3,6 @@ package com.anarsoft.trace.agent.runtime;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformer;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterAndTransformerStrategyCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepository;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepository;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,8 +34,9 @@ public class ClassLoaderForTransformation extends ClassLoader {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
             WriteClassDescriptionAndWarning writeClassDescription = mock(WriteClassDescriptionAndWarning.class);
-            ClassFilterAndTransformerStrategyCollectionFactory factory = new ClassFilterAndTransformerStrategyCollectionFactory(new MethodRepository(),
-                    new FieldRepository(), writeClassDescription);
+            ClassFilterAndTransformerStrategyCollectionFactory factory = null;
+            //new ClassFilterAndTransformerStrategyCollectionFactory(new MethodRepository(),
+            //        new FieldRepository(), writeClassDescription, preAnalyzed);
             ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(factory);
 
             byte[] transformed = applyClassTransformer.transform(targetArray,

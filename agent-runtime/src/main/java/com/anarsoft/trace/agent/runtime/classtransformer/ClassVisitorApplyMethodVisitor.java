@@ -1,15 +1,11 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilter;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorForTransformFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollectionadapter.FactoryCollectionAdapter;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryContext;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.SelectMethodVisitorFactoryStrategy;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.SelectMethodVisitorFactoryStrategyForAnalyze;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.SelectMethodVisitorFactoryStrategyForTransform;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallIdMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -20,49 +16,22 @@ import static org.objectweb.asm.Opcodes.ACC_STATIC;
 
 public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
 
-    private final SelectMethodVisitorFactoryStrategy methodVisitorFactory;
+
     private final String className;
-    private final MethodCallIdMap methodCallIdMap;
-    private final MethodVisitorAnalyzeAndTransformFactoryMap
-            methodIdToFactory;
-    private final MethodFilter methodFilter;
+    private final MethodRepositoryForTransform methodCallIdMap;
+    private final FactoryCollectionAdapter factoryCollectionAdapter;
+
     private int classVersion;
 
     public ClassVisitorApplyMethodVisitor(ClassVisitor classVisitor,
-                                          SelectMethodVisitorFactoryStrategy methodVisitorFactory,
                                           String className,
-                                          MethodCallIdMap methodCallIdMap,
-                                          MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory,
-                                          MethodFilter methodFilter) {
+                                          MethodRepositoryForTransform methodCallIdMap,
+                                          FactoryCollectionAdapter factoryCollectionAdapter) {
         super(ASMConstants.ASM_API_VERSION, classVisitor);
-        this.methodVisitorFactory = methodVisitorFactory;
         this.className = className;
         this.methodCallIdMap = methodCallIdMap;
-        this.methodIdToFactory = methodIdToFactory;
-        this.methodFilter = methodFilter;
+        this.factoryCollectionAdapter = factoryCollectionAdapter;
     }
-
-    public static ClassVisitor createAnalyze(ClassVisitor previousClassVisitor,
-                                             String className,
-                                             MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory,
-                                             TLinkedList<TLinkableWrapper<MethodVisitorAnalyzeAndTransformFactoryFactory>>
-                                                     factoryFactoryList,
-                                             MethodCallIdMap methodCallIdMap, MethodFilter methodFilter) {
-        return new ClassVisitorApplyMethodVisitor(previousClassVisitor,
-                new SelectMethodVisitorFactoryStrategyForAnalyze(factoryFactoryList), className, methodCallIdMap, methodIdToFactory, methodFilter);
-    }
-
-    public static ClassVisitor createTransform(ClassVisitor classWriter,
-                                               String className,
-                                               MethodVisitorAnalyzeAndTransformFactoryMap methodIdToFactory,
-                                               MethodCallIdMap methodCallIdMap,
-                                               TLinkedList<TLinkableWrapper<MethodVisitorForTransformFactory>> transformFactoryList,
-                                               MethodFilter methodFilter) {
-        return new ClassVisitorApplyMethodVisitor(classWriter,
-                new SelectMethodVisitorFactoryStrategyForTransform(transformFactoryList),
-                className, methodCallIdMap, methodIdToFactory, methodFilter);
-    }
-
 
     @Override
     public final void visit(int version, int access, String name, String signature,
@@ -81,20 +50,25 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
         if ((access & ACC_NATIVE) == ACC_NATIVE) {
             return previous;
         }
-        if (!methodFilter.take(name, descriptor)) {
-            return previous;
-        }
-
         int inMethodId = methodCallIdMap.asInt(new MethodCallId(className, name, descriptor));
-        FactoryContext transformFactoryContext = new FactoryContext();
-        transformFactoryContext.setMethodId(inMethodId);
-        transformFactoryContext.setClassName(className);
-        transformFactoryContext.setConstructor("<init>".equals(name));
-        transformFactoryContext.setDescription(descriptor);
-        transformFactoryContext.setStatic((access & ACC_STATIC) == ACC_STATIC);
-        transformFactoryContext.setUseExpandedFrames(useExpandedFrames());
 
-        return methodVisitorFactory.create(transformFactoryContext, previous, methodIdToFactory, methodCallIdMap);
+        NameAndDescriptor nameAndDescriptor = new NameAndDescriptor(name, descriptor);
+        TLinkedList<TLinkableWrapper<MethodVisitorFactory>> factoryList =
+                factoryCollectionAdapter.get(nameAndDescriptor, access, inMethodId, methodCallIdMap);
+
+        FactoryContext context = new FactoryContext();
+        context.setMethodId(inMethodId);
+        context.setClassName(className);
+        context.setConstructor("<init>".equals(name));
+        context.setDescription(descriptor);
+        context.setStatic((access & ACC_STATIC) == ACC_STATIC);
+        context.setUseExpandedFrames(useExpandedFrames());
+
+        MethodVisitor current = previous;
+        for (TLinkableWrapper<MethodVisitorFactory> element : factoryList) {
+            current = element.element().create(context, current);
+        }
+        return current;
     }
 
     private boolean useExpandedFrames() {

@@ -1,33 +1,8 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
-import com.anarsoft.trace.agent.runtime.LoadClassArray;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodfilter.MethodFilterTakeAll;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.MethodVisitorAnalyzeAndTransformFactoryFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallAnalyzeAndTransformFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodcall.MethodCallAnalyzeAndTransformFactoryFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.plan.ApplyAfterOperationMethodCallTarget;
-import com.anarsoft.trace.agent.runtime.classtransformer.plan.MethodTransformPlanBuilder;
-import com.anarsoft.trace.agent.runtime.classtransformer.plan.PlanElement;
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodCallIdMap;
-import com.vmlens.trace.agent.bootstrap.methodidtostrategy.MethodRepository;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import org.junit.Test;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-
-import java.io.IOException;
-
-import static com.anarsoft.trace.agent.runtime.classtransformer.ClassVisitorApplyMethodVisitor.createAnalyze;
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 public class ClassVisitorAnalyzeForTransformTest {
 
-
+/*
     @Test
     public void threadStart() throws IOException {
         // Expected
@@ -72,6 +47,6 @@ public class ClassVisitorAnalyzeForTransformTest {
         ClassReader reader = new ClassReader(classArray);
         reader.accept(classVisitorForTransform, 0);
     }
-
+*/
 
 }

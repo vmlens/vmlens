@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.builder;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionPreAnalyzedFactory;
 
 public interface MethodBuilder {
 
