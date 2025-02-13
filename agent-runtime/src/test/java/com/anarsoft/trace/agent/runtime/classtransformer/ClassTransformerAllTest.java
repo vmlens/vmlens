@@ -13,7 +13,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClassTransformerAllTest {
 
-
     @Test
     public void methodCall() throws IOException {
         // Given
@@ -27,6 +26,5 @@ public class ClassTransformerAllTest {
         int id = repo.asInt(new MethodCallId("com/vmlens/test/guineaPig/MethodCall", "update", "()V"));
         assertThat(repo.strategyAll(id), is(NormalMethodStrategy.SINGLETON));
     }
-
 
 }

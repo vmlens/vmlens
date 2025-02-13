@@ -28,7 +28,8 @@ public class RunTestClassTransformer {
     private final MethodRepositoryImpl methodRepositoryForAnalyze = new MethodRepositoryImpl(null);
     private final FieldRepository fieldRepositoryForAnalyze = new FieldRepository();
 
-    public void runTest(String className, String resource) throws IOException {
+
+    public TransformerStrategy getStrategy(String className) {
         TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
         TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
 
@@ -45,7 +46,12 @@ public class RunTestClassTransformer {
 
         ClassFilterAndTransformerStrategyCollection collection = classBuilderImpl.build();
         String normalizedName = className.replace('.', '/');
-        TransformerStrategy strategy = collection.get(normalizedName);
+        return collection.get(normalizedName);
+    }
+
+    public void runTest(String className, String resource) throws IOException {
+        TransformerStrategy strategy = getStrategy(className);
+
         byte[] classfileBuffer = new LoadClassArray().load(className);
 
         TransformerContext transformerContext = new TransformerContext(classfileBuffer, className);
