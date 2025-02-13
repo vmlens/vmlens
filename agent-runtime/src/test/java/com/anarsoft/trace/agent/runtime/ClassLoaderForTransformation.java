@@ -1,14 +1,12 @@
 package com.anarsoft.trace.agent.runtime;
 
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ApplyClassTransformer;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterAndTransformerStrategyCollectionFactory;
-import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
+import com.anarsoft.trace.agent.runtime.classtransformer.RunTestClassTransformer;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import static org.mockito.Mockito.mock;
 
 public class ClassLoaderForTransformation extends ClassLoader {
 
@@ -33,14 +31,13 @@ public class ClassLoaderForTransformation extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
-            WriteClassDescriptionAndWarning writeClassDescription = mock(WriteClassDescriptionAndWarning.class);
-            ClassFilterAndTransformerStrategyCollectionFactory factory = null;
-            //new ClassFilterAndTransformerStrategyCollectionFactory(new MethodRepository(),
-            //        new FieldRepository(), writeClassDescription, preAnalyzed);
-            ApplyClassTransformer applyClassTransformer = new ApplyClassTransformer(factory);
 
-            byte[] transformed = applyClassTransformer.transform(targetArray,
-                    name.replace('.', '/'));
+            TransformerStrategy strategy = new RunTestClassTransformer().getStrategy(name);
+
+            TransformerContext transformerContext = new TransformerContext(targetArray, name);
+
+
+            byte[] transformed = strategy.transform(transformerContext);
             if (transformed == null) {
                 System.out.println("not transformed " + name);
                 return defineClass(name, targetArray, 0, targetArray.length);

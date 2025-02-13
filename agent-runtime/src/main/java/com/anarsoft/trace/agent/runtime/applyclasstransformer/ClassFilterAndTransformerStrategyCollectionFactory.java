@@ -18,7 +18,7 @@ public class ClassFilterAndTransformerStrategyCollectionFactory {
     private final FieldRepositoryForTransform fieldRepositoryForAnalyze;
     private final WriteClassDescriptionAndWarning writeClassDescription;
     private final TLinkedList<TLinkableWrapper<PackageOrClass>> preAnalyzed;
-    private final TLinkedList<TLinkableWrapper<ClassFilterAndTransformerStrategy>> result = new TLinkedList<>();
+
 
     public ClassFilterAndTransformerStrategyCollectionFactory(MethodRepositoryForTransform methodRepositoryForAnalyze,
                                                               FieldRepositoryForTransform fieldRepositoryForAnalyze,

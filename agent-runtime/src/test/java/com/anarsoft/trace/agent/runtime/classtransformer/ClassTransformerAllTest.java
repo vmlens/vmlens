@@ -27,4 +27,5 @@ public class ClassTransformerAllTest {
         assertThat(repo.strategyAll(id), is(NormalMethodStrategy.SINGLETON));
     }
 
+
 }

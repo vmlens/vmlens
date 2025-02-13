@@ -1,14 +1,12 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
 import com.anarsoft.trace.agent.preanalyzed.modelfactory.ModelFactory;
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterAndTransformerStrategyCollection;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterAndTransformerStrategyCollectionFactory;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.ClassBuilderImpl;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.TransformerStrategyFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.logging.ClassVisitorForLogging;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
@@ -28,23 +26,19 @@ public class RunTestClassTransformer {
     private final MethodRepositoryImpl methodRepositoryForAnalyze = new MethodRepositoryImpl(null);
     private final FieldRepository fieldRepositoryForAnalyze = new FieldRepository();
 
-
     public TransformerStrategy getStrategy(String className) {
         TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
         TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
 
         WriteClassDescriptionAndWarningDuringStartup writeClassDescription =
                 new WriteClassDescriptionAndWarningDuringStartup(classAnalyzedEventList, infoMessageEventList);
-        TransformerStrategyFactory transformerStrategyFactory = new TransformerStrategyFactory(methodRepositoryForAnalyze,
-                fieldRepositoryForAnalyze, writeClassDescription);
+        ClassFilterAndTransformerStrategyCollectionFactory factory =
+                new ClassFilterAndTransformerStrategyCollectionFactory(methodRepositoryForAnalyze,
+                        fieldRepositoryForAnalyze,
+                        writeClassDescription,
+                        new ModelFactory().create());
 
-        ClassBuilderImpl classBuilderImpl = new ClassBuilderImpl(transformerStrategyFactory);
-        TLinkedList<TLinkableWrapper<PackageOrClass>> preAnalyzed = new ModelFactory().create();
-        for (TLinkableWrapper<PackageOrClass> p : preAnalyzed) {
-            p.element().addToBuilder(classBuilderImpl);
-        }
-
-        ClassFilterAndTransformerStrategyCollection collection = classBuilderImpl.build();
+        ClassFilterAndTransformerStrategyCollection collection = factory.create();
         String normalizedName = className.replace('.', '/');
         return collection.get(normalizedName);
     }

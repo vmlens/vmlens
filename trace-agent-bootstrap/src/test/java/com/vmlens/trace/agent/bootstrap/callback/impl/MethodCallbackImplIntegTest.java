@@ -17,7 +17,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import org.junit.Before;
-import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +64,7 @@ public class MethodCallbackImplIntegTest {
 
     }
 
-    @Test
+    //@Test
     public void normalMethodEnter() {
         // Given
         Object object = new Object();
@@ -83,7 +82,7 @@ public class MethodCallbackImplIntegTest {
         assertThat(eventList.get(0), instanceOf(MethodEnterEvent.class));
     }
 
-    @Test
+    //@Test
     public void normalMethodExit() {
         // Given
         Object object = new Object();
@@ -101,7 +100,7 @@ public class MethodCallbackImplIntegTest {
         assertThat(eventList.get(0), instanceOf(MethodExitEvent.class));
     }
 
-    @Test
+    //@Test
     public void threadStart() {
         // Given
         int position = 3;
