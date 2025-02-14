@@ -2,6 +2,7 @@ package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
 import com.anarsoft.trace.agent.preanalyzed.modelfactory.ModelFactory;
+import com.anarsoft.trace.agent.preanalyzed.serialize.DeserializePackageOrClass;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.ClassBuilderImpl;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.TransformerStrategyFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
@@ -11,6 +12,8 @@ import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositorySinglet
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+
+import java.io.*;
 
 public class ClassFilterAndTransformerStrategyCollectionFactory {
 
@@ -30,9 +33,18 @@ public class ClassFilterAndTransformerStrategyCollectionFactory {
         this.preAnalyzed = preAnalyzed;
     }
 
-    public static ClassFilterAndTransformerStrategyCollectionFactory createFactory(WriteClassDescriptionAndWarning
-                                                                                           writeClassDescription) {
+    public static ClassFilterAndTransformerStrategyCollectionFactory createFactory(String libPath,
+                                                                                   WriteClassDescriptionAndWarning
+                                                                                           writeClassDescription) throws IOException {
         TLinkedList<TLinkableWrapper<PackageOrClass>> preAnalyzed = new ModelFactory().create();
+
+        File resourceFile = new File(libPath + "/preanalyzed.vmlens");
+        if (resourceFile.exists()) {
+            InputStream in = new FileInputStream(resourceFile);
+            DataInputStream dataInputStream = new DataInputStream(in);
+            preAnalyzed = new DeserializePackageOrClass().deserialize(dataInputStream);
+            dataInputStream.close();
+        }
         return new ClassFilterAndTransformerStrategyCollectionFactory(MethodRepositorySingleton.INSTANCE,
                 FieldRepositorySingleton.INSTANCE, writeClassDescription, preAnalyzed);
     }

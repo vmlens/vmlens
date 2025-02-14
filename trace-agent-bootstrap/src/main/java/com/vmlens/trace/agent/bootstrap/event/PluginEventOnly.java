@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.event;
 
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 
-public interface RuntimeEventOnly extends RuntimeEvent {
+public interface PluginEventOnly extends RuntimeEvent {
 
     @Override
     default RuntimeEvent after(ActualRun actualRun) {

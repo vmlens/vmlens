@@ -21,50 +21,41 @@ import java.util.Properties;
 public class AgentRuntimeImpl implements AgentRuntime {
 
 
-	public void run(String args, Instrumentation inst) {
-		try {
-			String inputFileName = args;
-			if ((args == null) || (args.trim().equals(""))) {
-				File agentFile = new File(
-						AgentRuntimeImpl.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-				String libPath = agentFile.toString().substring(0,
-						agentFile.toString().length() - "/agent_runtime.jar".length());
-				inputFileName = libPath + "/run.properties";
-			}
+    public void run(String args, Instrumentation inst) {
+        try {
 
-			if (!new File(inputFileName).exists()) {
-				File agentFile = new File(
-						AgentRuntimeImpl.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-				String libPath = agentFile.toString().substring(0,
-						agentFile.toString().length() - "/agent_runtime.jar".length());
-				String correctedName = libPath + "/" + args;
+            File agentFile = new File(
+                    AgentRuntimeImpl.class.getProtectionDomain()
+                            .getCodeSource()
+                            .getLocation()
+                            .toURI()
+                            .getPath());
+            String libPath = agentFile.toString().substring(0,
+                    agentFile.toString().length() - "/agent_runtime.jar".length());
+            String inputFileName = libPath + "/run.properties";
 
-				if (new File(correctedName).exists()) {
-					inputFileName = correctedName;
-				}
-			}
 
-			Properties properties = new Properties();
-			properties.load(new FileInputStream(inputFileName));
+            Properties properties = new Properties();
+            properties.load(new FileInputStream(inputFileName));
 
-			String outputFileName = properties.getProperty("eventDir");
-			if (outputFileName == null) {
-				throw new RuntimeException("eventDir is missing in vmlens agent properties");
-			}
-			File outputDir = new File(outputFileName);
-			System.err.println("writing events to " + outputDir.getAbsolutePath());
+            String outputFileName = properties.getProperty("eventDir");
+            if (outputFileName == null) {
+                throw new RuntimeException("eventDir is missing in vmlens agent properties");
+            }
+            File outputDir = new File(outputFileName);
+            System.err.println("writing events to " + outputDir.getAbsolutePath());
 
-			if (!outputDir.exists()) {
-				outputDir.mkdirs();
-			}
+            if (!outputDir.exists()) {
+                outputDir.mkdirs();
+            }
 
-			File dir = new File(outputFileName);
+            File dir = new File(outputFileName);
 
-			for (File file : dir.listFiles()) {
-				if (file.getName().endsWith(".vmlens")) {
-					file.delete();
-				}
-			}
+            for (File file : dir.listFiles()) {
+                if (file.getName().endsWith(".vmlens")) {
+                    file.delete();
+                }
+            }
 
             new LoadClassesAtStart().loadClasses();
 
@@ -78,7 +69,8 @@ public class AgentRuntimeImpl implements AgentRuntime {
             WriteClassDescriptionAndWarningWrapper writeClassDescriptionAndWarningWrapper =
                     new WriteClassDescriptionAndWarningWrapper(writeClassDescriptionDuringStartup);
             AgentClassFileTransformer agentClassFileTransformer = new AgentClassFileTransformer(
-                    ClassFilterAndTransformerStrategyCollectionFactory.createFactory(writeClassDescriptionAndWarningWrapper),
+                    ClassFilterAndTransformerStrategyCollectionFactory.createFactory(libPath,
+                            writeClassDescriptionAndWarningWrapper),
                     writeClassDescriptionAndWarningWrapper);
 
             instrument(inst, agentClassFileTransformer, writeClassDescriptionDuringStartup);
@@ -95,42 +87,42 @@ public class AgentRuntimeImpl implements AgentRuntime {
             }
 
         } catch (Throwable e) {
-			e.printStackTrace();
-		}
-	}
+            e.printStackTrace();
+        }
+    }
 
     private void retransform(Instrumentation inst,
                              THashSet<String> alreadyTransformed,
                              WriteClassDescriptionAndWarning writeClassDescriptionAndWarning) throws UnmodifiableClassException {
-		TLinkedList<TLinkableWrapper<Class>> transformableClasses = new TLinkedList();
-		for (Class cl : inst.getAllLoadedClasses()) {
-			if (inst.isModifiableClass(cl)) {
-				String correctedClassName = cl.getName().replace('.', '/');
-				if (!cl.isInterface()) {
+        TLinkedList<TLinkableWrapper<Class>> transformableClasses = new TLinkedList();
+        for (Class cl : inst.getAllLoadedClasses()) {
+            if (inst.isModifiableClass(cl)) {
+                String correctedClassName = cl.getName().replace('.', '/');
+                if (!cl.isInterface()) {
                     if (!alreadyTransformed.contains(correctedClassName)) {
-                            transformableClasses.add(new TLinkableWrapper(cl));
-                            alreadyTransformed.add(correctedClassName);
+                        transformableClasses.add(new TLinkableWrapper(cl));
+                        alreadyTransformed.add(correctedClassName);
                     }
                 }
             } else {
                 InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
                 builder.add("not transformable:" + cl.getName());
                 writeClassDescriptionAndWarning.write(builder.build());
-			}
-		}
-		Class[] toBeRetransformed = new Class[transformableClasses.size()];
-		int i = 0;
-		for (TLinkableWrapper<Class> cl : transformableClasses) {
+            }
+        }
+        Class[] toBeRetransformed = new Class[transformableClasses.size()];
+        int i = 0;
+        for (TLinkableWrapper<Class> cl : transformableClasses) {
             InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
             builder.add(cl.element().getName());
             writeClassDescriptionAndWarning.write(builder.build());
 
             toBeRetransformed[i] = cl.element();
-			i++;
-		}
-		if (toBeRetransformed.length > 0) {
-			inst.retransformClasses(toBeRetransformed);
-		}
+            i++;
+        }
+        if (toBeRetransformed.length > 0) {
+            inst.retransformClasses(toBeRetransformed);
+        }
 
     }
 
@@ -138,7 +130,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
                               AgentClassFileTransformer agentClassFileTransformer,
                               WriteClassDescriptionAndWarningDuringStartup writeClassDescriptionDuringStartup) throws Exception {
         inst.addTransformer(agentClassFileTransformer, true);
-		THashSet<String> alreadyTransformed = new THashSet<>();
+        THashSet<String> alreadyTransformed = new THashSet<>();
         retransform(inst, alreadyTransformed, writeClassDescriptionDuringStartup);
-	}
+    }
 }

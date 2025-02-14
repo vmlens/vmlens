@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEventOnly;
+import com.vmlens.trace.agent.bootstrap.event.PluginEventOnly;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodExitEventGen;
 
 
-public class MethodExitEvent extends MethodExitEventGen implements RuntimeEventOnly {
+public class MethodExitEvent extends MethodExitEventGen implements PluginEventOnly {
 
     public MethodExitEvent(int methodId) {
         this.methodId = methodId;

@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.PluginEventOnly;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEventOnly;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
@@ -128,13 +128,13 @@ public class RunStateMachineTestWrapper {
     }
 
     private void assertRuntimeEventGetsProcessed() {
-        RuntimeEvent runtimeEvent = mock(RuntimeEventOnly.class);
+        RuntimeEvent runtimeEvent = mock(PluginEventOnly.class);
         runStateMachine.after(runtimeEvent, eventThread);
         verify(runtimeEvent).after(any());
     }
 
     private void assertRuntimeEventGetsNotProcessed() {
-        RuntimeEvent runtimeEvent = mock(RuntimeEventOnly.class);
+        RuntimeEvent runtimeEvent = mock(PluginEventOnly.class);
         runStateMachine.after(runtimeEvent, eventThread);
         verify(runtimeEvent, never()).after(any());
     }

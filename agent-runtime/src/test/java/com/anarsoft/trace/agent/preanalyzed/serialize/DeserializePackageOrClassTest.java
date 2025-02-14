@@ -50,11 +50,11 @@ public class DeserializePackageOrClassTest {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
         DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
 
-        PackageOrClass[] loaded = deserializePackageOrClass.deserialize(dataInputStream);
+        TLinkedList<TLinkableWrapper<PackageOrClass>> loaded = deserializePackageOrClass.deserialize(dataInputStream);
 
         // Then
-        assertThat(loaded[0], is(filteredPackage));
-        assertThat(loaded[1], is(withMethod));
+        assertThat(loaded.get(0).element(), is(filteredPackage));
+        assertThat(loaded.get(1).element(), is(withMethod));
 
     }
 

@@ -1,10 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEventOnly;
+import com.vmlens.trace.agent.bootstrap.event.PluginEventOnly;
 import com.vmlens.trace.agent.bootstrap.event.gen.MethodEnterEventGen;
 
-public class MethodEnterEvent extends MethodEnterEventGen implements RuntimeEventOnly {
+public class MethodEnterEvent extends MethodEnterEventGen implements PluginEventOnly {
 
     public MethodEnterEvent(int methodId) {
         this.methodId = methodId;
