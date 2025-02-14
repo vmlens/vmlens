@@ -3,6 +3,7 @@ package com.anarsoft.trace.agent.runtime.classtransformer;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.ThreadStartStrategy;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -12,11 +13,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ClassTransformerPreAnalyzedTest {
 
 
-    // update asm
-    //@Test
+    @Test
     public void threadStart() throws IOException {
         // Given
-        RunTestClassTransformer runTestClassTransformer = new RunTestClassTransformer();
+        RunTestClassTransformer runTestClassTransformer = new RunTestClassTransformer() {
+            @Override
+            protected String calculateFileName(String name) {
+                return "/ThreadExample.byte";
+            }
+        };
 
         // When
         runTestClassTransformer.runTest("java.lang.Thread", "/thread.txt");

@@ -1,1183 +1,1183 @@
 class:java/lang/Thread
 method:registerNatives()V
 method:nextThreadNum()I
-   GETSTATIC  java/lang/Thread.threadInitNumber:I
-   DUP
-   ICONST_1
-   IADD
-   PUTSTATIC  java/lang/Thread.threadInitNumber:I
-   IRETURN
+  GETSTATIC  java/lang/Thread.threadInitNumber:I
+  DUP
+  ICONST_1
+  IADD
+  PUTSTATIC  java/lang/Thread.threadInitNumber:I
+  IRETURN
 method:nextThreadID()J
-   GETSTATIC  java/lang/Thread.threadSeqNumber:J
-   LCONST_1
-   LADD
-   DUP2
-   PUTSTATIC  java/lang/Thread.threadSeqNumber:J
-   LRETURN
+  GETSTATIC  java/lang/Thread.threadSeqNumber:J
+  LCONST_1
+  LADD
+  DUP2
+  PUTSTATIC  java/lang/Thread.threadSeqNumber:J
+  LRETURN
 method:blockedOn(Lsun/nio/ch/Interruptible;)V
-   ALOAD
-   GETFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   DUP
-   ASTORE
-   MONITORENTER
-   ALOAD
-   ALOAD
-   PUTFIELD  java/lang/Thread.blocker:Lsun/nio/ch/Interruptible;
-   ALOAD
-   MONITOREXIT
-   GOTO
-   ASTORE
-   ALOAD
-   MONITOREXIT
-   ALOAD
-   ATHROW
-   RETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  DUP
+  ASTORE
+  MONITORENTER
+  ALOAD
+  ALOAD
+  PUTFIELD  java/lang/Thread.blocker:Lsun/nio/ch/Interruptible;
+  ALOAD
+  MONITOREXIT
+  GOTO
+  ASTORE
+  ALOAD
+  MONITOREXIT
+  ALOAD
+  ATHROW
+  RETURN
 method:currentThread()Ljava/lang/Thread;
 method:yield()V
 method:sleep(J)V
 method:sleep(JI)V
-   LLOAD
-   LCONST_0
-   LCMP
-   IFGE
-   NEW  java/lang/IllegalArgumentException
-   DUP
+  LLOAD
+  LCONST_0
+  LCMP
+  IFGE
+  NEW  java/lang/IllegalArgumentException
+  DUP
   load:timeout value is negative
-   INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
-   ATHROW
-   ILOAD
-   IFLT
-   ILOAD
+  INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
+  ATHROW
+  ILOAD
+  IFLT
+  ILOAD
   load:999999
-   IF_ICMPLE
-   NEW  java/lang/IllegalArgumentException
-   DUP
+  IF_ICMPLE
+  NEW  java/lang/IllegalArgumentException
+  DUP
   load:nanosecond timeout value out of range
-   INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
-   ATHROW
-   ILOAD
+  INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
+  ATHROW
+  ILOAD
   load:500000
-   IF_ICMPGE
-   ILOAD
-   IFEQ
-   LLOAD
-   LCONST_0
-   LCMP
-   IFNE
-   LLOAD
-   LCONST_1
-   LADD
-   LSTORE
-   LLOAD
-   INVOKESTATIC  java/lang/Thread.sleep:(J)V
-   RETURN
+  IF_ICMPGE
+  ILOAD
+  IFEQ
+  LLOAD
+  LCONST_0
+  LCMP
+  IFNE
+  LLOAD
+  LCONST_1
+  LADD
+  LSTORE
+  LLOAD
+  INVOKESTATIC  java/lang/Thread.sleep:(J)V
+  RETURN
 method:init(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   ALOAD
-   ALOAD
-   ALOAD
-   ALOAD
-   LLOAD
-   ACONST_NULL
-   ICONST_1
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;JLjava/security/AccessControlContext;Z)V
-   RETURN
+  ALOAD
+  ALOAD
+  ALOAD
+  ALOAD
+  LLOAD
+  ACONST_NULL
+  ICONST_1
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;JLjava/security/AccessControlContext;Z)V
+  RETURN
 method:init(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;JLjava/security/AccessControlContext;Z)V
-   ALOAD
-   IFNONNULL
-   NEW  java/lang/NullPointerException
-   DUP
+  ALOAD
+  IFNONNULL
+  NEW  java/lang/NullPointerException
+  DUP
   load:name cannot be null
-   INVOKESPECIAL  java/lang/NullPointerException.<init>:(Ljava/lang/String;)V
-   ATHROW
-   ALOAD
-   ALOAD
-   PUTFIELD  java/lang/Thread.name:Ljava/lang/String;
-   INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
-   ASTORE
-   INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
-   ASTORE
-   ALOAD
-   IFNONNULL
-   ALOAD
-   IFNULL
-   ALOAD
-   INVOKEVIRTUAL  java/lang/SecurityManager.getThreadGroup:()Ljava/lang/ThreadGroup;
-   ASTORE
-   ALOAD
-   IFNONNULL
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
-   ASTORE
-   ALOAD
-   INVOKEVIRTUAL  java/lang/ThreadGroup.checkAccess:()V
-   ALOAD
-   IFNULL
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Object.getClass:()Ljava/lang/Class;
-   INVOKESTATIC  java/lang/Thread.isCCLOverridden:(Ljava/lang/Class;)Z
-   IFEQ
-   ALOAD
-   GETSTATIC  java/lang/Thread.SUBCLASS_IMPLEMENTATION_PERMISSION:Ljava/lang/RuntimePermission;
-   INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/ThreadGroup.addUnstarted:()V
-   ALOAD
-   ALOAD
-   PUTFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   ALOAD
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.isDaemon:()Z
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getPriority:()I
-   PUTFIELD  java/lang/Thread.priority:I
-   ALOAD
-   IFNULL
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Object.getClass:()Ljava/lang/Class;
-   INVOKESTATIC  java/lang/Thread.isCCLOverridden:(Ljava/lang/Class;)Z
-   IFEQ
-   ALOAD
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getContextClassLoader:()Ljava/lang/ClassLoader;
-   PUTFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
-   GOTO
-   ALOAD
-   ALOAD
-   GETFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
-   PUTFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
-   ALOAD
-   ALOAD
-   IFNULL
-   ALOAD
-   GOTO
-   INVOKESTATIC  java/security/AccessController.getContext:()Ljava/security/AccessControlContext;
-   PUTFIELD  java/lang/Thread.inheritedAccessControlContext:Ljava/security/AccessControlContext;
-   ALOAD
-   ALOAD
-   PUTFIELD  java/lang/Thread.target:Ljava/lang/Runnable;
-   ALOAD
-   ALOAD
-   GETFIELD  java/lang/Thread.priority:I
-   INVOKEVIRTUAL  java/lang/Thread.setPriority:(I)V
-   ILOAD
-   IFEQ
-   ALOAD
-   GETFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   IFNULL
-   ALOAD
-   ALOAD
-   GETFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   INVOKESTATIC  java/lang/ThreadLocal.createInheritedMap:(Ljava/lang/ThreadLocal$ThreadLocalMap;)Ljava/lang/ThreadLocal$ThreadLocalMap;
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   LLOAD
-   PUTFIELD  java/lang/Thread.stackSize:J
-   ALOAD
-   INVOKESTATIC  java/lang/Thread.nextThreadID:()J
-   PUTFIELD  java/lang/Thread.tid:J
-   RETURN
+  INVOKESPECIAL  java/lang/NullPointerException.<init>:(Ljava/lang/String;)V
+  ATHROW
+  ALOAD
+  ALOAD
+  PUTFIELD  java/lang/Thread.name:Ljava/lang/String;
+  INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
+  ASTORE
+  INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+  ASTORE
+  ALOAD
+  IFNONNULL
+  ALOAD
+  IFNULL
+  ALOAD
+  INVOKEVIRTUAL  java/lang/SecurityManager.getThreadGroup:()Ljava/lang/ThreadGroup;
+  ASTORE
+  ALOAD
+  IFNONNULL
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
+  ASTORE
+  ALOAD
+  INVOKEVIRTUAL  java/lang/ThreadGroup.checkAccess:()V
+  ALOAD
+  IFNULL
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Object.getClass:()Ljava/lang/Class;
+  INVOKESTATIC  java/lang/Thread.isCCLOverridden:(Ljava/lang/Class;)Z
+  IFEQ
+  ALOAD
+  GETSTATIC  java/lang/Thread.SUBCLASS_IMPLEMENTATION_PERMISSION:Ljava/lang/RuntimePermission;
+  INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
+  ALOAD
+  INVOKEVIRTUAL  java/lang/ThreadGroup.addUnstarted:()V
+  ALOAD
+  ALOAD
+  PUTFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  ALOAD
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.isDaemon:()Z
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getPriority:()I
+  PUTFIELD  java/lang/Thread.priority:I
+  ALOAD
+  IFNULL
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Object.getClass:()Ljava/lang/Class;
+  INVOKESTATIC  java/lang/Thread.isCCLOverridden:(Ljava/lang/Class;)Z
+  IFEQ
+  ALOAD
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getContextClassLoader:()Ljava/lang/ClassLoader;
+  PUTFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
+  GOTO
+  ALOAD
+  ALOAD
+  GETFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
+  PUTFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
+  ALOAD
+  ALOAD
+  IFNULL
+  ALOAD
+  GOTO
+  INVOKESTATIC  java/security/AccessController.getContext:()Ljava/security/AccessControlContext;
+  PUTFIELD  java/lang/Thread.inheritedAccessControlContext:Ljava/security/AccessControlContext;
+  ALOAD
+  ALOAD
+  PUTFIELD  java/lang/Thread.target:Ljava/lang/Runnable;
+  ALOAD
+  ALOAD
+  GETFIELD  java/lang/Thread.priority:I
+  INVOKEVIRTUAL  java/lang/Thread.setPriority:(I)V
+  ILOAD
+  IFEQ
+  ALOAD
+  GETFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  IFNULL
+  ALOAD
+  ALOAD
+  GETFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  INVOKESTATIC  java/lang/ThreadLocal.createInheritedMap:(Ljava/lang/ThreadLocal$ThreadLocalMap;)Ljava/lang/ThreadLocal$ThreadLocalMap;
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  LLOAD
+  PUTFIELD  java/lang/Thread.stackSize:J
+  ALOAD
+  INVOKESTATIC  java/lang/Thread.nextThreadID:()J
+  PUTFIELD  java/lang/Thread.tid:J
+  RETURN
 method:clone()Ljava/lang/Object;
-   NEW  java/lang/CloneNotSupportedException
-   DUP
-   INVOKESPECIAL  java/lang/CloneNotSupportedException.<init>:()V
-   ATHROW
+  NEW  java/lang/CloneNotSupportedException
+  DUP
+  INVOKESPECIAL  java/lang/CloneNotSupportedException.<init>:()V
+  ATHROW
 method:<init>()V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ACONST_NULL
-   ACONST_NULL
-   NEW  java/lang/StringBuilder
-   DUP
-   INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ACONST_NULL
+  ACONST_NULL
+  NEW  java/lang/StringBuilder
+  DUP
+  INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
   load:Thread-
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   INVOKESTATIC  java/lang/Thread.nextThreadNum:()I
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
-   INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
-   LCONST_0
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   RETURN
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKESTATIC  java/lang/Thread.nextThreadNum:()I
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
+  LCONST_0
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
+  RETURN
 method:<init>(Ljava/lang/Runnable;)V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ACONST_NULL
-   ALOAD
-   NEW  java/lang/StringBuilder
-   DUP
-   INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ACONST_NULL
+  ALOAD
+  NEW  java/lang/StringBuilder
+  DUP
+  INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
   load:Thread-
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   INVOKESTATIC  java/lang/Thread.nextThreadNum:()I
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
-   INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
-   LCONST_0
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   RETURN
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKESTATIC  java/lang/Thread.nextThreadNum:()I
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
+  LCONST_0
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
+  RETURN
 method:<init>(Ljava/lang/Runnable;Ljava/security/AccessControlContext;)V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ACONST_NULL
-   ALOAD
-   NEW  java/lang/StringBuilder
-   DUP
-   INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ACONST_NULL
+  ALOAD
+  NEW  java/lang/StringBuilder
+  DUP
+  INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
   load:Thread-
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   INVOKESTATIC  java/lang/Thread.nextThreadNum:()I
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
-   INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
-   LCONST_0
-   ALOAD
-   ICONST_0
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;JLjava/security/AccessControlContext;Z)V
-   RETURN
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKESTATIC  java/lang/Thread.nextThreadNum:()I
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
+  LCONST_0
+  ALOAD
+  ICONST_0
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;JLjava/security/AccessControlContext;Z)V
+  RETURN
 method:<init>(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;)V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ALOAD
-   ALOAD
-   NEW  java/lang/StringBuilder
-   DUP
-   INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ALOAD
+  ALOAD
+  NEW  java/lang/StringBuilder
+  DUP
+  INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
   load:Thread-
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   INVOKESTATIC  java/lang/Thread.nextThreadNum:()I
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
-   INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
-   LCONST_0
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   RETURN
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKESTATIC  java/lang/Thread.nextThreadNum:()I
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
+  LCONST_0
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
+  RETURN
 method:<init>(Ljava/lang/String;)V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ACONST_NULL
-   ACONST_NULL
-   ALOAD
-   LCONST_0
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   RETURN
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ACONST_NULL
+  ACONST_NULL
+  ALOAD
+  LCONST_0
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
+  RETURN
 method:<init>(Ljava/lang/ThreadGroup;Ljava/lang/String;)V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ALOAD
-   ACONST_NULL
-   ALOAD
-   LCONST_0
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   RETURN
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ALOAD
+  ACONST_NULL
+  ALOAD
+  LCONST_0
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
+  RETURN
 method:<init>(Ljava/lang/Runnable;Ljava/lang/String;)V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ACONST_NULL
-   ALOAD
-   ALOAD
-   LCONST_0
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   RETURN
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ACONST_NULL
+  ALOAD
+  ALOAD
+  LCONST_0
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
+  RETURN
 method:<init>(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;)V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ALOAD
-   ALOAD
-   ALOAD
-   LCONST_0
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   RETURN
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ALOAD
+  ALOAD
+  ALOAD
+  LCONST_0
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
+  RETURN
 method:<init>(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   ALOAD
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.daemon:Z
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.stillborn:Z
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ICONST_0
-   PUTFIELD  java/lang/Thread.threadStatus:I
-   ALOAD
-   NEW  java/lang/Object
-   DUP
-   INVOKESPECIAL  java/lang/Object.<init>:()V
-   PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   ALOAD
-   ALOAD
-   ALOAD
-   ALOAD
-   LLOAD
-   INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
-   RETURN
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.daemon:Z
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.stillborn:Z
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ICONST_0
+  PUTFIELD  java/lang/Thread.threadStatus:I
+  ALOAD
+  NEW  java/lang/Object
+  DUP
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  PUTFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  ALOAD
+  ALOAD
+  ALOAD
+  ALOAD
+  LLOAD
+  INVOKESPECIAL  java/lang/Thread.init:(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V
+  RETURN
 method:start()V
-   ALOAD
+  ALOAD
   load:20
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
-   ALOAD
-   GETFIELD  java/lang/Thread.threadStatus:I
-   IFEQ
-   NEW  java/lang/IllegalThreadStateException
-   DUP
-  load:20
-  load:0
-  load:74
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
-   INVOKESPECIAL  java/lang/IllegalThreadStateException.<init>:()V
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  GETFIELD  java/lang/Thread.threadStatus:I
+  IFEQ
+  NEW  java/lang/IllegalThreadStateException
+  DUP
   load:20
   load:0
   load:74
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
-   ALOAD
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
+  INVOKESPECIAL  java/lang/IllegalThreadStateException.<init>:()V
   load:20
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
-   ATHROW
-   ALOAD
-   GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   ALOAD
+  load:0
+  load:74
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
+  ALOAD
+  load:20
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+  ALOAD
+  GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  ALOAD
   load:20
   load:1
   load:75
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
-   INVOKEVIRTUAL  java/lang/ThreadGroup.add:(Ljava/lang/Thread;)V
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
+  INVOKEVIRTUAL  java/lang/ThreadGroup.add:(Ljava/lang/Thread;)V
   load:20
   load:1
   load:75
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
-   ICONST_0
-   ISTORE
-   ALOAD
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
+  ICONST_0
+  ISTORE
+  ALOAD
   load:20
   load:2
   load:21
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
-   INVOKESPECIAL  java/lang/Thread.start0:()V
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
+  INVOKESPECIAL  java/lang/Thread.start0:()V
   load:20
   load:2
   load:21
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
-   ICONST_1
-   ISTORE
-   ILOAD
-   IFNE
-   ALOAD
-   GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   ALOAD
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
+  ICONST_1
+  ISTORE
+  ILOAD
+  IFNE
+  ALOAD
+  GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  ALOAD
   load:20
   load:3
   load:76
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
-   INVOKEVIRTUAL  java/lang/ThreadGroup.threadStartFailed:(Ljava/lang/Thread;)V
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
+  INVOKEVIRTUAL  java/lang/ThreadGroup.threadStartFailed:(Ljava/lang/Thread;)V
   load:20
   load:3
   load:76
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
-   GOTO
-   ASTORE
-   GOTO
-   ASTORE
-   ILOAD
-   IFNE
-   ALOAD
-   GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   ALOAD
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
+  GOTO
+  ASTORE
+  GOTO
+  ASTORE
+  ILOAD
+  IFNE
+  ALOAD
+  GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  ALOAD
   load:20
   load:4
   load:76
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
-   INVOKEVIRTUAL  java/lang/ThreadGroup.threadStartFailed:(Ljava/lang/Thread;)V
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
+  INVOKEVIRTUAL  java/lang/ThreadGroup.threadStartFailed:(Ljava/lang/Thread;)V
   load:20
   load:4
   load:76
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
-   GOTO
-   ASTORE
-   ALOAD
-   ALOAD
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
+  GOTO
+  ASTORE
+  ALOAD
+  ALOAD
   load:20
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
-   ATHROW
-   ALOAD
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+  ALOAD
   load:20
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
-   RETURN
-   ALOAD
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD
   load:20
-   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
-   ATHROW
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
 method:start0()V
 method:run()V
-   ALOAD
-   GETFIELD  java/lang/Thread.target:Ljava/lang/Runnable;
-   IFNULL
-   ALOAD
-   GETFIELD  java/lang/Thread.target:Ljava/lang/Runnable;
-   INVOKEINTERFACE  java/lang/Runnable.run:()V
-   RETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.target:Ljava/lang/Runnable;
+  IFNULL
+  ALOAD
+  GETFIELD  java/lang/Thread.target:Ljava/lang/Runnable;
+  INVOKEINTERFACE  java/lang/Runnable.run:()V
+  RETURN
 method:exit()V
-   ALOAD
-   GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   IFNULL
-   ALOAD
-   GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   ALOAD
-   INVOKEVIRTUAL  java/lang/ThreadGroup.threadTerminated:(Ljava/lang/Thread;)V
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.target:Ljava/lang/Runnable;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.inheritedAccessControlContext:Ljava/security/AccessControlContext;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.blocker:Lsun/nio/ch/Interruptible;
-   ALOAD
-   ACONST_NULL
-   PUTFIELD  java/lang/Thread.uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
-   RETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  IFNULL
+  ALOAD
+  GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  ALOAD
+  INVOKEVIRTUAL  java/lang/ThreadGroup.threadTerminated:(Ljava/lang/Thread;)V
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.target:Ljava/lang/Runnable;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.inheritedAccessControlContext:Ljava/security/AccessControlContext;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.blocker:Lsun/nio/ch/Interruptible;
+  ALOAD
+  ACONST_NULL
+  PUTFIELD  java/lang/Thread.uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
+  RETURN
 method:stop()V
-   INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
-   ALOAD
-   INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
-   IF_ACMPEQ
-   ALOAD
-   GETSTATIC  sun/security/util/SecurityConstants.STOP_THREAD_PERMISSION:Ljava/lang/RuntimePermission;
-   INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
-   ALOAD
-   GETFIELD  java/lang/Thread.threadStatus:I
-   IFEQ
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.resume:()V
-   ALOAD
-   NEW  java/lang/ThreadDeath
-   DUP
-   INVOKESPECIAL  java/lang/ThreadDeath.<init>:()V
-   INVOKESPECIAL  java/lang/Thread.stop0:(Ljava/lang/Object;)V
-   RETURN
+  INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
+  ALOAD
+  INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
+  IF_ACMPEQ
+  ALOAD
+  GETSTATIC  sun/security/util/SecurityConstants.STOP_THREAD_PERMISSION:Ljava/lang/RuntimePermission;
+  INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
+  ALOAD
+  GETFIELD  java/lang/Thread.threadStatus:I
+  IFEQ
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.resume:()V
+  ALOAD
+  NEW  java/lang/ThreadDeath
+  DUP
+  INVOKESPECIAL  java/lang/ThreadDeath.<init>:()V
+  INVOKESPECIAL  java/lang/Thread.stop0:(Ljava/lang/Object;)V
+  RETURN
 method:stop(Ljava/lang/Throwable;)V
-   NEW  java/lang/UnsupportedOperationException
-   DUP
-   INVOKESPECIAL  java/lang/UnsupportedOperationException.<init>:()V
-   ATHROW
+  NEW  java/lang/UnsupportedOperationException
+  DUP
+  INVOKESPECIAL  java/lang/UnsupportedOperationException.<init>:()V
+  ATHROW
 method:interrupt()V
-   ALOAD
-   INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
-   IF_ACMPEQ
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
-   ALOAD
-   GETFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
-   DUP
-   ASTORE
-   MONITORENTER
-   ALOAD
-   GETFIELD  java/lang/Thread.blocker:Lsun/nio/ch/Interruptible;
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   INVOKESPECIAL  java/lang/Thread.interrupt0:()V
-   ALOAD
-   ALOAD
-   INVOKEINTERFACE  sun/nio/ch/Interruptible.interrupt:(Ljava/lang/Thread;)V
-   ALOAD
-   MONITOREXIT
-   RETURN
-   ALOAD
-   MONITOREXIT
-   GOTO
-   ASTORE
-   ALOAD
-   MONITOREXIT
-   ALOAD
-   ATHROW
-   ALOAD
-   INVOKESPECIAL  java/lang/Thread.interrupt0:()V
-   RETURN
+  ALOAD
+  INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
+  IF_ACMPEQ
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
+  ALOAD
+  GETFIELD  java/lang/Thread.blockerLock:Ljava/lang/Object;
+  DUP
+  ASTORE
+  MONITORENTER
+  ALOAD
+  GETFIELD  java/lang/Thread.blocker:Lsun/nio/ch/Interruptible;
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  INVOKESPECIAL  java/lang/Thread.interrupt0:()V
+  ALOAD
+  ALOAD
+  INVOKEINTERFACE  sun/nio/ch/Interruptible.interrupt:(Ljava/lang/Thread;)V
+  ALOAD
+  MONITOREXIT
+  RETURN
+  ALOAD
+  MONITOREXIT
+  GOTO
+  ASTORE
+  ALOAD
+  MONITOREXIT
+  ALOAD
+  ATHROW
+  ALOAD
+  INVOKESPECIAL  java/lang/Thread.interrupt0:()V
+  RETURN
 method:interrupted()Z
-   INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
-   ICONST_1
-   INVOKESPECIAL  java/lang/Thread.isInterrupted:(Z)Z
-   IRETURN
+  INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
+  ICONST_1
+  INVOKESPECIAL  java/lang/Thread.isInterrupted:(Z)Z
+  IRETURN
 method:isInterrupted()Z
-   ALOAD
-   ICONST_0
-   INVOKESPECIAL  java/lang/Thread.isInterrupted:(Z)Z
-   IRETURN
+  ALOAD
+  ICONST_0
+  INVOKESPECIAL  java/lang/Thread.isInterrupted:(Z)Z
+  IRETURN
 method:isInterrupted(Z)Z
 method:destroy()V
-   NEW  java/lang/NoSuchMethodError
-   DUP
-   INVOKESPECIAL  java/lang/NoSuchMethodError.<init>:()V
-   ATHROW
+  NEW  java/lang/NoSuchMethodError
+  DUP
+  INVOKESPECIAL  java/lang/NoSuchMethodError.<init>:()V
+  ATHROW
 method:isAlive()Z
 method:suspend()V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
-   ALOAD
-   INVOKESPECIAL  java/lang/Thread.suspend0:()V
-   RETURN
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Thread.suspend0:()V
+  RETURN
 method:resume()V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
-   ALOAD
-   INVOKESPECIAL  java/lang/Thread.resume0:()V
-   RETURN
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Thread.resume0:()V
+  RETURN
 method:setPriority(I)V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
-   ILOAD
-   BIPUSH
-   IF_ICMPGT
-   ILOAD
-   ICONST_1
-   IF_ICMPGE
-   NEW  java/lang/IllegalArgumentException
-   DUP
-   INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:()V
-   ATHROW
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
-   DUP
-   ASTORE
-   IFNULL
-   ILOAD
-   ALOAD
-   INVOKEVIRTUAL  java/lang/ThreadGroup.getMaxPriority:()I
-   IF_ICMPLE
-   ALOAD
-   INVOKEVIRTUAL  java/lang/ThreadGroup.getMaxPriority:()I
-   ISTORE
-   ALOAD
-   ALOAD
-   ILOAD
-   DUP_X1
-   PUTFIELD  java/lang/Thread.priority:I
-   INVOKESPECIAL  java/lang/Thread.setPriority0:(I)V
-   RETURN
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
+  ILOAD
+  BIPUSH
+  IF_ICMPGT
+  ILOAD
+  ICONST_1
+  IF_ICMPGE
+  NEW  java/lang/IllegalArgumentException
+  DUP
+  INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:()V
+  ATHROW
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
+  DUP
+  ASTORE
+  IFNULL
+  ILOAD
+  ALOAD
+  INVOKEVIRTUAL  java/lang/ThreadGroup.getMaxPriority:()I
+  IF_ICMPLE
+  ALOAD
+  INVOKEVIRTUAL  java/lang/ThreadGroup.getMaxPriority:()I
+  ISTORE
+  ALOAD
+  ALOAD
+  ILOAD
+  DUP_X1
+  PUTFIELD  java/lang/Thread.priority:I
+  INVOKESPECIAL  java/lang/Thread.setPriority0:(I)V
+  RETURN
 method:getPriority()I
-   ALOAD
-   GETFIELD  java/lang/Thread.priority:I
-   IRETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.priority:I
+  IRETURN
 method:setName(Ljava/lang/String;)V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
-   ALOAD
-   IFNONNULL
-   NEW  java/lang/NullPointerException
-   DUP
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
+  ALOAD
+  IFNONNULL
+  NEW  java/lang/NullPointerException
+  DUP
   load:name cannot be null
-   INVOKESPECIAL  java/lang/NullPointerException.<init>:(Ljava/lang/String;)V
-   ATHROW
-   ALOAD
-   ALOAD
-   PUTFIELD  java/lang/Thread.name:Ljava/lang/String;
-   ALOAD
-   GETFIELD  java/lang/Thread.threadStatus:I
-   IFEQ
-   ALOAD
-   ALOAD
-   INVOKESPECIAL  java/lang/Thread.setNativeName:(Ljava/lang/String;)V
-   RETURN
+  INVOKESPECIAL  java/lang/NullPointerException.<init>:(Ljava/lang/String;)V
+  ATHROW
+  ALOAD
+  ALOAD
+  PUTFIELD  java/lang/Thread.name:Ljava/lang/String;
+  ALOAD
+  GETFIELD  java/lang/Thread.threadStatus:I
+  IFEQ
+  ALOAD
+  ALOAD
+  INVOKESPECIAL  java/lang/Thread.setNativeName:(Ljava/lang/String;)V
+  RETURN
 method:getName()Ljava/lang/String;
-   ALOAD
-   GETFIELD  java/lang/Thread.name:Ljava/lang/String;
-   ARETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.name:Ljava/lang/String;
+  ARETURN
 method:getThreadGroup()Ljava/lang/ThreadGroup;
-   ALOAD
-   GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   ARETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  ARETURN
 method:activeCount()I
-   INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
-   INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
-   INVOKEVIRTUAL  java/lang/ThreadGroup.activeCount:()I
-   IRETURN
+  INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
+  INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
+  INVOKEVIRTUAL  java/lang/ThreadGroup.activeCount:()I
+  IRETURN
 method:enumerate([Ljava/lang/Thread;)I
-   INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
-   INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
-   ALOAD
-   INVOKEVIRTUAL  java/lang/ThreadGroup.enumerate:([Ljava/lang/Thread;)I
-   IRETURN
+  INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
+  INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
+  ALOAD
+  INVOKEVIRTUAL  java/lang/ThreadGroup.enumerate:([Ljava/lang/Thread;)I
+  IRETURN
 method:countStackFrames()I
 method:join(J)V
-   INVOKESTATIC  java/lang/System.currentTimeMillis:()J
-   LSTORE
-   LCONST_0
-   LSTORE
-   LLOAD
-   LCONST_0
-   LCMP
-   IFGE
-   NEW  java/lang/IllegalArgumentException
-   DUP
+  INVOKESTATIC  java/lang/System.currentTimeMillis:()J
+  LSTORE
+  LCONST_0
+  LSTORE
+  LLOAD
+  LCONST_0
+  LCMP
+  IFGE
+  NEW  java/lang/IllegalArgumentException
+  DUP
   load:timeout value is negative
-   INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
-   ATHROW
-   LLOAD
-   LCONST_0
-   LCMP
-   IFNE
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.isAlive:()Z
-   IFEQ
-   ALOAD
-   LCONST_0
-   INVOKEVIRTUAL  java/lang/Object.wait:(J)V
-   GOTO
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.isAlive:()Z
-   IFEQ
-   LLOAD
-   LLOAD
-   LSUB
-   LSTORE
-   LLOAD
-   LCONST_0
-   LCMP
-   IFGT
-   GOTO
-   ALOAD
-   LLOAD
-   INVOKEVIRTUAL  java/lang/Object.wait:(J)V
-   INVOKESTATIC  java/lang/System.currentTimeMillis:()J
-   LLOAD
-   LSUB
-   LSTORE
-   GOTO
-   RETURN
+  INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
+  ATHROW
+  LLOAD
+  LCONST_0
+  LCMP
+  IFNE
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.isAlive:()Z
+  IFEQ
+  ALOAD
+  LCONST_0
+  INVOKEVIRTUAL  java/lang/Object.wait:(J)V
+  GOTO
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.isAlive:()Z
+  IFEQ
+  LLOAD
+  LLOAD
+  LSUB
+  LSTORE
+  LLOAD
+  LCONST_0
+  LCMP
+  IFGT
+  GOTO
+  ALOAD
+  LLOAD
+  INVOKEVIRTUAL  java/lang/Object.wait:(J)V
+  INVOKESTATIC  java/lang/System.currentTimeMillis:()J
+  LLOAD
+  LSUB
+  LSTORE
+  GOTO
+  RETURN
 method:join(JI)V
-   LLOAD
-   LCONST_0
-   LCMP
-   IFGE
-   NEW  java/lang/IllegalArgumentException
-   DUP
+  LLOAD
+  LCONST_0
+  LCMP
+  IFGE
+  NEW  java/lang/IllegalArgumentException
+  DUP
   load:timeout value is negative
-   INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
-   ATHROW
-   ILOAD
-   IFLT
-   ILOAD
+  INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
+  ATHROW
+  ILOAD
+  IFLT
+  ILOAD
   load:999999
-   IF_ICMPLE
-   NEW  java/lang/IllegalArgumentException
-   DUP
+  IF_ICMPLE
+  NEW  java/lang/IllegalArgumentException
+  DUP
   load:nanosecond timeout value out of range
-   INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
-   ATHROW
-   ILOAD
+  INVOKESPECIAL  java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V
+  ATHROW
+  ILOAD
   load:500000
-   IF_ICMPGE
-   ILOAD
-   IFEQ
-   LLOAD
-   LCONST_0
-   LCMP
-   IFNE
-   LLOAD
-   LCONST_1
-   LADD
-   LSTORE
-   ALOAD
-   LLOAD
-   INVOKEVIRTUAL  java/lang/Thread.join:(J)V
-   RETURN
+  IF_ICMPGE
+  ILOAD
+  IFEQ
+  LLOAD
+  LCONST_0
+  LCMP
+  IFNE
+  LLOAD
+  LCONST_1
+  LADD
+  LSTORE
+  ALOAD
+  LLOAD
+  INVOKEVIRTUAL  java/lang/Thread.join:(J)V
+  RETURN
 method:join()V
-   ALOAD
-   LCONST_0
-   INVOKEVIRTUAL  java/lang/Thread.join:(J)V
-   RETURN
+  ALOAD
+  LCONST_0
+  INVOKEVIRTUAL  java/lang/Thread.join:(J)V
+  RETURN
 method:dumpStack()V
-   NEW  java/lang/Exception
-   DUP
+  NEW  java/lang/Exception
+  DUP
   load:Stack trace
-   INVOKESPECIAL  java/lang/Exception.<init>:(Ljava/lang/String;)V
-   INVOKEVIRTUAL  java/lang/Exception.printStackTrace:()V
-   RETURN
+  INVOKESPECIAL  java/lang/Exception.<init>:(Ljava/lang/String;)V
+  INVOKEVIRTUAL  java/lang/Exception.printStackTrace:()V
+  RETURN
 method:setDaemon(Z)V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.isAlive:()Z
-   IFEQ
-   NEW  java/lang/IllegalThreadStateException
-   DUP
-   INVOKESPECIAL  java/lang/IllegalThreadStateException.<init>:()V
-   ATHROW
-   ALOAD
-   ILOAD
-   PUTFIELD  java/lang/Thread.daemon:Z
-   RETURN
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.isAlive:()Z
+  IFEQ
+  NEW  java/lang/IllegalThreadStateException
+  DUP
+  INVOKESPECIAL  java/lang/IllegalThreadStateException.<init>:()V
+  ATHROW
+  ALOAD
+  ILOAD
+  PUTFIELD  java/lang/Thread.daemon:Z
+  RETURN
 method:isDaemon()Z
-   ALOAD
-   GETFIELD  java/lang/Thread.daemon:Z
-   IRETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.daemon:Z
+  IRETURN
 method:checkAccess()V
-   INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   ALOAD
-   INVOKEVIRTUAL  java/lang/SecurityManager.checkAccess:(Ljava/lang/Thread;)V
-   RETURN
+  INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  ALOAD
+  INVOKEVIRTUAL  java/lang/SecurityManager.checkAccess:(Ljava/lang/Thread;)V
+  RETURN
 method:toString()Ljava/lang/String;
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
-   ASTORE
-   ALOAD
-   IFNULL
-   NEW  java/lang/StringBuilder
-   DUP
-   INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getThreadGroup:()Ljava/lang/ThreadGroup;
+  ASTORE
+  ALOAD
+  IFNULL
+  NEW  java/lang/StringBuilder
+  DUP
+  INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
   load:Thread[
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getName:()Ljava/lang/String;
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getName:()Ljava/lang/String;
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
   load:,
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getPriority:()I
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getPriority:()I
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
   load:,
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   ALOAD
-   INVOKEVIRTUAL  java/lang/ThreadGroup.getName:()Ljava/lang/String;
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  ALOAD
+  INVOKEVIRTUAL  java/lang/ThreadGroup.getName:()Ljava/lang/String;
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
   load:]
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
-   ARETURN
-   NEW  java/lang/StringBuilder
-   DUP
-   INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
+  ARETURN
+  NEW  java/lang/StringBuilder
+  DUP
+  INVOKESPECIAL  java/lang/StringBuilder.<init>:()V
   load:Thread[
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getName:()Ljava/lang/String;
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getName:()Ljava/lang/String;
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
   load:,
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getPriority:()I
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getPriority:()I
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
   load:,]
-   INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-   INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
-   ARETURN
+  INVOKEVIRTUAL  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  INVOKEVIRTUAL  java/lang/StringBuilder.toString:()Ljava/lang/String;
+  ARETURN
 method:getContextClassLoader()Ljava/lang/ClassLoader;
-   ALOAD
-   GETFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
-   IFNONNULL
-   ACONST_NULL
-   ARETURN
-   INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   GETFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
-   INVOKESTATIC  sun/reflect/Reflection.getCallerClass:()Ljava/lang/Class;
-   INVOKESTATIC  java/lang/ClassLoader.checkClassLoaderPermission:(Ljava/lang/ClassLoader;Ljava/lang/Class;)V
-   ALOAD
-   GETFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
-   ARETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
+  IFNONNULL
+  ACONST_NULL
+  ARETURN
+  INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  GETFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
+  INVOKESTATIC  sun/reflect/Reflection.getCallerClass:()Ljava/lang/Class;
+  INVOKESTATIC  java/lang/ClassLoader.checkClassLoaderPermission:(Ljava/lang/ClassLoader;Ljava/lang/Class;)V
+  ALOAD
+  GETFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
+  ARETURN
 method:setContextClassLoader(Ljava/lang/ClassLoader;)V
-   INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   NEW  java/lang/RuntimePermission
-   DUP
+  INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  NEW  java/lang/RuntimePermission
+  DUP
   load:setContextClassLoader
-   INVOKESPECIAL  java/lang/RuntimePermission.<init>:(Ljava/lang/String;)V
-   INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
-   ALOAD
-   ALOAD
-   PUTFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
-   RETURN
+  INVOKESPECIAL  java/lang/RuntimePermission.<init>:(Ljava/lang/String;)V
+  INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
+  ALOAD
+  ALOAD
+  PUTFIELD  java/lang/Thread.contextClassLoader:Ljava/lang/ClassLoader;
+  RETURN
 method:holdsLock(Ljava/lang/Object;)Z
 method:getStackTrace()[Ljava/lang/StackTraceElement;
-   ALOAD
-   INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
-   IF_ACMPEQ
-   INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   GETSTATIC  sun/security/util/SecurityConstants.GET_STACK_TRACE_PERMISSION:Ljava/lang/RuntimePermission;
-   INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.isAlive:()Z
-   IFNE
-   GETSTATIC  java/lang/Thread.EMPTY_STACK_TRACE:[Ljava/lang/StackTraceElement;
-   ARETURN
-   ICONST_1
-   ANEWARRAY  java/lang/Thread
-   DUP
-   ICONST_0
-   ALOAD
-   AASTORE
-   INVOKESTATIC  java/lang/Thread.dumpThreads:([Ljava/lang/Thread;)[[Ljava/lang/StackTraceElement;
-   ASTORE
-   ALOAD
-   ICONST_0
-   AALOAD
-   ASTORE
-   ALOAD
-   IFNONNULL
-   GETSTATIC  java/lang/Thread.EMPTY_STACK_TRACE:[Ljava/lang/StackTraceElement;
-   ASTORE
-   ALOAD
-   ARETURN
-   NEW  java/lang/Exception
-   DUP
-   INVOKESPECIAL  java/lang/Exception.<init>:()V
-   INVOKEVIRTUAL  java/lang/Exception.getStackTrace:()[Ljava/lang/StackTraceElement;
-   ARETURN
+  ALOAD
+  INVOKESTATIC  java/lang/Thread.currentThread:()Ljava/lang/Thread;
+  IF_ACMPEQ
+  INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  GETSTATIC  sun/security/util/SecurityConstants.GET_STACK_TRACE_PERMISSION:Ljava/lang/RuntimePermission;
+  INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.isAlive:()Z
+  IFNE
+  GETSTATIC  java/lang/Thread.EMPTY_STACK_TRACE:[Ljava/lang/StackTraceElement;
+  ARETURN
+  ICONST_1
+  ANEWARRAY  java/lang/Thread
+  DUP
+  ICONST_0
+  ALOAD
+  AASTORE
+  INVOKESTATIC  java/lang/Thread.dumpThreads:([Ljava/lang/Thread;)[[Ljava/lang/StackTraceElement;
+  ASTORE
+  ALOAD
+  ICONST_0
+  AALOAD
+  ASTORE
+  ALOAD
+  IFNONNULL
+  GETSTATIC  java/lang/Thread.EMPTY_STACK_TRACE:[Ljava/lang/StackTraceElement;
+  ASTORE
+  ALOAD
+  ARETURN
+  NEW  java/lang/Exception
+  DUP
+  INVOKESPECIAL  java/lang/Exception.<init>:()V
+  INVOKEVIRTUAL  java/lang/Exception.getStackTrace:()[Ljava/lang/StackTraceElement;
+  ARETURN
 method:getAllStackTraces()Ljava/util/Map;
-   INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   GETSTATIC  sun/security/util/SecurityConstants.GET_STACK_TRACE_PERMISSION:Ljava/lang/RuntimePermission;
-   INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
-   ALOAD
-   GETSTATIC  sun/security/util/SecurityConstants.MODIFY_THREADGROUP_PERMISSION:Ljava/lang/RuntimePermission;
-   INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
-   INVOKESTATIC  java/lang/Thread.getThreads:()[Ljava/lang/Thread;
-   ASTORE
-   ALOAD
-   INVOKESTATIC  java/lang/Thread.dumpThreads:([Ljava/lang/Thread;)[[Ljava/lang/StackTraceElement;
-   ASTORE
-   NEW  java/util/HashMap
-   DUP
-   ALOAD
-   ARRAYLENGTH
-   INVOKESPECIAL  java/util/HashMap.<init>:(I)V
-   ASTORE
-   ICONST_0
-   ISTORE
-   ILOAD
-   ALOAD
-   ARRAYLENGTH
-   IF_ICMPGE
-   ALOAD
-   ILOAD
-   AALOAD
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   ALOAD
-   ILOAD
-   AALOAD
-   ALOAD
-   INVOKEINTERFACE  java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
-   POP
-   GOTO
-   ALOAD
-   ARETURN
+  INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  GETSTATIC  sun/security/util/SecurityConstants.GET_STACK_TRACE_PERMISSION:Ljava/lang/RuntimePermission;
+  INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
+  ALOAD
+  GETSTATIC  sun/security/util/SecurityConstants.MODIFY_THREADGROUP_PERMISSION:Ljava/lang/RuntimePermission;
+  INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
+  INVOKESTATIC  java/lang/Thread.getThreads:()[Ljava/lang/Thread;
+  ASTORE
+  ALOAD
+  INVOKESTATIC  java/lang/Thread.dumpThreads:([Ljava/lang/Thread;)[[Ljava/lang/StackTraceElement;
+  ASTORE
+  NEW  java/util/HashMap
+  DUP
+  ALOAD
+  ARRAYLENGTH
+  INVOKESPECIAL  java/util/HashMap.<init>:(I)V
+  ASTORE
+  ICONST_0
+  ISTORE
+  ILOAD
+  ALOAD
+  ARRAYLENGTH
+  IF_ICMPGE
+  ALOAD
+  ILOAD
+  AALOAD
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  ALOAD
+  ILOAD
+  AALOAD
+  ALOAD
+  INVOKEINTERFACE  java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+  POP
+  GOTO
+  ALOAD
+  ARETURN
 method:isCCLOverridden(Ljava/lang/Class;)Z
-   ALOAD
+  ALOAD
   load:Ljava/lang/Thread;
-   IF_ACMPNE
-   ICONST_0
-   IRETURN
-   GETSTATIC  java/lang/Thread$Caches.subclassAuditsQueue:Ljava/lang/ref/ReferenceQueue;
-   GETSTATIC  java/lang/Thread$Caches.subclassAudits:Ljava/util/concurrent/ConcurrentMap;
-   INVOKESTATIC  java/lang/Thread.processQueue:(Ljava/lang/ref/ReferenceQueue;Ljava/util/concurrent/ConcurrentMap;)V
-   NEW  java/lang/Thread$WeakClassKey
-   DUP
-   ALOAD
-   GETSTATIC  java/lang/Thread$Caches.subclassAuditsQueue:Ljava/lang/ref/ReferenceQueue;
-   INVOKESPECIAL  java/lang/Thread$WeakClassKey.<init>:(Ljava/lang/Class;Ljava/lang/ref/ReferenceQueue;)V
-   ASTORE
-   GETSTATIC  java/lang/Thread$Caches.subclassAudits:Ljava/util/concurrent/ConcurrentMap;
-   ALOAD
-   INVOKEINTERFACE  java/util/concurrent/ConcurrentMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
-   CHECKCAST  java/lang/Boolean
-   ASTORE
-   ALOAD
-   IFNONNULL
-   ALOAD
-   INVOKESTATIC  java/lang/Thread.auditSubclass:(Ljava/lang/Class;)Z
-   INVOKESTATIC  java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
-   ASTORE
-   GETSTATIC  java/lang/Thread$Caches.subclassAudits:Ljava/util/concurrent/ConcurrentMap;
-   ALOAD
-   ALOAD
-   INVOKEINTERFACE  java/util/concurrent/ConcurrentMap.putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
-   POP
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Boolean.booleanValue:()Z
-   IRETURN
+  IF_ACMPNE
+  ICONST_0
+  IRETURN
+  GETSTATIC  java/lang/Thread$Caches.subclassAuditsQueue:Ljava/lang/ref/ReferenceQueue;
+  GETSTATIC  java/lang/Thread$Caches.subclassAudits:Ljava/util/concurrent/ConcurrentMap;
+  INVOKESTATIC  java/lang/Thread.processQueue:(Ljava/lang/ref/ReferenceQueue;Ljava/util/concurrent/ConcurrentMap;)V
+  NEW  java/lang/Thread$WeakClassKey
+  DUP
+  ALOAD
+  GETSTATIC  java/lang/Thread$Caches.subclassAuditsQueue:Ljava/lang/ref/ReferenceQueue;
+  INVOKESPECIAL  java/lang/Thread$WeakClassKey.<init>:(Ljava/lang/Class;Ljava/lang/ref/ReferenceQueue;)V
+  ASTORE
+  GETSTATIC  java/lang/Thread$Caches.subclassAudits:Ljava/util/concurrent/ConcurrentMap;
+  ALOAD
+  INVOKEINTERFACE  java/util/concurrent/ConcurrentMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+  CHECKCAST  java/lang/Boolean
+  ASTORE
+  ALOAD
+  IFNONNULL
+  ALOAD
+  INVOKESTATIC  java/lang/Thread.auditSubclass:(Ljava/lang/Class;)Z
+  INVOKESTATIC  java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+  ASTORE
+  GETSTATIC  java/lang/Thread$Caches.subclassAudits:Ljava/util/concurrent/ConcurrentMap;
+  ALOAD
+  ALOAD
+  INVOKEINTERFACE  java/util/concurrent/ConcurrentMap.putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+  POP
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Boolean.booleanValue:()Z
+  IRETURN
 method:auditSubclass(Ljava/lang/Class;)Z
-   NEW  java/lang/Thread$1
-   DUP
-   ALOAD
-   INVOKESPECIAL  java/lang/Thread$1.<init>:(Ljava/lang/Class;)V
-   INVOKESTATIC  java/security/AccessController.doPrivileged:(Ljava/security/PrivilegedAction;)Ljava/lang/Object;
-   CHECKCAST  java/lang/Boolean
-   ASTORE
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Boolean.booleanValue:()Z
-   IRETURN
+  NEW  java/lang/Thread$1
+  DUP
+  ALOAD
+  INVOKESPECIAL  java/lang/Thread$1.<init>:(Ljava/lang/Class;)V
+  INVOKESTATIC  java/security/AccessController.doPrivileged:(Ljava/security/PrivilegedAction;)Ljava/lang/Object;
+  CHECKCAST  java/lang/Boolean
+  ASTORE
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Boolean.booleanValue:()Z
+  IRETURN
 method:dumpThreads([Ljava/lang/Thread;)[[Ljava/lang/StackTraceElement;
 method:getThreads()[Ljava/lang/Thread;
 method:getId()J
-   ALOAD
-   GETFIELD  java/lang/Thread.tid:J
-   LRETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.tid:J
+  LRETURN
 method:getState()Ljava/lang/Thread$State;
-   ALOAD
-   GETFIELD  java/lang/Thread.threadStatus:I
-   INVOKESTATIC  sun/misc/VM.toThreadState:(I)Ljava/lang/Thread$State;
-   ARETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.threadStatus:I
+  INVOKESTATIC  sun/misc/VM.toThreadState:(I)Ljava/lang/Thread$State;
+  ARETURN
 method:setDefaultUncaughtExceptionHandler(Ljava/lang/Thread$UncaughtExceptionHandler;)V
-   INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
-   ASTORE
-   ALOAD
-   IFNULL
-   ALOAD
-   NEW  java/lang/RuntimePermission
-   DUP
+  INVOKESTATIC  java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+  ASTORE
+  ALOAD
+  IFNULL
+  ALOAD
+  NEW  java/lang/RuntimePermission
+  DUP
   load:setDefaultUncaughtExceptionHandler
-   INVOKESPECIAL  java/lang/RuntimePermission.<init>:(Ljava/lang/String;)V
-   INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
-   ALOAD
-   PUTSTATIC  java/lang/Thread.defaultUncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
-   RETURN
+  INVOKESPECIAL  java/lang/RuntimePermission.<init>:(Ljava/lang/String;)V
+  INVOKEVIRTUAL  java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
+  ALOAD
+  PUTSTATIC  java/lang/Thread.defaultUncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
+  RETURN
 method:getDefaultUncaughtExceptionHandler()Ljava/lang/Thread$UncaughtExceptionHandler;
-   GETSTATIC  java/lang/Thread.defaultUncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
-   ARETURN
+  GETSTATIC  java/lang/Thread.defaultUncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
+  ARETURN
 method:getUncaughtExceptionHandler()Ljava/lang/Thread$UncaughtExceptionHandler;
-   ALOAD
-   GETFIELD  java/lang/Thread.uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
-   IFNULL
-   ALOAD
-   GETFIELD  java/lang/Thread.uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
-   GOTO
-   ALOAD
-   GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
-   ARETURN
+  ALOAD
+  GETFIELD  java/lang/Thread.uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
+  IFNULL
+  ALOAD
+  GETFIELD  java/lang/Thread.uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
+  GOTO
+  ALOAD
+  GETFIELD  java/lang/Thread.group:Ljava/lang/ThreadGroup;
+  ARETURN
 method:setUncaughtExceptionHandler(Ljava/lang/Thread$UncaughtExceptionHandler;)V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
-   ALOAD
-   ALOAD
-   PUTFIELD  java/lang/Thread.uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
-   RETURN
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.checkAccess:()V
+  ALOAD
+  ALOAD
+  PUTFIELD  java/lang/Thread.uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler;
+  RETURN
 method:dispatchUncaughtException(Ljava/lang/Throwable;)V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/Thread.getUncaughtExceptionHandler:()Ljava/lang/Thread$UncaughtExceptionHandler;
-   ALOAD
-   ALOAD
-   INVOKEINTERFACE  java/lang/Thread$UncaughtExceptionHandler.uncaughtException:(Ljava/lang/Thread;Ljava/lang/Throwable;)V
-   RETURN
+  ALOAD
+  INVOKEVIRTUAL  java/lang/Thread.getUncaughtExceptionHandler:()Ljava/lang/Thread$UncaughtExceptionHandler;
+  ALOAD
+  ALOAD
+  INVOKEINTERFACE  java/lang/Thread$UncaughtExceptionHandler.uncaughtException:(Ljava/lang/Thread;Ljava/lang/Throwable;)V
+  RETURN
 method:processQueue(Ljava/lang/ref/ReferenceQueue;Ljava/util/concurrent/ConcurrentMap;)V
-   ALOAD
-   INVOKEVIRTUAL  java/lang/ref/ReferenceQueue.poll:()Ljava/lang/ref/Reference;
-   DUP
-   ASTORE
-   IFNULL
-   ALOAD
-   ALOAD
-   INVOKEINTERFACE  java/util/concurrent/ConcurrentMap.remove:(Ljava/lang/Object;)Ljava/lang/Object;
-   POP
-   GOTO
-   RETURN
+  ALOAD
+  INVOKEVIRTUAL  java/lang/ref/ReferenceQueue.poll:()Ljava/lang/ref/Reference;
+  DUP
+  ASTORE
+  IFNULL
+  ALOAD
+  ALOAD
+  INVOKEINTERFACE  java/util/concurrent/ConcurrentMap.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+  POP
+  GOTO
+  RETURN
 method:setPriority0(I)V
 method:stop0(Ljava/lang/Object;)V
 method:suspend0()V
@@ -1185,13 +1185,13 @@ method:resume0()V
 method:interrupt0()V
 method:setNativeName(Ljava/lang/String;)V
 method:<clinit>()V
-   INVOKESTATIC  java/lang/Thread.registerNatives:()V
-   ICONST_0
-   ANEWARRAY  java/lang/StackTraceElement
-   PUTSTATIC  java/lang/Thread.EMPTY_STACK_TRACE:[Ljava/lang/StackTraceElement;
-   NEW  java/lang/RuntimePermission
-   DUP
+  INVOKESTATIC  java/lang/Thread.registerNatives:()V
+  ICONST_0
+  ANEWARRAY  java/lang/StackTraceElement
+  PUTSTATIC  java/lang/Thread.EMPTY_STACK_TRACE:[Ljava/lang/StackTraceElement;
+  NEW  java/lang/RuntimePermission
+  DUP
   load:enableContextClassLoaderOverride
-   INVOKESPECIAL  java/lang/RuntimePermission.<init>:(Ljava/lang/String;)V
-   PUTSTATIC  java/lang/Thread.SUBCLASS_IMPLEMENTATION_PERMISSION:Ljava/lang/RuntimePermission;
-   RETURN
+  INVOKESPECIAL  java/lang/RuntimePermission.<init>:(Ljava/lang/String;)V
+  PUTSTATIC  java/lang/Thread.SUBCLASS_IMPLEMENTATION_PERMISSION:Ljava/lang/RuntimePermission;
+  RETURN

@@ -46,7 +46,10 @@ public class RunTestClassTransformer {
     public void runTest(String className, String resource) throws IOException {
         TransformerStrategy strategy = getStrategy(className);
 
-        byte[] classfileBuffer = new LoadClassArray().load(className);
+        byte[] classfileBuffer = new LoadClassArray().loadResource(calculateFileName(className));
+        //OutputStream outTransformed = new FileOutputStream("ThreadExample.byte");
+        //outTransformed.write(classfileBuffer);
+        //outTransformed.close();
 
         TransformerContext transformerContext = new TransformerContext(classfileBuffer, className);
         byte[] transformed = strategy.transform(transformerContext);
@@ -66,5 +69,10 @@ public class RunTestClassTransformer {
 
     public FieldRepository fieldRepositoryForAnalyze() {
         return fieldRepositoryForAnalyze;
+    }
+
+    protected String calculateFileName(String name) {
+        String fileName = "/" + name.replace('.', '/') + ".class";
+        return fileName;
     }
 }
