@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.fieldidtostrategy;
+package com.vmlens.trace.agent.bootstrap.fieldidrepository;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class FieldRepositoryTest {
+public class FieldRepositoryImplTest {
 
     private static final FieldOwnerAndName volatileField =
             new FieldOwnerAndName("owner.test.Test", "volatile");
@@ -32,7 +32,7 @@ public class FieldRepositoryTest {
 
     @Test
     public void analyzeTransformUse() {
-        FieldRepository fieldRepository = new FieldRepository();
+        FieldRepositoryImpl fieldRepository = new FieldRepositoryImpl();
         analyze(fieldRepository);
         transform(fieldRepository);
         use(fieldRepository);
@@ -40,31 +40,31 @@ public class FieldRepositoryTest {
 
     @Test
     public void transformAnalyzeUse() {
-        FieldRepository fieldRepository = new FieldRepository();
+        FieldRepositoryImpl fieldRepository = new FieldRepositoryImpl();
         transform(fieldRepository);
         analyze(fieldRepository);
         use(fieldRepository);
     }
 
-    private void analyze(FieldRepository fieldRepository) {
+    private void analyze(FieldRepositoryImpl fieldRepository) {
         fieldRepository.getIdAndSetFieldIsVolatile(volatileField);
         fieldRepository.getIdAndSetFieldIsVolatile(staticVolatileField);
         fieldRepository.getIdAndSetFieldIsNormal(normalField);
         fieldRepository.getIdAndSetFieldIsNormal(staticField);
     }
 
-    private void transform(FieldRepository fieldRepository) {
+    private void transform(FieldRepositoryImpl fieldRepository) {
         volatileFieldId = fieldRepository.asInt(volatileField);
         staticVolatileFieldId = fieldRepository.asInt(staticVolatileField);
         normalFieldId = fieldRepository.asInt(normalField);
         staticFieldId = fieldRepository.asInt(staticField);
     }
 
-    private void use(FieldRepository fieldRepository) {
-        assertThat(fieldRepository.get(volatileFieldId), Matchers.is(FieldRepository.VOLATILE_FIELD_STRATEGY));
-        assertThat(fieldRepository.get(staticVolatileFieldId), Matchers.is(FieldRepository.VOLATILE_FIELD_STRATEGY));
-        assertThat(fieldRepository.get(normalFieldId), Matchers.is(FieldRepository.NORMAL_FIELD_STRATEGY));
-        assertThat(fieldRepository.get(staticFieldId), Matchers.is(FieldRepository.NORMAL_FIELD_STRATEGY));
+    private void use(FieldRepositoryImpl fieldRepository) {
+        assertThat(fieldRepository.get(volatileFieldId), Matchers.is(FieldRepositoryImpl.VOLATILE_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(staticVolatileFieldId), Matchers.is(FieldRepositoryImpl.VOLATILE_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(normalFieldId), Matchers.is(FieldRepositoryImpl.NORMAL_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(staticFieldId), Matchers.is(FieldRepositoryImpl.NORMAL_FIELD_STRATEGY));
     }
 
 }

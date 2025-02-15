@@ -9,7 +9,7 @@ import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.Facto
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionPreAnalyzedFactory;
 import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 
 public class TransformerStrategyFactory {

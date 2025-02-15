@@ -69,7 +69,7 @@ public class MethodCallbackImplIntegTest {
         // Given
         Object object = new Object();
         MethodCallId normalMethod = new MethodCallId("java.test.Test", "normal", "()V");
-        MethodRepositoryImpl methodRepository = MethodRepositoryImpl.create();
+        MethodRepositoryImpl methodRepository = new MethodRepositoryImpl();
         MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(methodRepository,
                 monitorOrder,
                 threadLocalWhenInTestAdapter);
@@ -87,7 +87,7 @@ public class MethodCallbackImplIntegTest {
         // Given
         Object object = new Object();
         MethodCallId normalMethod = new MethodCallId("java.test.Test", "normal", "()V");
-        MethodRepositoryImpl methodRepository = MethodRepositoryImpl.create();
+        MethodRepositoryImpl methodRepository = new MethodRepositoryImpl();
         MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(methodRepository,
                 monitorOrder,
                 threadLocalWhenInTestAdapter);
@@ -108,14 +108,13 @@ public class MethodCallbackImplIntegTest {
 
         Object thread = new Thread();
         MethodCallId normalMethod = new MethodCallId("does.not.matter", "start", "()V");
-        MethodRepositoryImpl methodRepository = MethodRepositoryImpl.create();
+        MethodRepositoryImpl methodRepository = new MethodRepositoryImpl();
         MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(methodRepository,
                 monitorOrder,
                 threadLocalWhenInTestAdapter);
         int methodId = methodRepository.asInt(normalMethod);
 
         // When
-        methodCallbackImpl.targetOfMethodCall(thread, methodId);
         methodCallbackImpl.beforeMethodCall(methodId);
         methodCallbackImpl.afterMethodCall(inMethodId, position, methodId);
 

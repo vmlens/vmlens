@@ -8,8 +8,8 @@ import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepository;
+import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldOwnerAndName;
+import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
@@ -35,7 +35,7 @@ public class FieldCallbackImplIntegTest {
     private ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
     private ThreadLocalWhenInTest threadLocalWhenInTest;
     private Run run;
-    private FieldRepository fieldRepository;
+    private FieldRepositoryImpl fieldRepository;
 
     @Before
     public void setup() {
@@ -61,7 +61,7 @@ public class FieldCallbackImplIntegTest {
         threadLocalWhenInTestAdapter = new ThreadLocalWhenInTestAdapterImpl(threadLocalForParallelizeProvider,
                 queueInMock);
 
-        fieldRepository = new FieldRepository();
+        fieldRepository = new FieldRepositoryImpl();
     }
 
     @Test

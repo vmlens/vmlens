@@ -12,7 +12,7 @@ import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDur
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepository;
+import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassReader;
@@ -23,8 +23,8 @@ import java.io.StringWriter;
 
 public class RunTestClassTransformer {
 
-    private final MethodRepositoryImpl methodRepositoryForAnalyze = new MethodRepositoryImpl(null);
-    private final FieldRepository fieldRepositoryForAnalyze = new FieldRepository();
+    private final MethodRepositoryImpl methodRepositoryForAnalyze = new MethodRepositoryImpl();
+    private final FieldRepositoryImpl fieldRepositoryForAnalyze = new FieldRepositoryImpl();
 
     public TransformerStrategy getStrategy(String className) {
         TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
@@ -67,7 +67,7 @@ public class RunTestClassTransformer {
         return methodRepositoryForAnalyze;
     }
 
-    public FieldRepository fieldRepositoryForAnalyze() {
+    public FieldRepositoryImpl fieldRepositoryForAnalyze() {
         return fieldRepositoryForAnalyze;
     }
 

@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.fieldidtostrategy;
+package com.vmlens.trace.agent.bootstrap.fieldidrepository;
 
 public interface FieldRepositoryForTransform {
 

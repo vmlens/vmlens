@@ -3,8 +3,8 @@ package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor;
 import com.anarsoft.trace.agent.runtime.classtransformer.ASMConstants;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FieldCallbackFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldidtostrategy.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldOwnerAndName;
+import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryForTransform;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 

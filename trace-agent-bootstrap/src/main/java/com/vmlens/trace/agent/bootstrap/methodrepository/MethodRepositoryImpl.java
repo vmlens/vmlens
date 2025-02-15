@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.methodrepository;
 
-import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.StrategyAll;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
 import gnu.trove.map.hash.THashMap;
@@ -8,57 +7,38 @@ import gnu.trove.map.hash.THashMap;
 public class MethodRepositoryImpl implements MethodRepositoryForTransform, MethodRepositoryForCallback {
 
     private final THashMap<Integer, MethodCallId> integerToMethodCallId = new THashMap<>();
-    private final THashMap<MethodCallId, EitherEmptyAllOrPreAnalyzed> methodCallIdToEither = new THashMap<>();
-
-    private final CheckIsThreadRun checkIsThreadRun;
+    private final THashMap<Integer, EitherAllOrPreAnalyzed> idToEither = new THashMap<>();
+    private final THashMap<MethodCallId, Integer> methodCallIdToInteger = new THashMap<>();
     private int maxIndex = 0;
 
-    public MethodRepositoryImpl(CheckIsThreadRun checkIsThreadRun) {
-        this.checkIsThreadRun = checkIsThreadRun;
-    }
-
-    public static MethodRepositoryImpl create() {
-        return new MethodRepositoryImpl(new CheckIsThreadRun());
-    }
-
-
     public synchronized int asInt(MethodCallId methodCallId) {
-        return getOrCreateEither(methodCallId).methodId();
+        if (methodCallIdToInteger.contains(methodCallId)) {
+            return methodCallIdToInteger.get(methodCallId);
+        }
+        int temp = maxIndex;
+        maxIndex++;
+        methodCallIdToInteger.put(methodCallId, temp);
+        integerToMethodCallId.put(temp, methodCallId);
+        return temp;
     }
 
     public synchronized StrategyAll strategyAll(int methodId) {
-        MethodCallId methodCallId = integerToMethodCallId.get(methodId);
-        return methodCallIdToEither.get(methodCallId).strategyAll();
+        return idToEither.get(methodId).strategyAll();
     }
 
     @Override
     public StrategyPreAnalyzed strategyPreAnalyzed(int methodId) {
-        MethodCallId methodCallId = integerToMethodCallId.get(methodId);
-        return methodCallIdToEither.get(methodCallId).strategyPreAnalyzed();
+        return idToEither.get(methodId).strategyPreAnalyzed();
     }
 
     @Override
     public void setStrategyAll(int methodId, StrategyAll strategyAll) {
-        MethodCallId methodCallId = integerToMethodCallId.get(methodId);
-        EitherEmptyAllOrPreAnalyzed either = getOrCreateEither(methodCallId);
-        either.setStrategyAll(strategyAll);
+        idToEither.put(methodId, new EitherAll(strategyAll));
     }
 
     @Override
     public void setStrategyPreAnalyzed(int methodId, StrategyPreAnalyzed strategyPreAnalyzed) {
-        MethodCallId methodCallId = integerToMethodCallId.get(methodId);
-        EitherEmptyAllOrPreAnalyzed either = getOrCreateEither(methodCallId);
-        either.setStrategyPreAnalyzed(strategyPreAnalyzed);
+        idToEither.put(methodId, new EitherPreAnalyzed(strategyPreAnalyzed));
     }
 
-    private EitherEmptyAllOrPreAnalyzed getOrCreateEither(MethodCallId methodCallId) {
-        if (methodCallIdToEither.contains(methodCallId)) {
-            return methodCallIdToEither.get(methodCallId);
-        }
-        EitherEmptyAllOrPreAnalyzed temp = new EitherEmptyAllOrPreAnalyzed(maxIndex);
-        maxIndex++;
-        methodCallIdToEither.put(methodCallId, temp);
-        integerToMethodCallId.put(temp.methodId(), methodCallId);
-        return temp;
-    }
 }

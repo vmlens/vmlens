@@ -21,10 +21,6 @@ public class MethodCallbackImpl {
         this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
     }
 
-    public void targetOfMethodCall(Object object, int calledMethodId) {
-        // Fixme
-    }
-
     public void beforeMethodCall(int calledMethodId) {
         threadLocalWhenInTestAdapter.process(new CallbackActionBeforeMethodCall());
     }
@@ -43,7 +39,4 @@ public class MethodCallbackImpl {
         threadLocalWhenInTestAdapter.process(new CallbackActionMethodExit(methodId));
     }
 
-    public void constructorMethodEnter(int methodId) {
-
-    }
 }
