@@ -20,5 +20,4 @@ public class NormalMethodStrategy implements StrategyAll {
                 new SetFieldsStrategyNoOp<>()));
     }
 
-
 }
