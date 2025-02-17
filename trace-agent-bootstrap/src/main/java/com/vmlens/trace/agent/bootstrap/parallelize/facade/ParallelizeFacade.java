@@ -34,10 +34,10 @@ public class ParallelizeFacade {
         this.parallelizeLoopRepository = parallelizeLoopRepository;
     }
 
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> beginThreadMethodEnter(ThreadLocalForParallelize threadLocalWrapperForParallelize,
-                                       RunnableOrThreadWrapper beganTask) {
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> newTask(ThreadLocalForParallelize threadLocalWrapperForParallelize,
+                                                                    RunnableOrThreadWrapper beganTask) {
         if (currentLoop != null) {
-            return currentLoop.beginThreadMethodEnter(threadLocalWrapperForParallelize, beganTask);
+            return currentLoop.newTask(threadLocalWrapperForParallelize, beganTask);
         }
         return emptyList();
     }

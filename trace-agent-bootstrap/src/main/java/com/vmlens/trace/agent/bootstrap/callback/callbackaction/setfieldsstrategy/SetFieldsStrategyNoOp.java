@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy;
 
 public class SetFieldsStrategyNoOp<EVENT> implements SetFieldsStrategy<EVENT> {
 

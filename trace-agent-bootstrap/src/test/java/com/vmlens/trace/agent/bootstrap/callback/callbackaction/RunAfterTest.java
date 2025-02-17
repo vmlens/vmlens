@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.SetFieldsStrategyNoOp;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
@@ -16,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CallbackActionForRuntimeEventTest {
+public class RunAfterTest {
 
     @Test
     public void methodEnter() {
@@ -28,8 +29,8 @@ public class CallbackActionForRuntimeEventTest {
                 RuntimeEventAndWarnings.of((RuntimeEvent) invocationOnMock.getArguments()[0]));
 
         MethodEnterEvent methodEnterEvent = new MethodEnterEvent(5);
-        CallbackActionForRuntimeEvent<MethodEnterEvent> callbackActionForRuntimeEvent =
-                new CallbackActionForRuntimeEvent<>(methodEnterEvent,
+        RunAfter<MethodEnterEvent> callbackActionForRuntimeEvent =
+                new RunAfter<>(methodEnterEvent,
                         new SetFieldsStrategyNoOp<>());
 
         // When

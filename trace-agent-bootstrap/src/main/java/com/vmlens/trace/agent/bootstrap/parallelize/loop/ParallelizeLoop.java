@@ -43,7 +43,7 @@ public class ParallelizeLoop {
         this.interleaveLoop = interleaveLoop;
     }
 
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> beginThreadMethodEnter(ThreadLocalForParallelize threadLocalForParallelize, RunnableOrThreadWrapper beganTask) {
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> newTask(ThreadLocalForParallelize threadLocalForParallelize, RunnableOrThreadWrapper beganTask) {
         lock.lock();
         try {
             return currentRun.newTask(beganTask, threadLocalForParallelize);

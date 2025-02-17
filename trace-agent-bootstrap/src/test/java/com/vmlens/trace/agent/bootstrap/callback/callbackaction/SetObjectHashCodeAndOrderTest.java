@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.SetObjectHashCodeAndOrder;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
@@ -37,8 +38,8 @@ public class SetObjectHashCodeAndOrderTest {
         OrderMap<ObjectHashCodeAndFieldId> orderMapMock = mock(OrderMap.class);
         when(orderMapMock.getAndIncrementOrder(any())).thenReturn(ORDER);
 
-        CallbackActionForRuntimeEvent<VolatileAccessEvent> callbackActionForRuntimeEvent =
-                new CallbackActionForRuntimeEvent<>(volatileAccessEvent,
+        RunAfter<VolatileAccessEvent> callbackActionForRuntimeEvent =
+                new RunAfter<>(volatileAccessEvent,
                         new SetObjectHashCodeAndOrder<>(orderMapMock, onObject));
 
         // When

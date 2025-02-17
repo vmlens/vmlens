@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionStartAtomicVolatileFieldAccess;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetObjectHashCodeAndOrder;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.SetObjectHashCodeAndOrder;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent;

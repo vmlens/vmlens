@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RuntimeEventAndSetFieldsStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.RuntimeEventAndSetFieldsStrategy;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;

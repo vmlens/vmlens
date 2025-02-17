@@ -1,5 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.RuntimeEventAndSetFieldsStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.RuntimeEventAndSetFieldsStrategyImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.SetFieldsStrategy;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;

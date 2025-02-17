@@ -6,19 +6,27 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionMe
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
+import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
 
 public class MethodCallbackImpl {
 
+    private final ParallelizeFacade parallelizeFacade;
     private final MethodRepositoryForCallback methodIdToStrategy;
     private final OrderMap<Long> monitorOrder;
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
+    private final CheckIsThreadRun checkIsThreadRun;
 
-    public MethodCallbackImpl(MethodRepositoryForCallback methodIdToStrategy,
+    public MethodCallbackImpl(ParallelizeFacade parallelizeFacade,
+                              MethodRepositoryForCallback methodIdToStrategy,
                               OrderMap<Long> monitorOrder,
-                              ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
+                              ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter,
+                              CheckIsThreadRun checkIsThreadRun) {
+        this.parallelizeFacade = parallelizeFacade;
         this.methodIdToStrategy = methodIdToStrategy;
         this.monitorOrder = monitorOrder;
         this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
+        this.checkIsThreadRun = checkIsThreadRun;
     }
 
     public void beforeMethodCall(int calledMethodId) {
@@ -31,7 +39,7 @@ public class MethodCallbackImpl {
 
     public void methodEnter(Object object, int methodId) {
         methodIdToStrategy.strategyAll(methodId).onMethodEnter(object,
-                methodId, monitorOrder, threadLocalWhenInTestAdapter);
+                methodId, monitorOrder, threadLocalWhenInTestAdapter, checkIsThreadRun, parallelizeFacade);
     }
 
 

@@ -10,6 +10,7 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.StrategyAll;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
 
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.when;
 public class CallbackTestContainer {
 
     public static final int TEST_THREAD_INDEX = 1;
+    public static final int STARTED_THREAD_INDEX = 3;
 
     private final OrderMap<Long> monitorOrder;
     private final List<SerializableEvent> eventList;
@@ -60,9 +62,13 @@ public class CallbackTestContainer {
         OrderMap<Long> monitorOrder = new OrderMap<>();
         MethodRepositoryImpl methodRepository = new MethodRepositoryImpl();
 
-        MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(methodRepository,
+        CheckIsThreadRun checkIsThreadRun = mock(CheckIsThreadRun.class);
+        when(checkIsThreadRun.isThreadRun()).thenReturn(true);
+
+        MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(new ParallelizeFacadePassThrough(run),
+                methodRepository,
                 monitorOrder,
-                threadLocalWhenInTestAdapter);
+                threadLocalWhenInTestAdapter, checkIsThreadRun);
         PreAnalyzedCallbackImpl preAnalyzedCallbackImpl = new PreAnalyzedCallbackImpl(methodRepository,
                 threadLocalWhenInTestAdapter);
 

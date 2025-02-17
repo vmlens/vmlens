@@ -15,6 +15,7 @@ import gnu.trove.list.linked.TLinkedList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.vmlens.trace.agent.bootstrap.callback.impl.CallbackTestContainer.STARTED_THREAD_INDEX;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
 
 public class RunForCallbackMock implements RunForCallback {
@@ -49,7 +50,8 @@ public class RunForCallbackMock implements RunForCallback {
     @Override
     public TLinkedList<TLinkableWrapper<SerializableEvent>> newTask(RunnableOrThreadWrapper newWrapper,
                                                                     ThreadLocalForParallelize threadLocalForParallelize) {
-        runActions.add(new NewTask(newWrapper));
+        threadLocalForParallelize.setThreadLocalDataWhenInTest(new ThreadLocalWhenInTest(this, STARTED_THREAD_INDEX));
+        runActions.add(new NewTask());
         return emptyList();
     }
 
