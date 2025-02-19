@@ -15,11 +15,13 @@ public class MethodCallback {
             new ThreadLocalWhenInTestAdapterImpl(), new CheckIsThreadRun());
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
-        methodCallbackImpl.beforeMethodCall(calledMethodId);
+        // calledMethodId is only used in PreAnalyzedCallback
+        methodCallbackImpl.beforeMethodCall(inMethodId, position);
     }
 
     public static void afterMethodCall(int inMethodId, int position, int calledMethodId) {
-        methodCallbackImpl.afterMethodCall(inMethodId, position, calledMethodId);
+        // calledMethodId is only used in PreAnalyzedCallback
+        methodCallbackImpl.afterMethodCall(inMethodId, position);
     }
 
     public static void methodEnter(Object object, int methodId) {

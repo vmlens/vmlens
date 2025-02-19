@@ -4,8 +4,8 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParal
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent;
 import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldOwnerAndName;
@@ -45,7 +45,7 @@ public class FieldCallbackImplIntegTest {
         eventList = new LinkedList<>();
         QueueInMock queueInMock = new QueueInMock(eventList);
         run = mock(Run.class);
-        when(run.endAtomicOperation(any(), any())).thenAnswer(invocationOnMock ->
+        when(run.endAtomicAction(any(), any())).thenAnswer(invocationOnMock ->
                 RuntimeEventAndWarnings.of((RuntimeEvent) invocationOnMock.getArguments()[0]));
 
         threadLocalWhenInTest = new ThreadLocalWhenInTest(run, 1);

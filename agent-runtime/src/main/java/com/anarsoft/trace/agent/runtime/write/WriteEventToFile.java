@@ -1,9 +1,9 @@
 package com.anarsoft.trace.agent.runtime.write;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
-import static com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton.eventQueue;
+import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;

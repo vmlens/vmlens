@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl.runaction;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 
 import java.util.Objects;
 

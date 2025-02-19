@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.process.loadAgentLog
 
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository.AGENTLOG
-import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.AGENTLOG
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
 import com.vmlens.trace.agent.bootstrap.event.warning.DeserializeInfoMessageEvent
 
 import java.io.{DataInputStream, PrintStream}

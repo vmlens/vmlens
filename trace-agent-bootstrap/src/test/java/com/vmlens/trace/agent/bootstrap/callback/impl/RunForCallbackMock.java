@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.callback.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.impl.runaction.*;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
@@ -30,20 +30,20 @@ public class RunForCallbackMock implements RunForCallback {
     }
 
     @Override
-    public RuntimeEventAndWarnings endAtomicOperation(RuntimeEvent runtimeEvent,
-                                                      ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public RuntimeEventAndWarnings endAtomicAction(RuntimeEvent runtimeEvent,
+                                                   ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         runActions.add(new EndAtomicOperation(runtimeEvent));
         return RuntimeEventAndWarnings.of(runtimeEvent);
     }
 
     @Override
-    public void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+    public void startAtomicAction(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
         runActions.add(new StartAtomicOperation());
     }
 
     @Override
-    public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
-                                                  RunnableOrThreadWrapper newThread) {
+    public void startAtomicActionWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
+                                               RunnableOrThreadWrapper newThread) {
         runActions.add(new StartAtomicOperationWithNewThread(newThread));
     }
 

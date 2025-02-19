@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
@@ -37,7 +37,7 @@ public class RunAdapter {
     public TLinkedList<TLinkableWrapper<SerializableEvent>> endAtomicOperation(RuntimeEvent runtimeEventIn,
                                                                                ThreadLocalWhenInTest threadLocalWhenInTest) {
         runtimeEventIn.setThreadIndex(threadLocalWhenInTest.threadIndex());
-        RuntimeEventAndWarnings runtimeEventAndWarning = run.endAtomicOperation(runtimeEventIn, threadLocalWhenInTest);
+        RuntimeEventAndWarnings runtimeEventAndWarning = run.endAtomicAction(runtimeEventIn, threadLocalWhenInTest);
         TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents = emptyList();
 
         if (runtimeEventAndWarning.runtimeEvent() != null) {
@@ -50,11 +50,11 @@ public class RunAdapter {
 
     public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
                                                   RunnableOrThreadWrapper newThread) {
-        run.startAtomicOperationWithNewThread(threadLocalDataWhenInTest, newThread);
+        run.startAtomicActionWithNewThread(threadLocalDataWhenInTest, newThread);
     }
 
     public void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-        run.startAtomicOperation(threadLocalDataWhenInTest);
+        run.startAtomicAction(threadLocalDataWhenInTest);
     }
 
 }

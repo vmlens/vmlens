@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
+import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
-import com.vmlens.trace.agent.bootstrap.event.*;
+import java.nio.ByteBuffer;
 
 
 public class MethodExitEventGen {

@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.event.loadanddistribute.DirTypeNameAndLoadAnd
 import com.anarsoft.race.detection.event.loadanddistribute.LoadAndDistributeOneFilePositionImpl.{control, interleave, method}
 import com.anarsoft.race.detection.process.load.{LoadAndDistributeOneFilePosition, LoadRunsImpl, LoadStatisticAndDistributeOneFilePosition}
 import com.anarsoft.race.detection.process.main.LoadRuns
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository.{CONTROL, INTERLEAVE, METHOD_EVENTS}
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.{CONTROL, INTERLEAVE, METHOD_EVENTS}
 
 import java.nio.file.Path
 import scala.collection.mutable.ArrayBuffer

@@ -1,8 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.RuntimeEventAndSetFieldsStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setinmethodidandposition.RuntimeEventAndSetInMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
 
@@ -13,10 +12,9 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestFor
 public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLocalWhenInTestForParallelize {
     private final RunAdapter runAdapter;
     private final int threadIndex;
+    private InMethodIdAndPosition inMethodIdAndPosition;
+    private RuntimeEventAndSetInMethodIdAndPosition runtimeEventForAtomicAction;
 
-
-    private RuntimeEventAndSetFieldsStrategy atomicVolatileFieldAccess;
-    private ThreadStartEvent threadStartEvent;
 
     public ThreadLocalWhenInTest(RunForCallback run, int threadIndex) {
         this.runAdapter = new RunAdapter(run);
@@ -28,23 +26,24 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
         return threadIndex;
     }
 
-    public RuntimeEventAndSetFieldsStrategy atomicOperation() {
-        return atomicVolatileFieldAccess;
+    public RuntimeEventAndSetInMethodIdAndPosition runtimeEventForAtomicAction() {
+        return runtimeEventForAtomicAction;
     }
 
-    public void setAtomicVolatileFieldAccess(RuntimeEventAndSetFieldsStrategy atomicVolatileFieldAccess) {
-        this.atomicVolatileFieldAccess = atomicVolatileFieldAccess;
+    public void setRuntimeEventForAtomicAction(RuntimeEventAndSetInMethodIdAndPosition runtimeEventForAtomicAction) {
+        this.runtimeEventForAtomicAction = runtimeEventForAtomicAction;
+    }
+
+    public InMethodIdAndPosition inMethodIdAndPosition() {
+        return inMethodIdAndPosition;
+    }
+
+    public void setInMethodIdAndPosition(InMethodIdAndPosition inMethodIdAndPosition) {
+        this.inMethodIdAndPosition = inMethodIdAndPosition;
     }
 
     public RunAdapter runAdapter() {
         return runAdapter;
     }
 
-    public ThreadStartEvent threadStartEvent() {
-        return threadStartEvent;
-    }
-
-    public void setThreadStartEvent(ThreadStartEvent threadStartEvent) {
-        this.threadStartEvent = threadStartEvent;
-    }
 }

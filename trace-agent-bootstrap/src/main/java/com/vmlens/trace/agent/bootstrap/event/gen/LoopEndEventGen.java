@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
 import java.nio.ByteBuffer;
 

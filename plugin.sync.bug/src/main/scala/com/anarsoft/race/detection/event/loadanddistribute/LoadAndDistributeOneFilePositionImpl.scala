@@ -8,7 +8,7 @@ import com.anarsoft.race.detection.event.load.{DeserializeEvents, DeserializeStr
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
 import com.anarsoft.race.detection.loopAndRunData.RunDataListBuilder
 import com.anarsoft.race.detection.process.load.LoadAndDistributeOneFilePosition
-import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
 
 import java.io.RandomAccessFile
 import java.nio.file.{Files, Path}

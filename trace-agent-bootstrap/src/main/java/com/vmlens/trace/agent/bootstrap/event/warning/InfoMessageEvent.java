@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event.warning;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionStartAtomicVolatileFieldAccess;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.SetObjectHashCodeAndOrder;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunStartAtomicAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObjectHashCodeAndOrder;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent;
@@ -18,7 +18,7 @@ public class VolatileFieldStrategy implements FieldStrategy {
         volatileAccessEvent.setMethodId(inMethodId);
         volatileAccessEvent.setOperation(memoryAccessType);
 
-        CallbackAction callbackAction = CallbackActionStartAtomicVolatileFieldAccess.of(volatileAccessEvent,
+        CallbackAction callbackAction = RunStartAtomicAction.of(volatileAccessEvent,
                 new SetObjectHashCodeAndOrder<>(volatileFieldOrder, fromObject));
 
         threadLocalWhenInTestAdapter.process(callbackAction);

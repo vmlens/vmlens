@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.mocks;
 
-import com.vmlens.trace.agent.bootstrap.event.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 
 import java.util.List;
 

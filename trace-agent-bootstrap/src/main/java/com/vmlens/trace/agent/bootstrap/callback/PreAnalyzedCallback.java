@@ -7,7 +7,7 @@ public class PreAnalyzedCallback {
     private static volatile PreAnalyzedCallbackImpl preAnalyzedCallbackImpl;
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
-        preAnalyzedCallbackImpl.beforeMethodCall(calledMethodId);
+        preAnalyzedCallbackImpl.beforeMethodCall(inMethodId, position, calledMethodId);
     }
 
     public static void afterMethodCall(int inMethodId, int position, int calledMethodId) {

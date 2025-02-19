@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.runtime.write;
 
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 
-import static com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton.eventQueue;
+import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
 
 public class ShutdownHook extends Thread {
 

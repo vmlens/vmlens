@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.write;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
 public class PoisonedEvent implements SerializableEvent {
     @Override

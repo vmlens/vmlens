@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.warning.LogLevelSingleton;
 import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
 import com.vmlens.trace.agent.bootstrap.event.warning.Warning;
@@ -58,7 +58,7 @@ public class RunImpl implements Run {
         }
     }
 
-    public RuntimeEventAndWarnings endAtomicOperation(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public RuntimeEventAndWarnings endAtomicAction(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         lock.lock();
         try {
             runtimeEvent.setLoopId(loopId);
@@ -118,7 +118,7 @@ public class RunImpl implements Run {
     }
 
     @Override
-    public void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+    public void startAtomicAction(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
         lock.lock();
         try {
             try {
@@ -133,7 +133,7 @@ public class RunImpl implements Run {
     }
 
     @Override
-    public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
+    public void startAtomicActionWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
         lock.lock();
         try {
             try {

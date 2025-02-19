@@ -7,7 +7,7 @@ import com.anarsoft.trace.agent.runtime.write.*;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.AgentRuntime;
-import com.vmlens.trace.agent.bootstrap.event.EventQueueSingleton;
+import com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;

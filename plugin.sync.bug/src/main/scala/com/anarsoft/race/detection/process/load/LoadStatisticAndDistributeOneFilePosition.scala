@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.process.load
 
 import com.anarsoft.race.detection.event.loadanddistribute.DirTypeNameAndLoadAndDistributeOneFilePosition
-import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.STATISTIC_FILE_POSTFIX
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId.STATISTIC_FILE_POSTFIX
 
 import java.io.DataInputStream
 import java.nio.file.Files

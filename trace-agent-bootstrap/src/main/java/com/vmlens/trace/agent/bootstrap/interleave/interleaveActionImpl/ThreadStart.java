@@ -25,7 +25,9 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
     }
 
     @Override
-    public void addFixedOrder(Position myPosition, OrderArraysBuilder orderArraysBuilder, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
+    public void addFixedOrder(Position myPosition,
+                              OrderArraysBuilder orderArraysBuilder,
+                              ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         orderArraysBuilder.addFixedOrder(new LeftBeforeRight(myPosition, new Position(startedThreadIndex, 0)));
     }
 

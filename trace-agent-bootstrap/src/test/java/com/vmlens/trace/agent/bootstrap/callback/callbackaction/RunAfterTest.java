@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfieldsstrategy.SetFieldsStrategyNoOp;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFieldsNoOp;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
@@ -31,7 +31,7 @@ public class RunAfterTest {
         MethodEnterEvent methodEnterEvent = new MethodEnterEvent(5);
         RunAfter<MethodEnterEvent> callbackActionForRuntimeEvent =
                 new RunAfter<>(methodEnterEvent,
-                        new SetFieldsStrategyNoOp<>());
+                        new SetFieldsNoOp<>());
 
         // When
         TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents =

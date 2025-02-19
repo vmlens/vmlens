@@ -3,8 +3,8 @@ package com.anarsoft.race.detection.process.loadDescription
 import com.anarsoft.race.detection.process.main.LoadDescription
 import com.anarsoft.race.detection.reportbuilder.DescriptionBuilder
 import com.anarsoft.trace.agent.description.{DeserializeClassDescriptions, DeserializeThreadAndLoopDescription}
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository.{DESCRIPTION, THREAD_AND_LOOP_DESCRIPTION}
-import com.vmlens.trace.agent.bootstrap.event.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.{DESCRIPTION, THREAD_AND_LOOP_DESCRIPTION}
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
 
 import java.io.DataInputStream
 import java.nio.file.{Files, Path}

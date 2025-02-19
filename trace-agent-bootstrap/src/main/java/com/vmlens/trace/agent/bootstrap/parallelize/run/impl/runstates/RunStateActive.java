@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates;
 
-import com.vmlens.trace.agent.bootstrap.event.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
@@ -44,7 +44,7 @@ public class RunStateActive implements RunState {
 
     @Override
     public RunState startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-        return new RunStateAtomicOperation(threadLocalDataWhenInTest.threadIndex(), this);
+        return new RunStateAtomicNotNewThreadOperation(threadLocalDataWhenInTest.threadIndex(), this);
     }
 
     @Override

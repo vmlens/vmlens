@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.description;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
 import java.util.Arrays;
 import java.util.Objects;
