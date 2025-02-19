@@ -11,7 +11,7 @@ public class StreamRepository {
     public static final String AGENTLOG = "agentlog";
     public static final String METHOD_EVENTS = "method";
     public static final String INTERLEAVE = "interleave";
-    public static final String FIELD_EVENTS = "field";
+    public static final String FIELD_EVENTS = "nonvolatile";
     public static final String DIRECT_MEMORY = "directmemory";
     public static final String CONTROL = "control";
 
@@ -22,7 +22,7 @@ public class StreamRepository {
     public final StreamWrapperWithLoopIdAndRunId method;
 
     public final StreamWrapperWithLoopIdAndRunId interleave;
-    public final StreamWrapperWithLoopIdAndRunId field;
+    public final StreamWrapperWithLoopIdAndRunId nonVolatile;
     public final StreamWrapperWithLoopIdAndRunId directMemory;
     public final StreamWrapperWithLoopIdAndRunId control;
 
@@ -35,7 +35,7 @@ public class StreamRepository {
 
         this.method = createWithLoopIdAndRunId(eventDir, METHOD_EVENTS, streamList);
         this.interleave = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
-        this.field = createWithLoopIdAndRunId(eventDir, FIELD_EVENTS, streamList);
+        this.nonVolatile = createWithLoopIdAndRunId(eventDir, FIELD_EVENTS, streamList);
         this.directMemory = createWithLoopIdAndRunId(eventDir, DIRECT_MEMORY, streamList);
         this.control = createWithLoopIdAndRunId(eventDir, CONTROL, streamList);
     }

@@ -1,9 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
-
-import java.nio.ByteBuffer;
 
 
 public class FieldAccessEventGen {
@@ -53,7 +52,7 @@ public class FieldAccessEventGen {
 
 
     public void serialize(StreamRepository streamRepository) throws Exception {
-        serialize(streamRepository.field.
+        serialize(streamRepository.nonVolatile.
                 getByteBuffer(new LoopIdAndRunId(loopId, runId), 41, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
