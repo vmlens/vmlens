@@ -1,14 +1,12 @@
-package com.anarsoft.race.detection.event.nonvolatilefield
+package com.anarsoft.race.detection.event.nonvolatile
 
 import com.anarsoft.race.detection.reportbuilder.FieldId
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
 import com.vmlens.report.element.MemoryAccessModifier
 import com.vmlens.report.operationtextfactory.{FieldAccessTextFactory, OperationTextFactory}
-import com.vmlens.trace.agent.bootstrap.MemoryAccessType
-import org.apache.commons.text.StringEscapeUtils
 
-trait NonVolatileFieldAccessEvent extends LoadedNonVolatileFieldEvent
+trait NonVolatileFieldAccessEvent extends LoadedNonVolatileEvent
   with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEvent]
   with WithSetStacktraceNode {
 

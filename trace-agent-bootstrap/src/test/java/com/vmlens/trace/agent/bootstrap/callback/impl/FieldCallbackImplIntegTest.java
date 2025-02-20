@@ -14,9 +14,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class FieldCallbackImplIntegTest {
 
 
-
-
-
     @Test
     public void volatileField() {
         // Given
@@ -45,6 +42,5 @@ public class FieldCallbackImplIntegTest {
         assertThat(callbackTestContainer.runActions().get(0), is(startAtomicOperation()));
         assertThat(callbackTestContainer.runActions().get(1), is(endAtomicOperation(volatileAccessEvent)));
     }
-
 
 }
