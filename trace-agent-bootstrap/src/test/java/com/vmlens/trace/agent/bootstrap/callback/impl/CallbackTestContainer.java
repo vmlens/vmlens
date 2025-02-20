@@ -6,6 +6,8 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
+import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
@@ -25,26 +27,30 @@ public class CallbackTestContainer {
     public static final int TEST_THREAD_INDEX = 1;
     public static final int STARTED_THREAD_INDEX = 3;
 
-    private final OrderMap<Long> monitorOrder;
+
     private final List<SerializableEvent> eventList;
-    private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
     private final RunForCallbackMock run;
     private final MethodCallbackImpl methodCallbackImpl;
     private final PreAnalyzedCallbackImpl preAnalyzedCallbackImpl;
     private final MethodRepositoryImpl methodRepository;
+    private final FieldRepositoryImpl fieldIdToStrategy;
 
-    private CallbackTestContainer(OrderMap<Long> monitorOrder,
-                                  List<SerializableEvent> eventList,
-                                  ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter,
+    private final FieldCallbackImpl fieldCallbackImpl;
+
+    private CallbackTestContainer(List<SerializableEvent> eventList,
                                   RunForCallbackMock run,
-                                  MethodCallbackImpl methodCallbackImpl, PreAnalyzedCallbackImpl preAnalyzedCallbackImpl, MethodRepositoryImpl methodRepository) {
-        this.monitorOrder = monitorOrder;
+                                  MethodCallbackImpl methodCallbackImpl,
+                                  PreAnalyzedCallbackImpl preAnalyzedCallbackImpl,
+                                  MethodRepositoryImpl methodRepository,
+                                  FieldRepositoryImpl fieldIdToStrategy,
+                                  FieldCallbackImpl fieldCallbackImpl) {
         this.eventList = eventList;
-        this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
         this.run = run;
         this.methodCallbackImpl = methodCallbackImpl;
         this.preAnalyzedCallbackImpl = preAnalyzedCallbackImpl;
         this.methodRepository = methodRepository;
+        this.fieldIdToStrategy = fieldIdToStrategy;
+        this.fieldCallbackImpl = fieldCallbackImpl;
     }
 
     public static CallbackTestContainer create(boolean insideTest) {
@@ -72,8 +78,17 @@ public class CallbackTestContainer {
         PreAnalyzedCallbackImpl preAnalyzedCallbackImpl = new PreAnalyzedCallbackImpl(methodRepository,
                 threadLocalWhenInTestAdapter);
 
-        return new CallbackTestContainer(monitorOrder, eventList, threadLocalWhenInTestAdapter,
-                run, methodCallbackImpl, preAnalyzedCallbackImpl, methodRepository);
+        FieldRepositoryImpl fieldRepository = new FieldRepositoryImpl();
+
+        OrderMap<ObjectHashCodeAndFieldId> volatileFieldOrder = new OrderMap<>();
+        OrderMap<Integer> staticVolatileFieldOrder = new OrderMap<>();
+        FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldRepository,
+                volatileFieldOrder,
+                staticVolatileFieldOrder,
+                threadLocalWhenInTestAdapter);
+
+        return new CallbackTestContainer(eventList, run,
+                methodCallbackImpl, preAnalyzedCallbackImpl, methodRepository, fieldRepository, fieldCallbackImpl);
     }
 
     public static ThreadLocalWhenInTestAdapter createThreadLocalWhenInTestAdapter(ThreadLocalWhenInTest threadLocalWhenInTest,
@@ -110,5 +125,13 @@ public class CallbackTestContainer {
 
     public PreAnalyzedCallbackImpl preAnalyzedCallbackImpl() {
         return preAnalyzedCallbackImpl;
+    }
+
+    public FieldRepositoryImpl fieldIdToStrategy() {
+        return fieldIdToStrategy;
+    }
+
+    public FieldCallbackImpl fieldCallbackImpl() {
+        return fieldCallbackImpl;
     }
 }

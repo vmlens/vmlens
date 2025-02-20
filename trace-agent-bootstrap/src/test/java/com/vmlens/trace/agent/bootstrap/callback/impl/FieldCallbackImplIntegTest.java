@@ -1,87 +1,50 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
+import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent;
 import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryImpl;
-import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
-import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
+import static com.vmlens.trace.agent.bootstrap.callback.impl.CallbackTestContainer.TEST_THREAD_INDEX;
+import static com.vmlens.trace.agent.bootstrap.callback.impl.runaction.EndAtomicOperation.endAtomicOperation;
+import static com.vmlens.trace.agent.bootstrap.callback.impl.runaction.StartAtomicOperation.startAtomicOperation;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class FieldCallbackImplIntegTest {
 
-    private OrderMap<ObjectHashCodeAndFieldId> volatileFieldOrder;
-    private OrderMap<Integer> staticVolatileFieldOrder;
-    private List<SerializableEvent> eventList;
-    private ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
-    private ThreadLocalWhenInTest threadLocalWhenInTest;
-    private Run run;
-    private FieldRepositoryImpl fieldRepository;
 
-    @Before
-    public void setup() {
-        volatileFieldOrder = new OrderMap<>();
-        staticVolatileFieldOrder = new OrderMap<>();
 
-        eventList = new LinkedList<>();
-        QueueInMock queueInMock = new QueueInMock(eventList);
-        run = mock(Run.class);
-        when(run.endAtomicAction(any(), any())).thenAnswer(invocationOnMock ->
-                RuntimeEventAndWarnings.of((RuntimeEvent) invocationOnMock.getArguments()[0]));
 
-        threadLocalWhenInTest = new ThreadLocalWhenInTest(run, 1);
-
-        ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider =
-                mock(ThreadLocalForParallelizeProvider.class);
-
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
-        threadLocalForParallelize.setThreadLocalDataWhenInTest(threadLocalWhenInTest);
-
-        when(threadLocalForParallelizeProvider.threadLocalForParallelize())
-                .thenReturn(threadLocalForParallelize);
-        threadLocalWhenInTestAdapter = new ThreadLocalWhenInTestAdapterImpl(threadLocalForParallelizeProvider,
-                queueInMock);
-
-        fieldRepository = new FieldRepositoryImpl();
-    }
 
     @Test
     public void volatileField() {
+        // Given
+        Object object = new Object();
+        int position = 2;
+        int inMethodId = 56;
         FieldOwnerAndName volatileField = new FieldOwnerAndName("test.Class", "volatile");
-        fieldRepository.getIdAndSetFieldIsVolatile(volatileField);
-        int fieldId = fieldRepository.asInt(volatileField);
-        accessField(fieldId);
-        assertThat(eventList.get(0), instanceOf(VolatileAccessEvent.class));
+        CallbackTestContainer callbackTestContainer = CallbackTestContainer.create(true);
+        int fieldId = callbackTestContainer.fieldIdToStrategy().getIdAndSetFieldIsVolatile(volatileField);
+
+        VolatileAccessEvent volatileAccessEvent = new VolatileAccessEvent();
+        volatileAccessEvent.setThreadIndex(TEST_THREAD_INDEX);
+        volatileAccessEvent.setMethodId(inMethodId);
+        volatileAccessEvent.setOperation(MemoryAccessType.IS_READ);
+        volatileAccessEvent.setObjectHashCode(System.identityHashCode(object));
+
+        // When
+        callbackTestContainer.fieldCallbackImpl().beforeFieldRead(object, fieldId, position, inMethodId);
+        callbackTestContainer.fieldCallbackImpl().afterFieldAccess();
+
+        // Then
+        assertThat(callbackTestContainer.eventList().size(), is(1));
+        assertThat(callbackTestContainer.eventList().get(0), is(volatileAccessEvent));
+
+        assertThat(callbackTestContainer.runActions().size(), is(2));
+        assertThat(callbackTestContainer.runActions().get(0), is(startAtomicOperation()));
+        assertThat(callbackTestContainer.runActions().get(1), is(endAtomicOperation(volatileAccessEvent)));
     }
 
-    private void accessField(int fieldId) {
-        Object fromObject = new Object();
-        int position = 2;
-        int inMethodId = 22;
-        FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldRepository,
-                volatileFieldOrder,
-                staticVolatileFieldOrder,
-                threadLocalWhenInTestAdapter);
-        fieldCallbackImpl.beforeFieldRead(fromObject, fieldId, position, inMethodId);
-        fieldCallbackImpl.afterFieldAccess();
-    }
+
 }
