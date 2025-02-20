@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.groupinterleave
 
 import com.anarsoft.race.detection.event.interleave.{ThreadStartEvent, VolatileAccessEvent}
-import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess
+import com.anarsoft.race.detection.sortutil.EventWithReadWriteContainer
 import com.anarsoft.race.detection.util.EventArray
 
 import java.util
@@ -16,7 +16,7 @@ class GroupInterleaveElementBuilder {
     arrayBuffer.append(
       new GroupInterleaveElementSyncActionImpl[VolatileAccessEvent](
         EventArray[VolatileAccessEvent](list),
-        (event: VolatileAccessEvent) => EventContainerForMemoryAccess[VolatileAccessEvent](event)));
+        (event: VolatileAccessEvent) => EventWithReadWriteContainer[VolatileAccessEvent](event)));
   }
 
   def addThreadStartEvents(list: util.LinkedList[ThreadStartEvent]): Unit = {

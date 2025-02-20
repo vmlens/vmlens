@@ -2,12 +2,12 @@ package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
-import com.anarsoft.race.detection.sortutil.MemoryAccessEvent
+import com.anarsoft.race.detection.sortutil.EventWithReadWrite
 import com.vmlens.report.element.MemoryAccessModifier
 import com.vmlens.report.operationtextfactory.{FieldAccessTextFactory, OperationTextFactory}
 
 
-trait VolatileAccessEvent extends MemoryAccessEvent[VolatileAccessEvent]
+trait VolatileAccessEvent extends EventWithReadWrite[VolatileAccessEvent]
   with SyncActionEventWithCompareType[VolatileAccessEvent]
   with WithSetStacktraceNode
   with LoadedInterleaveActionEvent {

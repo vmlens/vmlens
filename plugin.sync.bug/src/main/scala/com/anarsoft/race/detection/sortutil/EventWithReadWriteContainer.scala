@@ -1,10 +1,10 @@
 package com.anarsoft.race.detection.sortutil
 
 
-class EventContainerForMemoryAccess[EVENT <: MemoryAccessEvent[EVENT]]
+class EventWithReadWriteContainer[EVENT <: EventWithReadWrite[EVENT]]
 (private val read: Option[EVENT], private val write: Option[EVENT]) extends EventContainer[EVENT] {
 
-  override def put(event: EVENT): EventContainer[EVENT] = EventContainerForMemoryAccess(read, write, event);
+  override def put(event: EVENT): EventContainer[EVENT] = EventWithReadWriteContainer(read, write, event);
 
 
   override def foreachOpposite(event: EVENT, f: EVENT => Unit): Unit = {
@@ -17,13 +17,13 @@ class EventContainerForMemoryAccess[EVENT <: MemoryAccessEvent[EVENT]]
   }
 }
 
-object EventContainerForMemoryAccess {
+object EventWithReadWriteContainer {
 
-  def apply[EVENT <: MemoryAccessEvent[EVENT]](event: EVENT): EventContainer[EVENT] =
+  def apply[EVENT <: EventWithReadWrite[EVENT]](event: EVENT): EventContainer[EVENT] =
     apply(None, None, event);
 
-  def apply[EVENT <: MemoryAccessEvent[EVENT]](existingRead: Option[EVENT],
-                                               existingWrite: Option[EVENT], event: EVENT) = {
+  def apply[EVENT <: EventWithReadWrite[EVENT]](existingRead: Option[EVENT],
+                                                existingWrite: Option[EVENT], event: EVENT) = {
     var resultRead = existingRead;
     var resultWrite = existingWrite;
 
@@ -33,6 +33,6 @@ object EventContainerForMemoryAccess {
     if (event.isWrite) {
       resultWrite = Some(event)
     }
-    new EventContainerForMemoryAccess(resultRead, resultWrite)
+    new EventWithReadWriteContainer(resultRead, resultWrite)
   }
 }

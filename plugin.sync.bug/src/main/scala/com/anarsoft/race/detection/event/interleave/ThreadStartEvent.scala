@@ -8,8 +8,10 @@ import com.vmlens.report.element.LoopRunAndThreadIndex
 import com.vmlens.report.operationtextfactory.{OperationTextFactory, ThreadOperationTextFactory}
 
 
-trait ThreadStartEvent extends LoadedInterleaveActionEvent with ThreadOperation
-  with EventForReportElement with WithSetStacktraceNode {
+trait ThreadStartEvent extends LoadedInterleaveActionEvent
+  with ThreadOperation
+  with EventForReportElement
+  with WithSetStacktraceNode {
 
   def startedThreadIndex: Int;
 

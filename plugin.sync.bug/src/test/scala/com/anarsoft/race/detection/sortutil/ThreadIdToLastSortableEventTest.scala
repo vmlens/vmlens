@@ -8,7 +8,7 @@ class ThreadIdToLastSortableEventTest extends AnyFlatSpec with Matchers {
 
   "ThreadIdToLastSortableEvent" should "store non volatile field access events" in {
     val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[NonVolatileMemoryAccessEventGuineaPig](
-      (event) => EventContainerForMemoryAccess(event))
+      (event) => EventWithReadWriteContainer(event))
 
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder();
 

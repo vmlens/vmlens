@@ -1,10 +1,8 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
-import com.anarsoft.race.detection.groupinterleave.{GroupInterleaveElementBuilder, GroupInterleaveElementSyncActionImpl}
+import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementBuilder
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
-import com.anarsoft.race.detection.sortutil.EventContainerForMemoryAccess
-import com.anarsoft.race.detection.util.EventArray
 
 import java.util
 
