@@ -19,11 +19,11 @@ public class ClassTransformerAllTest {
         RunTestClassTransformer runTestClassTransformer = new RunTestClassTransformer();
 
         // When
-        runTestClassTransformer.runTest("com.vmlens.test.guineaPig.MethodCall", "/methodCall.txt");
+        runTestClassTransformer.runTest("com.vmlens.test.guineapig.MethodCall", "/methodCall.txt");
 
         // Then
         MethodRepositoryImpl repo = runTestClassTransformer.methodRepositoryForAnalyze();
-        int id = repo.asInt(new MethodCallId("com/vmlens/test/guineaPig/MethodCall", "update", "()V"));
+        int id = repo.asInt(new MethodCallId("com/vmlens/test/guineapig/MethodCall", "update", "()V"));
         assertThat(repo.strategyAll(id), is(NormalMethodStrategy.SINGLETON));
     }
 

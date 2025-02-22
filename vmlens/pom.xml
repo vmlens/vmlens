@@ -53,6 +53,7 @@
 
 
     <modules>
+        <module>../annotation</module>
         <module>../test-util</module>
         <module>../api</module>
         <module>../trace-agent-bootstrap</module>

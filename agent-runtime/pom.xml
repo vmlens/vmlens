@@ -60,6 +60,11 @@
             <version>${asm.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.visualj</groupId>
+            <artifactId>annotation</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>test-util</artifactId>
             <version>${project.version}</version>

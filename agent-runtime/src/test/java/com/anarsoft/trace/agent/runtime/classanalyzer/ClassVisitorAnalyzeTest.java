@@ -22,7 +22,7 @@ public class ClassVisitorAnalyzeTest {
     @Test
     public void volatileFieldAccess() throws IOException {
         // Given
-        byte[] classArray = new LoadClassArray().load("com.vmlens.test.guineaPig.VolatileFieldAccess");
+        byte[] classArray = new LoadClassArray().load("com.vmlens.test.guineapig.VolatileFieldAccess");
         ClassReader classReader = new ClassReader(classArray);
         MethodRepositoryForTransform methodRepositoryForAnalyze = mock(MethodRepositoryForTransform.class);
         FieldRepositoryForTransform fieldRepositoryForAnalyze = mock(FieldRepositoryForTransform.class);
@@ -36,7 +36,7 @@ public class ClassVisitorAnalyzeTest {
 
         // Then
         ClassDescription classDescription = classAnalyzedEventList.get(0).element();
-        assertThat(classDescription.name(), is("com/vmlens/test/guineaPig/VolatileFieldAccess"));
+        assertThat(classDescription.name(), is("com/vmlens/test/guineapig/VolatileFieldAccess"));
         assertThat(classDescription.methodArray()[1].name(), is("update"));
     }
 

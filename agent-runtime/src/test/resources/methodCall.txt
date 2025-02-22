@@ -1,4 +1,4 @@
-class:com/vmlens/test/guineaPig/MethodCall
+class:com/vmlens/test/guineapig/MethodCall
 method:<init>()V
   ALOAD
   INVOKESPECIAL  java/lang/Object.<init>:()V

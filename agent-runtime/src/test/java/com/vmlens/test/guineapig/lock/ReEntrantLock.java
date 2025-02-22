@@ -1,4 +1,4 @@
-package com.vmlens.test.guineaPig.lock;
+package com.vmlens.test.guineapig.lock;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

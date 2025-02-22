@@ -113,7 +113,7 @@ public class AgentClassFileTransformerIntegTest {
     private void runTest(String className) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         ClassLoader cl = new ClassLoaderForTransformation(this.getClass().getClassLoader());
-        Object objectUnderTest = cl.loadClass("com.vmlens.test.guineaPig." + className).newInstance();
+        Object objectUnderTest = cl.loadClass("com.vmlens.test.guineapig." + className).newInstance();
         for (Method m : objectUnderTest.getClass().getMethods()) {
             if (m.getName().equals("update")) {
                 m.invoke(objectUnderTest);

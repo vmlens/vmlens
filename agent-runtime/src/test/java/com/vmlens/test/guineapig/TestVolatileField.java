@@ -1,4 +1,4 @@
-package com.vmlens.test.guineaPig;
+package com.vmlens.test.guineapig;
 
 import org.junit.Test;
 

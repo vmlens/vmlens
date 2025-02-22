@@ -1,4 +1,4 @@
-package com.vmlens.test.guineaPig;
+package com.vmlens.test.guineapig;
 
 public class StaticFieldAccess {
     private static int field;

@@ -2,6 +2,7 @@ package com.anarsoft.trace.agent.preanalyzed.model;
 
 import com.anarsoft.trace.agent.preanalyzed.builder.ClassBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.AbstractClassType;
+import org.visualj.ViewComponent;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
+@ViewComponent("agent.runtime")
 public class PackageOrClass {
 
     private final String name;
@@ -38,7 +40,6 @@ public class PackageOrClass {
     public void addToBuilder(ClassBuilder classBuilder) {
         classType.addToBuilder(name, methods, classBuilder);
     }
-
 
     public void serialize(DataOutputStream out) throws IOException {
         out.writeUTF(name);
