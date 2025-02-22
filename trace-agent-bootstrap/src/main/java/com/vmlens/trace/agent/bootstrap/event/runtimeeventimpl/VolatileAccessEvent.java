@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileAccessEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileFieldAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
@@ -11,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
  * a data structure
  */
 
-public class VolatileAccessEvent extends VolatileAccessEventGen implements RuntimeEvent,
+public class VolatileAccessEvent extends VolatileAccessEventGen implements
         InterleaveActionFactory, WithObjectHashCodeAndOrder<ObjectHashCodeAndFieldId>, WithInMethodIdAndPosition {
 
     public void setThreadIndex(int threadIndex) {
