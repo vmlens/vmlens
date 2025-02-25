@@ -47,4 +47,9 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
     public ThreadLocalForParallelize threadLocalForParallelize() {
         return threadLocalForParallelizeProvider.threadLocalForParallelize();
     }
+
+    @Override
+    public QueueIn eventQueue() {
+        return eventQueueInternal;
+    }
 }

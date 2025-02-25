@@ -1,12 +1,8 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.preanalyzed.modelfactory.ModelFactory;
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterAndTransformerStrategyCollection;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.ClassFilterAndTransformerStrategyCollectionFactory;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.*;
 import com.anarsoft.trace.agent.runtime.classtransformer.logging.ClassVisitorForLogging;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
@@ -26,7 +22,7 @@ public class RunTestClassTransformer {
     private final MethodRepositoryImpl methodRepositoryForAnalyze = new MethodRepositoryImpl();
     private final FieldRepositoryImpl fieldRepositoryForAnalyze = new FieldRepositoryImpl();
 
-    public TransformerStrategy getStrategy(String className) {
+    public TransformerStrategy getStrategy(String className) throws IOException {
         TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
         TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
 
@@ -36,7 +32,7 @@ public class RunTestClassTransformer {
                 new ClassFilterAndTransformerStrategyCollectionFactory(methodRepositoryForAnalyze,
                         fieldRepositoryForAnalyze,
                         writeClassDescription,
-                        new ModelFactory().create());
+                        new LoadPreAnalyzed().loadFromClasspath());
 
         ClassFilterAndTransformerStrategyCollection collection = factory.create();
         String normalizedName = className.replace('.', '/');
@@ -47,10 +43,6 @@ public class RunTestClassTransformer {
         TransformerStrategy strategy = getStrategy(className);
 
         byte[] classfileBuffer = new LoadClassArray().loadResource(calculateFileName(className));
-        //OutputStream outTransformed = new FileOutputStream("ThreadExample.byte");
-        //outTransformed.write(classfileBuffer);
-        //outTransformed.close();
-
         TransformerContext transformerContext = new TransformerContext(classfileBuffer, className);
         byte[] transformed = strategy.transform(transformerContext);
 

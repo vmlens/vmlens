@@ -27,17 +27,17 @@ public class MethodRepositoryImpl implements MethodRepositoryForTransform, Metho
     }
 
     @Override
-    public StrategyPreAnalyzed strategyPreAnalyzed(int methodId) {
+    public synchronized StrategyPreAnalyzed strategyPreAnalyzed(int methodId) {
         return idToEither.get(methodId).strategyPreAnalyzed();
     }
 
     @Override
-    public void setStrategyAll(int methodId, StrategyAll strategyAll) {
+    public synchronized void setStrategyAll(int methodId, StrategyAll strategyAll) {
         idToEither.put(methodId, new EitherAll(strategyAll));
     }
 
     @Override
-    public void setStrategyPreAnalyzed(int methodId, StrategyPreAnalyzed strategyPreAnalyzed) {
+    public synchronized void setStrategyPreAnalyzed(int methodId, StrategyPreAnalyzed strategyPreAnalyzed) {
         idToEither.put(methodId, new EitherPreAnalyzed(strategyPreAnalyzed));
     }
 

@@ -18,10 +18,11 @@ public class RunMethodStrategy implements StrategyAll {
     @Override
     public void methodEnter(EnterExitContext enterExitContext) {
         if (enterExitContext.checkIsThreadRun().isThreadRun()) {
-            enterExitContext.parallelizeFacade().newTask(enterExitContext.
+            enterExitContext.threadLocalWhenInTestAdapter().eventQueue().offer(
+                enterExitContext.parallelizeFacade().newTask(enterExitContext.
                             threadLocalWhenInTestAdapter().
                             threadLocalForParallelize(),
-                    new RunnableOrThreadWrapper(Thread.currentThread()));
+                    new RunnableOrThreadWrapper(Thread.currentThread())));
             enterExitContext.threadLocalWhenInTestAdapter().process(new RunAfter<>(new MethodEnterEvent(enterExitContext.methodId()),
                     new SetFieldsNoOp<>()));
         } else {

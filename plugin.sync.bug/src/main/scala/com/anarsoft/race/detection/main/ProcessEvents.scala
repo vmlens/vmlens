@@ -11,6 +11,13 @@ import com.vmlens.report.createreport.CreateReport
 import java.io.PrintStream
 import java.nio.file.Paths
 
+/*
+
+C\:\\git-repo\\vmlens\\test-vmlens-maven-plugin\\target\\vmlens-agent/vmlens/
+C:/report-dir/
+
+*/
+
 object ProcessEvents {
   def main(args: Array[String]): Unit = {
     val dir = Paths.get(args(0));

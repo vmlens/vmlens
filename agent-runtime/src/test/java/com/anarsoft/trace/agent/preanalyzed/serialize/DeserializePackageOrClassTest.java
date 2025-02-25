@@ -18,10 +18,8 @@ import static org.hamcrest.core.Is.is;
 public class DeserializePackageOrClassTest {
 
     @Test
-    public void serializeAndDeserialize() throws IOException {
+    public void serializeAndDeserializeFiltered() throws IOException {
         // Given
-        TLinkedList<TLinkableWrapper<PackageOrClass>> packageOrClasses = new TLinkedList<>();
-
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
 
@@ -29,6 +27,24 @@ public class DeserializePackageOrClassTest {
                 ClassTypeFilter.SINGLETON,
                 new PreAnalyzedMethod[0]);
 
+        // When
+        filteredPackage.serialize( dataOutputStream);
+        dataOutputStream.close();
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+        DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
+
+        PackageOrClass loaded = PackageOrClass.deserialize(dataInputStream);
+
+        // Then
+        assertThat(loaded, is(filteredPackage));
+    }
+
+    @Test
+    public void serializeAndDeserializeWithMethod() throws IOException {
+        // Given
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
 
         PreAnalyzedMethod[] preAnalyzedMethods = new PreAnalyzedMethod[1];
         preAnalyzedMethods[0] = new PreAnalyzedMethod("´start", "()V", MethodTypeThreadStart.SINGLETON);
@@ -36,25 +52,18 @@ public class DeserializePackageOrClassTest {
                 ClassTypeFilter.SINGLETON, preAnalyzedMethods);
 
 
-        packageOrClasses.add(wrap(filteredPackage));
-        packageOrClasses.add(wrap(withMethod));
-
-        SerializePackageOrClass serializePackageOrClass = new SerializePackageOrClass();
-        DeserializePackageOrClass deserializePackageOrClass = new DeserializePackageOrClass();
-
         // When
-        serializePackageOrClass.serialize(packageOrClasses, dataOutputStream);
+        withMethod.serialize(dataOutputStream);
 
         dataOutputStream.close();
 
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
         DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
 
-        TLinkedList<TLinkableWrapper<PackageOrClass>> loaded = deserializePackageOrClass.deserialize(dataInputStream);
+        PackageOrClass loaded = PackageOrClass.deserialize(dataInputStream);
 
         // Then
-        assertThat(loaded.get(0).element(), is(filteredPackage));
-        assertThat(loaded.get(1).element(), is(withMethod));
+        assertThat(loaded, is(withMethod));
 
     }
 

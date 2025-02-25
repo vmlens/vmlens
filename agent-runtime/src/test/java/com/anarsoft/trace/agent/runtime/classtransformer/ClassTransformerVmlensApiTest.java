@@ -21,7 +21,7 @@ public class ClassTransformerVmlensApiTest {
     }
 
     @Test
-    public void allInterleavingsBuilder() {
+    public void allInterleavingsBuilder() throws IOException {
         // Given
         RunTestClassTransformer runTestClassTransformer = new RunTestClassTransformer();
 

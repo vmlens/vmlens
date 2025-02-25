@@ -18,9 +18,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 
-@Mojo(name = "prepare-agent", defaultPhase = LifecyclePhase.INITIALIZE, requiresDependencyResolution = ResolutionScope.RUNTIME, threadSafe = true)
-public class AgentMojo
-        extends AbstractMojo {
+@Mojo(name = "prepare-agent", defaultPhase = LifecyclePhase.INITIALIZE,
+        requiresDependencyResolution = ResolutionScope.RUNTIME, threadSafe = true)
+public class AgentMojo extends AbstractMojo {
 
     private static final String SUREFIRE_ARG_LINE = "argLine";
     private static final String[] jars = new String[]{"agent_bootstrap.jar", "agent_runtime.jar", "agent.jar"};
