@@ -19,11 +19,13 @@ import java.util.Properties;
 
 
 @Mojo(name = "prepare-agent", defaultPhase = LifecyclePhase.INITIALIZE,
-        requiresDependencyResolution = ResolutionScope.RUNTIME, threadSafe = true)
+        requiresDependencyResolution = ResolutionScope.NONE, threadSafe = true)
 public class AgentMojo extends AbstractMojo {
 
     private static final String SUREFIRE_ARG_LINE = "argLine";
     private static final String[] jars = new String[]{"agent_bootstrap.jar", "agent_runtime.jar", "agent.jar"};
+
+    private static volatile File eventDirectory;
 
     @Parameter(property = "project", readonly = true)
     private MavenProject project;
@@ -32,6 +34,10 @@ public class AgentMojo extends AbstractMojo {
      */
     @Parameter(defaultValue = "${project.build.directory}/vmlens-agent")
     private File agentDirectory;
+
+    public static File eventDirectory() {
+        return eventDirectory;
+    }
 
     public void execute()
             throws MojoExecutionException {
@@ -58,7 +64,9 @@ public class AgentMojo extends AbstractMojo {
             Properties properties = new Properties();
             String dir = agentDirectory.getAbsolutePath() + "/vmlens/";
 
-            new File(dir).mkdirs();
+            File eventDir = new File(dir);
+            eventDir.mkdirs();
+            eventDirectory = eventDir;
             properties.setProperty("eventDir", dir);
             FileOutputStream stream = new FileOutputStream(new File(agentDirectory.getAbsolutePath() + "/run.properties"));
             properties.store(stream, "");
@@ -73,8 +81,8 @@ public class AgentMojo extends AbstractMojo {
             String agentVmArg = "-javaagent:\"" +
                     agentDirectory.getAbsolutePath() + "/agent.jar\"  " + additionalArgs;
             getLog().info(agentVmArg);
-
             projectProperties.setProperty(SUREFIRE_ARG_LINE, agentVmArg);
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
