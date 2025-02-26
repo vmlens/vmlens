@@ -5,7 +5,7 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrateg
 import com.anarsoft.trace.agent.runtime.classanalyzer.ClassVisitorAnalyze;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 
 public class TransformerStrategyForClassTransformer implements TransformerStrategy {

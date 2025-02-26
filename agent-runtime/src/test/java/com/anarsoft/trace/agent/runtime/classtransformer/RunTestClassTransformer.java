@@ -8,7 +8,7 @@ import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDur
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryImpl;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassReader;

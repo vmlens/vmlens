@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.fieldidrepository;
+package com.vmlens.trace.agent.bootstrap.fieldrepository;
 
 import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.FieldStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.FinalFieldStrategy;

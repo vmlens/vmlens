@@ -5,7 +5,7 @@ import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;

@@ -32,7 +32,7 @@ class SortedMemoryAccessList {
   }
 
   def foreach(f: (EventForReportElement) => Unit): Unit = {
-
+    list.foreach(f);
   }
   
 }

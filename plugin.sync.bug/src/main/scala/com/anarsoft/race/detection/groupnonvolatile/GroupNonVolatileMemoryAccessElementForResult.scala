@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.groupnonvolatilememoryaccess
+package com.anarsoft.race.detection.groupnonvolatile
 
 import com.anarsoft.race.detection.reportbuilder.StaticMemoryAccessId
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.SortedMemoryAccessList

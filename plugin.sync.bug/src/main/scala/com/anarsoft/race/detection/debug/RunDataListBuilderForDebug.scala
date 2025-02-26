@@ -3,6 +3,7 @@ package com.anarsoft.race.detection.debug
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.control.ControlEvent
 import com.anarsoft.race.detection.groupinterleave.{GroupInterleaveElement, GroupInterleaveElementSyncActionImpl, GroupInterleaveElementThreadOperationImpl}
+import com.anarsoft.race.detection.groupnonvolatile.{GroupNonVolatileElement, GroupNonVolatileElementImpl}
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 
 import java.util
@@ -23,6 +24,14 @@ class RunDataListBuilderForDebug extends RunDataListBuilder {
 
   }
 
+  override def addNonVolatileElements(loopAndRunId: LoopAndRunId, nonVolatileElements: List[GroupNonVolatileElement]): Unit = {
+    for (elem <- nonVolatileElements) {
+      for (event <- elem.asInstanceOf[GroupNonVolatileElementImpl[_]].eventArray) {
+        println(event);
+      }
+    }
+  }
+
   override def addSyncActionElements(loopAndRunId: LoopAndRunId, syncActionElements: List[GroupInterleaveElement]): Unit = {
     for (elem <- syncActionElements) {
       if (elem.isInstanceOf[GroupInterleaveElementSyncActionImpl[_]]) {
@@ -34,10 +43,6 @@ class RunDataListBuilderForDebug extends RunDataListBuilder {
           println(event);
         }
       }
-
-
-
-
     }
   }
 }

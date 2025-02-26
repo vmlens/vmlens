@@ -2,10 +2,11 @@ package com.anarsoft.race.detection.event.loadanddistribute
 
 import com.anarsoft.race.detection.event.control.{LoadedControlContext, LoadedControlEvent}
 import com.anarsoft.race.detection.event.distribute.{DistributeEvents, EventWithLoopAndRunId, LoadedEventContext}
-import com.anarsoft.race.detection.event.gen.{ControlDeSerializer, InterleaveDeSerializer, MethodDeSerializer}
+import com.anarsoft.race.detection.event.gen.{ControlDeSerializer, InterleaveDeSerializer, MethodDeSerializer, NonVolatileDeSerializer}
 import com.anarsoft.race.detection.event.interleave.{LoadedInterleaveActionContext, LoadedInterleaveActionEvent}
 import com.anarsoft.race.detection.event.load.{DeserializeEvents, DeserializeStrategy, FilePosition, LoadOneFilePosition}
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
+import com.anarsoft.race.detection.event.nonvolatile.{LoadedNonVolatileEvent, LoadedNonVolatileEventContext}
 import com.anarsoft.race.detection.loopAndRunData.RunDataListBuilder
 import com.anarsoft.race.detection.process.load.LoadAndDistributeOneFilePosition
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
@@ -32,6 +33,13 @@ class LoadAndDistributeOneFilePositionImpl[EVENT <: EventWithLoopAndRunId](val l
 }
 
 object LoadAndDistributeOneFilePositionImpl {
+
+  def nonVolatile(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedNonVolatileEvent](dir, typeName,
+    new NonVolatileDeSerializer(),
+    () => {
+      new LoadedNonVolatileEventContext()
+    });
+
 
   def method(dir: Path, typeName: String): LoadAndDistributeOneFilePosition = create[LoadedMethodEvent](dir, typeName,
     new MethodDeSerializer(),

@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public class FieldCallback {

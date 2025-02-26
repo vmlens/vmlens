@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection;
 
 
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 
 public class FactoryCollectionAllFactory implements FactoryCollectionFactory {

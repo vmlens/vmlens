@@ -1,10 +1,10 @@
 package com.anarsoft.race.detection.main
 
 import com.anarsoft.race.detection.event.loadanddistribute.DirTypeNameAndLoadAndDistributeOneFilePosition
-import com.anarsoft.race.detection.event.loadanddistribute.LoadAndDistributeOneFilePositionImpl.{control, interleave, method}
+import com.anarsoft.race.detection.event.loadanddistribute.LoadAndDistributeOneFilePositionImpl.{control, interleave, method, nonVolatile}
 import com.anarsoft.race.detection.process.load.{LoadAndDistributeOneFilePosition, LoadRunsImpl, LoadStatisticAndDistributeOneFilePosition}
 import com.anarsoft.race.detection.process.main.LoadRuns
-import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.{CONTROL, INTERLEAVE, METHOD_EVENTS}
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.{CONTROL, INTERLEAVE, METHOD_EVENTS, NON_VOLATILE}
 
 import java.nio.file.Path
 import scala.collection.mutable.ArrayBuffer
@@ -17,6 +17,7 @@ class LoadRunsFactory {
     arrayBuffer.append(create(dir, INTERLEAVE, (path, name) => interleave(path, name)));
     arrayBuffer.append(create(dir, CONTROL, (path, name) => control(path, name)));
     arrayBuffer.append(create(dir, METHOD_EVENTS, (path, name) => method(path, name)));
+    arrayBuffer.append(create(dir, NON_VOLATILE, (path, name) => nonVolatile(path, name)));
     new LoadRunsImpl(arrayBuffer.toList);
   }
 

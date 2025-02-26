@@ -26,4 +26,8 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileEvent
   override def createOperationTextFactory(memoryAccessModifier: MemoryAccessModifier): OperationTextFactory = {
     FieldAccessTextFactory.create(memoryAccessModifier, operation, fieldId, objectHashCode);
   }
+
+  override def addToContext(context: LoadedNonVolatileEventContext): Unit = {
+    context.nonVolatileAccessEvents.add(this)
+  }
 }

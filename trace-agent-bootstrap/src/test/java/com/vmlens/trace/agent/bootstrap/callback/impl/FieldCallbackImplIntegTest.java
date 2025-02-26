@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback.impl;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.FieldAccessEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldOwnerAndName;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.callback.impl.CallbackTestContainer.TEST_THREAD_INDEX;

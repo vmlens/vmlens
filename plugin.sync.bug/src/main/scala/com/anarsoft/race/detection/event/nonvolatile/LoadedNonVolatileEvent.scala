@@ -1,5 +1,10 @@
 package com.anarsoft.race.detection.event.nonvolatile
 
-trait LoadedNonVolatileEvent {
+import com.anarsoft.race.detection.event.distribute.EventWithLoopAndRunId
 
+
+trait LoadedNonVolatileEvent extends EventWithLoopAndRunId {
+
+  def addToContext(context: LoadedNonVolatileEventContext): Unit;
+  
 }

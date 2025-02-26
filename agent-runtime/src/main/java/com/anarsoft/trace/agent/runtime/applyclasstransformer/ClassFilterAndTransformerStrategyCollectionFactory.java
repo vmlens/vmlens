@@ -1,18 +1,17 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
-import com.anarsoft.trace.agent.preanalyzed.serialize.DeserializePackageOrClass;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.ClassBuilderImpl;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.TransformerStrategyFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
-import java.io.*;
+import java.io.IOException;
 
 public class ClassFilterAndTransformerStrategyCollectionFactory {
 

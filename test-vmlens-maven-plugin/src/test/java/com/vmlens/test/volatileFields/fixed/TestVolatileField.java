@@ -10,7 +10,7 @@ import org.junit.Test;
  */
 
 public class TestVolatileField {
-    volatile int j = 0;
+    int j = 0;
 
     @Test
     public void testUpdate() throws InterruptedException {

@@ -3,6 +3,7 @@ package com.anarsoft.race.detection.loopAndRunData
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.control.ControlEvent
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElement
+import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileElement
 import com.anarsoft.race.detection.util.EventArray
 
 import java.util
@@ -26,6 +27,11 @@ class RunDataListBuilderImpl extends RunDataListBuilder {
   def addSyncActionElements(loopAndRunId: LoopAndRunId, syncActionElements: List[GroupInterleaveElement]): Unit = {
     val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
     loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(syncActionElements = syncActionElements))
+  }
+
+  def addNonVolatileElements(loopAndRunId: LoopAndRunId, nonVolatileElements: List[GroupNonVolatileElement]): Unit = {
+    val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
+    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(nonVolatileElements = nonVolatileElements))
   }
 
   def build(): List[RunData] = {

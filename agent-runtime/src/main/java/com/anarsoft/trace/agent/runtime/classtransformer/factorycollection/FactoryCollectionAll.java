@@ -6,7 +6,7 @@ import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddFieldA
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMonitorCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 

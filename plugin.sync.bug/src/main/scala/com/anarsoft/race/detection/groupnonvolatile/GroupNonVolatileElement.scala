@@ -1,9 +1,9 @@
-package com.anarsoft.race.detection.groupnonvolatilememoryaccess
+package com.anarsoft.race.detection.groupnonvolatile
 
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.PartialOrder
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 
-trait GroupNonVolatileMemoryAccessElementForProcess {
+trait GroupNonVolatileElement {
 
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Int, Array[StacktraceNode]]): Unit;
 

@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.fieldidrepository.FieldRepositoryForCallback;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.FieldStrategy;
 import org.junit.Test;
 

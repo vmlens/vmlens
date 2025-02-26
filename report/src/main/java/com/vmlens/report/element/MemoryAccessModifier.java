@@ -1,7 +1,7 @@
 package com.vmlens.report.element;
 
 public enum MemoryAccessModifier {
-    DataRace("Data race ", ""), Volatile("", "volatile "), NonVolatile("", "");
+    DataRace("data race ", ""), Volatile("", "volatile "), NonVolatile("", "");
 
     private final String postfix;
     private final String volatilePrefix;

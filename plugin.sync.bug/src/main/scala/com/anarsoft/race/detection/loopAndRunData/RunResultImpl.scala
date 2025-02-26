@@ -3,7 +3,7 @@ package com.anarsoft.race.detection.loopAndRunData
 import com.anarsoft.race.detection.event.control.RunEndEvent
 import com.anarsoft.race.detection.event.distribute.EventWithLoopAndRunId
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementForResult
-import com.anarsoft.race.detection.groupnonvolatilememoryaccess.GroupNonVolatileMemoryAccessElementForResult
+import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileMemoryAccessElementForResult
 import com.anarsoft.race.detection.reportbuilder.{EventForReportElement, StaticMemoryAccessId}
 
 import scala.collection.mutable

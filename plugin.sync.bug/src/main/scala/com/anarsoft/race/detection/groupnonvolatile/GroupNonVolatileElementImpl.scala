@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.groupnonvolatilememoryaccess
+package com.anarsoft.race.detection.groupnonvolatile
 
 
 import com.anarsoft.race.detection.setstacktrace.{SetStacktraceNodeInEvent, WithSetStacktraceNode}
@@ -6,8 +6,8 @@ import com.anarsoft.race.detection.sortnonvolatilememoryaccess.{NonVolatileMemor
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
 
-class GroupNonVolatileMemoryAccessElementForProcessImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT] with WithSetStacktraceNode]
-(eventArray: EventArray[EVENT]) extends GroupNonVolatileMemoryAccessElementForProcess {
+class GroupNonVolatileElementImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT] with WithSetStacktraceNode]
+(val eventArray: EventArray[EVENT]) extends GroupNonVolatileElement {
 
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Int, Array[StacktraceNode]]): Unit = {
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);

@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.fieldidrepository;
+package com.vmlens.trace.agent.bootstrap.fieldrepository;
 
 import java.util.Objects;
 
