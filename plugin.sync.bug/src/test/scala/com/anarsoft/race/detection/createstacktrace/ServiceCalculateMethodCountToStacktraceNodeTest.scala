@@ -11,7 +11,7 @@ class ServiceCalculateMethodCountToStacktraceNodeTest extends AnyFlatSpec with M
   "The service " should " calculate the stack trace nodes " in {
     // Expected
     val root = new StacktraceNodeRoot(1);
-    val expected = Array(root, new StacktraceNodeIntermediate(5, root), root, root);
+    val expected = Array(null, root, new StacktraceNodeIntermediate(5, root), root, null);
 
     // Given
     val methodEnterRoot = new MethodEnterEventGen(1, 1, 
