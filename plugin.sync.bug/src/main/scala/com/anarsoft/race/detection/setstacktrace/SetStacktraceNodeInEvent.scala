@@ -1,6 +1,5 @@
 package com.anarsoft.race.detection.setstacktrace
 
-import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
 
@@ -10,7 +9,11 @@ class SetStacktraceNodeInEvent {
     for (event <- eventArray) {
       threadIdToStacktraceNodeArray.get(event.threadIndex) match {
         case Some(x) => {
-          event.setStacktraceNode(x.array(event.methodCounter));
+          val stacktraceNode = x.array(event.methodCounter);
+          if (stacktraceNode != null) {
+            event.setStacktraceNode(stacktraceNode);
+          }
+
         }
         case None => {
           // happens for example for the main thread

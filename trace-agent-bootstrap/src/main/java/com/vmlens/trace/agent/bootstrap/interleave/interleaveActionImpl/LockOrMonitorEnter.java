@@ -3,19 +3,18 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlockElement;
-import com.vmlens.trace.agent.bootstrap.interleave.block.LockOrMonitorEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapContainingStack;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.LockOrMonitor;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.LockOrMonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
-public class LockOrMonitorEnterImpl implements InterleaveAction, LockOrMonitorEnter {
+public class LockOrMonitorEnter implements InterleaveAction, com.vmlens.trace.agent.bootstrap.interleave.block.LockOrMonitorEnter {
 
     private final int threadIndex;
     private final LockOrMonitor lockOrMonitor;
 
-    public LockOrMonitorEnterImpl(int threadIndex, LockOrMonitor lockOrMonitor) {
+    public LockOrMonitorEnter(int threadIndex, LockOrMonitor lockOrMonitor) {
         this.threadIndex = threadIndex;
         this.lockOrMonitor = lockOrMonitor;
     }
@@ -29,7 +28,7 @@ public class LockOrMonitorEnterImpl implements InterleaveAction, LockOrMonitorEn
     public void blockBuilderAdd(Position myPosition,
                                 MapContainingStack mapContainingStack,
                                 MapOfBlocks result) {
-        mapContainingStack.push(new ElementAndPosition<LockOrMonitorEnter>(this, myPosition));
+        mapContainingStack.push(new ElementAndPosition<com.vmlens.trace.agent.bootstrap.interleave.block.LockOrMonitorEnter>(this, myPosition));
     }
 
     @Override
@@ -48,7 +47,7 @@ public class LockOrMonitorEnterImpl implements InterleaveAction, LockOrMonitorEn
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LockOrMonitorEnterImpl that = (LockOrMonitorEnterImpl) o;
+        LockOrMonitorEnter that = (LockOrMonitorEnter) o;
 
         return lockOrMonitor.equals(that.lockOrMonitor);
     }

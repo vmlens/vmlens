@@ -1,10 +1,10 @@
-package com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor;
+package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
-public class MonitorKey implements LockOrMonitorKey {
+public class ObjectHashCode {
 
     private final long objectHashCode;
 
-    public MonitorKey(long objectHashCode) {
+    public ObjectHashCode(long objectHashCode) {
         this.objectHashCode = objectHashCode;
     }
 
@@ -13,7 +13,7 @@ public class MonitorKey implements LockOrMonitorKey {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MonitorKey that = (MonitorKey) o;
+        ObjectHashCode that = (ObjectHashCode) o;
 
         return objectHashCode == that.objectHashCode;
     }

@@ -1,16 +1,17 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
+
+import java.nio.ByteBuffer;
 
 
 public class StampedLockEnterEventGen {
 
     protected int threadIndex;
     protected int order;
-    protected int monitorId;
     protected int methodCounter;
+    protected long objectHashCode;
     protected boolean isShared;
     protected int lockTyp;
     protected int stampedLockMethodId;
@@ -26,8 +27,8 @@ public class StampedLockEnterEventGen {
         StampedLockEnterEventGen that = (StampedLockEnterEventGen) o;
         if (threadIndex != that.threadIndex) return false;
         if (order != that.order) return false;
-        if (monitorId != that.monitorId) return false;
         if (methodCounter != that.methodCounter) return false;
+        if (objectHashCode != that.objectHashCode) return false;
         if (isShared != that.isShared) return false;
         if (lockTyp != that.lockTyp) return false;
         if (stampedLockMethodId != that.stampedLockMethodId) return false;
@@ -42,8 +43,8 @@ public class StampedLockEnterEventGen {
         return "StampedLockEnterEventGen{" +
                 "threadIndex=" + threadIndex +
                 "order=" + order +
-                "monitorId=" + monitorId +
                 "methodCounter=" + methodCounter +
+                "objectHashCode=" + objectHashCode +
                 "isShared=" + isShared +
                 "lockTyp=" + lockTyp +
                 "stampedLockMethodId=" + stampedLockMethodId +
@@ -56,7 +57,7 @@ public class StampedLockEnterEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.interleave.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 38, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 42, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
@@ -64,8 +65,8 @@ public class StampedLockEnterEventGen {
         buffer.put((byte) 12);
         buffer.putInt(threadIndex);
         buffer.putInt(order);
-        buffer.putInt(monitorId);
         buffer.putInt(methodCounter);
+        buffer.putLong(objectHashCode);
         buffer.put((byte) (isShared ? 1 : 0));
         buffer.putInt(lockTyp);
         buffer.putInt(stampedLockMethodId);

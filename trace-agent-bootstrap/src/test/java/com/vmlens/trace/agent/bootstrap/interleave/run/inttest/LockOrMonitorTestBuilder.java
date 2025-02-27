@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorEnterImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorExit;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.LockOrMonitor;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
@@ -36,7 +36,7 @@ public class LockOrMonitorTestBuilder {
 
         @Override
         public InterleaveAction create(int threadIndex) {
-            return new LockOrMonitorEnterImpl(threadIndex, lockOrMonitor);
+            return new LockOrMonitorEnter(threadIndex, lockOrMonitor);
         }
     }
 

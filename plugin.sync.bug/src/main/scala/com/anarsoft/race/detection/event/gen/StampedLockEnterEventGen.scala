@@ -12,8 +12,8 @@ import java.nio.ByteBuffer;
 class StampedLockEnterEventGen(
                                 val threadIndex: Int
                                 , val order: Int
-                                , val monitorId: Int
                                 , val methodCounter: Int
+                                , val objectHashCode: Long
                                 , val isShared: Boolean
                                 , val lockTyp: Int
                                 , val stampedLockMethodId: Int
@@ -25,8 +25,8 @@ class StampedLockEnterEventGen(
     var text = "StampedLockEnterEventGen"
     text = text + ", threadIndex:" + threadIndex
     text = text + ", order:" + order
-    text = text + ", monitorId:" + monitorId
     text = text + ", methodCounter:" + methodCounter
+    text = text + ", objectHashCode:" + objectHashCode
     text = text + ", isShared:" + isShared
     text = text + ", lockTyp:" + lockTyp
     text = text + ", stampedLockMethodId:" + stampedLockMethodId
@@ -45,10 +45,10 @@ class StampedLockEnterEventGen(
         else if (order != that.order) {
           false;
         }
-        else if (monitorId != that.monitorId) {
+        else if (methodCounter != that.methodCounter) {
           false;
         }
-        else if (methodCounter != that.methodCounter) {
+        else if (objectHashCode != that.objectHashCode) {
           false;
         }
         else if (isShared != that.isShared) {
@@ -88,7 +88,7 @@ object StampedLockEnterEventGen {
       ,
       data.getInt()
       ,
-      data.getInt()
+      data.getLong()
       ,
       if (data.get() == 1.asInstanceOf[Byte]) {
         true

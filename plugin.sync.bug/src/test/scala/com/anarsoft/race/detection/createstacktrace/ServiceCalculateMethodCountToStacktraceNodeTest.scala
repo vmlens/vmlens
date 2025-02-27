@@ -23,7 +23,8 @@ class ServiceCalculateMethodCountToStacktraceNodeTest extends AnyFlatSpec with M
     val methodExitRoot = new MethodExitEventGen(1, 1, 3,
       0, 0);
 
-    val array = Array(methodEnterRoot, methodEnterChild, methodExitChild, methodExitRoot);
+    // wrong order also works
+    val array = Array(methodExitRoot, methodEnterRoot, methodEnterChild, methodExitChild);
 
     // When
     val eventArray = new EventArray(array);

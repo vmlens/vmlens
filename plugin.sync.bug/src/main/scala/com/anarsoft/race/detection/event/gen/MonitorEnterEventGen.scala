@@ -12,8 +12,8 @@ import java.nio.ByteBuffer;
 class MonitorEnterEventGen(
                             val threadIndex: Int
                             , val order: Int
-                            , val monitorId: Int
                             , val methodCounter: Int
+                            , val objectHashCode: Long
                             , val methodId: Int
                             , val bytecodePosition: Int
                             , val loopId: Int
@@ -24,8 +24,8 @@ class MonitorEnterEventGen(
     var text = "MonitorEnterEventGen"
     text = text + ", threadIndex:" + threadIndex
     text = text + ", order:" + order
-    text = text + ", monitorId:" + monitorId
     text = text + ", methodCounter:" + methodCounter
+    text = text + ", objectHashCode:" + objectHashCode
     text = text + ", methodId:" + methodId
     text = text + ", bytecodePosition:" + bytecodePosition
     text = text + ", loopId:" + loopId
@@ -43,10 +43,10 @@ class MonitorEnterEventGen(
         else if (order != that.order) {
           false;
         }
-        else if (monitorId != that.monitorId) {
+        else if (methodCounter != that.methodCounter) {
           false;
         }
-        else if (methodCounter != that.methodCounter) {
+        else if (objectHashCode != that.objectHashCode) {
           false;
         }
         else if (methodId != that.methodId) {
@@ -83,7 +83,7 @@ object MonitorEnterEventGen {
       ,
       data.getInt()
       ,
-      data.getInt()
+      data.getLong()
       ,
       data.getInt()
       ,

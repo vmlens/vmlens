@@ -1,6 +1,10 @@
 package com.anarsoft.race.detection.event.gen;
 
+import com.anarsoft.race.detection.event.control.*
+import com.anarsoft.race.detection.event.directmemory.*
 import com.anarsoft.race.detection.event.interleave.*
+import com.anarsoft.race.detection.event.method.*
+import com.anarsoft.race.detection.event.nonvolatile.*
 
 import java.nio.ByteBuffer;
 
@@ -8,8 +12,8 @@ import java.nio.ByteBuffer;
 class LockEnterEventGen(
                          val threadIndex: Int
                          , val order: Int
-                         , val monitorId: Int
                          , val methodCounter: Int
+                         , val objectHashCode: Long
                          , val isShared: Boolean
                          , val lockTyp: Int
                          , val loopId: Int
@@ -20,8 +24,8 @@ class LockEnterEventGen(
     var text = "LockEnterEventGen"
     text = text + ", threadIndex:" + threadIndex
     text = text + ", order:" + order
-    text = text + ", monitorId:" + monitorId
     text = text + ", methodCounter:" + methodCounter
+    text = text + ", objectHashCode:" + objectHashCode
     text = text + ", isShared:" + isShared
     text = text + ", lockTyp:" + lockTyp
     text = text + ", loopId:" + loopId
@@ -39,10 +43,10 @@ class LockEnterEventGen(
         else if (order != that.order) {
           false;
         }
-        else if (monitorId != that.monitorId) {
+        else if (methodCounter != that.methodCounter) {
           false;
         }
-        else if (methodCounter != that.methodCounter) {
+        else if (objectHashCode != that.objectHashCode) {
           false;
         }
         else if (isShared != that.isShared) {
@@ -79,7 +83,7 @@ object LockEnterEventGen {
       ,
       data.getInt()
       ,
-      data.getInt()
+      data.getLong()
       ,
       if (data.get() == 1.asInstanceOf[Byte]) {
         true

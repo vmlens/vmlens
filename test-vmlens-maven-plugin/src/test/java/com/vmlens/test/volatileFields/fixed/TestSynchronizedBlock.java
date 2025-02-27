@@ -3,30 +3,34 @@ package com.vmlens.test.volatileFields.fixed;
 import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
-/**
- * -javaagent:C:\workspace\vmlens\test-vmlens-maven-plugin\target\vmlens-agent\agent.jar
- *
- *
- */
+public class TestSynchronizedBlock {
 
-public class TestVolatileField {
-    private volatile int j = 0;
+    private int j = 0;
 
     @Test
     public void testUpdate() throws InterruptedException {
-        AllInterleavings testUpdate = new AllInterleavings("testVolatileField");
+        AllInterleavings testUpdate = new AllInterleavings("testSynchronizedBlock");
 
         while (testUpdate.hasNext()) {
             j = 0;
             Thread first = new Thread() {
                 @Override
                 public void run() {
-                    j++;
+                    increment();
                 }
             };
             first.start();
-            j++;
+            increment();
             first.join();
         }
     }
+
+    private void increment() {
+        synchronized (this) {
+            j++;
+        }
+
+    }
+
+
 }

@@ -3,8 +3,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor;
 public class Monitor implements LockOrMonitor {
     private final MonitorKey monitorKey;
 
-    public Monitor(int id) {
-        this.monitorKey = new MonitorKey(id);
+    public Monitor(long objectHashCode) {
+        this.monitorKey = new MonitorKey(objectHashCode);
     }
 
     public MonitorKey key() {

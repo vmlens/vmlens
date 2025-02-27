@@ -1,8 +1,6 @@
 package com.anarsoft.race.detection.process.main
 
-import com.anarsoft.race.detection.loopAndRunData.RunData
 import com.anarsoft.race.detection.loopResult.LoopResultCollection
-import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl
 
 class MainProcess(private val loadDescription: LoadDescription,
                   private val loadRuns: LoadRuns,

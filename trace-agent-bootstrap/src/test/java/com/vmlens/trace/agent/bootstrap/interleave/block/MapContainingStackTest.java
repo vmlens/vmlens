@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorEnterImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class MapContainingStackTest {
         Monitor givenMonitor = new Monitor(0);
 
         // When
-        mapContainingStack.push(new ElementAndPosition<LockOrMonitorEnter>(new LockOrMonitorEnterImpl(1, givenMonitor), p(0, 1)));
-        mapContainingStack.push(new ElementAndPosition<LockOrMonitorEnter>(new LockOrMonitorEnterImpl(1, givenMonitor), p(0, 5)));
+        mapContainingStack.push(new ElementAndPosition<com.vmlens.trace.agent.bootstrap.interleave.block.LockOrMonitorEnter>(new LockOrMonitorEnter(1, givenMonitor), p(0, 1)));
+        mapContainingStack.push(new ElementAndPosition<com.vmlens.trace.agent.bootstrap.interleave.block.LockOrMonitorEnter>(new LockOrMonitorEnter(1, givenMonitor), p(0, 5)));
 
         // Then
         assertThat(mapContainingStack.pop(givenMonitor.key()).position(), is(p(0, 5)));

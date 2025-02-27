@@ -1,21 +1,23 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
+
+import java.nio.ByteBuffer;
 
 
 public class MonitorEnterEventGen {
 
     protected int threadIndex;
     protected int order;
-    protected int monitorId;
     protected int methodCounter;
+    protected long objectHashCode;
     protected int methodId;
     protected int bytecodePosition;
     protected int loopId;
     protected int runId;
     protected int runPosition;
+
 
     @Override
     public boolean equals(Object o) {
@@ -25,8 +27,8 @@ public class MonitorEnterEventGen {
         MonitorEnterEventGen that = (MonitorEnterEventGen) o;
         if (threadIndex != that.threadIndex) return false;
         if (order != that.order) return false;
-        if (monitorId != that.monitorId) return false;
         if (methodCounter != that.methodCounter) return false;
+        if (objectHashCode != that.objectHashCode) return false;
         if (methodId != that.methodId) return false;
         if (bytecodePosition != that.bytecodePosition) return false;
         if (loopId != that.loopId) return false;
@@ -40,8 +42,8 @@ public class MonitorEnterEventGen {
         return "MonitorEnterEventGen{" +
                 "threadIndex=" + threadIndex +
                 "order=" + order +
-                "monitorId=" + monitorId +
                 "methodCounter=" + methodCounter +
+                "objectHashCode=" + objectHashCode +
                 "methodId=" + methodId +
                 "bytecodePosition=" + bytecodePosition +
                 "loopId=" + loopId +
@@ -53,7 +55,7 @@ public class MonitorEnterEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.interleave.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 37, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 41, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
@@ -61,8 +63,8 @@ public class MonitorEnterEventGen {
         buffer.put((byte) 14);
         buffer.putInt(threadIndex);
         buffer.putInt(order);
-        buffer.putInt(monitorId);
         buffer.putInt(methodCounter);
+        buffer.putLong(objectHashCode);
         buffer.putInt(methodId);
         buffer.putInt(bytecodePosition);
         buffer.putInt(loopId);
