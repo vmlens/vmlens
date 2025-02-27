@@ -22,7 +22,7 @@ class StacktraceNodeStack(val threadIndex: Int) {
   def methodExit(): StacktraceNode = {
     val current = stack.pop();
     if (stack.isEmpty) {
-      current;
+      null;
     } else {
       stack.top
     }

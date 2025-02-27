@@ -22,6 +22,7 @@ public class TestSynchronizedBlock {
             first.start();
             increment();
             first.join();
+            j = 0;
         }
     }
 

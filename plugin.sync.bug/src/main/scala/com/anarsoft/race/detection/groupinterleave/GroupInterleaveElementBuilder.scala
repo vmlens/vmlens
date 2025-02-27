@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.groupinterleave
 
-import com.anarsoft.race.detection.event.interleave.{ThreadStartEvent, VolatileAccessEvent}
+import com.anarsoft.race.detection.event.interleave.{MonitorContainer, MonitorEvent, ThreadStartEvent, VolatileAccessEvent}
 import com.anarsoft.race.detection.sortutil.EventWithReadWriteContainer
 import com.anarsoft.race.detection.util.EventArray
 
@@ -23,6 +23,13 @@ class GroupInterleaveElementBuilder {
     arrayBuffer.append(
       new GroupInterleaveElementThreadOperationImpl[ThreadStartEvent](
         EventArray[ThreadStartEvent](list)));
+  }
+
+  def addMonitorEvents(list: util.LinkedList[MonitorEvent]): Unit = {
+    arrayBuffer.append(
+      new GroupInterleaveElementSyncActionImpl[MonitorEvent](
+        EventArray[MonitorEvent](list),
+        (event: MonitorEvent) => MonitorContainer(event)));
   }
   
   
