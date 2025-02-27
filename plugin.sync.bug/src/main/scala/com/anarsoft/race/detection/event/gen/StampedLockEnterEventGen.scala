@@ -11,7 +11,6 @@ import java.nio.ByteBuffer;
 
 class StampedLockEnterEventGen(
                                 val threadIndex: Int
-                                , val order: Int
                                 , val methodCounter: Int
                                 , val objectHashCode: Long
                                 , val isShared: Boolean
@@ -24,7 +23,6 @@ class StampedLockEnterEventGen(
   override def toString() = {
     var text = "StampedLockEnterEventGen"
     text = text + ", threadIndex:" + threadIndex
-    text = text + ", order:" + order
     text = text + ", methodCounter:" + methodCounter
     text = text + ", objectHashCode:" + objectHashCode
     text = text + ", isShared:" + isShared
@@ -40,9 +38,6 @@ class StampedLockEnterEventGen(
     other match {
       case that: StampedLockEnterEventGen => {
         if (threadIndex != that.threadIndex) {
-          false;
-        }
-        else if (order != that.order) {
           false;
         }
         else if (methodCounter != that.methodCounter) {
@@ -82,8 +77,6 @@ object StampedLockEnterEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new StampedLockEnterEventGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getInt()

@@ -2,11 +2,10 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.impl.MonitorCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
-import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public class MonitorCallback {
 
-    private static volatile MonitorCallbackImpl monitorCallbackImpl = new MonitorCallbackImpl(new OrderMap<>(),
+    private static volatile MonitorCallbackImpl monitorCallbackImpl = new MonitorCallbackImpl(
             new ThreadLocalWhenInTestAdapterImpl());
 
     public static void afterMonitorEnter(Object monitor, int inMethod, int position) {

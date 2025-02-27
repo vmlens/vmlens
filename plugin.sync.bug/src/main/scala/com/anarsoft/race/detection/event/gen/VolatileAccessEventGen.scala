@@ -1,10 +1,6 @@
 package com.anarsoft.race.detection.event.gen;
 
-import com.anarsoft.race.detection.event.control.*
-import com.anarsoft.race.detection.event.directmemory.*
 import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.nonvolatile.*
 
 import java.nio.ByteBuffer;
 
@@ -12,7 +8,6 @@ import java.nio.ByteBuffer;
 class VolatileAccessEventGen(
                               val threadIndex: Int
                               , val bytecodePosition: Int
-                              , val order: Int
                               , val fieldId: Int
                               , val methodCounter: Int
                               , val methodId: Int
@@ -26,7 +21,6 @@ class VolatileAccessEventGen(
     var text = "VolatileAccessEventGen"
     text = text + ", threadIndex:" + threadIndex
     text = text + ", bytecodePosition:" + bytecodePosition
-    text = text + ", order:" + order
     text = text + ", fieldId:" + fieldId
     text = text + ", methodCounter:" + methodCounter
     text = text + ", methodId:" + methodId
@@ -45,9 +39,6 @@ class VolatileAccessEventGen(
           false;
         }
         else if (bytecodePosition != that.bytecodePosition) {
-          false;
-        }
-        else if (order != that.order) {
           false;
         }
         else if (fieldId != that.fieldId) {
@@ -87,8 +78,6 @@ object VolatileAccessEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new VolatileAccessEventGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getInt()

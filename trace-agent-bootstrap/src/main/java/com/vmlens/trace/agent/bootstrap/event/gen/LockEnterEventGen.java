@@ -9,7 +9,6 @@ import java.nio.ByteBuffer;
 public class LockEnterEventGen {
 
     protected int threadIndex;
-    protected int order;
     protected int methodCounter;
     protected long objectHashCode;
     protected boolean isShared;
@@ -25,7 +24,6 @@ public class LockEnterEventGen {
 
         LockEnterEventGen that = (LockEnterEventGen) o;
         if (threadIndex != that.threadIndex) return false;
-        if (order != that.order) return false;
         if (methodCounter != that.methodCounter) return false;
         if (objectHashCode != that.objectHashCode) return false;
         if (isShared != that.isShared) return false;
@@ -40,7 +38,6 @@ public class LockEnterEventGen {
     public String toString() {
         return "LockEnterEventGen{" +
                 "threadIndex=" + threadIndex +
-                "order=" + order +
                 "methodCounter=" + methodCounter +
                 "objectHashCode=" + objectHashCode +
                 "isShared=" + isShared +
@@ -54,14 +51,13 @@ public class LockEnterEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.interleave.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 38, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 34, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 10);
         buffer.putInt(threadIndex);
-        buffer.putInt(order);
         buffer.putInt(methodCounter);
         buffer.putLong(objectHashCode);
         buffer.put((byte) (isShared ? 1 : 0));

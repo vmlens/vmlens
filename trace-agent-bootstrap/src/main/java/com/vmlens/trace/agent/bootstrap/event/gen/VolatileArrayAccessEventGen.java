@@ -1,14 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
+
+import java.nio.ByteBuffer;
 
 
 public class VolatileArrayAccessEventGen {
 
     protected int threadIndex;
-    protected int order;
     protected long index;
     protected int methodCounter;
     protected int methodId;
@@ -25,7 +25,6 @@ public class VolatileArrayAccessEventGen {
 
         VolatileArrayAccessEventGen that = (VolatileArrayAccessEventGen) o;
         if (threadIndex != that.threadIndex) return false;
-        if (order != that.order) return false;
         if (index != that.index) return false;
         if (methodCounter != that.methodCounter) return false;
         if (methodId != that.methodId) return false;
@@ -41,7 +40,6 @@ public class VolatileArrayAccessEventGen {
     public String toString() {
         return "VolatileArrayAccessEventGen{" +
                 "threadIndex=" + threadIndex +
-                "order=" + order +
                 "index=" + index +
                 "methodCounter=" + methodCounter +
                 "methodId=" + methodId +
@@ -56,14 +54,13 @@ public class VolatileArrayAccessEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.interleave.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 49, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 45, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 8);
         buffer.putInt(threadIndex);
-        buffer.putInt(order);
         buffer.putLong(index);
         buffer.putInt(methodCounter);
         buffer.putInt(methodId);

@@ -8,7 +8,6 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPositi
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodExitEvent;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForCallback;
-import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.EnterExitContext;
@@ -17,18 +16,15 @@ public class MethodCallbackImpl {
 
     private final ParallelizeFacade parallelizeFacade;
     private final MethodRepositoryForCallback methodIdToStrategy;
-    private final OrderMap<Long> monitorOrder;
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
     private final CheckIsThreadRun checkIsThreadRun;
 
     public MethodCallbackImpl(ParallelizeFacade parallelizeFacade,
                               MethodRepositoryForCallback methodIdToStrategy,
-                              OrderMap<Long> monitorOrder,
                               ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter,
                               CheckIsThreadRun checkIsThreadRun) {
         this.parallelizeFacade = parallelizeFacade;
         this.methodIdToStrategy = methodIdToStrategy;
-        this.monitorOrder = monitorOrder;
         this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
         this.checkIsThreadRun = checkIsThreadRun;
     }
@@ -45,7 +41,6 @@ public class MethodCallbackImpl {
     public void methodEnter(Object object, int methodId) {
         EnterExitContext enterExitContext = new EnterExitContext(object,
                 methodId,
-                monitorOrder,
                 threadLocalWhenInTestAdapter,
                 checkIsThreadRun,
                 parallelizeFacade);

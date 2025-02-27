@@ -1,15 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
+
+import java.nio.ByteBuffer;
 
 
 public class VolatileAccessEventStaticGen {
 
     protected int threadIndex;
     protected int bytecodePosition;
-    protected int order;
     protected int fieldId;
     protected int methodCounter;
     protected int methodId;
@@ -26,7 +26,6 @@ public class VolatileAccessEventStaticGen {
         VolatileAccessEventStaticGen that = (VolatileAccessEventStaticGen) o;
         if (threadIndex != that.threadIndex) return false;
         if (bytecodePosition != that.bytecodePosition) return false;
-        if (order != that.order) return false;
         if (fieldId != that.fieldId) return false;
         if (methodCounter != that.methodCounter) return false;
         if (methodId != that.methodId) return false;
@@ -42,7 +41,6 @@ public class VolatileAccessEventStaticGen {
         return "VolatileAccessEventStaticGen{" +
                 "threadIndex=" + threadIndex +
                 "bytecodePosition=" + bytecodePosition +
-                "order=" + order +
                 "fieldId=" + fieldId +
                 "methodCounter=" + methodCounter +
                 "methodId=" + methodId +
@@ -56,7 +54,7 @@ public class VolatileAccessEventStaticGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.interleave.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 38, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 34, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
@@ -64,7 +62,6 @@ public class VolatileAccessEventStaticGen {
         buffer.put((byte) 6);
         buffer.putInt(threadIndex);
         buffer.putInt(bytecodePosition);
-        buffer.putInt(order);
         buffer.putInt(fieldId);
         buffer.putInt(methodCounter);
         buffer.putInt(methodId);

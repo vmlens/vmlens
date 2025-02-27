@@ -10,8 +10,8 @@ import com.anarsoft.race.detection.event.nonvolatile.*
 import java.nio.ByteBuffer;
 
 class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionEvent] {
-  val eventArraySize: Int = 49
-  val blockSize: Int = 49 * 10000;
+  val eventArraySize: Int = 45
+  val blockSize: Int = 45 * 10000;
 
 
   def deSerializeJavaEvent(buffer: ByteBuffer): LoadedInterleaveActionEvent = {

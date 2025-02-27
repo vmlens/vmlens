@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class MonitorExitEvent extends MonitorExitEventGen implements
-        InterleaveActionFactory, WithObjectHashCodeAndOrder<ObjectHashCode> {
+        InterleaveActionFactory, WithObjectHashCode {
 
     public MonitorExitEvent(int methodId, int bytecodePosition) {
         this.methodId = methodId;
@@ -19,14 +19,7 @@ public class MonitorExitEvent extends MonitorExitEventGen implements
         this.threadIndex = threadIndex;
     }
 
-    @Override
-    public ObjectHashCode keyForOrderMap() {
-        return new ObjectHashCode(objectHashCode);
-    }
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
 
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();

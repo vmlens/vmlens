@@ -3,8 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.callback.impl.PreAnalyzedCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
-import com.vmlens.trace.agent.bootstrap.ordermap.OrderMapSingleton;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
+
 
 public class PreAnalyzedCallback {
 

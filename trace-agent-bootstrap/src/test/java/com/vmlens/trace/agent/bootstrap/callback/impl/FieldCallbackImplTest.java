@@ -21,15 +21,14 @@ public class FieldCallbackImplTest {
         FieldStrategy fieldStrategy = mock(FieldStrategy.class);
         when(fieldIdToStrategy.get(GIVEN_FIELD_ID)).thenReturn(fieldStrategy);
 
-        FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldIdToStrategy, null,
-                null, null);
+        FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldIdToStrategy, null);
 
         // When
         fieldCallbackImpl.beforeFieldRead(GIVEN_OBJECT, GIVEN_FIELD_ID, GIVEN_POSITION, GIVEN_IN_METHOD_ID);
 
         // Then
         verify(fieldStrategy).onAccess(GIVEN_OBJECT, GIVEN_FIELD_ID, GIVEN_POSITION, GIVEN_IN_METHOD_ID,
-                MemoryAccessType.IS_READ, null, null);
+                MemoryAccessType.IS_READ, null);
     }
 
 }

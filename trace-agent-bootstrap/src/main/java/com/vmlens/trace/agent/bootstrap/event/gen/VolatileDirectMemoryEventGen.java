@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
+
+import java.nio.ByteBuffer;
 
 
 public class VolatileDirectMemoryEventGen {
@@ -11,7 +12,6 @@ public class VolatileDirectMemoryEventGen {
     protected int methodCounter;
     protected long objectHashCode;
     protected int operation;
-    protected int order;
     protected int loopId;
     protected int runId;
     protected int runPosition;
@@ -26,7 +26,6 @@ public class VolatileDirectMemoryEventGen {
         if (methodCounter != that.methodCounter) return false;
         if (objectHashCode != that.objectHashCode) return false;
         if (operation != that.operation) return false;
-        if (order != that.order) return false;
         if (loopId != that.loopId) return false;
         if (runId != that.runId) return false;
         if (runPosition != that.runPosition) return false;
@@ -40,7 +39,6 @@ public class VolatileDirectMemoryEventGen {
                 "methodCounter=" + methodCounter +
                 "objectHashCode=" + objectHashCode +
                 "operation=" + operation +
-                "order=" + order +
                 "loopId=" + loopId +
                 "runId=" + runId +
                 "runPosition=" + runPosition +
@@ -50,7 +48,7 @@ public class VolatileDirectMemoryEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.directMemory.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 37, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 33, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
@@ -60,7 +58,6 @@ public class VolatileDirectMemoryEventGen {
         buffer.putInt(methodCounter);
         buffer.putLong(objectHashCode);
         buffer.putInt(operation);
-        buffer.putInt(order);
         buffer.putInt(loopId);
         buffer.putInt(runId);
         buffer.putInt(runPosition);

@@ -11,7 +11,6 @@ import java.nio.ByteBuffer;
 
 class LockEnterEventGen(
                          val threadIndex: Int
-                         , val order: Int
                          , val methodCounter: Int
                          , val objectHashCode: Long
                          , val isShared: Boolean
@@ -23,7 +22,6 @@ class LockEnterEventGen(
   override def toString() = {
     var text = "LockEnterEventGen"
     text = text + ", threadIndex:" + threadIndex
-    text = text + ", order:" + order
     text = text + ", methodCounter:" + methodCounter
     text = text + ", objectHashCode:" + objectHashCode
     text = text + ", isShared:" + isShared
@@ -38,9 +36,6 @@ class LockEnterEventGen(
     other match {
       case that: LockEnterEventGen => {
         if (threadIndex != that.threadIndex) {
-          false;
-        }
-        else if (order != that.order) {
           false;
         }
         else if (methodCounter != that.methodCounter) {
@@ -77,8 +72,6 @@ object LockEnterEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new LockEnterEventGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getInt()

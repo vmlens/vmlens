@@ -1,27 +1,23 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
-import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 public class EnterExitContext {
 
     private final Object object;
     private final int methodId;
-    private final OrderMap<Long> monitorOrder;
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
     private final CheckIsThreadRun checkIsThreadRun;
     private final ParallelizeFacade parallelizeFacade;
 
     public EnterExitContext(Object object,
                             int methodId,
-                            OrderMap<Long> monitorOrder,
                             ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter,
                             CheckIsThreadRun checkIsThreadRun,
                             ParallelizeFacade parallelizeFacade) {
         this.object = object;
         this.methodId = methodId;
-        this.monitorOrder = monitorOrder;
         this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
         this.checkIsThreadRun = checkIsThreadRun;
         this.parallelizeFacade = parallelizeFacade;
@@ -33,10 +29,6 @@ public class EnterExitContext {
 
     public int methodId() {
         return methodId;
-    }
-
-    public OrderMap<Long> monitorOrder() {
-        return monitorOrder;
     }
 
     public ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter() {

@@ -12,7 +12,6 @@ import java.nio.ByteBuffer;
 class VolatileAccessEventStaticGen(
                                     val threadIndex: Int
                                     , val bytecodePosition: Int
-                                    , val order: Int
                                     , val fieldId: Int
                                     , val methodCounter: Int
                                     , val methodId: Int
@@ -25,7 +24,6 @@ class VolatileAccessEventStaticGen(
     var text = "VolatileAccessEventStaticGen"
     text = text + ", threadIndex:" + threadIndex
     text = text + ", bytecodePosition:" + bytecodePosition
-    text = text + ", order:" + order
     text = text + ", fieldId:" + fieldId
     text = text + ", methodCounter:" + methodCounter
     text = text + ", methodId:" + methodId
@@ -43,9 +41,6 @@ class VolatileAccessEventStaticGen(
           false;
         }
         else if (bytecodePosition != that.bytecodePosition) {
-          false;
-        }
-        else if (order != that.order) {
           false;
         }
         else if (fieldId != that.fieldId) {
@@ -82,8 +77,6 @@ object VolatileAccessEventStaticGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new VolatileAccessEventStaticGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getInt()

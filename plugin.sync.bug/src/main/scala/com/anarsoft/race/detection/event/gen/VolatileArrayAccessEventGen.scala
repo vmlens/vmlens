@@ -11,7 +11,6 @@ import java.nio.ByteBuffer;
 
 class VolatileArrayAccessEventGen(
                                    val threadIndex: Int
-                                   , val order: Int
                                    , val index: Long
                                    , val methodCounter: Int
                                    , val methodId: Int
@@ -24,7 +23,6 @@ class VolatileArrayAccessEventGen(
   override def toString() = {
     var text = "VolatileArrayAccessEventGen"
     text = text + ", threadIndex:" + threadIndex
-    text = text + ", order:" + order
     text = text + ", index:" + index
     text = text + ", methodCounter:" + methodCounter
     text = text + ", methodId:" + methodId
@@ -40,9 +38,6 @@ class VolatileArrayAccessEventGen(
     other match {
       case that: VolatileArrayAccessEventGen => {
         if (threadIndex != that.threadIndex) {
-          false;
-        }
-        else if (order != that.order) {
           false;
         }
         else if (index != that.index) {
@@ -82,8 +77,6 @@ object VolatileArrayAccessEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new VolatileArrayAccessEventGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getLong()

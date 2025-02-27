@@ -47,10 +47,6 @@ class VolatileAccessEventBuilder {
     this
   }
 
-  def setOrder(order: Int): VolatileAccessEventBuilder = {
-    volatileAccessEvent.setOrder(order)
-    this
-  }
 
   def setThreadIndex(threadIndex: Int): VolatileAccessEventBuilder = {
     volatileAccessEvent.setThreadIndex(threadIndex)
@@ -63,7 +59,6 @@ class VolatileAccessEventBuilder {
   def buildScalaEvent(): VolatileAccessEventGen = {
     new VolatileAccessEventGen(volatileAccessEvent.threadIndex(),
       volatileAccessEvent.bytecodePosition(),
-      volatileAccessEvent.order(),
       volatileAccessEvent.fieldId(),
       volatileAccessEvent.methodCounter(),
       volatileAccessEvent.methodId(),

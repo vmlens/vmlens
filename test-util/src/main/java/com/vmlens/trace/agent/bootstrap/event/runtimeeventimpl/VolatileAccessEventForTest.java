@@ -6,9 +6,6 @@ public class VolatileAccessEventForTest extends VolatileAccessEvent {
         return threadIndex;
     }
 
-    public int order() {
-        return order;
-    }
 
     public int bytecodePosition() {
         return bytecodePosition;

@@ -1,17 +1,13 @@
 package com.anarsoft.race.detection.event.gen;
 
 import com.anarsoft.race.detection.event.control.*
-import com.anarsoft.race.detection.event.directmemory.*
 import com.anarsoft.race.detection.event.interleave.*
-import com.anarsoft.race.detection.event.method.*
-import com.anarsoft.race.detection.event.nonvolatile.*
 
 import java.nio.ByteBuffer;
 
 
 class MonitorEnterEventGen(
                             val threadIndex: Int
-                            , val order: Int
                             , val methodCounter: Int
                             , val objectHashCode: Long
                             , val methodId: Int
@@ -23,7 +19,6 @@ class MonitorEnterEventGen(
   override def toString() = {
     var text = "MonitorEnterEventGen"
     text = text + ", threadIndex:" + threadIndex
-    text = text + ", order:" + order
     text = text + ", methodCounter:" + methodCounter
     text = text + ", objectHashCode:" + objectHashCode
     text = text + ", methodId:" + methodId
@@ -38,9 +33,6 @@ class MonitorEnterEventGen(
     other match {
       case that: MonitorEnterEventGen => {
         if (threadIndex != that.threadIndex) {
-          false;
-        }
-        else if (order != that.order) {
           false;
         }
         else if (methodCounter != that.methodCounter) {
@@ -77,8 +69,6 @@ object MonitorEnterEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new MonitorEnterEventGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getInt()

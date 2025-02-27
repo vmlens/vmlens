@@ -9,7 +9,6 @@ import java.nio.ByteBuffer;
 public class StampedLockEnterEventGen {
 
     protected int threadIndex;
-    protected int order;
     protected int methodCounter;
     protected long objectHashCode;
     protected boolean isShared;
@@ -26,7 +25,6 @@ public class StampedLockEnterEventGen {
 
         StampedLockEnterEventGen that = (StampedLockEnterEventGen) o;
         if (threadIndex != that.threadIndex) return false;
-        if (order != that.order) return false;
         if (methodCounter != that.methodCounter) return false;
         if (objectHashCode != that.objectHashCode) return false;
         if (isShared != that.isShared) return false;
@@ -42,7 +40,6 @@ public class StampedLockEnterEventGen {
     public String toString() {
         return "StampedLockEnterEventGen{" +
                 "threadIndex=" + threadIndex +
-                "order=" + order +
                 "methodCounter=" + methodCounter +
                 "objectHashCode=" + objectHashCode +
                 "isShared=" + isShared +
@@ -57,14 +54,13 @@ public class StampedLockEnterEventGen {
 
     public void serialize(StreamRepository streamRepository) throws Exception {
         serialize(streamRepository.interleave.
-                getByteBuffer(new LoopIdAndRunId(loopId, runId), 42, EventConstants.MAX_ARRAY_SIZE * 1000));
+                getByteBuffer(new LoopIdAndRunId(loopId, runId), 38, EventConstants.MAX_ARRAY_SIZE * 1000));
 
     }
 
     public void serialize(ByteBuffer buffer) throws Exception {
         buffer.put((byte) 12);
         buffer.putInt(threadIndex);
-        buffer.putInt(order);
         buffer.putInt(methodCounter);
         buffer.putLong(objectHashCode);
         buffer.put((byte) (isShared ? 1 : 0));

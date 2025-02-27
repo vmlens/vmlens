@@ -6,11 +6,9 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
-import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.StrategyAll;
@@ -65,7 +63,7 @@ public class CallbackTestContainer {
 
         ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter = createThreadLocalWhenInTestAdapter(threadLocalWhenInTest, queueInMock);
 
-        OrderMap<Long> monitorOrder = new OrderMap<>();
+
         MethodRepositoryImpl methodRepository = new MethodRepositoryImpl();
 
         CheckIsThreadRun checkIsThreadRun = mock(CheckIsThreadRun.class);
@@ -73,18 +71,14 @@ public class CallbackTestContainer {
 
         MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(new ParallelizeFacadePassThrough(run),
                 methodRepository,
-                monitorOrder,
                 threadLocalWhenInTestAdapter, checkIsThreadRun);
         PreAnalyzedCallbackImpl preAnalyzedCallbackImpl = new PreAnalyzedCallbackImpl(methodRepository,
                 threadLocalWhenInTestAdapter);
 
         FieldRepositoryImpl fieldRepository = new FieldRepositoryImpl();
 
-        OrderMap<ObjectHashCodeAndFieldId> volatileFieldOrder = new OrderMap<>();
-        OrderMap<Integer> staticVolatileFieldOrder = new OrderMap<>();
+
         FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldRepository,
-                volatileFieldOrder,
-                staticVolatileFieldOrder,
                 threadLocalWhenInTestAdapter);
 
         return new CallbackTestContainer(eventList, run,

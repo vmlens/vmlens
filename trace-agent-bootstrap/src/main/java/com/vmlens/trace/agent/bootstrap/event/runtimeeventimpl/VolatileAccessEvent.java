@@ -11,15 +11,12 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
  */
 
 public class VolatileAccessEvent extends VolatileAccessEventGen implements
-        InterleaveActionFactory, WithObjectHashCodeAndOrder<ObjectHashCodeAndFieldId>, WithInMethodIdAndPosition {
+        InterleaveActionFactory, WithObjectHashCode, WithInMethodIdAndPosition {
 
     public void setThreadIndex(int threadIndex) {
         this.threadIndex = threadIndex;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
 
     public void setFieldId(int fieldId) {
         this.fieldId = fieldId;
@@ -61,10 +58,6 @@ public class VolatileAccessEvent extends VolatileAccessEventGen implements
                 operation);
     }
 
-    @Override
-    public ObjectHashCodeAndFieldId keyForOrderMap() {
-        return new ObjectHashCodeAndFieldId(objectHashCode, fieldId);
-    }
 
     @Override
     public void setInMethodIdAndPosition(int inMethodId, int position) {

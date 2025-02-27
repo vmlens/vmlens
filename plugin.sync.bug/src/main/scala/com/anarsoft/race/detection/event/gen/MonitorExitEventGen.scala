@@ -11,7 +11,6 @@ import java.nio.ByteBuffer;
 
 class MonitorExitEventGen(
                            val threadIndex: Int
-                           , val order: Int
                            , val methodCounter: Int
                            , val objectHashCode: Long
                            , val methodId: Int
@@ -23,7 +22,6 @@ class MonitorExitEventGen(
   override def toString() = {
     var text = "MonitorExitEventGen"
     text = text + ", threadIndex:" + threadIndex
-    text = text + ", order:" + order
     text = text + ", methodCounter:" + methodCounter
     text = text + ", objectHashCode:" + objectHashCode
     text = text + ", methodId:" + methodId
@@ -38,9 +36,6 @@ class MonitorExitEventGen(
     other match {
       case that: MonitorExitEventGen => {
         if (threadIndex != that.threadIndex) {
-          false;
-        }
-        else if (order != that.order) {
           false;
         }
         else if (methodCounter != that.methodCounter) {
@@ -77,8 +72,6 @@ object MonitorExitEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new MonitorExitEventGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getInt()

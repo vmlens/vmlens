@@ -5,13 +5,11 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.FieldAccessEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ObjectHashCodeAndFieldId;
-import com.vmlens.trace.agent.bootstrap.ordermap.OrderMap;
 
 public class NormalFieldStrategy implements FieldStrategy {
     @Override
     public void onAccess(Object fromObject, int fieldId, int position, int inMethodId,
-                         int memoryAccessType, OrderMap<ObjectHashCodeAndFieldId> volatileFieldOrder,
+                         int memoryAccessType,
                          ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
         FieldAccessEvent fieldAccessEvent = new FieldAccessEvent();
         fieldAccessEvent.setFieldId(fieldId);
@@ -27,7 +25,6 @@ public class NormalFieldStrategy implements FieldStrategy {
     @Override
     public void onStaticAccess(int fieldId, int position, int inMethodId,
                                int memoryAccessType,
-                               OrderMap<Integer> staticVolatileFieldOrder,
                                ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
 
     }

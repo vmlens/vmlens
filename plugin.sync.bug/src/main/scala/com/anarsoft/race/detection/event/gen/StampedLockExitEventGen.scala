@@ -11,7 +11,6 @@ import java.nio.ByteBuffer;
 
 class StampedLockExitEventGen(
                                val threadIndex: Int
-                               , val order: Int
                                , val methodCounter: Int
                                , val objectHashCode: Long
                                , val isShared: Boolean
@@ -24,7 +23,6 @@ class StampedLockExitEventGen(
   override def toString() = {
     var text = "StampedLockExitEventGen"
     text = text + ", threadIndex:" + threadIndex
-    text = text + ", order:" + order
     text = text + ", methodCounter:" + methodCounter
     text = text + ", objectHashCode:" + objectHashCode
     text = text + ", isShared:" + isShared
@@ -40,9 +38,6 @@ class StampedLockExitEventGen(
     other match {
       case that: StampedLockExitEventGen => {
         if (threadIndex != that.threadIndex) {
-          false;
-        }
-        else if (order != that.order) {
           false;
         }
         else if (methodCounter != that.methodCounter) {
@@ -82,8 +77,6 @@ object StampedLockExitEventGen {
   def applyFromJavaEvent(data: ByteBuffer) = {
     val result = new StampedLockExitEventGen(
 
-      data.getInt()
-      ,
       data.getInt()
       ,
       data.getInt()
