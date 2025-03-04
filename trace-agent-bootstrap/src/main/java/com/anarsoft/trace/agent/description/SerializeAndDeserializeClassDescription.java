@@ -9,7 +9,7 @@ public class SerializeAndDeserializeClassDescription {
 
     public void serialize(ClassDescription description, DataOutputStream out) throws IOException {
         out.writeUTF(convertNullToBlank(description.name()));
-        out.writeUTF(description.source());
+        out.writeUTF(convertNullToBlank(description.source()));
 
         out.writeUTF(convertNullToBlank(description.superClass()));
         out.writeInt(description.interfaces().length);

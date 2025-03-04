@@ -1,9 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.fieldrepository;
 
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.FieldStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.FinalFieldStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.NormalFieldStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.VolatileFieldStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.*;
 import gnu.trove.map.hash.THashMap;
 
 public class FieldRepositoryImpl implements FieldRepositoryForCallback, FieldRepositoryForTransform {
@@ -29,7 +26,14 @@ public class FieldRepositoryImpl implements FieldRepositoryForCallback, FieldRep
 
     @Override
     public synchronized FieldStrategy get(int fieldId) {
-        return idToStrategy.get(fieldId);
+        FieldStrategy strategy = idToStrategy.get(fieldId);
+        // sometimes there is no strategy set
+        // I think the reason is that a static field is accessed and
+        // the corresponding classes was not loaded yet
+        if (strategy == null) {
+            return new FieldStrategyNoOp();
+        }
+        return strategy;
     }
 
     @Override

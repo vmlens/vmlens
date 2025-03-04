@@ -15,7 +15,7 @@ public class MonitorTextFactory implements OperationTextFactory {
 
     @Override
     public String create(DescriptionContext context) {
-        return monitorOperation.text() + " " + objectHashCode;
+        return monitorOperation.text() + "(" + objectHashCode + ")";
     }
 
     @Override

@@ -1,11 +1,11 @@
-package com.vmlens.test.volatileFields.fixed;
+package com.vmlens.test.maven.plugin;
 
 import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 public class TestSynchronizedBlock {
 
-    private int j = 0;
+    private static volatile int j = 0;
 
     @Test
     public void testUpdate() throws InterruptedException {

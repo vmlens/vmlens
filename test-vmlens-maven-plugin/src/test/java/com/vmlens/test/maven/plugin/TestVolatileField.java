@@ -1,4 +1,4 @@
-package com.vmlens.test.volatileFields.fixed;
+package com.vmlens.test.maven.plugin;
 
 import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
