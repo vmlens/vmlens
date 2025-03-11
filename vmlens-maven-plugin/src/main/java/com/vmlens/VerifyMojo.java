@@ -1,6 +1,7 @@
 package com.vmlens;
 
 import com.anarsoft.race.detection.main.ProcessEvents;
+import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -20,7 +21,9 @@ public class VerifyMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        new ProcessEvents(AgentMojo.eventDirectory().toPath(), reportDirectory.toPath()).process();
+        new ProcessEvents(AgentMojo.eventDirectory().toPath(),
+                reportDirectory.toPath(),
+                new OnDescriptionAndLeftBeforeRightNoOp()).process();
     }
 
 }

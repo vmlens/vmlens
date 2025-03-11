@@ -70,7 +70,7 @@ public class RunStateMachineImplTest {
         ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
-        // end event
+        // end assertion
         runStateMachineTestWrapper.eventEnd(threadLocalForParallelize);
         runStateMachineTestWrapper.assertBehavesAsRunStateEnd();
         assertThat(threadLocalForParallelize.getThreadLocalDataWhenInTest(), is(nullValue()));

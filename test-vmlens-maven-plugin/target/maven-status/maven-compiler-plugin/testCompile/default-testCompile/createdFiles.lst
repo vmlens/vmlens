@@ -1,5 +1,5 @@
-com\vmlens\test\volatileFields\fixed\TestFinal.class
-com\vmlens\test\volatileFields\fixed\TestSynchronizedBlock.class
-com\vmlens\test\volatileFields\fixed\TestVolatileField$1.class
-com\vmlens\test\volatileFields\fixed\TestVolatileField.class
-com\vmlens\test\volatileFields\fixed\TestSynchronizedBlock$1.class
+com\vmlens\test\maven\plugin\TestVolatileField$1.class
+com\vmlens\test\maven\plugin\TestSynchronizedBlock$1.class
+com\vmlens\test\maven\plugin\TestSynchronizedBlock.class
+com\vmlens\test\maven\plugin\TestFinal.class
+com\vmlens\test\maven\plugin\TestVolatileField.class

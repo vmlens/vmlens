@@ -28,18 +28,15 @@
         <dependency>
             <groupId>io.github.java-diff-utils</groupId>
             <artifactId>java-diff-utils</artifactId>
-            <version>4.12</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.5</version>
         </dependency>
         <!-- vmlens versions -->
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>trace-agent-bootstrap</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

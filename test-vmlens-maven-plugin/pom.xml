@@ -23,12 +23,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>api</artifactId>
-            <version>1.1.7-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -39,7 +37,7 @@
                 <plugin>
                     <groupId>com.vmlens</groupId>
                     <artifactId>vmlens-maven-plugin</artifactId>
-                    <version>1.1.7-SNAPSHOT</version>
+                    <version>${project.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

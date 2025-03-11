@@ -56,7 +56,6 @@
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>trace-agent-bootstrap</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -75,8 +74,6 @@
 
 
             <plugin>
-
-
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.1</version>
@@ -107,8 +104,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -135,7 +130,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
