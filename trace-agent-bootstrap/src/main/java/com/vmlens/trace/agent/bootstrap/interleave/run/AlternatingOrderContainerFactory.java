@@ -4,6 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.*;
+import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
+import com.vmlens.trace.agent.bootstrap.interleave.deadlock.DeadlockDependentBlockFactory;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Pair;
@@ -16,10 +18,13 @@ public class AlternatingOrderContainerFactory {
 
         MapOfBlocks mapOfBlocksExceptDeadlock = new MapOfBlocksExceptDeadlockFactory().create(
                 interleaveActionWitPositionAndRun.getLeft());
+        KeyToThreadIdToElementList<Object, DependentBlock> deadlockDependentBlocks = new DeadlockDependentBlockFactory().
+                create(interleaveActionWitPositionAndRun.getLeft());
 
         OrderArraysBuilder orderArraysBuilder = new OrderArraysBuilder();
 
-        new AddDependentBlocksToOrderArraysBuilder().add(mapOfBlocksExceptDeadlock.dependentBlocks(), orderArraysBuilder);
+        AddDependentBlocksToOrderArraysBuilder.add(mapOfBlocksExceptDeadlock.dependentBlocks(), orderArraysBuilder);
+        AddDependentBlocksToOrderArraysBuilder.add(deadlockDependentBlocks, orderArraysBuilder);
         new AddIndependentBlocksToOrderArraysBuilder().add(mapOfBlocksExceptDeadlock.inDependentBlocks(),
                 interleaveActionWitPositionAndRun.getRight(),
                 orderArraysBuilder);

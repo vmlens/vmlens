@@ -20,6 +20,10 @@ public class KeyToThreadIdToElementList<KEY, ELEMENT extends WithThreadIndex>
         threadIndexToElementList.add(element);
     }
 
+    public void putThreadIndexToElementList(KEY key,ThreadIndexToElementList<ELEMENT> threadIndexToElementList ) {
+        map.put(key,threadIndexToElementList);
+    }
+
     public Iterator<ThreadIndexToElementList<ELEMENT>> iterator() {
         return map.values().iterator();
     }
@@ -27,6 +31,11 @@ public class KeyToThreadIdToElementList<KEY, ELEMENT extends WithThreadIndex>
     // Visible for Test
     public ThreadIndexToElementList<ELEMENT> get(KEY key) {
         return map.get(key);
+    }
+
+    // Visible for Test
+    public THashMap<KEY, ThreadIndexToElementList<ELEMENT>> map() {
+        return map;
     }
 
     @Override

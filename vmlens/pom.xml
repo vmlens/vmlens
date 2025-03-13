@@ -176,7 +176,6 @@
         </dependencies>
     </dependencyManagement>
 
-
     <modules>
         <module>../annotation</module>
         <module>../test-util</module>

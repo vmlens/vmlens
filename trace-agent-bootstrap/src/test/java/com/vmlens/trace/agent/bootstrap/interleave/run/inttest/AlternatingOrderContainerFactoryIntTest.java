@@ -26,9 +26,8 @@ public class AlternatingOrderContainerFactoryIntTest {
 
         // Given
         VolatileFieldAccessTestBuilder f1 = VolatileFieldAccessTestBuilder.firstVolatileField();
+
         ActualRunTestBuilder builder = new ActualRunTestBuilder();
-
-
         builder.thread(
                 f1.read()
         );
@@ -37,7 +36,6 @@ public class AlternatingOrderContainerFactoryIntTest {
         );
 
         TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = builder.build();
-
         AlternatingOrderContainerFactory factory = new AlternatingOrderContainerFactory();
 
         // When
@@ -61,8 +59,8 @@ public class AlternatingOrderContainerFactoryIntTest {
 
         // Given
         VolatileFieldAccessTestBuilder f1 = VolatileFieldAccessTestBuilder.firstVolatileField();
-        ActualRunTestBuilder builder = new ActualRunTestBuilder();
 
+        ActualRunTestBuilder builder = new ActualRunTestBuilder();
         builder.thread(
                 f1.read()
         );
@@ -72,7 +70,6 @@ public class AlternatingOrderContainerFactoryIntTest {
         );
 
         TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = builder.build();
-
         AlternatingOrderContainerFactory factory = new AlternatingOrderContainerFactory();
 
         // When
@@ -98,8 +95,6 @@ public class AlternatingOrderContainerFactoryIntTest {
         LockOrMonitorTestBuilder mx = LockOrMonitorTestBuilder.firstMonitor();
 
         ActualRunTestBuilder builder = new ActualRunTestBuilder();
-
-
         builder.thread(
                 mx.enter(),
                 f1.read(),
@@ -112,7 +107,6 @@ public class AlternatingOrderContainerFactoryIntTest {
         );
 
         TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = builder.build();
-
         AlternatingOrderContainerFactory factory = new AlternatingOrderContainerFactory();
 
         // When
@@ -126,5 +120,43 @@ public class AlternatingOrderContainerFactoryIntTest {
         assertThat(threadIndexSetBuilder.count(), is(2));
     }
 
+    @Test
+    public void deadlock() {
+        // Expected
+        Set<IntArray> threadIndices = new HashSet<>();
+        threadIndices.add(intArray(0, 0, 0, 0, 1, 1, 1,1));
+        threadIndices.add(intArray(1, 1, 1,1, 0, 0, 0,0));
+        threadIndices.add(intArray(0, 1, 1, 1,1, 0, 0,0));
 
+        // Given
+        LockOrMonitorTestBuilder first = LockOrMonitorTestBuilder.monitor(6L);
+        LockOrMonitorTestBuilder second = LockOrMonitorTestBuilder.monitor(22L);
+
+        ActualRunTestBuilder builder = new ActualRunTestBuilder();
+        builder.thread(
+                first.enter(),
+                second.enter(),
+                second.exit(),
+                first.exit()
+        );
+        builder.thread(
+                second.enter(),
+                first.enter(),
+                first.exit(),
+                second.exit()
+        );
+
+        TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = builder.build();
+        AlternatingOrderContainerFactory factory = new AlternatingOrderContainerFactory();
+
+        // When
+        AlternatingOrderContainer alternatingOrder = factory.create(actualRun);
+
+        // Then
+        ThreadIndexSetBuilder threadIndexSetBuilder = new ThreadIndexSetBuilder();
+        threadIndexSetBuilder.execute(alternatingOrder);
+
+        assertThat(threadIndexSetBuilder.executedTThreadIndexArray(), is(threadIndices));
+        assertThat(threadIndexSetBuilder.count(), is(3));
+    }
 }

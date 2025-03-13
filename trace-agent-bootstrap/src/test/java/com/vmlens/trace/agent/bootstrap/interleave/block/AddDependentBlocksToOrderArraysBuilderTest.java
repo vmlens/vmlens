@@ -1,7 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlwaysEnabled;
+import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
+import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.DependentBlockElementGuineaPig;
 import org.junit.Test;
 
@@ -15,6 +18,7 @@ public class AddDependentBlocksToOrderArraysBuilderTest {
     public void addBlocksIfStartsAlternatingOrderReturnsTrue() {
         // Expected
         AlternatingOrderElement expectedAlternatingOrderElement = new AlternatingOrderElement(
+                new AlwaysEnabled(),
                 lbr(0, 0, 1, 0),
                 lbr(1, 0, 0, 0));
 
@@ -56,11 +60,10 @@ public class AddDependentBlocksToOrderArraysBuilderTest {
         mapOfBlocks.addDependent(dependedBlockKey, new DependentBlock(firstEpos, firstEpos));
         mapOfBlocks.addDependent(dependedBlockKey, new DependentBlock(secondEpos, secondEpos));
 
-        AddDependentBlocksToOrderArraysBuilder add = new AddDependentBlocksToOrderArraysBuilder();
         OrderArraysBuilder builder = new OrderArraysBuilder();
 
         // When
-        add.add(mapOfBlocks.dependentBlocks(), builder);
+        AddDependentBlocksToOrderArraysBuilder.add(mapOfBlocks.dependentBlocks(), builder);
 
         return builder;
     }

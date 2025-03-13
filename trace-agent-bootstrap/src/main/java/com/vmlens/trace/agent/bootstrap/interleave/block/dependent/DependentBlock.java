@@ -1,38 +1,51 @@
-package com.vmlens.trace.agent.bootstrap.interleave.block;
+package com.vmlens.trace.agent.bootstrap.interleave.block.dependent;
 
-import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 
 /**
  * if we have a single element, start and end are the same
  */
 public class DependentBlock implements WithThreadIndex {
-    private final ElementAndPosition<DependentBlockElement> start;
-    private final ElementAndPosition<DependentBlockElement> end;
 
-    public DependentBlock(ElementAndPosition<DependentBlockElement> start, ElementAndPosition<DependentBlockElement> end) {
+    private final Strategy strategy;
+    // to be visible in the strategy
+    final ElementAndPosition<DependentBlockElement> start;
+    final ElementAndPosition<DependentBlockElement> end;
+
+    public DependentBlock(Strategy strategy,
+                          ElementAndPosition<DependentBlockElement> start,
+                          ElementAndPosition<DependentBlockElement> end) {
+        this.strategy = strategy;
         this.start = start;
         this.end = end;
     }
 
-    public static DependentBlock db(ElementAndPosition<DependentBlockElement> start, ElementAndPosition<DependentBlockElement> end) {
-        return new DependentBlock(start, end);
+    public DependentBlock(ElementAndPosition<DependentBlockElement> start,
+                          ElementAndPosition<DependentBlockElement> end) {
+        this(new StrategyAlternating(),start,end);
     }
+
+    public static DependentBlock createOptionalConstraint(LockKey firstLock, LockKey secondLock,
+                                                          ElementAndPosition<DependentBlockElement> start,
+                                                          ElementAndPosition<DependentBlockElement> end) {
+        return new DependentBlock(new StrategyPotentialConstraint(firstLock,secondLock),start,end);
+    }
+
 
     @Override
     public int threadIndex() {
         return start.threadIndex();
+
     }
 
     public void addAlternatingOrder(DependentBlock blockFromOtherThread,
                                     OrderArraysBuilder orderArraysBuilder) {
         if (end.element().startsAlternatingOrder(blockFromOtherThread.start.element())) {
-            orderArraysBuilder.addAlternatingOrder(new AlternatingOrderElement(
-                    new LeftBeforeRight(end.position(), blockFromOtherThread.start.position()),
-                    new LeftBeforeRight(blockFromOtherThread.end.position(), start.position())));
-        }
+            strategy.addToBuilder(this,blockFromOtherThread,orderArraysBuilder);
+            }
     }
 
     // Visible for Test

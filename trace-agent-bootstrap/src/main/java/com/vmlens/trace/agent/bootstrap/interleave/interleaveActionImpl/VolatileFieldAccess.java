@@ -3,10 +3,14 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.DependentBlockElement;
-import com.vmlens.trace.agent.bootstrap.interleave.block.MapContainingStack;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElementStrategy;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlwaysEnabled;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.OnlyWhenNotDeadlockActive;
+import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
+import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
+import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 
 public class VolatileFieldAccess extends InterleaveActionForDependentBlock {
     private static final int MIN_OPERATION = 3;
@@ -23,8 +27,18 @@ public class VolatileFieldAccess extends InterleaveActionForDependentBlock {
     }
 
     @Override
+    public AlternatingOrderElementStrategy alternatingOrderElementStrategy() {
+        return new AlwaysEnabled();
+    }
+
+    @Override
+    public void addToBlockingLockRelationBuilder(Position position, BlockingLockRelationBuilder builder) {
+        // Nothing To do
+    }
+
+    @Override
     public void blockBuilderAdd(Position myPosition,
-                                MapContainingStack mapContainingStack,
+                                ActiveLockCollection mapContainingStack,
                                 MapOfBlocks result) {
         DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<>(this, myPosition),
                 new ElementAndPosition<>(this, myPosition));
@@ -70,4 +84,5 @@ public class VolatileFieldAccess extends InterleaveActionForDependentBlock {
         return MemoryAccessType.asString(operation) +
                 "(" + fieldId + ')';
     }
+
 }

@@ -27,7 +27,7 @@ public class InterleaveActionWithPositionFactory {
 
     private void add(BlockBuilderWithThreadIndex element) {
         int position = getPositionAtThreadIndex(element.threadIndex());
-        add(new ElementAndPosition<BlockBuilder>(element, pos(element.threadIndex(), position)));
+        add(new ElementAndPosition<>(element, pos(element.threadIndex(), position)));
     }
 
     public void add(ElementAndPosition<BlockBuilder> withPosition) {

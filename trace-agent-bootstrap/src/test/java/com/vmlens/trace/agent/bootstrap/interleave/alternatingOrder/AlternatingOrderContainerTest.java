@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlwaysEnabled;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -34,13 +36,13 @@ public class AlternatingOrderContainerTest {
         LeftBeforeRight[] firstOrderArray = new LeftBeforeRight[2];
         firstOrderArray[indexA] = leftBeforeRightOne();
         firstOrderArray[indexB] = leftBeforeRightTwo();
-        return  new AlternatingOrderContainer(new OrderArrays(firstOrderArray, new AlternatingOrderElement[0]),null);
+        return  new AlternatingOrderContainer(new OrderArrays(firstOrderArray, new AlternatingOrderElement[0],new LeftBeforeRightPair[0]),null);
     }
     private AlternatingOrderContainer createAlternatingOrder(int indexA,int indexB ) {
         AlternatingOrderElement[] alternatingOrderElementArray = new AlternatingOrderElement[2];
-        alternatingOrderElementArray[indexA] = new AlternatingOrderElement(leftBeforeRightOne(),leftBeforeRightTwo());
-        alternatingOrderElementArray[indexB] = new AlternatingOrderElement(leftBeforeRightThree(),leftBeforeRightFour());
-        return  new AlternatingOrderContainer(new OrderArrays(new LeftBeforeRight[0], alternatingOrderElementArray),null);
+        alternatingOrderElementArray[indexA] = new AlternatingOrderElement(new AlwaysEnabled(),leftBeforeRightOne(),leftBeforeRightTwo());
+        alternatingOrderElementArray[indexB] = new AlternatingOrderElement(new AlwaysEnabled(),leftBeforeRightThree(),leftBeforeRightFour());
+        return  new AlternatingOrderContainer(new OrderArrays(new LeftBeforeRight[0], alternatingOrderElementArray,new LeftBeforeRightPair[0]),null);
     }
     private LeftBeforeRight leftBeforeRightOne() {
         return new LeftBeforeRight(new Position(0, 0), new Position(1, 0));

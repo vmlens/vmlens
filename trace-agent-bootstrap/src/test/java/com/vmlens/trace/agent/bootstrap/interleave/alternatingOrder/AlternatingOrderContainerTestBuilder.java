@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlwaysEnabled;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 
 import java.util.LinkedList;
@@ -22,7 +24,7 @@ public class AlternatingOrderContainerTestBuilder {
 
     public void both(Position left, Position right) {
         LeftBeforeRight oneRelation = new LeftBeforeRight(left, right);
-        alternating.add(new AlternatingOrderElement(oneRelation, oneRelation.inverse()));
+        alternating.add(new AlternatingOrderElement(new AlwaysEnabled(),oneRelation, oneRelation.inverse()));
     }
 
     public AlternatingOrderContainer build() {
@@ -42,7 +44,7 @@ public class AlternatingOrderContainerTestBuilder {
         for (AlternatingOrderElement ae : aoe) {
             setMaxPosition(ae, maxPositionToIndex);
         }
-        OrderArrays orderArrays = new OrderArrays(fa, aoe);
+        OrderArrays orderArrays = new OrderArrays(fa, aoe,new LeftBeforeRightPair[0]);
         ThreadIndexToElementList<Position> actualRun = new ThreadIndexToElementList<>();
         for (int index = 0; index < maxPositionToIndex.length; index++) {
             for (int position = 0; position <= maxPositionToIndex[index]; position++) {

@@ -35,4 +35,17 @@ public class CalculatedRun {
                 "calculatedRunElementArray=" + Arrays.toString(calculatedRunElementArray) +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CalculatedRun that = (CalculatedRun) o;
+        return Arrays.equals(calculatedRunElementArray, that.calculatedRunElementArray);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(calculatedRunElementArray);
+    }
 }

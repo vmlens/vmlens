@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 
 public class ThreadStart extends InterleaveActionForInDependentBlock {
     private final int threadIndex;

@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.DependentBlockElementGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.IndependentBlockElementNoOpGuineaPig;
@@ -49,10 +50,10 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
         MapOfBlocks result = factory.create(actualRun);
 
         // Then
-        assertThat(result.dependentBlocks().get(firstKey).getElementNAtIndex(0, 0), is(firstBlock));
-        assertThat(result.dependentBlocks().get(firstKey).getElementNAtIndex(0, 1), is(secondBlock));
+        assertThat(result.dependentBlocks().get(firstKey).getElementAtIndex(0, 0), is(firstBlock));
+        assertThat(result.dependentBlocks().get(firstKey).getElementAtIndex(0, 1), is(secondBlock));
 
-        assertThat(result.dependentBlocks().get(secondKey).getElementNAtIndex(0, 0), is(thirdBlock));
+        assertThat(result.dependentBlocks().get(secondKey).getElementAtIndex(0, 0), is(thirdBlock));
     }
 
     @Test

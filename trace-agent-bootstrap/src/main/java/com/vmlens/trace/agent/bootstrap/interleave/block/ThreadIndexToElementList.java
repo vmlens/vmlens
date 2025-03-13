@@ -23,7 +23,7 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
     private int elementCount;
 
     public ThreadIndexToElementList() {
-        this(new TLinkedList<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>>(), 0);
+        this(new TLinkedList<>(), 0);
     }
 
     public ThreadIndexToElementList<ELEMENT> safeClone() {
@@ -68,7 +68,7 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
     }
 
     // For Tests
-    public ELEMENT getElementNAtIndex(int index, int n) {
+    public ELEMENT getElementAtIndex(int index, int n) {
         return threadList.get(index).element().get(n).element();
     }
 
@@ -94,6 +94,10 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
         return threadList.iterator();
     }
 
+    public TLinkedList<TLinkableWrapper<ELEMENT>> listAt(int threadIndex) {
+        return threadList.get(threadIndex).element();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,9 +120,7 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
         return threadList.listIterator(threadIndex);
     }
 
-    TLinkedList<TLinkableWrapper<ELEMENT>> listAt(int threadIndex) {
-        return threadList.get(threadIndex).element();
-    }
+
 
 
 }

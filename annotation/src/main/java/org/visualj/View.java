@@ -8,11 +8,10 @@ import java.lang.annotation.Target;
 import static org.visualj.ComponentType.DEFAULT;
 
 @Target(ElementType.TYPE)
-@Repeatable(ViewComponents.class)
-public @interface ViewComponent {
+@Repeatable(Views.class)
+public @interface View {
 
     String value();
-
     ComponentType type() default DEFAULT;
 
 }

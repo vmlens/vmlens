@@ -2,9 +2,9 @@ package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import org.visualj.ViewComponent;
+import org.visualj.View;
 
-@ViewComponent("agent.runtime")
+@View("agent.runtime")
 public class ClassFilterAndTransformerStrategyCollection {
 
     private final TLinkedList<TLinkableWrapper<ClassFilterAndTransformerStrategy>> classArrayTransformerList;

@@ -1,6 +1,6 @@
-package com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor;
+package com.vmlens.trace.agent.bootstrap.interleave.lock;
 
-public class Monitor implements LockOrMonitor {
+public class Monitor implements Lock {
     private final MonitorKey monitorKey;
 
     public Monitor(long objectHashCode) {
@@ -27,7 +27,7 @@ public class Monitor implements LockOrMonitor {
     }
 
     @Override
-    public boolean startsAlternatingOrder(LockOrMonitor lockOrMonitor) {
+    public boolean startsAlternatingOrder(Lock lockOrMonitor) {
         return true;
     }
 }

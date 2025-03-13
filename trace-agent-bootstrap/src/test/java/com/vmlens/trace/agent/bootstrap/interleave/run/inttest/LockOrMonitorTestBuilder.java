@@ -1,20 +1,24 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorEnter;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockOrMonitorExit;
-import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.LockOrMonitor;
-import com.vmlens.trace.agent.bootstrap.interleave.lockOrMonitor.Monitor;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockExit;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.Monitor;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class LockOrMonitorTestBuilder {
-    private final LockOrMonitor lockOrMonitor;
+    private final Lock lockOrMonitor;
 
-    public LockOrMonitorTestBuilder(LockOrMonitor lockOrMonitor) {
+    public LockOrMonitorTestBuilder(Lock lockOrMonitor) {
         this.lockOrMonitor = lockOrMonitor;
     }
 
     public static LockOrMonitorTestBuilder firstMonitor() {
         return new LockOrMonitorTestBuilder(new Monitor(1));
+    }
+
+    public static LockOrMonitorTestBuilder monitor(long objectHashCode) {
+        return new LockOrMonitorTestBuilder(new Monitor(objectHashCode));
     }
 
 
@@ -28,29 +32,29 @@ public class LockOrMonitorTestBuilder {
 
     private static class LockOrMonitorEnterImplFactory implements InterleaveActionTestFactory {
 
-        private final LockOrMonitor lockOrMonitor;
+        private final Lock lockOrMonitor;
 
-        public LockOrMonitorEnterImplFactory(LockOrMonitor lockOrMonitor) {
+        public LockOrMonitorEnterImplFactory(Lock lockOrMonitor) {
             this.lockOrMonitor = lockOrMonitor;
         }
 
         @Override
         public InterleaveAction create(int threadIndex) {
-            return new LockOrMonitorEnter(threadIndex, lockOrMonitor);
+            return new LockEnterImpl(threadIndex, lockOrMonitor);
         }
     }
 
     private static class LockOrMonitorExitFactory implements InterleaveActionTestFactory {
 
-        private final LockOrMonitor lockOrMonitor;
+        private final Lock lockOrMonitor;
 
-        public LockOrMonitorExitFactory(LockOrMonitor lockOrMonitor) {
+        public LockOrMonitorExitFactory(Lock lockOrMonitor) {
             this.lockOrMonitor = lockOrMonitor;
         }
 
         @Override
         public InterleaveAction create(int threadIndex) {
-            return new LockOrMonitorExit(threadIndex, lockOrMonitor);
+            return new LockExit(threadIndex, lockOrMonitor);
         }
     }
 
