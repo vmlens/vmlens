@@ -8,7 +8,7 @@ import java.util.concurrent.locks.Condition;
 public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
 
 
-    private static final long DEFAULT_WAIT_TIME = 5 * 60 * 1000;
+    private static final long DEFAULT_WAIT_TIME = 3 * 60 * 1000;
 
     public WaitNotifyStrategyImpl() {
     }
