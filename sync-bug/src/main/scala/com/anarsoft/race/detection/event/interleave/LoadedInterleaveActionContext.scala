@@ -8,7 +8,7 @@ import java.util
 
 class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveActionEvent] {
 
-  val volatileAccessEvents = new util.LinkedList[VolatileAccessEvent]();
+  val volatileAccessEvents = new util.LinkedList[VolatileFieldAccessEvent]();
   val threadStartEvents = new util.LinkedList[ThreadStartEvent]();
   val monitorEvents = new util.LinkedList[MonitorEvent]()
 

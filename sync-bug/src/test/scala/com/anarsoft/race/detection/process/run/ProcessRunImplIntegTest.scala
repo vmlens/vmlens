@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.process.run
 
-import com.anarsoft.race.detection.event.gen.{FieldAccessEventGen, VolatileAccessEventGen}
-import com.anarsoft.race.detection.event.interleave.VolatileAccessEvent
+import com.anarsoft.race.detection.event.gen.{FieldAccessEventGen, VolatileFieldAccessEventGen}
+import com.anarsoft.race.detection.event.interleave.VolatileFieldAccessEvent
 import com.anarsoft.race.detection.event.nonvolatile.NonVolatileFieldAccessEvent
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementBuilder
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileElementBuilder
@@ -40,16 +40,16 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
     val runId = 0;
     val loopIdAndRunId = LoopAndRunId(loopId, runId);
 
-    val list = new util.LinkedList[VolatileAccessEvent]();
+    val list = new util.LinkedList[VolatileFieldAccessEvent]();
     val fieldId = 0;
     val methodCounter = 0;
     val methodId = 0;
     val objectHashCode = 0L;
 
-    val write = new VolatileAccessEventGen(0, 0, fieldId, methodCounter,
+    val write = new VolatileFieldAccessEventGen(0, 0, fieldId, methodCounter,
       methodId, MemoryAccessType.IS_WRITE,
       objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 0);
-    val read = new VolatileAccessEventGen(1, 1, fieldId, methodCounter,
+    val read = new VolatileFieldAccessEventGen(1, 1, fieldId, methodCounter,
       methodId, MemoryAccessType.IS_READ, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 3);
 
     list.add(read)

@@ -9,8 +9,9 @@ public class ReEntrantLock {
         Lock lock = new ReentrantLock();
         lock.lock();
 
+        lock.newCondition();
+        lock.tryLock();
+
         lock.unlock();
     }
-
-
 }

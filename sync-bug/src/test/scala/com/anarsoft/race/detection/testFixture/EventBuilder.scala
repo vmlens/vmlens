@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.testFixture
 
-import com.anarsoft.race.detection.event.gen.VolatileAccessEventGen
+import com.anarsoft.race.detection.event.gen.VolatileFieldAccessEventGen
 import com.anarsoft.race.detection.event.method.LoadedMethodEvent
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.{MethodEnterEventBuilder, VolatileAccessEventBuilder}
@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
 class EventBuilder(val runId: Int, val loopId: Int, val slidingWindowId: Int) {
 
   val javaSyncActions = new ArrayBuffer[RuntimeEvent]();
-  val volatileAccessEvents = new ArrayBuffer[VolatileAccessEventGen]();
+  val volatileAccessEvents = new ArrayBuffer[VolatileFieldAccessEventGen]();
 
   val methodJavaEvents = new ArrayBuffer[RuntimeEvent]();
   val methodEvents = new ArrayBuffer[LoadedMethodEvent]();

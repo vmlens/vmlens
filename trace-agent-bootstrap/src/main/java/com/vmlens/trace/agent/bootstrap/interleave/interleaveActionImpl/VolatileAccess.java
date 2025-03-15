@@ -5,14 +5,13 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElementStrategy;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlwaysEnabled;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.OnlyWhenNotDeadlockActive;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 
-public class VolatileFieldAccess extends InterleaveActionForDependentBlock {
+public class VolatileAccess extends InterleaveActionForDependentBlock {
     private static final int MIN_OPERATION = 3;
 
     private final int threadIndex;
@@ -20,7 +19,7 @@ public class VolatileFieldAccess extends InterleaveActionForDependentBlock {
     private final int operation;
 
 
-    public VolatileFieldAccess(int threadIndex, int fieldId, int operation) {
+    public VolatileAccess(int threadIndex, int fieldId, int operation) {
         this.threadIndex = threadIndex;
         this.fieldId = fieldId;
         this.operation = operation;
@@ -52,7 +51,7 @@ public class VolatileFieldAccess extends InterleaveActionForDependentBlock {
 
     @Override
     public boolean startsAlternatingOrder(DependentBlockElement other) {
-        VolatileFieldAccess otherVolatileFieldAccess = (VolatileFieldAccess) other;
+        VolatileAccess otherVolatileFieldAccess = (VolatileAccess) other;
         return (otherVolatileFieldAccess.operation | operation) >= MIN_OPERATION;
     }
 
@@ -66,7 +65,7 @@ public class VolatileFieldAccess extends InterleaveActionForDependentBlock {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        VolatileFieldAccess that = (VolatileFieldAccess) o;
+        VolatileAccess that = (VolatileAccess) o;
 
         if (fieldId != that.fieldId) return false;
         if (operation != that.operation) return false;

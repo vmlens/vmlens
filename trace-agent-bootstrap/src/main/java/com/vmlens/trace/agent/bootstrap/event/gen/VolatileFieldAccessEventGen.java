@@ -5,12 +5,15 @@ import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
 
-public class MethodAtomicExitEventGen  {
+public class VolatileFieldAccessEventGen  {
 
     protected int     threadIndex;
-    protected int     methodId;
+    protected int     bytecodePosition;
+    protected int     fieldId;
     protected int     methodCounter;
-    protected byte     hasCallback;
+    protected int     methodId;
+    protected int     operation;
+    protected long     objectHashCode;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
@@ -20,11 +23,14 @@ public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    MethodAtomicExitEventGen that = (MethodAtomicExitEventGen) o;
+    VolatileFieldAccessEventGen that = (VolatileFieldAccessEventGen) o;
     if ( threadIndex != that.threadIndex) return false;
-    if ( methodId != that.methodId) return false;
+    if ( bytecodePosition != that.bytecodePosition) return false;
+    if ( fieldId != that.fieldId) return false;
     if ( methodCounter != that.methodCounter) return false;
-    if ( hasCallback != that.hasCallback) return false;
+    if ( methodId != that.methodId) return false;
+    if ( operation != that.operation) return false;
+    if ( objectHashCode != that.objectHashCode) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
@@ -33,11 +39,14 @@ public boolean equals(Object o) {
 
 @Override
 public String toString() {
-    return "MethodAtomicExitEventGen{" +
+    return "VolatileFieldAccessEventGen{" +
     "threadIndex=" + threadIndex +
-    "methodId=" + methodId +
+    "bytecodePosition=" + bytecodePosition +
+    "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
-    "hasCallback=" + hasCallback +
+    "methodId=" + methodId +
+    "operation=" + operation +
+    "objectHashCode=" + objectHashCode +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
@@ -48,16 +57,19 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  26, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  45, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  21 );
+buffer.put( (byte)  7 );
      buffer.putInt( threadIndex ); 
-     buffer.putInt( methodId ); 
+     buffer.putInt( bytecodePosition ); 
+     buffer.putInt( fieldId ); 
      buffer.putInt( methodCounter ); 
-     buffer.put( hasCallback ); 
+     buffer.putInt( methodId ); 
+     buffer.putInt( operation ); 
+      buffer.putLong( objectHashCode );  
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 

@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.interleave
 
-trait VolatileAccessEventStatic extends LoadedInterleaveActionEvent {
+trait VolatileFieldAccessEventStatic extends LoadedInterleaveActionEvent {
   override def addToContext(context: LoadedInterleaveActionContext): Unit = {
   }
 }

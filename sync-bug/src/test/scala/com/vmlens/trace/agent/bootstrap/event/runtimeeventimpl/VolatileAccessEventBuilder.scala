@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl
 
-import com.anarsoft.race.detection.event.gen.VolatileAccessEventGen
+import com.anarsoft.race.detection.event.gen.VolatileFieldAccessEventGen
 
 class VolatileAccessEventBuilder {
 
@@ -56,8 +56,8 @@ class VolatileAccessEventBuilder {
   def buildJavaEvent() = volatileAccessEvent;
 
 
-  def buildScalaEvent(): VolatileAccessEventGen = {
-    new VolatileAccessEventGen(volatileAccessEvent.threadIndex(),
+  def buildScalaEvent(): VolatileFieldAccessEventGen = {
+    new VolatileFieldAccessEventGen(volatileAccessEvent.threadIndex(),
       volatileAccessEvent.bytecodePosition(),
       volatileAccessEvent.fieldId(),
       volatileAccessEvent.methodCounter(),

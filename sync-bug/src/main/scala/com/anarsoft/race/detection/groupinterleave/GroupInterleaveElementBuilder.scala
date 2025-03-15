@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.groupinterleave
 
-import com.anarsoft.race.detection.event.interleave.{MonitorContainer, MonitorEvent, ThreadStartEvent, VolatileAccessEvent}
+import com.anarsoft.race.detection.event.interleave.{MonitorContainer, MonitorEvent, ThreadStartEvent, VolatileFieldAccessEvent}
 import com.anarsoft.race.detection.sortutil.EventWithReadWriteContainer
 import com.anarsoft.race.detection.util.EventArray
 
@@ -12,11 +12,11 @@ class GroupInterleaveElementBuilder {
 
   val arrayBuffer = new ArrayBuffer[GroupInterleaveElement]();
 
-  def addVolatileAccessEvents(list: util.LinkedList[VolatileAccessEvent]): Unit = {
+  def addVolatileAccessEvents(list: util.LinkedList[VolatileFieldAccessEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionImpl[VolatileAccessEvent](
-        EventArray[VolatileAccessEvent](list),
-        (event: VolatileAccessEvent) => EventWithReadWriteContainer[VolatileAccessEvent](event)));
+      new GroupInterleaveElementSyncActionImpl[VolatileFieldAccessEvent](
+        EventArray[VolatileFieldAccessEvent](list),
+        (event: VolatileFieldAccessEvent) => EventWithReadWriteContainer[VolatileFieldAccessEvent](event)));
   }
 
   def addThreadStartEvents(list: util.LinkedList[ThreadStartEvent]): Unit = {

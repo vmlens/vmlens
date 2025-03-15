@@ -8,8 +8,8 @@ import com.vmlens.report.element.MemoryAccessModifier
 import com.vmlens.report.operationtextfactory.{FieldAccessTextFactory, OperationTextFactory}
 
 
-trait VolatileAccessEvent extends EventWithReadWrite[VolatileAccessEvent]
-  with SyncActionEventWithCompareType[VolatileAccessEvent]
+trait VolatileFieldAccessEvent extends EventWithReadWrite[VolatileFieldAccessEvent]
+  with SyncActionEventWithCompareType[VolatileFieldAccessEvent]
   with WithSetStacktraceNode
   with LoadedInterleaveActionEvent 
   with EventWithAssertion {
@@ -21,7 +21,7 @@ trait VolatileAccessEvent extends EventWithReadWrite[VolatileAccessEvent]
     context.volatileAccessEvents.add(this);
   }
 
-  def compareType(other: VolatileAccessEvent): Int = {
+  def compareType(other: VolatileFieldAccessEvent): Int = {
     if (objectHashCode != other.objectHashCode) {
       objectHashCode.compareTo(other.objectHashCode)
     } else {

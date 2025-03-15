@@ -9,26 +9,26 @@ import com.anarsoft.race.detection.event.directmemory._;
 import com.anarsoft.race.detection.event.interleave._;
 
 
-class StampedLockExitEventGen (
+class VolatileFieldAccessEventStaticGen (
    val threadIndex  : Int  
+ ,  val bytecodePosition  : Int  
+ ,  val fieldId  : Int  
  ,  val methodCounter  : Int  
- ,  val objectHashCode  : Long  
- ,  val isShared  : Boolean  
- ,  val lockTyp  : Int  
- ,  val stampedLockMethodId  : Int  
+ ,  val methodId  : Int  
+ ,  val isWrite  : Boolean  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends StampedLockExit 
+)    extends VolatileFieldAccessEventStatic  
 {
 override def toString() = {
-  var text =  "StampedLockExitEventGen" 
+  var text =  "VolatileFieldAccessEventStaticGen" 
   text = text + ", threadIndex:" +  threadIndex 
+  text = text + ", bytecodePosition:" +  bytecodePosition 
+  text = text + ", fieldId:" +  fieldId 
   text = text + ", methodCounter:" +  methodCounter 
-  text = text + ", objectHashCode:" +  objectHashCode 
-  text = text + ", isShared:" +  isShared 
-  text = text + ", lockTyp:" +  lockTyp 
-  text = text + ", stampedLockMethodId:" +  stampedLockMethodId 
+  text = text + ", methodId:" +  methodId 
+  text = text + ", isWrite:" +  isWrite 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -37,9 +37,19 @@ override def toString() = {
 
 override def equals(other: Any) = {
     other match {
-      case that: StampedLockExitEventGen => 
+      case that: VolatileFieldAccessEventStaticGen => 
         {
              if( threadIndex != that.threadIndex )
+             {
+               false;
+             }
+             else
+             if( bytecodePosition != that.bytecodePosition )
+             {
+               false;
+             }
+             else
+             if( fieldId != that.fieldId )
              {
                false;
              }
@@ -49,22 +59,12 @@ override def equals(other: Any) = {
                false;
              }
              else
-             if( objectHashCode != that.objectHashCode )
+             if( methodId != that.methodId )
              {
                false;
              }
              else
-             if( isShared != that.isShared )
-             {
-               false;
-             }
-             else
-             if( lockTyp != that.lockTyp )
-             {
-               false;
-             }
-             else
-             if( stampedLockMethodId != that.stampedLockMethodId )
+             if( isWrite != that.isWrite )
              {
                false;
              }
@@ -92,23 +92,23 @@ override def equals(other: Any) = {
 }
 
 
-object  StampedLockExitEventGen 
+object  VolatileFieldAccessEventStaticGen 
 {
    def applyFromJavaEvent(data : ByteBuffer) =
    {
-     val result = new StampedLockExitEventGen (
+     val result = new VolatileFieldAccessEventStaticGen (
           
                 data.getInt()
           ,
                 data.getInt()
           ,
-                data.getLong()
+                data.getInt()
+          ,
+                data.getInt()
+          ,
+                data.getInt()
           ,
                 if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
-          ,
-                data.getInt()
-          ,
-                data.getInt()
           ,
                 data.getInt()
           ,
