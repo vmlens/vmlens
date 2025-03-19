@@ -1,6 +1,5 @@
-package com.vmlens.trace.agent.bootstrap.interleave.run.inttesttwo;
+package com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil;
 
-import com.vmlens.trace.agent.bootstrap.interleave.IntArray;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
@@ -15,11 +14,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.List;
 
-import static com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.IntArrayUtil.toIntArray;
-
 public class IntTestRunner {
 
-    public void runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun, Expected expected) {
+    public int runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun, Expected expected) {
         AlternatingOrderContainerFactory factory = new AlternatingOrderContainerFactory();
         Map<ExpectedElement,Integer> fulfilled = new HashMap<>();
         AlternatingOrderContainer alternatingOrder = factory.create(actualRun);
@@ -38,5 +35,6 @@ public class IntTestRunner {
             }
         }
         expected.check(fulfilled,executed);
+        return executed.size();
     }
 }

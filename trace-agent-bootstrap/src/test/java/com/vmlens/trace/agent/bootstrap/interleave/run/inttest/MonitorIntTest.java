@@ -1,5 +1,9 @@
-package com.vmlens.trace.agent.bootstrap.interleave.run.inttesttwo;
+package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
+import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.ExpectedBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestRunner;
 import org.junit.Test;
 
 public class MonitorIntTest {

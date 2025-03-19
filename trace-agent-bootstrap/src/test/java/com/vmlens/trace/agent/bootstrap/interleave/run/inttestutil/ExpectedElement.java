@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.run.inttesttwo;
+package com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil;
 
 import java.util.List;
 import java.util.Objects;

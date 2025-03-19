@@ -1,8 +1,7 @@
-package com.vmlens.trace.agent.bootstrap.interleave.run.inttesttwo;
+package com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
