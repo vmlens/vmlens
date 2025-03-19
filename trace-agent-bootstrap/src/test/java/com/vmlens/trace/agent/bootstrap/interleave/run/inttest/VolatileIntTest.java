@@ -58,12 +58,11 @@ public class VolatileIntTest {
         VolatileAccessKey B = new VolatileFieldAccessKey(3, 3456L);
         IntTestBuilder builder = new IntTestBuilder();
 
-        IntTestOperation read0 = builder.read(A, 0);
-        IntTestOperation write1 = builder.write(B, 1);
+        builder.read(A, 0);
+        builder.write(B, 1);
 
         // Expected
         ExpectedBuilder expectedBuilder = new ExpectedBuilder();
-
 
         // Test
         int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
