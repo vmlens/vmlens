@@ -10,18 +10,22 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBloc
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileAccessKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldAccessKey;
+
+import java.util.Objects;
 
 public class VolatileAccess extends InterleaveActionForDependentBlock {
     private static final int MIN_OPERATION = 3;
 
     private final int threadIndex;
-    private final int fieldId;
+    private final VolatileAccessKey volatileAccessKey;
     private final int operation;
 
 
-    public VolatileAccess(int threadIndex, int fieldId, int operation) {
+    public VolatileAccess(int threadIndex, VolatileAccessKey volatileAccessKey, int operation) {
         this.threadIndex = threadIndex;
-        this.fieldId = fieldId;
+        this.volatileAccessKey = volatileAccessKey;
         this.operation = operation;
     }
 
@@ -41,12 +45,12 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
                                 MapOfBlocks result) {
         DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<>(this, myPosition),
                 new ElementAndPosition<>(this, myPosition));
-        result.addDependent(new VolatileFieldAccessKey(fieldId), dependentBlock);
+        result.addDependent(volatileAccessKey, dependentBlock);
     }
 
     @Override
     protected Object blockKey() {
-        return new VolatileFieldAccessKey(fieldId);
+        return volatileAccessKey;
     }
 
     @Override
@@ -62,26 +66,28 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         VolatileAccess that = (VolatileAccess) o;
-
-        if (fieldId != that.fieldId) return false;
-        if (operation != that.operation) return false;
-        return threadIndex == that.threadIndex;
+        return threadIndex == that.threadIndex &&
+                operation == that.operation &&
+                Objects.equals(volatileAccessKey, that.volatileAccessKey);
     }
+
     @Override
     public int hashCode() {
-        int result = fieldId;
+        int result = threadIndex;
+        result = 31 * result + Objects.hashCode(volatileAccessKey);
         result = 31 * result + operation;
-        result = 31 * result + threadIndex;
         return result;
     }
+
     @Override
     public String toString() {
-        return MemoryAccessType.asString(operation) +
-                "(" + fieldId + ')';
+        return "VolatileAccess{" +
+                "threadIndex=" + threadIndex +
+                ", volatileAccessKey=" + volatileAccessKey +
+                ", operation=" + operation +
+                '}';
     }
-
 }

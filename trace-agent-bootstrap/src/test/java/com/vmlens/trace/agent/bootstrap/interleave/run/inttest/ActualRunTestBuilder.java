@@ -8,7 +8,7 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ActualRunTestBuilder {
 
-    TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = new TLinkedList<>();
+    private final TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = new TLinkedList<>();
     private int index;
 
     public void thread(InterleaveActionTestFactory... interleaveActionTestBuilderList) {

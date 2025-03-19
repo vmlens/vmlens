@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileFieldAccessEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldAccessKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 /**
@@ -54,7 +55,7 @@ public class VolatileAccessEvent extends VolatileFieldAccessEventGen implements
     public InterleaveAction create() {
         return new VolatileAccess(
                 threadIndex,
-                fieldId,
+                new VolatileFieldAccessKey(fieldId,objectHashCode),
                 operation);
     }
 

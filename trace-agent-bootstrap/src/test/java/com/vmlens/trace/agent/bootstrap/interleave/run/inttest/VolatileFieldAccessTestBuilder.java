@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldAccessKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class VolatileFieldAccessTestBuilder {
@@ -36,7 +37,7 @@ public class VolatileFieldAccessTestBuilder {
 
         @Override
         public InterleaveAction create(int threadIndex) {
-            return new VolatileAccess(threadIndex, fieldId, operation);
+            return new VolatileAccess(threadIndex, new VolatileFieldAccessKey(fieldId,6L), operation);
         }
     }
 

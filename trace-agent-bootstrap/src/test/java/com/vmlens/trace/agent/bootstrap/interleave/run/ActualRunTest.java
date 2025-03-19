@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileAccessKey;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,9 +15,10 @@ public class ActualRunTest {
         // Given
         CalculatedRun calculatedRun = mock(CalculatedRun.class);
         ActualRun actualRun = new ActualRun(new ActualRunObserverForCalculatedRun(calculatedRun));
+        VolatileAccessKey volatileAccessKey = mock(VolatileAccessKey.class);
 
         // When
-        InterleaveInfo interleaveInfo = actualRun.after(new VolatileAccess(1, 1, 1));
+        InterleaveInfo interleaveInfo = actualRun.after(new VolatileAccess(1, volatileAccessKey, 1));
 
         // Then
         assertThat(actualRun.run().size(), is(1));
