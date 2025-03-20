@@ -4,13 +4,20 @@ package com.vmlens.trace.agent.bootstrap.interleave.lock;
 public abstract class LockKey implements Comparable<LockKey> {
 
     public static final int CATEGORY_MONITOR = 1;
+    public static final int CATEGORY_REENTRANT_LOCK = 2;
+    public static final int CATEGORY_READ_WRITE_LOCK = 2;
+
+    private final long objectHashCode;
+
+    public LockKey(long objectHashCode) {
+        this.objectHashCode = objectHashCode;
+    }
 
     public abstract int category();
-    public abstract long objectHashCode();
-    public abstract boolean isReadLock();
+    public abstract boolean isRead();
 
-    public final boolean blocks(LockKey otherLock) {
-        return ! (isReadLock() && otherLock.isReadLock());
+    public long objectHashCode() {
+        return objectHashCode;
     }
 
     @Override

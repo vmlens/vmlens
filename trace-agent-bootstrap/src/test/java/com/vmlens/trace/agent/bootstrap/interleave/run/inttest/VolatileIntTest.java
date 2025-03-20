@@ -65,7 +65,7 @@ public class VolatileIntTest {
         ExpectedBuilder expectedBuilder = new ExpectedBuilder();
 
         // Test
-        int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.build()).size();
         assertThat(count,is(0));
     }
 

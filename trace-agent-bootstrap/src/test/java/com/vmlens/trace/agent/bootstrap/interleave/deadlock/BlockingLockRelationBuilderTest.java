@@ -3,7 +3,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.KeyToThreadIdToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Monitor;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import gnu.trove.map.hash.THashMap;
 import org.junit.Test;
 
@@ -12,9 +13,9 @@ import static org.hamcrest.Matchers.is;
 
 public class BlockingLockRelationBuilderTest {
 
-    private final Monitor first = new Monitor(16L);
-    private final Monitor second = new Monitor(36L);
-    private final Monitor third = new Monitor(120L);
+    private final Lock first = new Lock(new MonitorKey(16L));
+    private final Lock second = new Lock(new MonitorKey(36L));
+    private final Lock third = new Lock(new MonitorKey(120L));
 
     @Test
     public void threeMonitorsSingleThreaded() {

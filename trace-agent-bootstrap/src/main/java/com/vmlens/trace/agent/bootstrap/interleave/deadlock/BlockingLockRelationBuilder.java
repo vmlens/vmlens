@@ -44,8 +44,16 @@ public class BlockingLockRelationBuilder {
     }
 
     private void add(ElementAndPosition<LockEnter> parent,ElementAndPosition<LockEnter> child ) {
+        LockKey parentKey = parent.element().key();
+        LockKey childKey = child.element().key();
+
+        // if both keys are read the can not create a deadlock
+        if(parentKey.isRead() && childKey.isRead()) {
+            return;
+        }
+
         PositionPair positionPair = new PositionPair(parent.position(),child.position());
-        LockPair pair = new LockPair(parent.element().key(), child.element().key());
+        LockPair pair = new LockPair(parentKey,childKey);
         LockPair normalized = pair.normalized();
         LockPairCombinationAndThreadIndices list = map.get(normalized);
         if(list == null) {

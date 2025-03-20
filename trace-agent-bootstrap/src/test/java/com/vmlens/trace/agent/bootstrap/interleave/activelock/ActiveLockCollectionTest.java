@@ -2,7 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.activelock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Monitor;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.p;
@@ -15,8 +16,8 @@ public class ActiveLockCollectionTest {
     public void testActiveOneThreadIndex() {
         // Given
         ActiveLockCollection mapContainingStack = new ActiveLockCollection();
-        Monitor firstMonitor = new Monitor(0);
-        Monitor secondMonitor = new Monitor(10);
+        Lock firstMonitor = new Lock(new MonitorKey(0));
+        Lock secondMonitor = new Lock(new MonitorKey(19));
         int threadIndex = 5;
 
         // When
@@ -32,7 +33,7 @@ public class ActiveLockCollectionTest {
     public void testActiveOneMultipleIndex() {
         // Given
         ActiveLockCollection mapContainingStack = new ActiveLockCollection();
-        Monitor firstMonitor = new Monitor(0);
+        Lock firstMonitor = new Lock(new MonitorKey(0));
         int threadIndex = 5;
         int secondIndex = 9;
 

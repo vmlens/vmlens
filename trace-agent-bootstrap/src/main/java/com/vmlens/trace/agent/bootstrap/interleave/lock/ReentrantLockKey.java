@@ -1,14 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.interleave.lock;
 
-public class MonitorKey extends LockKey {
+public class ReentrantLockKey extends LockKey {
 
-    public MonitorKey(long objectHashCode) {
+    public ReentrantLockKey(long objectHashCode) {
         super(objectHashCode);
     }
 
     @Override
     public int category() {
-        return CATEGORY_MONITOR;
+        return CATEGORY_REENTRANT_LOCK;
     }
 
     @Override

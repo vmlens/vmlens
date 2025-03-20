@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileAccessKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldAccessKey;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestOperation;
@@ -13,7 +15,7 @@ public class MonitorAndVolatileIntTest {
     @Test
     public void volatileFieldAndMonitor() {
         // Given
-        long A = 1000L;
+        LockKey A = new MonitorKey(1000L);
         VolatileAccessKey key = new VolatileFieldAccessKey(3, 789L);
 
         IntTestBuilder builder = new IntTestBuilder();

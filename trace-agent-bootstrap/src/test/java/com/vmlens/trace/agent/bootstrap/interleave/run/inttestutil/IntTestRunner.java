@@ -16,7 +16,7 @@ import java.util.List;
 
 public class IntTestRunner {
 
-    public int runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun, Expected expected) {
+    public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun, Expected expected) {
         AlternatingOrderContainerFactory factory = new AlternatingOrderContainerFactory();
         Map<ExpectedElement,Integer> fulfilled = new HashMap<>();
         AlternatingOrderContainer alternatingOrder = factory.create(actualRun);
@@ -35,6 +35,6 @@ public class IntTestRunner {
             }
         }
         expected.check(fulfilled,executed);
-        return executed.size();
+        return executed;
     }
 }

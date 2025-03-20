@@ -8,12 +8,14 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestOperat
 import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestRunner;
 import org.junit.Test;
 
-public class MonitorIntTest {
+import com.vmlens.trace.agent.bootstrap.interleave.lock.ReentrantLockKey;
+
+public class ReentrantLockIntTest {
 
     @Test
     public void enterExit() {
         // Given
-        LockKey A = new MonitorKey(1000L);
+        LockKey A = new ReentrantLockKey(1000L);
 
         IntTestBuilder builder = new IntTestBuilder();
 
@@ -32,29 +34,7 @@ public class MonitorIntTest {
         new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
     }
 
-    @Test
-    public void deadlock() {
-        // Given
-        LockKey A = new MonitorKey(1000L);
-        LockKey B = new MonitorKey(1500L);
-
-        IntTestBuilder builder = new IntTestBuilder();
-
-        IntTestOperation enterA_0 = builder.enter(A,0);
-        IntTestOperation enterB_0 = builder.enter(B,0);
-        builder.exit(B,0);
-        builder.exit(A,0);
-
-        IntTestOperation enterB_1 = builder.enter(B,1);
-        IntTestOperation enterA_1 = builder.enter(A,1);
-        builder.exit(A,1);
-        builder.exit(B,1);
-
-        // Expected
-        ExpectedBuilder expectedBuilder = new ExpectedBuilder();
-        expectedBuilder.group(enterA_0,enterB_1,enterA_1,enterB_0);
-
-        // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+    public void chainedLocks() {
+        // Fixme implement
     }
 }
