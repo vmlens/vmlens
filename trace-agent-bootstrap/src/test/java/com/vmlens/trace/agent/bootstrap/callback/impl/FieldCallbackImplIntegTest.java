@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback.impl;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.FieldAccessEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileFieldAccessEvent;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class FieldCallbackImplIntegTest {
         CallbackTestContainer callbackTestContainer = CallbackTestContainer.create(true);
         int fieldId = callbackTestContainer.fieldIdToStrategy().getIdAndSetFieldIsVolatile(volatileField);
 
-        VolatileAccessEvent volatileAccessEvent = new VolatileAccessEvent();
+        VolatileFieldAccessEvent volatileAccessEvent = new VolatileFieldAccessEvent();
         volatileAccessEvent.setThreadIndex(TEST_THREAD_INDEX);
         volatileAccessEvent.setMethodId(inMethodId);
         volatileAccessEvent.setOperation(MemoryAccessType.IS_READ);

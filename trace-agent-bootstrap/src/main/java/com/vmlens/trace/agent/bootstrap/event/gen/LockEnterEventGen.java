@@ -10,8 +10,7 @@ public class LockEnterEventGen  {
     protected int     threadIndex;
     protected int     methodCounter;
     protected long     objectHashCode;
-    protected boolean     isShared;
-    protected int     lockTyp;
+    protected int     lockType;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
@@ -25,8 +24,7 @@ public boolean equals(Object o) {
     if ( threadIndex != that.threadIndex) return false;
     if ( methodCounter != that.methodCounter) return false;
     if ( objectHashCode != that.objectHashCode) return false;
-    if ( isShared != that.isShared) return false;
-    if ( lockTyp != that.lockTyp) return false;
+    if ( lockType != that.lockType) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
@@ -39,8 +37,7 @@ public String toString() {
     "threadIndex=" + threadIndex +
     "methodCounter=" + methodCounter +
     "objectHashCode=" + objectHashCode +
-    "isShared=" + isShared +
-    "lockTyp=" + lockTyp +
+    "lockType=" + lockType +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
@@ -51,7 +48,7 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  34, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  33, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
@@ -60,8 +57,7 @@ buffer.put( (byte)  10 );
      buffer.putInt( threadIndex ); 
      buffer.putInt( methodCounter ); 
       buffer.putLong( objectHashCode );  
-     buffer.put( (byte) ( isShared ? 1 : 0 ) );
-     buffer.putInt( lockTyp ); 
+     buffer.putInt( lockType ); 
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 

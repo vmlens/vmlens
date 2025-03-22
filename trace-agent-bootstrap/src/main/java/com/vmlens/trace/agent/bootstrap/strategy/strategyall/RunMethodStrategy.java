@@ -7,6 +7,9 @@ import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
 import java.util.Objects;
 
+import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.methodEnterEvent;
+import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.methodExitEvent;
+
 public class RunMethodStrategy implements StrategyAll {
 
     private final StrategyAll strategyIfNotThreadRun;
@@ -16,19 +19,26 @@ public class RunMethodStrategy implements StrategyAll {
     }
 
     @Override
-    public void methodEnter(EnterExitContext enterExitContext) {
+    public void methodEnter(MethodEnterExitContext enterExitContext) {
         if (enterExitContext.checkIsThreadRun().isThreadRun()) {
             enterExitContext.threadLocalWhenInTestAdapter().eventQueue().offer(
                 enterExitContext.parallelizeFacade().newTask(enterExitContext.
                             threadLocalWhenInTestAdapter().
                             threadLocalForParallelize(),
                     new RunnableOrThreadWrapper(Thread.currentThread())));
-            enterExitContext.threadLocalWhenInTestAdapter().process(new RunAfter<>(new MethodEnterEvent(enterExitContext.methodId()),
-                    new SetFieldsNoOp<>()));
+            methodEnterEvent(enterExitContext);
         } else {
             strategyIfNotThreadRun.methodEnter(enterExitContext);
         }
+    }
 
+    @Override
+    public void methodExit(MethodEnterExitContext enterExitContext) {
+        if (enterExitContext.checkIsThreadRun().isThreadRun()) {
+            methodExitEvent(enterExitContext);
+        } else {
+            strategyIfNotThreadRun.methodEnter(enterExitContext);
+        }
     }
 
     @Override

@@ -8,6 +8,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Fixme add call to callback method for atomic and hash map:
+ *   name
+ *   operation before call
+ */
+
 public class PreAnalyzedMethod {
     private final String name;
     private final String desc;

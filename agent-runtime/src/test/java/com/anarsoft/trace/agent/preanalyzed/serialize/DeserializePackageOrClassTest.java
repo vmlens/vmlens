@@ -4,14 +4,11 @@ package com.anarsoft.trace.agent.preanalyzed.serialize;
 import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
 import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.ClassTypeFilter;
-import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodTypeThreadStart;
-import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadStart;
 import org.junit.Test;
 
 import java.io.*;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -47,7 +44,7 @@ public class DeserializePackageOrClassTest {
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
 
         PreAnalyzedMethod[] preAnalyzedMethods = new PreAnalyzedMethod[1];
-        preAnalyzedMethods[0] = new PreAnalyzedMethod("´start", "()V", MethodTypeThreadStart.SINGLETON);
+        preAnalyzedMethods[0] = new PreAnalyzedMethod("´start", "()V", ThreadStart.SINGLETON);
         PackageOrClass withMethod = new PackageOrClass("with.java",
                 ClassTypeFilter.SINGLETON, preAnalyzedMethods);
 

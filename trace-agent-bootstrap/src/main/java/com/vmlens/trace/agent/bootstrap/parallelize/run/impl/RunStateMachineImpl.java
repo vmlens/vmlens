@@ -70,7 +70,7 @@ public class RunStateMachineImpl implements RunStateMachine, ProcessRuntimeEvent
     @Override
     public RuntimeEvent callAfterFromState(RuntimeEvent runtimeEvent,
                                            ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-        return runtimeEvent.after(actualRun);
+        return runtimeEvent.after(actualRun,runContext);
     }
 
     @Override

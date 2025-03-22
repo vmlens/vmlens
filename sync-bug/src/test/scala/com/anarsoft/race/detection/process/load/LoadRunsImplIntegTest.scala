@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.process.load
 
 import com.anarsoft.race.detection.loopAndRunData.LoopAndRunId
 import com.anarsoft.race.detection.main.LoadRunsFactory
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileAccessEvent
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileFieldAccessEvent
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -23,15 +23,15 @@ class LoadRunsImplIntegTest extends AnyFlatSpec with Matchers {
     val tempDirectory = Files.createTempDirectory("testDir")
     val streamRepository = new StreamRepository(tempDirectory.toString);
 
-    val first = new VolatileAccessEvent();
+    val first = new VolatileFieldAccessEvent();
     first.setLoopId(2)
     first.setRunId(0)
 
-    val second = new VolatileAccessEvent();
+    val second = new VolatileFieldAccessEvent();
     second.setLoopId(1)
     second.setRunId(1)
 
-    val third = new VolatileAccessEvent();
+    val third = new VolatileFieldAccessEvent();
     third.setLoopId(1)
     third.setRunId(2)
 

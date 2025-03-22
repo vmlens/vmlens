@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
 
-import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElementStrategy;
@@ -10,8 +9,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBloc
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileAccessKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldAccessKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileKey;
 
 import java.util.Objects;
 
@@ -19,11 +17,11 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
     private static final int MIN_OPERATION = 3;
 
     private final int threadIndex;
-    private final VolatileAccessKey volatileAccessKey;
+    private final VolatileKey volatileAccessKey;
     private final int operation;
 
 
-    public VolatileAccess(int threadIndex, VolatileAccessKey volatileAccessKey, int operation) {
+    public VolatileAccess(int threadIndex, VolatileKey volatileAccessKey, int operation) {
         this.threadIndex = threadIndex;
         this.volatileAccessKey = volatileAccessKey;
         this.operation = operation;

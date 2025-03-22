@@ -7,6 +7,7 @@ import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.Metho
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.ThreadJoinStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.ThreadStartStrategy;
 
 import static com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.MethodNotFoundAction.NO_OP;
@@ -27,6 +28,11 @@ public class MethodBuilderImpl implements MethodBuilder {
     @Override
     public void addThreadStart(String name, String desc) {
         methodToStrategy.put(new NameAndDescriptor(name, desc), ThreadStartStrategy.SINGLETON);
+    }
+
+    @Override
+    public void addThreadJoin(String name, String desc) {
+        methodToStrategy.put(new NameAndDescriptor(name, desc), ThreadJoinStrategy.SINGLETON);
     }
 
     @Override

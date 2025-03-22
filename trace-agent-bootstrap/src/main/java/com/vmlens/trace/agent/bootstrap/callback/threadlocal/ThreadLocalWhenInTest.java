@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setinmethodidandposition.RuntimeEventAndSetInMethodIdAndPosition;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermethodexit.ExecuteAfterMethodCall;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
@@ -13,7 +13,7 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
     private final RunAdapter runAdapter;
     private final int threadIndex;
     private InMethodIdAndPosition inMethodIdAndPosition;
-    private RuntimeEventAndSetInMethodIdAndPosition runtimeEventForAtomicAction;
+    private ExecuteAfterMethodCall executeAfterMethodCall;
 
 
     public ThreadLocalWhenInTest(RunForCallback run, int threadIndex) {
@@ -26,12 +26,14 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
         return threadIndex;
     }
 
-    public RuntimeEventAndSetInMethodIdAndPosition runtimeEventForAtomicAction() {
-        return runtimeEventForAtomicAction;
+
+
+    public ExecuteAfterMethodCall executeAfterMethodCall() {
+        return executeAfterMethodCall;
     }
 
-    public void setRuntimeEventForAtomicAction(RuntimeEventAndSetInMethodIdAndPosition runtimeEventForAtomicAction) {
-        this.runtimeEventForAtomicAction = runtimeEventForAtomicAction;
+    public void setExecuteAfterMethodCall(ExecuteAfterMethodCall executeAfterMethodCall) {
+        this.executeAfterMethodCall = executeAfterMethodCall;
     }
 
     public InMethodIdAndPosition inMethodIdAndPosition() {

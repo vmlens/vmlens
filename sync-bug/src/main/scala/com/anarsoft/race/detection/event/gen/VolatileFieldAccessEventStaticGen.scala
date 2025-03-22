@@ -15,7 +15,7 @@ class VolatileFieldAccessEventStaticGen (
  ,  val fieldId  : Int  
  ,  val methodCounter  : Int  
  ,  val methodId  : Int  
- ,  val isWrite  : Boolean  
+ ,  val operation  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
@@ -28,7 +28,7 @@ override def toString() = {
   text = text + ", fieldId:" +  fieldId 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", methodId:" +  methodId 
-  text = text + ", isWrite:" +  isWrite 
+  text = text + ", operation:" +  operation 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -64,7 +64,7 @@ override def equals(other: Any) = {
                false;
              }
              else
-             if( isWrite != that.isWrite )
+             if( operation != that.operation )
              {
                false;
              }
@@ -108,7 +108,7 @@ object  VolatileFieldAccessEventStaticGen
           ,
                 data.getInt()
           ,
-                if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
+                data.getInt()
           ,
                 data.getInt()
           ,

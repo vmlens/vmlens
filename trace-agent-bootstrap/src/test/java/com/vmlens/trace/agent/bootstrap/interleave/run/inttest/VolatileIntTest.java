@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run.inttest;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileAccessKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldAccessKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil.IntTestOperation;
@@ -16,7 +16,7 @@ public class VolatileIntTest {
     @Test
     public void readWrite() {
         // Given
-        VolatileAccessKey key = new VolatileFieldAccessKey(3, 789L);
+        VolatileKey key = new VolatileFieldKey(3, 789L);
         IntTestBuilder builder = new IntTestBuilder();
 
         IntTestOperation read0 = builder.read(key, 0);
@@ -34,7 +34,7 @@ public class VolatileIntTest {
     @Test
     public void readTwoWrites() {
         // Given
-        VolatileAccessKey key = new VolatileFieldAccessKey(3, 789L);
+        VolatileKey key = new VolatileFieldKey(3, 789L);
         IntTestBuilder builder = new IntTestBuilder();
 
         IntTestOperation read0 = builder.read(key, 0);
@@ -54,8 +54,8 @@ public class VolatileIntTest {
     @Test
     public void differentObjects() {
         // Given
-        VolatileAccessKey A = new VolatileFieldAccessKey(3, 789L);
-        VolatileAccessKey B = new VolatileFieldAccessKey(3, 3456L);
+        VolatileKey A = new VolatileFieldKey(3, 789L);
+        VolatileKey B = new VolatileFieldKey(3, 3456L);
         IntTestBuilder builder = new IntTestBuilder();
 
         builder.read(A, 0);

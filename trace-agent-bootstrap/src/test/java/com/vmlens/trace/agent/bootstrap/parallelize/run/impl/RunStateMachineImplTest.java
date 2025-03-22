@@ -35,7 +35,7 @@ public class RunStateMachineImplTest {
 
         // after thread start
         runStateMachineTestWrapper.eventEndAtomicOperation(runtimeEvent);
-        verify(runtimeEvent).after(any());
+        verify(runtimeEvent).after(any(),any());
         verify(runtimeEvent).setStartedThreadIndex(anyInt());
         runStateMachineTestWrapper.assertBehavesAsRunStateActiveActiveStrategyRecording();
     }
@@ -52,7 +52,7 @@ public class RunStateMachineImplTest {
 
         // after thread start
         runStateMachineTestWrapper.eventEndAtomicOperation(runtimeEvent);
-        verify(runtimeEvent).after(any());
+        verify(runtimeEvent).after(any(),any());
         verify(runtimeEvent).setStartedThreadIndex(anyInt());
         runStateMachineTestWrapper.assertBehavesAsRunStateNewThreadStarted();
 
@@ -88,7 +88,7 @@ public class RunStateMachineImplTest {
 
         // after atomic operation
         runStateMachineTestWrapper.eventEndAtomicOperation(runtimeEvent);
-        verify(runtimeEvent).after(any());
+        verify(runtimeEvent).after(any(),any());
         runStateMachineTestWrapper.assertBehavesAsRunStateActiveActiveStrategyRecording();
     }
 

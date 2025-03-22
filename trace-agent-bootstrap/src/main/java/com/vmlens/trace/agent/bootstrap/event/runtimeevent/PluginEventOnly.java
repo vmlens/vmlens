@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 public interface PluginEventOnly extends RuntimeEvent {
 
     @Override
-    default RuntimeEvent after(ActualRun actualRun) {
+    default RuntimeEvent after(ActualRun actualRun, CreateInterleaveActionContext context) {
         setRunPosition(actualRun.positionInRun());
         return this;
     }

@@ -6,11 +6,11 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveInfo;
 
 public interface InterleaveActionFactory extends RuntimeEvent {
 
-    InterleaveAction create();
+    InterleaveAction create(CreateInterleaveActionContext context);
 
     @Override
-    default RuntimeEvent after(ActualRun actualRun) {
-        InterleaveInfo interleaveInfo = actualRun.after(create());
+    default RuntimeEvent after(ActualRun actualRun, CreateInterleaveActionContext context) {
+        InterleaveInfo interleaveInfo = actualRun.after(create(context));
         setRunPosition(interleaveInfo.runPosition());
         return this;
     }

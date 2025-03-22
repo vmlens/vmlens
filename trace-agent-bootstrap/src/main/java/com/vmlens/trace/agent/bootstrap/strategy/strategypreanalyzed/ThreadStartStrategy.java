@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunStartAtomicActionWithNewThread;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetEndAtomicActionForPreAnalyzed;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setinmethodidandposition.RuntimeEventAndSetInMethodIdAndPositionImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterMethodCall;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermethodexit.ExecuteRunEndAtomicAction;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 
@@ -21,11 +21,11 @@ public class ThreadStartStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void methodExit(EnterExitContext context) {
-        RuntimeEventAndSetInMethodIdAndPositionImpl<ThreadStartEvent> runtimeEventAndSetInMethodIdAndPositionImpl =
-                new RuntimeEventAndSetInMethodIdAndPositionImpl<>(new ThreadStartEvent());
+        ExecuteRunEndAtomicAction<ThreadStartEvent> runtimeEventAndSetInMethodIdAndPositionImpl =
+                new ExecuteRunEndAtomicAction<>(new ThreadStartEvent());
 
         context.threadLocalWhenInTestAdapter().process(
-                new SetEndAtomicActionForPreAnalyzed(runtimeEventAndSetInMethodIdAndPositionImpl));
+                new SetExecuteAfterMethodCall(runtimeEventAndSetInMethodIdAndPositionImpl));
     }
 
     @Override

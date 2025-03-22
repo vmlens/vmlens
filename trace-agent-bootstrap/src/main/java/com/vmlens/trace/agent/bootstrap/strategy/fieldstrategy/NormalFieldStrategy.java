@@ -2,9 +2,11 @@ package com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFieldsNoOp;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.FieldAccessEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.FieldAccessEventStatic;
 
 public class NormalFieldStrategy implements FieldStrategy {
     @Override
@@ -26,6 +28,14 @@ public class NormalFieldStrategy implements FieldStrategy {
     public void onStaticAccess(int fieldId, int position, int inMethodId,
                                int memoryAccessType,
                                ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
+        FieldAccessEventStatic fieldAccessEvent = new FieldAccessEventStatic();
+        fieldAccessEvent.setFieldId(fieldId);
+        fieldAccessEvent.setMethodId(inMethodId);
+        fieldAccessEvent.setOperation(memoryAccessType);
 
+        CallbackAction callbackAction = new RunAfter<>(fieldAccessEvent,
+                new SetFieldsNoOp<>());
+
+        threadLocalWhenInTestAdapter.process(callbackAction);
     }
 }

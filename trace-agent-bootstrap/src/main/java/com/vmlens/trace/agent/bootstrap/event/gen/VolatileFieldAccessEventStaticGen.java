@@ -12,7 +12,7 @@ public class VolatileFieldAccessEventStaticGen  {
     protected int     fieldId;
     protected int     methodCounter;
     protected int     methodId;
-    protected boolean     isWrite;
+    protected int     operation;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
@@ -28,7 +28,7 @@ public boolean equals(Object o) {
     if ( fieldId != that.fieldId) return false;
     if ( methodCounter != that.methodCounter) return false;
     if ( methodId != that.methodId) return false;
-    if ( isWrite != that.isWrite) return false;
+    if ( operation != that.operation) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
@@ -43,7 +43,7 @@ public String toString() {
     "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
     "methodId=" + methodId +
-    "isWrite=" + isWrite +
+    "operation=" + operation +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
@@ -54,7 +54,7 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  34, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  37, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
@@ -65,7 +65,7 @@ buffer.put( (byte)  6 );
      buffer.putInt( fieldId ); 
      buffer.putInt( methodCounter ); 
      buffer.putInt( methodId ); 
-     buffer.put( (byte) ( isWrite ? 1 : 0 ) );
+     buffer.putInt( operation ); 
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 

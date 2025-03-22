@@ -6,6 +6,8 @@ public interface MethodBuilder {
 
     void addThreadStart(String name, String desc);
 
+    void addThreadJoin(String name, String desc);
+
     void noOpWhenMethodNotFound();
 
     FactoryCollectionPreAnalyzedFactory build();

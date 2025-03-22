@@ -4,7 +4,7 @@ package com.anarsoft.trace.agent.preanalyzed.model;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.ClassTypeAllStartWith;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.ClassTypeFilter;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.ClassTypeVmlensApi;
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedEqualNoOp;
+import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedSpecificMethods;
 
 public class ClassTypeCollection {
 
@@ -15,7 +15,7 @@ public class ClassTypeCollection {
         if(classType instanceof ClassTypeFilter) {
             return 0;
         }
-        if(classType instanceof PreAnalyzedEqualNoOp) {
+        if(classType instanceof PreAnalyzedSpecificMethods) {
             return 1;
         }
         if(classType instanceof ClassTypeAllStartWith) {
@@ -32,7 +32,7 @@ public class ClassTypeCollection {
             return ClassTypeFilter.SINGLETON;
         }
         if(id == 1) {
-            return PreAnalyzedEqualNoOp.SINGLETON;
+            return PreAnalyzedSpecificMethods.SINGLETON;
         }
         if(id == 2) {
             return ClassTypeAllStartWith.SINGLETON;

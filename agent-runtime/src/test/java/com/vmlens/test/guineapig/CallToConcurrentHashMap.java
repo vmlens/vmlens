@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentMap;
 public class CallToConcurrentHashMap {
 
     public void call() {
-        ConcurrentMap map = new ConcurrentHashMap();
-
+        ConcurrentHashMap map = new ConcurrentHashMap();
+        map.get("test");
     }
 
 }

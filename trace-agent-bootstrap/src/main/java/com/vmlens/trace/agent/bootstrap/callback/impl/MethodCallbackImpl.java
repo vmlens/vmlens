@@ -1,16 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunEndAtomicAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.OnAfterMethodCall;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetInMethodIdAndPositionAtThreadLocal;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFieldsNoOp;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodExitEvent;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
-import com.vmlens.trace.agent.bootstrap.strategy.strategyall.EnterExitContext;
+import com.vmlens.trace.agent.bootstrap.strategy.strategyall.MethodEnterExitContext;
 
 public class MethodCallbackImpl {
 
@@ -35,24 +32,24 @@ public class MethodCallbackImpl {
     }
 
     public void afterMethodCall(int inMethodId, int position) {
-        threadLocalWhenInTestAdapter.process(new RunEndAtomicAction(inMethodId, position));
+        threadLocalWhenInTestAdapter.process(new OnAfterMethodCall(inMethodId, position));
     }
 
     public void methodEnter(Object object, int methodId) {
-        EnterExitContext enterExitContext = new EnterExitContext(object,
+        MethodEnterExitContext enterExitContext = new MethodEnterExitContext(object,
                 methodId,
                 threadLocalWhenInTestAdapter,
                 checkIsThreadRun,
                 parallelizeFacade);
-
-
         methodIdToStrategy.strategyAll(methodId).methodEnter(enterExitContext);
     }
 
-
     public void methodExit(Object object, int methodId) {
-        threadLocalWhenInTestAdapter.process(new RunAfter<>(new MethodExitEvent(methodId),
-                new SetFieldsNoOp<>()));
+        MethodEnterExitContext enterExitContext = new MethodEnterExitContext(object,
+                methodId,
+                threadLocalWhenInTestAdapter,
+                checkIsThreadRun,
+                parallelizeFacade);
+        methodIdToStrategy.strategyAll(methodId).methodExit(enterExitContext);
     }
-
 }

@@ -21,6 +21,9 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
   def build(): DescriptionBuilderForReport = {
     val stacktraceLeafsMap = new mutable.HashMap[StacktraceNode, StacktraceLeaf]();
 
+    var failures = 0;
+    var dataRaces = 0;
+
     // addVolatileAccessEvents the loops to the report builder
     for (loopAndRun <- runCountAndResultList) {
       val runResult = loopAndRun.runResult;
@@ -34,10 +37,14 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
       }
 
       val result = if (runResult.isFailure && runResult.dataRaceCount > 0) {
+        failures = failures + 1;
+        dataRaces = dataRaces + runResult.dataRaceCount;
         TestResult.FAILURE_AND_DATA_RACE
       } else if (runResult.isFailure) {
+        failures = failures + 1;
         TestResult.FAILURE
       } else if (runResult.dataRaceCount > 0) {
+        dataRaces = dataRaces + runResult.dataRaceCount;
         TestResult.DATA_RACE
       } else {
         TestResult.SUCCESS
@@ -52,8 +59,10 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
       reportBuilder.addStacktraceLeaf(elem._2)
     }
 
-
-    new DescriptionBuilderForReportImpl(reportBuilder);
+    val descriptionBuilder =  new DescriptionBuilderForReportImpl(reportBuilder);
+    descriptionBuilder.setFailures(failures);
+    descriptionBuilder.setDataRaces(dataRaces);
+    descriptionBuilder
   }
 
   private def stacktraceLeaf(stacktraceNode: Option[StacktraceNode],

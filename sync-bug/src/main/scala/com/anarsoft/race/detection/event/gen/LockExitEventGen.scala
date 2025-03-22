@@ -13,8 +13,7 @@ class LockExitEventGen (
    val threadIndex  : Int  
  ,  val methodCounter  : Int  
  ,  val objectHashCode  : Long  
- ,  val isShared  : Boolean  
- ,  val lockTyp  : Int  
+ ,  val lockType  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
@@ -25,8 +24,7 @@ override def toString() = {
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", objectHashCode:" +  objectHashCode 
-  text = text + ", isShared:" +  isShared 
-  text = text + ", lockTyp:" +  lockTyp 
+  text = text + ", lockType:" +  lockType 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -52,12 +50,7 @@ override def equals(other: Any) = {
                false;
              }
              else
-             if( isShared != that.isShared )
-             {
-               false;
-             }
-             else
-             if( lockTyp != that.lockTyp )
+             if( lockType != that.lockType )
              {
                false;
              }
@@ -96,8 +89,6 @@ object  LockExitEventGen
                 data.getInt()
           ,
                 data.getLong()
-          ,
-                if( data.get( ) == 1.asInstanceOf[Byte] ) { true } else { false } 
           ,
                 data.getInt()
           ,

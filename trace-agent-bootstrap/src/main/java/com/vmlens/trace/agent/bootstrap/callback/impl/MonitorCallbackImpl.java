@@ -5,6 +5,10 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObj
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorExitEvent;
+import com.vmlens.trace.agent.bootstrap.strategy.strategyall.MonitorContext;
+
+import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.monitorEnter;
+import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.monitorExit;
 
 
 public class MonitorCallbackImpl {
@@ -16,15 +20,13 @@ public class MonitorCallbackImpl {
     }
 
     public void afterMonitorEnter(Object monitor, int inMethod, int position) {
-        threadLocalWhenInTestAdapter.process(new RunAfter<>(new MonitorEnterEvent(
-                inMethod, position),
-                new SetObjectHashCode<>(monitor)));
+        MonitorContext monitorContext = new MonitorContext(monitor,inMethod,threadLocalWhenInTestAdapter);
+        monitorEnter(monitorContext,position);
     }
 
     public void afterMonitorExit(Object monitor, int inMethod, int position) {
-        threadLocalWhenInTestAdapter.process(new RunAfter<>(new MonitorExitEvent(
-                inMethod, position),
-                new SetObjectHashCode(monitor)));
+        MonitorContext monitorContext = new MonitorContext(monitor,inMethod,threadLocalWhenInTestAdapter);
+        monitorExit(monitorContext,position);
     }
 
 }

@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileAccessKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
@@ -30,15 +30,15 @@ public class IntTestBuilder {
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
 
-    public IntTestOperation read(VolatileAccessKey volatileAccessKey, int threadIndex) {
+    public IntTestOperation read(VolatileKey volatileAccessKey, int threadIndex) {
         return volatileAccess(volatileAccessKey,threadIndex,MemoryAccessType.IS_READ);
     }
 
-    public IntTestOperation write(VolatileAccessKey volatileAccessKey, int threadIndex) {
+    public IntTestOperation write(VolatileKey volatileAccessKey, int threadIndex) {
         return volatileAccess(volatileAccessKey,threadIndex,MemoryAccessType.IS_WRITE);
     }
 
-    private IntTestOperation volatileAccess(VolatileAccessKey volatileAccessKey, int threadIndex, int operation) {
+    private IntTestOperation volatileAccess(VolatileKey volatileAccessKey, int threadIndex, int operation) {
         VolatileAccess volatileAccess = new VolatileAccess(threadIndex,volatileAccessKey, operation);
         actualRun.add(wrap(volatileAccess));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));

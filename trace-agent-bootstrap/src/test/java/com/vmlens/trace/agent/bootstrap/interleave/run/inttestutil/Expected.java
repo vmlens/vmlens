@@ -37,5 +37,4 @@ public class Expected {
         }
         assertThat(notFulfilled,is(false));
     }
-
 }

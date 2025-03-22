@@ -5,6 +5,7 @@ import com.anarsoft.race.detection.process.loadDescription.LoadDescriptionImpl
 import com.anarsoft.race.detection.process.main.MainProcess
 import com.anarsoft.race.detection.process.run.ProcessRunImpl
 import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl
+import com.vmlens.report.VerifyResult
 import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp}
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.createreport.CreateReport
@@ -12,17 +13,11 @@ import com.vmlens.report.createreport.CreateReport
 import java.io.{File, PrintStream}
 import java.nio.file.{Path, Paths}
 
-/*
-
-C\:\\git-repo\\vmlens\\test-vmlens-maven-plugin\\target\\vmlens-agent/vmlens/
-C:/report-dir/
-
-*/
 class ProcessEvents(val eventDir: Path,
                     val reportDir: Path,
                     val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight) {
 
-  def process(): Unit = {
+  def process(): VerifyResult = {
 
     val dir = reportDir.toFile
     if (!dir.exists()) {
@@ -43,8 +38,9 @@ class ProcessEvents(val eventDir: Path,
     val printStream = new PrintStream(reportDir.resolve("agentlog.txt").toFile)
     new LoadAgentLog(eventDir).load(printStream);
     printStream.close();
-  }
 
+    reportBuilder.verifyResult();
+  }
 }
 
 object ProcessEvents {

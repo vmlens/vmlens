@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class TestSynchronizedBlock {
 
-    private static volatile int j = 0;
+    private volatile int j = 0;
 
     @Test
     public void testUpdate() throws InterruptedException {
@@ -22,7 +22,7 @@ public class TestSynchronizedBlock {
             first.start();
             increment();
             first.join();
-            j = 0;
+         //   j = 0;
         }
     }
 

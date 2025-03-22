@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunEndAtomicAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.OnAfterMethodCall;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForCallback;
 
@@ -42,6 +42,6 @@ public class FieldCallbackImpl {
     }
 
     public void afterFieldAccess() {
-        threadLocalWhenInTestAdapter.process(new RunEndAtomicAction(-1, -1));
+        threadLocalWhenInTestAdapter.process(new OnAfterMethodCall(-1, -1));
     }
 }

@@ -1,6 +1,7 @@
 package com.vmlens;
 
 import com.anarsoft.race.detection.main.ProcessEvents;
+import com.vmlens.report.VerifyResult;
 import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -21,9 +22,27 @@ public class VerifyMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        new ProcessEvents(AgentMojo.eventDirectory().toPath(),
+        VerifyResult result = new ProcessEvents(AgentMojo.eventDirectory().toPath(),
                 reportDirectory.toPath(),
                 new OnDescriptionAndLeftBeforeRightNoOp()).process();
+
+        handleResult(result,reportDirectory);
+    }
+
+    // visible for test
+    static void handleResult(VerifyResult result, File reportDirectory) throws MojoFailureException {
+        if(result.failureCount() > 0 && result.dataRaceCount() > 0 ) {
+            throw new MojoFailureException(String.format("There are %s test failures and %s data races, see %s for the test report." ,
+                    result.failureCount(),result.dataRaceCount(),reportDirectory.toString()));
+        }
+        if(result.failureCount() > 0 ) {
+            throw new MojoFailureException(String.format("There are %s test failures, see %s for the report." ,
+                    result.failureCount(),reportDirectory.toString()));
+        }
+        if(result.dataRaceCount() > 0 ) {
+            throw new MojoFailureException(String.format("There are %s data races, see %s for the report.",
+                    result.dataRaceCount(),reportDirectory.toString()));
+        }
     }
 
 }

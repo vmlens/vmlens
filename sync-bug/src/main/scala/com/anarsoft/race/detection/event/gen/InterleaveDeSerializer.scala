@@ -33,33 +33,27 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
           return LockExitEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 12 ) {
-          return StampedLockEnterEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 13 ) {
-          return StampedLockExitEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 14 ) {
           return MonitorEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 15 ) {
+       if( id == 13 ) {
           return MonitorExitEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 18 ) {
+       if( id == 16 ) {
           return ThreadStartEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 19 ) {
+       if( id == 17 ) {
           return ThreadJoinedEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 20 ) {
+       if( id == 18 ) {
           return MethodAtomicEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 21 ) {
+       if( id == 19 ) {
           return MethodAtomicExitEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 22 ) {
+       if( id == 20 ) {
           return MethodCallbackEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 23 ) {
+       if( id == 21 ) {
           return MethodCallbackExitEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");

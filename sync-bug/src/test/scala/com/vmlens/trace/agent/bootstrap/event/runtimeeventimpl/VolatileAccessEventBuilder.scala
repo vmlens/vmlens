@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.event.gen.VolatileFieldAccessEventGen
 
 class VolatileAccessEventBuilder {
 
-  val volatileAccessEvent = new VolatileAccessEventForTest();
+  val volatileAccessEvent = new VolatileFieldAccessEventForTest();
 
   def setRunPosition(runPosition: Int): VolatileAccessEventBuilder = {
     volatileAccessEvent.setRunPosition(runPosition)

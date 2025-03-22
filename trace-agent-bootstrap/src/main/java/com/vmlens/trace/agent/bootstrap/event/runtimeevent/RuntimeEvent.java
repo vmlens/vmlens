@@ -15,7 +15,7 @@ public interface RuntimeEvent extends SerializableEvent {
     void setRunPosition(int runPosition);
     void serialize(ByteBuffer buffer) throws Exception;
 
-    RuntimeEvent after(ActualRun actualRun);
+    RuntimeEvent after(ActualRun actualRun, CreateInterleaveActionContext context);
 
     boolean isInterleaveActionFactory();
 }
