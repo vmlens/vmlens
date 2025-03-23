@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -19,7 +19,7 @@ public class RunStateMachineImplTest {
     @Test
     public void threadBeginAfterRunStateAtomicOperationWithNewThreadStarted() {
         // Given
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(new ThreadForParallelizeMock(5L, "threadName"));
         ThreadStartEvent runtimeEvent = mock(ThreadStartEvent.class);
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
@@ -43,7 +43,7 @@ public class RunStateMachineImplTest {
     @Test
     public void threadBeginAfterRunStateNewThreadStarted() {
         // Given
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(new ThreadForParallelizeMock(5L, "threadName"));
         ThreadStartEvent runtimeEvent = mock(ThreadStartEvent.class);
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
@@ -67,7 +67,7 @@ public class RunStateMachineImplTest {
     @Test
     public void recordingToEnd() {
         // Given
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "threadName");
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(new ThreadForParallelizeMock(5L, "threadName"));
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
 
         // end assertion

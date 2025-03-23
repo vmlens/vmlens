@@ -1,11 +1,11 @@
 package com.anarsoft.race.detection.createpartialordersyncaction
 
-import com.anarsoft.race.detection.partialorder.PartialOrderBuilder
+import com.anarsoft.race.detection.partialorder.BuildPartialOrderContext
 import com.anarsoft.race.detection.processeventbytype.AlgorithmForOneType
 import com.anarsoft.race.detection.sortutil.{EventContainer, ThreadIdToLastSortableEvent}
 
 class AlgorithmForOneTypeCreatePartialOrder[EVENT <: SyncActionEventWithCompareType[EVENT]]
-(val partialOrderBuilder: PartialOrderBuilder, createContainer: (EVENT) => EventContainer[EVENT])
+(val partialOrderBuilder: BuildPartialOrderContext, createContainer: (EVENT) => EventContainer[EVENT])
   extends AlgorithmForOneType[EVENT] {
 
 

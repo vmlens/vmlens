@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.createpartialorderthreadoperation.ThreadOperation
-import com.anarsoft.race.detection.partialorder.{PartialOrderBuilder, WithPositionImpl}
+import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContext, WithPositionImpl}
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.vmlens.report.element.LoopRunAndThreadIndex
@@ -19,7 +19,7 @@ trait ThreadStartEvent extends LoadedInterleaveActionEvent
     context.threadStartEvents.add(this);
   }
 
-  def addToPartialOrderBuilder(partialOrderBuilder: PartialOrderBuilder): Unit = {
+  def addToPartialOrderBuilder(partialOrderBuilder: BuildPartialOrderContext): Unit = {
     partialOrderBuilder.addLeftBeforeRight(this, new WithPositionImpl(0, startedThreadIndex))
   }
 

@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.HasNextResult;
 
 import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelizeSingleton.callbackStatePerThread;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.callbackStatePerThread;
 
 public class VmlensApiCallbackImpl {
 

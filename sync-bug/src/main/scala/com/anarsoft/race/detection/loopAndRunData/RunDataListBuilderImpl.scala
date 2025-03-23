@@ -26,7 +26,7 @@ class RunDataListBuilderImpl extends RunDataListBuilder {
 
   def addSyncActionElements(loopAndRunId: LoopAndRunId, syncActionElements: List[GroupInterleaveElement]): Unit = {
     val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
-    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(syncActionElements = syncActionElements))
+    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(interLeaveElements = syncActionElements))
   }
 
   def addNonVolatileElements(loopAndRunId: LoopAndRunId, nonVolatileElements: List[GroupNonVolatileElement]): Unit = {

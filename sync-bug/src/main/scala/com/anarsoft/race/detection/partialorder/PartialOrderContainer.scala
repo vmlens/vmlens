@@ -6,7 +6,7 @@ import com.vmlens.report.assertion.{LeftBeforeRight, OnDescriptionAndLeftBeforeR
 
 import scala.collection.mutable.{HashMap, HashSet}
 
-class PartialOrderContainer(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight) extends PartialOrderBuilder {
+class PartialOrderContainer(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight) {
 
   private val allLeftThreadIndices = new HashSet[Int]();
   private val threadIndexToPartialOrderBetweenTwoThreads = new HashMap[LeftRightThreadIndex, LeftBeforeRightPerThread]();
@@ -21,7 +21,7 @@ class PartialOrderContainer(val onTestLoopAndLeftBeforeRight : OnDescriptionAndL
     }
   }
 
-  override def addLeftBeforeRight(left: WithPosition, right: WithPosition): Unit = {
+  def addLeftBeforeRight(left: WithPosition, right: WithPosition): Unit = {
     onTestLoopAndLeftBeforeRight.onLeftBeforeRight(new LeftBeforeRight(left.asPosition(), right.asPosition()));
     allLeftThreadIndices.add(left.threadIndex);
     val order = threadIndexToPartialOrderBetweenTwoThreads

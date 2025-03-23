@@ -4,16 +4,20 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates.RunStateEnd;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 
 public class RunStateMachineImpl implements RunStateMachine, ProcessRuntimeEventCallback {
 
-    private final ThreadLocalDataWhenInTestMap runContext;
+    private final ThreadIndexAndThreadStateMap runContext;
     private final ActualRun actualRun;
     private RunState currentState;
 
     public RunStateMachineImpl(ActualRun actualRun,
-                               ThreadLocalDataWhenInTestMap runContext,
+                               ThreadIndexAndThreadStateMap runContext,
                                RunState initialState) {
         this.actualRun = actualRun;
         this.currentState = initialState;
@@ -34,7 +38,7 @@ public class RunStateMachineImpl implements RunStateMachine, ProcessRuntimeEvent
 
     @Override
     public ThreadLocalWhenInTestAndSerializableEvents processNewTestTask(RunnableOrThreadWrapper newWrapper,
-                                                    ThreadLocalForParallelize threadLocalForParallelize, Run run) {
+                                                                         ThreadLocalForParallelize threadLocalForParallelize, Run run) {
         RunStateAndResult<ThreadLocalWhenInTestAndSerializableEvents> result = currentState.processNewTestTask(newWrapper, threadLocalForParallelize, run);
         currentState = result.runState();
         return result.result();
@@ -76,5 +80,10 @@ public class RunStateMachineImpl implements RunStateMachine, ProcessRuntimeEvent
     @Override
     public boolean canStartAtomicOperation() {
         return currentState.isStartAtomicOperationPossible();
+    }
+
+    @Override
+    public void checkStopWaiting() throws TestBlockedException {
+        currentState.checkStopWaiting(runContext);
     }
 }

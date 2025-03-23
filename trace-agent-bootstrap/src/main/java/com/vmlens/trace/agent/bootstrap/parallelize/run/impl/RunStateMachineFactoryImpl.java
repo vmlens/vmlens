@@ -9,14 +9,14 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates.RunStateA
 public class RunStateMachineFactoryImpl implements RunStateMachineFactory {
 
     @Override
-    public RunStateMachine createRunning(ThreadLocalDataWhenInTestMap runContext, CalculatedRun calculatedRun,
+    public RunStateMachine createRunning(ThreadIndexAndThreadStateMap runContext, CalculatedRun calculatedRun,
                                          ActualRun actualRun) {
         return new RunStateMachineImpl(actualRun, runContext,
                 RunStateActive.createInterleaved(calculatedRun));
     }
 
     @Override
-    public RunStateMachine createInitial(ThreadLocalDataWhenInTestMap runContext,
+    public RunStateMachine createInitial(ThreadIndexAndThreadStateMap runContext,
                                          ActualRun actualRun) {
         return new RunStateMachineImpl(actualRun, runContext,
                 RunStateActive.createRecording());

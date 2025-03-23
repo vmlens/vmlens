@@ -16,8 +16,10 @@ public class Position implements Comparable<Position>, WithThreadIndex {
 
     @Override
     public String toString() {
-        return "(" + threadIndex + "," +
-                positionInThread + ')';
+        return "Position{" +
+                "threadIndex=" + threadIndex +
+                ", positionInThread=" + positionInThread +
+                '}';
     }
 
     @Override

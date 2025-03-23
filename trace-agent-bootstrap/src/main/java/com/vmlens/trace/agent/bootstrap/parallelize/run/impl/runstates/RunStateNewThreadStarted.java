@@ -5,28 +5,29 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ProcessRuntimeEventCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents.empty;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents.empty;
 
 
 public class RunStateNewThreadStarted implements RunState {
 
     private final RunnableOrThreadWrapper startedThread;
-    private final ThreadLocalDataWhenInTestMap runContext;
+    private final ThreadIndexAndThreadStateMap runContext;
     private final int startedThreadIndex;
     private final RunStateActive nextState;
 
     public RunStateNewThreadStarted(RunnableOrThreadWrapper startedThread,
-                                    ThreadLocalDataWhenInTestMap runContext,
+                                    ThreadIndexAndThreadStateMap runContext,
                                     int startedThreadIndex,
                                     RunStateActive nextState) {
         this.startedThread = startedThread;
@@ -63,7 +64,7 @@ public class RunStateNewThreadStarted implements RunState {
     @Override
     public RunState startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
                                                       RunnableOrThreadWrapper newThread,
-                                                      ThreadLocalDataWhenInTestMap runContext) {
+                                                      ThreadIndexAndThreadStateMap runContext) {
         throw new IllegalStateException("should not be called");
     }
 
@@ -83,5 +84,10 @@ public class RunStateNewThreadStarted implements RunState {
     @Override
     public boolean isStartAtomicOperationPossible() {
         return false;
+    }
+
+    @Override
+    public void checkStopWaiting(ThreadIndexAndThreadStateMap runContext) throws TestBlockedException {
+
     }
 }

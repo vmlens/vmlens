@@ -5,23 +5,28 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
+import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.map.hash.TLongIntHashMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 
-public class ThreadLocalDataWhenInTestMap implements CreateInterleaveActionContext {
+public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionContext {
     private int maxThreadIndex;
     // Package Visible for Test
-    final TLongObjectHashMap<ThreadLocalWhenInTest> threadIdToState = new TLongObjectHashMap<>();
+    final TLongIntHashMap threadIdToIndex = new TLongIntHashMap();
+    private final TIntObjectHashMap<ThreadForParallelize> threadIndexToThreadState = new TIntObjectHashMap<>();
 
     public ThreadLocalWhenInTest createForMainTestThread(Run run, ThreadLocalForParallelize threadLocalForParallelize,
                                                          TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, maxThreadIndex);
-        threadIdToState.put(threadLocalForParallelize.threadId(), threadLocalDataWhenInTest);
+        threadIdToIndex.put(threadLocalForParallelize.threadId(),maxThreadIndex);
+        threadIndexToThreadState.put(maxThreadIndex,threadLocalForParallelize.threadForParallelize());
 
         ThreadDescription threadDescription = new
                 ThreadDescription(run.loopId(), run.runId(), maxThreadIndex, threadLocalForParallelize.threadId(),
@@ -36,7 +41,8 @@ public class ThreadLocalDataWhenInTestMap implements CreateInterleaveActionConte
                                                         int newThreadIndex,
                                                         TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, newThreadIndex);
-        threadIdToState.put(threadLocalForParallelize.threadId(), threadLocalDataWhenInTest);
+        threadIdToIndex.put(threadLocalForParallelize.threadId(), newThreadIndex);
+        threadIndexToThreadState.put(newThreadIndex,threadLocalForParallelize.threadForParallelize());
 
         ThreadDescription threadDescription = new
                 ThreadDescription(run.loopId(), run.runId(), newThreadIndex, threadLocalForParallelize.threadId(),
@@ -54,6 +60,11 @@ public class ThreadLocalDataWhenInTestMap implements CreateInterleaveActionConte
 
     @Override
     public int threadIndexForThreadId(long threadId) {
-        return threadIdToState.get(threadId).threadIndex();
+        return threadIdToIndex.get(threadId);
     }
+
+    public boolean isBlocked(int index) {
+        return threadIndexToThreadState.get(index).isBlocked();
+    }
+
 }

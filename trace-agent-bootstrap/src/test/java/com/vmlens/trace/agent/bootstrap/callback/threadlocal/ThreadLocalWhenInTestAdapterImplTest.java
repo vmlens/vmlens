@@ -3,7 +3,8 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadForParallelizeMock;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
@@ -14,7 +15,7 @@ public class ThreadLocalWhenInTestAdapterImplTest {
     public void startCallbackProcessing() {
         // Given
         QueueIn queueIn = mock(QueueIn.class);
-        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(5L, "test");
+        ThreadLocalForParallelize threadLocalForParallelize = new ThreadLocalForParallelize(new ThreadForParallelizeMock(5L, "test"));
 
         ThreadLocalForParallelizeProviderMock threadLocalForParallelizeProviderMock =
                 new ThreadLocalForParallelizeProviderMock(threadLocalForParallelize);

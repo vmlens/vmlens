@@ -4,15 +4,16 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ProcessRuntimeEventCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents.empty;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents.empty;
 
 public class RunStateActive implements RunState {
 
@@ -50,7 +51,7 @@ public class RunStateActive implements RunState {
     @Override
     public RunState startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
                                                       RunnableOrThreadWrapper newThread,
-                                                      ThreadLocalDataWhenInTestMap runContext) {
+                                                      ThreadIndexAndThreadStateMap runContext) {
         return new RunStateAtomicOperationWithNewThreadStarted(threadLocalDataWhenInTest.threadIndex(), newThread,
                 runContext, this);
     }
@@ -73,5 +74,10 @@ public class RunStateActive implements RunState {
     @Override
     public boolean isStartAtomicOperationPossible() {
         return true;
+    }
+
+    @Override
+    public void checkStopWaiting(ThreadIndexAndThreadStateMap runContext) throws TestBlockedException {
+        activeStrategy.checkStopWaiting(runContext);
     }
 }

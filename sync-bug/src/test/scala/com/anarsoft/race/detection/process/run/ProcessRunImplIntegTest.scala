@@ -62,7 +62,7 @@ class ProcessRunImplIntegTest extends AnyFlatSpec with Matchers {
 
     // When
     val runData = RunData.forLoopAndRun(loopIdAndRunId).copy(nonVolatileElements = nonVolatileReadWrite(loopIdAndRunId),
-      syncActionElements = builder.build());
+      interLeaveElements = builder.build());
     val runResult = processRunImpl.process(runData);
 
     //Then

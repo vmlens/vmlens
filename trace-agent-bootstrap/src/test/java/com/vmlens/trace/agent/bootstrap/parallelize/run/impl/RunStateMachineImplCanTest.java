@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,7 +14,7 @@ public class RunStateMachineImplCanTest {
         // Given
         RunStateMachineTestWrapper runStateMachineTestWrapper = RunStateMachineTestWrapper.createRecording();
         RunStateMachine runStateMachine = runStateMachineTestWrapper.runStateMachine();
-        runStateMachineTestWrapper.eventEnd(new ThreadLocalForParallelize(6L, "threadName"));
+        runStateMachineTestWrapper.eventEnd(new ThreadLocalForParallelize(new ThreadForParallelizeMock(6L, "threadName")));
 
         // Then can* always returns true
         assertThat(runStateMachine.canProcessEndOfOperation(runStateMachineTestWrapper.eventThread()), is(true));

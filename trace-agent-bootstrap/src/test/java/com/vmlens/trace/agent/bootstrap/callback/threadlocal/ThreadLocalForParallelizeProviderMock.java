@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
 public class ThreadLocalForParallelizeProviderMock implements ThreadLocalForParallelizeProvider {
 

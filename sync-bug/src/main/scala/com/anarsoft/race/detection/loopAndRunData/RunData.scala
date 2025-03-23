@@ -9,7 +9,7 @@ import com.anarsoft.race.detection.util.EventArray
 case class RunData(loopAndRunId: LoopAndRunId,
                    methodEventArray: EventArray[MethodEvent],
                    nonVolatileElements: List[GroupNonVolatileElement],
-                   syncActionElements: List[GroupInterleaveElement],
+                   interLeaveElements: List[GroupInterleaveElement],
                    controlEvents: List[ControlEvent]) {
   
 }

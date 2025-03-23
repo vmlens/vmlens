@@ -41,4 +41,15 @@ public class EventUtil {
         return new RunAfter<>(new MethodExitEvent(context.methodId()),
                 new SetFieldsNoOp<>());
     }
+
+    public static RunAfter<MonitorEnterEvent> createMonitorEnter(MonitorContext context,int position) {
+        return new RunAfter<>(new MonitorEnterEvent(
+                context.methodId(), position),
+                new SetObjectHashCode<>(context.object()));
+    }
+
+    public static RunAfter<MethodEnterEvent> createMethodEnter(MonitorContext context) {
+        return new RunAfter<>(new MethodEnterEvent(context.methodId()),
+                new SetFieldsNoOp<>());
+    }
 }

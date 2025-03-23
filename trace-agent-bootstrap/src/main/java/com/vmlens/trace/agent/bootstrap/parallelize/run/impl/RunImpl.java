@@ -9,6 +9,10 @@ import com.vmlens.trace.agent.bootstrap.event.warning.Warning;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -122,7 +126,8 @@ public class RunImpl implements Run {
         lock.lock();
         try {
             try {
-                waitNotifyStrategy.waitForCanStartAtomicOperation(runStateMachine, threadActiveCondition);
+                waitNotifyStrategy.waitForCanStartAtomicOperation(runStateMachine,
+                        threadActiveCondition);
             } catch (TestBlockedException e) {
                 e.printStackTrace();
             }
@@ -137,7 +142,8 @@ public class RunImpl implements Run {
         lock.lock();
         try {
             try {
-                waitNotifyStrategy.waitForCanStartAtomicOperation(runStateMachine, threadActiveCondition);
+                waitNotifyStrategy.waitForCanStartAtomicOperation(runStateMachine,
+                        threadActiveCondition);
             } catch (TestBlockedException e) {
                 e.printStackTrace();
             }

@@ -11,10 +11,10 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRunObserverNoOp;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachineFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunImpl;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -67,7 +67,7 @@ public class ParallelizeLoop {
                 if (interleaveLoopIterator.hasNext()) {
                     CalculatedRun calculatedReun = interleaveLoopIterator.next();
                     ActualRun actualRun = new ActualRun(new ActualRunObserverForCalculatedRun(calculatedReun));
-                    ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
+                    ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
                     currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createRunning(
                             runContext, calculatedReun, actualRun), loopId, maxRunId);
                     threadLocalForParallelize.setThreadLocalDataWhenInTest(
@@ -81,7 +81,7 @@ public class ParallelizeLoop {
                 return false;
             } else {
                 ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
-                ThreadLocalDataWhenInTestMap runContext = new ThreadLocalDataWhenInTestMap();
+                ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
                 currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
                         runContext, actualRun), loopId, maxRunId);
                 threadLocalForParallelize.setThreadLocalDataWhenInTest(

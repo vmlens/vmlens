@@ -9,7 +9,8 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadForParallelizeMock;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.StrategyAll;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
@@ -90,7 +91,7 @@ public class CallbackTestContainer {
         ThreadLocalForParallelizeProvider threadLocalForParallelizeProvider =
                 mock(ThreadLocalForParallelizeProvider.class);
 
-        ThreadLocalForParallelize threadLocalForParallelizeInside = new ThreadLocalForParallelize(5L, "threadName");
+        ThreadLocalForParallelize threadLocalForParallelizeInside = new ThreadLocalForParallelize(new ThreadForParallelizeMock(5L, "threadName"));
         threadLocalForParallelizeInside.setThreadLocalDataWhenInTest(threadLocalWhenInTest);
         when(threadLocalForParallelizeProvider.threadLocalForParallelize())
                 .thenReturn(threadLocalForParallelizeInside);

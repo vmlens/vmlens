@@ -10,6 +10,7 @@ class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveA
 
   val volatileAccessEvents = new util.LinkedList[VolatileFieldAccessEvent]();
   val threadStartEvents = new util.LinkedList[ThreadStartEvent]();
+  val threadJoinedEvents = new util.LinkedList[ThreadJoinedEvent]();
   val monitorEvents = new util.LinkedList[MonitorEvent]()
 
   def addLoadedEvent(event: LoadedInterleaveActionEvent): Unit = {
@@ -20,6 +21,7 @@ class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveA
     val groupBuilder = new GroupInterleaveElementBuilder();
     groupBuilder.addVolatileAccessEvents(volatileAccessEvents);
     groupBuilder.addThreadStartEvents(threadStartEvents);
+    groupBuilder.addThreadJoinedEvents(threadJoinedEvents);
     groupBuilder.addMonitorEvents(monitorEvents);
 
     builder.addSyncActionElements(loopAndRunId, groupBuilder.build())

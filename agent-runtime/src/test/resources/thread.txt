@@ -871,9 +871,27 @@ method:join(JI)V
   RETURN
 method:join()V
   ALOAD
+  load:44
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
   LCONST_0
+  load:44
+  load:0
+  load:42
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
   INVOKEVIRTUAL  java/lang/Thread.join:(J)V
+  load:44
+  load:0
+  load:42
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
+  ALOAD
+  load:44
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
   RETURN
+  ALOAD
+  load:44
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
 method:dumpStack()V
   NEW  java/lang/Exception
   DUP

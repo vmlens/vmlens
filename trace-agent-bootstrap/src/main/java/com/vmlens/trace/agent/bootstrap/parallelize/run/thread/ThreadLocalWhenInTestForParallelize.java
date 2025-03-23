@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.parallelize.run;
+package com.vmlens.trace.agent.bootstrap.parallelize.run.thread;
 
 public interface ThreadLocalWhenInTestForParallelize {
 

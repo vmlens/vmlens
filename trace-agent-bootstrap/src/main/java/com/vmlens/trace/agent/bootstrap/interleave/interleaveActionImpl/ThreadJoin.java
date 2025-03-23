@@ -18,7 +18,13 @@ public class ThreadJoin extends InterleaveActionForInDependentBlock {
 
     @Override
     public void addFixedOrder(Position myPosition, OrderArraysBuilder orderArraysBuilder, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
-        orderArraysBuilder.addFixedOrder(new LeftBeforeRight(new Position(joinedThreadIndex, threadIndexToMaxPosition.getPositionAtThreadIndex(joinedThreadIndex)), myPosition));
+        int lastPosition = threadIndexToMaxPosition.getPositionAtThreadIndex(joinedThreadIndex);
+        if(lastPosition > 0) {
+            orderArraysBuilder.addFixedOrder(new LeftBeforeRight(new Position(joinedThreadIndex, lastPosition - 1),
+                    myPosition));
+        }
+
+
     }
 
     @Override

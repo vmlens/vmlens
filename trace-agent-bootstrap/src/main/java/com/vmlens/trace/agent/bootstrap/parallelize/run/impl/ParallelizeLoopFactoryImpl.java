@@ -4,7 +4,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategyImpl;
 
 public class ParallelizeLoopFactoryImpl implements ParallelizeLoopFactory {
 

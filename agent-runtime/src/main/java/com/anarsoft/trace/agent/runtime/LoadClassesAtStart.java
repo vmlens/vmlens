@@ -23,7 +23,7 @@ public class LoadClassesAtStart {
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.procedure.TIntObjectProcedure");
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.TLinkable");
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.map.hash.TObjectIntHashMap");
-        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelizeSingleton");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton");
         this.getClass().getClassLoader().loadClass("org.objectweb.asm.ConstantDynamic");
         this.getClass().getClassLoader().loadClass("java.util.concurrent.locks.LockSupport");
 

@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.parallelize.run;
+package com.vmlens.trace.agent.bootstrap.parallelize.run.thread;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;

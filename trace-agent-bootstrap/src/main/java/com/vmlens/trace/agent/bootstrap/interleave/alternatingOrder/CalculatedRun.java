@@ -48,4 +48,11 @@ public class CalculatedRun {
     public int hashCode() {
         return Arrays.hashCode(calculatedRunElementArray);
     }
+
+    public Integer activeThreadIndex() {
+        if (currentPosInArray >= calculatedRunElementArray.length) {
+            return null;
+        }
+        return calculatedRunElementArray[currentPosInArray].threadIndex();
+    }
 }

@@ -2,11 +2,12 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates;
 
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ProcessRuntimeEventCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadLocalDataWhenInTestMap;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
 
 public abstract class RunStateAtomicOperationAbstract implements RunState {
 
@@ -36,12 +37,17 @@ public abstract class RunStateAtomicOperationAbstract implements RunState {
 
     @Override
     public RunState startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
-                                                      RunnableOrThreadWrapper newThread, ThreadLocalDataWhenInTestMap runContext) {
+                                                      RunnableOrThreadWrapper newThread, ThreadIndexAndThreadStateMap runContext) {
         throw new IllegalStateException("should not be called");
     }
 
     @Override
     public boolean isStartAtomicOperationPossible() {
         return false;
+    }
+
+    @Override
+    public void checkStopWaiting(ThreadIndexAndThreadStateMap runContext) throws TestBlockedException {
+
     }
 }

@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.run.inttestutil;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockExit;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadJoin;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
@@ -37,6 +38,13 @@ public class IntTestBuilder {
     public IntTestOperation write(VolatileKey volatileAccessKey, int threadIndex) {
         return volatileAccess(volatileAccessKey,threadIndex,MemoryAccessType.IS_WRITE);
     }
+
+    public IntTestOperation join(int joinedThreadIndex, int threadIndex) {
+        ThreadJoin threadJoin = new ThreadJoin(threadIndex,joinedThreadIndex);
+        actualRun.add(wrap(threadJoin));
+        return new IntTestOperation(threadIndexToPosition.next(threadIndex));
+    }
+
 
     private IntTestOperation volatileAccess(VolatileKey volatileAccessKey, int threadIndex, int operation) {
         VolatileAccess volatileAccess = new VolatileAccess(threadIndex,volatileAccessKey, operation);

@@ -3,9 +3,10 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestAndSerializableEvents;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 
 public interface RunState {
 
@@ -19,7 +20,7 @@ public interface RunState {
 
     RunState startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
                                                RunnableOrThreadWrapper newThread,
-                                               ThreadLocalDataWhenInTestMap runContext);
+                                               ThreadIndexAndThreadStateMap runContext);
 
     RunStateAndResult<RuntimeEvent> endAtomicOperation(ProcessRuntimeEventCallback processRuntimeEventCallback,
                                                        RuntimeEvent runtimeEvent,
@@ -30,4 +31,7 @@ public interface RunState {
                                           ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
 
     boolean isStartAtomicOperationPossible();
+
+    void checkStopWaiting(ThreadIndexAndThreadStateMap runContext) throws TestBlockedException;
+
 }

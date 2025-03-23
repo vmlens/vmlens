@@ -1,9 +1,10 @@
 package com.anarsoft.race.detection.process.run
 
+import com.anarsoft.race.detection.createlastthreadposition.LastThreadPositionMap
 import com.anarsoft.race.detection.createstacktrace.ServiceCalculateMethodCountToStacktraceNode
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileMemoryAccessElementForResult
 import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult, RunResultImpl}
-import com.anarsoft.race.detection.partialorder.{PartialOrderContainer, PartialOrderImpl}
+import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContextImpl, PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.main.ProcessRun
 import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRight
 
@@ -19,17 +20,27 @@ class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBefo
     val stackTraceMap = stackTraceIdToStacktrace.toMap;
 
     // set the stacktrace nodes in the events
-    for (syncActionElement <- runData.syncActionElements) {
+    for (syncActionElement <- runData.interLeaveElements) {
       syncActionElement.setStacktraceNode(stackTraceMap)
     }
     for (nonVolatileElement <- runData.nonVolatileElements) {
       nonVolatileElement.setStacktraceNode(stackTraceMap)
     }
 
+    // calculate last thread position
+    val lastThreadPositionMap = new LastThreadPositionMap();
+    for (syncActionElement <- runData.interLeaveElements) {
+      syncActionElement.addLastThreadPosition(lastThreadPositionMap)
+    }
+    for (nonVolatileElement <- runData.nonVolatileElements) {
+      nonVolatileElement.addLastThreadPosition(lastThreadPositionMap)
+    }
+    
     // calculate the partial order
     val partialOrderContainer = new PartialOrderContainer(onTestLoopAndLeftBeforeRight);
-    for (syncActionElement <- runData.syncActionElements) {
-      syncActionElement.addToPartialOrderBuilder(partialOrderContainer);
+    val buildPartialOrderContext = new BuildPartialOrderContextImpl(partialOrderContainer,lastThreadPositionMap);
+    for (syncActionElement <- runData.interLeaveElements) {
+      syncActionElement.addToPartialOrderBuilder(buildPartialOrderContext);
     }
 
     // sort the non volatile events according to the partial order
@@ -40,6 +51,6 @@ class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBefo
     }
     
     new RunResultImpl(runData.loopAndRunId, nonVolatileResult.toList, runData.controlEvents,
-      runData.syncActionElements);
+      runData.interLeaveElements);
   }
 }

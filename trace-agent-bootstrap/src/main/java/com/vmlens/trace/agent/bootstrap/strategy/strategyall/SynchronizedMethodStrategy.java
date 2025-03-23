@@ -14,15 +14,17 @@ public class SynchronizedMethodStrategy implements StrategyAll {
 
     @Override
     public void methodEnter(MethodEnterExitContext enterExitContext) {
-        methodEnterEvent(enterExitContext);
-        monitorEnter(enterExitContext,-1);
+
+
+        ExecuteSynchronizedMethodExit executeSynchronizedMethodExit =
+                new ExecuteSynchronizedMethodExit(createMonitorEnter(enterExitContext,-1),
+                        createMethodEnter(enterExitContext));
+        enterExitContext.threadLocalWhenInTestAdapter().process(new SetExecuteAfterMethodCall(executeSynchronizedMethodExit));
     }
 
     @Override
     public void methodExit(MethodEnterExitContext enterExitContext) {
-        ExecuteSynchronizedMethodExit executeSynchronizedMethodExit =
-                new ExecuteSynchronizedMethodExit(createMonitorExit(enterExitContext,-1),
-                        createMethodExit(enterExitContext));
-        enterExitContext.threadLocalWhenInTestAdapter().process(new SetExecuteAfterMethodCall(executeSynchronizedMethodExit));
+        methodEnterEvent(enterExitContext);
+        monitorEnter(enterExitContext,-1);
     }
 }

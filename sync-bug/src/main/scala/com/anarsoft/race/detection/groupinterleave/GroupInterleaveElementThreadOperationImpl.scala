@@ -1,8 +1,9 @@
 package com.anarsoft.race.detection.groupinterleave
 
 
+import com.anarsoft.race.detection.createlastthreadposition.{CreateLastThreadPosition, LastThreadPositionMap}
 import com.anarsoft.race.detection.createpartialorderthreadoperation.{AddToPartialOrderBuilder, ThreadOperation}
-import com.anarsoft.race.detection.partialorder.PartialOrderBuilder
+import com.anarsoft.race.detection.partialorder.BuildPartialOrderContext
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.{SetStacktraceNodeInEvent, WithSetStacktraceNode}
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
@@ -13,11 +14,15 @@ class GroupInterleaveElementThreadOperationImpl[EVENT <: ThreadOperation with Wi
 (val eventArray: EventArray[EVENT])
   extends GroupInterleaveElement {
 
+  def addLastThreadPosition(lastThreadPositionMap: LastThreadPositionMap): Unit = {
+    new CreateLastThreadPosition().process(eventArray, lastThreadPositionMap);
+  }
+  
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Int, Array[StacktraceNode]]): Unit = {
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
   }
 
-  def addToPartialOrderBuilder(partialOrderBuilder: PartialOrderBuilder): Unit = {
+  def addToPartialOrderBuilder(partialOrderBuilder: BuildPartialOrderContext): Unit = {
     new AddToPartialOrderBuilder().process(eventArray, partialOrderBuilder);
   }
 

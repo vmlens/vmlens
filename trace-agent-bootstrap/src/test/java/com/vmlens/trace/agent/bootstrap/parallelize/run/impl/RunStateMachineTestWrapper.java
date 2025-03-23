@@ -7,8 +7,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadLocalWhenInTestForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates.ActiveStrategyRecording;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates.RunStateActive;
 import gnu.trove.list.linked.TLinkedList;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 public class RunStateMachineTestWrapper {
 
     private final RunStateMachine runStateMachine;
-    private final ThreadLocalDataWhenInTestMap runContext;
+    private final ThreadIndexAndThreadStateMap runContext;
     private final ActualRun actualRun;
     private final ThreadLocalWhenInTestForParallelize threadLocalWhenInTest;
     private final Run run;
@@ -31,7 +31,7 @@ public class RunStateMachineTestWrapper {
             new RunnableOrThreadWrapper(new Object());
 
     public RunStateMachineTestWrapper(ActiveStrategyRecording activeStrategyRecording) {
-        runContext = new ThreadLocalDataWhenInTestMap();
+        runContext = new ThreadIndexAndThreadStateMap();
         actualRun = new ActualRunMock(new ActualRunMockStrategyTake());
         runStateMachine = new RunStateMachineImpl(actualRun, runContext,
                 new RunStateActive(activeStrategyRecording));
@@ -48,7 +48,7 @@ public class RunStateMachineTestWrapper {
     public void assertBehavesAsRunStateEnd() {
         assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
         assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(true));
-        assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L, "threadName"), run)
+        assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(new ThreadForParallelizeMock(12L, "threadName")), run)
                         .threadLocalWhenInTest(),
                 is(nullValue()));
         assertThat(runStateMachine.endAtomicOperation(mock(RuntimeEvent.class), eventThread), is(nullValue()));
@@ -58,7 +58,7 @@ public class RunStateMachineTestWrapper {
     public void assertBehavesAsRunStateActiveActiveStrategyRecording() {
         assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
         assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(true));
-        assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L, "threadName"), run)
+        assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(new ThreadForParallelizeMock(12L, "threadName")), run)
                         .threadLocalWhenInTest(),
                 is(nullValue()));
         assertThat(runStateMachine.canStartAtomicOperation(), is(true));
@@ -68,7 +68,7 @@ public class RunStateMachineTestWrapper {
     public void assertBehavesAsRunStateAtomicOperation() {
         assertThat(runStateMachine.canProcessEndOfOperation(eventThread), is(true));
         assertThat(runStateMachine.canProcessEndOfOperation(otherThread), is(false));
-        assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(12L, "threadName"), run)
+        assertThat(runStateMachine.processNewTestTask(startedThread, new ThreadLocalForParallelize(new ThreadForParallelizeMock(12L, "threadName")), run)
                         .threadLocalWhenInTest(),
                 is(nullValue()));
         assertThat(runStateMachine.canStartAtomicOperation(), is(false));
