@@ -3,6 +3,12 @@ package com.vmlens.test.maven.plugin;
 import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
+/**
+ * -javaagent:C:\workspace\vmlens\test-vmlens-maven-plugin\target\vmlens-agent\agent.jar
+ *
+ *
+ */
+
 public class TestSynchronizedBlock {
 
     private volatile int j = 0;

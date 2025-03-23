@@ -23,7 +23,7 @@ public class ActualRunTest {
         // Then
         assertThat(actualRun.run().size(), is(1));
         assertThat(interleaveInfo.runPosition(), is(0));
-        verify(calculatedRun, times(1)).incrementPositionInThread();
+        verify(calculatedRun, times(1)).incrementPositionInThread(anyInt());
 
     }
 }

@@ -24,6 +24,7 @@ public class ActiveStrategyInterleaved implements ActiveStrategy {
         if(activeThreadIndex != null) {
             if(runContext.isBlocked(activeThreadIndex)) {
                 System.err.println(calculatedRun);
+                new TestBlockedException().printStackTrace();
                 throw new TestBlockedException();
             }
         }

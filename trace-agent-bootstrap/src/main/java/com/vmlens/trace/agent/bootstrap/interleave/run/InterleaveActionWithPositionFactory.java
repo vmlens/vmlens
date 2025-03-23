@@ -22,6 +22,7 @@ public class InterleaveActionWithPositionFactory {
         for (TLinkableWrapper<InterleaveAction> syncAction : actualRun) {
             add(syncAction.element());
         }
+
         return new ImmutablePair<>(runWithPosition, run);
     }
 

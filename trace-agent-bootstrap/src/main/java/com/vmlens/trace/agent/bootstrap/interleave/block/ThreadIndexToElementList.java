@@ -77,6 +77,17 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
         return threadList.get(index).element().removeFirst().element();
     }
 
+    public void popIfNotEmpty(int threadIndex) {
+        if( threadList.size() <= threadIndex ) {
+            return;
+        }
+        TLinkedList<TLinkableWrapper<ELEMENT>> list = threadList.get(threadIndex).element();
+        if(list.isEmpty()) {
+            return;
+        }
+        list.removeFirst();
+    }
+
     public boolean isEmptyAtIndex(int index) {
         return threadList.get(index).element().isEmpty();
     }

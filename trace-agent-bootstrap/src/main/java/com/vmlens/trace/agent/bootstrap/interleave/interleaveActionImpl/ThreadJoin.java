@@ -31,4 +31,12 @@ public class ThreadJoin extends InterleaveActionForInDependentBlock {
     public int threadIndex() {
         return threadIndex;
     }
+
+    @Override
+    public String toString() {
+        return "ThreadJoin{" +
+                "threadIndex=" + threadIndex +
+                ", joinedThreadIndex=" + joinedThreadIndex +
+                '}';
+    }
 }

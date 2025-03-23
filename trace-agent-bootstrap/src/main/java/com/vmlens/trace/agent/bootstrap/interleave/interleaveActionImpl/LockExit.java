@@ -74,4 +74,12 @@ public class LockExit implements InterleaveAction, DependentBlockElement {
     public Lock lockOrMonitor() {
         return lockOrMonitor;
     }
+
+    @Override
+    public String toString() {
+        return "LockExit{" +
+                "threadIndex=" + threadIndex +
+                ", lockOrMonitor=" + lockOrMonitor +
+                '}';
+    }
 }

@@ -45,4 +45,12 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
     public int hashCode() {
         return startedThreadIndex;
     }
+
+    @Override
+    public String toString() {
+        return "ThreadStart{" +
+                "threadIndex=" + threadIndex +
+                ", startedThreadIndex=" + startedThreadIndex +
+                '}';
+    }
 }
