@@ -2,13 +2,14 @@ package com.anarsoft.race.detection.process.run
 
 import com.anarsoft.race.detection.createlastthreadposition.LastThreadPositionMap
 import com.anarsoft.race.detection.createstacktrace.ServiceCalculateMethodCountToStacktraceNode
+import com.anarsoft.race.detection.event.control.ProcessContext
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileMemoryAccessElementForResult
 import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult, RunResultImpl}
 import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContextImpl, PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.main.ProcessRun
 import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRight
 
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight) extends ProcessRun {
 
@@ -49,8 +50,15 @@ class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBefo
     for (nonVolatileElement <- runData.nonVolatileElements) {
       nonVolatileResult.append(nonVolatileElement.sort(partialOrder));
     }
+
+    val processContext = new ProcessContext();
     
+    for(controlEvent <- runData.controlEvents   ) {
+      controlEvent.process(processContext)
+    }
+
+
     new RunResultImpl(runData.loopAndRunId, nonVolatileResult.toList, runData.controlEvents,
-      runData.interLeaveElements);
+      runData.interLeaveElements,processContext.warningList.toSet,processContext.isFailure);
   }
 }

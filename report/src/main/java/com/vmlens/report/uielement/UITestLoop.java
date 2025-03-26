@@ -2,8 +2,6 @@ package com.vmlens.report.uielement;
 
 public class UITestLoop {
 
-
-
     private final String name;
     private final int count;
     private final String resultText;

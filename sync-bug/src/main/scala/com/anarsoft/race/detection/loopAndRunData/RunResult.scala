@@ -10,6 +10,8 @@ trait RunResult extends Ordered[RunResult] {
 
   def dataRaceCount: Int;
 
+  def warningIdList : Set[Int];
+  
   def loopId: Int;
 
   def runId: Int;;

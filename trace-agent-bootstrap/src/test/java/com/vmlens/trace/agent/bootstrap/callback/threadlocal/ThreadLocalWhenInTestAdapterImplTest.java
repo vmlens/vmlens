@@ -33,9 +33,7 @@ public class ThreadLocalWhenInTestAdapterImplTest {
         threadLocalWhenInTestAdapterImpl.process(callbackAction);
 
         // Then
-        verify(callbackAction, never()).execute(threadLocalWhenInTest);
+        verify(callbackAction, never()).execute(any(),any());
 
     }
-
-
 }

@@ -1,7 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates;
 
+import com.vmlens.trace.agent.bootstrap.exception.Message;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.exception.TestBlockedException;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 
@@ -24,8 +25,8 @@ public class ActiveStrategyInterleaved implements ActiveStrategy {
         if(activeThreadIndex != null) {
             if(runContext.isBlocked(activeThreadIndex)) {
                 System.err.println(calculatedRun);
-                new TestBlockedException().printStackTrace();
-                throw new TestBlockedException();
+                new TestBlockedException(Message.TEST_BLOCKED_MESSAGE).printStackTrace();
+                throw new TestBlockedException(Message.TEST_BLOCKED_MESSAGE);
             }
         }
     }

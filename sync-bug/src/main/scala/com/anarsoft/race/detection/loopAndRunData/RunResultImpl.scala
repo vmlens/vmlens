@@ -11,7 +11,9 @@ import scala.collection.mutable
 class RunResultImpl(loopAndRunId: LoopAndRunId,
                     nonVolatileMemoryAccessElements: List[GroupNonVolatileMemoryAccessElementForResult],
                     interleaveEvents: List[EventWithLoopAndRunId],
-                    syncActionElements: List[GroupInterleaveElementForResult]) extends RunResult {
+                    syncActionElements: List[GroupInterleaveElementForResult],
+                    val warningIdList : Set[Int],
+                    val  isFailure: Boolean) extends RunResult {
 
   override def loopId: Int = loopAndRunId.loopId;
 
@@ -33,21 +35,12 @@ class RunResultImpl(loopAndRunId: LoopAndRunId,
       dataRaceCount.compare(that.dataRaceCount)
     }
     else if (isFailure) {
-      1
+      warningIdList.size + 1
     } else {
       -1
     }
   }
-
-  override def isFailure: Boolean = {
-    var hasEndEvent = false;
-    for (interleave <- interleaveEvents) {
-      if (interleave.isInstanceOf[RunEndEvent]) {
-        hasEndEvent = true
-      }
-    }
-    !hasEndEvent;
-  }
+  
 
   override def dataRaceCount: Int = {
     val dataRaceSet = new mutable.HashSet[StaticMemoryAccessId]();

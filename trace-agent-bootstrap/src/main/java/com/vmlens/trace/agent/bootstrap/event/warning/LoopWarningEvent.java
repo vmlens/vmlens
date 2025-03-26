@@ -9,7 +9,4 @@ public class LoopWarningEvent extends LoopWarningEventGen implements Warning {
         this.runId = runId;
         this.messageId = messageId;
     }
-
-
-
 }

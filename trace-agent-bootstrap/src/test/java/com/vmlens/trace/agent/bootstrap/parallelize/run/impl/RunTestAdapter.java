@@ -11,7 +11,8 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.RuntimeEventAndWarnings.of;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.singleton;
+
 
 public class RunTestAdapter implements Run {
 
@@ -22,12 +23,12 @@ public class RunTestAdapter implements Run {
     }
 
     @Override
-    public RuntimeEventAndWarnings after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        return of(runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest));
+    public   TLinkedList<TLinkableWrapper<SerializableEvent>> after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        return singleton(runStateMachine.after(runtimeEvent, threadLocalDataWhenInTest));
     }
 
     @Override
-    public RuntimeEventAndWarnings endAtomicAction(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> endAtomicAction(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return null;
     }
 
@@ -53,12 +54,12 @@ public class RunTestAdapter implements Run {
     }
 
     @Override
-    public void startAtomicAction(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> startAtomicAction(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+        return null;
     }
 
     @Override
-    public void startAtomicActionWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
-
+    public TLinkedList<TLinkableWrapper<SerializableEvent>> startAtomicActionWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
+        return null;
     }
 }

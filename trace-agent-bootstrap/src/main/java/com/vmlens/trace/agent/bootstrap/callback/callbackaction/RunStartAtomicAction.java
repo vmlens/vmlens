@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFie
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermethodexit.ExecuteRunEndAtomicAction;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.WithInMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -29,10 +30,9 @@ public class RunStartAtomicAction<EVENT extends RuntimeEvent & WithInMethodIdAnd
 
 
     @Override
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> execute(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
         EVENT event = atomicOperation.applySetFields();
         threadLocalDataWhenInTest.setExecuteAfterMethodCall(new ExecuteRunEndAtomicAction<>(event));
-        threadLocalDataWhenInTest.runAdapter().startAtomicOperation(threadLocalDataWhenInTest);
-        return emptyList();
+        threadLocalDataWhenInTest.runAdapter().startAtomicOperation(threadLocalDataWhenInTest,queueIn);
     }
 }

@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.exception.Message;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.exception.TestBlockedException;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 
 import java.util.concurrent.TimeUnit;
@@ -28,7 +29,7 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
                 threadActiveCondition.await(100, TimeUnit.MICROSECONDS);
                 runStateMachine.checkStopWaiting();
                 if ((System.currentTimeMillis() - started) > DEFAULT_WAIT_TIME) {
-                    throw new TestBlockedException();
+                    throw new TestBlockedException(Message.TEST_BLOCKED_MESSAGE);
                 }
             }
         } catch (InterruptedException e) {
@@ -44,7 +45,7 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
                 threadActiveCondition.await(100, TimeUnit.MICROSECONDS);
                 runStateMachine.checkStopWaiting();
                 if ((System.currentTimeMillis() - started) > DEFAULT_WAIT_TIME) {
-                    throw new TestBlockedException();
+                    throw new TestBlockedException(Message.TEST_BLOCKED_MESSAGE);
                 }
             }
         } catch (InterruptedException e) {

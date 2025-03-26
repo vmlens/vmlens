@@ -28,9 +28,7 @@ class LoopResultCollection {
     }
   }
 
-  def addToBuilder(loopReportBuilder: LoopReportBuilder): Unit = {
-    for (elem <- loopIdToResult) {
-      loopReportBuilder.addRunResult(elem._2)
-    }
-  }
+
+  def build() : Seq[RunCountAndResult] = loopIdToResult.values.toSeq;
+
 }

@@ -14,22 +14,28 @@ public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELE
 	private  TLinkableWrapper<ELEMENT> next;
 	private  TLinkableWrapper<ELEMENT> previous;
 
-	public static <T> TLinkedList<TLinkableWrapper<T>> emptyList() {
-		return new TLinkedList<>();
-	}
+
 
 	public TLinkableWrapper(ELEMENT element) {
 		super();
 		this.element = element;
 	}
 
-	public ELEMENT element() {
-		return element;
+	public static <T> TLinkedList<TLinkableWrapper<T>> emptyList() {
+		return new TLinkedList<>();
 	}
 
-    public static <ELEMENT> TLinkableWrapper<ELEMENT> wrap(ELEMENT element) {
+	public static  <T> TLinkedList<TLinkableWrapper<T>> singleton(T element) {
+		TLinkedList<TLinkableWrapper<T>> result = new TLinkedList<>();
+		result.add(wrap(element));
+		return result;
+	}
+
+	public static <ELEMENT> TLinkableWrapper<ELEMENT> wrap(ELEMENT element) {
         return new TLinkableWrapper<>(element);
     }
+
+
 
     public static <ELEMENT> ELEMENT[] toArray(Class<ELEMENT> clazz, TLinkedList<TLinkableWrapper<ELEMENT>> list) {
         ELEMENT[] array = (ELEMENT[]) Array.newInstance(clazz, list.size());
@@ -42,6 +48,9 @@ public class TLinkableWrapper<ELEMENT> implements TLinkable<TLinkableWrapper<ELE
         return array;
     }
 
+	public ELEMENT element() {
+		return element;
+	}
 
 	@Override
 	public TLinkableWrapper<ELEMENT> getNext() {

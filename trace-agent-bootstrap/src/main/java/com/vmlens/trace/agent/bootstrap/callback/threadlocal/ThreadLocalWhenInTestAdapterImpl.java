@@ -34,9 +34,7 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
         ThreadLocalWhenInTest dataWhenInTest = threadLocal.startCallbackProcessing();
         if (dataWhenInTest != null) {
             try {
-                TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents =
-                        callbackAction.execute(dataWhenInTest);
-                eventQueueInternal.offer(serializableEvents);
+                callbackAction.execute(dataWhenInTest,eventQueueInternal);
             } finally {
                 threadLocal.stopCallbackProcessing();
             }

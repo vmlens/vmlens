@@ -130,12 +130,12 @@ public class RunStateMachineTestWrapper {
     private void assertRuntimeEventGetsProcessed() {
         RuntimeEvent runtimeEvent = mock(PluginEventOnly.class);
         runStateMachine.after(runtimeEvent, eventThread);
-        verify(runtimeEvent).after(any(),any());
+        verify(runtimeEvent).after(any(),any(),any());
     }
 
     private void assertRuntimeEventGetsNotProcessed() {
         RuntimeEvent runtimeEvent = mock(PluginEventOnly.class);
         runStateMachine.after(runtimeEvent, eventThread);
-        verify(runtimeEvent, never()).after(any(),any());
+        verify(runtimeEvent, never()).after(any(),any(),any());
     }
 }

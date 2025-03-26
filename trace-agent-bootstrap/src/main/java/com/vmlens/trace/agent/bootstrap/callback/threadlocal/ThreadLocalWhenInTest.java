@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermethodexit.ExecuteAfterMethodCall;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 
@@ -9,9 +10,12 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
  * Data Structure, only state no behaviour
  *
  */
-public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLocalWhenInTestForParallelize {
+public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParallelize {
+
     private final RunAdapter runAdapter;
     private final int threadIndex;
+    private int methodCount;
+
     private InMethodIdAndPosition inMethodIdAndPosition;
     private ExecuteAfterMethodCall executeAfterMethodCall;
 
@@ -46,6 +50,15 @@ public class ThreadLocalWhenInTest extends PerThreadCounter implements ThreadLoc
 
     public RunAdapter runAdapter() {
         return runAdapter;
+    }
+
+    public int incrementAndGetMethodCount() {
+        methodCount++;
+        return methodCount;
+    }
+
+    public int methodCount() {
+        return methodCount;
     }
 
 }

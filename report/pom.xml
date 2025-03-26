@@ -26,7 +26,6 @@
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>trace-agent-bootstrap</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

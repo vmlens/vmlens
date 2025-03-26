@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.exception.TestBlockedException;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstates.RunStateEnd;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents;
@@ -74,7 +74,7 @@ public class RunStateMachineImpl implements RunStateMachine, ProcessRuntimeEvent
     @Override
     public RuntimeEvent callAfterFromState(RuntimeEvent runtimeEvent,
                                            ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-        return runtimeEvent.after(actualRun,runContext);
+        return runtimeEvent.after(actualRun,runContext,threadLocalDataWhenInTest);
     }
 
     @Override

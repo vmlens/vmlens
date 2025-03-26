@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.exception.TestBlockedException;
 
 import java.util.concurrent.locks.Condition;
 

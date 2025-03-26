@@ -1,10 +1,13 @@
 package com.anarsoft.race.detection.reportbuilder
 
 
+import com.anarsoft.race.detection.loopAndRunData.RunResult
 import com.anarsoft.race.detection.process.main.{DescriptionBuilderForReport, LoopReportBuilder, RunCountAndResult}
+import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl.toTestResult
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.element.*
+import com.vmlens.trace.agent.bootstrap.exception.Message
 
 import java.util
 import scala.collection.mutable
@@ -36,21 +39,13 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
             eventForReport.methodId))
       }
 
-      val result = if (runResult.isFailure && runResult.dataRaceCount > 0) {
+      if (runResult.isFailure) {
         failures = failures + 1;
-        dataRaces = dataRaces + runResult.dataRaceCount;
-        TestResult.FAILURE_AND_DATA_RACE
-      } else if (runResult.isFailure) {
-        failures = failures + 1;
-        TestResult.FAILURE
-      } else if (runResult.dataRaceCount > 0) {
-        dataRaces = dataRaces + runResult.dataRaceCount;
-        TestResult.DATA_RACE
-      } else {
-        TestResult.SUCCESS
       }
-
-      reportBuilder.addLoopAndRun(new TestLoop(runResult.loopId, result,
+      dataRaces = dataRaces + runResult.dataRaceCount;
+      
+      
+      reportBuilder.addLoopAndRun(new TestLoop(runResult.loopId, toTestResult(runResult),
         loopAndRun.count + 1), run);
     }
 
@@ -96,4 +91,27 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
     }
   }
 
+}
+
+object LoopReportBuilderImpl {
+
+  def toTestResult(runResult : RunResult) : TestResult =  {
+    val result : TestResultLabel = if (runResult.isFailure && runResult.dataRaceCount > 0) {
+      TestResultLabel.FailureAndDataRace
+    } else if (runResult.isFailure) {
+      TestResultLabel.Failure
+    } else if (runResult.dataRaceCount > 0) {
+      TestResultLabel.DataRace
+    } else {
+      TestResultLabel.Success
+    }
+
+    var text = result.text;
+    for(id <- runResult.warningIdList ) {
+      text = text + ", " + Message.of(id).text();
+    }
+    
+    new TestResult(text,result.style);
+  }
+  
 }

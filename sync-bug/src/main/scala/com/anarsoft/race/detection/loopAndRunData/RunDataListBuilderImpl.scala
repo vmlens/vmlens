@@ -14,9 +14,9 @@ class RunDataListBuilderImpl extends RunDataListBuilder {
 
   private[this] val loopAndRunIdToRunDataBuilder = new mutable.HashMap[LoopAndRunId, RunData]();
 
-  override def addControlEvents(loopAndRunId: LoopAndRunId, interleaveEventList: List[ControlEvent]): Unit = {
+  override def addControlEvents(loopAndRunId: LoopAndRunId, controlEventList: List[ControlEvent]): Unit = {
     val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
-    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(controlEvents = interleaveEventList))
+    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(controlEvents = controlEventList))
   }
 
   def addMethodEvents(loopAndRunId: LoopAndRunId, methodEventList: util.List[MethodEvent]): Unit = {

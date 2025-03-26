@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermet
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodExitEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorEnterEvent;
@@ -23,12 +24,9 @@ public class ExecuteSynchronizedMethodExit implements ExecuteAfterMethodCall {
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> execute(int inMethodId,
-                                                                    int position,
-                                                                    ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        TLinkedList<TLinkableWrapper<SerializableEvent>> result =
-                monitorExit.execute(threadLocalDataWhenInTest);
-        result.addAll(methodExit.execute(threadLocalDataWhenInTest));
-        return result;
+    public void execute(int inMethodId, int position, ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+        monitorExit.execute(threadLocalDataWhenInTest,queueIn);
+        methodExit.execute(threadLocalDataWhenInTest,queueIn);
+
     }
 }

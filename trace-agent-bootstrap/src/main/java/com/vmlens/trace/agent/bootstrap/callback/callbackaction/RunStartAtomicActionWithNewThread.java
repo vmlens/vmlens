@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -15,8 +16,7 @@ public class RunStartAtomicActionWithNewThread implements CallbackAction {
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> execute(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        threadLocalDataWhenInTest.runAdapter().startAtomicOperationWithNewThread(threadLocalDataWhenInTest, newThread);
-        return TLinkableWrapper.emptyList();
+    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+        threadLocalDataWhenInTest.runAdapter().startAtomicOperationWithNewThread(threadLocalDataWhenInTest, newThread, queueIn);
     }
 }
