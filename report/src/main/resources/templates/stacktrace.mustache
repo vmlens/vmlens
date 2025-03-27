@@ -2,10 +2,16 @@
 
 <!-- stacktrace.mustache -->
 <div class="container-fluid">
-    {{#elements}}
-        <div class="row text-left">
-            {{{text}}}
-        </div>
-    {{/elements}}
+    <div class="row text-left">
+        <table class="table table-striped">
+            {{#elements}}
+             <tr>
+                 <td>
+                    {{{text}}}
+                 </td>
+             </tr>
+            {{/elements}}
+        </table>
+    </div>
 </div>
 {{>footer.mustache}}

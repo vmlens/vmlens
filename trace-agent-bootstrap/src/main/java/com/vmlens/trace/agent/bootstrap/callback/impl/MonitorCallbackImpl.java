@@ -3,12 +3,9 @@ package com.vmlens.trace.agent.bootstrap.callback.impl;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorEnterEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorExitEvent;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.MonitorContext;
 
-import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.monitorEnter;
-import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.monitorExit;
+import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.*;
 
 
 public class MonitorCallbackImpl {

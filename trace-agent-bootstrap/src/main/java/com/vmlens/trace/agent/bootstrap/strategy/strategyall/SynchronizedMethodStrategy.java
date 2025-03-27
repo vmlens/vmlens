@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterMethodCall;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermethodexit.ExecuteSynchronizedMethodExit;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermethodexit.ExecuteSynchronizedMethodEnter;
 
 import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.*;
 
@@ -14,17 +14,13 @@ public class SynchronizedMethodStrategy implements StrategyAll {
 
     @Override
     public void methodEnter(MethodEnterExitContext enterExitContext) {
-
-
-        ExecuteSynchronizedMethodExit executeSynchronizedMethodExit =
-                new ExecuteSynchronizedMethodExit(createMonitorEnter(enterExitContext,-1),
-                        createMethodEnter(enterExitContext));
-        enterExitContext.threadLocalWhenInTestAdapter().process(new SetExecuteAfterMethodCall(executeSynchronizedMethodExit));
+        methodEnterEvent(enterExitContext);
+        monitorEnter(enterExitContext,-1);
     }
 
     @Override
     public void methodExit(MethodEnterExitContext enterExitContext) {
-        methodEnterEvent(enterExitContext);
-        monitorEnter(enterExitContext,-1);
+        monitorExit(enterExitContext,-1);
+        methodExitEvent(enterExitContext);
     }
 }
