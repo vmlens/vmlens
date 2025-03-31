@@ -3,12 +3,10 @@ package com.anarsoft.race.detection.event.interleave
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
-import com.vmlens.report.assertion.{EventWithAssertion, OnDescriptionAndEvent}
 
 trait MonitorEvent extends EventForReportElement
   with WithSetStacktraceNode
-  with SyncActionEventWithCompareType[MonitorEvent]
-  with EventWithAssertion {
+  with SyncActionEventWithCompareType[MonitorEvent] {
 
   def create(): MonitorContainer;
 
@@ -21,8 +19,5 @@ trait MonitorEvent extends EventForReportElement
   override def compareType(other: MonitorEvent): Int = {
     objectHashCode.compareTo(other.objectHashCode)
   }
-
-  override def add(onDescriptionAndEvent: OnDescriptionAndEvent): Unit = {
-
-  }
+  
 }

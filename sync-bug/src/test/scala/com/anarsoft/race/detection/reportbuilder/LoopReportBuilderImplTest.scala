@@ -16,7 +16,7 @@ class LoopReportBuilderImplTest extends AnyFlatSpec with Matchers {
 
     val reportBuilderMock = new ReportBuilderMock();
     val loopReportBuilderImpl = new LoopReportBuilderImpl(reportBuilderMock);
-    val eventForRunElements = List(new EventForReportElementGuineaPig(1, 1, 1, 6, Some(leaf), new OperationTextFactoryGuineaPig()));
+    val eventForRunElements = List(new EventForReportElementGuineaPig(1, 1, 1, 6, Some(leaf), new RunElementTypeGuineaPig()));
     val runResultMocks = new RunResultMock(eventForRunElements, false,  0 , Set());
 
     // When

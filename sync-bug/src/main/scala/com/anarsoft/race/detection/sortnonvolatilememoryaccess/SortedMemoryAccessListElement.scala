@@ -2,8 +2,7 @@ package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.reportbuilder.{EventForReportElement, NonVolatileEventForReport}
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.report.element.MemoryAccessModifier
-import com.vmlens.report.operationtextfactory.{FieldAccessTextFactory, OperationTextFactory}
+import com.vmlens.report.runelementtype.{VolatileAccess, RunElementType}
 
 private class SortedMemoryAccessListElement(var isDataRace: Boolean,
                                             val event: NonVolatileEventForReport) extends EventForReportElement {
@@ -20,13 +19,7 @@ private class SortedMemoryAccessListElement(var isDataRace: Boolean,
 
   def stacktraceNode: Option[StacktraceNode] = event.stacktraceNode;
 
-  def operationTextFactory: OperationTextFactory = {
-    val memoryAccessModifier = if (isDataRace) {
-      MemoryAccessModifier.DataRace
-    } else {
-      MemoryAccessModifier.NonVolatile
-    }
-    event.createOperationTextFactory(memoryAccessModifier);
-  }
+  def runElementType: RunElementType = event.runElementType(isDataRace);
+  
 
 }

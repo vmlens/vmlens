@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.interleave
 
-import com.vmlens.report.operationtextfactory.{MonitorOperation, MonitorTextFactory, OperationTextFactory}
+import com.vmlens.report.runelementtype.{LockAccess, LockOperation, LockType, RunElementType}
 
 
 trait MonitorEnterEvent extends LoadedInterleaveActionEvent with MonitorEvent {
@@ -18,8 +18,8 @@ trait MonitorEnterEvent extends LoadedInterleaveActionEvent with MonitorEvent {
     monitorContainer.monitorExit.foreach(f);
   }
 
-  override def operationTextFactory: OperationTextFactory = {
-    new MonitorTextFactory(MonitorOperation.MONITOR_ENTER, objectHashCode);
+  override def runElementType: RunElementType = {
+    new LockAccess(LockOperation.LOCK_ENTER, LockType.MONITOR ,  objectHashCode);
   }
 
 

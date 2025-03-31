@@ -10,7 +10,7 @@ class MainProcess(private val loadDescription: LoadDescription,
                   private val processRun: ProcessRun,
                   private val loopReportBuilder: LoopReportBuilder,
                   private val onDescription : OnDescription) {
-  def process(): DescriptionBuilderForReport = {
+  def process(): UILoopsAndStacktraceLeafsBuilder = {
 
    val loopIdToResult = new ProcessEvents(loadRuns, processRun).process();
     for (elem <- loopIdToResult) {

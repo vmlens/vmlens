@@ -5,12 +5,11 @@ import com.anarsoft.race.detection.event.control.ControlEvent
 import com.anarsoft.race.detection.groupinterleave.{GroupInterleaveElement, GroupInterleaveElementSyncActionImpl, GroupInterleaveElementThreadOperationImpl}
 import com.anarsoft.race.detection.groupnonvolatile.{GroupNonVolatileElement, GroupNonVolatileElementImpl}
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
-import com.vmlens.report.assertion.{DebugLogger, EventWithAssertion, OnDescriptionAndEvent}
+import com.vmlens.report.assertion.DebugLogger
 
 import java.util
 
-class RunDataListBuilderForDebug(val debugLogger: DebugLogger,
-                                 val onDescriptionAndEvent : OnDescriptionAndEvent) extends RunDataListBuilder {
+class RunDataListBuilderForDebug(val debugLogger: DebugLogger) extends RunDataListBuilder {
 
   override def addControlEvents(loopAndRunId: LoopAndRunId, interleaveEventList: List[ControlEvent]): Unit = {
     for (elem <- interleaveEventList) {
@@ -41,7 +40,6 @@ class RunDataListBuilderForDebug(val debugLogger: DebugLogger,
       if (elem.isInstanceOf[GroupInterleaveElementSyncActionImpl[_]]) {
         for (event <- elem.asInstanceOf[GroupInterleaveElementSyncActionImpl[_]].eventArray) {
           debugLogger.println(event.toString)
-          event.add(onDescriptionAndEvent);
         }
       } else {
         for (event <- elem.asInstanceOf[GroupInterleaveElementThreadOperationImpl[_]].eventArray) {

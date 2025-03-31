@@ -5,7 +5,7 @@ import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContext, WithP
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.vmlens.report.element.LoopRunAndThreadIndex
-import com.vmlens.report.operationtextfactory.{OperationTextFactory, ThreadOperationTextFactory}
+import com.vmlens.report.runelementtype.{RunElementType, ThreadRunElementType}
 
 trait ThreadJoinedEvent extends LoadedInterleaveActionEvent  with ThreadOperation
   with EventForReportElement
@@ -22,8 +22,8 @@ trait ThreadJoinedEvent extends LoadedInterleaveActionEvent  with ThreadOperatio
       joinedThreadIndex),this)
   }
 
-  override def operationTextFactory: OperationTextFactory = {
-    new ThreadOperationTextFactory("join (%s)", new LoopRunAndThreadIndex(loopId, runId, joinedThreadIndex));
+  override def runElementType: RunElementType = {
+    new ThreadRunElementType("join (%s)", new LoopRunAndThreadIndex(loopId, runId, joinedThreadIndex));
   }
   
 }

@@ -9,6 +9,7 @@ import java.util
 class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveActionEvent] {
 
   val volatileAccessEvents = new util.LinkedList[VolatileFieldAccessEvent]();
+  val staticVolatileAccessEvents = new util.LinkedList[VolatileFieldAccessEventStatic]();
   val threadStartEvents = new util.LinkedList[ThreadStartEvent]();
   val threadJoinedEvents = new util.LinkedList[ThreadJoinedEvent]();
   val monitorEvents = new util.LinkedList[MonitorEvent]()
@@ -20,6 +21,7 @@ class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveA
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
     val groupBuilder = new GroupInterleaveElementBuilder();
     groupBuilder.addVolatileAccessEvents(volatileAccessEvents);
+    groupBuilder.addStaticVolatileAccessEvents(staticVolatileAccessEvents);
     groupBuilder.addThreadStartEvents(threadStartEvents);
     groupBuilder.addThreadJoinedEvents(threadJoinedEvents);
     groupBuilder.addMonitorEvents(monitorEvents);

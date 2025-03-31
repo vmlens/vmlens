@@ -2,6 +2,7 @@ package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FactoryFactoryAll;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddArrayAccessAccessCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddFieldAccessCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMonitorCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
@@ -46,10 +47,10 @@ public class FactoryCollectionAll implements FactoryCollection {
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = new TLinkedList<>();
         result.add(wrap(AddMonitorCall.factory()));
         result.add(wrap(AddFieldAccessCall.factory(fieldIdMap)));
+        result.add(wrap(AddArrayAccessAccessCall.factory()));
         factoryForBoth.addToTransform(nameAndDescriptor, result);
         return result;
     }
-
 
     private boolean isStatic(int access) {
         return (access & ACC_STATIC) == ACC_STATIC;

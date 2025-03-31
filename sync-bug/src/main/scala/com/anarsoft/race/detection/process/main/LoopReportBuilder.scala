@@ -7,6 +7,6 @@ trait LoopReportBuilder {
 
   def addRunResult(runResult: RunCountAndResult): Unit
 
-  def build(): DescriptionBuilderForReport
+  def build(): UILoopsAndStacktraceLeafsBuilder
 
 }

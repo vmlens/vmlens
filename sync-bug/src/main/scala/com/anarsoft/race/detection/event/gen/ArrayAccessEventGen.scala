@@ -11,13 +11,11 @@ import com.anarsoft.race.detection.event.interleave._;
 
 class ArrayAccessEventGen (
    val threadIndex  : Int  
- ,  val fieldId  : Int  
+ ,  val arrayIndex  : Int  
  ,  val methodCounter  : Int  
+ ,  val objectHashCode  : Long  
  ,  val operation  : Int  
  ,  val methodId  : Int  
- ,  val objectHashCode  : Long  
- ,  val bytecodePosition  : Int  
- ,  val classId  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
@@ -26,13 +24,11 @@ class ArrayAccessEventGen (
 override def toString() = {
   var text =  "ArrayAccessEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
-  text = text + ", fieldId:" +  fieldId 
+  text = text + ", arrayIndex:" +  arrayIndex 
   text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", objectHashCode:" +  objectHashCode 
   text = text + ", operation:" +  operation 
   text = text + ", methodId:" +  methodId 
-  text = text + ", objectHashCode:" +  objectHashCode 
-  text = text + ", bytecodePosition:" +  bytecodePosition 
-  text = text + ", classId:" +  classId 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -48,12 +44,17 @@ override def equals(other: Any) = {
                false;
              }
              else
-             if( fieldId != that.fieldId )
+             if( arrayIndex != that.arrayIndex )
              {
                false;
              }
              else
              if( methodCounter != that.methodCounter )
+             {
+               false;
+             }
+             else
+             if( objectHashCode != that.objectHashCode )
              {
                false;
              }
@@ -64,21 +65,6 @@ override def equals(other: Any) = {
              }
              else
              if( methodId != that.methodId )
-             {
-               false;
-             }
-             else
-             if( objectHashCode != that.objectHashCode )
-             {
-               false;
-             }
-             else
-             if( bytecodePosition != that.bytecodePosition )
-             {
-               false;
-             }
-             else
-             if( classId != that.classId )
              {
                false;
              }
@@ -112,10 +98,6 @@ object  ArrayAccessEventGen
    {
      val result = new ArrayAccessEventGen (
           
-                data.getInt()
-          ,
-                data.getInt()
-          ,
                 data.getInt()
           ,
                 data.getInt()

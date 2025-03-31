@@ -5,6 +5,7 @@ import org.junit.Test;
 
 
 public class TestVolatileField {
+
     private volatile int j = 0;
 
     @Test

@@ -6,7 +6,6 @@ import com.anarsoft.race.detection.setstacktrace.{SetStacktraceNodeInEvent, With
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.{NonVolatileMemoryAccessEvent, PartialOrder, SortNonVolatileMemoryAccess}
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
-import com.vmlens.report.assertion.EventWithAssertion
 
 class GroupNonVolatileElementImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT] 
   with WithSetStacktraceNode]

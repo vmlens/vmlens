@@ -8,10 +8,9 @@ import com.anarsoft.race.detection.setstacktrace.{SetStacktraceNodeInEvent, With
 import com.anarsoft.race.detection.sortutil.EventContainer
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
-import com.vmlens.report.assertion.EventWithAssertion
 
 class GroupInterleaveElementSyncActionImpl[EVENT <: SyncActionEventWithCompareType[EVENT]
-  with WithSetStacktraceNode with EventWithAssertion]
+  with WithSetStacktraceNode]
 (val eventArray: EventArray[EVENT], val createContainer: (EVENT) => EventContainer[EVENT])
   extends GroupInterleaveElement {
 

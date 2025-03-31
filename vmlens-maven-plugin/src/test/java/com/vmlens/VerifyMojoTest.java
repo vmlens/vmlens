@@ -1,6 +1,6 @@
 package com.vmlens;
 
-import com.vmlens.report.VerifyResult;
+import com.vmlens.report.ResultForVerify;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
 
@@ -13,13 +13,13 @@ public class VerifyMojoTest {
 
     @Test
     public void handleResultNothing() throws MojoFailureException {
-        VerifyMojo.handleResult(new VerifyResult(0,0), new File("aab/ddd"));
+        VerifyMojo.handleResult(new ResultForVerify(0,0), new File("aab/ddd"));
     }
 
     @Test
     public void handleResultDataRaceAndFailure() {
         try {
-            VerifyMojo.handleResult(new VerifyResult(3, 6), new File("aab/ddd"));
+            VerifyMojo.handleResult(new ResultForVerify(3, 6), new File("aab/ddd"));
         }
         catch (MojoFailureException exp) {
             assertThat(exp.getMessage(),
@@ -30,7 +30,7 @@ public class VerifyMojoTest {
     @Test
     public void handleResultDataRace() {
         try {
-            VerifyMojo.handleResult(new VerifyResult(0, 6), new File("aab/ddd"));
+            VerifyMojo.handleResult(new ResultForVerify(0, 6), new File("aab/ddd"));
         }
         catch (MojoFailureException exp) {
             assertThat(exp.getMessage(),
@@ -41,7 +41,7 @@ public class VerifyMojoTest {
     @Test
     public void handleResultFailure() {
         try {
-            VerifyMojo.handleResult(new VerifyResult(5, 0), new File("aab/ddd"));
+            VerifyMojo.handleResult(new ResultForVerify(5, 0), new File("aab/ddd"));
         }
         catch (MojoFailureException exp) {
             assertThat(exp.getMessage(),

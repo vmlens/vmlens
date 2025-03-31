@@ -1,18 +1,18 @@
 package com.vmlens.report.element;
 
-import com.vmlens.report.operationtextfactory.OperationTextFactory;
+import com.vmlens.report.runelementtype.RunElementType;
 
 public class RunElement {
 
     private final LoopRunAndThreadIndex loopRunAndThreadIndex;
     private final int runPosition;
     private final StacktraceLeaf stacktraceLeaf;
-    private final OperationTextFactory operationTextFactory;
+    private final RunElementType operationTextFactory;
 
     private final int inMethodId;
 
     public RunElement(LoopRunAndThreadIndex loopRunAndThreadIndex, int runPosition, StacktraceLeaf stacktraceLeaf,
-                      OperationTextFactory operationTextFactory, int inMethodId) {
+                      RunElementType operationTextFactory, int inMethodId) {
         this.loopRunAndThreadIndex = loopRunAndThreadIndex;
         this.runPosition = runPosition;
         this.stacktraceLeaf = stacktraceLeaf;
@@ -32,7 +32,7 @@ public class RunElement {
         return stacktraceLeaf;
     }
 
-    public OperationTextFactory operationTextFactory() {
+    public RunElementType operationTextFactory() {
         return operationTextFactory;
     }
 

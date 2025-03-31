@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.reportbuilder
 
 
 import com.anarsoft.race.detection.loopAndRunData.RunResult
-import com.anarsoft.race.detection.process.main.{DescriptionBuilderForReport, LoopReportBuilder, RunCountAndResult}
+import com.anarsoft.race.detection.process.main.{UILoopsAndStacktraceLeafsBuilder, LoopReportBuilder, RunCountAndResult}
 import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl.toTestResult
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.vmlens.report.builder.ReportBuilder
@@ -21,7 +21,7 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
     runCountAndResultList.append(runResult)
   }
 
-  def build(): DescriptionBuilderForReport = {
+  def build(): UILoopsAndStacktraceLeafsBuilder = {
     val stacktraceLeafsMap = new mutable.HashMap[StacktraceNode, StacktraceLeaf]();
 
     var failures = 0;
@@ -35,7 +35,7 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
       for (eventForReport <- runResult) {
         run.add(
           new RunElement(new LoopRunAndThreadIndex(eventForReport.loopId, eventForReport.runId, eventForReport.threadIndex),
-            eventForReport.runPosition, stacktraceLeaf(eventForReport.stacktraceNode, stacktraceLeafsMap), eventForReport.operationTextFactory,
+            eventForReport.runPosition, stacktraceLeaf(eventForReport.stacktraceNode, stacktraceLeafsMap), eventForReport.runElementType,
             eventForReport.methodId))
       }
 
@@ -54,7 +54,7 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
       reportBuilder.addStacktraceLeaf(elem._2)
     }
 
-    val descriptionBuilder =  new DescriptionBuilderForReportImpl(reportBuilder);
+    val descriptionBuilder =  new UILoopsAndStacktraceLeafsBuilderImpl(reportBuilder);
     descriptionBuilder.setFailures(failures);
     descriptionBuilder.setDataRaces(dataRaces);
     descriptionBuilder

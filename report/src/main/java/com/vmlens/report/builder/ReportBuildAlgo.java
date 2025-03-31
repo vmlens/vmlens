@@ -55,7 +55,7 @@ public class ReportBuildAlgo {
                     firstStacktraceMethodName = descriptionContext.methodName(runElement.inMethodId());
                 }
 
-                UIRunElement uiRunElement = new UIRunElement(runElement.operationTextFactory().create(descriptionContext),
+                UIRunElement uiRunElement = new UIRunElement(runElement.operationTextFactory().asString(descriptionContext),
                         firstStacktraceMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex()));
 
                 UIStacktraceLeaf uiStacktraceLeaf;

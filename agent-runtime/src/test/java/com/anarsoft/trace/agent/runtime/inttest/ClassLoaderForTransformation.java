@@ -1,5 +1,6 @@
-package com.anarsoft.trace.agent.runtime;
+package com.anarsoft.trace.agent.runtime.inttest;
 
+import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.classtransformer.RunTestClassTransformer;

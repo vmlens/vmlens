@@ -1,14 +1,8 @@
-package com.anarsoft.trace.agent.runtime;
+package com.anarsoft.trace.agent.runtime.inttest;
 
 
-import com.vmlens.trace.agent.bootstrap.callback.FieldCallback;
-import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
-import com.vmlens.trace.agent.bootstrap.callback.MonitorCallback;
-import com.vmlens.trace.agent.bootstrap.callback.VmlensApiCallback;
-import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.impl.MonitorCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.impl.VmlensApiCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.*;
+import com.vmlens.trace.agent.bootstrap.callback.impl.*;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,9 +12,25 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class AgentClassFileTransformerIntegTest {
+public class AgentClassFileTransformerIntTest {
 
     private static final int CALLBACK_ID_WRITE_VOLATILE = 3;
+
+    @Test
+    public void arrayAccess() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+
+        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
+        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+
+        ArrayCallbackImpl arrayCallbackImpl = mock(ArrayCallbackImpl.class);
+        ArrayCallback.setArrayCallbackImpl(arrayCallbackImpl);
+
+        runTest("ArrayAccess");
+        verify(arrayCallbackImpl, times(4)).beforeArrayWrite(any(), anyInt(), anyInt());
+        verify(arrayCallbackImpl, times(3)).beforeArrayRead(any(), anyInt(), anyInt());
+    }
+
 
     @Test
     public void transformVolatileField() throws ClassNotFoundException, InstantiationException,

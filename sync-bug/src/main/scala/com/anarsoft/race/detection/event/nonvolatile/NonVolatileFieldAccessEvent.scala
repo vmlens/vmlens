@@ -3,9 +3,8 @@ package com.anarsoft.race.detection.event.nonvolatile
 import com.anarsoft.race.detection.reportbuilder.FieldId
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
-import com.vmlens.report.assertion.{EventWithAssertion, OnDescriptionAndEvent}
-import com.vmlens.report.element.MemoryAccessModifier
-import com.vmlens.report.operationtextfactory.{FieldAccessTextFactory, OperationTextFactory}
+import com.vmlens.report.runelementtype.memoryaccesskey.FieldIdAndObjectHashcode
+import com.vmlens.report.runelementtype.{NonVolatileAccess, RunElementType}
 
 trait NonVolatileFieldAccessEvent extends LoadedNonVolatileEvent
   with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEvent]
@@ -24,8 +23,8 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileEvent
 
   def staticMemoryAccessId() = new FieldId(fieldId);
 
-  override def createOperationTextFactory(memoryAccessModifier: MemoryAccessModifier): OperationTextFactory = {
-    FieldAccessTextFactory.create(memoryAccessModifier, operation, fieldId, objectHashCode);
+  override def runElementType(isDataRace : Boolean): RunElementType = {
+   new NonVolatileAccess(new FieldIdAndObjectHashcode(fieldId, objectHashCode), operation, isDataRace);
   }
 
   override def addToContext(context: LoadedNonVolatileEventContext): Unit = {

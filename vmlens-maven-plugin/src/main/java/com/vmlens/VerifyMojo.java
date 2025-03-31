@@ -1,7 +1,7 @@
 package com.vmlens;
 
 import com.anarsoft.race.detection.main.ProcessEvents;
-import com.vmlens.report.VerifyResult;
+import com.vmlens.report.ResultForVerify;
 import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -22,7 +22,7 @@ public class VerifyMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        VerifyResult result = new ProcessEvents(AgentMojo.eventDirectory().toPath(),
+        ResultForVerify result = new ProcessEvents(AgentMojo.eventDirectory().toPath(),
                 reportDirectory.toPath(),
                 new OnDescriptionAndLeftBeforeRightNoOp()).process();
 
@@ -30,7 +30,7 @@ public class VerifyMojo extends AbstractMojo {
     }
 
     // visible for test
-    static void handleResult(VerifyResult result, File reportDirectory) throws MojoFailureException {
+    static void handleResult(ResultForVerify result, File reportDirectory) throws MojoFailureException {
         if(result.failureCount() > 0 && result.dataRaceCount() > 0 ) {
             throw new MojoFailureException(String.format("There are %s test failures and %s data races, see %s for the test report." ,
                     result.failureCount(),result.dataRaceCount(),reportDirectory.toString()));

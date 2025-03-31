@@ -8,13 +8,11 @@ import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 public class ArrayAccessEventGen  {
 
     protected int     threadIndex;
-    protected int     fieldId;
+    protected int     arrayIndex;
     protected int     methodCounter;
+    protected long     objectHashCode;
     protected int     operation;
     protected int     methodId;
-    protected long     objectHashCode;
-    protected int     bytecodePosition;
-    protected int     classId;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
@@ -26,30 +24,26 @@ public boolean equals(Object o) {
 
     ArrayAccessEventGen that = (ArrayAccessEventGen) o;
     if ( threadIndex != that.threadIndex) return false;
-    if ( fieldId != that.fieldId) return false;
+    if ( arrayIndex != that.arrayIndex) return false;
     if ( methodCounter != that.methodCounter) return false;
+    if ( objectHashCode != that.objectHashCode) return false;
     if ( operation != that.operation) return false;
     if ( methodId != that.methodId) return false;
-    if ( objectHashCode != that.objectHashCode) return false;
-    if ( bytecodePosition != that.bytecodePosition) return false;
-    if ( classId != that.classId) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
     return true;
 }
 
-@Override
+    @Override
 public String toString() {
     return "ArrayAccessEventGen{" +
     "threadIndex=" + threadIndex +
-    "fieldId=" + fieldId +
+    "arrayIndex=" + arrayIndex +
     "methodCounter=" + methodCounter +
+    "objectHashCode=" + objectHashCode +
     "operation=" + operation +
     "methodId=" + methodId +
-    "objectHashCode=" + objectHashCode +
-    "bytecodePosition=" + bytecodePosition +
-    "classId=" + classId +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
@@ -60,20 +54,18 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.nonVolatile.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  49, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  41, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
 buffer.put( (byte)  5 );
      buffer.putInt( threadIndex ); 
-     buffer.putInt( fieldId ); 
+     buffer.putInt( arrayIndex ); 
      buffer.putInt( methodCounter ); 
+      buffer.putLong( objectHashCode );  
      buffer.putInt( operation ); 
      buffer.putInt( methodId ); 
-      buffer.putLong( objectHashCode );  
-     buffer.putInt( bytecodePosition ); 
-     buffer.putInt( classId ); 
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 

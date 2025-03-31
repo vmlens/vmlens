@@ -3,16 +3,14 @@ package com.anarsoft.race.detection.event.interleave
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.EventWithReadWrite
-import com.vmlens.report.assertion.{EventWithAssertion, OnDescriptionAndEvent}
-import com.vmlens.report.element.MemoryAccessModifier
-import com.vmlens.report.operationtextfactory.{FieldAccessTextFactory, OperationTextFactory}
+import com.vmlens.report.runelementtype.memoryaccesskey.FieldIdAndObjectHashcode
+import com.vmlens.report.runelementtype.{RunElementType, VolatileAccess}
 
 
 trait VolatileFieldAccessEvent extends EventWithReadWrite[VolatileFieldAccessEvent]
   with SyncActionEventWithCompareType[VolatileFieldAccessEvent]
   with WithSetStacktraceNode
-  with LoadedInterleaveActionEvent 
-  with EventWithAssertion {
+  with LoadedInterleaveActionEvent {
 
   def fieldId: Int
   def objectHashCode: Long
@@ -29,11 +27,8 @@ trait VolatileFieldAccessEvent extends EventWithReadWrite[VolatileFieldAccessEve
     }
   }
 
-  override def operationTextFactory: OperationTextFactory = {
-    FieldAccessTextFactory.create(MemoryAccessModifier.Volatile, operation, fieldId, objectHashCode);
+  override def runElementType: RunElementType = {
+    new VolatileAccess(new FieldIdAndObjectHashcode(fieldId, objectHashCode),operation);
   }
 
-  override def add(onDescriptionAndEvent: OnDescriptionAndEvent): Unit = {
-    onDescriptionAndEvent.onVolatileAccessEvent(loopId,fieldId,threadIndex,operation)
-  }
 }

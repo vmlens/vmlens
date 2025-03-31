@@ -1,12 +1,12 @@
 package com.anarsoft.race.detection.reportbuilder
 
-import com.anarsoft.race.detection.process.main.DescriptionBuilderForReport
+import com.anarsoft.race.detection.process.main.UILoopsAndStacktraceLeafsBuilder
 import com.anarsoft.trace.agent.description.{ClassDescription, ThreadOrLoopDescription}
-import com.vmlens.report.VerifyResult
+import com.vmlens.report.ResultForVerify
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs
 
-class DescriptionBuilderForReportImpl(reportBuilder: ReportBuilder) extends DescriptionBuilderForReport {
+class UILoopsAndStacktraceLeafsBuilderImpl(reportBuilder: ReportBuilder) extends UILoopsAndStacktraceLeafsBuilder {
 
   private var failureCount = 0;
   private var dataRaceCount = 0;
@@ -33,6 +33,6 @@ class DescriptionBuilderForReportImpl(reportBuilder: ReportBuilder) extends Desc
     reportBuilder.build();
   }
   
-  def verifyResult() : VerifyResult = new VerifyResult(failureCount,dataRaceCount);
+  def buildResultForVerify() : ResultForVerify = new ResultForVerify(failureCount,dataRaceCount);
 
 }

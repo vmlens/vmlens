@@ -5,7 +5,7 @@ import com.anarsoft.race.detection.process.loadDescription.LoadDescriptionImpl
 import com.anarsoft.race.detection.process.main.MainProcess
 import com.anarsoft.race.detection.process.run.ProcessRunImpl
 import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl
-import com.vmlens.report.VerifyResult
+import com.vmlens.report.ResultForVerify
 import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp}
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.createreport.CreateReport
@@ -17,7 +17,7 @@ class ProcessEvents(val eventDir: Path,
                     val reportDir: Path,
                     val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight) {
 
-  def process(): VerifyResult = {
+  def process(): ResultForVerify = {
 
     val dir = reportDir.toFile
     if (!dir.exists()) {
@@ -39,7 +39,7 @@ class ProcessEvents(val eventDir: Path,
     new LoadAgentLog(eventDir).load(printStream);
     printStream.close();
 
-    reportBuilder.verifyResult();
+    reportBuilder.buildResultForVerify();
   }
 }
 
