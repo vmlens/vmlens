@@ -8,7 +8,9 @@ import java.util
 
 class LoadedNonVolatileEventContext extends LoadedEventContext[LoadedNonVolatileEvent] {
 
-  val nonVolatileAccessEvents = new util.LinkedList[NonVolatileFieldAccessEvent]();
+  val nonVolatileFieldAccessEvents = new util.LinkedList[NonVolatileFieldAccessEvent]();
+  val nonVolatileStaticFieldAccessEvents = new util.LinkedList[NonVolatileFieldAccessEventStatic]();
+  val arrayAccessEvents = new util.LinkedList[ArrayAccessEvent]();
 
   override def addLoadedEvent(event: LoadedNonVolatileEvent): Unit = {
     event.addToContext(this)
@@ -16,7 +18,9 @@ class LoadedNonVolatileEventContext extends LoadedEventContext[LoadedNonVolatile
 
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
     val groupBuilder = new GroupNonVolatileElementBuilder();
-    groupBuilder.add(nonVolatileAccessEvents)
+    groupBuilder.addFieldAccess(nonVolatileFieldAccessEvents)
+    groupBuilder.addStaticFieldAccess(nonVolatileStaticFieldAccessEvents)
+    groupBuilder.addArrayAccess(arrayAccessEvents)
     builder.addNonVolatileElements(loopAndRunId, groupBuilder.build());
   }
 }

@@ -1,13 +1,33 @@
 package com.vmlens.report;
 
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.HashMap;
+
 public class ResultForVerify {
 
-    private final int failureCount;
-    private final int dataRaceCount;
+    private final Map<Integer,Integer>  loopIdToDataRaceCount = new HashMap<>();
+    private final List<LoopToDataRaceCount> loopToDataRaceCountList = new LinkedList<>();
 
-    public ResultForVerify(int failureCount, int dataRaceCount) {
-        this.failureCount = failureCount;
-        this.dataRaceCount = dataRaceCount;
+    private int failureCount;
+    private int dataRaceCount;
+
+    public void setDataRaces(int loopId, int count) {
+        loopIdToDataRaceCount.put(loopId,count);
+        dataRaceCount += count;
+    }
+
+    public void setLoopName(int loopId, String loopName) {
+        if(loopIdToDataRaceCount.containsKey(loopId)) {
+           int count =  loopIdToDataRaceCount.get(loopId);
+            loopToDataRaceCountList.add(new LoopToDataRaceCount(loopName,count));
+        }
+
+    }
+
+    public void setFailure(int loopId) {
+        failureCount++;
     }
 
     public int failureCount() {
@@ -16,5 +36,10 @@ public class ResultForVerify {
 
     public int dataRaceCount() {
         return dataRaceCount;
+    }
+
+    // for test
+    public List<LoopToDataRaceCount> loopToDataRaceCountList() {
+        return loopToDataRaceCountList;
     }
 }

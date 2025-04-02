@@ -28,7 +28,7 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileEvent
   }
 
   override def addToContext(context: LoadedNonVolatileEventContext): Unit = {
-    context.nonVolatileAccessEvents.add(this)
+    context.nonVolatileFieldAccessEvents.add(this)
   }
   
 }

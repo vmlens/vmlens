@@ -2,9 +2,10 @@ package com.anarsoft.race.detection.reportbuilder
 
 
 import com.anarsoft.race.detection.loopAndRunData.RunResult
-import com.anarsoft.race.detection.process.main.{UILoopsAndStacktraceLeafsBuilder, LoopReportBuilder, RunCountAndResult}
+import com.anarsoft.race.detection.process.main.{LoopReportBuilder, RunCountAndResult, UILoopsAndStacktraceLeafsBuilder}
 import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl.toTestResult
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
+import com.vmlens.report.ResultForVerify
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.element.*
 import com.vmlens.trace.agent.bootstrap.exception.Message
@@ -24,8 +25,9 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
   def build(): UILoopsAndStacktraceLeafsBuilder = {
     val stacktraceLeafsMap = new mutable.HashMap[StacktraceNode, StacktraceLeaf]();
 
-    var failures = 0;
-    var dataRaces = 0;
+    val  resultForVerify = new ResultForVerify();
+    
+
 
     // addVolatileAccessEvents the loops to the report builder
     for (loopAndRun <- runCountAndResultList) {
@@ -40,9 +42,11 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
       }
 
       if (runResult.isFailure) {
-        failures = failures + 1;
+        resultForVerify.setFailure(runResult.loopId)
       }
-      dataRaces = dataRaces + runResult.dataRaceCount;
+      if(runResult.dataRaceCount > 0) {
+        resultForVerify.setDataRaces(runResult.loopId,runResult.dataRaceCount)
+      }
       
       
       reportBuilder.addLoopAndRun(new TestLoop(runResult.loopId, toTestResult(runResult),
@@ -54,9 +58,7 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
       reportBuilder.addStacktraceLeaf(elem._2)
     }
 
-    val descriptionBuilder =  new UILoopsAndStacktraceLeafsBuilderImpl(reportBuilder);
-    descriptionBuilder.setFailures(failures);
-    descriptionBuilder.setDataRaces(dataRaces);
+    val descriptionBuilder = new UILoopsAndStacktraceLeafsBuilderImpl(reportBuilder,resultForVerify);
     descriptionBuilder
   }
 

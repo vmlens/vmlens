@@ -6,33 +6,24 @@ import com.vmlens.report.ResultForVerify
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs
 
-class UILoopsAndStacktraceLeafsBuilderImpl(reportBuilder: ReportBuilder) extends UILoopsAndStacktraceLeafsBuilder {
-
-  private var failureCount = 0;
-  private var dataRaceCount = 0;
-
-  def setFailures(i : Int): Unit = {
-    failureCount =   i;
-  }
+class UILoopsAndStacktraceLeafsBuilderImpl(reportBuilder: ReportBuilder, resultForVerify : ResultForVerify) extends UILoopsAndStacktraceLeafsBuilder {
   
-  def setDataRaces(i : Int): Unit = {
-    dataRaceCount =   i;
-  }
+  private val visitor = new SetLoopNameInResultForVerifyVisitor(resultForVerify);
   
-
-
   override def addClassDescription(classDescription: ClassDescription): Unit = {
     reportBuilder.addClassDescription(classDescription);
   }
 
   override def addThreadOrLoopDescription(threadOrLoopDescription: ThreadOrLoopDescription): Unit = {
     reportBuilder.addThreadOrLoopDescription(threadOrLoopDescription);
+    threadOrLoopDescription.accept(visitor);
+    
   }
 
   def build(): UILoopsAndStacktraceLeafs = {
     reportBuilder.build();
   }
   
-  def buildResultForVerify() : ResultForVerify = new ResultForVerify(failureCount,dataRaceCount);
+  def buildResultForVerify() : ResultForVerify = resultForVerify;
 
 }

@@ -85,7 +85,7 @@ class ProcessRunImplIntTest extends AnyFlatSpec with Matchers {
     list.add(write);
 
     val builder = new GroupNonVolatileElementBuilder();
-    builder.add(list);
+    builder.addFieldAccess(list);
     builder.build();
   }
 
