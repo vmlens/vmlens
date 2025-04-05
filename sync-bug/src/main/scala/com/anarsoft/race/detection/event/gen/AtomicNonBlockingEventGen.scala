@@ -9,34 +9,71 @@ import com.anarsoft.race.detection.event.directmemory._;
 import com.anarsoft.race.detection.event.interleave._;
 
 
-class MethodCallbackEnterEventGen (
+class AtomicNonBlockingEventGen (
    val threadIndex  : Int  
+ ,  val bytecodePosition  : Int  
+ ,  val fieldId  : Int  
  ,  val methodCounter  : Int  
+ ,  val methodId  : Int  
+ ,  val operation  : Int  
+ ,  val objectHashCode  : Long  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends MethodCallbackEnterEvent  
+ ,  val atomicMethodId  : Int  
+)    extends AtomicNonBlockingEvent  
 {
 override def toString() = {
-  var text =  "MethodCallbackEnterEventGen" 
+  var text =  "AtomicNonBlockingEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
+  text = text + ", bytecodePosition:" +  bytecodePosition 
+  text = text + ", fieldId:" +  fieldId 
   text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", methodId:" +  methodId 
+  text = text + ", operation:" +  operation 
+  text = text + ", objectHashCode:" +  objectHashCode 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
+  text = text + ", atomicMethodId:" +  atomicMethodId 
  text;
 }
 
 override def equals(other: Any) = {
     other match {
-      case that: MethodCallbackEnterEventGen => 
+      case that: AtomicNonBlockingEventGen => 
         {
              if( threadIndex != that.threadIndex )
              {
                false;
              }
              else
+             if( bytecodePosition != that.bytecodePosition )
+             {
+               false;
+             }
+             else
+             if( fieldId != that.fieldId )
+             {
+               false;
+             }
+             else
              if( methodCounter != that.methodCounter )
+             {
+               false;
+             }
+             else
+             if( methodId != that.methodId )
+             {
+               false;
+             }
+             else
+             if( operation != that.operation )
+             {
+               false;
+             }
+             else
+             if( objectHashCode != that.objectHashCode )
              {
                false;
              }
@@ -56,6 +93,11 @@ override def equals(other: Any) = {
                false;
              }
              else
+             if( atomicMethodId != that.atomicMethodId )
+             {
+               false;
+             }
+             else
              true;
         }
       case _ => false
@@ -64,13 +106,25 @@ override def equals(other: Any) = {
 }
 
 
-object  MethodCallbackEnterEventGen 
+object  AtomicNonBlockingEventGen 
 {
    def applyFromJavaEvent(data : ByteBuffer) =
    {
-     val result = new MethodCallbackEnterEventGen (
+     val result = new AtomicNonBlockingEventGen (
           
                 data.getInt()
+          ,
+                data.getInt()
+          ,
+                data.getInt()
+          ,
+                data.getInt()
+          ,
+                data.getInt()
+          ,
+                data.getInt()
+          ,
+                data.getLong()
           ,
                 data.getInt()
           ,

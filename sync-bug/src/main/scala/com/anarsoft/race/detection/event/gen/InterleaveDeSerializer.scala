@@ -10,8 +10,8 @@ import com.anarsoft.race.detection.event.interleave._;
 import com.anarsoft.race.detection.event.load._;
 
 class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionEvent] {
-   val eventArraySize : Int = 45
-   val blockSize : Int =  45 * 10000;
+   val eventArraySize : Int = 49
+   val blockSize : Int =  49 * 10000;
   
 
     def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedInterleaveActionEvent = {
@@ -45,16 +45,13 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
           return ThreadJoinedEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 18 ) {
-          return MethodAtomicEnterEventGen.applyFromJavaEvent( buffer   );
+          return AtomicReadWriteLockEnterEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 19 ) {
-          return MethodAtomicExitEventGen.applyFromJavaEvent( buffer   );
+          return AtomicReadWriteLockExitEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 20 ) {
-          return MethodCallbackEnterEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 21 ) {
-          return MethodCallbackExitEventGen.applyFromJavaEvent( buffer   );
+          return AtomicNonBlockingEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");
     }

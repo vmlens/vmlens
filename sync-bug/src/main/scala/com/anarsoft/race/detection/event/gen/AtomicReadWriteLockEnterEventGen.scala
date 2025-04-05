@@ -9,38 +9,35 @@ import com.anarsoft.race.detection.event.directmemory._;
 import com.anarsoft.race.detection.event.interleave._;
 
 
-class MethodAtomicEnterEventGen (
+class AtomicReadWriteLockEnterEventGen (
    val threadIndex  : Int  
- ,  val methodId  : Int  
  ,  val methodCounter  : Int  
- ,  val hasCallback  : Byte  
+ ,  val objectHashCode  : Long  
+ ,  val lockType  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends MethodAtomicEnterEvent  
+ ,  val atomicMethodId  : Int  
+)    extends AtomicReadWriteLockEnterEvent  
 {
 override def toString() = {
-  var text =  "MethodAtomicEnterEventGen" 
+  var text =  "AtomicReadWriteLockEnterEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
-  text = text + ", methodId:" +  methodId 
   text = text + ", methodCounter:" +  methodCounter 
-  text = text + ", hasCallback:" +  hasCallback 
+  text = text + ", objectHashCode:" +  objectHashCode 
+  text = text + ", lockType:" +  lockType 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
+  text = text + ", atomicMethodId:" +  atomicMethodId 
  text;
 }
 
 override def equals(other: Any) = {
     other match {
-      case that: MethodAtomicEnterEventGen => 
+      case that: AtomicReadWriteLockEnterEventGen => 
         {
              if( threadIndex != that.threadIndex )
-             {
-               false;
-             }
-             else
-             if( methodId != that.methodId )
              {
                false;
              }
@@ -50,7 +47,12 @@ override def equals(other: Any) = {
                false;
              }
              else
-             if( hasCallback != that.hasCallback )
+             if( objectHashCode != that.objectHashCode )
+             {
+               false;
+             }
+             else
+             if( lockType != that.lockType )
              {
                false;
              }
@@ -70,6 +72,11 @@ override def equals(other: Any) = {
                false;
              }
              else
+             if( atomicMethodId != that.atomicMethodId )
+             {
+               false;
+             }
+             else
              true;
         }
       case _ => false
@@ -78,19 +85,21 @@ override def equals(other: Any) = {
 }
 
 
-object  MethodAtomicEnterEventGen 
+object  AtomicReadWriteLockEnterEventGen 
 {
    def applyFromJavaEvent(data : ByteBuffer) =
    {
-     val result = new MethodAtomicEnterEventGen (
+     val result = new AtomicReadWriteLockEnterEventGen (
           
                 data.getInt()
           ,
                 data.getInt()
           ,
+                data.getLong()
+          ,
                 data.getInt()
           ,
-                data.get()
+                data.getInt()
           ,
                 data.getInt()
           ,

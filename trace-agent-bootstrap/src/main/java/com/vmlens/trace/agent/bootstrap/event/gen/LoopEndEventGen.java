@@ -41,7 +41,7 @@ public String toString() {
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  23 );
+buffer.put( (byte)  22 );
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( status ); 

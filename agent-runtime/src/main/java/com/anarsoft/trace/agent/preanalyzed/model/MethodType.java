@@ -1,7 +1,8 @@
 package com.anarsoft.trace.agent.preanalyzed.model;
 
 
-import com.anarsoft.trace.agent.preanalyzed.builder.MethodBuilder;
+import com.anarsoft.trace.agent.preanalyzed.builder.CallbackInNonBlockingMethod;
+import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,7 +10,10 @@ import java.io.IOException;
 public interface MethodType {
 
 
-    void add(String name, String desc, MethodBuilder methodBuilder);
+    void add(String name,
+             String desc,
+             CallbackInNonBlockingMethod[] callbackInNonBlockingMethods,
+             FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder);
 
     void serialize(DataOutputStream out) throws IOException;
 }

@@ -38,7 +38,7 @@ public String toString() {
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  25 );
+buffer.put( (byte)  24 );
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
 }

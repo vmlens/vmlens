@@ -57,7 +57,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
-                //  logTransformedClass(name, transformed);
+              //  logTransformedClass(name, transformed);
                 return transformed;
             }
         } catch (Throwable e) {

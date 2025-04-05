@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer.builder;
 
-import com.anarsoft.trace.agent.preanalyzed.builder.MethodBuilder;
+import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategyNoOp;
 import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyForClassTransformer;
@@ -47,7 +47,7 @@ public class TransformerStrategyFactory {
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
-    public MethodBuilder createMethodBuilder() {
-        return new MethodBuilderImpl(methodRepositoryForAnalyze);
+    public FactoryCollectionPreAnalyzedFactoryBuilder createMethodBuilder() {
+        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze);
     }
 }

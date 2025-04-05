@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer;
 
 import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
-import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.ClassBuilderImpl;
+import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.ClassTransformerListBuilderImpl;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.builder.TransformerStrategyFactory;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
@@ -45,7 +45,7 @@ public class ClassFilterAndTransformerStrategyCollectionFactory {
         TransformerStrategyFactory transformerStrategyFactory = new TransformerStrategyFactory(methodRepositoryForAnalyze,
                 fieldRepositoryForAnalyze,
                 writeClassDescription);
-        ClassBuilderImpl classBuilder = new ClassBuilderImpl(transformerStrategyFactory);
+        ClassTransformerListBuilderImpl classBuilder = new ClassTransformerListBuilderImpl(transformerStrategyFactory);
         for (TLinkableWrapper<PackageOrClass> packageOrClass : preAnalyzed) {
             packageOrClass.element().addToBuilder(classBuilder);
         }

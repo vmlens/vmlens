@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.model;
 
-import com.anarsoft.trace.agent.preanalyzed.builder.ClassBuilder;
+import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.AbstractClassType;
 import org.visualj.View;
 
@@ -36,7 +36,7 @@ public class PackageOrClass {
         return new PackageOrClass(name, classType, methods);
     }
 
-    public void addToBuilder(ClassBuilder classBuilder) {
+    public void addToBuilder(ClassTransformerListBuilder classBuilder) {
         classType.addToBuilder(name, methods, classBuilder);
     }
 

@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl;
 
-import com.anarsoft.trace.agent.preanalyzed.builder.ClassBuilder;
+import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
 
 public class ClassTypeFilter extends AbstractClassType {
@@ -11,7 +11,7 @@ public class ClassTypeFilter extends AbstractClassType {
     }
 
     @Override
-    public void addToBuilder(String name, PreAnalyzedMethod[] methods, ClassBuilder classBuilder) {
+    public void addToBuilder(String name, PreAnalyzedMethod[] methods, ClassTransformerListBuilder classBuilder) {
         classBuilder.addFilterStartsWith(name);
     }
 }

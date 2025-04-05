@@ -9,27 +9,33 @@ import com.anarsoft.race.detection.event.directmemory._;
 import com.anarsoft.race.detection.event.interleave._;
 
 
-class MethodCallbackExitEventGen (
+class AtomicReadWriteLockExitEventGen (
    val threadIndex  : Int  
  ,  val methodCounter  : Int  
+ ,  val objectHashCode  : Long  
+ ,  val lockType  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends MethodCallbackExitEvent  
+ ,  val atomicMethodId  : Int  
+)    extends AtomicReadWriteLockExitEvent  
 {
 override def toString() = {
-  var text =  "MethodCallbackExitEventGen" 
+  var text =  "AtomicReadWriteLockExitEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", objectHashCode:" +  objectHashCode 
+  text = text + ", lockType:" +  lockType 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
+  text = text + ", atomicMethodId:" +  atomicMethodId 
  text;
 }
 
 override def equals(other: Any) = {
     other match {
-      case that: MethodCallbackExitEventGen => 
+      case that: AtomicReadWriteLockExitEventGen => 
         {
              if( threadIndex != that.threadIndex )
              {
@@ -37,6 +43,16 @@ override def equals(other: Any) = {
              }
              else
              if( methodCounter != that.methodCounter )
+             {
+               false;
+             }
+             else
+             if( objectHashCode != that.objectHashCode )
+             {
+               false;
+             }
+             else
+             if( lockType != that.lockType )
              {
                false;
              }
@@ -56,6 +72,11 @@ override def equals(other: Any) = {
                false;
              }
              else
+             if( atomicMethodId != that.atomicMethodId )
+             {
+               false;
+             }
+             else
              true;
         }
       case _ => false
@@ -64,12 +85,18 @@ override def equals(other: Any) = {
 }
 
 
-object  MethodCallbackExitEventGen 
+object  AtomicReadWriteLockExitEventGen 
 {
    def applyFromJavaEvent(data : ByteBuffer) =
    {
-     val result = new MethodCallbackExitEventGen (
+     val result = new AtomicReadWriteLockExitEventGen (
           
+                data.getInt()
+          ,
+                data.getInt()
+          ,
+                data.getLong()
+          ,
                 data.getInt()
           ,
                 data.getInt()

@@ -1,7 +1,8 @@
 package com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl;
 
-import com.anarsoft.trace.agent.preanalyzed.builder.ClassBuilder;
-import com.anarsoft.trace.agent.preanalyzed.builder.MethodBuilder;
+import com.anarsoft.trace.agent.preanalyzed.builder.CallbackInNonBlockingMethod;
+import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
+import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.ClassType;
 import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadStart;
@@ -15,13 +16,13 @@ public class PreAnalyzedSpecificMethodsTest {
     public void add() {
         // Given
         ClassType classTypeThread = PreAnalyzedSpecificMethods.SINGLETON;
-        ClassBuilder classBuilder = mock(ClassBuilder.class);
+        ClassTransformerListBuilder classBuilder = mock(ClassTransformerListBuilder.class);
 
-        MethodBuilder methodBuilder = mock(MethodBuilder.class);
-        when(classBuilder.createMethodBuilder()).thenReturn(methodBuilder);
+        FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder = mock(FactoryCollectionPreAnalyzedFactoryBuilder.class);
+        when(classBuilder.createPreAnalyzedSpecial()).thenReturn(methodBuilder);
 
         PreAnalyzedMethod[] methods = new PreAnalyzedMethod[1];
-        methods[0] = new PreAnalyzedMethod("start", "()V", ThreadStart.SINGLETON);
+        methods[0] = new PreAnalyzedMethod("start", "()V", ThreadStart.SINGLETON, new CallbackInNonBlockingMethod[0]);
 
         // When
         classTypeThread.addToBuilder("java.lang.Thread", methods, classBuilder);

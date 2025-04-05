@@ -1,6 +1,7 @@
 package com.anarsoft.trace.agent.preanalyzed.serialize;
 
 
+import com.anarsoft.trace.agent.preanalyzed.builder.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
 import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.ClassTypeFilter;
@@ -44,7 +45,8 @@ public class DeserializePackageOrClassTest {
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
 
         PreAnalyzedMethod[] preAnalyzedMethods = new PreAnalyzedMethod[1];
-        preAnalyzedMethods[0] = new PreAnalyzedMethod("´start", "()V", ThreadStart.SINGLETON);
+        preAnalyzedMethods[0] = new PreAnalyzedMethod("´start", "()V", ThreadStart.SINGLETON,
+                new CallbackInNonBlockingMethod[0]);
         PackageOrClass withMethod = new PackageOrClass("with.java",
                 ClassTypeFilter.SINGLETON, preAnalyzedMethods);
 

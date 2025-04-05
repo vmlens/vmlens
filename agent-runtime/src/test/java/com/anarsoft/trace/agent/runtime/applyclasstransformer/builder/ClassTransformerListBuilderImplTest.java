@@ -10,13 +10,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ClassBuilderImplTest {
+public class ClassTransformerListBuilderImplTest {
 
     @Test
     public void createFilter() {
         // Given
         TransformerStrategyFactory transformerStrategyFactoryMock = mock(TransformerStrategyFactory.class);
-        ClassBuilderImpl classBuilderImpl = new ClassBuilderImpl(transformerStrategyFactoryMock);
+        ClassTransformerListBuilderImpl classBuilderImpl = new ClassTransformerListBuilderImpl(transformerStrategyFactoryMock);
 
         TransformerStrategy transformerStrategyMock = mock(TransformerStrategy.class);
         when(transformerStrategyFactoryMock.createNoOp()).thenReturn(transformerStrategyMock);

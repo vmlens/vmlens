@@ -1,26 +1,28 @@
 package com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl;
 
-import com.anarsoft.trace.agent.preanalyzed.builder.ClassBuilder;
-import com.anarsoft.trace.agent.preanalyzed.builder.MethodBuilder;
+import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
+import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.ClassType;
 import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
 
-public class PreAnalyzedSpecificMethods extends AbstractClassType {
+/**
+ *
+ * Used for Thread and ReentrantReadWriteLock and ReentrantLock
+ * e.g. classes where we are only interested in the method calls not potent
+ *
+ */
+
+
+public class PreAnalyzedSpecificMethods extends AbstractPreAnalyzed {
 
     public static final ClassType SINGLETON = new PreAnalyzedSpecificMethods();
 
-    private PreAnalyzedSpecificMethods() {
-    }
+    private PreAnalyzedSpecificMethods() {}
 
     @Override
-    public void addToBuilder(String name,
-                             PreAnalyzedMethod[] methods,
-                             ClassBuilder classBuilder) {
-        MethodBuilder methodBuilder = classBuilder.createMethodBuilder();
-        for (PreAnalyzedMethod method : methods) {
-            method.add(methodBuilder);
-        }
+    protected FactoryCollectionPreAnalyzedFactoryBuilder create(ClassTransformerListBuilder classBuilder) {
+        FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder = classBuilder.createPreAnalyzedSpecial();
         methodBuilder.noOpWhenMethodNotFound();
-        classBuilder.addPreAnalyzedEquals(name, methodBuilder.build());
+        return methodBuilder;
     }
 }

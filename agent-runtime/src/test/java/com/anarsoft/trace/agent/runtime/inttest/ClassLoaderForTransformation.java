@@ -38,6 +38,11 @@ public class ClassLoaderForTransformation extends ClassLoader {
             TransformerContext transformerContext = new TransformerContext(targetArray, name);
 
 
+            if(strategy == null) {
+                System.out.println("not transformed " + name);
+                return defineClass(name, targetArray, 0, targetArray.length);
+            }
+
             byte[] transformed = strategy.transform(transformerContext);
             if (transformed == null) {
                 System.out.println("not transformed " + name);

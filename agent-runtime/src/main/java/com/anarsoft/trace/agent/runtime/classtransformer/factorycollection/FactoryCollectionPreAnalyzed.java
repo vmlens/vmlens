@@ -9,8 +9,7 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTran
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
-public class
-FactoryCollectionPreAnalyzed implements FactoryCollection {
+public class FactoryCollectionPreAnalyzed implements FactoryCollection {
 
     private final FactoryForPreAnalyzedAndAll factoryForBoth;
     private final THashMap<NameAndDescriptor, StrategyPreAnalyzed> methodToStrategy;

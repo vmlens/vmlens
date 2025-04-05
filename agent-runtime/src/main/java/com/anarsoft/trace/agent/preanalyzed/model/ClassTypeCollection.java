@@ -1,10 +1,7 @@
 package com.anarsoft.trace.agent.preanalyzed.model;
 
 
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.ClassTypeAllStartWith;
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.ClassTypeFilter;
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.ClassTypeVmlensApi;
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedSpecificMethods;
+import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.*;
 
 public class ClassTypeCollection {
 
@@ -24,6 +21,12 @@ public class ClassTypeCollection {
         if(classType instanceof ClassTypeVmlensApi) {
             return 3;
         }
+        if(classType instanceof PreAnalyzedAtomicNonBlocking) {
+            return 4;
+        }
+        if(classType instanceof PreAnalyzedAtomicReadWriteLock) {
+            return 5;
+        }
         throw new RuntimeException("unknown " + classType.getClass());
     }
 
@@ -39,6 +42,12 @@ public class ClassTypeCollection {
         }
         if(id == 3) {
             return ClassTypeVmlensApi.SINGLETON;
+        }
+        if(id == 4) {
+            return PreAnalyzedAtomicNonBlocking.SINGLETON;
+        }
+        if(id == 5) {
+            return PreAnalyzedAtomicReadWriteLock.SINGLETON;
         }
         throw new RuntimeException("unknown " + id);
     }

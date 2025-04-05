@@ -5,42 +5,54 @@ import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
 
-public class MethodAtomicEnterEventGen  {
+public class AtomicNonBlockingEventGen  {
 
     protected int     threadIndex;
-    protected int     methodId;
+    protected int     bytecodePosition;
+    protected int     fieldId;
     protected int     methodCounter;
-    protected byte     hasCallback;
+    protected int     methodId;
+    protected int     operation;
+    protected long     objectHashCode;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
+    protected int     atomicMethodId;
 
 @Override
 public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    MethodAtomicEnterEventGen that = (MethodAtomicEnterEventGen) o;
+    AtomicNonBlockingEventGen that = (AtomicNonBlockingEventGen) o;
     if ( threadIndex != that.threadIndex) return false;
-    if ( methodId != that.methodId) return false;
+    if ( bytecodePosition != that.bytecodePosition) return false;
+    if ( fieldId != that.fieldId) return false;
     if ( methodCounter != that.methodCounter) return false;
-    if ( hasCallback != that.hasCallback) return false;
+    if ( methodId != that.methodId) return false;
+    if ( operation != that.operation) return false;
+    if ( objectHashCode != that.objectHashCode) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
+    if ( atomicMethodId != that.atomicMethodId) return false;
     return true;
 }
 
 @Override
 public String toString() {
-    return "MethodAtomicEnterEventGen{" +
+    return "AtomicNonBlockingEventGen{" +
     "threadIndex=" + threadIndex +
-    "methodId=" + methodId +
+    "bytecodePosition=" + bytecodePosition +
+    "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
-    "hasCallback=" + hasCallback +
+    "methodId=" + methodId +
+    "operation=" + operation +
+    "objectHashCode=" + objectHashCode +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
+    "atomicMethodId=" + atomicMethodId +
     '}';
 }
 
@@ -48,19 +60,23 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  26, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  49, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  18 );
+buffer.put( (byte)  20 );
      buffer.putInt( threadIndex ); 
-     buffer.putInt( methodId ); 
+     buffer.putInt( bytecodePosition ); 
+     buffer.putInt( fieldId ); 
      buffer.putInt( methodCounter ); 
-     buffer.put( hasCallback ); 
+     buffer.putInt( methodId ); 
+     buffer.putInt( operation ); 
+      buffer.putLong( objectHashCode );  
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 
+     buffer.putInt( atomicMethodId ); 
 }
 
 
