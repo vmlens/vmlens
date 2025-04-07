@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl;
 
-import com.anarsoft.trace.agent.preanalyzed.builder.CallbackInNonBlockingMethod;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.ClassType;
@@ -19,7 +19,7 @@ public class PreAnalyzedSpecificMethodsTest {
         ClassTransformerListBuilder classBuilder = mock(ClassTransformerListBuilder.class);
 
         FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder = mock(FactoryCollectionPreAnalyzedFactoryBuilder.class);
-        when(classBuilder.createPreAnalyzedSpecial()).thenReturn(methodBuilder);
+        when(classBuilder.createTraceNoMethodCall()).thenReturn(methodBuilder);
 
         PreAnalyzedMethod[] methods = new PreAnalyzedMethod[1];
         methods[0] = new PreAnalyzedMethod("start", "()V", ThreadStart.SINGLETON, new CallbackInNonBlockingMethod[0]);

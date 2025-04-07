@@ -3,12 +3,15 @@ package com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl;
 import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.ClassType;
-import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
 
 /**
  *
  * Used for Thread and ReentrantReadWriteLock and ReentrantLock
- * e.g. classes where we are only interested in the method calls not potent
+ * e.g. classes where we are only interested in the method calls not calls
+ * inside the method
+ * examples:
+ *    Thread.join
+ *    lock.enter
  *
  */
 
@@ -21,7 +24,7 @@ public class PreAnalyzedSpecificMethods extends AbstractPreAnalyzed {
 
     @Override
     protected FactoryCollectionPreAnalyzedFactoryBuilder create(ClassTransformerListBuilder classBuilder) {
-        FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder = classBuilder.createPreAnalyzedSpecial();
+        FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder = classBuilder.createTraceNoMethodCall();
         methodBuilder.noOpWhenMethodNotFound();
         return methodBuilder;
     }

@@ -6,8 +6,8 @@ import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadStart;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_WRITE_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.*;
-import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.READ_LOCK;
-import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.WRITE_LOCK;
+import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
+import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.NonBlockingMethod.*;
 
 public class MethodTypeCollection {
@@ -52,10 +52,10 @@ public class MethodTypeCollection {
         }
 
         // MethodWithLock
-        if(methodType == READ_LOCK) {
+        if(methodType == METHOD_WITH_READ_LOCK) {
             return 10;
         }
-        if(methodType == WRITE_LOCK) {
+        if(methodType == METHOD_WITH_WRITE_LOCK) {
             return 11;
         }
 
@@ -111,10 +111,10 @@ public class MethodTypeCollection {
 
         // MethodWithLock
         if(id == 10) {
-            return READ_LOCK;
+            return METHOD_WITH_READ_LOCK;
         }
         if(id == 11) {
-            return WRITE_LOCK;
+            return METHOD_WITH_WRITE_LOCK;
         }
 
         // NonBlockingMethod

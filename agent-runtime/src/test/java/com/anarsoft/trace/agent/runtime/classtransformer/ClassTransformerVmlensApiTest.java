@@ -14,7 +14,7 @@ public class ClassTransformerVmlensApiTest {
     @Test
     public void allInterleavings() throws IOException {
         // Given
-        RunTestClassTransformer runTestClassTransformer = new RunTestClassTransformer();
+        RunTestClassTransformer runTestClassTransformer = RunTestClassTransformer.createFromLoaded();
 
         // When and Then
         runTestClassTransformer.runTest("com.vmlens.api.AllInterleavings", "/allInterleavings.txt");
@@ -23,7 +23,7 @@ public class ClassTransformerVmlensApiTest {
     @Test
     public void allInterleavingsBuilder() throws IOException {
         // Given
-        RunTestClassTransformer runTestClassTransformer = new RunTestClassTransformer();
+        RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
 
         // When
         TransformerStrategy strategy = runTestClassTransformer.getStrategy("com.vmlens.api.AllInterleavingsBuilder");

@@ -33,7 +33,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
 
-            TransformerStrategy strategy = new RunTestClassTransformer().getStrategy(name);
+            TransformerStrategy strategy =  RunTestClassTransformer.createFromLoaded().getStrategy(name);
 
             TransformerContext transformerContext = new TransformerContext(targetArray, name);
 

@@ -1,14 +1,13 @@
 package com.anarsoft.trace.agent.preanalyzed.builder;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
 
 public interface ClassTransformerListBuilder {
 
-    FactoryCollectionPreAnalyzedFactoryBuilder createPreAnalyzedSpecial();
+    FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall();
 
-    FactoryCollectionPreAnalyzedFactoryBuilder createPreAnalyzedAtomicNonBlocking();
+    FactoryCollectionPreAnalyzedFactoryBuilder createTraceMethodCallWithObject();
 
-    FactoryCollectionPreAnalyzedFactoryBuilder createPreAnalyzedAtomicReadWriteLock();
 
 
     void addPreAnalyzedEquals(String name, FactoryCollectionPreAnalyzedFactory factoryCollectionPreAnalyzedBuilder);

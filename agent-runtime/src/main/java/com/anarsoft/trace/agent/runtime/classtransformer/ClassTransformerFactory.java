@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionFactory;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import org.objectweb.asm.ClassVisitor;
 

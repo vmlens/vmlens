@@ -1,6 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
 import com.anarsoft.trace.agent.description.ClassDescription;
+import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
 import com.anarsoft.trace.agent.runtime.LoadClassArray;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.*;
 import com.anarsoft.trace.agent.runtime.classtransformer.logging.ClassVisitorForLogging;
@@ -19,22 +20,48 @@ import java.io.StringWriter;
 
 public class RunTestClassTransformer {
 
-    private final MethodRepositoryImpl methodRepositoryForAnalyze = new MethodRepositoryImpl();
-    private final FieldRepositoryImpl fieldRepositoryForAnalyze = new FieldRepositoryImpl();
+    private final ClassFilterAndTransformerStrategyCollection collection;
 
-    public TransformerStrategy getStrategy(String className) throws IOException {
+    private final MethodRepositoryImpl methodRepositoryForAnalyze;
+
+
+    public RunTestClassTransformer(ClassFilterAndTransformerStrategyCollection collection,
+                                   MethodRepositoryImpl methodRepositoryForAnalyze) {
+        this.collection = collection;
+        this.methodRepositoryForAnalyze = methodRepositoryForAnalyze;
+    }
+
+    public static RunTestClassTransformer create(TLinkedList<TLinkableWrapper<PackageOrClass>> preAnalyzed)  {
+        MethodRepositoryImpl methodRepositoryForAnalyze = new MethodRepositoryImpl();
+        FieldRepositoryImpl fieldRepositoryForAnalyze = new FieldRepositoryImpl();
+
         TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
         TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
 
         WriteClassDescriptionAndWarningDuringStartup writeClassDescription =
                 new WriteClassDescriptionAndWarningDuringStartup(classAnalyzedEventList, infoMessageEventList);
+
+
         ClassFilterAndTransformerStrategyCollectionFactory factory =
                 new ClassFilterAndTransformerStrategyCollectionFactory(methodRepositoryForAnalyze,
                         fieldRepositoryForAnalyze,
                         writeClassDescription,
-                        new LoadPreAnalyzed().loadFromClasspath());
+                        preAnalyzed);
 
         ClassFilterAndTransformerStrategyCollection collection = factory.create();
+        return new RunTestClassTransformer(collection,methodRepositoryForAnalyze);
+
+    }
+
+
+    public static RunTestClassTransformer createFromLoaded() throws IOException {
+       return create(new LoadPreAnalyzed().loadFromClasspath());
+    }
+
+
+    public TransformerStrategy getStrategy(String className)  {
+
+
         String normalizedName = className.replace('.', '/');
         return collection.get(normalizedName);
     }
@@ -59,9 +86,6 @@ public class RunTestClassTransformer {
         return methodRepositoryForAnalyze;
     }
 
-    public FieldRepositoryImpl fieldRepositoryForAnalyze() {
-        return fieldRepositoryForAnalyze;
-    }
 
     protected String calculateFileName(String name) {
         String fileName = "/" + name.replace('.', '/') + ".class";

@@ -16,7 +16,7 @@ public class ClassTransformerAllTest {
     @Test
     public void methodCall() throws IOException {
         // Given
-        RunTestClassTransformer runTestClassTransformer = new RunTestClassTransformer();
+        RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
 
         // When
         runTestClassTransformer.runTest("com.vmlens.test.guineapig.MethodCall", "/methodCall.txt");

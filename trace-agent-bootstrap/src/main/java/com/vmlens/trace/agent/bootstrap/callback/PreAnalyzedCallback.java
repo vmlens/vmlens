@@ -15,6 +15,10 @@ public class PreAnalyzedCallback {
         preAnalyzedCallbackImpl.beforeMethodCall(inMethodId, position, calledMethodId);
     }
 
+    public static void beforeMethodCallInNonBlocking(Object object, int inMethodId, int position, int calledMethodId) {
+        preAnalyzedCallbackImpl.beforeMethodCallInNonBlocking(object, inMethodId, position, calledMethodId);
+    }
+
     public static void afterMethodCall(int inMethodId, int position, int calledMethodId) {
         preAnalyzedCallbackImpl.afterMethodCall(inMethodId, position, calledMethodId);
     }
@@ -24,6 +28,10 @@ public class PreAnalyzedCallback {
     }
 
     public static void methodExit(Object object, int methodId) {
+        preAnalyzedCallbackImpl.methodExit(object, methodId);
+    }
+
+    public static void methodExitObjectReturn(Object returnValue, Object object, int methodId) {
         preAnalyzedCallbackImpl.methodExit(object, methodId);
     }
 

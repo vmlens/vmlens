@@ -12,6 +12,6 @@ public class PreAnalyzedAtomicNonBlocking extends AbstractPreAnalyzed {
 
     @Override
     protected FactoryCollectionPreAnalyzedFactoryBuilder create(ClassTransformerListBuilder classBuilder) {
-        return classBuilder.createPreAnalyzedAtomicNonBlocking();
+        return classBuilder.createTraceMethodCallWithObject();
     }
 }

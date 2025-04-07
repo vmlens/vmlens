@@ -108,9 +108,15 @@ public class MethodEnterExitTransform extends MethodVisitor {
             case FRETURN:
             case LRETURN:
             case DRETURN:
-            case ARETURN:
             case ATHROW:
                 createMethodExitCall();
+                break;
+            case ARETURN:
+                if(methodCallbackFactory.supportsObjectReturn()) {
+                    createMethodExitWithObjectReturnCall();
+                } else {
+                    createMethodExitCall();
+                }
                 break;
             default:
                 break;
@@ -118,6 +124,21 @@ public class MethodEnterExitTransform extends MethodVisitor {
         }
         super.visitInsn(inst);
     }
+
+    private void createMethodExitWithObjectReturnCall()  {
+        if (isStatic) {
+            super.visitLdcInsn(Type.getType("L" + className + ";"));
+            methodCallbackFactory.methodExit(inMethodId);
+        } else {
+            // we currently only need the return value in
+            // not static methods
+            super.visitInsn(DUP);
+            super.visitVarInsn(ALOAD, 0);
+            methodCallbackFactory.methodExitWithObjectReturn(inMethodId);
+        }
+
+    }
+
 
     private void createMethodExitCall() {
         if (isStatic) {

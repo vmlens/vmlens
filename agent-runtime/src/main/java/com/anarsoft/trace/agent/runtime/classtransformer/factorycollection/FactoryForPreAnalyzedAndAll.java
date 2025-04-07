@@ -36,13 +36,21 @@ public class FactoryForPreAnalyzedAndAll {
         return result;
     }
 
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> addToTransform(NameAndDescriptor nameAndDescriptor,
+    public void addToTransform(NameAndDescriptor nameAndDescriptor,
                                                                               TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result) {
         TryCatchBlockCounter tryCatchBlockCounter = nameAndDescriptorToTryCatchBlockCounter.get(nameAndDescriptor);
         result.add(wrap(new MethodEnterExitTransformFactory(tryCatchBlockCounter.tryCatchBlockCount(), factoryFactory)));
-        // must be added last, since it applies to method calls
+    }
+
+
+    /**
+     *
+     * must be added last, since it applies to method calls
+     *
+     * @param result
+     */
+    public void addMethodCall(TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result) {
         result.add(wrap(AddMethodCall.factory(methodCallIdMap, factoryFactory)));
-        return result;
     }
 
 }

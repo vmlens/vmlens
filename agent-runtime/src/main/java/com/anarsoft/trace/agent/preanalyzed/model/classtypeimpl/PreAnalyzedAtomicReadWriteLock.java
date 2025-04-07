@@ -12,6 +12,6 @@ public class PreAnalyzedAtomicReadWriteLock extends AbstractPreAnalyzed {
 
     @Override
     protected FactoryCollectionPreAnalyzedFactoryBuilder create(ClassTransformerListBuilder classBuilder) {
-        return classBuilder.createPreAnalyzedAtomicReadWriteLock();
+        return classBuilder.createTraceNoMethodCall();
     }
 }

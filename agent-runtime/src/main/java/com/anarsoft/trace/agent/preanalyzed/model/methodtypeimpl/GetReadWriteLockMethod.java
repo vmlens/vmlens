@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl;
 
-import com.anarsoft.trace.agent.preanalyzed.builder.CallbackInNonBlockingMethod;
+import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.trace.agent.bootstrap.lock.LockTypes;
 import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;

@@ -12,6 +12,11 @@ public class MethodCallbackFactoryAll extends MethodCallbackFactory {
         super(methodVisitor);
     }
 
+    @Override
+    public boolean supportsObjectReturn() {
+        return false;
+    }
+
     protected void methodCall(int id, String methodName, String methodDescriptor) {
         methodVisitor.visitLdcInsn(id);
         methodVisitor.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS,

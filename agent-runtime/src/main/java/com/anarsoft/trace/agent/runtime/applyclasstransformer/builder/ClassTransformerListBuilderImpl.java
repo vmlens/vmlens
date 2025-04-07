@@ -3,7 +3,7 @@ package com.anarsoft.trace.agent.runtime.applyclasstransformer.builder;
 import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.*;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
@@ -24,18 +24,13 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     }
 
     @Override
-    public FactoryCollectionPreAnalyzedFactoryBuilder createPreAnalyzedSpecial() {
-        return transformerStrategyFactory.createMethodBuilder();
+    public FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall() {
+        return transformerStrategyFactory.createTraceNoMethodCall();
     }
 
     @Override
-    public FactoryCollectionPreAnalyzedFactoryBuilder createPreAnalyzedAtomicNonBlocking() {
-        return null;
-    }
-
-    @Override
-    public FactoryCollectionPreAnalyzedFactoryBuilder createPreAnalyzedAtomicReadWriteLock() {
-        return null;
+    public FactoryCollectionPreAnalyzedFactoryBuilder createTraceMethodCallWithObject() {
+        return transformerStrategyFactory.createTraceMethodCallWithObject();
     }
 
     @Override

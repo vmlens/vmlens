@@ -49,6 +49,7 @@ public class FactoryCollectionAll implements FactoryCollection {
         result.add(wrap(AddFieldAccessCall.factory(fieldIdMap)));
         result.add(wrap(AddArrayAccessAccessCall.factory()));
         factoryForBoth.addToTransform(nameAndDescriptor, result);
+        factoryForBoth.addMethodCall(result);
         return result;
     }
 

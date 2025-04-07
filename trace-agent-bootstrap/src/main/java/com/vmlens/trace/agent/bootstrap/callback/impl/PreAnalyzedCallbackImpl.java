@@ -21,6 +21,10 @@ public class PreAnalyzedCallbackImpl {
         methodRepository.strategyPreAnalyzed(inMethodId).beforeMethodCall(beforeAfterContext);
     }
 
+    public void beforeMethodCallInNonBlocking(Object object, int inMethodId, int position, int calledMethodId) {
+
+    }
+
     public void afterMethodCall(int inMethodId, int position, int calledMethodId) {
         BeforeAfterContext beforeAfterContext = new BeforeAfterContext();
         methodRepository.strategyPreAnalyzed(inMethodId).afterMethodCall(beforeAfterContext);

@@ -4,9 +4,11 @@ import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzed
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategyNoOp;
 import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyForClassTransformer;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionAllFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionAllFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.NoMethodCall;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.WithObjectMethodCall;
 import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
@@ -47,7 +49,12 @@ public class TransformerStrategyFactory {
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
-    public FactoryCollectionPreAnalyzedFactoryBuilder createMethodBuilder() {
-        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze);
+    public FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall() {
+        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new NoMethodCall());
     }
+
+    public FactoryCollectionPreAnalyzedFactoryBuilder createTraceMethodCallWithObject() {
+        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new WithObjectMethodCall());
+    }
+
 }
