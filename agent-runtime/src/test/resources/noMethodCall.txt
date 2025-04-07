@@ -1,0 +1,23 @@
+class:com/vmlens/test/guineapig/PreAnalyzedGuineaPig
+method:<init>()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  RETURN
+method:method()Ljava/lang/Object;
+  ALOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKESPECIAL  com/vmlens/test/guineapig/PreAnalyzedGuineaPig.calledMethod:()V
+  load:Hallo
+  DUP
+  ALOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExitObjectReturn:(Ljava/lang/Object;Ljava/lang/Object;I)V
+  ARETURN
+  ALOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:calledMethod()V
+  RETURN
