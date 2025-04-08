@@ -45,11 +45,13 @@ public class MethodWithLockStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Nothing to do
+        // Fixme same as before at all -> problem multiple
+        // method calls requires stack?  e.g. how to store the method id and position?
     }
 
     @Override
     public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Nothing to do
+        // Fixme same as before at all -> problem multiple
+        // method calls requires stack? -> e.g. how to store the method id and position?
     }
 }
