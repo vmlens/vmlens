@@ -14,17 +14,15 @@ import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;
 
 public class GetReadWriteLockMethod  extends AbstractMethodType  {
 
-    public static final GetReadWriteLockMethod GET_READ_LOCK = new GetReadWriteLockMethod(LockTypes.READ_LOCK);
-    public static final GetReadWriteLockMethod GET_WRITE_LOCK = new GetReadWriteLockMethod(LockTypes.WRITE_LOCK);
+    public static final GetReadWriteLockMethod GET_READ_WRITE_LOCK = new GetReadWriteLockMethod();
 
-    private final ReadOrWriteLock lockType;
 
-    private GetReadWriteLockMethod(ReadOrWriteLock lockType) {
-        this.lockType = lockType;
+    private GetReadWriteLockMethod() {
+
     }
 
     @Override
     public void add(String name, String desc, CallbackInNonBlockingMethod[] callbackInNonBlockingMethods, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodBuilder.getReadWriteLock(name,desc,lockType);
+        methodBuilder.getReadWriteLock(name,desc);
     }
 }

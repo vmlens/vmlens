@@ -1,11 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
+
 /**
  * All atomic events must implement this interface
  */
 
 public interface WithInMethodIdAndPosition {
 
-    void setInMethodIdAndPosition(int inMethodId, int position);
+    void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap);
 
 }

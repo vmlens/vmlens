@@ -14,7 +14,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_LOCK;
+
+import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_WRITE_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.EXIT_REENTRANT_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.NonBlockingMethod.NON_BLOCKING_WRITE;
@@ -48,7 +49,7 @@ public class PreAnalyzedIntTest {
 
     @Test
     public void getReadWriteLock() throws IOException {
-        PreAnalyzedMethodBuilder preAnalyzedMethodBuilder = new PreAnalyzedMethodBuilder(GET_READ_LOCK);
+        PreAnalyzedMethodBuilder preAnalyzedMethodBuilder = new PreAnalyzedMethodBuilder(GET_READ_WRITE_LOCK);
         runTest(PreAnalyzedSpecificMethods.SINGLETON, preAnalyzedMethodBuilder.build(), "/noMethodCall.txt");
     }
 

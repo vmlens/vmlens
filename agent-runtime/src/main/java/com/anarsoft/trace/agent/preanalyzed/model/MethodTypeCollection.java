@@ -3,8 +3,7 @@ package com.anarsoft.trace.agent.preanalyzed.model;
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadJoin;
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadStart;
 
-import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_LOCK;
-import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_WRITE_LOCK;
+import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_WRITE_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.*;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK;
@@ -24,50 +23,47 @@ public class MethodTypeCollection {
         }
 
         // GetReadWriteLockMethod
-        if(methodType == GET_READ_LOCK) {
+        if(methodType == GET_READ_WRITE_LOCK) {
             return 2;
-        }
-        if(methodType == GET_WRITE_LOCK) {
-            return 3;
         }
 
         // LockMethod
         if(methodType == ENTER_REENTRANT_LOCK) {
-            return 4;
+            return 3;
         }
         if(methodType == EXIT_REENTRANT_LOCK) {
-            return 5;
+            return 4;
         }
         if(methodType == ENTER_READ_LOCK) {
-            return 6;
+            return 5;
         }
         if(methodType == EXIT_READ_LOCK) {
-            return 7;
+            return 6;
         }
         if(methodType == ENTER_WRITE_LOCK) {
-            return 8;
+            return 7;
         }
         if(methodType == EXIT_WRITE_LOCK) {
-            return 9;
+            return 8;
         }
 
         // MethodWithLock
         if(methodType == METHOD_WITH_READ_LOCK) {
-            return 10;
+            return 9;
         }
         if(methodType == METHOD_WITH_WRITE_LOCK) {
-            return 11;
+            return 10;
         }
 
         // NonBlockingMethod
         if(methodType == NON_BLOCKING_READ) {
-            return 12;
+            return 11;
         }
         if(methodType == NON_BLOCKING_WRITE) {
-            return 13;
+            return 12;
         }
         if(methodType == NON_BLOCKING_READ_WRITE) {
-            return 14;
+            return 13;
         }
 
         throw new RuntimeException("unknown " + methodType.getClass());
@@ -83,48 +79,45 @@ public class MethodTypeCollection {
 
         // GetReadWriteLockMethod
         if(id == 2) {
-            return GET_READ_LOCK;
-        }
-        if(id == 3) {
-            return GET_WRITE_LOCK;
+            return GET_READ_WRITE_LOCK;
         }
 
         // LockMethod
-        if(id == 4) {
+        if(id == 3) {
             return ENTER_REENTRANT_LOCK;
         }
-        if(id == 5) {
+        if(id == 4) {
             return EXIT_REENTRANT_LOCK;
         }
-        if(id == 6) {
+        if(id == 5) {
             return ENTER_READ_LOCK;
         }
-        if(id == 7) {
+        if(id == 6) {
             return EXIT_READ_LOCK;
         }
-        if(id == 8) {
+        if(id == 7) {
             return ENTER_WRITE_LOCK;
         }
-        if(id == 9) {
+        if(id == 8) {
             return EXIT_WRITE_LOCK;
         }
 
         // MethodWithLock
-        if(id == 10) {
+        if(id == 9) {
             return METHOD_WITH_READ_LOCK;
         }
-        if(id == 11) {
+        if(id == 10) {
             return METHOD_WITH_WRITE_LOCK;
         }
 
         // NonBlockingMethod
-        if(id == 12) {
+        if(id == 11) {
             return NON_BLOCKING_READ;
         }
-        if(id == 13) {
+        if(id == 12) {
             return NON_BLOCKING_WRITE;
         }
-        if(id == 14) {
+        if(id == 13) {
             return NON_BLOCKING_READ_WRITE;
         }
 

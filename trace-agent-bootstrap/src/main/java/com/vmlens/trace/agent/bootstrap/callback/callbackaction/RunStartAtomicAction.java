@@ -31,7 +31,7 @@ public class RunStartAtomicAction<EVENT extends RuntimeEvent & WithInMethodIdAnd
 
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
-        EVENT event = atomicOperation.applySetFields();
+        EVENT event = atomicOperation.applySetFields(threadLocalDataWhenInTest);
         threadLocalDataWhenInTest.setExecuteAfterMethodCall(new ExecuteRunEndAtomicAction<>(event));
         threadLocalDataWhenInTest.runAdapter().startAtomicOperation(threadLocalDataWhenInTest,queueIn);
     }

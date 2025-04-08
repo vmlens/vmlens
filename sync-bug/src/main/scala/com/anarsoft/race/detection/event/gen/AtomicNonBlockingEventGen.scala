@@ -12,7 +12,6 @@ import com.anarsoft.race.detection.event.interleave._;
 class AtomicNonBlockingEventGen (
    val threadIndex  : Int  
  ,  val bytecodePosition  : Int  
- ,  val fieldId  : Int  
  ,  val methodCounter  : Int  
  ,  val methodId  : Int  
  ,  val operation  : Int  
@@ -27,7 +26,6 @@ override def toString() = {
   var text =  "AtomicNonBlockingEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", bytecodePosition:" +  bytecodePosition 
-  text = text + ", fieldId:" +  fieldId 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", methodId:" +  methodId 
   text = text + ", operation:" +  operation 
@@ -49,11 +47,6 @@ override def equals(other: Any) = {
              }
              else
              if( bytecodePosition != that.bytecodePosition )
-             {
-               false;
-             }
-             else
-             if( fieldId != that.fieldId )
              {
                false;
              }
@@ -112,8 +105,6 @@ object  AtomicNonBlockingEventGen
    {
      val result = new AtomicNonBlockingEventGen (
           
-                data.getInt()
-          ,
                 data.getInt()
           ,
                 data.getInt()

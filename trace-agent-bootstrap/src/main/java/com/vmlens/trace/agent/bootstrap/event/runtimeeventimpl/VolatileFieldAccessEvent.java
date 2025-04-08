@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFacto
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 
 public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implements
@@ -59,7 +60,7 @@ public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implem
 
 
     @Override
-    public void setInMethodIdAndPosition(int inMethodId, int position) {
+    public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
         // Nothing To do
     }
 }

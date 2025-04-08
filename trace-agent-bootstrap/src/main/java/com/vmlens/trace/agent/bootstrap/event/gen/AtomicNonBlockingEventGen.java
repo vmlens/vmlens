@@ -9,7 +9,6 @@ public class AtomicNonBlockingEventGen  {
 
     protected int     threadIndex;
     protected int     bytecodePosition;
-    protected int     fieldId;
     protected int     methodCounter;
     protected int     methodId;
     protected int     operation;
@@ -27,7 +26,6 @@ public boolean equals(Object o) {
     AtomicNonBlockingEventGen that = (AtomicNonBlockingEventGen) o;
     if ( threadIndex != that.threadIndex) return false;
     if ( bytecodePosition != that.bytecodePosition) return false;
-    if ( fieldId != that.fieldId) return false;
     if ( methodCounter != that.methodCounter) return false;
     if ( methodId != that.methodId) return false;
     if ( operation != that.operation) return false;
@@ -44,7 +42,6 @@ public String toString() {
     return "AtomicNonBlockingEventGen{" +
     "threadIndex=" + threadIndex +
     "bytecodePosition=" + bytecodePosition +
-    "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
     "methodId=" + methodId +
     "operation=" + operation +
@@ -60,7 +57,7 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  49, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  45, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
@@ -68,7 +65,6 @@ public void serialize(ByteBuffer buffer) throws Exception {
 buffer.put( (byte)  20 );
      buffer.putInt( threadIndex ); 
      buffer.putInt( bytecodePosition ); 
-     buffer.putInt( fieldId ); 
      buffer.putInt( methodCounter ); 
      buffer.putInt( methodId ); 
      buffer.putInt( operation ); 

@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.BeforeAfterContext;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.EnterExitContext;
@@ -9,11 +10,14 @@ public class PreAnalyzedCallbackImpl {
 
     private final MethodRepositoryForCallback methodRepository;
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
+    private final ReadWriteLockMap readWriteLockMap;
 
     public PreAnalyzedCallbackImpl(MethodRepositoryForCallback methodRepository,
-                                   ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
+                                   ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter,
+                                   ReadWriteLockMap readWriteLockMap) {
         this.methodRepository = methodRepository;
         this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
+        this.readWriteLockMap = readWriteLockMap;
     }
 
     public void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
@@ -31,12 +35,18 @@ public class PreAnalyzedCallbackImpl {
     }
 
     public void methodEnter(Object object, int methodId) {
-        EnterExitContext enterExitContext = new EnterExitContext(object, methodId, threadLocalWhenInTestAdapter);
+        EnterExitContext enterExitContext = new EnterExitContext(object, methodId, threadLocalWhenInTestAdapter,readWriteLockMap);
         methodRepository.strategyPreAnalyzed(methodId).methodEnter(enterExitContext);
     }
 
     public void methodExit(Object object, int methodId) {
-        EnterExitContext enterExitContext = new EnterExitContext(object, methodId, threadLocalWhenInTestAdapter);
+        EnterExitContext enterExitContext = new EnterExitContext(object, methodId, threadLocalWhenInTestAdapter,readWriteLockMap);
+        methodRepository.strategyPreAnalyzed(methodId).methodExit(enterExitContext);
+    }
+
+    public void methodExitObjectReturn(Object returnValue,Object object, int methodId) {
+        EnterExitContext enterExitContext = new EnterExitContext(object, methodId, threadLocalWhenInTestAdapter,readWriteLockMap);
+        enterExitContext.setReturnValue(returnValue);
         methodRepository.strategyPreAnalyzed(methodId).methodExit(enterExitContext);
     }
 

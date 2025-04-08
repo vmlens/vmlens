@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.OnAfterMethodCal
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetInMethodIdAndPositionAtThreadLocal;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
@@ -15,15 +16,17 @@ public class MethodCallbackImpl {
     private final MethodRepositoryForCallback methodIdToStrategy;
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
     private final CheckIsThreadRun checkIsThreadRun;
+    private final ReadWriteLockMap readWriteLockMap;
 
     public MethodCallbackImpl(ParallelizeFacade parallelizeFacade,
                               MethodRepositoryForCallback methodIdToStrategy,
                               ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter,
-                              CheckIsThreadRun checkIsThreadRun) {
+                              CheckIsThreadRun checkIsThreadRun, ReadWriteLockMap readWriteLockMap) {
         this.parallelizeFacade = parallelizeFacade;
         this.methodIdToStrategy = methodIdToStrategy;
         this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
         this.checkIsThreadRun = checkIsThreadRun;
+        this.readWriteLockMap = readWriteLockMap;
     }
 
     public void beforeMethodCall(int inMethodId, int position) {
@@ -32,7 +35,7 @@ public class MethodCallbackImpl {
     }
 
     public void afterMethodCall(int inMethodId, int position) {
-        threadLocalWhenInTestAdapter.process(new OnAfterMethodCall(inMethodId, position));
+        threadLocalWhenInTestAdapter.process(new OnAfterMethodCall(inMethodId, position,readWriteLockMap));
     }
 
     public void methodEnter(Object object, int methodId) {

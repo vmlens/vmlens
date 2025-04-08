@@ -4,17 +4,20 @@ import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.OnAfterMethodCall;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForCallback;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class FieldCallbackImpl {
 
     private final FieldRepositoryForCallback fieldIdToStrategy;
-
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
+    private final ReadWriteLockMap readWriteLockMap;
 
     public FieldCallbackImpl(FieldRepositoryForCallback fieldIdToStrategy,
-                             ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
+                             ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter,
+                             ReadWriteLockMap readWriteLockMap) {
         this.fieldIdToStrategy = fieldIdToStrategy;
         this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
+        this.readWriteLockMap = readWriteLockMap;
     }
 
     public void beforeFieldRead(Object fromObject, int fieldId, int position, int inMethodId) {
@@ -42,6 +45,6 @@ public class FieldCallbackImpl {
     }
 
     public void afterFieldAccess() {
-        threadLocalWhenInTestAdapter.process(new OnAfterMethodCall(-1, -1));
+        threadLocalWhenInTestAdapter.process(new OnAfterMethodCall(-1, -1,readWriteLockMap));
     }
 }

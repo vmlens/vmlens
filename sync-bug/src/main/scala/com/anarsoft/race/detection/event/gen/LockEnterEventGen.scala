@@ -14,6 +14,8 @@ class LockEnterEventGen (
  ,  val methodCounter  : Int  
  ,  val objectHashCode  : Long  
  ,  val lockType  : Int  
+ ,  val bytecodePosition  : Int  
+ ,  val methodId  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
@@ -25,6 +27,8 @@ override def toString() = {
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", objectHashCode:" +  objectHashCode 
   text = text + ", lockType:" +  lockType 
+  text = text + ", bytecodePosition:" +  bytecodePosition 
+  text = text + ", methodId:" +  methodId 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -51,6 +55,16 @@ override def equals(other: Any) = {
              }
              else
              if( lockType != that.lockType )
+             {
+               false;
+             }
+             else
+             if( bytecodePosition != that.bytecodePosition )
+             {
+               false;
+             }
+             else
+             if( methodId != that.methodId )
              {
                false;
              }
@@ -89,6 +103,10 @@ object  LockEnterEventGen
                 data.getInt()
           ,
                 data.getLong()
+          ,
+                data.getInt()
+          ,
+                data.getInt()
           ,
                 data.getInt()
           ,

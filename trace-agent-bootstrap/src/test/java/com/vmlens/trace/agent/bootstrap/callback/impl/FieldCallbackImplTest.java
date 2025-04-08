@@ -21,7 +21,7 @@ public class FieldCallbackImplTest {
         FieldStrategy fieldStrategy = mock(FieldStrategy.class);
         when(fieldIdToStrategy.get(GIVEN_FIELD_ID)).thenReturn(fieldStrategy);
 
-        FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldIdToStrategy, null);
+        FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldIdToStrategy, null, null);
 
         // When
         fieldCallbackImpl.beforeFieldRead(GIVEN_OBJECT, GIVEN_FIELD_ID, GIVEN_POSITION, GIVEN_IN_METHOD_ID);

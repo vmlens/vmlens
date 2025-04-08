@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
@@ -9,8 +10,11 @@ import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
 public class MethodCallback {
 
     private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(
-            ParallelizeFacade.parallelize(), MethodRepositorySingleton.INSTANCE,
-            new ThreadLocalWhenInTestAdapterImpl(), new CheckIsThreadRun());
+            ParallelizeFacade.parallelize(),
+            MethodRepositorySingleton.INSTANCE,
+            new ThreadLocalWhenInTestAdapterImpl(),
+            new CheckIsThreadRun(),
+            ReadWriteLockMap.INSTANCE);
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
         // calledMethodId is only used in PreAnalyzedCallback

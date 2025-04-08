@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodExitEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorExitEvent;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class ExecuteSynchronizedMethodExit implements ExecuteAfterMethodCall {
 
@@ -19,7 +20,10 @@ public class ExecuteSynchronizedMethodExit implements ExecuteAfterMethodCall {
     }
 
     @Override
-    public void execute(int inMethodId, int position, ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+    public void execute(int inMethodId, int position,
+                        ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                        QueueIn queueIn,
+                        ReadWriteLockMap readWriteLockMap) {
         monitorExit.execute(threadLocalDataWhenInTest,queueIn);
         methodExit.execute(threadLocalDataWhenInTest,queueIn);
     }

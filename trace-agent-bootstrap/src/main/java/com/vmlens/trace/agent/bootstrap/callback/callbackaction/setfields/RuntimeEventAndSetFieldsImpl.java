@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 
 public class RuntimeEventAndSetFieldsImpl<EVENT extends RuntimeEvent> implements RuntimeEventAndSetFields {
@@ -12,8 +13,8 @@ public class RuntimeEventAndSetFieldsImpl<EVENT extends RuntimeEvent> implements
         this.setFieldsStrategy = setFieldsStrategy;
     }
 
-    public EVENT applySetFields() {
-        setFieldsStrategy.setFields(runtimeEvent);
+    public EVENT applySetFields(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        setFieldsStrategy.setFields(runtimeEvent,threadLocalDataWhenInTest);
         return runtimeEvent;
     }
 

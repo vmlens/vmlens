@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;
 
 public interface FactoryCollectionPreAnalyzedFactoryBuilder {
 
-    void getReadWriteLock(String name, String desc, ReadOrWriteLock lockType);
+    void getReadWriteLock(String name, String desc);
 
     void addMethodWithLock(String name, String desc, ReadOrWriteLock lockType);
 

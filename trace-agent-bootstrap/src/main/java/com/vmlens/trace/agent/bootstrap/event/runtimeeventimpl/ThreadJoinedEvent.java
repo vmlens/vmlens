@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActio
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadJoin;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class ThreadJoinedEvent extends ThreadJoinedEventGen implements InterleaveActionFactory,
         WithInMethodIdAndPosition {
@@ -41,7 +42,7 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements Interleav
     }
 
     @Override
-    public void setInMethodIdAndPosition(int inMethodId, int position) {
+    public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
         this.methodId = inMethodId;
         this.bytecodePosition = position;
     }

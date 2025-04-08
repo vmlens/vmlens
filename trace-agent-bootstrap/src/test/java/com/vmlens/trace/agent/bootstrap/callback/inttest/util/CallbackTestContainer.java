@@ -10,6 +10,7 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryImpl;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadForParallelizeMock;
@@ -36,8 +37,8 @@ public class CallbackTestContainer {
     private final PreAnalyzedCallbackImpl preAnalyzedCallbackImpl;
     private final MethodRepositoryImpl methodRepository;
     private final FieldRepositoryImpl fieldIdToStrategy;
-
     private final FieldCallbackImpl fieldCallbackImpl;
+    private final ReadWriteLockMap readWriteLockMap;
 
     private CallbackTestContainer(List<SerializableEvent> eventList,
                                   RunForCallbackMock run,
@@ -45,7 +46,8 @@ public class CallbackTestContainer {
                                   PreAnalyzedCallbackImpl preAnalyzedCallbackImpl,
                                   MethodRepositoryImpl methodRepository,
                                   FieldRepositoryImpl fieldIdToStrategy,
-                                  FieldCallbackImpl fieldCallbackImpl) {
+                                  FieldCallbackImpl fieldCallbackImpl,
+                                  ReadWriteLockMap readWriteLockMap) {
         this.eventList = eventList;
         this.run = run;
         this.methodCallbackImpl = methodCallbackImpl;
@@ -53,6 +55,7 @@ public class CallbackTestContainer {
         this.methodRepository = methodRepository;
         this.fieldIdToStrategy = fieldIdToStrategy;
         this.fieldCallbackImpl = fieldCallbackImpl;
+        this.readWriteLockMap = readWriteLockMap;
     }
 
     public static CallbackTestContainer create(boolean insideTest) {
@@ -73,20 +76,22 @@ public class CallbackTestContainer {
         CheckIsThreadRun checkIsThreadRun = mock(CheckIsThreadRun.class);
         when(checkIsThreadRun.isThreadRun()).thenReturn(true);
 
+        ReadWriteLockMap readWriteLockMap = new  ReadWriteLockMap();
+
         MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(new ParallelizeFacadePassThrough(run),
                 methodRepository,
-                threadLocalWhenInTestAdapter, checkIsThreadRun);
+                threadLocalWhenInTestAdapter, checkIsThreadRun,readWriteLockMap);
         PreAnalyzedCallbackImpl preAnalyzedCallbackImpl = new PreAnalyzedCallbackImpl(methodRepository,
-                threadLocalWhenInTestAdapter);
+                threadLocalWhenInTestAdapter,readWriteLockMap);
 
         FieldRepositoryImpl fieldRepository = new FieldRepositoryImpl();
 
 
         FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldRepository,
-                threadLocalWhenInTestAdapter);
+                threadLocalWhenInTestAdapter,readWriteLockMap);
 
         return new CallbackTestContainer(eventList, run,
-                methodCallbackImpl, preAnalyzedCallbackImpl, methodRepository, fieldRepository, fieldCallbackImpl);
+                methodCallbackImpl, preAnalyzedCallbackImpl, methodRepository, fieldRepository, fieldCallbackImpl,readWriteLockMap);
     }
 
     public static ThreadLocalWhenInTestAdapter createThreadLocalWhenInTestAdapter(ThreadLocalWhenInTest threadLocalWhenInTest,
@@ -131,5 +136,9 @@ public class CallbackTestContainer {
 
     public FieldCallbackImpl fieldCallbackImpl() {
         return fieldCallbackImpl;
+    }
+
+    public ReadWriteLockMap readWriteLockMap() {
+        return readWriteLockMap;
     }
 }
