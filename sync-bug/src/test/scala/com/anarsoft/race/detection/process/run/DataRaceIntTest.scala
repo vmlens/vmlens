@@ -14,7 +14,7 @@ import org.scalatest.matchers.should.Matchers
 import java.util
 
 
-class ProcessRunImplIntTest extends AnyFlatSpec with Matchers {
+class DataRaceIntTest extends AnyFlatSpec with Matchers {
 
   "a read and write to/from a normal field without sync actions" should "lead to a data race" in {
     // Given

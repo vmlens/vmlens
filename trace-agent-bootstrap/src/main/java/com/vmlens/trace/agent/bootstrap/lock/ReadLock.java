@@ -19,4 +19,9 @@ public class ReadLock extends ReadOrWriteLock {
         return readKey(objectHashCode);
     }
 
+    @Override
+    public int id() {
+        return id;
+    }
+
 }

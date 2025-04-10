@@ -7,8 +7,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class AddToBuildPartialOrderContextTest extends AnyFlatSpec with Matchers {
-
-
+  
   "AddToPartialOrderBuilder" should "call BuildPartialOrderContext for monitor enter after exit" in {
     // Given
     val monitorEnterMainThread = new SyncActionEventMonitorGuineaPig(true, 1, 1);
@@ -26,6 +25,5 @@ class AddToBuildPartialOrderContextTest extends AnyFlatSpec with Matchers {
     verify(partialOrderBuilderMock).addLeftBeforeRight(monitorExitMainThread, monitorEnterWorkerThread)
 
   }
-
-
+  
 }

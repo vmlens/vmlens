@@ -8,16 +8,16 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnte
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
-import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class AtomicReadWriteLockEnterEvent extends AtomicReadWriteLockEnterEventGen implements
         InterleaveActionFactory , WithInMethodIdPositionObjectHashCode {
 
-    private final LockType lockType;
+    private final LockType lockTypeClass;
 
 
-    public AtomicReadWriteLockEnterEvent(LockType lockType) {
-        this.lockType = lockType;
+    public AtomicReadWriteLockEnterEvent(LockType lockTypeClass) {
+        this.lockTypeClass = lockTypeClass;
+        this.lockType = lockTypeClass.id();
     }
 
     public void setThreadIndex(int threadIndex) {
@@ -42,7 +42,7 @@ public class AtomicReadWriteLockEnterEvent extends AtomicReadWriteLockEnterEvent
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        Lock monitor = new Lock(lockType.create(objectHashCode));
+        Lock monitor = new Lock(lockTypeClass.create(objectHashCode));
         return new LockEnterImpl(threadIndex, monitor);
     }
 

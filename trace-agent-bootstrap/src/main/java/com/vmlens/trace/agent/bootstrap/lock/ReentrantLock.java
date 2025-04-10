@@ -19,4 +19,9 @@ public class ReentrantLock implements LockType {
     public long getObjectHashCode(ReadWriteLockMap readWriteLockMap, long objectHashCode) {
        return  objectHashCode;
     }
+
+    @Override
+    public int id() {
+        return id;
+    }
 }

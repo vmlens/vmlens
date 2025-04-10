@@ -17,4 +17,9 @@ public class WriteLock extends ReadOrWriteLock {
     public LockKey create(long objectHashCode) {
         return writeKey(objectHashCode);
     }
+
+    @Override
+    public int id() {
+        return id;
+    }
 }

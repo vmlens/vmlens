@@ -1,6 +1,11 @@
 package com.anarsoft.race.detection.event.interleave
 
-trait LockEnterEvent extends LoadedInterleaveActionEvent {
-  override def addToContext(context: LoadedInterleaveActionContext): Unit = {
-  }
+import com.vmlens.report.runelementtype.{LockAccess, LockOperation, ReportLockType, RunElementType}
+
+trait LockEnterEvent extends LockEvent with WithLockEnterEvent  {
+
+  override def runElementType : RunElementType =  
+    new LockAccess(LockOperation.LOCK_ENTER, lockTypeClass().reportLockType(), objectHashCode);
+  
+  
 }

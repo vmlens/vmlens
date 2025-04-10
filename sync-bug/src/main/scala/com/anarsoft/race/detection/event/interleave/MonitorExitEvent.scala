@@ -1,6 +1,7 @@
 package com.anarsoft.race.detection.event.interleave
 
-import com.vmlens.report.runelementtype.{LockAccess, LockOperation, LockType, RunElementType}
+import com.anarsoft.race.detection.sortutil.MonitorContainer
+import com.vmlens.report.runelementtype.{LockAccess, LockOperation, ReportLockType, RunElementType}
 
 trait MonitorExitEvent extends LoadedInterleaveActionEvent with MonitorEvent {
 
@@ -17,11 +18,9 @@ trait MonitorExitEvent extends LoadedInterleaveActionEvent with MonitorEvent {
   }
 
   override def runElementType: RunElementType = {
-    new LockAccess(LockOperation.LOCK_EXIT,  LockType.MONITOR,objectHashCode);
+    new LockAccess(LockOperation.LOCK_EXIT,  ReportLockType.MONITOR,objectHashCode);
   }
 
-  override def addToContext(context: LoadedInterleaveActionContext): Unit = {
-    context.monitorEvents.add(this);
-  }
+ 
 
 }

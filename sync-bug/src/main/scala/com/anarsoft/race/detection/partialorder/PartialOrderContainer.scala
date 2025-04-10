@@ -10,6 +10,7 @@ class PartialOrderContainer(val onTestLoopAndLeftBeforeRight : OnDescriptionAndL
 
   private val allLeftThreadIndices = new HashSet[Int]();
   private val threadIndexToPartialOrderBetweenTwoThreads = new HashMap[LeftRightThreadIndex, LeftBeforeRightPerThread]();
+ 
   def foreachMaxDirectBefore(right: WithPosition, f: (WithPosition) => Unit): Unit = {
     for (leftThreadIndex <- allLeftThreadIndices) {
       if (right.threadIndex != leftThreadIndex) {

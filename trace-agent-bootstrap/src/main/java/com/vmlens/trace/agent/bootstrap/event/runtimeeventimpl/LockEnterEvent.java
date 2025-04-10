@@ -3,10 +3,8 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.LockEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
@@ -14,12 +12,13 @@ import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
 
-    private final LockType lockType;
+    private final LockType lockTypeClass;
     private Object object;
 
-    public LockEnterEvent(LockType lockType, Object object) {
-        this.lockType = lockType;
+    public LockEnterEvent(LockType lockTypeClass, Object object) {
+        this.lockTypeClass = lockTypeClass;
         this.object = object;
+        this.lockType = lockTypeClass.id();
     }
 
     public void setThreadIndex(int threadIndex) {
@@ -44,7 +43,7 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        Lock monitor = new Lock(lockType.create(objectHashCode));
+        Lock monitor = new Lock(lockTypeClass.create(objectHashCode));
         return new LockEnterImpl(threadIndex, monitor);
     }
 

@@ -14,12 +14,13 @@ public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGe
         InterleaveActionFactory,
         WithInMethodIdAndPosition {
 
-    private final LockType lockType;
+    private final LockType lockTypeClass;
     private Object object;
 
-    public AtomicReadWriteLockExitEvent(LockType lockType, Object object) {
-        this.lockType = lockType;
+    public AtomicReadWriteLockExitEvent(LockType lockTypeClass, Object object) {
+        this.lockTypeClass = lockTypeClass;
         this.object = object;
+        this.lockType = lockTypeClass.id();
     }
 
     public void setThreadIndex(int threadIndex) {
@@ -45,7 +46,7 @@ public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGe
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        Lock monitor = new Lock(lockType.create(objectHashCode));
+        Lock monitor = new Lock(lockTypeClass.create(objectHashCode));
         return new LockExit(threadIndex, monitor);
     }
 

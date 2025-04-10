@@ -1,7 +1,29 @@
 package com.anarsoft.race.detection.event.interleave
 
-trait AtomicNonBlockingEvent  extends LoadedInterleaveActionEvent {
+import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
+import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
+import com.anarsoft.race.detection.sortutil.EventWithReadWrite
+import com.vmlens.report.runelementtype.{RunElementType, VolatileAccess}
+import com.vmlens.report.runelementtype.memoryaccesskey.{AtomicMethodIdAndObjectHashcode, FieldIdAndObjectHashcode}
+
+trait AtomicNonBlockingEvent  extends EventWithReadWrite[AtomicNonBlockingEvent]
+  with SyncActionEventWithCompareType[AtomicNonBlockingEvent]
+  with WithSetStacktraceNode
+  with LoadedInterleaveActionEvent {
+
+  def atomicMethodId: Int
+  def objectHashCode: Long
+
   override def addToContext(context: LoadedInterleaveActionContext): Unit = {
+    context.atomicNonBlockingEvents.add(this);
+  }
+
+  def compareType(other: AtomicNonBlockingEvent): Int = {
+      objectHashCode.compareTo(other.objectHashCode)
+  }
+
+  override def runElementType: RunElementType = {
+    new VolatileAccess(new AtomicMethodIdAndObjectHashcode(atomicMethodId, objectHashCode),operation);
   }
 
 }

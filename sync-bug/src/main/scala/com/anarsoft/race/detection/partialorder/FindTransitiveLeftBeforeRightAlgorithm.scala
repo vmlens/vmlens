@@ -30,7 +30,7 @@ class FindTransitiveLeftBeforeRightAlgorithm(private val partialOrderContainer: 
                 relationFound = true
               }
             } else {
-              next(pos(elem._2, elem._1));
+              next(currentLeft);
             }
           }
         )

@@ -1,7 +1,8 @@
 package com.anarsoft.race.detection.groupinterleave
 
-import com.anarsoft.race.detection.event.interleave.{MonitorContainer, MonitorEvent, ThreadJoinedEvent, ThreadStartEvent, VolatileFieldAccessEvent, VolatileFieldAccessEventStatic}
-import com.anarsoft.race.detection.sortutil.EventWithReadWriteContainer
+import com.anarsoft.race.detection.event.interleave.{AtomicNonBlockingEvent, LockEvent, MonitorEvent, ThreadJoinedEvent, ThreadStartEvent, VolatileFieldAccessEvent, VolatileFieldAccessEventStatic, WithLockEvent}
+import com.anarsoft.race.detection.sortutil.lockcontainer.LockContainer
+import com.anarsoft.race.detection.sortutil.{EventContainer, EventWithReadWriteContainer, MonitorContainer}
 import com.anarsoft.race.detection.util.EventArray
 
 import java.util
@@ -9,14 +10,27 @@ import scala.collection.mutable.ArrayBuffer
 
 
 class GroupInterleaveElementBuilder {
-
+  
   val arrayBuffer = new ArrayBuffer[GroupInterleaveElement]();
 
+  def addAtomicNonBlockingEvents(list: util.LinkedList[AtomicNonBlockingEvent]): Unit = {
+    arrayBuffer.append(
+      new GroupInterleaveElementSyncActionImpl[AtomicNonBlockingEvent](
+        EventArray[AtomicNonBlockingEvent](list),
+        GroupInterleaveElementBuilder.create_container_atomic_non_blocking));
+  }
+
+  def addAtomicReadWriteLockEvents(list: util.LinkedList[WithLockEvent]): Unit = {
+    arrayBuffer.append(
+      new GroupInterleaveElementSyncActionImpl[WithLockEvent](
+        EventArray[WithLockEvent](list), GroupInterleaveElementBuilder.create_container_lock));
+  }
+  
   def addVolatileAccessEvents(list: util.LinkedList[VolatileFieldAccessEvent]): Unit = {
     arrayBuffer.append(
       new GroupInterleaveElementSyncActionImpl[VolatileFieldAccessEvent](
         EventArray[VolatileFieldAccessEvent](list),
-        (event: VolatileFieldAccessEvent) => EventWithReadWriteContainer[VolatileFieldAccessEvent](event)));
+        GroupInterleaveElementBuilder.create_container_volatile_field));
   }
 
   def addStaticVolatileAccessEvents(list: util.LinkedList[VolatileFieldAccessEventStatic]): Unit = {
@@ -38,6 +52,12 @@ class GroupInterleaveElementBuilder {
         EventArray[ThreadJoinedEvent](list)));
   }
 
+  def addLockEvents(list: util.LinkedList[WithLockEvent]): Unit = {
+    arrayBuffer.append(
+      new GroupInterleaveElementSyncActionImpl[WithLockEvent](
+        EventArray[WithLockEvent](list),GroupInterleaveElementBuilder.create_container_lock));
+  }
+  
   def addMonitorEvents(list: util.LinkedList[MonitorEvent]): Unit = {
     arrayBuffer.append(
       new GroupInterleaveElementSyncActionImpl[MonitorEvent](
@@ -45,10 +65,25 @@ class GroupInterleaveElementBuilder {
         (event: MonitorEvent) => MonitorContainer(event)));
   }
   
-  
-
   def build(): List[GroupInterleaveElement] = {
     arrayBuffer.toList
   }
 
+}      
+      
+object  GroupInterleaveElementBuilder {
+
+  val create_container_volatile_field: VolatileFieldAccessEvent => EventContainer[VolatileFieldAccessEvent] =
+    (event: VolatileFieldAccessEvent) => {
+      EventWithReadWriteContainer[VolatileFieldAccessEvent](event)
+    };
+
+  val create_container_atomic_non_blocking : AtomicNonBlockingEvent => EventContainer[AtomicNonBlockingEvent] =
+    (event: AtomicNonBlockingEvent) => {
+      EventWithReadWriteContainer[AtomicNonBlockingEvent](event)
+    };
+
+    val create_container_lock: WithLockEvent => LockContainer = 
+      (event: WithLockEvent) =>  event.create();
+  
 }

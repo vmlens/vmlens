@@ -97,6 +97,8 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
         idToFieldContainer.put(fieldId, new ContainerForField());
     }
 
-
-
+    @Override
+    public void needsMethod(int methodId) {
+        idToMethodContainer.put(methodId,new ContainerForMethod());
+    }
 }

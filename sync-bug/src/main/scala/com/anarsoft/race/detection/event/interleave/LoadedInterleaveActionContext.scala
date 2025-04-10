@@ -8,11 +8,14 @@ import java.util
 
 class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveActionEvent] {
 
+  val atomicNonBlockingEvents = new util.LinkedList[AtomicNonBlockingEvent]();
+  val atomicReadWriteLockEvents = new util.LinkedList[WithLockEvent]();
   val volatileAccessEvents = new util.LinkedList[VolatileFieldAccessEvent]();
   val staticVolatileAccessEvents = new util.LinkedList[VolatileFieldAccessEventStatic]();
   val threadStartEvents = new util.LinkedList[ThreadStartEvent]();
   val threadJoinedEvents = new util.LinkedList[ThreadJoinedEvent]();
   val monitorEvents = new util.LinkedList[MonitorEvent]()
+  val lockEvents = new util.LinkedList[WithLockEvent]()
 
   def addLoadedEvent(event: LoadedInterleaveActionEvent): Unit = {
     event.addToContext(this);
@@ -20,10 +23,13 @@ class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveA
 
   override def addToBuilder(loopAndRunId: LoopAndRunId, builder: RunDataListBuilder): Unit = {
     val groupBuilder = new GroupInterleaveElementBuilder();
+    groupBuilder.addAtomicReadWriteLockEvents(atomicReadWriteLockEvents);
+    groupBuilder.addAtomicNonBlockingEvents(atomicNonBlockingEvents);
     groupBuilder.addVolatileAccessEvents(volatileAccessEvents);
     groupBuilder.addStaticVolatileAccessEvents(staticVolatileAccessEvents);
     groupBuilder.addThreadStartEvents(threadStartEvents);
     groupBuilder.addThreadJoinedEvents(threadJoinedEvents);
+    groupBuilder.addLockEvents(lockEvents);
     groupBuilder.addMonitorEvents(monitorEvents);
 
     builder.addSyncActionElements(loopAndRunId, groupBuilder.build())

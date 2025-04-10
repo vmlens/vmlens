@@ -23,7 +23,6 @@ public class ResultForVerify {
            int count =  loopIdToDataRaceCount.get(loopId);
             loopToDataRaceCountList.add(new LoopToDataRaceCount(loopName,count));
         }
-
     }
 
     public void setFailure(int loopId) {

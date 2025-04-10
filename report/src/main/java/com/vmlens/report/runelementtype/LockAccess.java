@@ -6,10 +6,10 @@ import com.vmlens.report.description.NeedsDescriptionCallback;
 public class LockAccess implements RunElementType {
 
     private final LockOperation monitorOperation;
-    private final LockType lockType;
+    private final ReportLockType lockType;
     private final long objectHashCode;
 
-    public LockAccess(LockOperation monitorOperation, LockType lockType, long objectHashCode) {
+    public LockAccess(LockOperation monitorOperation, ReportLockType lockType, long objectHashCode) {
         this.monitorOperation = monitorOperation;
         this.lockType = lockType;
         this.objectHashCode = objectHashCode;
