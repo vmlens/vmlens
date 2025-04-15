@@ -9,7 +9,7 @@ public class ThreadLocalForParallelize {
     private final ThreadForParallelize threadForParallelize;
 
     private ThreadLocalWhenInTest parallelizedThreadLocal;
-    private int inCallbackProcessingCount;
+    private int doNotProcessCallbackCount;
 
     public ThreadLocalForParallelize(ThreadForParallelize threadForParallelize) {
         this.threadForParallelize = threadForParallelize;
@@ -23,19 +23,16 @@ public class ThreadLocalForParallelize {
         this.parallelizedThreadLocal = parallelizedThreadLocal;
     }
 
-    public ThreadLocalWhenInTest startCallbackProcessing() {
-        if (parallelizedThreadLocal != null) {
-            if (inCallbackProcessingCount == 0) {
-                setInCallbackProcessing();
-                return parallelizedThreadLocal;
-            }
-            return null;
-        }
-        return null;
+    public ThreadLocalWhenInTest getThreadLocalWhenInTest() {
+        return parallelizedThreadLocal;
     }
 
-    public void setInCallbackProcessing() {
-        inCallbackProcessingCount++;
+    public boolean canProcessCallback() {
+        return doNotProcessCallbackCount == 0;
+    }
+
+    public void incrementDoNotProcessCallbackCount() {
+        doNotProcessCallbackCount++;
     }
 
     public void setParallelizedThreadLocalToNull() {
@@ -50,8 +47,9 @@ public class ThreadLocalForParallelize {
         return threadForParallelize.getName();
     }
 
-    public void stopCallbackProcessing() {
-        inCallbackProcessingCount--;
+
+    public void decrementDoNotProcessCallbackCount() {
+        doNotProcessCallbackCount--;
     }
 
     public ThreadForParallelize threadForParallelize() {

@@ -7,6 +7,8 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySinglet
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
 
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+
 public class MethodCallback {
 
     private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(
@@ -17,21 +19,49 @@ public class MethodCallback {
             ReadWriteLockMap.INSTANCE);
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
-        // calledMethodId is only used in PreAnalyzedCallback
-        methodCallbackImpl.beforeMethodCall(inMethodId, position);
+        if(canProcess()) {
+            startProcess();
+            try {
+                // calledMethodId is only used in PreAnalyzedCallback
+                methodCallbackImpl.beforeMethodCall(inMethodId, position);
+        } finally {
+            stopProcess();
+        }
     }
+}
 
     public static void afterMethodCall(int inMethodId, int position, int calledMethodId) {
-        // calledMethodId is only used in PreAnalyzedCallback
-        methodCallbackImpl.afterMethodCall(inMethodId, position);
+        if(canProcess()) {
+            startProcess();
+            try {
+                // calledMethodId is only used in PreAnalyzedCallback
+                methodCallbackImpl.afterMethodCall(inMethodId, position);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void methodEnter(Object object, int methodId) {
-        methodCallbackImpl.methodEnter(object, methodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                methodCallbackImpl.methodEnter(object, methodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void methodExit(Object object, int methodId) {
-        methodCallbackImpl.methodExit(object, methodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                methodCallbackImpl.methodExit(object, methodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     // Visible for Test

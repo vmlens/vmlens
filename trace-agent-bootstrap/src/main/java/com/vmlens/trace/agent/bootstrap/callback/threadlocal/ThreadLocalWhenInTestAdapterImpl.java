@@ -2,11 +2,8 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
 
 import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
 
@@ -31,13 +28,9 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
         ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider
                 .threadLocalForParallelize();
 
-        ThreadLocalWhenInTest dataWhenInTest = threadLocal.startCallbackProcessing();
+        ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
         if (dataWhenInTest != null) {
-            try {
-                callbackAction.execute(dataWhenInTest,eventQueueInternal);
-            } finally {
-                threadLocal.stopCallbackProcessing();
-            }
+            callbackAction.execute(dataWhenInTest,eventQueueInternal);
         }
     }
 

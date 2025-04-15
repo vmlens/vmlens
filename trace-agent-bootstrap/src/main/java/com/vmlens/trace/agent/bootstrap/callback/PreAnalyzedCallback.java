@@ -5,6 +5,8 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+
 
 public class PreAnalyzedCallback {
 
@@ -14,27 +16,69 @@ public class PreAnalyzedCallback {
             ReadWriteLockMap.INSTANCE);
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
-        preAnalyzedCallbackImpl.beforeMethodCall(inMethodId, position, calledMethodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                preAnalyzedCallbackImpl.beforeMethodCall(inMethodId, position, calledMethodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void beforeMethodCallInNonBlocking(Object object, int inMethodId, int position, int calledMethodId) {
-        preAnalyzedCallbackImpl.beforeMethodCallInNonBlocking(object, inMethodId, position, calledMethodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                preAnalyzedCallbackImpl.beforeMethodCallInNonBlocking(object, inMethodId, position, calledMethodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void afterMethodCall(int inMethodId, int position, int calledMethodId) {
-        preAnalyzedCallbackImpl.afterMethodCall(inMethodId, position, calledMethodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                preAnalyzedCallbackImpl.afterMethodCall(inMethodId, position, calledMethodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void methodEnter(Object object, int methodId) {
-        preAnalyzedCallbackImpl.methodEnter(object, methodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                preAnalyzedCallbackImpl.methodEnter(object, methodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void methodExit(Object object, int methodId) {
-        preAnalyzedCallbackImpl.methodExit(object, methodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                preAnalyzedCallbackImpl.methodExit(object, methodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void methodExitObjectReturn(Object returnValue, Object object, int methodId) {
-        preAnalyzedCallbackImpl.methodExitObjectReturn(returnValue, object, methodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                preAnalyzedCallbackImpl.methodExitObjectReturn(returnValue, object, methodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void setPreAnalyzedCallbackImpl(PreAnalyzedCallbackImpl preAnalyzedCallbackImpl) {

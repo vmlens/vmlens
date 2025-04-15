@@ -11,10 +11,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ParallelizeLoopFact
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
-
-
-
 
 public class ParallelizeFacade {
 
@@ -36,28 +32,15 @@ public class ParallelizeFacade {
                         ThreadLocalForParallelize threadLocalWrapperForParallelize,
                         RunnableOrThreadWrapper beganTask) {
         if (currentLoop != null) {
-            try {
-                threadLocalWrapperForParallelize.setInCallbackProcessing();
-                currentLoop.newTask(queueIn, threadLocalWrapperForParallelize, beganTask);
-            }
-            finally{
-                threadLocalWrapperForParallelize.stopCallbackProcessing();
-            }
+            currentLoop.newTask(queueIn, threadLocalWrapperForParallelize, beganTask);
         }
-
     }
 
     public HasNextResult hasNext(ThreadLocalForParallelize threadLocalWrapperForParallelize, Object obj) {
-        try {
-            threadLocalWrapperForParallelize.setInCallbackProcessing();
-            TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents = new TLinkedList<>();
-            currentLoop = parallelizeLoopRepository.getOrCreate(obj, serializableEvents);
-            boolean next = currentLoop.hasNext(threadLocalWrapperForParallelize, serializableEvents);
-            return new HasNextResult(next, serializableEvents);
-        }
-        finally{
-            threadLocalWrapperForParallelize.stopCallbackProcessing();
-        }
+        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents = new TLinkedList<>();
+        currentLoop = parallelizeLoopRepository.getOrCreate(obj, serializableEvents);
+        boolean next = currentLoop.hasNext(threadLocalWrapperForParallelize, serializableEvents);
+        return new HasNextResult(next, serializableEvents);
     }
 
     public void close(ThreadLocalForParallelize threadLocalWrapperForParallelize, Object obj) {

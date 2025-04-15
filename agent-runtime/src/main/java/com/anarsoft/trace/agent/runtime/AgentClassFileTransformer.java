@@ -50,9 +50,9 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String name, Class<?> cl, ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) throws IllegalClassFormatException {
 
+        ThreadLocalForParallelizeSingleton.callbackStatePerThread.get().incrementDoNotProcessCallbackCount();
         try {
-            ThreadLocalForParallelizeSingleton.callbackStatePerThread.get().setInCallbackProcessing();
-            if (loader != null && loader.equals(this.getClass().getClassLoader())) {
+              if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
             }
             TransformerContext context = new TransformerContext(classfileBuffer, name);
@@ -69,7 +69,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             return null;
         }
         finally {
-            ThreadLocalForParallelizeSingleton.callbackStatePerThread.get().stopCallbackProcessing();
+            ThreadLocalForParallelizeSingleton.callbackStatePerThread.get().decrementDoNotProcessCallbackCount();
         }
         return null;
     }

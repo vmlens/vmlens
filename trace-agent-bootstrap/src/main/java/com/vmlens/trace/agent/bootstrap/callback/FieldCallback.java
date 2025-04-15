@@ -4,6 +4,9 @@ import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton;
+
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
 
 
 public class FieldCallback {
@@ -14,19 +17,48 @@ public class FieldCallback {
             ReadWriteLockMap.INSTANCE);
 
     public static void beforeFieldRead(Object fromObject, int fieldId, int position, int inMethodId) {
-        fieldCallbackImpl.beforeFieldRead(fromObject, fieldId, position, inMethodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                fieldCallbackImpl.beforeFieldRead(fromObject, fieldId, position, inMethodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void beforeFieldWrite(Object fromObject, int fieldId, int position, int inMethodId) {
-        fieldCallbackImpl.beforeFieldWrite(fromObject, fieldId, position, inMethodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                fieldCallbackImpl.beforeFieldWrite(fromObject, fieldId, position, inMethodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void beforeStaticFieldRead(int fieldId, int position, int inMethodId) {
-        fieldCallbackImpl.beforeStaticFieldRead(fieldId, position, inMethodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                fieldCallbackImpl.beforeStaticFieldRead(fieldId, position, inMethodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
+
     public static void beforeStaticFieldWrite(int fieldId, int position, int inMethodId) {
-        fieldCallbackImpl.beforeStaticFieldWrite(fieldId, position, inMethodId);
+        if(canProcess()) {
+            startProcess();
+            try {
+                fieldCallbackImpl.beforeStaticFieldWrite(fieldId, position, inMethodId);
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void afterFieldAccess() {
