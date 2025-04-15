@@ -6,6 +6,7 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton;
 import org.objectweb.asm.Opcodes;
 
 import java.io.FileOutputStream;
@@ -50,6 +51,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
                             byte[] classfileBuffer) throws IllegalClassFormatException {
 
         try {
+            ThreadLocalForParallelizeSingleton.callbackStatePerThread.get().setInCallbackProcessing();
             if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
             }
@@ -65,6 +67,9 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             infoMessageEventBuilder.add(e);
             writeClassDescriptionAndWarning.write(infoMessageEventBuilder.build());
             return null;
+        }
+        finally {
+            ThreadLocalForParallelizeSingleton.callbackStatePerThread.get().stopCallbackProcessing();
         }
         return null;
     }

@@ -9,7 +9,6 @@ import com.vmlens.trace.agent.bootstrap.event.warning.Warning;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
-import com.vmlens.trace.agent.bootstrap.exception.TestBlockedException;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
@@ -30,8 +29,11 @@ public class RunImpl implements Run {
     private final int loopId;
     private final int runId;
 
-    public RunImpl(ReentrantLock lock, WaitNotifyStrategy waitNotifyStrategy,
-                   RunStateMachine runStateMachine, int loopId, int runId) {
+    public RunImpl(ReentrantLock lock,
+                   WaitNotifyStrategy waitNotifyStrategy,
+                   RunStateMachine runStateMachine,
+                   int loopId,
+                   int runId) {
         this.waitNotifyStrategy = waitNotifyStrategy;
         this.runStateMachine = runStateMachine;
         this.lock = lock;
@@ -40,45 +42,57 @@ public class RunImpl implements Run {
         this.runId = runId;
     }
 
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        RuntimeEventOperation operation = new RuntimeEventOperationAfter();
-        fillOperations(operation);
-        return operation.execute(runtimeEvent,threadLocalDataWhenInTest);
-    }
-
-
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> endAtomicAction(RuntimeEvent runtimeEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        RuntimeEventOperation operation = new RuntimeEventOperationEndAtomicOperation();
-        fillOperations(operation);
-        return operation.execute(runtimeEvent,threadLocalDataWhenInTest);
-    }
-
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> newTask(RunnableOrThreadWrapper newWrapper,
-                                                                    ThreadLocalForParallelize threadLocalForParallelize) {
+    @Override
+    public void after(AfterContext afterContext) {
         lock.lock();
         try {
-            ThreadLocalWhenInTestAndSerializableEvents result = runStateMachine.processNewTestTask(newWrapper, threadLocalForParallelize, this);
-            TLinkedList<TLinkableWrapper<SerializableEvent>> results = result.serializableEvents();
-            if (result.threadLocalWhenInTest() != null) {
-                try {
-                    waitNotifyStrategy.notifyAndWaitTillActive(result.threadLocalWhenInTest(), runStateMachine, threadActiveCondition);
-                } catch (TestBlockedException e) {
-                    if (LogLevelSingleton.logLevel().isInfoEnabled()) {
-                        Warning warning = new LoopWarningEvent(loopId, runId, e.id());
-                        results.add(wrap(warning));
-                    }
-                }
+            afterContext.runtimeEvent().setRunId(runId);
+            afterContext.runtimeEvent().setLoopId(loopId);
+            runStateMachine.after(afterContext,SendEvent.create(afterContext,this));
+            if(afterContext.runtimeEvent().isInterleaveActionFactory()) {
+                waitNotifyStrategy.notifyAndWaitTillActive(afterContext.threadLocalDataWhenInTest(),
+                        runStateMachine,
+                        threadActiveCondition,
+                        SendEvent.create(afterContext,this));
             }
-            return result.serializableEvents();
         } finally {
             lock.unlock();
         }
     }
 
+    @Override
+    public void newTask(NewTaskContext newTaskContext) {
+        lock.lock();
+        try {
+            ThreadLocalWhenInTest threadLocalWhenInTest = runStateMachine.processNewTestTask(newTaskContext,
+                    this,
+                    SendEvent.create(newTaskContext,this));
+            if(threadLocalWhenInTest != null) {
+                waitNotifyStrategy.notifyAndWaitTillActive(threadLocalWhenInTest,
+                        runStateMachine,
+                        threadActiveCondition,
+                        SendEvent.create(newTaskContext,this));
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
     public ActualRun end(ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
             return runStateMachine.end(threadLocalForParallelize);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void newTestTaskStarted(RunnableOrThreadWrapper newWrapper) {
+        lock.lock();
+        try {
+             runStateMachine.newTestTaskStarted(newWrapper);
         } finally {
             lock.unlock();
         }
@@ -94,55 +108,5 @@ public class RunImpl implements Run {
         return loopId;
     }
 
-    @Override
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> startAtomicAction(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-        lock.lock();
-        TLinkedList<TLinkableWrapper<SerializableEvent>> results = new  TLinkedList<>();
-        try {
-            try {
-                waitNotifyStrategy.waitForCanStartAtomicOperation(runStateMachine,
-                        threadActiveCondition);
-            } catch (TestBlockedException e) {
-                if (LogLevelSingleton.logLevel().isInfoEnabled()) {
-                    Warning warning = new LoopWarningEvent(loopId, runId, e.id());
-                    results.add(wrap(warning));
-                }
-            }
-            runStateMachine.startAtomicOperation(threadLocalDataWhenInTest);
-            return results;
-        } finally {
-            lock.unlock();
-        }
-    }
 
-    @Override
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> startAtomicActionWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, RunnableOrThreadWrapper newThread) {
-        lock.lock();
-        TLinkedList<TLinkableWrapper<SerializableEvent>> results = new  TLinkedList<>();
-        try {
-            try {
-                waitNotifyStrategy.waitForCanStartAtomicOperation(runStateMachine,
-                        threadActiveCondition);
-            } catch (TestBlockedException e) {
-                if (LogLevelSingleton.logLevel().isInfoEnabled()) {
-                    Warning warning = new LoopWarningEvent(loopId, runId, e.id());
-                    results.add(wrap(warning));
-                }
-            }
-            runStateMachine.startAtomicOperationWithNewThread(threadLocalDataWhenInTest, newThread);
-            return results;
-        } finally {
-            lock.unlock();
-        }
-    }
-
-
-    private void fillOperations(RuntimeEventOperation operation) {
-        operation.setRunId(runId);
-        operation.setLoopId(loopId);
-        operation.setRunStateMachine(runStateMachine);
-        operation.setThreadActiveCondition(threadActiveCondition);
-        operation.setWaitNotifyStrategy(waitNotifyStrategy);
-        operation.setLock(lock);
-    }
 }

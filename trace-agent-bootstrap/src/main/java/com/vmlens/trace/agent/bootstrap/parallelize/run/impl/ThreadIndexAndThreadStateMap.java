@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -39,7 +40,7 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
 
     public ThreadLocalWhenInTest createForStartedThread(Run run, ThreadLocalForParallelize threadLocalForParallelize,
                                                         int newThreadIndex,
-                                                        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+                                                        SendEvent sendEvent) {
         ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, newThreadIndex);
         threadIdToIndex.put(threadLocalForParallelize.threadId(), newThreadIndex);
         threadIndexToThreadState.put(newThreadIndex,threadLocalForParallelize.threadForParallelize());
@@ -47,7 +48,7 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
         ThreadDescription threadDescription = new
                 ThreadDescription(run.loopId(), run.runId(), newThreadIndex, threadLocalForParallelize.threadId(),
                 threadLocalForParallelize.threadName());
-        serializableEvents.add(wrap(threadDescription));
+        sendEvent.sendSerializable(threadDescription);
 
         return threadLocalDataWhenInTest;
     }

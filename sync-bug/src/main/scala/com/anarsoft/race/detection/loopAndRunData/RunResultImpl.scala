@@ -37,7 +37,7 @@ class RunResultImpl(loopAndRunId: LoopAndRunId,
     else if (isFailure) {
       warningIdList.size + 1
     } else {
-      -1
+      0
     }
   }
   

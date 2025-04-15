@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -24,28 +25,11 @@ public class RunAdapter {
                       ThreadLocalWhenInTest threadLocalWhenInTest,
                       QueueIn queueIn) {
         runtimeEventIn.setThreadIndex(threadLocalWhenInTest.threadIndex());
-        TLinkedList<TLinkableWrapper<SerializableEvent>> runtimeEventAndWarning = run.after(runtimeEventIn, threadLocalWhenInTest);
-        queueIn.offer(runtimeEventAndWarning);
-
+        run.after(new AfterContext(threadLocalWhenInTest, runtimeEventIn, queueIn));
     }
 
-    public void endAtomicOperation(RuntimeEvent runtimeEventIn,
-                                   ThreadLocalWhenInTest threadLocalWhenInTest,
-                                   QueueIn queueIn) {
-        runtimeEventIn.setThreadIndex(threadLocalWhenInTest.threadIndex());
-        TLinkedList<TLinkableWrapper<SerializableEvent>> runtimeEventAndWarning = run.endAtomicAction(runtimeEventIn, threadLocalWhenInTest);
-        queueIn.offer(runtimeEventAndWarning);
-    }
-
-    public void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
-                                                  RunnableOrThreadWrapper newThread,
-                                                  QueueIn queueIn) {
-        queueIn.offer(run.startAtomicActionWithNewThread(threadLocalDataWhenInTest, newThread));
-    }
-
-    public void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
-                                     QueueIn queueIn) {
-        queueIn.offer(run.startAtomicAction(threadLocalDataWhenInTest));
+    public void newTestTaskStarted(RunnableOrThreadWrapper newWrapper) {
+        run.newTestTaskStarted(newWrapper);
     }
 
 }

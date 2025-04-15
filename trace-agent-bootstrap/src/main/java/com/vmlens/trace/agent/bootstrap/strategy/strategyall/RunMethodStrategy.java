@@ -21,11 +21,10 @@ public class RunMethodStrategy implements StrategyAll {
     @Override
     public void methodEnter(MethodEnterExitContext enterExitContext) {
         if (enterExitContext.checkIsThreadRun().isThreadRun()) {
-            enterExitContext.threadLocalWhenInTestAdapter().eventQueue().offer(
-                enterExitContext.parallelizeFacade().newTask(enterExitContext.
-                            threadLocalWhenInTestAdapter().
-                            threadLocalForParallelize(),
-                    new RunnableOrThreadWrapper(Thread.currentThread())));
+            enterExitContext.parallelizeFacade().newTask(
+                        enterExitContext.threadLocalWhenInTestAdapter().eventQueue(),
+                        enterExitContext.threadLocalWhenInTestAdapter().threadLocalForParallelize(),
+                    new RunnableOrThreadWrapper(Thread.currentThread()));
             methodEnterEvent(enterExitContext);
         } else {
             strategyIfNotThreadRun.methodEnter(enterExitContext);

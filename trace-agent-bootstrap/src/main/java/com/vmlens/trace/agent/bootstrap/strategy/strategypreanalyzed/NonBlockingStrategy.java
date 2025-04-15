@@ -1,9 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterMethodCall;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermethodexit.ExecuteRunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteRunAfter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.AtomicNonBlockingEvent;
-import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
 
 public class NonBlockingStrategy implements StrategyPreAnalyzed {
 
@@ -27,7 +26,7 @@ public class NonBlockingStrategy implements StrategyPreAnalyzed {
                 new ExecuteRunAfter<>(event);
 
         context.threadLocalWhenInTestAdapter().process(
-                new SetExecuteAfterMethodCall(runtimeEventAndSetInMethodIdAndPositionImpl));
+                new SetExecuteAfterOperation(runtimeEventAndSetInMethodIdAndPositionImpl));
     }
 
     @Override

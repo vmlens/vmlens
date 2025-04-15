@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileFieldAccessEventStaticGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NotThreadStartedInterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileStaticFieldKey;
@@ -11,7 +12,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStaticGen  implements
-        InterleaveActionFactory , WithInMethodIdAndPosition {
+        NotThreadStartedInterleaveActionFactory, WithInMethodIdAndPosition {
 
     public void setThreadIndex(int threadIndex) {
         this.threadIndex = threadIndex;
@@ -44,6 +45,10 @@ public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStat
 
     public void setRunPosition(int runPosition) {
         this.runPosition = runPosition;
+    }
+
+    public void setBytecodePosition(int bytecodePosition) {
+        this.bytecodePosition = bytecodePosition;
     }
 
     @Override

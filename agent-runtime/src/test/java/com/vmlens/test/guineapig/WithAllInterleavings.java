@@ -1,11 +1,11 @@
 package com.vmlens.test.guineapig;
 
-import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.AllInterleaving;
 
 public class WithAllInterleavings {
 
     public void update() {
-        AllInterleavings testUpdate = new AllInterleavings("withAllInterleavings");
+        AllInterleaving testUpdate = new AllInterleaving("withAllInterleavings");
         while (testUpdate.hasNext()) {
 
         }

@@ -1,8 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeaftermethodexit.ExecuteAfterMethodCall;
-import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteAfterOperation;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 
@@ -17,7 +15,7 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
     private int methodCount;
 
     private InMethodIdAndPosition inMethodIdAndPosition;
-    private ExecuteAfterMethodCall executeAfterMethodCall;
+    private ExecuteAfterOperation executeAfterOperation;
 
 
     public ThreadLocalWhenInTest(RunForCallback run, int threadIndex) {
@@ -30,14 +28,12 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
         return threadIndex;
     }
 
-
-
-    public ExecuteAfterMethodCall executeAfterMethodCall() {
-        return executeAfterMethodCall;
+    public ExecuteAfterOperation executeAfterOperation() {
+        return executeAfterOperation;
     }
 
-    public void setExecuteAfterMethodCall(ExecuteAfterMethodCall executeAfterMethodCall) {
-        this.executeAfterMethodCall = executeAfterMethodCall;
+    public void setExecuteAfterOperation(ExecuteAfterOperation executeAfterMethodCall) {
+        this.executeAfterOperation = executeAfterMethodCall;
     }
 
     public InMethodIdAndPosition inMethodIdAndPosition() {

@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.AllInterleaving;
 import org.junit.Test;
 
 /**
@@ -15,7 +15,7 @@ public class TestSynchronizedBlock {
 
     @Test
     public void testUpdate() throws InterruptedException {
-        AllInterleavings testUpdate = new AllInterleavings("testSynchronizedBlock");
+        AllInterleaving testUpdate = new AllInterleaving("testSynchronizedBlock");
 
         while (testUpdate.hasNext()) {
             j = 0;

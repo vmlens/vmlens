@@ -1,0 +1,155 @@
+package com.vmlens.api;
+
+/**
+ * 
+ * The class AllInterleavings let you test all thread interleavings for your test. Enclose your test in a while loop to iterate through all thread interleavings like in the following example:
+ * 
+ * <pre>{@code 
+ * try (AllInterleavings allInterleavings = 
+    new AllInterleavings("ConcurrencyTestUniqueId");) {
+    while (allInterleavings.hasNext()) {
+        firstId  = 0L;
+        secondId = 0L;
+        UniqueId uniqueId = new UniqueId();
+        Thread first = new Thread(() -> {
+            firstId = uniqueId.nextId();
+        });
+        first.start();
+        secondId = uniqueId.nextId();
+        first.join();
+        assertTrue(firstId != secondId);
+    }
+  }
+ * 
+ * }</pre>
+ *
+ *
+ */
+
+public class AllInterleaving implements AutoCloseable {
+
+	/**
+     * The name shown in the control reportbuilder.
+	 * 
+	 */
+	public final String name;
+	
+	
+	/**
+	 * see {@link AllInterleavingBuilder#showStatementsWhenSingleThreaded} for a description and how to set this value.
+	 * 
+	 */
+	public final boolean showStatementsWhenSingleThreaded;
+	
+	
+	/**
+	 * see {@link AllInterleavingBuilder#showStatementsInExecutor} for a description and how to set this value.
+	 * 
+	 */
+	public final boolean showStatementsInExecutor;
+	
+	
+	/**
+	 * see {@link AllInterleavingBuilder#showNonVolatileSharedMemoryAccess} for a description and how to set this value.
+	 * 
+	 */
+	public final boolean showNonVolatileSharedMemoryAccess;
+	
+	/**
+	 * see {@link AllInterleavingBuilder#maximumRuns} for a description and how to set this value.
+	 * 
+	 */
+	public final int maximumRuns;
+	
+
+	/**
+	 * see {@link AllInterleavingBuilder#maximumSynchronizationActionsPerThread} for a description and how to set this value.
+	 * 
+	 */
+	public final int maximumSynchronizationActionsPerThread;
+	
+
+	/**
+	 * see {@link AllInterleavingBuilder#removeAtomicAnnotation} for a description and how to set this value.
+	 * 
+	 */
+	public final Class[] removeAtomicAnnotationFromClassArray;
+	
+	
+	/**
+	 * Creates a new AllInterleavings instance. To set non default values use {@link AllInterleavingBuilder}
+	 * 
+	 *
+     * @param name The name shown in the control reportbuilder.
+	 */
+	
+	public AllInterleaving(String name) {
+		this( name , false , false , false , 5000 , 2000 , new Class[0] );
+	}
+
+
+	AllInterleaving(String name, boolean showStatementsWhenSingleThreaded, boolean showStatementsInExecutor,
+					boolean showNonVolatileSharedMemoryAccess, int maximum_run_count, int maximum_operation_per_thread_count, Class[] testClassArray) {
+		super();
+		this.name = name;
+		this.showStatementsWhenSingleThreaded = showStatementsWhenSingleThreaded;
+		this.showStatementsInExecutor = showStatementsInExecutor;
+		this.showNonVolatileSharedMemoryAccess = showNonVolatileSharedMemoryAccess;
+		this.maximumRuns = maximum_run_count;
+		this.maximumSynchronizationActionsPerThread = maximum_operation_per_thread_count;
+		this.removeAtomicAnnotationFromClassArray = testClassArray;
+	}
+
+	/**
+	 * 
+	 * Create a new {@link AllInterleavingBuilder}.
+	 *
+     * @param name The name shown in the control reportbuilder.
+	 * @return A new {@link AllInterleavingBuilder}
+	 */
+	
+	public static AllInterleavingBuilder builder(String name)
+	{
+		return new AllInterleavingBuilder(name);
+	}
+
+
+	/**
+	 * Return true if there are still thread interleavings to be executed and select the next thread interleaving.
+	 * Otherwise returns false.
+	 * 
+	 * @return true if  there are still thread interleavings to be executed otherwise false.
+	 */
+
+	public  boolean hasNext()
+	{
+		return hasNext(this);
+	}
+
+	
+	/**
+	 * closes this instance
+	 * 
+	 */
+	
+	public void close()  {
+		close(this);
+	}
+	
+	
+	
+	private static boolean hasNext(Object object)
+	{
+		return false;
+	}
+
+
+	private static void close(Object obj) {
+		
+	}
+	
+	
+	
+	
+	
+}

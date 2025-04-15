@@ -4,13 +4,14 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.MonitorEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NotThreadStartedInterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class MonitorEnterEvent extends MonitorEnterEventGen implements
-        InterleaveActionFactory, WithObjectHashCode {
+        NotThreadStartedInterleaveActionFactory, WithObjectHashCode {
 
     public MonitorEnterEvent(int methodId, int bytecodePosition) {
         this.methodId = methodId;

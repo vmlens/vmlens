@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.inttest.util.ThreadForParallelizeMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadForParallelizeMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import org.junit.Test;
 

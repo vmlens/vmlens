@@ -1,14 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunEndEvent;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunStartEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRunObserverForCalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRunObserverNoOp;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachineFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
@@ -43,10 +43,12 @@ public class ParallelizeLoop {
         this.interleaveLoop = interleaveLoop;
     }
 
-    public TLinkedList<TLinkableWrapper<SerializableEvent>> newTask(ThreadLocalForParallelize threadLocalForParallelize, RunnableOrThreadWrapper beganTask) {
+    public void newTask(QueueIn queueIn,
+                        ThreadLocalForParallelize threadLocalForParallelize,
+                        RunnableOrThreadWrapper beganTask) {
         lock.lock();
         try {
-            return currentRun.newTask(beganTask, threadLocalForParallelize);
+              currentRun.newTask(new NewTaskContext(queueIn, beganTask, threadLocalForParallelize));
         } finally {
             lock.unlock();
         }
@@ -55,7 +57,6 @@ public class ParallelizeLoop {
     public boolean hasNext(ThreadLocalForParallelize threadLocalForParallelize,
                            TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         lock.lock();
-        threadLocalForParallelize.setInCallbackProcessing();
         try {
             if (currentRun != null) {
                 RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
@@ -65,11 +66,10 @@ public class ParallelizeLoop {
                 interleaveLoop.addActualRun(previous);
 
                 if (interleaveLoopIterator.hasNext()) {
-                    CalculatedRun calculatedReun = interleaveLoopIterator.next();
-                    ActualRun actualRun = new ActualRun(new ActualRunObserverForCalculatedRun(calculatedReun));
+                    CalculatedRun calculatedRun = interleaveLoopIterator.next();
                     ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
                     currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createRunning(
-                            runContext, calculatedReun, actualRun), loopId, maxRunId);
+                            runContext, calculatedRun), loopId, maxRunId);
                     threadLocalForParallelize.setThreadLocalDataWhenInTest(
                             runContext.createForMainTestThread(currentRun, threadLocalForParallelize, serializableEvents));
                     int tempRunId = maxRunId;
@@ -80,10 +80,9 @@ public class ParallelizeLoop {
                 }
                 return false;
             } else {
-                ActualRun actualRun = new ActualRun(new ActualRunObserverNoOp());
                 ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
                 currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
-                        runContext, actualRun), loopId, maxRunId);
+                        runContext), loopId, maxRunId);
                 threadLocalForParallelize.setThreadLocalDataWhenInTest(
                         runContext.createForMainTestThread(currentRun, threadLocalForParallelize, serializableEvents));
                 int tempRunId = maxRunId;
@@ -92,7 +91,6 @@ public class ParallelizeLoop {
                 return true;
             }
         } finally {
-            threadLocalForParallelize.stopCallbackProcessing();
             lock.unlock();
         }
     }

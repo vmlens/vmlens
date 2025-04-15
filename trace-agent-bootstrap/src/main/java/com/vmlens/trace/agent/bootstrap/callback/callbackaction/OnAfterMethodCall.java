@@ -1,13 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
-
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
 
 public class OnAfterMethodCall implements CallbackAction {
 
@@ -25,13 +20,13 @@ public class OnAfterMethodCall implements CallbackAction {
 
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
-        if (threadLocalDataWhenInTest.executeAfterMethodCall() == null) {
+        if (threadLocalDataWhenInTest.executeAfterOperation() == null) {
             return;
         }
 
-        threadLocalDataWhenInTest.executeAfterMethodCall().execute(inMethodId, position, threadLocalDataWhenInTest,queueIn,
+        threadLocalDataWhenInTest.executeAfterOperation().execute(inMethodId, position, threadLocalDataWhenInTest,queueIn,
                 readWriteLockMap);
-        threadLocalDataWhenInTest.setExecuteAfterMethodCall(null);
+        threadLocalDataWhenInTest.setExecuteAfterOperation(null);
 
     }
 }

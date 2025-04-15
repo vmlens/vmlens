@@ -2,6 +2,10 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
 public class VolatileFieldAccessEventForTest extends VolatileFieldAccessEvent {
 
+    public VolatileFieldAccessEventForTest() {
+        super(null);
+    }
+
     public int threadIndex() {
         return threadIndex;
     }

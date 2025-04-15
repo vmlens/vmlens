@@ -3,11 +3,13 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.exception.Message;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
-import com.vmlens.trace.agent.bootstrap.exception.TestBlockedException;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
+
+import static com.vmlens.trace.agent.bootstrap.exception.Message.TEST_BLOCKED_MESSAGE;
 
 public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
 
@@ -20,16 +22,15 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
     @Override
     public void notifyAndWaitTillActive(ThreadLocalWhenInTest threadLocalDataWhenInTest,
                                         RunStateMachine runStateMachine,
-                                        Condition threadActiveCondition)
-            throws TestBlockedException {
+                                        Condition threadActiveCondition,
+                                        SendEvent sendEvent) {
         try {
             threadActiveCondition.signalAll();
-            long started = System.currentTimeMillis();
-            while (!runStateMachine.canProcessEndOfOperation(threadLocalDataWhenInTest)) {
+            while (!runStateMachine.isActive(threadLocalDataWhenInTest)) {
                 threadActiveCondition.await(100, TimeUnit.MICROSECONDS);
-                runStateMachine.checkStopWaiting();
-                if ((System.currentTimeMillis() - started) > DEFAULT_WAIT_TIME) {
-                    throw new TestBlockedException(Message.TEST_BLOCKED_MESSAGE);
+                if(runStateMachine.checkStopWaiting()) {
+                    sendEvent.sendMessage(TEST_BLOCKED_MESSAGE);
+                    return;
                 }
             }
         } catch (InterruptedException e) {
@@ -37,19 +38,5 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
         }
     }
 
-    @Override
-    public void waitForCanStartAtomicOperation(RunStateMachine runStateMachine, Condition threadActiveCondition) throws TestBlockedException {
-        try {
-            long started = System.currentTimeMillis();
-            while (!runStateMachine.canStartAtomicOperation()) {
-                threadActiveCondition.await(100, TimeUnit.MICROSECONDS);
-                runStateMachine.checkStopWaiting();
-                if ((System.currentTimeMillis() - started) > DEFAULT_WAIT_TIME) {
-                    throw new TestBlockedException(Message.TEST_BLOCKED_MESSAGE);
-                }
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
+
 }

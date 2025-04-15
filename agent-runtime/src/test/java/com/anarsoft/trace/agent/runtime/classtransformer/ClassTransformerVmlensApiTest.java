@@ -12,21 +12,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ClassTransformerVmlensApiTest {
 
     @Test
-    public void allInterleavings() throws IOException {
+    public void allInterleaving() throws IOException {
         // Given
         RunTestClassTransformer runTestClassTransformer = RunTestClassTransformer.createFromLoaded();
 
         // When and Then
-        runTestClassTransformer.runTest("com.vmlens.api.AllInterleavings", "/allInterleavings.txt");
+        runTestClassTransformer.runTest("com.vmlens.api.AllInterleaving", "/allInterleaving.txt");
     }
 
     @Test
-    public void allInterleavingsBuilder() throws IOException {
+    public void allInterleavingBuilder() throws IOException {
         // Given
         RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
 
         // When
-        TransformerStrategy strategy = runTestClassTransformer.getStrategy("com.vmlens.api.AllInterleavingsBuilder");
+        TransformerStrategy strategy = runTestClassTransformer.getStrategy("com.vmlens.api.AllInterleavingBuilder");
 
         // Then
         assertThat(strategy, instanceOf(TransformerStrategyNoOp.class));

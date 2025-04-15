@@ -11,16 +11,10 @@ import gnu.trove.list.linked.TLinkedList;
 
 public interface RunForCallback {
 
-    TLinkedList<TLinkableWrapper<SerializableEvent>> after(RuntimeEvent runtimeEvent,
-                                  ThreadLocalWhenInTest threadLocalDataWhenInTest);
+    void after(AfterContext afterContext);
 
-    TLinkedList<TLinkableWrapper<SerializableEvent>> endAtomicAction(RuntimeEvent runtimeEvent,
-                                            ThreadLocalWhenInTest threadLocalDataWhenInTest);
+    void newTask(NewTaskContext newTaskContext);
 
-    TLinkedList<TLinkableWrapper<SerializableEvent>> startAtomicAction(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
+    void newTestTaskStarted(RunnableOrThreadWrapper newWrapper);
 
-    TLinkedList<TLinkableWrapper<SerializableEvent>> startAtomicActionWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
-                                        RunnableOrThreadWrapper newThread);
-    TLinkedList<TLinkableWrapper<SerializableEvent>> newTask(RunnableOrThreadWrapper newWrapper,
-                                                             ThreadLocalForParallelize threadLocalForParallelize);
 }

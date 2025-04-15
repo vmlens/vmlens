@@ -121,7 +121,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
             i++;
         }
         if (toBeRetransformed.length > 0) {
-        //    inst.retransformClasses(toBeRetransformed);
+             inst.retransformClasses(toBeRetransformed);
         }
 
     }

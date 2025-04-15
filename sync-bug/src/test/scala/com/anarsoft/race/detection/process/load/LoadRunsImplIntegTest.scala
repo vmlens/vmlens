@@ -23,15 +23,15 @@ class LoadRunsImplIntegTest extends AnyFlatSpec with Matchers {
     val tempDirectory = Files.createTempDirectory("testDir")
     val streamRepository = new StreamRepository(tempDirectory.toString);
 
-    val first = new VolatileFieldAccessEvent();
+    val first = new VolatileFieldAccessEvent(null);
     first.setLoopId(2)
     first.setRunId(0)
 
-    val second = new VolatileFieldAccessEvent();
+    val second = new VolatileFieldAccessEvent(null);
     second.setLoopId(1)
     second.setRunId(1)
 
-    val third = new VolatileFieldAccessEvent();
+    val third = new VolatileFieldAccessEvent(null);
     third.setLoopId(1)
     third.setRunId(2)
 

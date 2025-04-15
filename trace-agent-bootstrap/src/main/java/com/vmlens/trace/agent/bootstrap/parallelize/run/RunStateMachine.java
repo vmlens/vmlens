@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.exception.TestBlockedException;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
@@ -11,26 +11,27 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 
 public interface RunStateMachine {
 
-    RuntimeEvent after(RuntimeEvent runtimeEvent, ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
+    // Reading
 
-    ThreadLocalWhenInTestAndSerializableEvents processNewTestTask(RunnableOrThreadWrapper newWrapper,
-                                                                  ThreadLocalForParallelize threadLocalForParallelize,
-                                                                  Run run);
+    boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
 
-    boolean canProcessEndOfOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
+    boolean checkStopWaiting();
 
-    void startAtomicOperation(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
 
-    void startAtomicOperationWithNewThread(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
-                                           RunnableOrThreadWrapper newThread);
+    // Writing
 
-    boolean canStartAtomicOperation();
+    void after(AfterContext afterContext,
+               SendEvent sendEvent);
 
-    RuntimeEvent endAtomicOperation(RuntimeEvent runtimeEvent,
-                                    ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
+    void newTestTaskStarted(RunnableOrThreadWrapper newWrapper);
 
+    // can be null when this is not a test task
+    ThreadLocalWhenInTest processNewTestTask(NewTaskContext newTaskContext,
+                                             Run run,
+                                             SendEvent sendEvent);
+
+    // can be null when the run is already ended
     ActualRun end(ThreadLocalForParallelize threadLocalForParallelize);
 
-    void checkStopWaiting() throws TestBlockedException;
 
 }

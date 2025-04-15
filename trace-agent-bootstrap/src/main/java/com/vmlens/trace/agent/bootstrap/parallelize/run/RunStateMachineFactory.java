@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThrea
 
 public interface RunStateMachineFactory {
     RunStateMachine createRunning(ThreadIndexAndThreadStateMap runContext,
-                                  CalculatedRun calculatedRun, ActualRun actualRun);
+                                  CalculatedRun calculatedRun);
 
-    RunStateMachine createInitial(ThreadIndexAndThreadStateMap runContext, ActualRun actualRun);
+    RunStateMachine createInitial(ThreadIndexAndThreadStateMap runContext);
 }

@@ -1,0 +1,16 @@
+package com.vmlens.trace.agent.bootstrap.interleave.run;
+
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
+
+public interface InterleaveRun {
+
+    InterleaveInfo after(InterleaveAction interleaveAction);
+    TLinkedList<TLinkableWrapper<InterleaveAction>> run();
+
+    boolean isActive(int threadIndex);
+    Integer activeThreadIndex();
+
+    ActualRun actualRun();
+
+}

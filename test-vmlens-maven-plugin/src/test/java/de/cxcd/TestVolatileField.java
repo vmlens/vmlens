@@ -1,6 +1,6 @@
 package de.cxcd;
 
-import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.AllInterleaving;
 import org.junit.Test;
 
 public class TestVolatileField {
@@ -8,7 +8,7 @@ public class TestVolatileField {
 
     @Test
     public void testUpdate() throws InterruptedException {
-        AllInterleavings testUpdate = new AllInterleavings("otherPackage");
+        AllInterleaving testUpdate = new AllInterleaving("otherPackage");
 
         while (testUpdate.hasNext()) {
             j = 0;

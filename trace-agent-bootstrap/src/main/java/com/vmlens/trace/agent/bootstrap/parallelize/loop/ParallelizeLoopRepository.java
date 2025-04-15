@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
 import com.anarsoft.trace.agent.description.TestLoopDescription;
-import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.AllInterleaving;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -29,7 +29,7 @@ public class ParallelizeLoopRepository {
             if (parallelizeLoop == null) {
                 parallelizeLoop = parallelizeLoopFactory.create(maxLoopId);
 
-                AllInterleavings allInterleavings = (AllInterleavings) config;
+                AllInterleaving allInterleavings = (AllInterleaving) config;
                 serializableEvents.add(wrap(new TestLoopDescription(maxLoopId, allInterleavings.name)));
 
                 maxLoopId++;
