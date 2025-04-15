@@ -10,30 +10,26 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class TestVolatileField {
+public class TestRunnable {
 
-    private volatile int j = 0;
+    public static volatile int STATIC_FIELD = 0;
 
     @Test
     public void testUpdate() throws InterruptedException {
+
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(1);
         expectedSet.add(2);
 
         Set<Integer> countSet = new HashSet<>();
-        AllInterleaving testUpdate = new AllInterleaving("testVolatileField");
+        AllInterleaving testUpdate = new AllInterleaving("testRunnable");
         while (testUpdate.hasNext()) {
-            j = 0;
-            Thread first = new Thread() {
-                @Override
-                public void run() {
-                    j++;
-                }
-            };
+            STATIC_FIELD = 0;
+            Thread first = new Thread(new UpdateVolatileField());
             first.start();
-            j++;
+            STATIC_FIELD++;
             first.join();
-            countSet.add(j);
+            countSet.add(STATIC_FIELD);
         }
         assertThat(countSet,is(expectedSet));
     }

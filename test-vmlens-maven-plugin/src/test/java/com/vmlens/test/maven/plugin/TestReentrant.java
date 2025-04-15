@@ -3,38 +3,32 @@ package com.vmlens.test.maven.plugin;
 import com.vmlens.api.AllInterleaving;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
-public class TestVolatileField {
-
-    private volatile int j = 0;
+public class TestReentrant {
 
     @Test
     public void testUpdate() throws InterruptedException {
-        Set<Integer> expectedSet = new HashSet<>();
-        expectedSet.add(1);
-        expectedSet.add(2);
+        int count = 0;
 
-        Set<Integer> countSet = new HashSet<>();
-        AllInterleaving testUpdate = new AllInterleaving("testVolatileField");
+        AllInterleaving testUpdate = new AllInterleaving("reentrantLock");
         while (testUpdate.hasNext()) {
-            j = 0;
+            final ReentrantLock lock = new ReentrantLock();
             Thread first = new Thread() {
                 @Override
                 public void run() {
-                    j++;
+                    lock.lock();
+                    lock.unlock();
                 }
             };
             first.start();
-            j++;
+            lock.lock();
+            lock.unlock();
             first.join();
-            countSet.add(j);
+            count++;
         }
-        assertThat(countSet,is(expectedSet));
     }
 }

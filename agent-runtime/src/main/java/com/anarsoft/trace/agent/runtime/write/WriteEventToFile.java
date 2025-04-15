@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
 import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;
@@ -38,6 +39,9 @@ public class WriteEventToFile implements Runnable {
 
     @Override
     public void run() {
+        // we never want tracing in this thread
+        startProcess();
+
         testAndAddShutdownHook();
         boolean process = true;
         while (process) {

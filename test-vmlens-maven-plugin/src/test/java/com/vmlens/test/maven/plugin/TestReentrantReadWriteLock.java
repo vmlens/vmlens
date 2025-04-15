@@ -6,11 +6,15 @@ import org.junit.Test;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ReentrantReadWriteLockIntTest {
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class TestReentrantReadWriteLock {
 
     @Test
     public void testUpdate() throws InterruptedException {
 
+        int count = 0;
         final ReadWriteLock lock = new ReentrantReadWriteLock();
 
         AllInterleaving testUpdate = new AllInterleaving("readWriteLockTest");
@@ -26,7 +30,10 @@ public class ReentrantReadWriteLockIntTest {
             lock.writeLock().lock();
             lock.writeLock().unlock();
             first.join();
+            count++;
         }
+
+        assertThat(count,is(3));
     }
 
 }
