@@ -25,7 +25,7 @@ public class RunStateContext {
     }
 
     public boolean isActive(int threadIndex) {
-        return interleaveRun.isActive(threadIndex);
+        return interleaveRun.isActive(threadIndex,runContext.getActiveThreadIndices());
     }
 
     public ThreadIndexAndThreadStateMap runContext() {

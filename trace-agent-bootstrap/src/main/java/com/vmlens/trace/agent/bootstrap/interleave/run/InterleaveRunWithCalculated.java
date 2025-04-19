@@ -3,7 +3,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.run;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
+
+import static com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated.calculateActiveByPositionInRun;
 
 public class InterleaveRunWithCalculated implements InterleaveRun {
 
@@ -30,9 +33,9 @@ public class InterleaveRunWithCalculated implements InterleaveRun {
         return actualRun.run();
     }
 
-    public boolean isActive(int threadIndex) {
+    public boolean isActive(int threadIndex, TIntLinkedList activeThreadIndices) {
         if (actualRun.positionInRun() >= calculatedRunElementArray.length) {
-            return true;
+            return calculateActiveByPositionInRun(actualRun.positionInRun(),threadIndex,activeThreadIndices);
         }
         /*
           The last after call of a thread needs to be enabled

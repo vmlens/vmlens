@@ -68,6 +68,10 @@ public class ThreadForParallelize {
             return false;
         }
 
+        if(state == TERMINATED) {
+            return true;
+        }
+
         for(StackTraceElement element : thread.getStackTrace()) {
             if(element.getClassName().startsWith("com.vmlens.trace.agent.bootstrap")) {
                 return false;

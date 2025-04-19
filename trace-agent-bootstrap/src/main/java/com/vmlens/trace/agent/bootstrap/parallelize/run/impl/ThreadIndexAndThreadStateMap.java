@@ -9,6 +9,8 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.iterator.TIntObjectIterator;
+import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TLongIntHashMap;
@@ -65,6 +67,18 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
 
     public boolean isBlocked(int index) {
         return threadIndexToThreadState.get(index).isBlocked();
+    }
+
+    public TIntLinkedList getActiveThreadIndices() {
+        TIntLinkedList active = new TIntLinkedList();
+        TIntObjectIterator<ThreadForParallelize> iter = threadIndexToThreadState.iterator();
+        while(iter.hasNext()) {
+            iter.advance();
+            if(! iter.value().isBlocked()) {
+                active.add(iter.key());
+            }
+        }
+        return active;
     }
 
 }

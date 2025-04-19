@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
 
 public class InterleaveRunWithoutCalculated implements InterleaveRun {
@@ -22,8 +23,8 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
     }
 
     @Override
-    public boolean isActive(int threadIndex) {
-        return true;
+    public boolean isActive(int threadIndex, TIntLinkedList activeThreadIndices) {
+        return calculateActiveByPositionInRun(actualRun.positionInRun(),threadIndex,activeThreadIndices);
     }
 
     @Override
@@ -35,4 +36,12 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
     public ActualRun actualRun() {
         return actualRun;
     }
+
+    public static boolean calculateActiveByPositionInRun(int positionInRun,
+                                                         int threadIndex,
+                                                         TIntLinkedList activeThreadIndices) {
+        int position =  positionInRun % activeThreadIndices.size();
+        return activeThreadIndices.get(position) == threadIndex;
+    }
+
 }
