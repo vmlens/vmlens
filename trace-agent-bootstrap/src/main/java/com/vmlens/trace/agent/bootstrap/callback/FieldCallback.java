@@ -62,7 +62,14 @@ public class FieldCallback {
     }
 
     public static void afterFieldAccess() {
-        fieldCallbackImpl.afterFieldAccess();
+        if(canProcess()) {
+            startProcess();
+            try {
+                fieldCallbackImpl.afterFieldAccess();
+            } finally {
+                stopProcess();
+            }
+        }
     }
 
     public static void setFieldCallbackImpl(FieldCallbackImpl fieldCallbackImpl) {

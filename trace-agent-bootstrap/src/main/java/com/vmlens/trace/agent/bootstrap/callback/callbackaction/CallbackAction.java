@@ -8,6 +8,7 @@ import gnu.trove.list.linked.TLinkedList;
 
 public interface CallbackAction {
 
-    void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn);
+    void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                 QueueIn queueIn);
 
 }

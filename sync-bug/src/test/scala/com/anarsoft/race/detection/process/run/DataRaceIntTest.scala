@@ -6,7 +6,7 @@ import com.anarsoft.race.detection.event.nonvolatile.NonVolatileFieldAccessEvent
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementBuilder
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileElementBuilder
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunData}
-import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp
+import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRightNoOp, OnEventNoOp}
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -22,7 +22,7 @@ class DataRaceIntTest extends AnyFlatSpec with Matchers {
     val runId = 0;
     val loopIdAndRunId = LoopAndRunId(loopId, runId);
 
-    val processRunImpl = new ProcessRunImpl(new OnDescriptionAndLeftBeforeRightNoOp());
+    val processRunImpl = new ProcessRunImpl(new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp());
 
     val nonVolatileElements = nonVolatileReadWrite(loopIdAndRunId);
 
@@ -58,7 +58,7 @@ class DataRaceIntTest extends AnyFlatSpec with Matchers {
     val builder = new GroupInterleaveElementBuilder();
     builder.addVolatileAccessEvents(list);
 
-    val processRunImpl = new ProcessRunImpl(new OnDescriptionAndLeftBeforeRightNoOp());
+    val processRunImpl = new ProcessRunImpl(new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp());
 
     // When
     val runData = RunData.forLoopAndRun(loopIdAndRunId).copy(nonVolatileElements = nonVolatileReadWrite(loopIdAndRunId),

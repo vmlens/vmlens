@@ -12,7 +12,6 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TLongIntHashMap;
-import gnu.trove.map.hash.TLongObjectHashMap;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 

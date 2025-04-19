@@ -27,7 +27,6 @@ public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGe
         this.threadIndex = threadIndex;
     }
 
-
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
     }

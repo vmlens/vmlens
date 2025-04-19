@@ -1,25 +1,17 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.AfterContext;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateContext;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestAndSerializableEvents.empty;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ProcessAfter.process;
 
 
 public class RunStateNewThreadStarted implements RunState {
@@ -48,11 +40,7 @@ public class RunStateNewThreadStarted implements RunState {
 
     @Override
     public RunState after(AfterContext afterContext, SendEvent sendEvent) {
-        afterContext.runtimeEvent().setStartedThreadIndex(threadIndexForNewTestTask);
-        afterContext.runtimeEvent().after(runStateContext.interleaveRun(),
-                runStateContext.runContext(),
-                afterContext.threadLocalDataWhenInTest(),
-                sendEvent);
+        process(afterContext, sendEvent, runStateContext, threadIndexForNewTestTask);
         return this;
     }
 
@@ -79,4 +67,5 @@ public class RunStateNewThreadStarted implements RunState {
     public RunStateAndResult<Boolean> checkBlocked() {
         return new RunStateAndResult<>(this,false);
     }
+
 }

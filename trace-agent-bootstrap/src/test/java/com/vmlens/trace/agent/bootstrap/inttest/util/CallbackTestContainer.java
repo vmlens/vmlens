@@ -3,10 +3,7 @@ package com.vmlens.trace.agent.bootstrap.inttest.util;
 import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.impl.PreAnalyzedCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.*;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
@@ -127,8 +124,6 @@ public class CallbackTestContainer {
     public void setStrategyPreAnalyzed(int methodId, StrategyPreAnalyzed strategyPreAnalyzed) {
         methodRepository.setStrategyPreAnalyzed(methodId, strategyPreAnalyzed);
     }
-
-
 
     public List<SerializableEvent> eventList() {
         return eventList;

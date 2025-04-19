@@ -19,7 +19,8 @@ public class OnAfterMethodCall implements CallbackAction {
     }
 
     @Override
-    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                        QueueIn queueIn) {
         if (threadLocalDataWhenInTest.executeAfterOperation() == null) {
             return;
         }

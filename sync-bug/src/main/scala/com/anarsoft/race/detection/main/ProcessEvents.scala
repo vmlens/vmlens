@@ -6,7 +6,7 @@ import com.anarsoft.race.detection.process.main.MainProcess
 import com.anarsoft.race.detection.process.run.ProcessRunImpl
 import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl
 import com.vmlens.report.ResultForVerify
-import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp}
+import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp, OnEvent, OnEventNoOp}
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.createreport.CreateReport
 
@@ -15,7 +15,8 @@ import java.nio.file.{Path, Paths}
 
 class ProcessEvents(val eventDir: Path,
                     val reportDir: Path,
-                    val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight) {
+                    val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight,
+                    val onEvent : OnEvent) {
 
   def process(): ResultForVerify = {
 
@@ -26,7 +27,7 @@ class ProcessEvents(val eventDir: Path,
 
     val loadDescription = new LoadDescriptionImpl(eventDir)
     val loadRuns = new LoadRunsFactory().create(eventDir)
-    val processRun = new ProcessRunImpl(onTestLoopAndLeftBeforeRight);
+    val processRun = new ProcessRunImpl(onTestLoopAndLeftBeforeRight,onEvent);
     val loopReportBuilder = new LoopReportBuilderImpl(new ReportBuilder());
 
     val mainProcess = new MainProcess(loadDescription, loadRuns, processRun, loopReportBuilder,onTestLoopAndLeftBeforeRight);
@@ -47,7 +48,7 @@ object ProcessEvents {
   def main(args: Array[String]): Unit = {
     val dir = Paths.get(args(0));
     val reportDir = Paths.get(args(1));
-    new ProcessEvents(dir, reportDir, new OnDescriptionAndLeftBeforeRightNoOp()).process();
+    new ProcessEvents(dir, reportDir, new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp()).process();
 
   }
 }

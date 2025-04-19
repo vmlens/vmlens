@@ -75,4 +75,5 @@ public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implem
         objectHashCode = System.identityHashCode(object);
         object = null;
     }
+
 }

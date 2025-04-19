@@ -7,15 +7,20 @@ import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileMemoryAccess
 import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult, RunResultImpl}
 import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContextImpl, PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.main.ProcessRun
-import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRight
+import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnEvent}
 
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
-class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight) extends ProcessRun {
+class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight,
+                     val onEvent : OnEvent) extends ProcessRun {
 
   def process(runData: RunData): RunResult = {
     onTestLoopAndLeftBeforeRight.startRun(runData.loopAndRunId.loopId,runData.loopAndRunId.runId);
-    
+
+    for(elem <-  runData.interLeaveElements) {
+      elem.addToOnEvent(onEvent);
+    }
+
     // calculate the stacktrace map
     val stackTraceIdToStacktrace = new ServiceCalculateMethodCountToStacktraceNode().process(runData.methodEventArray);
     val stackTraceMap = stackTraceIdToStacktrace.toMap;

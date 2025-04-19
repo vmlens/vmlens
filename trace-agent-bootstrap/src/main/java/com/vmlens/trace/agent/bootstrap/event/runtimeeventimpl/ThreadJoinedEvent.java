@@ -35,7 +35,6 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements NotThread
         this.runPosition = runPosition;
     }
 
-
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
         this.joinedThreadIndex = context.threadIndexForThreadId(joinedThreadId);

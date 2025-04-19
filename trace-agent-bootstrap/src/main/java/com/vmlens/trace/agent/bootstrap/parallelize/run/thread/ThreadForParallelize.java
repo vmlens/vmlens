@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.thread;
 
-import static java.lang.Thread.State.NEW;
-import static java.lang.Thread.State.RUNNABLE;
+import static java.lang.Thread.State.*;
 
 public class ThreadForParallelize {
 
@@ -63,8 +62,6 @@ public class ThreadForParallelize {
         at com.vmlens.test.maven.plugin.TestVolatileField$1.run(TestVolatileField.java:19)
 
      */
-
-
     public boolean isBlocked() {
         Thread.State state = thread.getState();
         if(state == NEW || state == RUNNABLE) {
@@ -86,4 +83,5 @@ public class ThreadForParallelize {
     public String getName() {
         return thread.getName();
     }
+
 }

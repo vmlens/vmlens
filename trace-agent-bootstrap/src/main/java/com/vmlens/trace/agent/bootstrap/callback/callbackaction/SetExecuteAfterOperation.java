@@ -14,7 +14,8 @@ public class SetExecuteAfterOperation implements CallbackAction {
     }
 
     @Override
-    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                        QueueIn queueIn) {
         threadLocalDataWhenInTest.setExecuteAfterOperation(runtimeEventAndSetInMethodIdAndPosition);
     }
 }

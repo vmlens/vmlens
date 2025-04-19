@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation;
 
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
@@ -22,6 +23,7 @@ public class ExecuteRunAfter <EVENT extends RuntimeEvent & WithInMethodIdAndPosi
                         QueueIn queueIn,
                         ReadWriteLockMap readWriteLockMap) {
         event.setInMethodIdAndPosition(inMethodId, position, readWriteLockMap);
-        threadLocalDataWhenInTest.runAdapter().after(event,threadLocalDataWhenInTest, queueIn);
+        threadLocalDataWhenInTest.runAdapter().after(
+                new AfterContext(threadLocalDataWhenInTest,event,queueIn));
     }
 }

@@ -50,5 +50,4 @@ public class ArrayAccessEvent extends ArrayAccessEventGen implements
         this.runPosition = runPosition;
     }
 
-
 }

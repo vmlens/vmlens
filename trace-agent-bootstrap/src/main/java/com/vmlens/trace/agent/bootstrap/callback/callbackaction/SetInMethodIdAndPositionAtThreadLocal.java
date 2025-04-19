@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
-
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
@@ -21,7 +20,8 @@ public class SetInMethodIdAndPositionAtThreadLocal implements CallbackAction {
 
 
     @Override
-    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                        QueueIn queueIn) {
         threadLocalDataWhenInTest.setInMethodIdAndPosition(inMethodIdAndPosition);
     }
 }

@@ -13,7 +13,8 @@ public class RunNewTestTaskStarted implements CallbackAction {
     }
 
     @Override
-    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                        QueueIn queueIn) {
         threadLocalDataWhenInTest.runAdapter().newTestTaskStarted(newThread);
     }
 }

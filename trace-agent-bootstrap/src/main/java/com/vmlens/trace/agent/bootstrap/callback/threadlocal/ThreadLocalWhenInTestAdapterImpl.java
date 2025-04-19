@@ -43,4 +43,5 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
     public QueueIn eventQueue() {
         return eventQueueInternal;
     }
+
 }

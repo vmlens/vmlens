@@ -22,8 +22,6 @@ public class MonitorExitEvent extends MonitorExitEventGen implements
         this.threadIndex = threadIndex;
     }
 
-
-
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
     }

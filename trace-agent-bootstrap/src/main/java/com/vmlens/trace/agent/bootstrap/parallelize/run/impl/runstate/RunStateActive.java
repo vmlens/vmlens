@@ -4,13 +4,15 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.AfterContext;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
+
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ProcessAfter.process;
 
 public class RunStateActive implements RunState {
 
@@ -40,10 +42,7 @@ public class RunStateActive implements RunState {
 
     @Override
     public RunState after(AfterContext afterContext, SendEvent sendEvent) {
-        afterContext.runtimeEvent().setStartedThreadIndex(startedThreadIndex);
-        afterContext.runtimeEvent().after(runStateContext.interleaveRun(),
-                runStateContext.runContext(),
-                afterContext.threadLocalDataWhenInTest(),sendEvent);
+        process(afterContext, sendEvent, runStateContext, startedThreadIndex);
         return this;
     }
 
@@ -68,4 +67,5 @@ public class RunStateActive implements RunState {
         }
         return new RunStateAndResult<>(this,false);
     }
+
 }

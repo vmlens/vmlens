@@ -20,8 +20,10 @@ public class RunAfter<EVENT extends RuntimeEvent> implements CallbackAction {
     }
 
     @Override
-    public void  execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+    public void  execute(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                         QueueIn queueIn) {
         setFieldsStrategy.setFields(runtimeEvent,threadLocalDataWhenInTest);
-        threadLocalDataWhenInTest.runAdapter().after(runtimeEvent, threadLocalDataWhenInTest,queueIn);
+        threadLocalDataWhenInTest.runAdapter().after(
+                new AfterContext(threadLocalDataWhenInTest,runtimeEvent,queueIn));
     }
 }
