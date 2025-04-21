@@ -21,21 +21,22 @@ public class VolatileFieldCT {
         expectedSet.add(2);
 
         Set<Integer> countSet = new HashSet<>();
-        AllInterleaving testUpdate = new AllInterleaving("testVolatileField");
-        while (testUpdate.hasNext()) {
-            j = 0;
-            Thread first = new Thread() {
-                @Override
-                public void run() {
-                    j++;
-                }
-            };
-            first.start();
-            j++;
-            first.join();
-            assertThat(j,is(2));
-            countSet.add(j);
+        try(AllInterleaving allInterleaving = new AllInterleaving("testVolatileField")) {
+            while (allInterleaving.hasNext()) {
+                j = 0;
+                Thread first = new Thread() {
+                    @Override
+                    public void run() {
+                        j++;
+                    }
+                };
+                first.start();
+                j++;
+                first.join();
+                countSet.add(j);
+            }
+            assertThat(countSet,is(expectedSet));
         }
-        assertThat(countSet,is(expectedSet));
+
     }
 }

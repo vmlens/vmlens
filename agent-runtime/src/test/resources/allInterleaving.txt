@@ -1,47 +1,11 @@
 class:com/vmlens/api/AllInterleaving
 method:<init>(Ljava/lang/String;)V
   ALOAD
-  ALOAD
-  ICONST_0
-  ICONST_0
-  ICONST_0
-  SIPUSH
-  SIPUSH
-  ICONST_0
-  ANEWARRAY  java/lang/Class
-  INVOKESPECIAL  com/vmlens/api/AllInterleaving.<init>:(Ljava/lang/String;ZZZII[Ljava/lang/Class;)V
-  RETURN
-method:<init>(Ljava/lang/String;ZZZII[Ljava/lang/Class;)V
-  ALOAD
   INVOKESPECIAL  java/lang/Object.<init>:()V
   ALOAD
   ALOAD
   PUTFIELD  com/vmlens/api/AllInterleaving.name:Ljava/lang/String;
-  ALOAD
-  ILOAD
-  PUTFIELD  com/vmlens/api/AllInterleaving.showStatementsWhenSingleThreaded:Z
-  ALOAD
-  ILOAD
-  PUTFIELD  com/vmlens/api/AllInterleaving.showStatementsInExecutor:Z
-  ALOAD
-  ILOAD
-  PUTFIELD  com/vmlens/api/AllInterleaving.showNonVolatileSharedMemoryAccess:Z
-  ALOAD
-  ILOAD
-  PUTFIELD  com/vmlens/api/AllInterleaving.maximumRuns:I
-  ALOAD
-  ILOAD
-  PUTFIELD  com/vmlens/api/AllInterleaving.maximumSynchronizationActionsPerThread:I
-  ALOAD
-  ALOAD
-  PUTFIELD  com/vmlens/api/AllInterleaving.removeAtomicAnnotationFromClassArray:[Ljava/lang/Class;
   RETURN
-method:builder(Ljava/lang/String;)Lcom/vmlens/api/AllInterleavingBuilder;
-  NEW  com/vmlens/api/AllInterleavingBuilder
-  DUP
-  ALOAD
-  INVOKESPECIAL  com/vmlens/api/AllInterleavingBuilder.<init>:(Ljava/lang/String;)V
-  ARETURN
 method:hasNext()Z
   ALOAD
   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.hasNext:(Ljava/lang/Object;)Z

@@ -9,6 +9,7 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLoca
 public class VmlensApiCallbackImpl {
 
     public void close(Object obj) {
+        ParallelizeFacade.parallelize().close(callbackStatePerThread.get(), obj);
     }
 
     public boolean hasNext(Object obj) {
