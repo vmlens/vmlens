@@ -1,10 +1,15 @@
 package com.vmlens;
 
-
+import com.anarsoft.race.detection.main.ProcessEvents;
+import com.vmlens.report.ResultForVerify;
+import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp;
+import com.vmlens.report.assertion.OnEventNoOp;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.surefire.SurefireMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -17,30 +22,41 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
-@Mojo(name = "prepare-agent", defaultPhase = LifecyclePhase.INITIALIZE,
-        requiresDependencyResolution = ResolutionScope.NONE, threadSafe = true)
-public class AgentMojo extends AbstractMojo {
+@Mojo(
+        name = "test",
+        defaultPhase = LifecyclePhase.TEST,
+        threadSafe = true,
+        requiresDependencyResolution = ResolutionScope.TEST)
+public class VMLensMojo extends SurefireMojo {
 
     private static final String SUREFIRE_ARG_LINE = "argLine";
     private static final String[] jars = new String[]{"agent_bootstrap.jar", "agent_runtime.jar", "agent.jar"};
 
-    private static volatile File eventDirectory;
+    private File eventDirectory;
 
-    @Parameter(property = "project", readonly = true)
-    private MavenProject project;
     /**
      * Agent directory
      */
     @Parameter(defaultValue = "${project.build.directory}/vmlens-agent")
     private File agentDirectory;
 
-    public static File eventDirectory() {
-        return eventDirectory;
+    @Parameter(defaultValue = "${project.build.directory}/vmlens-report")
+    private File reportDirectory;
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        prepareAgent();
+        MojoFailureException mojoFailureException = null;
+        try{
+            super.execute();
+        } catch(MojoFailureException exp) {
+            mojoFailureException = exp;
+        }
+
+        createReport(mojoFailureException);
     }
 
-    public void execute()
-            throws MojoExecutionException {
+    private void prepareAgent() {
         try {
             if (!agentDirectory.exists()) {
                 agentDirectory.mkdirs();
@@ -72,8 +88,8 @@ public class AgentMojo extends AbstractMojo {
             properties.store(stream, "");
             stream.close();
 
-            Properties projectProperties = project.getProperties();
-            String additionalArgs = projectProperties.getProperty(SUREFIRE_ARG_LINE);
+
+            String additionalArgs = getArgLine();
             if (additionalArgs == null) {
                 additionalArgs = "";
             }
@@ -81,11 +97,36 @@ public class AgentMojo extends AbstractMojo {
             String agentVmArg = "-javaagent:\"" +
                     agentDirectory.getAbsolutePath() + "/agent.jar\"  " + additionalArgs;
             getLog().info(agentVmArg);
-            projectProperties.setProperty(SUREFIRE_ARG_LINE, agentVmArg);
+            setArgLine(agentVmArg);
 
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    private void createReport(MojoFailureException mojoFailureException) throws MojoFailureException {
+        ResultForVerify result = new ProcessEvents(eventDirectory.toPath(),
+                reportDirectory.toPath(),
+                new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp()).process();
+
+        handleResult(result,reportDirectory,mojoFailureException,this.getLog());
+    }
+
+    // Visible for Test
+    static void handleResult(ResultForVerify result,
+                             File reportDirectory,
+                             MojoFailureException mojoFailureException,
+                             Log log) throws MojoFailureException {
+        if(mojoFailureException != null) {
+            log.error(String.format("See %s for the vmlens report.", reportDirectory.toString()));
+            throw mojoFailureException;
+        }
+        if(result.dataRaceCount() > 0 ) {
+            throw new MojoFailureException(String.format("There are %s data races, see %s for the report.",
+                    result.dataRaceCount(),reportDirectory.toString()));
+        }
+        log.info(String.format("See %s for the vmlens report.", reportDirectory.toString()));
+    }
+
 }

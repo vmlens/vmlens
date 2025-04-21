@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TestReentrantReadWriteLock {
+public class ReentrantReadWriteLockCT {
 
     @Test
     public void testUpdate() throws InterruptedException {

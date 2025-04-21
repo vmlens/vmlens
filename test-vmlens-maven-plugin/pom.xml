@@ -20,13 +20,18 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency>
-        <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -45,17 +50,17 @@
             <plugin>
                 <groupId>com.vmlens</groupId>
                 <artifactId>vmlens-maven-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*CT.java</include>
+                        <include>**/Test*.java</include>
+                    </includes>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>prepare-agent</id>
+                        <id>test</id>
                         <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>verify</id>
-                        <goals>
-                            <goal>verify</goal>
+                            <goal>test</goal>
                         </goals>
                     </execution>
                 </executions>

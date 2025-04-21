@@ -3,7 +3,7 @@ package de.cxcd;
 import com.vmlens.api.AllInterleaving;
 import org.junit.Test;
 
-public class TestVolatileField {
+public class VolatileFieldCT {
     private volatile int j = 0;
 
     @Test

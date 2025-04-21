@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class TestRunnable {
+public class RunnableCT {
 
     public static volatile int STATIC_FIELD = 0;
 

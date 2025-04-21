@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class TestVolatileField {
+public class VolatileFieldCT {
 
     private volatile int j = 0;
 
@@ -33,6 +33,7 @@ public class TestVolatileField {
             first.start();
             j++;
             first.join();
+            assertThat(j,is(2));
             countSet.add(j);
         }
         assertThat(countSet,is(expectedSet));
