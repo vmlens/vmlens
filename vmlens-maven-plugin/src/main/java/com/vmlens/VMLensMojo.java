@@ -38,10 +38,10 @@ public class VMLensMojo extends SurefireMojo {
      * Agent directory
      */
     @Parameter(defaultValue = "${project.build.directory}/vmlens-agent")
-    private File agentDirectory;
+    protected File agentDirectory;
 
     @Parameter(defaultValue = "${project.build.directory}/vmlens-report")
-    private File reportDirectory;
+    protected File reportDirectory;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -105,7 +105,7 @@ public class VMLensMojo extends SurefireMojo {
         }
     }
 
-    private void createReport(MojoFailureException mojoFailureException) throws MojoFailureException {
+    protected void createReport(MojoFailureException mojoFailureException) throws MojoFailureException {
         ResultForVerify result = new ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
                 new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp()).process();
