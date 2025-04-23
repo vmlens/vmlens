@@ -1,7 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.builder;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
+
 import com.vmlens.trace.agent.bootstrap.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;
@@ -12,7 +11,7 @@ public interface FactoryCollectionPreAnalyzedFactoryBuilder {
 
     void addMethodWithLock(String name, String desc, ReadOrWriteLock lockType);
 
-    void addNonBlockingMethod(String name, String desc, int operation, CallbackInNonBlockingMethod[] callbackMethods);
+    void addNonBlockingMethod(String name, String desc, int operation);
 
     void addLockMethod(String name, String desc, LockType lockType, LockOperation lockOperation);
 
@@ -22,6 +21,5 @@ public interface FactoryCollectionPreAnalyzedFactoryBuilder {
 
     void noOpWhenMethodNotFound();
 
-    FactoryCollectionPreAnalyzedFactory build();
 
 }

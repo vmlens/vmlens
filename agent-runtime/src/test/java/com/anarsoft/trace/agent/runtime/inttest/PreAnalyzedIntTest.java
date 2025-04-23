@@ -3,7 +3,6 @@ package com.anarsoft.trace.agent.runtime.inttest;
 import com.anarsoft.trace.agent.preanalyzed.model.ClassType;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedAtomicReadWriteLock;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedSpecificMethods;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
 import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedAtomicNonBlocking;
@@ -24,16 +23,7 @@ public class PreAnalyzedIntTest {
 
     private final String CLASS_NAME = "com/vmlens/test/guineapig/PreAnalyzedGuineaPig";
 
-    //@Test
-    public void atomicNonBlocking() throws IOException {
-        // Given
-        CallbackInNonBlockingMethod callbackInNonBlockingMethod = new CallbackInNonBlockingMethod(CLASS_NAME,"method", "()Ljava/lang/Object;", MemoryAccessType.IS_WRITE);
-        CallbackInNonBlockingMethod[] callbak = new  CallbackInNonBlockingMethod[1];
-        callbak[0] = callbackInNonBlockingMethod;
-        PreAnalyzedMethodBuilder preAnalyzedMethodBuilder = new PreAnalyzedMethodBuilder(NON_BLOCKING_WRITE);
-        preAnalyzedMethodBuilder.withCallback(callbak);
-        runTest(PreAnalyzedAtomicNonBlocking.SINGLETON, preAnalyzedMethodBuilder.build(),"/methodCall.txt");
-    }
+
 
     @Test
     public void atomicReadWriteLock() throws IOException {

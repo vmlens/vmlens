@@ -34,8 +34,9 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     }
 
     @Override
-    public void addPreAnalyzedEquals(String name, FactoryCollectionPreAnalyzedFactory factoryCollectionPreAnalyzedBuilder) {
-        add(new ClassFilterEquals(name), transformerStrategyFactory.createPreAnalyzed(factoryCollectionPreAnalyzedBuilder));
+    public void addPreAnalyzedEquals(String name, FactoryCollectionPreAnalyzedFactoryBuilder factoryCollectionPreAnalyzedBuilder) {
+        add(new ClassFilterEquals(name), transformerStrategyFactory.createPreAnalyzed(
+                ((FactoryCollectionPreAnalyzedFactoryBuilderImpl)factoryCollectionPreAnalyzedBuilder).build() ) );
     }
 
     @Override

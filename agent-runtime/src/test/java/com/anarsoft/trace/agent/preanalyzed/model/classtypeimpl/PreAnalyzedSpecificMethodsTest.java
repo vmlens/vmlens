@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.ClassType;
@@ -22,7 +21,7 @@ public class PreAnalyzedSpecificMethodsTest {
         when(classBuilder.createTraceNoMethodCall()).thenReturn(methodBuilder);
 
         PreAnalyzedMethod[] methods = new PreAnalyzedMethod[1];
-        methods[0] = new PreAnalyzedMethod("start", "()V", ThreadStart.SINGLETON, new CallbackInNonBlockingMethod[0]);
+        methods[0] = new PreAnalyzedMethod("start", "()V", ThreadStart.SINGLETON);
 
         // When
         classTypeThread.addToBuilder("java.lang.Thread", methods, classBuilder);

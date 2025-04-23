@@ -2,7 +2,7 @@ package com.anarsoft.trace.agent.preanalyzed.model;
 
 import com.anarsoft.trace.agent.preanalyzed.builder.ClassTransformerListBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.AbstractClassType;
-import org.visualj.View;
+
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
-@View("agent.runtime")
 public class PackageOrClass {
 
     private final String name;

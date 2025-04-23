@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 
@@ -18,7 +17,7 @@ public class NonBlockingMethod extends AbstractMethodType  {
     }
 
     @Override
-    public void add(String name, String desc, CallbackInNonBlockingMethod[] callbackInNonBlockingMethods, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodBuilder.addNonBlockingMethod(name,desc,operation,callbackInNonBlockingMethods);
+    public void add(String name, String desc, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
+        methodBuilder.addNonBlockingMethod(name,desc,operation);
     }
 }

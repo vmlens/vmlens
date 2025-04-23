@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.preanalyzed.model;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.AbstractMethodType;
 
@@ -14,44 +13,30 @@ public class PreAnalyzedMethod {
     private final String name;
     private final String desc;
     private final MethodType methodType;
-    private final CallbackInNonBlockingMethod[] callbackInNonBlockingMethods;
 
     public PreAnalyzedMethod(String name,
                              String desc,
-                             MethodType methodType,
-                             CallbackInNonBlockingMethod[] callbackInNonBlockingMethods) {
+                             MethodType methodType) {
         this.name = name;
         this.desc = desc;
         this.methodType = methodType;
-        this.callbackInNonBlockingMethods = callbackInNonBlockingMethods;
     }
 
     public static PreAnalyzedMethod deserialize(DataInputStream inputStream) throws IOException {
         String name = inputStream.readUTF();
         String desc = inputStream.readUTF();
         MethodType methodType = AbstractMethodType.deserialize(inputStream);
-
-        int arrayLength = inputStream.readInt();
-        CallbackInNonBlockingMethod[] callbackInNonBlockingMethods = new CallbackInNonBlockingMethod[arrayLength];
-        for(int i = 0 ; i < arrayLength; i++) {
-            callbackInNonBlockingMethods[i] =  CallbackInNonBlockingMethod.deserialize(inputStream);
-        }
-        return new PreAnalyzedMethod(name, desc, methodType,new CallbackInNonBlockingMethod[0]);
+        return new PreAnalyzedMethod(name, desc, methodType);
     }
 
     public void add(FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodType.add(name, desc, callbackInNonBlockingMethods, methodBuilder);
+        methodType.add(name, desc, methodBuilder);
     }
 
     public void serialize(DataOutputStream out) throws IOException {
         out.writeUTF(name);
         out.writeUTF(desc);
         methodType.serialize(out);
-
-        out.writeInt(callbackInNonBlockingMethods.length);
-        for (CallbackInNonBlockingMethod callbackInNonBlockingMethod : callbackInNonBlockingMethods) {
-            callbackInNonBlockingMethod.serialize(out);
-        }
     }
 
     @Override

@@ -46,7 +46,7 @@ class ServiceCalculateMethodCountToStacktraceNode {
 
   /**
    * methodCount starts with 1 for the first method call
-   * there are events with methodCount 0 so we need to create one more element
+   * there are events with methodCount 0 so we need to createWithLists one more element
    *
    */
   def createArray(list: ListBuffer[StacktraceNode]): Array[StacktraceNode] = {

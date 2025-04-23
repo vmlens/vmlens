@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.trace.agent.bootstrap.lock.*;
 
@@ -24,7 +23,7 @@ public class LockMethod  extends AbstractMethodType  {
     }
 
     @Override
-    public void add(String name, String desc, CallbackInNonBlockingMethod[] callbackInNonBlockingMethods, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
+    public void add(String name, String desc,FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
         methodBuilder.addLockMethod(name,desc,lockType,lockOperation);
     }
 }

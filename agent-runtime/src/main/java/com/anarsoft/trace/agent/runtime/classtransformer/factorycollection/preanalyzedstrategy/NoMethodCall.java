@@ -2,7 +2,6 @@ package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.prea
 
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryForPreAnalyzedAndAll;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
@@ -18,8 +17,4 @@ public class NoMethodCall  implements PreAnalyzedStrategy {
 
     }
 
-    @Override
-    public void addCallback(NameAndDescriptor nameAndDescriptor, CallbackInNonBlockingMethod[] callbackMethods) {
-
-    }
 }

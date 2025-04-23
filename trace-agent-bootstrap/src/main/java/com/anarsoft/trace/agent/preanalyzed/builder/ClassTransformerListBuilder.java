@@ -1,6 +1,5 @@
 package com.anarsoft.trace.agent.preanalyzed.builder;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
 
 public interface ClassTransformerListBuilder {
 
@@ -8,9 +7,8 @@ public interface ClassTransformerListBuilder {
 
     FactoryCollectionPreAnalyzedFactoryBuilder createTraceMethodCallWithObject();
 
-
-
-    void addPreAnalyzedEquals(String name, FactoryCollectionPreAnalyzedFactory factoryCollectionPreAnalyzedBuilder);
+    void addPreAnalyzedEquals(String name, FactoryCollectionPreAnalyzedFactoryBuilder
+            factoryCollectionPreAnalyzedFactoryBuilder);
 
     void addTraceStartsWith(String name);
 

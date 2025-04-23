@@ -14,7 +14,7 @@ public abstract class AbstractPreAnalyzed extends AbstractClassType {
         for (PreAnalyzedMethod method : methods) {
             method.add(methodBuilder);
         }
-        classBuilder.addPreAnalyzedEquals(name, methodBuilder.build());
+        classBuilder.addPreAnalyzedEquals(name, methodBuilder);
     }
 
     protected abstract FactoryCollectionPreAnalyzedFactoryBuilder create(ClassTransformerListBuilder classBuilder);

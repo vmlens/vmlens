@@ -53,6 +53,16 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.github.pureconfig</groupId>
+                <artifactId>pureconfig-generic-scala3_3</artifactId>
+                <version>0.17.8</version>
+            </dependency>
+               <dependency>
+                <groupId>com.github.pureconfig</groupId>
+                <artifactId>pureconfig-core_3</artifactId>
+                <version>0.17.8</version>
+            </dependency>
+            <dependency>
                 <groupId>com.github.spullara.mustache.java</groupId>
                 <artifactId>compiler</artifactId>
                 <version>0.9.11</version>

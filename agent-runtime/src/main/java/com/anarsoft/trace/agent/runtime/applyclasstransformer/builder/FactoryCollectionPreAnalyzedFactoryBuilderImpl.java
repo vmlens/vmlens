@@ -1,7 +1,6 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer.builder;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.PreAnalyzedStrategy;
-import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.CallbackInNonBlockingMethod;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
@@ -45,11 +44,9 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
 
 
     @Override
-    public void addNonBlockingMethod(String name, String desc, int operation,
-                                     CallbackInNonBlockingMethod[] callbackMethods) {
+    public void addNonBlockingMethod(String name, String desc, int operation) {
         NameAndDescriptor nameAndDescriptor = new NameAndDescriptor(name, desc);
         methodToStrategy.put(nameAndDescriptor, new NonBlockingStrategy(operation));
-        preAnalyzedStrategy.addCallback(nameAndDescriptor,callbackMethods);
     }
 
     @Override
@@ -72,7 +69,7 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
         methodNotFoundAction = NO_OP;
     }
 
-    @Override
+
     public FactoryCollectionPreAnalyzedFactory build() {
         return new FactoryCollectionPreAnalyzedFactory(methodToStrategy, methodNotFoundAction, methodCallIdMap,preAnalyzedStrategy);
     }

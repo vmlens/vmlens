@@ -2,7 +2,6 @@ package com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl;
 
 import com.anarsoft.trace.agent.preanalyzed.model.MethodType;
 import com.anarsoft.trace.agent.preanalyzed.model.MethodTypeCollection;
-import com.anarsoft.trace.agent.preanalyzed.model.ClassTypeCollection;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

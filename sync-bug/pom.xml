@@ -54,6 +54,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.pureconfig</groupId>
+            <artifactId>pureconfig-generic-scala3_3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pureconfig</groupId>
+            <artifactId>pureconfig-core_3</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala3-library_3</artifactId>
         </dependency>
