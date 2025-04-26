@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
-import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FactoryFactoryAll;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactoryFactoryAll;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddArrayAccessAccessCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddFieldAccessCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMonitorCall;
@@ -22,11 +22,11 @@ public class FactoryCollectionAll implements FactoryCollection {
 
     public FactoryCollectionAll(FieldRepositoryForTransform fieldIdMap, MethodRepositoryForTransform methodCallIdMap) {
         this.fieldIdMap = fieldIdMap;
-        this.factoryForBoth = new FactoryForPreAnalyzedAndAll(new FactoryFactoryAll(), methodCallIdMap);
+        this.factoryForBoth = new FactoryForPreAnalyzedAndAll(new MethodCallbackFactoryFactoryAll(), methodCallIdMap);
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor) {
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor, int access) {
         return factoryForBoth.getAnalyze(nameAndDescriptor);
     }
 

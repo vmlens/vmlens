@@ -66,6 +66,9 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
     }
 
     public boolean isBlocked(int index) {
+        if(threadIndexToThreadState.get(index) == null) {
+            return true;
+        }
         return threadIndexToThreadState.get(index).isBlocked();
     }
 

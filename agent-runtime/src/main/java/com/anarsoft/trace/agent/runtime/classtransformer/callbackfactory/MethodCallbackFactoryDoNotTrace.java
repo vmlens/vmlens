@@ -4,17 +4,17 @@ import org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
-public class MethodCallbackFactoryPreAnalyzed extends MethodCallbackFactory {
+public class MethodCallbackFactoryDoNotTrace extends MethodCallbackFactory {
 
-    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback";
+    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/DoNotTraceCallback";
 
-    public MethodCallbackFactoryPreAnalyzed(MethodVisitor methodVisitor) {
+    public MethodCallbackFactoryDoNotTrace(MethodVisitor methodVisitor) {
         super(methodVisitor);
     }
 
     @Override
     public boolean supportsObjectReturn() {
-        return true;
+        return false;
     }
 
     protected void methodCall(int id, String methodName, String methodDescriptor) {
@@ -22,5 +22,4 @@ public class MethodCallbackFactoryPreAnalyzed extends MethodCallbackFactory {
         methodVisitor.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS,
                 methodName, methodDescriptor, false);
     }
-
 }

@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
-import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FactoryFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor.AddMethodCall;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodenterexit.MethodEnterExitAnalyzeFactory;
@@ -18,10 +18,10 @@ public class FactoryForPreAnalyzedAndAll {
 
     private final THashMap<NameAndDescriptor, TryCatchBlockCounter> nameAndDescriptorToTryCatchBlockCounter =
             new THashMap<>();
-    private final FactoryFactory factoryFactory;
+    private final MethodCallbackFactoryFactory factoryFactory;
     private final MethodRepositoryForTransform methodCallIdMap;
 
-    public FactoryForPreAnalyzedAndAll(FactoryFactory factoryFactory,
+    public FactoryForPreAnalyzedAndAll(MethodCallbackFactoryFactory factoryFactory,
                                        MethodRepositoryForTransform methodCallIdMap) {
         this.factoryFactory = factoryFactory;
         this.methodCallIdMap = methodCallIdMap;
@@ -41,7 +41,6 @@ public class FactoryForPreAnalyzedAndAll {
         TryCatchBlockCounter tryCatchBlockCounter = nameAndDescriptorToTryCatchBlockCounter.get(nameAndDescriptor);
         result.add(wrap(new MethodEnterExitTransformFactory(tryCatchBlockCounter.tryCatchBlockCount(), factoryFactory)));
     }
-
 
     /**
      *

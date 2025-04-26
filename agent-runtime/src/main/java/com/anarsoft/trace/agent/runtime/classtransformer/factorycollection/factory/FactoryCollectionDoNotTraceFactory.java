@@ -1,24 +1,20 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory;
 
-
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollection;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionAll;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.FactoryCollectionDoNotTrace;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 
-public class FactoryCollectionAllFactory implements FactoryCollectionFactory {
+public class FactoryCollectionDoNotTraceFactory  implements FactoryCollectionFactory  {
 
-    private final FieldRepositoryForTransform fieldIdMap;
     private final MethodRepositoryForTransform methodCallIdMap;
 
-    public FactoryCollectionAllFactory(FieldRepositoryForTransform fieldIdMap,
-                                       MethodRepositoryForTransform methodCallIdMap) {
-        this.fieldIdMap = fieldIdMap;
+    public FactoryCollectionDoNotTraceFactory(MethodRepositoryForTransform methodCallIdMap) {
         this.methodCallIdMap = methodCallIdMap;
     }
 
     @Override
     public FactoryCollection create() {
-        return new FactoryCollectionAll(fieldIdMap, methodCallIdMap);
+        return new FactoryCollectionDoNotTrace(methodCallIdMap);
     }
 }

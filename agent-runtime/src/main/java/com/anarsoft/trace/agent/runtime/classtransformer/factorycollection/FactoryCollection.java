@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 public interface FactoryCollection {
 
-    TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor);
+    TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor, int access);
 
     TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(NameAndDescriptor nameAndDescriptor,
                                                                                    int access,

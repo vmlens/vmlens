@@ -1,7 +1,7 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
-import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FactoryFactoryPreAnalyzed;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactoryFactoryPreAnalyzed;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.PreAnalyzedStrategy;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
@@ -24,12 +24,12 @@ public class FactoryCollectionPreAnalyzed implements FactoryCollection {
         this.methodToStrategy = methodToStrategy;
         this.methodNotFoundAction = methodNotFoundAction;
         this.factoryForBoth = new FactoryForPreAnalyzedAndAll(
-                new FactoryFactoryPreAnalyzed(), methodCallIdMap);
+                new MethodCallbackFactoryFactoryPreAnalyzed(), methodCallIdMap);
         this.preAnalyzedStrategy = preAnalyzedStrategy;
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor) {
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor, int access) {
         StrategyPreAnalyzed strategy = methodToStrategy.get(nameAndDescriptor);
         if (strategy != null) {
             return factoryForBoth.getAnalyze(nameAndDescriptor);

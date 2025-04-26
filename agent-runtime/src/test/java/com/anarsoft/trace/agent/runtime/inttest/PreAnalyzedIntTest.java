@@ -1,13 +1,11 @@
 package com.anarsoft.trace.agent.runtime.inttest;
 
 import com.anarsoft.trace.agent.preanalyzed.model.ClassType;
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedAtomicReadWriteLock;
+import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedAllMethods;
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedSpecificMethods;
 import com.anarsoft.trace.agent.preanalyzed.model.PackageOrClass;
 import com.anarsoft.trace.agent.preanalyzed.model.PreAnalyzedMethod;
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.PreAnalyzedAtomicNonBlocking;
 import com.anarsoft.trace.agent.runtime.classtransformer.RunTestClassTransformer;
-import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 
@@ -17,7 +15,6 @@ import java.io.IOException;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_WRITE_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.EXIT_REENTRANT_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
-import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.NonBlockingMethod.NON_BLOCKING_WRITE;
 
 public class PreAnalyzedIntTest {
 
@@ -28,7 +25,7 @@ public class PreAnalyzedIntTest {
     @Test
     public void atomicReadWriteLock() throws IOException {
         PreAnalyzedMethodBuilder preAnalyzedMethodBuilder = new PreAnalyzedMethodBuilder(METHOD_WITH_READ_LOCK);
-        runTest(PreAnalyzedAtomicReadWriteLock.SINGLETON, preAnalyzedMethodBuilder.build(), "/noMethodCall.txt");
+        runTest(PreAnalyzedAllMethods.SINGLETON, preAnalyzedMethodBuilder.build(), "/noMethodCall.txt");
     }
 
     @Test

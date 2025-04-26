@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodenterexit;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FactoryFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -46,7 +46,7 @@ public class MethodEnterExitTransform extends MethodVisitor {
     public MethodEnterExitTransform(int inMethodId, int tryCatchBlockCount, boolean useExpandedFrames,
                                     MethodVisitor methodVisitor, boolean isStatic,
                                     boolean isConstructor, String className,
-                                    String description, FactoryFactory factoryFactory) {
+                                    String description, MethodCallbackFactoryFactory factoryFactory) {
         super(ASM_API_VERSION, methodVisitor);
         this.inMethodId = inMethodId;
         this.tryCatchBlockCount = tryCatchBlockCount;

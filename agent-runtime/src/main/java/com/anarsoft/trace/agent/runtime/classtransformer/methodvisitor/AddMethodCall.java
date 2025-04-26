@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitor;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FactoryFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
@@ -28,7 +28,7 @@ public class AddMethodCall extends MethodVisitor {
     }
 
     public static MethodVisitorFactory factory(MethodRepositoryForTransform methodCallIdMap,
-                                               FactoryFactory factoryFactory) {
+                                               MethodCallbackFactoryFactory factoryFactory) {
         return (factoryContext, previous) -> new AddMethodCall(previous,
                 methodCallIdMap,
                 factoryFactory.create(previous),

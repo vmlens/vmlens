@@ -1,3 +1,3 @@
 package com.vmlens.preanalyzed.model
 
-case class MethodWithLock(name : String, lockOperation : LockType)
+case class MethodWithLock(name : String, desc : String, lockType : ReadOrWriteLockType)

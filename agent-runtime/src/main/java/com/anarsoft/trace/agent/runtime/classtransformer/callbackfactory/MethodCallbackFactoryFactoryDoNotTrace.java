@@ -2,10 +2,11 @@ package com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory;
 
 import org.objectweb.asm.MethodVisitor;
 
-public class FactoryFactoryAll implements FactoryFactory {
+public class MethodCallbackFactoryFactoryDoNotTrace implements MethodCallbackFactoryFactory {
 
     @Override
     public MethodCallbackFactory create(MethodVisitor methodVisitor) {
-        return new MethodCallbackFactoryAll(methodVisitor);
+        return new MethodCallbackFactoryDoNotTrace(methodVisitor);
     }
+
 }

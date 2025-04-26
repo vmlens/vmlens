@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.classtransformer.methodvisitormethodenterexit;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.FactoryFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactoryFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.FactoryContext;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.TransformFactory;
 import org.objectweb.asm.MethodVisitor;
@@ -8,10 +8,10 @@ import org.objectweb.asm.MethodVisitor;
 public class MethodEnterExitTransformFactory implements TransformFactory {
 
     private final int tryCatchBlockCount;
-    private final FactoryFactory factoryFactory;
+    private final MethodCallbackFactoryFactory factoryFactory;
 
     public MethodEnterExitTransformFactory(int tryCatchBlockCount,
-                                           FactoryFactory factoryFactory) {
+                                           MethodCallbackFactoryFactory factoryFactory) {
         this.tryCatchBlockCount = tryCatchBlockCount;
         this.factoryFactory = factoryFactory;
     }

@@ -46,9 +46,12 @@ public class ClassFilterAndTransformerStrategyCollectionFactory {
                 fieldRepositoryForAnalyze,
                 writeClassDescription);
         ClassTransformerListBuilderImpl classBuilder = new ClassTransformerListBuilderImpl(transformerStrategyFactory);
+        classBuilder.addDoNotTraceIn();
+
         for (TLinkableWrapper<PackageOrClass> packageOrClass : preAnalyzed) {
             packageOrClass.element().addToBuilder(classBuilder);
         }
+
         return classBuilder.build();
     }
 }

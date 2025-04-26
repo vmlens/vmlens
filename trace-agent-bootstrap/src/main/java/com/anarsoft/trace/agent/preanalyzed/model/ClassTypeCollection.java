@@ -21,11 +21,8 @@ public class ClassTypeCollection {
         if(classType instanceof ClassTypeVmlensApi) {
             return 3;
         }
-        if(classType instanceof PreAnalyzedAtomicNonBlocking) {
+        if(classType instanceof PreAnalyzedAllMethods) {
             return 4;
-        }
-        if(classType instanceof PreAnalyzedAtomicReadWriteLock) {
-            return 5;
         }
         throw new RuntimeException("unknown " + classType.getClass());
     }
@@ -44,10 +41,7 @@ public class ClassTypeCollection {
             return ClassTypeVmlensApi.SINGLETON;
         }
         if(id == 4) {
-            return PreAnalyzedAtomicNonBlocking.SINGLETON;
-        }
-        if(id == 5) {
-            return PreAnalyzedAtomicReadWriteLock.SINGLETON;
+            return PreAnalyzedAllMethods.SINGLETON;
         }
         throw new RuntimeException("unknown " + id);
     }

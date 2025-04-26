@@ -1,12 +1,10 @@
 package com.vmlens.preanalyzed.serialize
 
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.{ClassTypeAllStartWith, ClassTypeFilter, ClassTypeVmlensApi, PreAnalyzedAtomicReadWriteLock, PreAnalyzedSpecificMethods}
-import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.{GetReadWriteLockMethod, ThreadJoin, ThreadStart}
+import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.{ClassTypeAllStartWith, ClassTypeFilter, ClassTypeVmlensApi, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
+import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.{GetReadWriteLockMethod, NonBlockingMethod, ThreadJoin, ThreadStart}
 import com.anarsoft.trace.agent.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod}
-import com.vmlens.preanalyzed.factory.PreAnalyzedFactory
-import com.vmlens.preanalyzed.model.*
+import com.vmlens.preanalyzed.model.{LockType, *}
 
-import java.io.{DataOutputStream, FileOutputStream}
 import scala.collection.mutable.ArrayBuffer
 
 class TransformToPackageOrClass {
@@ -35,22 +33,72 @@ class TransformToPackageOrClass {
           }
           case GetReadWriteLock(name) => {
             new PackageOrClass(name,
-              PreAnalyzedAtomicReadWriteLock.SINGLETON,
+              PreAnalyzedAllMethods.SINGLETON,
               Array(new PreAnalyzedMethod("readLock", "()Ljava/util/concurrent/locks/Lock;", GetReadWriteLockMethod.GET_READ_WRITE_LOCK),
                 new PreAnalyzedMethod("writeLock", "()Ljava/util/concurrent/locks/Lock;", GetReadWriteLockMethod.GET_READ_WRITE_LOCK)))
           }
           case Lock(name, lockType, methods) => {
-            new PackageOrClass(name, PreAnalyzedAtomicReadWriteLock.SINGLETON, lockMethodsToArray(lockType, methods))
-
+            new PackageOrClass(name, PreAnalyzedAllMethods.SINGLETON, lockMethodsToArray(lockType, methods))
           }
-        }
+          case AtomicReadWriteLock(name, methods) => {
+            new PackageOrClass(name, PreAnalyzedAllMethods.SINGLETON, methodWithLockToArray(methods))
+          }
+          case AtomicNonBlocking(name, methods) => {
+            new PackageOrClass(name, PreAnalyzedAllMethods.SINGLETON, atomicNonBlockingMethodArray(methods))
+          }
+          }
       result.append(packageOrClass)
     }
     result.toList;
   }
 
+  private def atomicNonBlockingMethodArray(methods: List[AtomicNonBlockingMethod]): Array[PreAnalyzedMethod] = {
+    val buffer = new ArrayBuffer[PreAnalyzedMethod]();
+    for (elem <- methods) {
+      buffer.append(new PreAnalyzedMethod(elem.name, elem.desc, javaNonBlockingMethod(elem.methodType)))
+    }
+    buffer.toArray;
+  }
 
-  def lockMethodsToArray(lockType: LockType, methods: List[LockMethod]): Array[PreAnalyzedMethod] = {
+  private def javaNonBlockingMethod(atomicNonBlockingMethodType : AtomicNonBlockingMethodType) : NonBlockingMethod = {
+    atomicNonBlockingMethodType match {
+      case Read() => {
+        NonBlockingMethod.NON_BLOCKING_READ
+      }
+      case Write() => {
+        NonBlockingMethod.NON_BLOCKING_WRITE
+      }
+      case ReadWrite() => {
+        NonBlockingMethod.NON_BLOCKING_READ_WRITE
+      }
+        
+      
+    }
+    
+  }
+  
+  
+  private def methodWithLockToArray(methods : List[MethodWithLock]) : Array[PreAnalyzedMethod] = {
+    val buffer = new ArrayBuffer[PreAnalyzedMethod]();
+    for (elem <- methods) {
+      buffer.append(new PreAnalyzedMethod(elem.name, elem.desc, javaMethodWithLock(elem.lockType)))
+    }
+    buffer.toArray;
+  }
+
+  private def javaMethodWithLock(lockType: ReadOrWriteLockType): com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock = {
+    lockType match {
+      case ReadLock() => {
+        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
+      }
+      case WriteLock() => {
+        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK
+      }
+    }
+  }
+
+
+  private def lockMethodsToArray(lockType: LockType, methods: List[LockMethod]): Array[PreAnalyzedMethod] = {
     val buffer = new ArrayBuffer[PreAnalyzedMethod]();
     for (elem <- methods) {
       buffer.append(new PreAnalyzedMethod(elem.name, elem.desc, javaLockMethod(lockType, elem.lockOperation)))
@@ -58,7 +106,7 @@ class TransformToPackageOrClass {
     buffer.toArray;
   }
 
-  def javaLockMethod(lockType: LockType, lockOperation: LockOperation): com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod = {
+  private def javaLockMethod(lockType: LockType, lockOperation: LockOperation) : com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod = {
     (lockOperation, lockType) match {
       case (LockEnter(), ReadLock()) => {
         com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.ENTER_READ_LOCK;

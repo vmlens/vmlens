@@ -29,7 +29,6 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
         this.preAnalyzedStrategy = preAnalyzedStrategy;
     }
 
-
     @Override
     public void getReadWriteLock(String name, String desc) {
         methodToStrategy.put(new NameAndDescriptor(name, desc), new GetReadWriteLockMethodStrategy());
@@ -40,8 +39,6 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
     public void addMethodWithLock(String name, String desc, ReadOrWriteLock lockType) {
         methodToStrategy.put(new NameAndDescriptor(name, desc), new MethodWithLockStrategy(lockType));
     }
-
-
 
     @Override
     public void addNonBlockingMethod(String name, String desc, int operation) {
@@ -69,10 +66,7 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
         methodNotFoundAction = NO_OP;
     }
 
-
     public FactoryCollectionPreAnalyzedFactory build() {
         return new FactoryCollectionPreAnalyzedFactory(methodToStrategy, methodNotFoundAction, methodCallIdMap,preAnalyzedStrategy);
     }
-
-
 }

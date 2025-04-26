@@ -5,10 +5,10 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrateg
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategyNoOp;
 import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyForClassTransformer;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionAllFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionDoNotTraceFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.NoMethodCall;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.WithObjectMethodCall;
 import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
@@ -53,8 +53,9 @@ public class TransformerStrategyFactory {
         return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new NoMethodCall());
     }
 
-    public FactoryCollectionPreAnalyzedFactoryBuilder createTraceMethodCallWithObject() {
-        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new WithObjectMethodCall());
+    public TransformerStrategy createDoNotTraceIn() {
+        return new TransformerStrategyForClassTransformer(new FactoryCollectionDoNotTraceFactory(methodRepositoryForAnalyze),
+                methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
 }

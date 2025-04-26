@@ -4,9 +4,7 @@ package com.anarsoft.trace.agent.preanalyzed.builder;
 public interface ClassTransformerListBuilder {
 
     FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall();
-
-    FactoryCollectionPreAnalyzedFactoryBuilder createTraceMethodCallWithObject();
-
+    
     void addPreAnalyzedEquals(String name, FactoryCollectionPreAnalyzedFactoryBuilder
             factoryCollectionPreAnalyzedFactoryBuilder);
 
@@ -15,5 +13,7 @@ public interface ClassTransformerListBuilder {
     void addFilterStartsWith(String name);
 
     void addVmlensApi(String name);
+
+    void addDoNotTraceIn();
 
 }

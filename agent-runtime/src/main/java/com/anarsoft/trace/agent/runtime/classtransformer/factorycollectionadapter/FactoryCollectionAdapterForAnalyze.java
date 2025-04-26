@@ -20,6 +20,6 @@ public class FactoryCollectionAdapterForAnalyze implements FactoryCollectionAdap
                                                                    int access,
                                                                    int methodId,
                                                                    MethodRepositoryForTransform methodRepositoryForTransform) {
-        return factoryCollection.getAnalyze(nameAndDescriptor);
+        return factoryCollection.getAnalyze(nameAndDescriptor,access);
     }
 }
