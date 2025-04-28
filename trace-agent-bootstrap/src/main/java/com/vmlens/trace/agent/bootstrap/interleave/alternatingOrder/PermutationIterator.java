@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 /**
  * hides the algorithm to calculate all binary permutations for a given length

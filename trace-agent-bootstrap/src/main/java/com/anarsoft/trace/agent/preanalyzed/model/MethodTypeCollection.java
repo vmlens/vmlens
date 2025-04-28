@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.preanalyzed.model;
 
+import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.NotYetImplementedMethod;
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadJoin;
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadStart;
 
@@ -65,6 +66,9 @@ public class MethodTypeCollection {
         if(methodType == NON_BLOCKING_READ_WRITE) {
             return 13;
         }
+        if(methodType == NotYetImplementedMethod.SINGLETON) {
+            return 14;
+        }
 
         throw new RuntimeException("unknown " + methodType.getClass());
     }
@@ -119,6 +123,9 @@ public class MethodTypeCollection {
         }
         if(id == 13) {
             return NON_BLOCKING_READ_WRITE;
+        }
+        if(id == 14) {
+            return NotYetImplementedMethod.SINGLETON;
         }
 
         throw new RuntimeException("unknown " + id);

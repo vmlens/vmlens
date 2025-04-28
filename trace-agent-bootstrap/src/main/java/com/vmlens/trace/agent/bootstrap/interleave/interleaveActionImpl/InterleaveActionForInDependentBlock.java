@@ -1,7 +1,7 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.IndependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;

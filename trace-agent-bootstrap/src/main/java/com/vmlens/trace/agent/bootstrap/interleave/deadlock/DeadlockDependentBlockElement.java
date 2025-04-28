@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElementStrategy;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElementStrategy;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 

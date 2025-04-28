@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.activelock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import org.junit.Test;

@@ -19,6 +19,8 @@ public interface FactoryCollectionPreAnalyzedFactoryBuilder {
 
     void addThreadJoin(String name, String desc);
 
+    void notYetImplemented(String name, String desc);
+
     void noOpWhenMethodNotFound();
 
 

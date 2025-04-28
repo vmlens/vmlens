@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithCalculated;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated;

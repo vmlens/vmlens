@@ -62,6 +62,11 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
     }
 
     @Override
+    public void notYetImplemented(String name, String desc) {
+        methodToStrategy.put(new NameAndDescriptor(name, desc), new NotYetImplementedStrategy(name));
+    }
+
+    @Override
     public void noOpWhenMethodNotFound() {
         methodNotFoundAction = NO_OP;
     }

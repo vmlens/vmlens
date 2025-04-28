@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElement;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.LeftBeforeRightPair;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.OrderArrays;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.LeftBeforeRightPair;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrays;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 

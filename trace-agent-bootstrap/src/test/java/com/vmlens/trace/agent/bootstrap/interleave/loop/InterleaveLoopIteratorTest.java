@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import org.junit.Test;
 
 import java.util.Iterator;

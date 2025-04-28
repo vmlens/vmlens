@@ -1,7 +1,7 @@
 package com.vmlens.preanalyzed.serialize
 
 import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.{ClassTypeAllStartWith, ClassTypeFilter, ClassTypeVmlensApi, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
-import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.{GetReadWriteLockMethod, NonBlockingMethod, ThreadJoin, ThreadStart}
+import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.{GetReadWriteLockMethod, NonBlockingMethod, NotYetImplementedMethod, ThreadJoin, ThreadStart}
 import com.anarsoft.trace.agent.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod}
 import com.vmlens.preanalyzed.model.{LockType, *}
 
@@ -55,29 +55,37 @@ class TransformToPackageOrClass {
   private def atomicNonBlockingMethodArray(methods: List[AtomicNonBlockingMethod]): Array[PreAnalyzedMethod] = {
     val buffer = new ArrayBuffer[PreAnalyzedMethod]();
     for (elem <- methods) {
-      buffer.append(new PreAnalyzedMethod(elem.name, elem.desc, javaNonBlockingMethod(elem.methodType)))
+      addNonBlocking(elem,buffer);
     }
     buffer.toArray;
   }
 
-  private def javaNonBlockingMethod(atomicNonBlockingMethodType : AtomicNonBlockingMethodType) : NonBlockingMethod = {
-    atomicNonBlockingMethodType match {
+  private def addNonBlocking(method : AtomicNonBlockingMethod,  buffer : ArrayBuffer[PreAnalyzedMethod]) : Unit = {
+    method.methodType match {
       case Read() => {
-        NonBlockingMethod.NON_BLOCKING_READ
+        buffer.append(new PreAnalyzedMethod(method.name, method.desc,  NonBlockingMethod.NON_BLOCKING_READ))
+
       }
       case Write() => {
-        NonBlockingMethod.NON_BLOCKING_WRITE
+        buffer.append(new PreAnalyzedMethod(method.name, method.desc,  NonBlockingMethod.NON_BLOCKING_WRITE))
+
       }
       case ReadWrite() => {
-        NonBlockingMethod.NON_BLOCKING_READ_WRITE
+        buffer.append(new PreAnalyzedMethod(method.name, method.desc, NonBlockingMethod.NON_BLOCKING_READ_WRITE))
       }
-        
-      
+
+      case
+        NotYetImplemented()  =>{
+        buffer.append(new PreAnalyzedMethod(method.name, method.desc, NotYetImplementedMethod.SINGLETON))
+
+      }
+
+
     }
-    
+
   }
-  
-  
+
+
   private def methodWithLockToArray(methods : List[MethodWithLock]) : Array[PreAnalyzedMethod] = {
     val buffer = new ArrayBuffer[PreAnalyzedMethod]();
     for (elem <- methods) {

@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block.dependent;
 
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 

@@ -2,6 +2,8 @@ package com.vmlens.preanalyzed.factory
 
 import com.vmlens.preanalyzed.model._
 
+import com.vmlens.preanalyzed.factory.ConcurrentHashMapFactory.concurrentHashMap;
+import com.vmlens.preanalyzed.factory.AtomicIntegerFactory.atomicInteger;
 import scala.collection.mutable.ArrayBuffer
 
 class PreAnalyzedFactory {
@@ -19,9 +21,9 @@ class PreAnalyzedFactory {
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$WriteLock", WriteLock(), lockMethods()),
       Lock("java/util/concurrent/locks/ReentrantLock", ReentrantLock(), lockMethods()),
 
-      AtomicReadWriteLock("java/util/concurrent/ConcurrentHashMap",concurrentHashMapMethods()),
-      AtomicNonBlocking("java/util/concurrent/atomic/AtomicInteger", atomicIntegerMethods()),
-
+      concurrentHashMap(),
+      atomicInteger(),
+     
       ThreadModel("java/lang/Thread"),
       VMLensApi("com/vmlens/api/AllInterleaving"),
 
@@ -57,17 +59,8 @@ class PreAnalyzedFactory {
       LockMethod("tryLock", "()V", LockEnter()),
       LockMethod("unlock", "()V", LockExit()));
 
-  private def concurrentHashMapMethods() : List[MethodWithLock] =
-    List[MethodWithLock](
-      MethodWithLock("get", "(Ljava/lang/Object;)Ljava/lang/Object;",ReadLock()),
-      MethodWithLock( "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",WriteLock())
 
-    )
 
-  private def atomicIntegerMethods(): List[AtomicNonBlockingMethod] =
-    List[AtomicNonBlockingMethod](
-      AtomicNonBlockingMethod("incrementAndGet", "()I", ReadWrite())
-    )
-
+ 
 
 }

@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block.guineapig;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElementStrategy;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlwaysEnabled;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElementStrategy;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlwaysEnabled;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
 
 public class DependentBlockElementGuineaPig implements DependentBlockElement {

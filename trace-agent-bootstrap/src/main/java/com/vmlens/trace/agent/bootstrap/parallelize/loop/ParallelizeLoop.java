@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunEndEvent;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunStartEvent;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;

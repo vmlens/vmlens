@@ -1,0 +1,698 @@
+class:java/util/concurrent/atomic/AtomicInteger
+method:<init>(I)V
+  ALOAD
+  INVOKESPECIAL  java/lang/Number.<init>:()V
+  ALOAD
+  ILOAD
+  PUTFIELD  java/util/concurrent/atomic/AtomicInteger.value:I
+  RETURN
+method:<init>()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Number.<init>:()V
+  RETURN
+method:get()I
+  ALOAD
+  load:2
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  GETFIELD  java/util/concurrent/atomic/AtomicInteger.value:I
+  ALOAD
+  load:2
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:2
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:set(I)V
+  ALOAD
+  load:3
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  ILOAD
+  PUTFIELD  java/util/concurrent/atomic/AtomicInteger.value:I
+  ALOAD
+  load:3
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD
+  load:3
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:lazySet(I)V
+  ALOAD
+  load:4
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.putIntRelease:(Ljava/lang/Object;JI)V
+  ALOAD
+  load:4
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD
+  load:4
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getAndSet(I)I
+  ALOAD
+  load:5
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getAndSetInt:(Ljava/lang/Object;JI)I
+  ALOAD
+  load:5
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:5
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:compareAndSet(II)Z
+  ALOAD
+  load:6
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.compareAndSetInt:(Ljava/lang/Object;JII)Z
+  ALOAD
+  load:6
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:6
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:weakCompareAndSet(II)Z
+  ALOAD
+  load:7
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.weakCompareAndSetIntPlain:(Ljava/lang/Object;JII)Z
+  ALOAD
+  load:7
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:7
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:weakCompareAndSetPlain(II)Z
+  ALOAD
+  load:8
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.weakCompareAndSetIntPlain:(Ljava/lang/Object;JII)Z
+  ALOAD
+  load:8
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:8
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getAndIncrement()I
+  ALOAD
+  load:9
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ICONST_1
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getAndAddInt:(Ljava/lang/Object;JI)I
+  ALOAD
+  load:9
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:9
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getAndDecrement()I
+  ALOAD
+  load:10
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ICONST_M1
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getAndAddInt:(Ljava/lang/Object;JI)I
+  ALOAD
+  load:10
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:10
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getAndAdd(I)I
+  ALOAD
+  load:11
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getAndAddInt:(Ljava/lang/Object;JI)I
+  ALOAD
+  load:11
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:11
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:incrementAndGet()I
+  ALOAD
+  load:12
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ICONST_1
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getAndAddInt:(Ljava/lang/Object;JI)I
+  ICONST_1
+  IADD
+  ALOAD
+  load:12
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:12
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:decrementAndGet()I
+  ALOAD
+  load:13
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ICONST_M1
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getAndAddInt:(Ljava/lang/Object;JI)I
+  ICONST_1
+  ISUB
+  ALOAD
+  load:13
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:13
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:addAndGet(I)I
+  ALOAD
+  load:14
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getAndAddInt:(Ljava/lang/Object;JI)I
+  ILOAD
+  IADD
+  ALOAD
+  load:14
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:14
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getAndUpdate(Ljava/util/function/IntUnaryOperator;)I
+  ALOAD
+  load:15
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  ISTORE
+  ICONST_0
+  ISTORE
+  ICONST_0
+  ISTORE
+  ILOAD
+  IFNE
+  ALOAD
+  ILOAD
+  INVOKEINTERFACE  java/util/function/IntUnaryOperator.applyAsInt:(I)I
+  ISTORE
+  ALOAD
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.weakCompareAndSetVolatile:(II)Z
+  IFEQ
+  ILOAD
+  ALOAD
+  load:15
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ILOAD
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  DUP
+  ISTORE
+  IF_ICMPNE
+  ICONST_1
+  GOTO
+  ICONST_0
+  ISTORE
+  GOTO
+  ALOAD
+  load:15
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:updateAndGet(Ljava/util/function/IntUnaryOperator;)I
+  ALOAD
+  load:16
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  ISTORE
+  ICONST_0
+  ISTORE
+  ICONST_0
+  ISTORE
+  ILOAD
+  IFNE
+  ALOAD
+  ILOAD
+  INVOKEINTERFACE  java/util/function/IntUnaryOperator.applyAsInt:(I)I
+  ISTORE
+  ALOAD
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.weakCompareAndSetVolatile:(II)Z
+  IFEQ
+  ILOAD
+  ALOAD
+  load:16
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ILOAD
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  DUP
+  ISTORE
+  IF_ICMPNE
+  ICONST_1
+  GOTO
+  ICONST_0
+  ISTORE
+  GOTO
+  ALOAD
+  load:16
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getAndAccumulate(ILjava/util/function/IntBinaryOperator;)I
+  ALOAD
+  load:17
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  ISTORE
+  ICONST_0
+  ISTORE
+  ICONST_0
+  ISTORE
+  ILOAD
+  IFNE
+  ALOAD
+  ILOAD
+  ILOAD
+  INVOKEINTERFACE  java/util/function/IntBinaryOperator.applyAsInt:(II)I
+  ISTORE
+  ALOAD
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.weakCompareAndSetVolatile:(II)Z
+  IFEQ
+  ILOAD
+  ALOAD
+  load:17
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ILOAD
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  DUP
+  ISTORE
+  IF_ICMPNE
+  ICONST_1
+  GOTO
+  ICONST_0
+  ISTORE
+  GOTO
+  ALOAD
+  load:17
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:accumulateAndGet(ILjava/util/function/IntBinaryOperator;)I
+  ALOAD
+  load:18
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  ISTORE
+  ICONST_0
+  ISTORE
+  ICONST_0
+  ISTORE
+  ILOAD
+  IFNE
+  ALOAD
+  ILOAD
+  ILOAD
+  INVOKEINTERFACE  java/util/function/IntBinaryOperator.applyAsInt:(II)I
+  ISTORE
+  ALOAD
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.weakCompareAndSetVolatile:(II)Z
+  IFEQ
+  ILOAD
+  ALOAD
+  load:18
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ILOAD
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  DUP
+  ISTORE
+  IF_ICMPNE
+  ICONST_1
+  GOTO
+  ICONST_0
+  ISTORE
+  GOTO
+  ALOAD
+  load:18
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:toString()Ljava/lang/String;
+  ALOAD
+  load:19
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  INVOKESTATIC  java/lang/Integer.toString:(I)Ljava/lang/String;
+  DUP
+  ALOAD
+  load:19
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExitObjectReturn:(Ljava/lang/Object;Ljava/lang/Object;I)V
+  ARETURN
+  ALOAD
+  load:19
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:intValue()I
+  ALOAD
+  load:20
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  ALOAD
+  load:20
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:20
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:longValue()J
+  ALOAD
+  load:21
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  I2L
+  ALOAD
+  load:21
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  LRETURN
+  ALOAD
+  load:21
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:floatValue()F
+  ALOAD
+  load:22
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  I2F
+  ALOAD
+  load:22
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  FRETURN
+  ALOAD
+  load:22
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:doubleValue()D
+  ALOAD
+  load:23
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD
+  INVOKEVIRTUAL  java/util/concurrent/atomic/AtomicInteger.get:()I
+  I2D
+  ALOAD
+  load:23
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  DRETURN
+  ALOAD
+  load:23
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getPlain()I
+  ALOAD
+  load:24
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getInt:(Ljava/lang/Object;J)I
+  ALOAD
+  load:24
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:24
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:setPlain(I)V
+  ALOAD
+  load:25
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.putInt:(Ljava/lang/Object;JI)V
+  ALOAD
+  load:25
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD
+  load:25
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getOpaque()I
+  ALOAD
+  load:26
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getIntOpaque:(Ljava/lang/Object;J)I
+  ALOAD
+  load:26
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:26
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:setOpaque(I)V
+  ALOAD
+  load:27
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.putIntOpaque:(Ljava/lang/Object;JI)V
+  ALOAD
+  load:27
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD
+  load:27
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:getAcquire()I
+  ALOAD
+  load:28
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.getIntAcquire:(Ljava/lang/Object;J)I
+  ALOAD
+  load:28
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:28
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:setRelease(I)V
+  ALOAD
+  load:29
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.putIntRelease:(Ljava/lang/Object;JI)V
+  ALOAD
+  load:29
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD
+  load:29
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:compareAndExchange(II)I
+  ALOAD
+  load:30
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.compareAndExchangeInt:(Ljava/lang/Object;JII)I
+  ALOAD
+  load:30
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:30
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:compareAndExchangeAcquire(II)I
+  ALOAD
+  load:31
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.compareAndExchangeIntAcquire:(Ljava/lang/Object;JII)I
+  ALOAD
+  load:31
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:31
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:compareAndExchangeRelease(II)I
+  ALOAD
+  load:32
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.compareAndExchangeIntRelease:(Ljava/lang/Object;JII)I
+  ALOAD
+  load:32
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:32
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:weakCompareAndSetVolatile(II)Z
+  ALOAD
+  load:33
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.weakCompareAndSetInt:(Ljava/lang/Object;JII)Z
+  ALOAD
+  load:33
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:33
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:weakCompareAndSetAcquire(II)Z
+  ALOAD
+  load:34
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.weakCompareAndSetIntAcquire:(Ljava/lang/Object;JII)Z
+  ALOAD
+  load:34
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:34
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:weakCompareAndSetRelease(II)Z
+  ALOAD
+  load:35
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  ALOAD
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  ILOAD
+  ILOAD
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.weakCompareAndSetIntRelease:(Ljava/lang/Object;JII)Z
+  ALOAD
+  load:35
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  ALOAD
+  load:35
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:<clinit>()V
+  INVOKESTATIC  jdk/internal/misc/Unsafe.getUnsafe:()Ljdk/internal/misc/Unsafe;
+  PUTSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  GETSTATIC  java/util/concurrent/atomic/AtomicInteger.U:Ljdk/internal/misc/Unsafe;
+  load:Ljava/util/concurrent/atomic/AtomicInteger;
+  load:value
+  INVOKEVIRTUAL  jdk/internal/misc/Unsafe.objectFieldOffset:(Ljava/lang/Class;Ljava/lang/String;)J
+  PUTSTATIC  java/util/concurrent/atomic/AtomicInteger.VALUE:J
+  RETURN

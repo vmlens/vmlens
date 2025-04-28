@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.inttest;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileFieldKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;

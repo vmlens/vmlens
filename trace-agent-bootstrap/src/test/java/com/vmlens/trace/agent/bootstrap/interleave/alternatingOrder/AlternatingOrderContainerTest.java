@@ -1,9 +1,9 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElement;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlwaysEnabled;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlwaysEnabled;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

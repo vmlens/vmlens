@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.interleave.inttest.util;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockExit;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.ThreadJoin;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockEnterImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockExit;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.ThreadJoin;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.VolatileAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;

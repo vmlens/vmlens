@@ -3,11 +3,9 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileFieldAccessEventStaticGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NotThreadStartedInterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.VolatileAccess;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileFieldKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey.VolatileStaticFieldKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.VolatileAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileStaticFieldKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 

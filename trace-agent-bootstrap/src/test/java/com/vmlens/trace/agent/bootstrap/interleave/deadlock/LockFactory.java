@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.LockEnterImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 
 public class LockFactory {

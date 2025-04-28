@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.DependentBlockElementGuineaPig;
@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.junit.Test;
 
-import static com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition.epos;
+import static com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition.epos;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 

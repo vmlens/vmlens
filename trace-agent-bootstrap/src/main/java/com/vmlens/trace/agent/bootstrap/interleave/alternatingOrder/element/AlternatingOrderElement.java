@@ -1,7 +1,7 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.CreateOrderContext;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CreateOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 
 import java.util.Objects;

@@ -24,3 +24,5 @@ case class Write() extends AtomicNonBlockingMethodType;
 
 case class ReadWrite() extends AtomicNonBlockingMethodType;
 
+case class NotYetImplemented() extends AtomicNonBlockingMethodType;
+

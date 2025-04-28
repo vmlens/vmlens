@@ -22,6 +22,10 @@ public class ClassLoaderForTransformation extends ClassLoader {
 
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+        if (name.startsWith("java.util.concurrent.atomic")) {
+            return testClassLoader.loadClass(name);
+        }
+
         if (name.startsWith("com.vmlens.trace.agent")) {
             return testClassLoader.loadClass(name);
         }

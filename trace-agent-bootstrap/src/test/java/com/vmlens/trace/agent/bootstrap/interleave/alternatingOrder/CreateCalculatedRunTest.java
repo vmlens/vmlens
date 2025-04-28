@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.IntArray;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import static com.vmlens.trace.agent.bootstrap.interleave.IntArray.intArray;
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
-import static com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.IntArrayUtil.toIntArray;
+import static com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.IntArrayUtil.toIntArray;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;

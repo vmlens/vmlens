@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl.volatileaccesskey;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey;
 
 /**
  * marker interface

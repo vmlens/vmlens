@@ -20,8 +20,8 @@ class SerializePreAnalyzed {
 object SerializePreAnalyzed {
 
   def main(args: Array[String]) = {
-    val fileOutputStream = new FileOutputStream("../agent-runtime/src/main/resources/preanalyzed.vmlens");
-   // val fileOutputStream = new FileOutputStream("../test-vmlens-maven-plugin/target/vmlens-agent/preanalyzed.vmlens");
+   val fileOutputStream = new FileOutputStream("../agent-runtime/src/main/resources/preanalyzed.vmlens");
+  //  val fileOutputStream = new FileOutputStream("../test-vmlens-maven-plugin/target/vmlens-agent/preanalyzed.vmlens");
     val dataOutputStream = new DataOutputStream(fileOutputStream);
     val list = new PreAnalyzedFactory().create();
     new SerializePreAnalyzed().serialize(list, dataOutputStream);

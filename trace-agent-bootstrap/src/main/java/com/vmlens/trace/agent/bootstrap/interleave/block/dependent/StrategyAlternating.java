@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.block.dependent;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElement;
 import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
 
 class StrategyAlternating implements Strategy {

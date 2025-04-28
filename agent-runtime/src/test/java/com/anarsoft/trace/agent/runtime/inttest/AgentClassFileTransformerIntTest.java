@@ -120,6 +120,7 @@ public class AgentClassFileTransformerIntTest {
         verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
     }
 
+
     private void runTest(String className) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         ClassLoader cl = new ClassLoaderForTransformation(this.getClass().getClassLoader());

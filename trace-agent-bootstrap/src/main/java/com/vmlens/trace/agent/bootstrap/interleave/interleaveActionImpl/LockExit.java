@@ -1,11 +1,11 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveActionImpl;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.AlternatingOrderElementStrategy;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.element.OnlyWhenNotDeadlockActive;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElementStrategy;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.OnlyWhenNotDeadlockActive;
 import com.vmlens.trace.agent.bootstrap.interleave.block.*;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;

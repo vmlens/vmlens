@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.activelock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingOrder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;

@@ -20,7 +20,10 @@ class StacktraceNodeStack(val threadIndex: Int) {
   }
 
   def methodExit(): StacktraceNode = {
-    val current = stack.pop();
+    // can at least currently happen because of exceptions
+    if(stack.nonEmpty) {
+      stack.pop();
+    }
     if (stack.isEmpty) {
       null;
     } else {
