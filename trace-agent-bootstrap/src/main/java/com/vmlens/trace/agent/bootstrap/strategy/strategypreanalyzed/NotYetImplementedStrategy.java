@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.ThrowNotYetImplementedException;
+
 public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
 
     private final String methodName;
@@ -10,12 +12,12 @@ public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void methodEnter(EnterExitContext context) {
-        throwException();
+        throwException(context);
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
-        throwException();
+        throwException(context);
     }
 
     @Override
@@ -28,8 +30,7 @@ public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
         // Nothing to do
     }
 
-    private void throwException() {
-        throw new UnsupportedOperationException("The method " + methodName + " can currently not be tested with vmlens.");
-
+    private void throwException(EnterExitContext context) {
+        context.threadLocalWhenInTestAdapter().process(new ThrowNotYetImplementedException(methodName));
     }
 }

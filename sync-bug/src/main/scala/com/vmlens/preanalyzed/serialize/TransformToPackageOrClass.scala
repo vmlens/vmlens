@@ -1,6 +1,6 @@
 package com.vmlens.preanalyzed.serialize
 
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.{ClassTypeAllStartWith, ClassTypeFilter, ClassTypeVmlensApi, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
+import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.{ClassNotYetImplemented, ClassTypeAllStartWith, ClassTypeFilter, ClassTypeVmlensApi, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.{GetReadWriteLockMethod, NonBlockingMethod, NotYetImplementedMethod, ThreadJoin, ThreadStart}
 import com.anarsoft.trace.agent.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod}
 import com.vmlens.preanalyzed.model.{LockType, *}
@@ -45,6 +45,9 @@ class TransformToPackageOrClass {
           }
           case AtomicNonBlocking(name, methods) => {
             new PackageOrClass(name, PreAnalyzedAllMethods.SINGLETON, atomicNonBlockingMethodArray(methods))
+          }
+          case NotYetImplementedClass(name) => {
+            new PackageOrClass(name, ClassNotYetImplemented.SINGLETON, Array.ofDim[PreAnalyzedMethod](0))
           }
           }
       result.append(packageOrClass)

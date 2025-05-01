@@ -16,4 +16,6 @@ public interface ClassTransformerListBuilder {
 
     void addDoNotTraceIn();
 
+    void addClassNotYetImplemented(String name);
+
 }

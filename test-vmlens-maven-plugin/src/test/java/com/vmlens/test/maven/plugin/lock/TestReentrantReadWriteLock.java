@@ -1,4 +1,4 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.lock;
 
 import com.vmlens.api.AllInterleaving;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ReentrantReadWriteLockCT {
+public class TestReentrantReadWriteLock {
 
     @Test
     public void testUpdate() throws InterruptedException {

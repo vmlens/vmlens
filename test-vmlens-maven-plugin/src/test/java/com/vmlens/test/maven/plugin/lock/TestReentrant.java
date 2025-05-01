@@ -1,4 +1,4 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.lock;
 
 import com.vmlens.api.AllInterleaving;
 import org.junit.Test;

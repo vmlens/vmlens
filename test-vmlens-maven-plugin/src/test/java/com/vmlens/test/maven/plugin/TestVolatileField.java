@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class VolatileFieldCT {
+public class TestVolatileField {
 
     private volatile int j = 0;
 

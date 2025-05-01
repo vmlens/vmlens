@@ -13,8 +13,8 @@
     <name>test-vmlens-maven-plugin</name>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -22,6 +22,11 @@
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>java-hamcrest</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -48,14 +53,16 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.vmlens</groupId>
                 <artifactId>vmlens-maven-plugin</artifactId>
-                <configuration>
-                    <includes>
-                        <include>**/*CT.java</include>
-                        <include>**/Test*.java</include>
-                    </includes>
-                </configuration>
                 <executions>
                     <execution>
                         <id>test</id>

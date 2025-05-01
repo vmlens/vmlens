@@ -1,4 +1,4 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.concurrent;
 
 import com.vmlens.api.AllInterleaving;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ConcurrentHashMapCT {
+public class TestConcurrentHashMap {
 
     @Test
     public void testUpdate() throws InterruptedException {

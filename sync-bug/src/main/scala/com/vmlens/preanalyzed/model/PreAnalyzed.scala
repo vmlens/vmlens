@@ -38,3 +38,7 @@ case class AtomicReadWriteLock(name : String, methods : List[MethodWithLock]) ex
 case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMethod]) extends PreAnalyzed {
   def take(className: String) : Boolean = className.equals(name);
 }
+
+case class NotYetImplementedClass(name : String) extends PreAnalyzed {
+  def take(className: String) : Boolean = className.equals(name);
+}

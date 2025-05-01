@@ -4,10 +4,7 @@ import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzed
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategyNoOp;
 import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyForClassTransformer;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionAllFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionDoNotTraceFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionFactory;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.*;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.NoMethodCall;
 import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
@@ -35,6 +32,11 @@ public class TransformerStrategyFactory {
 
     public TransformerStrategy createVmlensApi() {
         return new TransformerStrategyVmlensApi();
+    }
+
+    public TransformerStrategy createNotYetImplemented() {
+        return new TransformerStrategyForClassTransformer(new FactoryCollectionNotYetImplementedFactory(methodRepositoryForAnalyze),
+                methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
     public TransformerStrategy createAll() {

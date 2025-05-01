@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AtomicIntegerCT {
+public class TestAtomicInteger {
 
     @Test
     public void testUpdate() throws InterruptedException {

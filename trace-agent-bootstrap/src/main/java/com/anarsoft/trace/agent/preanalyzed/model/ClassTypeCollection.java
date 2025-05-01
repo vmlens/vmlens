@@ -24,6 +24,9 @@ public class ClassTypeCollection {
         if(classType instanceof PreAnalyzedAllMethods) {
             return 4;
         }
+        if(classType instanceof ClassNotYetImplemented) {
+            return 5;
+        }
         throw new RuntimeException("unknown " + classType.getClass());
     }
 
@@ -42,6 +45,9 @@ public class ClassTypeCollection {
         }
         if(id == 4) {
             return PreAnalyzedAllMethods.SINGLETON;
+        }
+        if(id == 5) {
+            return ClassNotYetImplemented.SINGLETON;
         }
         throw new RuntimeException("unknown " + id);
     }
