@@ -44,14 +44,6 @@
         <url>git@github.com:vmlens/vlmens.git</url>
     </scm>
 
-
-    <properties>
-        <asm.version>7.3.1</asm.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <encoding>UTF-8</encoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>

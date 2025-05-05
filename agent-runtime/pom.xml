@@ -88,16 +88,19 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.3.2</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <filesets>
+                        <fileset>
+                            <directory>_dist/agent_lib/</directory>
+                            <includes>
+                                <include>**/*.jar</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
-
-
             <plugin>
                 <!-- NOTE: We don't need a groupId specification because the group is
                      org.apache.maven.plugins ...which is assumed by default.
@@ -150,8 +153,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
     </build>
 </project>

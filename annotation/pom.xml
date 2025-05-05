@@ -2,13 +2,46 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.visualj</groupId>
+  <parent>
+    <groupId>com.vmlens</groupId>
+    <artifactId>vmlens</artifactId>
+    <version>1.2.0</version>
+    <relativePath>../vmlens/pom.xml</relativePath>
+  </parent>
+
   <artifactId>annotation</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
 
   <name>annotation</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/vmlens/vlmens</url>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>vmlens</name>
+    <url>https://www.vmlens.com</url>
+  </organization>
+
+
+  <developers>
+    <developer>
+      <name>Thomas Krieger</name>
+      <email>thomas.krieger@vmlens.com</email>
+      <organization>vmlens</organization>
+      <organizationUrl>https://www.vmlens.com</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
+    <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
+    <url>git@github.com:vmlens/vlmens.git</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
