@@ -1,7 +1,7 @@
 package com.vmlens.test.maven.plugin;
 
 import com.vmlens.api.AllInterleaving;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +19,6 @@ public class TestVolatileField {
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(1);
         expectedSet.add(2);
-
         Set<Integer> countSet = new HashSet<>();
         try(AllInterleaving allInterleaving = new AllInterleaving("testVolatileField")) {
             while (allInterleaving.hasNext()) {
@@ -37,6 +36,5 @@ public class TestVolatileField {
             }
             assertThat(countSet,is(expectedSet));
         }
-
     }
 }
