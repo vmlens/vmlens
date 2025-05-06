@@ -1,4 +1,4 @@
-# vmlens let you test multi-threaded, concurrent java
+# vmlens lets you test multi-threaded, concurrent java
 
 <img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" >
 
