@@ -1,7 +1,5 @@
 # vmlens lets you test multi-threaded, concurrent java
 
-<img style="margin-right: 30px" src="https://vmlens.com/img/logo.png" >
-
 # Example
 
 The following example shows how to test multi-threaded, concurrent java with vmlens:
