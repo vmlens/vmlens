@@ -10,6 +10,10 @@ public class ThreadLocalForParallelizeSingleton {
         }
     };
 
+    public static void resetProcessCount() {
+        callbackStatePerThread.get().resetProcessCallbackCount();
+    }
+
     public static void startProcess() {
         callbackStatePerThread.get().incrementDoNotProcessCallbackCount();
     }

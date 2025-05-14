@@ -3,8 +3,8 @@
 <!-- run.mustache -->
 
 <div class="container-fluid">
-    <div class="row text-left">
-        <table class="table table-striped">
+    <div class="row">
+        <table class="table table-striped text-start">
             <tr>
                 <th>Thread</th>
                 <th>Operation</th>
@@ -13,14 +13,9 @@
             {{#elements}}
                 <tr>
                     <td>{{threadName}}</td>
-                        <td>
-                            {{{operation}}}
-                        </td>
-                        <td>    {{#hasLink}}<a href="{{link}}">
-                            {{method}} </a> {{/hasLink}}
-                            {{^hasLink}}  {{method}} {{/hasLink}}  </td>
-
-                    </tr>
+                    <td>{{{operation}}}</td>
+                    <td>{{#hasLink}}<a href="{{link}}">{{method}} </a> {{/hasLink}}{{^hasLink}}  {{method}} {{/hasLink}}  </td>
+                </tr>
             {{/elements}}
         </table>
     </div>

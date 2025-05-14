@@ -9,6 +9,7 @@ import com.vmlens.report.ResultForVerify
 import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp, OnEvent, OnEventNoOp}
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.createreport.CreateReport
+import com.vmlens.setup.Setup.reCreate
 
 import java.io.{File, PrintStream}
 import java.nio.file.{Path, Paths}
@@ -21,9 +22,7 @@ class ProcessEvents(val eventDir: Path,
   def process(): ResultForVerify = {
 
     val dir = reportDir.toFile
-    if (!dir.exists()) {
-      dir.mkdir();
-    }
+    reCreate(dir);
 
     val loadDescription = new LoadDescriptionImpl(eventDir)
     val loadRuns = new LoadRunsFactory().create(eventDir)

@@ -29,7 +29,7 @@ public class NonVolatileAccess implements RunElementType  {
 
     private String modifier() {
         if(isDataRace) {
-            return " data race ";
+            return " <span style=\"color: red;\">data race</span> ";
         }
         return " ";
     }
