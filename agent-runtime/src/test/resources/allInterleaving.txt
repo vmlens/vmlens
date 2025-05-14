@@ -15,6 +15,12 @@ method:close()V
   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.close:(Ljava/lang/Object;)V
   RETURN
 method:hasNext(Ljava/lang/Object;)Z
+  GETSTATIC  java/lang/System.err:Ljava/io/PrintStream;
+  load:The vmlens java agent is not configured.
+  INVOKEVIRTUAL  java/io/PrintStream.println:(Ljava/lang/String;)V
+  GETSTATIC  java/lang/System.err:Ljava/io/PrintStream;
+  load:See http://vmlens/documentation for configuring the vmlens java agent.
+  INVOKEVIRTUAL  java/io/PrintStream.println:(Ljava/lang/String;)V
   ICONST_0
   IRETURN
 method:close(Ljava/lang/Object;)V

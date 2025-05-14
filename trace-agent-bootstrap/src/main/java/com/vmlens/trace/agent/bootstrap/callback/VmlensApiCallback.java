@@ -18,6 +18,11 @@ public class VmlensApiCallback {
     }
 
     public static boolean hasNext(Object obj) {
+        /*
+          we need to reset the count since it might be negative,
+          see TestVolatileField in the testng project
+         */
+            resetProcessCount();
             startProcess();
             try {
                 return vmlensApiCallback.hasNext(obj);

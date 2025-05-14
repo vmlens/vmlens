@@ -56,8 +56,7 @@ public class AllInterleaving implements AutoCloseable {
 	 * @return true if  there are still thread interleaving to be executed otherwise false.
 	 */
 
-	public  boolean hasNext()
-	{
+	public  boolean hasNext() {
 		return hasNext(this);
 	}
 
@@ -73,8 +72,9 @@ public class AllInterleaving implements AutoCloseable {
 	
 	
 	
-	private static boolean hasNext(Object object)
-	{
+	private static boolean hasNext(Object object) {
+		System.err.println("The vmlens java agent is not configured.");
+		System.err.println("See http://vmlens/documentation for configuring the vmlens java agent.");
 		return false;
 	}
 

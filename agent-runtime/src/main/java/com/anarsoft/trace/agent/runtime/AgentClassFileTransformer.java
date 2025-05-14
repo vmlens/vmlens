@@ -6,7 +6,6 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerContext
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategy;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton;
 import org.objectweb.asm.Opcodes;
 
 import java.io.FileOutputStream;
@@ -14,6 +13,9 @@ import java.io.OutputStream;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
+
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.stopProcess;
 
 
 public class AgentClassFileTransformer implements ClassFileTransformer {
@@ -50,7 +52,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String name, Class<?> cl, ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) throws IllegalClassFormatException {
 
-        ThreadLocalForParallelizeSingleton.callbackStatePerThread.get().incrementDoNotProcessCallbackCount();
+        startProcess();
         try {
               if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
@@ -59,7 +61,10 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
-              //  logTransformedClass(name, transformed);
+             /*   if(name.endsWith("TestVolatileField")) {
+                    logTransformedClass(name, transformed);
+                }
+              */
                 return transformed;
             }
         } catch (Throwable e) {
@@ -69,7 +74,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             return null;
         }
         finally {
-            ThreadLocalForParallelizeSingleton.callbackStatePerThread.get().decrementDoNotProcessCallbackCount();
+           stopProcess();
         }
         return null;
     }

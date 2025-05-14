@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
         <relativePath>../vmlens/pom.xml</relativePath>
     </parent>
 
@@ -87,20 +87,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.3.2</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>_dist/agent_lib/</directory>
-                            <includes>
-                                <include>**/*.jar</include>
-                            </includes>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
             <plugin>
                 <!-- NOTE: We don't need a groupId specification because the group is
                      org.apache.maven.plugins ...which is assumed by default.

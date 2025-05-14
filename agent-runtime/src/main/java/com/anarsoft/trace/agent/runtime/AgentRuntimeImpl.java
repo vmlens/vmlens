@@ -18,6 +18,9 @@ import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
 import java.util.Properties;
 
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.stopProcess;
+
 public class AgentRuntimeImpl implements AgentRuntime {
 
 
@@ -73,6 +76,8 @@ public class AgentRuntimeImpl implements AgentRuntime {
                             writeClassDescriptionAndWarningWrapper),
                     writeClassDescriptionAndWarningWrapper);
 
+            startProcess();
+
             instrument(inst, agentClassFileTransformer, writeClassDescriptionDuringStartup);
             writeClassDescriptionAndWarningWrapper
                     .setWriteClassDescriptionAndWarning(new WriteClassDescriptionAndWarningNormal());
@@ -86,6 +91,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
                 EventQueueSingleton.eventQueue.offer(classDescription.element());
             }
 
+            stopProcess();
         } catch (Throwable e) {
             e.printStackTrace();
         }

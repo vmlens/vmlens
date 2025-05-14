@@ -35,6 +35,10 @@ public class ThreadLocalForParallelize {
         doNotProcessCallbackCount++;
     }
 
+    public void resetProcessCallbackCount() {
+        doNotProcessCallbackCount = 0;
+    }
+
     public void setParallelizedThreadLocalToNull() {
         this.parallelizedThreadLocal = null;
     }
