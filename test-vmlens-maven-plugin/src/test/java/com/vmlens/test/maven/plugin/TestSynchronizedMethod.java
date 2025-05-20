@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ public class TestSynchronizedMethod {
     @Test
     public void testUpdate() throws InterruptedException {
         Map map = new HashMap();
-        AllInterleaving testUpdate = new AllInterleaving("testSynchronizedMethod");
+        AllInterleavings testUpdate = new AllInterleavings("testSynchronizedMethod");
         while (testUpdate.hasNext()) {
             Thread first = new Thread() {
                 @Override

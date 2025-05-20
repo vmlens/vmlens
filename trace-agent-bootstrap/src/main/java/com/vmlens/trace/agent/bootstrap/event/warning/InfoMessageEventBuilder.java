@@ -17,7 +17,12 @@ public class InfoMessageEventBuilder {
 
     public InfoMessageEventBuilder add(Throwable exception) {
         text.add(wrap(exception.getMessage()));
-        for (StackTraceElement element : exception.getStackTrace()) {
+        add(exception.getStackTrace());
+        return this;
+    }
+
+    public InfoMessageEventBuilder add(StackTraceElement[] elements) {
+        for (StackTraceElement element : elements) {
             text.add(wrap(element.toString()));
         }
         return this;

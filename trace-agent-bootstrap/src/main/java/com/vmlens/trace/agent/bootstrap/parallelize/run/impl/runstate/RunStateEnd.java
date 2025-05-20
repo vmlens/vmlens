@@ -16,7 +16,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 public class RunStateEnd implements RunState {
 
     @Override
-    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
+    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent) {
         return true;
     }
 
@@ -43,7 +43,7 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked() {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
         return new RunStateAndResult<>(this,false);
     }
 

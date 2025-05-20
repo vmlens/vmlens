@@ -13,14 +13,12 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 public interface RunState {
 
     // reading
-
-    boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
+    boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent);
 
     // is null if end state
     ActualRun actualRun();
 
     // writing
-
     RunState  after(AfterContext afterContext, SendEvent sendEvent);
 
     RunState newTestTaskStarted(RunnableOrThreadWrapper newWrapper);
@@ -29,6 +27,6 @@ public interface RunState {
                                                                 Run run,
                                                                 SendEvent sendEvent);
 
-    RunStateAndResult<Boolean> checkBlocked();
+    RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent);
 
 }

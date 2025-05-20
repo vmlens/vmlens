@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin.concurrent;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ public class TestDelayedQueue {
 
         Set<Integer> values = new HashSet<>();
 
-        try(AllInterleaving allInterleaving = new AllInterleaving("delayedQueue")) {
+        try(AllInterleavings allInterleaving = new AllInterleavings("delayedQueue")) {
             while (allInterleaving.hasNext()) {
                 DelayQueue<DelayedString> queue = new DelayQueue<>();
                 queue.add(new DelayedString(System.currentTimeMillis() , "second"));

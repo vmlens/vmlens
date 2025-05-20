@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -15,12 +15,12 @@ public class TestVolatileField {
     private volatile int j = 0;
 
     @Test
-    public void testUpdate() throws InterruptedException {
+    public void testReadWrite() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(1);
         expectedSet.add(2);
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleaving allInterleaving = new AllInterleaving("testVolatileField")) {
+        try(AllInterleavings allInterleaving = new AllInterleavings("testVolatileFieldReadWrite")) {
             while (allInterleaving.hasNext()) {
                 j = 0;
                 Thread first = new Thread() {
@@ -31,6 +31,30 @@ public class TestVolatileField {
                 };
                 first.start();
                 j++;
+                first.join();
+                countSet.add(j);
+            }
+            assertThat(countSet,is(expectedSet));
+        }
+    }
+
+    @Test
+    public void testWrite() throws InterruptedException {
+        Set<Integer> expectedSet = new HashSet<>();
+        expectedSet.add(5);
+        expectedSet.add(9);
+        Set<Integer> countSet = new HashSet<>();
+        try(AllInterleavings allInterleaving = new AllInterleavings("testVolatileFieldWrite")) {
+            while (allInterleaving.hasNext()) {
+                j = 0;
+                Thread first = new Thread() {
+                    @Override
+                    public void run() {
+                        j = 5;
+                    }
+                };
+                first.start();
+                j = 9;
                 first.join();
                 countSet.add(j);
             }

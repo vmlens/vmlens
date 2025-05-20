@@ -43,15 +43,14 @@ public class RunStateMachineImpl implements RunStateMachine  {
         return actualRun;
     }
 
-
     @Override
-    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-        return currentState.isActive(threadLocalDataWhenInTest);
+    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent) {
+        return currentState.isActive(threadLocalDataWhenInTest,sendEvent);
     }
 
     @Override
-    public boolean checkStopWaiting() {
-        RunStateAndResult<Boolean> result = currentState.checkBlocked();
+    public boolean checkStopWaiting(SendEvent sendEvent) {
+        RunStateAndResult<Boolean> result = currentState.checkBlocked(sendEvent);
         currentState = result.runState();
         return result.result();
     }

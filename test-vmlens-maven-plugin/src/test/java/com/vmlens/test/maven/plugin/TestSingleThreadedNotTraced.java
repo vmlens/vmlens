@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class TestSingleThreadedNotTraced {
     @Test
     public void testUpdate() throws InterruptedException {
         Map map = new HashMap();
-        AllInterleaving testUpdate = new AllInterleaving("testSingleThreadedNotTraced");
+        AllInterleavings testUpdate = new AllInterleavings("testSingleThreadedNotTraced");
         while (testUpdate.hasNext()) {
             Thread first = new Thread() {
                 @Override

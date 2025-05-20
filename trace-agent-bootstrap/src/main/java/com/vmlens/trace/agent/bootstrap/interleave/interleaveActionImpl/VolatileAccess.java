@@ -13,13 +13,12 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatile
 
 import java.util.Objects;
 
-public class VolatileAccess extends InterleaveActionForDependentBlock {
-    private static final int MIN_OPERATION = 3;
+import static com.vmlens.trace.agent.bootstrap.MemoryAccessType.IS_READ;
 
+public class VolatileAccess extends InterleaveActionForDependentBlock {
     private final int threadIndex;
     private final VolatileKey volatileAccessKey;
     private final int operation;
-
 
     public VolatileAccess(int threadIndex, VolatileKey volatileAccessKey, int operation) {
         this.threadIndex = threadIndex;
@@ -54,7 +53,8 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
     @Override
     public boolean startsAlternatingOrder(DependentBlockElement other) {
         VolatileAccess otherVolatileFieldAccess = (VolatileAccess) other;
-        return (otherVolatileFieldAccess.operation | operation) >= MIN_OPERATION;
+        // if at least one operation is a write
+        return otherVolatileFieldAccess.operation > IS_READ ||  operation > IS_READ;
     }
 
     @Override

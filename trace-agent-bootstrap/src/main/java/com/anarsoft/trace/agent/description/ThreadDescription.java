@@ -94,4 +94,15 @@ public class ThreadDescription implements SerializableEvent, ThreadOrLoopDescrip
         result = 31 * result + Objects.hashCode(threadName);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "ThreadDescription{" +
+                "loopId=" + loopId +
+                ", runId=" + runId +
+                ", threadIndex=" + threadIndex +
+                ", threadId=" + threadId +
+                ", threadName='" + threadName + '\'' +
+                '}';
+    }
 }

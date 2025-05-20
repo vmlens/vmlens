@@ -5,10 +5,9 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
         <relativePath>../vmlens/pom.xml</relativePath>
     </parent>
-
 
     <artifactId>test-util</artifactId>
 
@@ -34,7 +33,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
-        <!-- vmlens versions -->
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>trace-agent-bootstrap</artifactId>

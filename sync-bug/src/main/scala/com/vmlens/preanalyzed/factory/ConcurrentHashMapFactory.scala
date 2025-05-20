@@ -4,9 +4,11 @@ import com.vmlens.preanalyzed.model._
 
 object ConcurrentHashMapFactory {
 
-  def concurrentHashMap(): AtomicReadWriteLock = {
-    AtomicReadWriteLock("java/util/concurrent/ConcurrentHashMap", concurrentHashMapMethods())
-    
+  def concurrentHashMap(): PreAnalyzedList = {
+    PreAnalyzedList(List(
+      AtomicReadWriteLock("java/util/concurrent/ConcurrentHashMap", concurrentHashMapMethods()),
+      Filter("java/util/concurrent/ConcurrentHashMap")
+    ))
   }
 
   private def concurrentHashMapMethods(): List[MethodWithLock] =

@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.inttest.util;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;
 
 public class ThreadForParallelizeMock extends ThreadForParallelize {
@@ -14,8 +16,8 @@ public class ThreadForParallelizeMock extends ThreadForParallelize {
     }
 
     @Override
-    public boolean isBlocked() {
-        return false;
+    public ThreadState isBlocked(SendEvent sendEvent) {
+        return ThreadState.ACTIVE;
     }
 
     @Override

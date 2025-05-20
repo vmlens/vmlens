@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class TestDeadlock {
     @Ignore
     @Test
     public void testUpdate() throws InterruptedException {
-        AllInterleaving testUpdate = new AllInterleaving("testDeadlock");
+        AllInterleavings testUpdate = new AllInterleavings("testDeadlock");
         while (testUpdate.hasNext()) {
 
             Thread first = new Thread() {

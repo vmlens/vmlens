@@ -62,4 +62,9 @@ public class InterleaveRunWithCalculated implements InterleaveRun {
     public ActualRun actualRun() {
         return actualRun;
     }
+
+    @Override
+    public boolean withCalculated() {
+        return true;
+    }
 }

@@ -1,5 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.thread;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadState;
+
 import static java.lang.Thread.State.*;
 
 public class ThreadForParallelize {
@@ -62,22 +65,25 @@ public class ThreadForParallelize {
         at com.vmlens.test.maven.plugin.TestVolatileField$1.run(TestVolatileField.java:19)
 
      */
-    public boolean isBlocked() {
+    public ThreadState isBlocked(SendEvent sendEvent) {
         Thread.State state = thread.getState();
         if(state == NEW || state == RUNNABLE) {
-            return false;
+            return ThreadState.ACTIVE;
         }
 
         if(state == TERMINATED) {
-            return true;
+            return ThreadState.TERMINATED;
         }
 
-        for(StackTraceElement element : thread.getStackTrace()) {
+        StackTraceElement[] elements = thread.getStackTrace();
+        for(StackTraceElement element : elements) {
             if(element.getClassName().startsWith("com.vmlens.trace.agent.bootstrap")) {
-                return false;
+                return ThreadState.ACTIVE;
             }
         }
-        return true;
+
+        //sendEvent.sendSerializable(new InfoMessageEventBuilder().add(elements).build());
+        return ThreadState.BLOCKED;
     }
 
     public long getId() {

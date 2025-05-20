@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin.concurrent;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -23,7 +23,7 @@ public class TestCopyOnWrite {
 
     private void runTest(String nameOfTest, Supplier<Collection<String>> createCollection) throws InterruptedException {
         int count = 0;
-        try(AllInterleaving allInterleaving = new AllInterleaving(nameOfTest)) {
+        try(AllInterleavings allInterleaving = new AllInterleavings(nameOfTest)) {
             while (allInterleaving.hasNext()) {
                 Collection<String> copyOnWrite = createCollection.get();
                 Thread first = new Thread() {
