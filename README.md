@@ -10,8 +10,8 @@ public class TestNonVolatileField {
     private int j = 0;
     @Test
     public void testUpdate() throws InterruptedException {
-        try(AllInterleavings allInterleaving = new AllInterleavings("testNonVolatileField")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testNonVolatileField")) {
+            while (allInterleavings.hasNext()) {
                 Thread first = new Thread() {
                     @Override
                     public void run() {
