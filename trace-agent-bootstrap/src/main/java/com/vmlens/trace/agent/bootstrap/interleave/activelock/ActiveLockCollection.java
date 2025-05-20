@@ -1,14 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.interleave.activelock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
-import gnu.trove.map.hash.THashMap;
 
-import java.util.Iterator;
 import java.util.ListIterator;
 
 public class ActiveLockCollection {
@@ -23,6 +20,9 @@ public class ActiveLockCollection {
 
     public ElementAndPosition<LockEnter> pop(int threadIndex, LockKey forLockOrMonitor) {
         TLinkedList<TLinkableWrapper<ElementAndPosition<LockEnter>>> list = threadIndexToLockList.listAt(threadIndex);
+        if(list == null) {
+            return null;
+        }
         ListIterator<TLinkableWrapper<ElementAndPosition<LockEnter>>> iter = list.listIterator(list.size() );
         while(iter.hasPrevious()) {
             TLinkableWrapper<ElementAndPosition<LockEnter>> element = iter.previous();

@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 public class TestFinal {
@@ -9,7 +9,7 @@ public class TestFinal {
 
     @Test
     public void testUpdate() throws InterruptedException {
-        AllInterleaving testUpdate = new AllInterleaving("testFinal");
+        AllInterleavings testUpdate = new AllInterleavings("testFinal");
 
         while (testUpdate.hasNext()) {
             new TestFinal();

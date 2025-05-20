@@ -49,7 +49,7 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
 
     @Override
     public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
-        this.objectHashCode = readWriteLockMap.getUnderlying(System.identityHashCode(object));
+        this.objectHashCode = lockTypeClass.getObjectHashCode(readWriteLockMap,System.identityHashCode(object));
         this.methodId = inMethodId;
         this.bytecodePosition = position;
         this.object = null;

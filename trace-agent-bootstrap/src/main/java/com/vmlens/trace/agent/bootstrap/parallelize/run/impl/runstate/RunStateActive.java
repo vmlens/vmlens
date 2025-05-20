@@ -31,8 +31,8 @@ public class RunStateActive implements RunState {
     }
 
     @Override
-    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest) {
-        return runStateContext.isActive(threadLocalDataWhenInTest.threadIndex());
+    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent) {
+        return runStateContext.isActive(threadLocalDataWhenInTest.threadIndex(),sendEvent);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class RunStateActive implements RunState {
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked() {
-        if(runStateContext.isBlocked()) {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
+        if(runStateContext.isBlocked(sendEvent)) {
             return new RunStateAndResult<>(new RunStateActive(runStateContext.withoutCalculated()),true);
         }
         return new RunStateAndResult<>(this,false);

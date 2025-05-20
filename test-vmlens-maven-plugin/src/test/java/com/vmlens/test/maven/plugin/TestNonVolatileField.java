@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ public class TestNonVolatileField {
     @Ignore
     @Test
     public void testUpdate() throws InterruptedException {
-        try(AllInterleaving allInterleaving = new AllInterleaving("testNonVolatileField")) {
+        try(AllInterleavings allInterleaving = new AllInterleavings("testNonVolatileField")) {
             while (allInterleaving.hasNext()) {
                 Thread first = new Thread() {
                     @Override

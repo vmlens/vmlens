@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin.lock;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import java.util.concurrent.locks.ReadWriteLock;
@@ -17,7 +17,7 @@ public class TestReentrantReadWriteLock {
         int count = 0;
         final ReadWriteLock lock = new ReentrantReadWriteLock();
 
-        AllInterleaving testUpdate = new AllInterleaving("readWriteLockTest");
+        AllInterleavings testUpdate = new AllInterleavings("readWriteLockTest");
         while (testUpdate.hasNext()) {
             Thread first = new Thread() {
                 @Override

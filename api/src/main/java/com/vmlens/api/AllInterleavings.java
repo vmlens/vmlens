@@ -2,7 +2,7 @@ package com.vmlens.api;
 
 /**
  * 
- * The class AllInterleaving let you test all thread interleaving for your test. Enclose your test in a while loop
+ * The class AllInterleavings lets you test all thread interleavings for your test. Enclose your test in a while loop
  * to iterate through all thread interleaving like in the following example:
  * 
  * <pre>{@code 
@@ -24,18 +24,14 @@ package com.vmlens.api;
  * 
  * }</pre>
  *
- *
  */
-
-public class AllInterleaving implements AutoCloseable {
+public class AllInterleavings implements AutoCloseable {
 
 	/**
      * The name shown in the report.
 	 * 
 	 */
 	public final String name;
-	
-	
 
 	/**
 	 * Creates a new AllInterleaving instance.
@@ -43,11 +39,10 @@ public class AllInterleaving implements AutoCloseable {
 	 *
      * @param name The name shown in the report.
 	 */
-	public AllInterleaving(String name) {
+	public AllInterleavings(String name) {
 		super();
 		this.name = name;
 	}
-
 
 	/**
 	 * Return true if there are still thread interleaving to be executed and select the next thread interleaving,
@@ -69,22 +64,15 @@ public class AllInterleaving implements AutoCloseable {
 	public void close()  {
 		close(this);
 	}
-	
-	
-	
+
 	private static boolean hasNext(Object object) {
 		System.err.println("The vmlens java agent is not configured.");
-		System.err.println("See http://vmlens/documentation for configuring the vmlens java agent.");
+		System.err.println("See https://vmlens/docs/ for configuring the vmlens java agent.");
 		return false;
 	}
-
 
 	private static void close(Object obj) {
 		
 	}
-	
-	
-	
-	
-	
+
 }

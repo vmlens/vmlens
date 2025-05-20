@@ -14,7 +14,7 @@ public interface ClassTransformerListBuilder {
 
     void addVmlensApi(String name);
 
-    void addDoNotTraceIn();
+    void addDoNotTraceIn(String name);
 
     void addClassNotYetImplemented(String name);
 

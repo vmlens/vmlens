@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -14,7 +14,7 @@ public class TestAtomicInteger {
     public void testUpdate() throws InterruptedException {
        int count = 0;
 
-        try(AllInterleaving allInterleaving = new AllInterleaving("testAtomicInteger")) {
+        try(AllInterleavings allInterleaving = new AllInterleavings("testAtomicInteger")) {
             while (allInterleaving.hasNext()) {
                 final AtomicInteger atomicInteger = new AtomicInteger();
                 Thread first = new Thread() {

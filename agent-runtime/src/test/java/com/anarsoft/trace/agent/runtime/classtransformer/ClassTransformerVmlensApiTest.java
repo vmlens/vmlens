@@ -13,7 +13,7 @@ public class ClassTransformerVmlensApiTest {
         RunTestClassTransformer runTestClassTransformer = RunTestClassTransformer.createFromLoaded();
 
         // When and Then
-        runTestClassTransformer.runTest("com.vmlens.api.AllInterleaving", "/allInterleaving.txt");
+        runTestClassTransformer.runTest("com.vmlens.api.AllInterleavings", "/allInterleavings.txt");
     }
 
 }

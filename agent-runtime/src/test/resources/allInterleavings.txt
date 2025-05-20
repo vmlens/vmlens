@@ -1,10 +1,10 @@
-class:com/vmlens/api/AllInterleaving
+class:com/vmlens/api/AllInterleavings
 method:<init>(Ljava/lang/String;)V
   ALOAD
   INVOKESPECIAL  java/lang/Object.<init>:()V
   ALOAD
   ALOAD
-  PUTFIELD  com/vmlens/api/AllInterleaving.name:Ljava/lang/String;
+  PUTFIELD  com/vmlens/api/AllInterleavings.name:Ljava/lang/String;
   RETURN
 method:hasNext()Z
   ALOAD
@@ -19,7 +19,7 @@ method:hasNext(Ljava/lang/Object;)Z
   load:The vmlens java agent is not configured.
   INVOKEVIRTUAL  java/io/PrintStream.println:(Ljava/lang/String;)V
   GETSTATIC  java/lang/System.err:Ljava/io/PrintStream;
-  load:See http://vmlens/documentation for configuring the vmlens java agent.
+  load:See https://vmlens/docs/ for configuring the vmlens java agent.
   INVOKEVIRTUAL  java/io/PrintStream.println:(Ljava/lang/String;)V
   ICONST_0
   IRETURN

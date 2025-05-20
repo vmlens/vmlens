@@ -8,6 +8,8 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
+import static com.vmlens.trace.agent.bootstrap.exception.Message.TEST_BLOCKED_MESSAGE;
+
 public class RunStateContext {
 
     private final ThreadIndexAndThreadStateMap runContext;
@@ -24,8 +26,8 @@ public class RunStateContext {
                 new InterleaveRunWithoutCalculated(interleaveRun.actualRun()));
     }
 
-    public boolean isActive(int threadIndex) {
-        return interleaveRun.isActive(threadIndex,runContext.getActiveThreadIndices());
+    public boolean isActive(int threadIndex,SendEvent sendEvent) {
+        return interleaveRun.isActive(threadIndex,runContext.getActiveThreadIndices(sendEvent));
     }
 
     public ThreadIndexAndThreadStateMap runContext() {
@@ -39,10 +41,25 @@ public class RunStateContext {
         return runContext.createForStartedThread(run, threadLocalForParallelize, newThreadIndex, sendEvent);
     }
 
-    public boolean isBlocked() {
+    public boolean isBlocked(SendEvent sendEvent) {
         Integer activeThreadIndex = interleaveRun.activeThreadIndex();
         if(activeThreadIndex != null) {
-            return runContext.isBlocked(activeThreadIndex);
+            ThreadState state = runContext.isBlocked(activeThreadIndex, sendEvent);
+            switch (state) {
+                case TERMINATED : {
+                    return true;
+                }
+                case BLOCKED : {
+                    if(interleaveRun.withCalculated()) {
+                        sendEvent.sendMessage(TEST_BLOCKED_MESSAGE);
+                    }
+                    return true;
+                }
+                case ACTIVE : {
+                    return false;
+                }
+
+            }
         }
         return false;
     }

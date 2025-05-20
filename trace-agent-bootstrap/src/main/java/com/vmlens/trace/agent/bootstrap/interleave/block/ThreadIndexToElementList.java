@@ -107,6 +107,9 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
     }
 
     public TLinkedList<TLinkableWrapper<ELEMENT>> listAt(int threadIndex) {
+        if(threadIndex >= threadList.size()) {
+            return null;
+        }
         return threadList.get(threadIndex).element();
     }
 

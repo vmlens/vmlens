@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin.concurrent;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -21,7 +21,7 @@ public class TestPriorityQueue {
 
         Set<String> values = new HashSet<>();
 
-        try(AllInterleaving allInterleaving = new AllInterleaving("priorityQueue")) {
+        try(AllInterleavings allInterleaving = new AllInterleavings("priorityQueue")) {
             while (allInterleaving.hasNext()) {
                 PriorityBlockingQueue<String> queue = new PriorityBlockingQueue<>();
                 queue.add("second");

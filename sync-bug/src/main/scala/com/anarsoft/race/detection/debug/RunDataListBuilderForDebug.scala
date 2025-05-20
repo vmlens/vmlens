@@ -6,13 +6,14 @@ import com.anarsoft.race.detection.groupinterleave.{GroupInterleaveElement, Grou
 import com.anarsoft.race.detection.groupnonvolatile.{GroupNonVolatileElement, GroupNonVolatileElementImpl}
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
 
+import java.io.PrintStream
 import java.util
 
-class RunDataListBuilderForDebug() extends RunDataListBuilder {
+class RunDataListBuilderForDebug(stream : PrintStream) extends RunDataListBuilder {
 
   override def addControlEvents(loopAndRunId: LoopAndRunId, interleaveEventList: List[ControlEvent]): Unit = {
     for (elem <- interleaveEventList) {
-      println(elem.toString);
+      stream.println(elem.toString);
     }
   }
 
@@ -20,7 +21,7 @@ class RunDataListBuilderForDebug() extends RunDataListBuilder {
     val iter = methodEventList.iterator();
     while (iter.hasNext) {
       val elem = iter.next();
-      println(elem.toString);
+      stream.println(elem.toString);
     }
 
   }
@@ -28,7 +29,7 @@ class RunDataListBuilderForDebug() extends RunDataListBuilder {
   override def addNonVolatileElements(loopAndRunId: LoopAndRunId, nonVolatileElements: List[GroupNonVolatileElement]): Unit = {
     for (elem <- nonVolatileElements) {
       for (event <- elem.asInstanceOf[GroupNonVolatileElementImpl[_]].eventArray) {
-        println(event.toString)
+        stream.println(event.toString)
       }
     }
   }
@@ -37,11 +38,11 @@ class RunDataListBuilderForDebug() extends RunDataListBuilder {
     for (elem <- syncActionElements) {
       if (elem.isInstanceOf[GroupInterleaveElementSyncActionImpl[_]]) {
         for (event <- elem.asInstanceOf[GroupInterleaveElementSyncActionImpl[_]].eventArray) {
-          println(event.toString)
+          stream.println(event.toString)
         }
       } else {
         for (event <- elem.asInstanceOf[GroupInterleaveElementThreadOperationImpl[_]].eventArray) {
-          println(event.toString)
+          stream.println(event.toString)
         }
       }
     }

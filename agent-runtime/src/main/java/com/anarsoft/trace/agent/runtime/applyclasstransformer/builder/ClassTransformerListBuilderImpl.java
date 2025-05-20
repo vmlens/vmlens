@@ -53,8 +53,8 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     }
 
     @Override
-    public void addDoNotTraceIn() {
-        add(new ClassFilterEquals("java/lang/ClassLoader"), transformerStrategyFactory.createDoNotTraceIn());
+    public void addDoNotTraceIn(String name) {
+        add(new ClassFilterEquals(name), transformerStrategyFactory.createDoNotTraceIn());
     }
 
     public ClassFilterAndTransformerStrategyCollection build() {

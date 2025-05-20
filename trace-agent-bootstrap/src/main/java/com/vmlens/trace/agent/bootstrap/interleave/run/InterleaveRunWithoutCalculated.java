@@ -44,4 +44,8 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
         return activeThreadIndices.get(position) == threadIndex;
     }
 
+    @Override
+    public boolean withCalculated() {
+        return false;
+    }
 }

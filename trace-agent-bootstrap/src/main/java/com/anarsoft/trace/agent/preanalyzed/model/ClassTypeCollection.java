@@ -27,6 +27,9 @@ public class ClassTypeCollection {
         if(classType instanceof ClassNotYetImplemented) {
             return 5;
         }
+        if(classType instanceof DoNotTraceInClass) {
+            return 6;
+        }
         throw new RuntimeException("unknown " + classType.getClass());
     }
 
@@ -48,6 +51,9 @@ public class ClassTypeCollection {
         }
         if(id == 5) {
             return ClassNotYetImplemented.SINGLETON;
+        }
+        if(id == 6) {
+            return DoNotTraceInClass.SINGLETON;
         }
         throw new RuntimeException("unknown " + id);
     }

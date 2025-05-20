@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,7 +20,7 @@ public class TestSynchronizedBlock {
     public void testUpdate() throws InterruptedException {
 
 
-        AllInterleaving testUpdate = new AllInterleaving("testSynchronizedBlock");
+        AllInterleavings testUpdate = new AllInterleavings("testSynchronizedBlock");
         while (testUpdate.hasNext()) {
             j = 0;
             Thread first = new Thread() {

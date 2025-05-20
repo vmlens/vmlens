@@ -42,3 +42,7 @@ case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMeth
 case class NotYetImplementedClass(name : String) extends PreAnalyzed {
   def take(className: String) : Boolean = className.equals(name);
 }
+
+case class DoNotTraceIn(name : String) extends PreAnalyzed {
+  def take(className: String) : Boolean = className.equals(name);
+}

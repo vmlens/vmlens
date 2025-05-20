@@ -65,23 +65,33 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
         return threadIdToIndex.get(threadId);
     }
 
-    public boolean isBlocked(int index) {
+    public ThreadState isBlocked(int index,SendEvent sendEvent) {
         if(threadIndexToThreadState.get(index) == null) {
-            return true;
+            return ThreadState.TERMINATED;
         }
-        return threadIndexToThreadState.get(index).isBlocked();
+        return threadIndexToThreadState.get(index).isBlocked(sendEvent);
     }
 
-    public TIntLinkedList getActiveThreadIndices() {
+    public TIntLinkedList getActiveThreadIndices(SendEvent sendEvent) {
         TIntLinkedList active = new TIntLinkedList();
         TIntObjectIterator<ThreadForParallelize> iter = threadIndexToThreadState.iterator();
         while(iter.hasNext()) {
             iter.advance();
-            if(! iter.value().isBlocked()) {
+            if(isActive(iter.value(),sendEvent)) {
                 active.add(iter.key());
             }
         }
         return active;
+    }
+
+    private boolean isActive(ThreadForParallelize threadForParallelize,SendEvent sendEvent) {
+        ThreadState state = threadForParallelize.isBlocked(sendEvent);
+        switch (state) {
+            case ACTIVE: {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

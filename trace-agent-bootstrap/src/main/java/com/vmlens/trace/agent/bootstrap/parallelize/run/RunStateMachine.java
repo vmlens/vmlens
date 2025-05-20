@@ -12,9 +12,9 @@ public interface RunStateMachine {
 
     // Reading
 
-    boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest);
+    boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent);
 
-    boolean checkStopWaiting();
+    boolean checkStopWaiting(SendEvent sendEvent);
 
 
     // Writing

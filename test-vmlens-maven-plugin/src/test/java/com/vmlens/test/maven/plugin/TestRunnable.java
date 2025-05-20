@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -22,7 +22,7 @@ public class TestRunnable {
         expectedSet.add(2);
 
         Set<Integer> countSet = new HashSet<>();
-        AllInterleaving testUpdate = new AllInterleaving("testRunnable");
+        AllInterleavings testUpdate = new AllInterleavings("testRunnable");
         while (testUpdate.hasNext()) {
             STATIC_FIELD = 0;
             Thread first = new Thread(new UpdateVolatileField());

@@ -13,5 +13,6 @@ public interface InterleaveRun {
     Integer activeThreadIndex();
 
     ActualRun actualRun();
+    boolean withCalculated();
 
 }

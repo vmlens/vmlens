@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 import org.testng.annotations.Test;
 
 import java.util.HashSet;
@@ -29,7 +29,7 @@ public class TestVolatileField {
         expectedSet.add(1);
         expectedSet.add(2);
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleaving allInterleaving = new AllInterleaving("testVolatileField")) {
+        try(AllInterleavings allInterleaving = new AllInterleavings("testVolatileField")) {
             while (allInterleaving.hasNext()) {
                 j = 0;
                 Thread first = new Thread() {

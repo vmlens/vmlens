@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -101,11 +101,6 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>2.12.0</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.5</version>
             </dependency>
             <dependency>
                 <groupId>io.github.java-diff-utils</groupId>
@@ -266,7 +261,6 @@
         </profile>
     </profiles>
 
-
     <build>
         <pluginManagement>
             <plugins>
@@ -344,6 +338,5 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
 
 </project>

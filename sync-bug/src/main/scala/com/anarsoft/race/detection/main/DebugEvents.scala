@@ -5,18 +5,22 @@ import com.anarsoft.race.detection.process.load.LoadRunsImpl
 import com.anarsoft.race.detection.process.loadAgentLog.LoadAgentLog
 import com.anarsoft.race.detection.process.loadDescription.LoadDescriptionImpl
 
+import java.io.PrintStream
 import java.nio.file.{Path, Paths}
 
 
 class DebugEvents(val dir : Path) {
   
   def process(): Unit = {
+    val stream = new PrintStream("debug.text");
 
-    new LoadDescriptionImpl(dir).load(new DescriptionBuilderForDebug());
+    new LoadDescriptionImpl(dir).load(new DescriptionBuilderForDebug(stream));
     val loadEvents = new LoadRunsFactory().create(dir).asInstanceOf[LoadRunsImpl]
-    val runDataListBuilderForDebug = new RunDataListBuilderForDebug();
+    val runDataListBuilderForDebug = new RunDataListBuilderForDebug(stream);
     loadEvents.load(runDataListBuilderForDebug)
-    new LoadAgentLog(dir).load(System.out);
+    new LoadAgentLog(dir).load(stream);
+
+    stream.close();
   }
 
 }
