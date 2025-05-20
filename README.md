@@ -73,6 +73,10 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
 
 See [pom.xml](https://github.com/vmlens/vmlens/blob/master/test-vmlens-maven-plugin/pom.xml) for an example.
 
+# Documentation
+
+Read the documentation [here](https://vmlens.com/docs/).
+
 # Questions? Problems? Suggestions?
 
 Contact me at [thomas.krieger@vmlens.com](mailto:thomas.krieger@vmlens.com)
