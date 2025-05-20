@@ -5,12 +5,12 @@
 The following example shows how to test multi-threaded, concurrent java with vmlens:
 
 ```Java
-import com.vmlens.api.AllInterleaving;
+import com.vmlens.api.AllInterleavings;
 public class TestNonVolatileField {
     private int j = 0;
     @Test
     public void testUpdate() throws InterruptedException {
-        try(AllInterleaving allInterleaving = new AllInterleaving("testNonVolatileField")) {
+        try(AllInterleavings allInterleaving = new AllInterleavings("testNonVolatileField")) {
             while (allInterleaving.hasNext()) {
                 Thread first = new Thread() {
                     @Override
@@ -44,7 +44,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
 <dependency>
   <groupId>com.vmlens</groupId>
   <artifactId>api</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.2</version>
   <scope>test</scope>
 </dependency>	
 	
@@ -54,7 +54,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
     <plugin>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens-maven-plugin</artifactId>
-	<version>1.2.1</version>
+	<version>1.2.2</version>
         <executions>
             <execution>
                 <id>test</id>
