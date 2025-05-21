@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTran
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
-public class FactoryCollectionPreAnalyzed implements FactoryCollection {
+public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOrAll {
 
     private final FactoryForPreAnalyzedAndAll factoryForBoth;
     private final THashMap<NameAndDescriptor, StrategyPreAnalyzed> methodToStrategy;
@@ -21,6 +21,7 @@ public class FactoryCollectionPreAnalyzed implements FactoryCollection {
                                         MethodNotFoundAction methodNotFoundAction,
                                         MethodRepositoryForTransform methodCallIdMap,
                                         PreAnalyzedStrategy preAnalyzedStrategy) {
+        super(methodCallIdMap);
         this.methodToStrategy = methodToStrategy;
         this.methodNotFoundAction = methodNotFoundAction;
         this.factoryForBoth = new FactoryForPreAnalyzedAndAll(
@@ -29,7 +30,7 @@ public class FactoryCollectionPreAnalyzed implements FactoryCollection {
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor, int access) {
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyzeAfterFilter(NameAndDescriptor nameAndDescriptor, int access) {
         StrategyPreAnalyzed strategy = methodToStrategy.get(nameAndDescriptor);
         if (strategy != null) {
             return factoryForBoth.getAnalyze(nameAndDescriptor);
@@ -46,7 +47,7 @@ public class FactoryCollectionPreAnalyzed implements FactoryCollection {
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(NameAndDescriptor nameAndDescriptor,
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategyAfterFilter(NameAndDescriptor nameAndDescriptor,
                                                                                           int access,
                                                                                           int methodId,
                                                                                           MethodRepositoryForTransform methodRepositoryForTransform) {

@@ -37,10 +37,16 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
         return actualRun;
     }
 
+    /**
+     * To avoid class loading locks, see for example com.vmlens.test.maven.plugin.real.TestGson
+     * we are not going round-robin but rather first the latest started thread
+     *
+     */
     public static boolean calculateActiveByPositionInRun(int positionInRun,
                                                          int threadIndex,
                                                          TIntLinkedList activeThreadIndices) {
-        int position =  positionInRun % activeThreadIndices.size();
+         int position =  activeThreadIndices.size() - 1;
+        //int position =  positionInRun % activeThreadIndices.size();
         return activeThreadIndices.get(position) == threadIndex;
     }
 

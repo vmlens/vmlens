@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -54,7 +54,7 @@
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
-                <version>2.11.0</version>
+                <version>2.13.1</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -221,20 +221,20 @@
     </dependencyManagement>
 
     <modules>
-        <module>../annotation</module>
-        <module>../test-util</module>
-        <module>../api</module>
-        <module>../trace-agent-bootstrap</module>
+        <module>annotation</module>
+        <module>test-util</module>
+        <module>api</module>
+        <module>trace-agent-bootstrap</module>
         <!-- trace-agent-bootstrap-jdk9 cleans vmlens-maven-plugin dist directory -->
-        <module>../trace-agent-bootstrap-jdk9</module>
-        <module>../trace-agent</module>
-        <module>../agent-runtime</module>
-        <module>../report</module>
-		<module>../sync-bug</module>
-        <module>../vmlens-maven-plugin</module>
-        <module>../test-vmlens-maven-plugin</module>
-        <module>../test-vmlens-testng</module>
-        <module>../standalone</module>
+        <module>trace-agent-bootstrap-jdk9</module>
+        <module>trace-agent</module>
+        <module>agent-runtime</module>
+        <module>report</module>
+		<module>sync-bug</module>
+        <module>vmlens-maven-plugin</module>
+        <module>test-vmlens-maven-plugin</module>
+        <module>test-vmlens-testng</module>
+        <module>standalone</module>
     </modules>
 
     <profiles>

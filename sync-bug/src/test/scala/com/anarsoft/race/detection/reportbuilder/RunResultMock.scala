@@ -12,10 +12,8 @@ class RunResultMock(eventForRunElements: List[EventForReportElement],
   }
   
   
-
   override def loopId: Int = 0
 
   override def runId: Int = 0
-
-  override def compare(that: RunResult): Int = 0
+  
 }

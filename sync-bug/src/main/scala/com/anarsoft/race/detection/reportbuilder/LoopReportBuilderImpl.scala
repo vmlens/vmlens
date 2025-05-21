@@ -24,10 +24,7 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
 
   def build(): UILoopsAndStacktraceLeafsBuilder = {
     val stacktraceLeafsMap = new mutable.HashMap[StacktraceNode, StacktraceLeaf]();
-
     val  resultForVerify = new ResultForVerify();
-    
-
 
     // addVolatileAccessEvents the loops to the report builder
     for (loopAndRun <- runCountAndResultList) {
@@ -110,7 +107,7 @@ object LoopReportBuilderImpl {
 
     var text = result.text;
     for(id <- runResult.warningIdList ) {
-      text = text + ", " + Message.of(id).text();
+      text = text + ", " + "<span style=\"color: #FFC107;\">" + Message.of(id).text() + "</span>";
     }
     
     new TestResult(text,result.style);

@@ -15,15 +15,25 @@ class LoopResultCollection {
     loopIdToResult.get(loopId) match {
       case Some(x) => {
         val count = Math.max(x.count, runResult.runId)
-        // >= means we replace the initial run
-        if (runResult.compare(x.runResult) >= 0) {
-          if(runResult.runId > x.runResult.runId) {
-            loopIdToResult.put(loopId, RunCountAndResult(count, runResult))
-          }
-        } else {
+      
+        if(runResult.isFailure) {
+          loopIdToResult.put(loopId, RunCountAndResult(count, runResult))
+        } else if (x.runResult.isFailure) {
           loopIdToResult.put(loopId, RunCountAndResult(count, x.runResult))
+        } else if(runResult.dataRaceCount > x.runResult.dataRaceCount) {
+          loopIdToResult.put(loopId, RunCountAndResult(count, runResult)) 
+        }  else if(x.runResult.dataRaceCount > runResult.dataRaceCount) {
+          loopIdToResult.put(loopId, RunCountAndResult(count, x.runResult))
+        } else if(runResult.warningIdList.size >  x.runResult.warningIdList.size) {
+          loopIdToResult.put(loopId, RunCountAndResult(count, runResult))
+        } else if (x.runResult.warningIdList.size > runResult.warningIdList.size) {
+            loopIdToResult.put(loopId, RunCountAndResult(count, x.runResult))
+          } else {
+          loopIdToResult.put(loopId, RunCountAndResult(count, runResult))
         }
+        
       }
+      
 
       case None => {
         loopIdToResult.put(loopId, RunCountAndResult(runResult.runId, runResult))

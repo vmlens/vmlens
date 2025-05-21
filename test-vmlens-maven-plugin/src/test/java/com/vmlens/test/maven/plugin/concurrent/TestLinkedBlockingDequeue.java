@@ -32,8 +32,8 @@ public class TestLinkedBlockingDequeue {
 
         Set<String> values = new HashSet<>();
 
-        try(AllInterleavings allInterleaving = new AllInterleavings(name)) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings(name)) {
+            while (allInterleavings.hasNext()) {
                 Deque<String> queue = createDeque.get();
                 queue.push("first");
                 Thread first = new Thread() {

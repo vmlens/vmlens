@@ -20,6 +20,7 @@ public class FactoryCollectionAdapterForTransform implements FactoryCollectionAd
                                                                    int access,
                                                                    int methodId,
                                                                    MethodRepositoryForTransform methodRepositoryForTransform) {
-        return factoryCollection.getTransformAndSetStrategy(nameAndDescriptor, access, methodId, methodRepositoryForTransform);
+        return factoryCollection.getTransformAndSetStrategy(nameAndDescriptor,
+                access, methodId, methodRepositoryForTransform);
     }
 }

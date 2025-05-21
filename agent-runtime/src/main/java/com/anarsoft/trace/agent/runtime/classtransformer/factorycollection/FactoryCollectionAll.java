@@ -14,24 +14,25 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 import static org.objectweb.asm.Opcodes.ACC_STATIC;
 
-public class FactoryCollectionAll implements FactoryCollection {
+public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {
 
     private final FactoryForPreAnalyzedAndAll factoryForBoth;
     private final FieldRepositoryForTransform fieldIdMap;
 
 
     public FactoryCollectionAll(FieldRepositoryForTransform fieldIdMap, MethodRepositoryForTransform methodCallIdMap) {
+        super(methodCallIdMap);
         this.fieldIdMap = fieldIdMap;
         this.factoryForBoth = new FactoryForPreAnalyzedAndAll(new MethodCallbackFactoryFactoryAll(), methodCallIdMap);
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor, int access) {
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyzeAfterFilter(NameAndDescriptor nameAndDescriptor, int access) {
         return factoryForBoth.getAnalyze(nameAndDescriptor);
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategyAfterFilter(
             NameAndDescriptor nameAndDescriptor,
             int access,
             int methodId,

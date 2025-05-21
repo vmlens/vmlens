@@ -35,8 +35,8 @@ public class TestConcurrentMap {
         expectedSet.add(2);
 
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings(name)) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings(name)) {
+            while (allInterleavings.hasNext()) {
                 final ConcurrentMap<String,Integer>  map = createMap.get();
                 Thread first = new Thread() {
                     @Override
@@ -69,8 +69,8 @@ public class TestConcurrentMap {
         expectedSet.add(2);
 
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings(name)) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings(name)) {
+            while (allInterleavings.hasNext()) {
                 final ConcurrentMap<String,Integer>  map = createMap.get();
                 Thread first = new Thread() {
                     @Override

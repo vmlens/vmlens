@@ -6,14 +6,14 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestSingleThreadedNotTraced {
+public class TestSynchronizedMethodAndVolatileField {
 
     private volatile int j = 0;
 
     @Test
     public void testUpdate() throws InterruptedException {
         Map map = new HashMap();
-        AllInterleavings testUpdate = new AllInterleavings("testSingleThreadedNotTraced");
+        AllInterleavings testUpdate = new AllInterleavings("testSynchronizedMethodAndVolatileField");
         while (testUpdate.hasNext()) {
             Thread first = new Thread() {
                 @Override

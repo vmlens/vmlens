@@ -50,8 +50,8 @@ public class TestDelayedQueue {
 
         Set<Integer> values = new HashSet<>();
 
-        try(AllInterleavings allInterleaving = new AllInterleavings("delayedQueue")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("delayedQueue")) {
+            while (allInterleavings.hasNext()) {
                 DelayQueue<DelayedString> queue = new DelayQueue<>();
                 queue.add(new DelayedString(System.currentTimeMillis() , "second"));
                 Thread first = new Thread() {

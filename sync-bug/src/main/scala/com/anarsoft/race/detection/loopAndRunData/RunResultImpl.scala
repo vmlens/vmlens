@@ -30,18 +30,7 @@ class RunResultImpl(loopAndRunId: LoopAndRunId,
     }
   }
 
-  override def compare(that: RunResult): Int = {
-    if (isFailure && that.isFailure) {
-      dataRaceCount.compare(that.dataRaceCount)
-    }
-    else if (isFailure) {
-      warningIdList.size + 1
-    } else {
-      0
-    }
-  }
   
-
   override def dataRaceCount: Int = {
     val dataRaceSet = new mutable.HashSet[StaticMemoryAccessId]();
     for (elem <- nonVolatileMemoryAccessElements) {

@@ -27,5 +27,15 @@ public class ClassTransformerAllTest {
         assertThat(repo.strategyAll(id), is(NormalMethodStrategy.SINGLETON));
     }
 
+    @Test
+    public void withClinit() throws IOException {
+        // Given
+        RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
+
+        // When
+        runTestClassTransformer.runTest("com.vmlens.test.guineapig.WithClinit", "/withClinit.txt");
+
+    }
+
 
 }

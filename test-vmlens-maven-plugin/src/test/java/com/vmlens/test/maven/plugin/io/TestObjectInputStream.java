@@ -23,8 +23,8 @@ public class TestObjectInputStream {
         expectedSet.add("cdab");
 
         Set<String> actualSet = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings("testObjectInputStream")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testObjectInputStream")) {
+            while (allInterleavings.hasNext()) {
                 firstString = null;
                 LineNumberReader stream = new LineNumberReader(new StringReader("ab\ncd"));
                 Thread first = new Thread() {

@@ -3,8 +3,7 @@
   <parent>
     <artifactId>vmlens</artifactId>
     <groupId>com.vmlens</groupId>
-    <version>1.2.2</version>
-    <relativePath>../vmlens/pom.xml</relativePath>
+    <version>1.2.3-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>trace-agent-bootstrap-jdk9</artifactId>

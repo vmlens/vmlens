@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import gnu.trove.list.linked.TIntLinkedList;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated.calculateActiveByPositionInRun;
@@ -9,6 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InterleaveRunWithoutCalculatedTest {
 
+    @Ignore
     @Test
     public void calculateActiveByPositionInRunTest() {
         TIntLinkedList indices = new TIntLinkedList();

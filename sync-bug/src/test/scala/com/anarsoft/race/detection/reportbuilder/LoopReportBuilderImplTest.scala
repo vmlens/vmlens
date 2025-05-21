@@ -30,7 +30,7 @@ class LoopReportBuilderImplTest extends AnyFlatSpec with Matchers {
 
   "toTestResult" should "display the correct text" in {
 
-    toTestResult(new RunResultMock(List(), true, 5 , Set(TEST_BLOCKED_MESSAGE.id()))).text() should be("Failure, data race, test blocked")
+    toTestResult(new RunResultMock(List(), true, 5 , Set(TEST_BLOCKED_MESSAGE.id()))).text() should be("Failure, data race, <span style=\"color: #FFC107;\">test blocked</span>")
     toTestResult(new RunResultMock(List(), false, 0, Set())).text() should be("Success")
     toTestResult(new RunResultMock(List(), false, 3, Set())).text() should be("Data race")
 

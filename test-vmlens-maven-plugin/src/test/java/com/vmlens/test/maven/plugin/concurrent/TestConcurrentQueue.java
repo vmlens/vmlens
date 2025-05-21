@@ -44,8 +44,8 @@ public class TestConcurrentQueue {
 
         Set<Integer> values = new HashSet<>();
 
-        try(AllInterleavings allInterleaving = new AllInterleavings(name)) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings(name)) {
+            while (allInterleavings.hasNext()) {
                 Queue<String> queue = createQueue.get();
                 queue.add("first");
                 Thread first = new Thread() {
@@ -71,8 +71,8 @@ public class TestConcurrentQueue {
 
         Set<ImmutablePair<String,String>> actual = new HashSet<>();
 
-        try(AllInterleavings allInterleaving = new AllInterleavings(name)) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings(name)) {
+            while (allInterleavings.hasNext()) {
                 Queue<String> queue = createQueue.get();
 
                 Thread first = new Thread() {

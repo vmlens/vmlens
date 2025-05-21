@@ -20,8 +20,8 @@ public class TestVolatileField {
         expectedSet.add(1);
         expectedSet.add(2);
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings("testVolatileFieldReadWrite")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testVolatileFieldReadWrite")) {
+            while (allInterleavings.hasNext()) {
                 j = 0;
                 Thread first = new Thread() {
                     @Override
@@ -44,8 +44,8 @@ public class TestVolatileField {
         expectedSet.add(5);
         expectedSet.add(9);
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings("testVolatileFieldWrite")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testVolatileFieldWrite")) {
+            while (allInterleavings.hasNext()) {
                 j = 0;
                 Thread first = new Thread() {
                     @Override

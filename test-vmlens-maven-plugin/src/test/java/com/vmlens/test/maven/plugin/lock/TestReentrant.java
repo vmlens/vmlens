@@ -14,8 +14,8 @@ public class TestReentrant {
 
     @Test
     public void testLock() throws InterruptedException {
-        try(AllInterleavings allInterleaving = new AllInterleavings("reentrantLock")) {
-        while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("reentrantLock")) {
+        while (allInterleavings.hasNext()) {
             final ReentrantLock lock = new ReentrantLock();
             Thread first = new Thread() {
                     @Override
@@ -40,9 +40,12 @@ public class TestReentrant {
         expectedSet.add(true);
         expectedSet.add(false);
 
-        Set<Boolean> actual = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings("reentrantTryLock")) {
-            while (allInterleaving.hasNext()) {
+
+
+        Set<Boolean> actualMain = new HashSet<>();
+        Set<Boolean> actualThread = new HashSet<>();
+        try(AllInterleavings allInterleavings = new AllInterleavings("reentrantTryLock")) {
+            while (allInterleavings.hasNext()) {
                 final ReentrantLock firstLock = new ReentrantLock();
                 final ReentrantLock secondLock = new ReentrantLock();
                 Thread first = new Thread() {
@@ -53,6 +56,7 @@ public class TestReentrant {
                         if(lockSuccessful) {
                             secondLock.unlock();
                         }
+                        actualThread.add(lockSuccessful);
                         firstLock.unlock();
                     }
                 };
@@ -63,9 +67,13 @@ public class TestReentrant {
                     firstLock.unlock();
                 }
                 secondLock.unlock();
-                actual.add(lockSuccessful);
+                actualMain.add(lockSuccessful);
                 first.join();
             }
+
+            Set<Boolean> actual = new HashSet<>();
+            actual.addAll(actualMain);
+            actual.addAll(actualThread);
             assertThat(actual,is(expectedSet));
         }
     }
@@ -78,9 +86,13 @@ public class TestReentrant {
         expectedSet.add(true);
         expectedSet.add(false);
 
-        Set<Boolean> actual = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings("reentrantTryLockWithTimeout")) {
-            while (allInterleaving.hasNext()) {
+        // Currently deadlock is not symmetric,
+        // so only one try will fail
+
+        Set<Boolean> actualMain = new HashSet<>();
+        Set<Boolean> actualThread = new HashSet<>();
+        try(AllInterleavings allInterleavings = new AllInterleavings("reentrantTryLockWithTimeout")) {
+            while (allInterleavings.hasNext()) {
                 final ReentrantLock firstLock = new ReentrantLock();
                 final ReentrantLock secondLock = new ReentrantLock();
                 Thread first = new Thread() {
@@ -91,6 +103,7 @@ public class TestReentrant {
                         if (lockSuccessful) {
                             secondLock.unlock();
                         }
+                        actualThread.add(lockSuccessful);
                         firstLock.unlock();
                     }
                 };
@@ -101,9 +114,12 @@ public class TestReentrant {
                     firstLock.unlock();
                 }
                 secondLock.unlock();
-                actual.add(lockSuccessful);
+                actualMain.add(lockSuccessful);
                 first.join();
             }
+            Set<Boolean> actual = new HashSet<>();
+            actual.addAll(actualMain);
+            actual.addAll(actualThread);
             assertThat(actual,is(expectedSet));
         }
     }

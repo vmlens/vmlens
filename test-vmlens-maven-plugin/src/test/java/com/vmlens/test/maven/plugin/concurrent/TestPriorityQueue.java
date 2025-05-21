@@ -21,8 +21,8 @@ public class TestPriorityQueue {
 
         Set<String> values = new HashSet<>();
 
-        try(AllInterleavings allInterleaving = new AllInterleavings("priorityQueue")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("priorityQueue")) {
+            while (allInterleavings.hasNext()) {
                 PriorityBlockingQueue<String> queue = new PriorityBlockingQueue<>();
                 queue.add("second");
                 Thread first = new Thread() {

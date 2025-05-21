@@ -5,8 +5,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.2</version>
-        <relativePath>../vmlens/pom.xml</relativePath>
+        <version>1.2.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>test-vmlens-maven-plugin</artifactId>
@@ -48,6 +47,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>api</artifactId>
