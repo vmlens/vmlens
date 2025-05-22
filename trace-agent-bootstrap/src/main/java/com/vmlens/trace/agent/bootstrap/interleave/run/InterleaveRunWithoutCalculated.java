@@ -38,7 +38,7 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
     }
 
     /**
-     * To avoid class loading locks, see for example com.vmlens.test.maven.plugin.real.TestGson
+     * To avoid class loading locks, see for example com.vmlens.test.maven.plugin.json.TestGson
      * we are not going round-robin but rather first the latest started thread
      *
      */

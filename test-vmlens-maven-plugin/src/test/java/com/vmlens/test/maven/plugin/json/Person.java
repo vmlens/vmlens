@@ -1,4 +1,4 @@
-package com.vmlens.test.maven.plugin.real;
+package com.vmlens.test.maven.plugin.json;
 
 public class Person {
 

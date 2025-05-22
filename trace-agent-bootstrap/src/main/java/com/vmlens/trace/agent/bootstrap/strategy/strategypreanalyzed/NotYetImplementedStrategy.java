@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.ThrowNotYetImplementedException;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.NotYetImplementedAction;
 
 public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
 
@@ -31,6 +31,6 @@ public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
     }
 
     private void throwException(EnterExitContext context) {
-        context.threadLocalWhenInTestAdapter().process(new ThrowNotYetImplementedException(methodName));
+        context.threadLocalWhenInTestAdapter().process(new NotYetImplementedAction(methodName));
     }
 }

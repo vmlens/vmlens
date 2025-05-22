@@ -110,6 +110,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       Include("java/io/"),
 
+      // Best is to use pre analyzed for field access
+      //Include("java/lang/reflect"),
+
       Filter("java"),
       Filter("sun"),
       Filter("jdk"),

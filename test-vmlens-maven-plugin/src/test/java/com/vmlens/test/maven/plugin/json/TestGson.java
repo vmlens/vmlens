@@ -1,4 +1,4 @@
-package com.vmlens.test.maven.plugin.real;
+package com.vmlens.test.maven.plugin.json;
 
 import com.google.gson.Gson;
 import com.vmlens.api.AllInterleavings;

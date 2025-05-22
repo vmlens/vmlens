@@ -41,10 +41,10 @@ public class TestDelayedQueue {
         }
     }
 
-    @Ignore
     @Test
     public void testDelayed() throws InterruptedException {
         Set<Integer> expected = new HashSet<>();
+        expected.add(0);
         expected.add(1);
         expected.add(2);
 
