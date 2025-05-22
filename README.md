@@ -40,7 +40,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
 
 ```XML
 <project>
-<!-- to include the class AllInterleaving into the test class path.  -->	
+<!-- to include the class AllInterleavings into the test class path.  -->	
 <dependency>
   <groupId>com.vmlens</groupId>
   <artifactId>api</artifactId>
