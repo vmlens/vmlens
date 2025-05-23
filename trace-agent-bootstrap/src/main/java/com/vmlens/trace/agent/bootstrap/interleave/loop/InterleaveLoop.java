@@ -13,6 +13,7 @@ import java.util.Iterator;
 
 
 public class InterleaveLoop implements IteratorQueue {
+
     private final THashSet<AlternatingOrderContainer> allAlternatingOrderContainer =
             new THashSet<>();
     private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> stillToBeProcessedAlternatingOrderContainer =

@@ -32,5 +32,6 @@ public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
 
     private void throwException(EnterExitContext context) {
         context.threadLocalWhenInTestAdapter().process(new NotYetImplementedAction(methodName));
+
     }
 }

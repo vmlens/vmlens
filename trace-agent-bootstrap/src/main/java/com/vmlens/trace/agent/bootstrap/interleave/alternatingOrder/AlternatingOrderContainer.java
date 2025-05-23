@@ -63,8 +63,6 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
     private class AlternatingOrderContainerIterator implements
             Iterator<CalculatedRun> {
 
-
-        private final THashSet<CalculatedRun> alreadyExecuted = new THashSet<CalculatedRun>();
         private final PermutationIterator permutationIterator;
 
         public AlternatingOrderContainerIterator() {
@@ -107,15 +105,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
             permutationIterator.advance();
 
             LeftBeforeRight[] orderArray = toArray(LeftBeforeRight.class, newOrder);
-            CalculatedRun run =  new CreateCalculatedRun(orderArray, actualRun).create();
-            if(run == null) {
-                return run;
-            }
-            if(alreadyExecuted.contains(run)){
-                return null;
-            }
-            alreadyExecuted.add(run);
-            return run;
+            return  new CreateCalculatedRun(orderArray, actualRun).create();
         }
 
         @Override
