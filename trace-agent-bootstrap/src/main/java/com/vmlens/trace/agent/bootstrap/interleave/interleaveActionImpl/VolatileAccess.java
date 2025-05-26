@@ -10,6 +10,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollecti
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 import java.util.Objects;
 
@@ -87,5 +89,20 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
                 ", volatileAccessKey=" + volatileAccessKey +
                 ", operation=" + operation +
                 '}';
+    }
+
+    @Override
+    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+        if(! (other instanceof VolatileAccess)) {
+            return false;
+        }
+        VolatileAccess otherLock = (VolatileAccess) other;
+        if(threadIndex != otherLock.threadIndex)  {
+            return false;
+        }
+        if(operation != otherLock.operation)  {
+            return false;
+        }
+        return volatileAccessKey.equalsNormalized(normalizeContext,otherLock.volatileAccessKey);
     }
 }

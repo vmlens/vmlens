@@ -12,6 +12,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBloc
 import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 public class LockExit implements InterleaveAction, DependentBlockElement {
 
@@ -81,5 +82,18 @@ public class LockExit implements InterleaveAction, DependentBlockElement {
                 "threadIndex=" + threadIndex +
                 ", lockOrMonitor=" + lockOrMonitor +
                 '}';
+    }
+
+    @Override
+    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+        if(! (other instanceof LockExit)) {
+            return false;
+        }
+        LockExit otherLock = (LockExit) other;
+        if(threadIndex != otherLock.threadIndex)  {
+            return false;
+        }
+
+        return lockOrMonitor.key().equalsNormalized(normalizeContext,otherLock.lockOrMonitor.key());
     }
 }
