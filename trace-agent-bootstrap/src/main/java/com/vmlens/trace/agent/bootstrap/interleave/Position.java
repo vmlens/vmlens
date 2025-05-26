@@ -60,6 +60,10 @@ public class Position implements Comparable<Position>, WithThreadIndex {
         return threadIndex;
     }
 
+    public int positionInThread() {
+        return positionInThread;
+    }
+
     public boolean greaterOrEquals(Position other) {
         if(other.threadIndex != threadIndex()) {
             return false;

@@ -37,7 +37,7 @@ public class FactoryForPreAnalyzedAndAll {
     }
 
     public void addToTransform(NameAndDescriptor nameAndDescriptor,
-                                                                              TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result) {
+                               TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result) {
         TryCatchBlockCounter tryCatchBlockCounter = nameAndDescriptorToTryCatchBlockCounter.get(nameAndDescriptor);
         result.add(wrap(new MethodEnterExitTransformFactory(tryCatchBlockCounter.tryCatchBlockCount(), factoryFactory)));
     }

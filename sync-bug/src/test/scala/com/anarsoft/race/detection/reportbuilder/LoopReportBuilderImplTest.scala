@@ -9,7 +9,7 @@ import com.vmlens.trace.agent.bootstrap.exception.Message.TEST_BLOCKED_MESSAGE
 
 class LoopReportBuilderImplTest extends AnyFlatSpec with Matchers {
 
-  "LoopReportBuilderImpl" should "call addLoopAndRun and addStacktraceLeaf on report builder" in {
+  "LoopReportBuilderImpl" should "call addLoopAndRun and addStacktraceLeaf on report ordertree" in {
     // Given
     val root = new StacktraceNodeRoot(1);
     val leaf = StacktraceNodeIntermediate(5, root);

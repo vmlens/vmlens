@@ -111,9 +111,9 @@ public class AgentRuntimeImpl implements AgentRuntime {
                     }
                 }
             } else {
-              //  InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
-              //  builder.add("not transformable:" + cl.getName());
-              //  writeClassDescriptionAndWarning.write(builder.build());
+              //  InfoMessageEventBuilder ordertree = new InfoMessageEventBuilder();
+              //  ordertree.add("not transformable:" + cl.getName());
+              //  writeClassDescriptionAndWarning.write(ordertree.build());
             }
         }
         Class[] toBeRetransformed = new Class[transformableClasses.size()];
