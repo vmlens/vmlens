@@ -106,6 +106,10 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
         return threadList.iterator();
     }
 
+    public Iterator<ELEMENT> elementIterator() {
+        return new ElementIterator<>( iterator());
+    }
+
     public TLinkedList<TLinkableWrapper<ELEMENT>> listAt(int threadIndex) {
         if(threadIndex >= threadList.size()) {
             return null;
