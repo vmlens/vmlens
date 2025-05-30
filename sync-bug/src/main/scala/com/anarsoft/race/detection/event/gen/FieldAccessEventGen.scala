@@ -21,7 +21,7 @@ class FieldAccessEventGen (
  ,  val runPosition  : Int  
 )    extends NonVolatileFieldAccessEvent
 {
-override def toString() = {
+override def toString : String = {
   var text =  "FieldAccessEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", fieldId:" +  fieldId 
@@ -35,7 +35,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: FieldAccessEventGen => 
         {

@@ -20,10 +20,10 @@ class NonVolatileDeSerializer extends DeserializeStrategy[LoadedNonVolatileEvent
        if( id == 2 ) {
           return FieldAccessEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 4 ) {
+       if( id == 3 ) {
           return FieldAccessEventStaticGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 5 ) {
+       if( id == 4 ) {
           return ArrayAccessEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");

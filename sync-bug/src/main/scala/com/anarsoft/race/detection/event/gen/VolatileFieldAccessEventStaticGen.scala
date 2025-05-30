@@ -21,7 +21,7 @@ class VolatileFieldAccessEventStaticGen (
  ,  val runPosition  : Int  
 )    extends VolatileFieldAccessEventStatic  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "VolatileFieldAccessEventStaticGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", bytecodePosition:" +  bytecodePosition 
@@ -35,7 +35,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: VolatileFieldAccessEventStaticGen => 
         {

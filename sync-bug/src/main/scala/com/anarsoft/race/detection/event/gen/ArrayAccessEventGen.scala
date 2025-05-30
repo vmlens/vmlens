@@ -21,7 +21,7 @@ class ArrayAccessEventGen (
  ,  val runPosition  : Int  
 )    extends ArrayAccessEvent 
 {
-override def toString() = {
+override def toString : String = {
   var text =  "ArrayAccessEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", arrayIndex:" +  arrayIndex 
@@ -35,7 +35,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: ArrayAccessEventGen => 
         {

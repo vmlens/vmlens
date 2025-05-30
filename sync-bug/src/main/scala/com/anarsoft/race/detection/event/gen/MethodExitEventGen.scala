@@ -17,7 +17,7 @@ class MethodExitEventGen (
  ,  val runId  : Int  
 )    extends MethodExitEvent 
 {
-override def toString() = {
+override def toString : String = {
   var text =  "MethodExitEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodId:" +  methodId 
@@ -27,7 +27,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: MethodExitEventGen => 
         {

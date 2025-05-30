@@ -21,7 +21,7 @@ class LockEnterEventGen (
  ,  val runPosition  : Int  
 )    extends LockEnterEvent  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "LockEnterEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodCounter:" +  methodCounter 
@@ -35,7 +35,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: LockEnterEventGen => 
         {

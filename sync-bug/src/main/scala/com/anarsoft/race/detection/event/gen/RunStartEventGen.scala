@@ -14,14 +14,14 @@ class RunStartEventGen (
  ,  val runId  : Int  
 )    extends RunStartEvent  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "RunStartEventGen" 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: RunStartEventGen => 
         {

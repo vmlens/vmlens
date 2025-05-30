@@ -22,7 +22,7 @@ class AtomicReadWriteLockEnterEventGen (
  ,  val atomicMethodId  : Int  
 )    extends AtomicReadWriteLockEnterEvent  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "AtomicReadWriteLockEnterEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodCounter:" +  methodCounter 
@@ -37,7 +37,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: AtomicReadWriteLockEnterEventGen => 
         {

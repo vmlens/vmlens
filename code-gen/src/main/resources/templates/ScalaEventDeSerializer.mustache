@@ -9,14 +9,19 @@ import com.anarsoft.race.detection.event.directmemory._;
 import com.anarsoft.race.detection.event.interleave._;
 import com.anarsoft.race.detection.event.load._;
 
-class DirectMemoryDeSerializer extends DeserializeStrategy[LoadedDirectMemoryEvent] {
-   val eventArraySize : Int = 0
-   val blockSize : Int =  0 * 10000;
+class {{className}} extends DeserializeStrategy[{{deserializerExtends}}] {
+   val eventArraySize : Int = {{arraySize}}
+   val blockSize : Int =  {{arraySize}} * {{eventCount}};
   
 
-    def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedDirectMemoryEvent = {
+    def deSerializeJavaEvent(buffer : ByteBuffer) : {{deserializerExtends}} = {
        val id = buffer.get();
        
+       {{#eventList}}
+       if( id == {{eventId}} ) {
+          return {{eventClass}}.applyFromJavaEvent( buffer   );
+       }
+       {{/eventList}}
          throw new RuntimeException("id " + id + " could not be deserialized");
     }
 
