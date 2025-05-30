@@ -1,6 +1,6 @@
 package com.vmlens.preanalyzed.factory
 
-import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicNonBlockingMethod, Filter, PreAnalyzedList, Read, ReadWrite, Write}
+import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicClassNonBlockingMethod, Filter, PreAnalyzedList, Read, ReadWrite, Write}
 
 object ConcurrentLinkedQueueFactory {
 
@@ -10,34 +10,34 @@ object ConcurrentLinkedQueueFactory {
     ));
 
 
-  private def atomicMethods(): List[AtomicNonBlockingMethod] = List[AtomicNonBlockingMethod](
-    AtomicNonBlockingMethod("isEmpty","()Z", Read()   ),
-    AtomicNonBlockingMethod("peek","()Ljava/lang/Object;", Read()   ),
-    AtomicNonBlockingMethod("stream","()Ljava/util/stream/Stream;",  Read()  ),
-    AtomicNonBlockingMethod("containsAll","(Ljava/util/Collection;)Z", Read()   ),
-    AtomicNonBlockingMethod("removeAll","(Ljava/util/Collection;)Z",  ReadWrite()   ),
-    AtomicNonBlockingMethod("retainAll","(Ljava/util/Collection;)Z",  ReadWrite()   ),
-    AtomicNonBlockingMethod("toArray","(Ljava/util/function/IntFunction;)[Ljava/lang/Object;", Read()   ),
-    AtomicNonBlockingMethod("addAll","(Ljava/util/Collection;)Z",    Write()  ),
-    AtomicNonBlockingMethod("remove","()Ljava/lang/Object;", Read()   ),
-    AtomicNonBlockingMethod("iterator","()Ljava/util/Iterator;",Read()    ),
-    AtomicNonBlockingMethod("clear","()V",   ReadWrite()  ),
-    AtomicNonBlockingMethod("poll","()Ljava/lang/Object;",  ReadWrite()   ),
-    AtomicNonBlockingMethod("offer","(Ljava/lang/Object;)Z",   Write()   ),
-    AtomicNonBlockingMethod("add","(Ljava/lang/Object;)Z",   Write()   ),
-    AtomicNonBlockingMethod("toArray","()[Ljava/lang/Object;", Read()   ),
-    AtomicNonBlockingMethod("forEach","(Ljava/util/function/Consumer;)V", Read()   ),
-    AtomicNonBlockingMethod("equals","(Ljava/lang/Object;)Z",  Read()  ),
-    AtomicNonBlockingMethod("toArray","([Ljava/lang/Object;)[Ljava/lang/Object;",  Read()  ),
-    AtomicNonBlockingMethod("size","()I", Read()   ),
-    AtomicNonBlockingMethod("element","()Ljava/lang/Object;", Read()   ),
-    AtomicNonBlockingMethod("removeIf","(Ljava/util/function/Predicate;)Z",  ReadWrite() ),
-    AtomicNonBlockingMethod("spliterator","()Ljava/util/Spliterator;", Read()   ),
-    AtomicNonBlockingMethod("toString","()Ljava/lang/String;", Read()   ),
-    AtomicNonBlockingMethod("remove","(Ljava/lang/Object;)Z", ReadWrite()  ),
-    AtomicNonBlockingMethod("parallelStream","()Ljava/util/stream/Stream;", Read()   ),
-    AtomicNonBlockingMethod("contains","(Ljava/lang/Object;)Z", Read()   ),
-    AtomicNonBlockingMethod("hashCode","()I", Read()   )
+  private def atomicMethods(): List[AtomicClassNonBlockingMethod] = List[AtomicClassNonBlockingMethod](
+    AtomicClassNonBlockingMethod("isEmpty","()Z", Read()   ),
+    AtomicClassNonBlockingMethod("peek","()Ljava/lang/Object;", Read()   ),
+    AtomicClassNonBlockingMethod("stream","()Ljava/util/stream/Stream;",  Read()  ),
+    AtomicClassNonBlockingMethod("containsAll","(Ljava/util/Collection;)Z", Read()   ),
+    AtomicClassNonBlockingMethod("removeAll","(Ljava/util/Collection;)Z",  ReadWrite()   ),
+    AtomicClassNonBlockingMethod("retainAll","(Ljava/util/Collection;)Z",  ReadWrite()   ),
+    AtomicClassNonBlockingMethod("toArray","(Ljava/util/function/IntFunction;)[Ljava/lang/Object;", Read()   ),
+    AtomicClassNonBlockingMethod("addAll","(Ljava/util/Collection;)Z",    Write()  ),
+    AtomicClassNonBlockingMethod("remove","()Ljava/lang/Object;", Read()   ),
+    AtomicClassNonBlockingMethod("iterator","()Ljava/util/Iterator;",Read()    ),
+    AtomicClassNonBlockingMethod("clear","()V",   ReadWrite()  ),
+    AtomicClassNonBlockingMethod("poll","()Ljava/lang/Object;",  ReadWrite()   ),
+    AtomicClassNonBlockingMethod("offer","(Ljava/lang/Object;)Z",   Write()   ),
+    AtomicClassNonBlockingMethod("add","(Ljava/lang/Object;)Z",   Write()   ),
+    AtomicClassNonBlockingMethod("toArray","()[Ljava/lang/Object;", Read()   ),
+    AtomicClassNonBlockingMethod("forEach","(Ljava/util/function/Consumer;)V", Read()   ),
+    AtomicClassNonBlockingMethod("equals","(Ljava/lang/Object;)Z",  Read()  ),
+    AtomicClassNonBlockingMethod("toArray","([Ljava/lang/Object;)[Ljava/lang/Object;",  Read()  ),
+    AtomicClassNonBlockingMethod("size","()I", Read()   ),
+    AtomicClassNonBlockingMethod("element","()Ljava/lang/Object;", Read()   ),
+    AtomicClassNonBlockingMethod("removeIf","(Ljava/util/function/Predicate;)Z",  ReadWrite() ),
+    AtomicClassNonBlockingMethod("spliterator","()Ljava/util/Spliterator;", Read()   ),
+    AtomicClassNonBlockingMethod("toString","()Ljava/lang/String;", Read()   ),
+    AtomicClassNonBlockingMethod("remove","(Ljava/lang/Object;)Z", ReadWrite()  ),
+    AtomicClassNonBlockingMethod("parallelStream","()Ljava/util/stream/Stream;", Read()   ),
+    AtomicClassNonBlockingMethod("contains","(Ljava/lang/Object;)Z", Read()   ),
+    AtomicClassNonBlockingMethod("hashCode","()I", Read()   )
   )
 
 

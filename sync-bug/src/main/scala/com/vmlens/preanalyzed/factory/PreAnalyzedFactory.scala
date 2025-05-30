@@ -3,15 +3,18 @@ package com.vmlens.preanalyzed.factory
 import com.vmlens.preanalyzed.factory.AccumulatorFactory.{doubleAccumulator, longAccumulator}
 import com.vmlens.preanalyzed.factory.AdderFactory.{doubleAdder, longAdder}
 import com.vmlens.preanalyzed.factory.AtomicBooleanFactory.atomicBoolean
+import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongArrayFactory.{atomicIntegerArray, atomicLongArray}
 import com.vmlens.preanalyzed.model.*
 import com.vmlens.preanalyzed.factory.ConcurrentHashMapFactory.concurrentHashMap
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongFactory.{atomicInteger, atomicLong}
 import com.vmlens.preanalyzed.factory.AtomicMarkableReferenceFactory.atomicMarkableReference
+import com.vmlens.preanalyzed.factory.AtomicReferenceArrayFactory.atomicReferenceArray
 import com.vmlens.preanalyzed.factory.AtomicReferenceFactory.atomicReference
 import com.vmlens.preanalyzed.factory.AtomicStampedReferenceFactory.atomicStampedReference
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedDequeFactory.concurrentLinkedDeque
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLinkedQueue
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
+import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
 
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
@@ -60,6 +63,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       loadNotYetImplemented(),
 
+      forGuineaPig(),
+      
       GetReadWriteLock("java/util/concurrent/locks/ReentrantReadWriteLock"),
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$ReadLock", ReadLock(), lockMethods()),
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$WriteLock", WriteLock(), lockMethods()),
@@ -91,10 +96,14 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       atomicReference(),
       atomicMarkableReference(),
       atomicBoolean(),
-      doubleAccumulator(),
+      doubleAccumulator(),  
       longAccumulator(),
       doubleAdder(),
       longAdder(),
+
+      atomicIntegerArray(),
+      atomicLongArray(),
+      atomicReferenceArray(),
 
       ThreadModel("java/lang/Thread"),
       VMLensApi("com/vmlens/api/AllInterleavings"),

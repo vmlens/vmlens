@@ -1,14 +1,8 @@
 package com.anarsoft.trace.agent.runtime.classtransformer;
 
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
-import com.vmlens.trace.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClassTransformerPreAnalyzedTest {
 
@@ -19,6 +13,16 @@ public class ClassTransformerPreAnalyzedTest {
 
         // When and Then
         runTestClassTransformer.runTest("java.util.concurrent.atomic.AtomicInteger", "/atomicInteger.txt");
+
+    }
+
+    @Test
+    public void atomicArray() throws IOException {
+        // Given
+        RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
+
+        // When and Then
+        runTestClassTransformer.runTest("com.vmlens.test.guineapig.MethodWithIntParam", "/methodWithIntParam.txt");
 
     }
 

@@ -8,7 +8,8 @@ import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 public class VolatileArrayAccessEventGen  {
 
     protected int     threadIndex;
-    protected long     index;
+    protected int     bytecodePosition;
+    protected int     arrayIndex;
     protected int     methodCounter;
     protected int     methodId;
     protected int     operation;
@@ -24,7 +25,8 @@ public boolean equals(Object o) {
 
     VolatileArrayAccessEventGen that = (VolatileArrayAccessEventGen) o;
     if ( threadIndex != that.threadIndex) return false;
-    if ( index != that.index) return false;
+    if ( bytecodePosition != that.bytecodePosition) return false;
+    if ( arrayIndex != that.arrayIndex) return false;
     if ( methodCounter != that.methodCounter) return false;
     if ( methodId != that.methodId) return false;
     if ( operation != that.operation) return false;
@@ -39,7 +41,8 @@ public boolean equals(Object o) {
 public String toString() {
     return "VolatileArrayAccessEventGen{" +
     "threadIndex=" + threadIndex +
-    "index=" + index +
+    "bytecodePosition=" + bytecodePosition +
+    "arrayIndex=" + arrayIndex +
     "methodCounter=" + methodCounter +
     "methodId=" + methodId +
     "operation=" + operation +
@@ -61,7 +64,8 @@ public String toString() {
 public void serialize(ByteBuffer buffer) throws Exception {
 buffer.put( (byte)  8 );
      buffer.putInt( threadIndex ); 
-      buffer.putLong( index );  
+     buffer.putInt( bytecodePosition ); 
+     buffer.putInt( arrayIndex ); 
      buffer.putInt( methodCounter ); 
      buffer.putInt( methodId ); 
      buffer.putInt( operation ); 

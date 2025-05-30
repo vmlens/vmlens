@@ -2,6 +2,7 @@ package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactoryFactoryPreAnalyzed;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodEnterStrategyWithoutParam;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
@@ -12,11 +13,11 @@ import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 
 public class FactoryCollectionNotYetImplemented implements FactoryCollection {
 
-    private final FactoryForPreAnalyzedAndAll factoryForBoth;
+    private final FactoryTraceMethodEnterExit factoryForBoth;
 
     public FactoryCollectionNotYetImplemented( MethodRepositoryForTransform methodCallIdMap) {
-        this.factoryForBoth = new FactoryForPreAnalyzedAndAll(
-                new MethodCallbackFactoryFactoryPreAnalyzed(), methodCallIdMap);
+        this.factoryForBoth = new FactoryTraceMethodEnterExit(
+                new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam()), methodCallIdMap);
     }
 
     @Override

@@ -9,7 +9,7 @@ public class MethodCallbackFactoryAll extends MethodCallbackFactory {
     private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/MethodCallback";
 
     public MethodCallbackFactoryAll(MethodVisitor methodVisitor) {
-        super(methodVisitor);
+        super(new MethodEnterStrategyWithoutParam(),methodVisitor);
     }
 
     @Override

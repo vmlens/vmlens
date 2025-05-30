@@ -10,16 +10,13 @@ import com.anarsoft.race.detection.event.interleave._;
 import com.anarsoft.race.detection.event.load._;
 
 class DirectMemoryDeSerializer extends DeserializeStrategy[LoadedDirectMemoryEvent] {
-   val eventArraySize : Int = 33
-   val blockSize : Int =  33 * 10000;
+   val eventArraySize : Int = 0
+   val blockSize : Int =  0 * 10000;
   
 
     def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedDirectMemoryEvent = {
        val id = buffer.get();
        
-       if( id == 9 ) {
-          return VolatileDirectMemoryEventGen.applyFromJavaEvent( buffer   );
-       }
          throw new RuntimeException("id " + id + " could not be deserialized");
     }
 

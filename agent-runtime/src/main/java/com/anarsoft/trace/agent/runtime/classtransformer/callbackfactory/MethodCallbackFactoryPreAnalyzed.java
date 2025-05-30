@@ -8,8 +8,8 @@ public class MethodCallbackFactoryPreAnalyzed extends MethodCallbackFactory {
 
     private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback";
 
-    public MethodCallbackFactoryPreAnalyzed(MethodVisitor methodVisitor) {
-        super(methodVisitor);
+    public MethodCallbackFactoryPreAnalyzed(MethodEnterStrategy methodEnterStrategy,MethodVisitor methodVisitor) {
+        super(methodEnterStrategy,methodVisitor);
     }
 
     @Override
@@ -17,6 +17,7 @@ public class MethodCallbackFactoryPreAnalyzed extends MethodCallbackFactory {
         return true;
     }
 
+    @Override
     protected void methodCall(int id, String methodName, String methodDescriptor) {
         methodVisitor.visitLdcInsn(id);
         methodVisitor.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS,

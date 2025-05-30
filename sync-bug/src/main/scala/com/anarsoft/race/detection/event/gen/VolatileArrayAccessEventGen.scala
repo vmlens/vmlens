@@ -11,7 +11,8 @@ import com.anarsoft.race.detection.event.interleave._;
 
 class VolatileArrayAccessEventGen (
    val threadIndex  : Int  
- ,  val index  : Long  
+ ,  val bytecodePosition  : Int  
+ ,  val arrayIndex  : Int  
  ,  val methodCounter  : Int  
  ,  val methodId  : Int  
  ,  val operation  : Int  
@@ -24,7 +25,8 @@ class VolatileArrayAccessEventGen (
 override def toString() = {
   var text =  "VolatileArrayAccessEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
-  text = text + ", index:" +  index 
+  text = text + ", bytecodePosition:" +  bytecodePosition 
+  text = text + ", arrayIndex:" +  arrayIndex 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", methodId:" +  methodId 
   text = text + ", operation:" +  operation 
@@ -44,7 +46,12 @@ override def equals(other: Any) = {
                false;
              }
              else
-             if( index != that.index )
+             if( bytecodePosition != that.bytecodePosition )
+             {
+               false;
+             }
+             else
+             if( arrayIndex != that.arrayIndex )
              {
                false;
              }
@@ -100,7 +107,9 @@ object  VolatileArrayAccessEventGen
           
                 data.getInt()
           ,
-                data.getLong()
+                data.getInt()
+          ,
+                data.getInt()
           ,
                 data.getInt()
           ,

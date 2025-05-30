@@ -67,6 +67,11 @@
                 <version>24.1-jre</version>
             </dependency>
             <dependency>
+                <groupId>com.samskivert</groupId>
+                <artifactId>jmustache</artifactId>
+                <version>1.16</version>
+            </dependency>
+            <dependency>
                 <groupId>com.typesafe.scala-logging</groupId>
                 <artifactId>scala-logging_2.13</artifactId>
                 <version>3.9.3</version>
@@ -241,6 +246,7 @@
     </dependencyManagement>
 
     <modules>
+        <module>code-gen</module>
         <module>annotation</module>
         <module>test-util</module>
         <module>api</module>

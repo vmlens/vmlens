@@ -13,6 +13,8 @@ public interface FactoryCollectionPreAnalyzedFactoryBuilder {
 
     void addNonBlockingMethod(String name, String desc, int operation);
 
+    void addNonBlockingArrayMethod(String name, String desc, int operation);
+
     void addLockMethod(String name, String desc, LockType lockType, LockOperation lockOperation);
 
     void addThreadStart(String name, String desc);

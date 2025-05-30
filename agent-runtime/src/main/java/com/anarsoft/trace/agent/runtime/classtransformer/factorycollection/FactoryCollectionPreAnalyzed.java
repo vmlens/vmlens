@@ -2,7 +2,9 @@ package com.anarsoft.trace.agent.runtime.classtransformer.factorycollection;
 
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
 import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodCallbackFactoryFactoryPreAnalyzed;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.PreAnalyzedStrategy;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodEnterStrategyWithIntParam;
+import com.anarsoft.trace.agent.runtime.classtransformer.callbackfactory.MethodEnterStrategyWithoutParam;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
 import com.anarsoft.trace.agent.runtime.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
@@ -12,20 +14,23 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOrAll {
 
-    private final FactoryForPreAnalyzedAndAll factoryForBoth;
+    private final FactoryTraceMethodEnterExit factoryTraceMethodEnterExit;
+    private final FactoryTraceMethodEnterExit factoryTraceMethodEnterWithIntParamExit;
     private final THashMap<NameAndDescriptor, StrategyPreAnalyzed> methodToStrategy;
     private final MethodNotFoundAction methodNotFoundAction;
-    private final PreAnalyzedStrategy preAnalyzedStrategy;
+    private final SelectMethodEnterStrategy preAnalyzedStrategy;
 
     public FactoryCollectionPreAnalyzed(THashMap<NameAndDescriptor, StrategyPreAnalyzed> methodToStrategy,
                                         MethodNotFoundAction methodNotFoundAction,
                                         MethodRepositoryForTransform methodCallIdMap,
-                                        PreAnalyzedStrategy preAnalyzedStrategy) {
+                                        SelectMethodEnterStrategy preAnalyzedStrategy) {
         super(methodCallIdMap);
         this.methodToStrategy = methodToStrategy;
         this.methodNotFoundAction = methodNotFoundAction;
-        this.factoryForBoth = new FactoryForPreAnalyzedAndAll(
-                new MethodCallbackFactoryFactoryPreAnalyzed(), methodCallIdMap);
+        this.factoryTraceMethodEnterExit = new FactoryTraceMethodEnterExit(
+                new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam()), methodCallIdMap);
+        this.factoryTraceMethodEnterWithIntParamExit = new FactoryTraceMethodEnterExit(
+                new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithIntParam()), methodCallIdMap);
         this.preAnalyzedStrategy = preAnalyzedStrategy;
     }
 
@@ -33,14 +38,17 @@ public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOr
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyzeAfterFilter(NameAndDescriptor nameAndDescriptor, int access) {
         StrategyPreAnalyzed strategy = methodToStrategy.get(nameAndDescriptor);
         if (strategy != null) {
-            return factoryForBoth.getAnalyze(nameAndDescriptor);
+            if(preAnalyzedStrategy.useWithInParam(nameAndDescriptor)) {
+                return factoryTraceMethodEnterWithIntParamExit.getAnalyze(nameAndDescriptor);
+            }
+            return factoryTraceMethodEnterExit.getAnalyze(nameAndDescriptor);
         }
         switch (methodNotFoundAction) {
             case NO_OP: {
                 return TLinkableWrapper.emptyList();
             }
             case WARNING_AND_NOT_TRANSFORM: {
-                return factoryForBoth.getAnalyze(nameAndDescriptor);
+                return factoryTraceMethodEnterExit.getAnalyze(nameAndDescriptor);
             }
         }
         return TLinkableWrapper.emptyList();
@@ -55,8 +63,11 @@ public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOr
         if (strategy != null) {
             methodRepositoryForTransform.setStrategyPreAnalyzed(methodId, strategy);
             TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-            factoryForBoth.addToTransform(nameAndDescriptor, result);
-            preAnalyzedStrategy.addMethodCallToResult(factoryForBoth,methodRepositoryForTransform,nameAndDescriptor,result);
+            if(preAnalyzedStrategy.useWithInParam(nameAndDescriptor)) {
+                factoryTraceMethodEnterWithIntParamExit.addToTransform(nameAndDescriptor, result);
+            } else {
+                factoryTraceMethodEnterExit.addToTransform(nameAndDescriptor, result);
+            }
             return result;
         }
         switch (methodNotFoundAction) {

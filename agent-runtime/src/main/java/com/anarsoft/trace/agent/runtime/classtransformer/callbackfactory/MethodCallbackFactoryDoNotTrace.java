@@ -9,7 +9,7 @@ public class MethodCallbackFactoryDoNotTrace extends MethodCallbackFactory {
     private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/DoNotTraceCallback";
 
     public MethodCallbackFactoryDoNotTrace(MethodVisitor methodVisitor) {
-        super(methodVisitor);
+        super(new MethodEnterStrategyWithoutParam(),methodVisitor);
     }
 
     @Override

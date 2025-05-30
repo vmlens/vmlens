@@ -4,6 +4,7 @@ import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.NotYetImplement
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadJoin;
 import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ThreadStart;
 
+import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.ArrayNonBlockingMethod.*;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_WRITE_LOCK;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.*;
 import static com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
@@ -66,8 +67,21 @@ public class MethodTypeCollection {
         if(methodType == NON_BLOCKING_READ_WRITE) {
             return 13;
         }
-        if(methodType == NotYetImplementedMethod.SINGLETON) {
+        
+        // Array
+        if(methodType == ARRAY_NON_BLOCKING_READ) {
             return 14;
+        }
+        if(methodType == ARRAY_NON_BLOCKING_WRITE) {
+            return 15;
+        }
+        if(methodType == ARRAY_NON_BLOCKING_READ_WRITE) {
+            return 16;
+        }
+        
+        
+        if(methodType == NotYetImplementedMethod.SINGLETON) {
+            return 17;
         }
 
         throw new RuntimeException("unknown " + methodType.getClass());
@@ -124,7 +138,20 @@ public class MethodTypeCollection {
         if(id == 13) {
             return NON_BLOCKING_READ_WRITE;
         }
+        
+        // Array
         if(id == 14) {
+            return ARRAY_NON_BLOCKING_READ;
+        }
+        if(id == 15) {
+            return ARRAY_NON_BLOCKING_WRITE;
+        }
+        if(id == 16) {
+            return ARRAY_NON_BLOCKING_READ_WRITE;
+        }
+        
+        
+        if(id == 17) {
             return NotYetImplementedMethod.SINGLETON;
         }
 

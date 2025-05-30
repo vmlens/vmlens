@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent.runtime.applyclasstransformer.builder;
 
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.PreAnalyzedStrategy;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
 import com.anarsoft.trace.agent.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.anarsoft.trace.agent.runtime.classtransformer.NameAndDescriptor;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
@@ -20,11 +20,11 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
     private final THashMap<NameAndDescriptor, StrategyPreAnalyzed> methodToStrategy = new
             THashMap<>();
     private final MethodRepositoryForTransform methodCallIdMap;
-    private final PreAnalyzedStrategy preAnalyzedStrategy;
+    private final SelectMethodEnterStrategy preAnalyzedStrategy;
     private MethodNotFoundAction methodNotFoundAction = WARNING_AND_NOT_TRANSFORM;
 
     public FactoryCollectionPreAnalyzedFactoryBuilderImpl(MethodRepositoryForTransform methodCallIdMap,
-                                                          PreAnalyzedStrategy preAnalyzedStrategy) {
+                                                          SelectMethodEnterStrategy preAnalyzedStrategy) {
         this.methodCallIdMap = methodCallIdMap;
         this.preAnalyzedStrategy = preAnalyzedStrategy;
     }
@@ -43,6 +43,13 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
     @Override
     public void addNonBlockingMethod(String name, String desc, int operation) {
         NameAndDescriptor nameAndDescriptor = new NameAndDescriptor(name, desc);
+        methodToStrategy.put(nameAndDescriptor, new NonBlockingStrategy(operation));
+    }
+
+    @Override
+    public void addNonBlockingArrayMethod(String name, String desc, int operation) {
+        NameAndDescriptor nameAndDescriptor = new NameAndDescriptor(name, desc);
+        preAnalyzedStrategy.addToUseWithInParam(nameAndDescriptor);
         methodToStrategy.put(nameAndDescriptor, new NonBlockingStrategy(operation));
     }
 

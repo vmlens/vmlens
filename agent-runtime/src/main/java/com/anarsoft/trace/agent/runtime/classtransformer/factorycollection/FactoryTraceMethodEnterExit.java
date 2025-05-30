@@ -14,14 +14,14 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
-public class FactoryForPreAnalyzedAndAll {
+public class FactoryTraceMethodEnterExit {
 
     private final THashMap<NameAndDescriptor, TryCatchBlockCounter> nameAndDescriptorToTryCatchBlockCounter =
             new THashMap<>();
     private final MethodCallbackFactoryFactory factoryFactory;
     private final MethodRepositoryForTransform methodCallIdMap;
 
-    public FactoryForPreAnalyzedAndAll(MethodCallbackFactoryFactory factoryFactory,
+    public FactoryTraceMethodEnterExit(MethodCallbackFactoryFactory factoryFactory,
                                        MethodRepositoryForTransform methodCallIdMap) {
         this.factoryFactory = factoryFactory;
         this.methodCallIdMap = methodCallIdMap;

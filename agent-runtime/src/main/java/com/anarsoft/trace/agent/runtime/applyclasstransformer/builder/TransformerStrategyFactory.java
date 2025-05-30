@@ -5,7 +5,7 @@ import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrateg
 import com.anarsoft.trace.agent.runtime.applyclasstransformer.TransformerStrategyNoOp;
 import com.anarsoft.trace.agent.runtime.classtransformer.TransformerStrategyForClassTransformer;
 import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.factory.*;
-import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.NoMethodCall;
+import com.anarsoft.trace.agent.runtime.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
 import com.anarsoft.trace.agent.runtime.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.anarsoft.trace.agent.runtime.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
@@ -52,7 +52,7 @@ public class TransformerStrategyFactory {
     }
 
     public FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall() {
-        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new NoMethodCall());
+        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new SelectMethodEnterStrategy());
     }
 
     public TransformerStrategy createDoNotTraceIn() {

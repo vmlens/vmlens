@@ -16,14 +16,14 @@ import static org.objectweb.asm.Opcodes.ACC_STATIC;
 
 public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {
 
-    private final FactoryForPreAnalyzedAndAll factoryForBoth;
+    private final FactoryTraceMethodEnterExit factoryForBoth;
     private final FieldRepositoryForTransform fieldIdMap;
 
 
     public FactoryCollectionAll(FieldRepositoryForTransform fieldIdMap, MethodRepositoryForTransform methodCallIdMap) {
         super(methodCallIdMap);
         this.fieldIdMap = fieldIdMap;
-        this.factoryForBoth = new FactoryForPreAnalyzedAndAll(new MethodCallbackFactoryFactoryAll(), methodCallIdMap);
+        this.factoryForBoth = new FactoryTraceMethodEnterExit(new MethodCallbackFactoryFactoryAll(), methodCallIdMap);
     }
 
     @Override

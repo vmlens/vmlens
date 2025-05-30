@@ -1,4 +1,10 @@
 package com.vmlens.preanalyzed.model
 
-case class AtomicNonBlockingMethod(name : String, desc : String, methodType : AtomicNonBlockingMethodType)
-  extends AtomicMethod
+
+sealed trait AtomicNonBlockingMethod extends AtomicMethod;
+
+case class AtomicArrayNonBlockingMethod(name: String, desc: String, methodType: AtomicNonBlockingMethodType)
+  extends AtomicNonBlockingMethod
+
+case class AtomicClassNonBlockingMethod(name : String, desc : String, methodType : AtomicNonBlockingMethodType)
+  extends AtomicNonBlockingMethod

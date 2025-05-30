@@ -11,7 +11,7 @@ import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 
 public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implements
-        NotThreadStartedInterleaveActionFactory, WithObjectHashCode, WithInMethodIdAndPosition {
+        NotThreadStartedInterleaveActionFactory, WithInMethodIdAndPosition {
 
     private Object object;
 

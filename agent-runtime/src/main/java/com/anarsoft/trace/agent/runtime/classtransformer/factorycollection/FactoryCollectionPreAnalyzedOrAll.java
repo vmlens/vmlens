@@ -9,10 +9,10 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 public abstract class FactoryCollectionPreAnalyzedOrAll  implements FactoryCollection {
 
-    private final FactoryForPreAnalyzedAndAll factoryForDoNotTrace;
+    private final FactoryTraceMethodEnterExit factoryForDoNotTrace;
 
     public FactoryCollectionPreAnalyzedOrAll(MethodRepositoryForTransform methodCallIdMap) {
-        this.factoryForDoNotTrace = new FactoryForPreAnalyzedAndAll(new MethodCallbackFactoryFactoryDoNotTrace(),
+        this.factoryForDoNotTrace = new FactoryTraceMethodEnterExit(new MethodCallbackFactoryFactoryDoNotTrace(),
                 methodCallIdMap);
     }
 
