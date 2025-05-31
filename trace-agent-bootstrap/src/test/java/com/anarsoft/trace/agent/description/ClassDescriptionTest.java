@@ -1,5 +1,6 @@
 package com.anarsoft.trace.agent.description;
 
+import com.vmlens.trace.agent.bootstrap.description.*;
 import org.junit.Test;
 
 import java.io.*;

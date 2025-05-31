@@ -1,6 +1,6 @@
 package com.vmlens.report.container;
 
-import com.anarsoft.trace.agent.description.TestLoopDescription;
+import com.vmlens.trace.agent.bootstrap.description.TestLoopDescription;
 
 public class ContainerForTestLoop implements Container {
 

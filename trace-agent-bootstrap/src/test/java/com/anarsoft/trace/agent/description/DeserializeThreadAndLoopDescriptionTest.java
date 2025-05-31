@@ -1,5 +1,9 @@
 package com.anarsoft.trace.agent.description;
 
+import com.vmlens.trace.agent.bootstrap.description.DeserializeThreadAndLoopDescription;
+import com.vmlens.trace.agent.bootstrap.description.TestLoopDescription;
+import com.vmlens.trace.agent.bootstrap.description.ThreadDescription;
+import com.vmlens.trace.agent.bootstrap.description.ThreadOrLoopDescription;
 import org.junit.Test;
 
 import java.io.*;

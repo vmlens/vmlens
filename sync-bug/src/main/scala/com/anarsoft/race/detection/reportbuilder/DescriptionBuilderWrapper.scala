@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.reportbuilder
 
-import com.anarsoft.trace.agent.description.{ClassDescription, ThreadOrLoopDescription}
 import com.vmlens.report.assertion.OnDescription
+import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, ThreadOrLoopDescription}
 
 class DescriptionBuilderWrapper(val delegate : DescriptionBuilder, val onDescription : OnDescription) extends DescriptionBuilder {
   override def addClassDescription(classDescription: ClassDescription): Unit = {

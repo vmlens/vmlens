@@ -1,6 +1,5 @@
 package com.vmlens.report.builder;
 
-import com.anarsoft.trace.agent.description.*;
 import com.vmlens.report.container.ContainerForField;
 import com.vmlens.report.container.ContainerForMethod;
 import com.vmlens.report.container.ContainerForTestLoop;
@@ -10,6 +9,7 @@ import com.vmlens.report.description.DescriptionContextImpl;
 import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.element.*;
 import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs;
+import com.vmlens.trace.agent.bootstrap.description.*;
 
 import java.util.HashMap;
 import java.util.LinkedList;

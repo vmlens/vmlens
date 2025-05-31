@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.reportbuilder
 
-import com.anarsoft.trace.agent.description.{ClassDescription, ThreadOrLoopDescription}
+import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, ThreadOrLoopDescription}
 
 trait DescriptionBuilder {
 
