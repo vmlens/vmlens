@@ -19,7 +19,7 @@ class LockEnterEventGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends LockEnterEvent  
+)    extends LockEnterEvent
 {
 override def toString : String = {
   var text =  "LockEnterEventGen" 
@@ -98,23 +98,23 @@ object  LockEnterEventGen
    {
      val result = new LockEnterEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

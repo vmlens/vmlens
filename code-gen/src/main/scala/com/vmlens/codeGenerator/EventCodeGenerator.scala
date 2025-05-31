@@ -58,14 +58,7 @@ object EventCodeGenerator {
     map.put("javaFields", createFieldList(eventDesc.javaFields()))
     map.put("scalaFields", createFieldList(eventDesc.scalaFields()))
     map.put("javaFieldsInSend", createFieldList(eventDesc.javaFieldsInSend()))
-
-    eventDesc.additionalInterleaveFlag.foreach((x) => {
-      map.put("additionalInterleaveFlag", x)
-    })
-
-
-    map.put("hasInterleaveEvent", eventDesc.hasInterleaveEvent.asInstanceOf[AnyRef])
-    map.put("isInterleaveEvent", eventDesc.isInterleaveEvent.asInstanceOf[AnyRef])
+    
     map.put("eventCount", "" + EVENT_COUNT)
     map.put("arraySize", "" + eventDesc.typ.getDataArraySize)
     map.put("writtenLength", "" + eventDesc.getByteArraySize())
@@ -90,33 +83,14 @@ object EventCodeGenerator {
       else {
         fieldMap.put("comma", ",");
       }
-      if (field.occurence.isInScalaEvent() && !field.occurence.isInJavaEvent()) {
-        fieldMap.put("mutable", true);
-      }
-      else {
-        fieldMap.put("mutable", false);
-      }
 
 
       fieldMap.put("name", field.name);
       fieldMap.put("nameCamelCase", Util.getCamelCase(field.name));
       fieldMap.put("javaType", field.typ.name);
       fieldMap.put("scalaType", Util.getCamelCase(field.typ.name));
-      fieldMap.put("isInJavaEvent", field.occurence.isInJavaEvent());
-      fieldMap.put("onlyFirstWrite", field.occurence.onlyFirstWrite());
-
-      field.nameForSend match {
-        case None => {
-          fieldMap.put("nameForSend", field.name);
-        }
-
-        case Some(x) => {
-          fieldMap.put("nameForSend", x);
-        }
-        
-      }
-
-
+      fieldMap.put("nameForSend", field.name);
+      
       fieldMap.put("setJavaElement", "public void set" + Util.getCamelCase(field.name) + "(" + 
         field.typ.name + " " + field.name + ") { this." + field.name + " = " + field.name + "; }");
       fieldMap.put("writeJavaElement", String.format(field.typ.writeJavaElement, field.name));

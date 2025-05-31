@@ -56,7 +56,7 @@ public String toString() {
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  15 );
+buffer.put( (byte)  17 );
      buffer.putInt( threadIndex ); 
      buffer.putInt( bytecodePosition ); 
      buffer.putInt( methodId ); 

@@ -98,23 +98,23 @@ object  LockExitEventGen
    {
      val result = new LockExitEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

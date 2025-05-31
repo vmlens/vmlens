@@ -18,7 +18,7 @@ class FieldAccessEventStaticGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends NonVolatileFieldAccessEventStatic
+)     extends NonVolatileFieldAccessEventStatic
 {
 override def toString : String = {
   var text =  "FieldAccessEventStaticGen" 
@@ -91,21 +91,21 @@ object  FieldAccessEventStaticGen
    {
      val result = new FieldAccessEventStaticGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

@@ -105,25 +105,25 @@ object  VolatileArrayAccessEventGen
    {
      val result = new VolatileArrayAccessEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

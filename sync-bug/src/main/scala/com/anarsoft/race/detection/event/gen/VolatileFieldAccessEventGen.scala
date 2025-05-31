@@ -20,7 +20,7 @@ class VolatileFieldAccessEventGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends VolatileFieldAccessEvent 
+)    extends VolatileFieldAccessEvent  
 {
 override def toString : String = {
   var text =  "VolatileFieldAccessEventGen" 
@@ -105,25 +105,25 @@ object  VolatileFieldAccessEventGen
    {
      val result = new VolatileFieldAccessEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

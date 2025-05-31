@@ -49,12 +49,7 @@ object  {{className}}
      val result = new {{className}} (
        {{#scalaFields}}
           {{comma}}
-            {{^isInJavaEvent}}
-                0
-            {{/isInJavaEvent}}
-            {{#isInJavaEvent}}
-                {{{scalaFromByteBuffer}}}
-            {{/isInJavaEvent}}
+            {{{scalaFromByteBuffer}}}
         {{/scalaFields}}
      );
      result;

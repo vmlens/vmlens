@@ -56,11 +56,11 @@ object  LoopWarningEventGen
    {
      val result = new LoopWarningEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

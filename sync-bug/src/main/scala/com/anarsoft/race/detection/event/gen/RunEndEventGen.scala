@@ -49,9 +49,9 @@ object  RunEndEventGen
    {
      val result = new RunEndEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

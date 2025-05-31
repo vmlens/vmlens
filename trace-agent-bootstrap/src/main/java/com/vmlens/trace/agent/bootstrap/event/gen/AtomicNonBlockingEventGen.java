@@ -13,10 +13,10 @@ public class AtomicNonBlockingEventGen  {
     protected int     methodId;
     protected int     operation;
     protected long     objectHashCode;
+    protected int     atomicMethodId;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
-    protected int     atomicMethodId;
 
 @Override
 public boolean equals(Object o) {
@@ -30,10 +30,10 @@ public boolean equals(Object o) {
     if ( methodId != that.methodId) return false;
     if ( operation != that.operation) return false;
     if ( objectHashCode != that.objectHashCode) return false;
+    if ( atomicMethodId != that.atomicMethodId) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
-    if ( atomicMethodId != that.atomicMethodId) return false;
     return true;
 }
 
@@ -46,10 +46,10 @@ public String toString() {
     "methodId=" + methodId +
     "operation=" + operation +
     "objectHashCode=" + objectHashCode +
+    "atomicMethodId=" + atomicMethodId +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
-    "atomicMethodId=" + atomicMethodId +
     '}';
 }
 
@@ -62,17 +62,17 @@ public String toString() {
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  18 );
+buffer.put( (byte)  6 );
      buffer.putInt( threadIndex ); 
      buffer.putInt( bytecodePosition ); 
      buffer.putInt( methodCounter ); 
      buffer.putInt( methodId ); 
      buffer.putInt( operation ); 
       buffer.putLong( objectHashCode );  
+     buffer.putInt( atomicMethodId ); 
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 
-     buffer.putInt( atomicMethodId ); 
 }
 
 

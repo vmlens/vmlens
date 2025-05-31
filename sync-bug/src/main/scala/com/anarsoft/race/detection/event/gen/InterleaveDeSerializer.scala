@@ -17,11 +17,14 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
     def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedInterleaveActionEvent = {
        val id = buffer.get();
        
-       if( id == 5 ) {
+       if( id == 4 ) {
           return VolatileFieldAccessEventStaticGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 6 ) {
+       if( id == 5 ) {
           return VolatileFieldAccessEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 6 ) {
+          return AtomicNonBlockingEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 7 ) {
           return VolatileArrayAccessEventGen.applyFromJavaEvent( buffer   );
@@ -33,25 +36,22 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
           return LockExitEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 10 ) {
-          return MonitorEnterEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 11 ) {
-          return MonitorExitEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 14 ) {
-          return ThreadStartEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 15 ) {
-          return ThreadJoinedEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 16 ) {
-          return AtomicReadWriteLockEnterEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 17 ) {
           return AtomicReadWriteLockExitEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 18 ) {
-          return AtomicNonBlockingEventGen.applyFromJavaEvent( buffer   );
+       if( id == 11 ) {
+          return AtomicReadWriteLockEnterEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 12 ) {
+          return MonitorEnterEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 13 ) {
+          return MonitorExitEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 16 ) {
+          return ThreadStartEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 17 ) {
+          return ThreadJoinedEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");
     }

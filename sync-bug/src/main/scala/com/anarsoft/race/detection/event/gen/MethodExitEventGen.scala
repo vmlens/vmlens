@@ -15,7 +15,7 @@ class MethodExitEventGen (
  ,  val methodCounter  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
-)    extends MethodExitEvent 
+)    extends MethodExitEvent  
 {
 override def toString : String = {
   var text =  "MethodExitEventGen" 
@@ -70,15 +70,15 @@ object  MethodExitEventGen
    {
      val result = new MethodExitEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

@@ -17,13 +17,13 @@ class ControlDeSerializer extends DeserializeStrategy[LoadedControlEvent] {
     def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedControlEvent = {
        val id = buffer.get();
        
-       if( id == 19 ) {
+       if( id == 18 ) {
           return RunStartEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 20 ) {
+       if( id == 19 ) {
           return RunEndEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 21 ) {
+       if( id == 20 ) {
           return LoopWarningEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");

@@ -1,6 +1,6 @@
 package com.vmlens.codeGenerator.domain
 
-class FieldDesc(val name : String, val typ : FieldTyp, val occurence : FieldOccurence,val nameForSend : Option[String]) extends Equals {
+class FieldDesc(val name : String, val typ : FieldTyp) extends Equals {
   def canEqual(other: Any) = {
     other.isInstanceOf[com.vmlens.codeGenerator.domain.FieldDesc]
   }

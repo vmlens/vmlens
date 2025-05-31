@@ -21,9 +21,9 @@ object EventDescControl {
   }
   
   def runStartAndEnd(eventName : String, extendsString : String, typControl : EventTyp) : EventDesc  = 
-    new EventDesc(eventName, typControl, nextId(),runField(), extendsString, false, false,None)
+    new EventDesc(eventName, typControl, nextId(),runField(), extendsString)
   
   def warning(eventName : String, extendsString : String, typControl : EventTyp) : EventDesc  =
-    new EventDesc(eventName, typControl, nextId(),plusMessageFields(runField()), extendsString, false, false,None)
+    new EventDesc(eventName, typControl, nextId(),plusMessageFields(runField()), extendsString)
   
 }
