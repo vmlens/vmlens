@@ -5,7 +5,10 @@ import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodType;
 
 public class ThreadJoin extends AbstractMethodType {
 
-    public static final MethodType SINGLETON = new ThreadJoin();
+    public static final AbstractMethodType SINGLETON = new ThreadJoin();
+
+    private ThreadJoin() {
+    }
 
     @Override
     public void add(String name, String desc, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {

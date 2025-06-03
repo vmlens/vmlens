@@ -16,7 +16,6 @@ public class GetReadWriteLockMethod  extends AbstractMethodType  {
 
 
     private GetReadWriteLockMethod() {
-
     }
 
     @Override
