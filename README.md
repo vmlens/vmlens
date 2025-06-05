@@ -1,4 +1,4 @@
-# vmlens lets you test multi-threaded, concurrent java
+# VMLens lets you test multi-threaded, concurrent java
 
 # Example
 
@@ -26,7 +26,7 @@ public class TestNonVolatileField {
     }
 }
 ```
-vmlens detects the data race and generates the following report:
+VMLens detects the data race and generates the following report:
 
 <img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/img/dataRaceReportNew.png">
 
