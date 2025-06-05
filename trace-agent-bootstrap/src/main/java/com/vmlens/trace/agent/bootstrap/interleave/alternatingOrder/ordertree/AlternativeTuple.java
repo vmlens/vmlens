@@ -2,19 +2,19 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
 public class AlternativeTuple {
 
-    private final ListNodeAlternative first;
-    private final ListNodeAlternative second;
+    private final OrderAlternative first;
+    private final OrderAlternative second;
 
-    public AlternativeTuple(ListNodeAlternative first, ListNodeAlternative second) {
+    public AlternativeTuple(OrderAlternative first, OrderAlternative second) {
         this.first = first;
         this.second = second;
     }
 
-    public ListNodeAlternative first() {
+    public OrderAlternative first() {
         return first;
     }
 
-    public ListNodeAlternative second() {
+    public OrderAlternative second() {
         return second;
     }
 }

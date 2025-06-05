@@ -55,7 +55,7 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
     @Override
     public boolean startsAlternatingOrder(DependentBlockElement other) {
         VolatileAccess otherVolatileFieldAccess = (VolatileAccess) other;
-        // if at least one operation is a write
+        // if at least one interleaveoperation is a write
         return otherVolatileFieldAccess.operation > IS_READ ||  operation > IS_READ;
     }
 
@@ -87,7 +87,7 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
         return "VolatileAccess{" +
                 "threadIndex=" + threadIndex +
                 ", volatileAccessKey=" + volatileAccessKey +
-                ", operation=" + operation +
+                ", interleaveoperation=" + operation +
                 '}';
     }
 

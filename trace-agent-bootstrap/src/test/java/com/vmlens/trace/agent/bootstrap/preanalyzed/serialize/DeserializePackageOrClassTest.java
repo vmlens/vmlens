@@ -1,4 +1,4 @@
-package com.anarsoft.trace.agent.preanalyzed.serialize;
+package com.vmlens.trace.agent.bootstrap.preanalyzed.serialize;
 
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.PackageOrClass;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.PreAnalyzedMethod;

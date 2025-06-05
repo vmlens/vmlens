@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.OrderTreeBuilder;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;

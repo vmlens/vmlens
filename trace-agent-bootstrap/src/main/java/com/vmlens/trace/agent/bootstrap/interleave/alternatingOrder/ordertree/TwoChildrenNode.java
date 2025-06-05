@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
-public class EitherNode implements OrderTreeNode {
+public class TwoChildrenNode implements OrderTreeNode {
 
     private final OrderTreeNode firstAlternative;
     private final OrderTreeNode secondAlternative;
 
-    public EitherNode(OrderTreeNode firstAlternative, OrderTreeNode secondAlternative) {
+    public TwoChildrenNode(OrderTreeNode firstAlternative, OrderTreeNode secondAlternative) {
         this.firstAlternative = firstAlternative;
         this.secondAlternative = secondAlternative;
     }

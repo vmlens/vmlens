@@ -1,4 +1,4 @@
-package com.anarsoft.trace.agent.description;
+package com.vmlens.trace.agent.bootstrap.description;
 
 import com.vmlens.trace.agent.bootstrap.description.DeserializeThreadAndLoopDescription;
 import com.vmlens.trace.agent.bootstrap.description.TestLoopDescription;

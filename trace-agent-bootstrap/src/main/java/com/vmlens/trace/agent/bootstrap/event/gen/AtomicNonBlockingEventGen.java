@@ -44,7 +44,7 @@ public String toString() {
     "bytecodePosition=" + bytecodePosition +
     "methodCounter=" + methodCounter +
     "methodId=" + methodId +
-    "operation=" + operation +
+    "interleaveoperation=" + operation +
     "objectHashCode=" + objectHashCode +
     "atomicMethodId=" + atomicMethodId +
     "loopId=" + loopId +

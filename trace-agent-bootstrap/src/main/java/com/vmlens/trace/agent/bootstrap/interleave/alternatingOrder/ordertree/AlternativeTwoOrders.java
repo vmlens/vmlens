@@ -2,7 +2,9 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 
-public class AlternativeTwoOrders implements ListNodeAlternative {
+import java.util.Objects;
+
+public class AlternativeTwoOrders implements OrderAlternative {
 
     private final LeftBeforeRight firstOrder;
     private final LeftBeforeRight secondOrder;
@@ -19,4 +21,18 @@ public class AlternativeTwoOrders implements ListNodeAlternative {
         return true;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+
+        AlternativeTwoOrders that = (AlternativeTwoOrders) object;
+        return Objects.equals(firstOrder, that.firstOrder) && Objects.equals(secondOrder, that.secondOrder);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(firstOrder);
+        result = 31 * result + Objects.hashCode(secondOrder);
+        return result;
+    }
 }

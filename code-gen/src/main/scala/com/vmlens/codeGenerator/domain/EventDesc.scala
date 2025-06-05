@@ -81,7 +81,7 @@ object EventDesc extends GenericDesc {
   val lockType = new FieldDesc("lockType", intTyp)
   val startedThreadIndex = new FieldDesc("startedThreadIndex", intTyp)
   val joinedThreadIndex = new FieldDesc("joinedThreadIndex", intTyp)
-  val operation = new FieldDesc("operation", intTyp)
+  val operation = new FieldDesc("interleaveoperation", intTyp)
 //  val threadIdAtEvent = new FieldDesc("threadIdAtEvent", longTyp)
   val loopId = new FieldDesc("loopId", intTyp)
   val runId = new FieldDesc("runId", intTyp)

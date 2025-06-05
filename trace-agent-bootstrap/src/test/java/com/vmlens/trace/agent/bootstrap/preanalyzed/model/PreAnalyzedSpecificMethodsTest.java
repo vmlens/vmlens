@@ -1,4 +1,4 @@
-package com.anarsoft.trace.agent.preanalyzed.model;
+package com.vmlens.trace.agent.bootstrap.preanalyzed.model;
 
 import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.ClassTransformerListBuilder;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
