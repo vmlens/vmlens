@@ -9,7 +9,6 @@ public class TestGson {
 
     private Gson gson = new Gson();
 
-
     /**
      *
      * This is an example of a classloader lock in action:
@@ -75,6 +74,5 @@ public class TestGson {
         Gson gson = new Gson();
         gson.fromJson(json, Person.class);
     }
-
-
+    
 }

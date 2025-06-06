@@ -6,6 +6,9 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class TestJsonB {
 
     private final Jsonb jsonb = JsonbBuilder.create();
@@ -30,6 +33,8 @@ public class TestJsonB {
     private void parseJson() {
         String json = "{\"name\":\"Alice\", \"age\":30}";
         Person person = jsonb.fromJson(json, Person.class);
+        assertThat(person.getName(),is("Alice"));
+        assertThat(person.getAge(),is(30));
     }
 
 }
