@@ -11,7 +11,8 @@ import com.anarsoft.race.detection.event.interleave._;
 
 class VolatileArrayAccessEventGen (
    val threadIndex  : Int  
- ,  val index  : Long  
+ ,  val bytecodePosition  : Int  
+ ,  val arrayIndex  : Int  
  ,  val methodCounter  : Int  
  ,  val methodId  : Int  
  ,  val operation  : Int  
@@ -21,13 +22,14 @@ class VolatileArrayAccessEventGen (
  ,  val runPosition  : Int  
 )    extends VolatileArrayAccessEvent
 {
-override def toString() = {
+override def toString : String = {
   var text =  "VolatileArrayAccessEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
-  text = text + ", index:" +  index 
+  text = text + ", bytecodePosition:" +  bytecodePosition 
+  text = text + ", arrayIndex:" +  arrayIndex 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", methodId:" +  methodId 
-  text = text + ", operation:" +  operation 
+  text = text + ", interleaveoperation:" +  operation
   text = text + ", objectHashCode:" +  objectHashCode 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
@@ -35,7 +37,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: VolatileArrayAccessEventGen => 
         {
@@ -44,7 +46,12 @@ override def equals(other: Any) = {
                false;
              }
              else
-             if( index != that.index )
+             if( bytecodePosition != that.bytecodePosition )
+             {
+               false;
+             }
+             else
+             if( arrayIndex != that.arrayIndex )
              {
                false;
              }
@@ -98,23 +105,25 @@ object  VolatileArrayAccessEventGen
    {
      val result = new VolatileArrayAccessEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getInt()
           ,
-                data.getInt()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
+          ,
+            data.getInt()
      );
      result;
    }

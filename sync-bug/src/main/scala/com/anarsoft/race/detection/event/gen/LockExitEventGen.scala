@@ -21,7 +21,7 @@ class LockExitEventGen (
  ,  val runPosition  : Int  
 )    extends LockExitEvent
 {
-override def toString() = {
+override def toString : String = {
   var text =  "LockExitEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodCounter:" +  methodCounter 
@@ -35,7 +35,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: LockExitEventGen => 
         {
@@ -98,23 +98,23 @@ object  LockExitEventGen
    {
      val result = new LockExitEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

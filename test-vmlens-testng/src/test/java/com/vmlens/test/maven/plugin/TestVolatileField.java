@@ -29,8 +29,8 @@ public class TestVolatileField {
         expectedSet.add(1);
         expectedSet.add(2);
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings("testVolatileField")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testVolatileField")) {
+            while (allInterleavings.hasNext()) {
                 j = 0;
                 Thread first = new Thread() {
                     @Override

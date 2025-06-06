@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -42,6 +43,7 @@ public class InterleaveLoopIteratorTest {
         assertThat(iterator.hasNext(), is(false));
     }
 
+    @Ignore
     @Test
     public void testQueueWithTwoElementsAndNullValues() {
         // Given

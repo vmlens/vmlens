@@ -8,6 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollecti
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 public class BlockBuilderGuineaPig implements InterleaveAction {
 
@@ -44,5 +45,11 @@ public class BlockBuilderGuineaPig implements InterleaveAction {
     @Override
     public int threadIndex() {
         throw new RuntimeException("should not be called for this test");
+    }
+
+
+    @Override
+    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+        return false;
     }
 }

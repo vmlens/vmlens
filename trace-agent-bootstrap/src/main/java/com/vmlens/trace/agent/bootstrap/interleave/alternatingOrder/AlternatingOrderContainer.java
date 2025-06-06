@@ -2,12 +2,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.CreateOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.TIntList;
-import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
-import gnu.trove.set.hash.THashSet;
 
 import java.util.Iterator;
 
@@ -63,8 +61,6 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
     private class AlternatingOrderContainerIterator implements
             Iterator<CalculatedRun> {
 
-
-        private final THashSet<CalculatedRun> alreadyExecuted = new THashSet<CalculatedRun>();
         private final PermutationIterator permutationIterator;
 
         public AlternatingOrderContainerIterator() {
@@ -107,15 +103,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
             permutationIterator.advance();
 
             LeftBeforeRight[] orderArray = toArray(LeftBeforeRight.class, newOrder);
-            CalculatedRun run =  new CreateCalculatedRun(orderArray, actualRun).create();
-            if(run == null) {
-                return run;
-            }
-            if(alreadyExecuted.contains(run)){
-                return null;
-            }
-            alreadyExecuted.add(run);
-            return run;
+            return  new CreateCalculatedRun(orderArray, actualRun).create();
         }
 
         @Override

@@ -1,7 +1,7 @@
 package com.vmlens.report.container;
 
-import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.description.FieldInClassDescription;
+import com.vmlens.trace.agent.bootstrap.description.ClassDescription;
+import com.vmlens.trace.agent.bootstrap.description.FieldInClassDescription;
 
 public class ContainerForField implements Container {
 

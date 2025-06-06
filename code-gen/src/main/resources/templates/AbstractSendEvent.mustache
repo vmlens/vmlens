@@ -1,0 +1,69 @@
+package com.vmlens.trace.agent.bootstrap.event.gen;
+
+import com.vmlens.trace.agent.bootstrap.callback.QueueCollectionWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ParallelizedThreadLocal;
+
+public abstract class AbstractSendEvent implements SendEvent {
+
+	public static final int ID_Field		= 0;
+	public static final int ID_SyncActions 	= 1;
+	public static final int ID_Monitor 		= 2;
+	public static final int ID_Method 		= 3;
+	public static final int ID_DirectMemory = 4;
+	public static final int ID_Scheduler 	= 5;
+	
+	protected abstract long threadId();
+	protected abstract QueueCollectionWrapper  getQueueCollection();
+	protected abstract ParallelizedThreadLocal getParallelizedThreadLocal();
+
+{{#eventList}}
+{{^isInterleaveEvent}}
+   public void write{{className}} (final int slidingWindowId
+{{#javaFieldsInSend}}
+        , final  {{javaType}}     {{name}}
+{{/javaFieldsInSend}}
+                   )  {
+{{#hasInterleaveEvent}}
+    ParallelizedThreadLocal parallizedThreadFacade = getParallelizedThreadLocal();
+    if(parallizedThreadFacade != null && parallizedThreadFacade.sendAsInterleaveEvent({{className}}.class) )  {
+        getQueueCollection().put( ID_{{typName}} , EventFactory.create{{className}}Interleave ( slidingWindowId
+            {{#javaFields}}
+                , {{nameForSend}}
+            {{/javaFields}}
+            {{#additionalInterleaveFlag}}
+                {{additionalInterleaveFlag}}
+            {{/additionalInterleaveFlag}}
+                , parallizedThreadFacade.loopId()
+                ,  parallizedThreadFacade.runId()
+                ,  parallizedThreadFacade.runPosition()
+            ) , slidingWindowId );
+        }
+            else
+        {{/hasInterleaveEvent}}
+        {
+            getQueueCollection().put( ID_{{typName}} , EventFactory.create{{className}} ( slidingWindowId
+        {{#javaFields}}
+            ,  {{nameForSend}}
+        {{/javaFields}}
+        ) , slidingWindowId);
+   }
+   }
+{{/isInterleaveEvent}}
+{{/eventList}}
+{{#eventList}}
+{{^isInterleaveEvent}}
+    public void writeWithoutInterleave{{className}} (final int slidingWindowId
+    {{#javaFieldsInSend}}
+        , final {{javaType}} {{name}}
+    {{/javaFieldsInSend}}
+    )
+    {
+    getQueueCollection().put( ID_{{typName}} , EventFactory.create{{className}} ( slidingWindowId
+    {{#javaFields}}
+        ,  {{nameForSend}}
+    {{/javaFields}}
+    ) , slidingWindowId );
+    }
+{{/isInterleaveEvent}}
+{{/eventList}}
+}

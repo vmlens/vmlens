@@ -32,7 +32,7 @@ public class TestReentrantReadWriteLock {
             first.join();
             count++;
         }
-        assertThat(count,is(3));
+        assertThat(count,is(4));
     }
 
 }

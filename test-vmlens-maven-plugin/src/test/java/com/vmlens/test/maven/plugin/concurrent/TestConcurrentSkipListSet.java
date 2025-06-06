@@ -19,8 +19,8 @@ public class TestConcurrentSkipListSet {
         expectedSet.add(false);
 
         Set<Boolean> actual = new HashSet<>();
-        try(AllInterleavings allInterleaving = new AllInterleavings("concurrentSkipListSet")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("concurrentSkipListSet")) {
+            while (allInterleavings.hasNext()) {
                 final ConcurrentSkipListSet<String>  set = new ConcurrentSkipListSet<>();
                 Thread first = new Thread() {
                     @Override

@@ -17,20 +17,29 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
     def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedInterleaveActionEvent = {
        val id = buffer.get();
        
-       if( id == 6 ) {
+       if( id == 4 ) {
           return VolatileFieldAccessEventStaticGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 7 ) {
+       if( id == 5 ) {
           return VolatileFieldAccessEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 8 ) {
+       if( id == 6 ) {
+          return AtomicNonBlockingEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 7 ) {
           return VolatileArrayAccessEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 10 ) {
+       if( id == 8 ) {
           return LockEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 11 ) {
+       if( id == 9 ) {
           return LockExitEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 10 ) {
+          return AtomicReadWriteLockExitEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 11 ) {
+          return AtomicReadWriteLockEnterEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 12 ) {
           return MonitorEnterEventGen.applyFromJavaEvent( buffer   );
@@ -43,15 +52,6 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
        }
        if( id == 17 ) {
           return ThreadJoinedEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 18 ) {
-          return AtomicReadWriteLockEnterEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 19 ) {
-          return AtomicReadWriteLockExitEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 20 ) {
-          return AtomicNonBlockingEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");
     }

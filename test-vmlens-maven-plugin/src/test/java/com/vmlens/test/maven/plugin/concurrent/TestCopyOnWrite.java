@@ -23,8 +23,8 @@ public class TestCopyOnWrite {
 
     private void runTest(String nameOfTest, Supplier<Collection<String>> createCollection) throws InterruptedException {
         int count = 0;
-        try(AllInterleavings allInterleaving = new AllInterleavings(nameOfTest)) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings(nameOfTest)) {
+            while (allInterleavings.hasNext()) {
                 Collection<String> copyOnWrite = createCollection.get();
                 Thread first = new Thread() {
                     @Override

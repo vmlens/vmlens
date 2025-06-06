@@ -1,0 +1,58 @@
+package com.anarsoft.race.detection.event.gen;
+
+import java.nio.ByteBuffer;
+
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.control._;
+import com.anarsoft.race.detection.event.nonvolatile._;
+import com.anarsoft.race.detection.event.directmemory._;
+import com.anarsoft.race.detection.event.interleave._;
+
+
+class {{className}} (
+{{#scalaFields}}
+{{^mutable}} {{comma}}  val {{name}}  : {{scalaType}} {{/mutable}} {{#mutable}} {{comma}}  var {{name}}  : {{scalaType}} {{/mutable}}
+{{/scalaFields}}
+)   {{scalaExtends}}
+{
+override def toString : String = {
+  var text =  "{{className}}" 
+{{#scalaFields}}  
+  text = text + ", {{name}}:" +  {{name}} 
+{{/scalaFields}}
+ text;
+}
+
+override def equals(other: Any) : Boolean = {
+    other match {
+      case that: {{className}} => 
+        {
+           {{#scalaFields}}
+             if( {{name}} != that.{{name}} )
+             {
+               false;
+             }
+             else
+           {{/scalaFields}}
+             true;
+        }
+      case _ => false
+    }
+  }
+}
+
+
+object  {{className}} 
+{
+   def applyFromJavaEvent(data : ByteBuffer) =
+   {
+     val result = new {{className}} (
+       {{#scalaFields}}
+          {{comma}}
+            {{{scalaFromByteBuffer}}}
+        {{/scalaFields}}
+     );
+     result;
+   }
+
+}

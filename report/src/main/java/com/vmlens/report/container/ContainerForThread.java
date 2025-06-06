@@ -1,6 +1,6 @@
 package com.vmlens.report.container;
 
-import com.anarsoft.trace.agent.description.ThreadDescription;
+import com.vmlens.trace.agent.bootstrap.description.ThreadDescription;
 
 public class ContainerForThread implements Container {
 

@@ -39,6 +39,12 @@ public class PreAnalyzedCallbackImpl {
         methodRepository.strategyPreAnalyzed(methodId).methodEnter(enterExitContext);
     }
 
+    public void methodEnterWithIntParam(Object object, int intParam, int methodId) {
+        EnterExitContext enterExitContext = new EnterExitContext(object, methodId, threadLocalWhenInTestAdapter,readWriteLockMap);
+        enterExitContext.setIntParam(intParam);
+        methodRepository.strategyPreAnalyzed(methodId).methodEnter(enterExitContext);
+    }
+
     public void methodExit(Object object, int methodId) {
         EnterExitContext enterExitContext = new EnterExitContext(object, methodId, threadLocalWhenInTestAdapter,readWriteLockMap);
         methodRepository.strategyPreAnalyzed(methodId).methodExit(enterExitContext);

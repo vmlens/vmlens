@@ -4,6 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 public class ThreadJoin extends InterleaveActionForInDependentBlock {
 
@@ -37,5 +39,18 @@ public class ThreadJoin extends InterleaveActionForInDependentBlock {
                 "threadIndex=" + threadIndex +
                 ", joinedThreadIndex=" + joinedThreadIndex +
                 '}';
+    }
+
+    @Override
+    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+        if(! (other instanceof ThreadJoin)) {
+            return false;
+        }
+        ThreadJoin otherLock = (ThreadJoin) other;
+        if(threadIndex != otherLock.threadIndex)  {
+            return false;
+        }
+
+        return joinedThreadIndex == otherLock.joinedThreadIndex;
     }
 }

@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.lock;
 
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.LockEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.LockExitEvent;
 
 public class LockExit implements LockOperation {

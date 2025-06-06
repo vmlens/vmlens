@@ -16,28 +16,28 @@ class AtomicNonBlockingEventGen (
  ,  val methodId  : Int  
  ,  val operation  : Int  
  ,  val objectHashCode  : Long  
+ ,  val atomicMethodId  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
- ,  val atomicMethodId  : Int  
-)    extends AtomicNonBlockingEvent  
+)    extends AtomicNonBlockingEvent 
 {
-override def toString() = {
+override def toString : String = {
   var text =  "AtomicNonBlockingEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", bytecodePosition:" +  bytecodePosition 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", methodId:" +  methodId 
-  text = text + ", operation:" +  operation 
+  text = text + ", interleaveoperation:" +  operation
   text = text + ", objectHashCode:" +  objectHashCode 
+  text = text + ", atomicMethodId:" +  atomicMethodId 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
-  text = text + ", atomicMethodId:" +  atomicMethodId 
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: AtomicNonBlockingEventGen => 
         {
@@ -71,6 +71,11 @@ override def equals(other: Any) = {
                false;
              }
              else
+             if( atomicMethodId != that.atomicMethodId )
+             {
+               false;
+             }
+             else
              if( loopId != that.loopId )
              {
                false;
@@ -82,11 +87,6 @@ override def equals(other: Any) = {
              }
              else
              if( runPosition != that.runPosition )
-             {
-               false;
-             }
-             else
-             if( atomicMethodId != that.atomicMethodId )
              {
                false;
              }
@@ -105,25 +105,25 @@ object  AtomicNonBlockingEventGen
    {
      val result = new AtomicNonBlockingEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

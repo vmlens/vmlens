@@ -39,7 +39,7 @@ public String toString() {
     "threadIndex=" + threadIndex +
     "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
-    "operation=" + operation +
+    "interleaveoperation=" + operation +
     "methodId=" + methodId +
     "loopId=" + loopId +
     "runId=" + runId +
@@ -56,7 +56,7 @@ public String toString() {
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  4 );
+buffer.put( (byte)  2 );
      buffer.putInt( threadIndex ); 
      buffer.putInt( fieldId ); 
      buffer.putInt( methodCounter ); 

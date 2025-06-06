@@ -9,4 +9,7 @@ public interface InterleaveAction extends BlockBuilderWithThreadIndex {
     void addToBlockingLockRelationBuilder(Position position,
                                           BlockingLockRelationBuilder builder);
 
+
+    boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other);
+
 }

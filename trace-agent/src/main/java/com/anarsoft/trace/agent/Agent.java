@@ -1,6 +1,6 @@
 package com.anarsoft.trace.agent;
 
-import com.vmlens.trace.agent.bootstrap.AgentRuntime;
+import com.vmlens.agent.AgentRuntime;
 
 import java.io.File;
 import java.lang.instrument.Instrumentation;
@@ -90,7 +90,7 @@ public class /**/Agent {
             ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
             URLClassLoader classloader = new URLClassLoader(urlList.toArray(new URL[]{}), null);
             Thread.currentThread().setContextClassLoader(classloader);
-            String agentName = "com.anarsoft.trace.agent.runtime.AgentRuntimeImpl";
+            String agentName = "com.vmlens.nottraced.agent.AgentRuntimeImpl";
             AgentRuntime agentRuntime = (AgentRuntime) classloader.loadClass(agentName).newInstance();
             agentRuntime.run(configPath, inst);
 

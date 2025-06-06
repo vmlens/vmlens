@@ -1,9 +1,9 @@
 package com.vmlens.preanalyzed.serialize
 
-import com.anarsoft.trace.agent.preanalyzed.model.classtypeimpl.{ClassNotYetImplemented, ClassTypeAllStartWith, ClassTypeFilter, ClassTypeVmlensApi, DoNotTraceInClass, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
-import com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.{GetReadWriteLockMethod, NonBlockingMethod, NotYetImplementedMethod, ThreadJoin, ThreadStart}
-import com.anarsoft.trace.agent.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod}
-import com.vmlens.preanalyzed.model.{LockType, *}
+import com.vmlens.preanalyzed.model.*
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{ClassNotYetImplemented, ClassTypeAllStartWith, ClassTypeFilter, ClassTypeVmlensApi, DoNotTraceInClass, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod, methodtypeimpl}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.{ArrayNonBlockingMethod, GetReadWriteLockMethod, NonBlockingMethod, NotYetImplementedMethod, ThreadJoin, ThreadStart}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -67,29 +67,62 @@ class TransformToPackageOrClass {
   }
 
   private def addNonBlocking(method : AtomicNonBlockingMethod,  buffer : ArrayBuffer[PreAnalyzedMethod]) : Unit = {
-    method.methodType match {
+    method match {
+      case AtomicArrayNonBlockingMethod(name, desc, methodType) => {
+        addAtomicArrayMethod(name, desc, methodType, buffer)
+      }
+      case AtomicClassNonBlockingMethod(name, desc, methodType) => {
+        addAtomicClassMethod(name, desc, methodType, buffer)
+      }
+
+    }
+  }
+
+  private def addAtomicArrayMethod(name: String, desc: String, methodType: AtomicNonBlockingMethodType,
+                                   buffer : ArrayBuffer[PreAnalyzedMethod]): Unit = {
+    methodType match {
       case Read() => {
-        buffer.append(new PreAnalyzedMethod(method.name, method.desc,  NonBlockingMethod.NON_BLOCKING_READ))
+        buffer.append(new PreAnalyzedMethod(name, desc, ArrayNonBlockingMethod.ARRAY_NON_BLOCKING_READ))
 
       }
       case Write() => {
-        buffer.append(new PreAnalyzedMethod(method.name, method.desc,  NonBlockingMethod.NON_BLOCKING_WRITE))
+        buffer.append(new PreAnalyzedMethod(name, desc, ArrayNonBlockingMethod.ARRAY_NON_BLOCKING_WRITE))
 
       }
       case ReadWrite() => {
-        buffer.append(new PreAnalyzedMethod(method.name, method.desc, NonBlockingMethod.NON_BLOCKING_READ_WRITE))
+        buffer.append(new PreAnalyzedMethod(name, desc, ArrayNonBlockingMethod.ARRAY_NON_BLOCKING_READ_WRITE))
       }
 
       case
-        NotYetImplemented()  =>{
-        buffer.append(new PreAnalyzedMethod(method.name, method.desc, NotYetImplementedMethod.SINGLETON))
+        NotYetImplemented() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NotYetImplementedMethod.SINGLETON))
 
       }
-
-
     }
-
   }
+
+  private def addAtomicClassMethod(name: String, desc: String, methodType: AtomicNonBlockingMethodType,
+                                   buffer : ArrayBuffer[PreAnalyzedMethod]) : Unit = {
+    methodType match {
+      case Read() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_READ))
+
+      }
+      case Write() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_WRITE))
+
+      }
+      case ReadWrite() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_READ_WRITE))
+      }
+
+      case
+        NotYetImplemented() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NotYetImplementedMethod.SINGLETON))
+
+      }
+      }
+    }
 
 
   private def methodWithLockToArray(methods : List[MethodWithLock]) : Array[PreAnalyzedMethod] = {
@@ -100,13 +133,13 @@ class TransformToPackageOrClass {
     buffer.toArray;
   }
 
-  private def javaMethodWithLock(lockType: ReadOrWriteLockType): com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock = {
+  private def javaMethodWithLock(lockType: ReadOrWriteLockType): methodtypeimpl.MethodWithLock = {
     lockType match {
       case ReadLock() => {
-        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
+        methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
       }
       case WriteLock() => {
-        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK
+        methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK
       }
     }
   }
@@ -120,25 +153,25 @@ class TransformToPackageOrClass {
     buffer.toArray;
   }
 
-  private def javaLockMethod(lockType: LockType, lockOperation: LockOperation) : com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod = {
+  private def javaLockMethod(lockType: LockType, lockOperation: LockOperation) : methodtypeimpl.LockMethod = {
     (lockOperation, lockType) match {
       case (LockEnter(), ReadLock()) => {
-        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.ENTER_READ_LOCK;
+        methodtypeimpl.LockMethod.ENTER_READ_LOCK;
       }
       case (LockEnter(), WriteLock()) => {
-        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.ENTER_WRITE_LOCK;
+        methodtypeimpl.LockMethod.ENTER_WRITE_LOCK;
       }
       case (LockEnter(), ReentrantLock()) => {
-        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.ENTER_REENTRANT_LOCK;
+        methodtypeimpl.LockMethod.ENTER_REENTRANT_LOCK;
       }
       case (LockExit(), ReadLock()) => {
-        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.EXIT_READ_LOCK;
+        methodtypeimpl.LockMethod.EXIT_READ_LOCK;
       }
       case (LockExit(), WriteLock()) => {
-        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.EXIT_WRITE_LOCK;
+        methodtypeimpl.LockMethod.EXIT_WRITE_LOCK;
       }
       case (LockExit(), ReentrantLock()) => {
-        com.anarsoft.trace.agent.preanalyzed.model.methodtypeimpl.LockMethod.EXIT_REENTRANT_LOCK;
+        methodtypeimpl.LockMethod.EXIT_REENTRANT_LOCK;
       }
 
     }

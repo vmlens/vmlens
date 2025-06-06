@@ -4,6 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 public class ThreadStart extends InterleaveActionForInDependentBlock {
     private final int threadIndex;
@@ -51,5 +53,18 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
                 "threadIndex=" + threadIndex +
                 ", startedThreadIndex=" + startedThreadIndex +
                 '}';
+    }
+
+    @Override
+    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+        if(! (other instanceof ThreadStart)) {
+            return false;
+        }
+        ThreadStart otherLock = (ThreadStart) other;
+        if(threadIndex != otherLock.threadIndex)  {
+            return false;
+        }
+
+        return startedThreadIndex == otherLock.startedThreadIndex;
     }
 }

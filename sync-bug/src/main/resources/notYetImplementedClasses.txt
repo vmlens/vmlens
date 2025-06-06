@@ -54,17 +54,14 @@ java/util/concurrent/CyclicBarrier$Generation
 java/util/concurrent/Exchanger
 java/util/concurrent/Exchanger$Node
 java/util/concurrent/Exchanger$Participant
-java/util/concurrent/atomic/AtomicIntegerArray
 java/util/concurrent/atomic/AtomicIntegerFieldUpdater
 java/util/concurrent/atomic/AtomicIntegerFieldUpdater$AtomicIntegerFieldUpdaterImpl
 java/util/concurrent/atomic/AtomicIntegerFieldUpdater$AtomicIntegerFieldUpdaterImpl$1
-java/util/concurrent/atomic/AtomicLongArray
 java/util/concurrent/atomic/AtomicLongFieldUpdater
 java/util/concurrent/atomic/AtomicLongFieldUpdater$CASUpdater
 java/util/concurrent/atomic/AtomicLongFieldUpdater$CASUpdater$1
 java/util/concurrent/atomic/AtomicLongFieldUpdater$LockedUpdater
 java/util/concurrent/atomic/AtomicLongFieldUpdater$LockedUpdater$1
-java/util/concurrent/atomic/AtomicReferenceArray
 java/util/concurrent/atomic/AtomicReferenceFieldUpdater
 java/util/concurrent/atomic/AtomicReferenceFieldUpdater$AtomicReferenceFieldUpdaterImpl
 java/util/concurrent/atomic/AtomicReferenceFieldUpdater$AtomicReferenceFieldUpdaterImpl$1

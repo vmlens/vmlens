@@ -15,7 +15,7 @@ class LoopWarningEventGen (
  ,  val messageId  : Int  
 )    extends LoopWarningEvent  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "LoopWarningEventGen" 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
@@ -23,7 +23,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: LoopWarningEventGen => 
         {
@@ -56,11 +56,11 @@ object  LoopWarningEventGen
    {
      val result = new LoopWarningEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

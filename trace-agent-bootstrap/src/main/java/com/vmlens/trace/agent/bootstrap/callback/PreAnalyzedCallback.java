@@ -59,6 +59,19 @@ public class PreAnalyzedCallback {
         }
     }
 
+    public static void methodEnterWithIntParam(Object object,
+                                               int intParam,
+                                               int methodId) {
+        if(canProcess()) {
+            startProcess();
+            try {
+                preAnalyzedCallbackImpl.methodEnterWithIntParam(object, intParam, methodId);
+            } finally {
+                stopProcess();
+            }
+        }
+    }
+
     public static void methodExit(Object object, int methodId) {
         if(canProcess()) {
             startProcess();

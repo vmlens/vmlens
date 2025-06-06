@@ -59,7 +59,7 @@ public String toString() {
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  11 );
+buffer.put( (byte)  9 );
      buffer.putInt( threadIndex ); 
      buffer.putInt( methodCounter ); 
       buffer.putLong( objectHashCode );  

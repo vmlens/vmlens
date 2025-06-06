@@ -1,0 +1,28 @@
+package com.anarsoft.race.detection.event.gen;
+
+import java.nio.ByteBuffer
+
+import com.anarsoft.race.detection.event.method._
+import com.anarsoft.race.detection.event.control._;
+import com.anarsoft.race.detection.event.nonvolatile._;
+import com.anarsoft.race.detection.event.directmemory._;
+import com.anarsoft.race.detection.event.interleave._;
+import com.anarsoft.race.detection.event.load._;
+
+class {{className}} extends DeserializeStrategy[{{deserializerExtends}}] {
+   val eventArraySize : Int = {{arraySize}}
+   val blockSize : Int =  {{arraySize}} * {{eventCount}};
+  
+
+    def deSerializeJavaEvent(buffer : ByteBuffer) : {{deserializerExtends}} = {
+       val id = buffer.get();
+       
+       {{#eventList}}
+       if( id == {{eventId}} ) {
+          return {{eventClass}}.applyFromJavaEvent( buffer   );
+       }
+       {{/eventList}}
+         throw new RuntimeException("id " + id + " could not be deserialized");
+    }
+
+}

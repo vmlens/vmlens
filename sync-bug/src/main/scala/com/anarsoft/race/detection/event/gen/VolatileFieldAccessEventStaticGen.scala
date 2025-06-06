@@ -21,21 +21,21 @@ class VolatileFieldAccessEventStaticGen (
  ,  val runPosition  : Int  
 )    extends VolatileFieldAccessEventStatic  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "VolatileFieldAccessEventStaticGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", bytecodePosition:" +  bytecodePosition 
   text = text + ", fieldId:" +  fieldId 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", methodId:" +  methodId 
-  text = text + ", operation:" +  operation 
+  text = text + ", interleaveoperation:" +  operation
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: VolatileFieldAccessEventStaticGen => 
         {
@@ -98,23 +98,23 @@ object  VolatileFieldAccessEventStaticGen
    {
      val result = new VolatileFieldAccessEventStaticGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

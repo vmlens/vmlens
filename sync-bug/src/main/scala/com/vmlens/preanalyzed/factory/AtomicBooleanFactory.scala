@@ -1,6 +1,6 @@
 package com.vmlens.preanalyzed.factory
 
-import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicNonBlockingMethod, NotYetImplemented, Read, ReadWrite, Write}
+import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicClassNonBlockingMethod, NotYetImplemented, Read, ReadWrite, Write}
 
 object AtomicBooleanFactory {
 
@@ -8,27 +8,27 @@ object AtomicBooleanFactory {
     atomicMethods());
 
 
-  private def atomicMethods(): List[AtomicNonBlockingMethod] = List[AtomicNonBlockingMethod](
-    AtomicNonBlockingMethod("weakCompareAndSetAcquire","(ZZ)Z",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("getPlain","()Z",   NotYetImplemented() ),
-    AtomicNonBlockingMethod("compareAndExchangeAcquire","(ZZ)Z",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("getAcquire","()Z",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("setPlain","(Z)V",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("get","()Z", Read()  ),
-    AtomicNonBlockingMethod("compareAndExchange","(ZZ)Z",  ReadWrite()  ),
-    AtomicNonBlockingMethod("setRelease","(Z)V",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("compareAndExchangeRelease","(ZZ)Z",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("weakCompareAndSetVolatile","(ZZ)Z", NotYetImplemented()  ),
-    AtomicNonBlockingMethod("lazySet","(Z)V",   NotYetImplemented() ),
-    AtomicNonBlockingMethod("compareAndSet","(ZZ)Z",   ReadWrite() ),
-    AtomicNonBlockingMethod("setOpaque","(Z)V",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("weakCompareAndSetPlain","(ZZ)Z",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("weakCompareAndSet","(ZZ)Z",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("toString","()Ljava/lang/String;",  Read()  ),
-    AtomicNonBlockingMethod("set","(Z)V", Write()  ),
-    AtomicNonBlockingMethod("weakCompareAndSetRelease","(ZZ)Z",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("getOpaque","()Z",  NotYetImplemented()  ),
-    AtomicNonBlockingMethod("getAndSet","(Z)Z",  ReadWrite()  )
+  private def atomicMethods(): List[AtomicClassNonBlockingMethod] = List[AtomicClassNonBlockingMethod](
+    AtomicClassNonBlockingMethod("weakCompareAndSetAcquire","(ZZ)Z",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("getPlain","()Z",   NotYetImplemented() ),
+    AtomicClassNonBlockingMethod("compareAndExchangeAcquire","(ZZ)Z",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("getAcquire","()Z",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("setPlain","(Z)V",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("get","()Z", Read()  ),
+    AtomicClassNonBlockingMethod("compareAndExchange","(ZZ)Z",  ReadWrite()  ),
+    AtomicClassNonBlockingMethod("setRelease","(Z)V",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("compareAndExchangeRelease","(ZZ)Z",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("weakCompareAndSetVolatile","(ZZ)Z", NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("lazySet","(Z)V",   NotYetImplemented() ),
+    AtomicClassNonBlockingMethod("compareAndSet","(ZZ)Z",   ReadWrite() ),
+    AtomicClassNonBlockingMethod("setOpaque","(Z)V",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("weakCompareAndSetPlain","(ZZ)Z",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("weakCompareAndSet","(ZZ)Z",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("toString","()Ljava/lang/String;",  Read()  ),
+    AtomicClassNonBlockingMethod("set","(Z)V", Write()  ),
+    AtomicClassNonBlockingMethod("weakCompareAndSetRelease","(ZZ)Z",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("getOpaque","()Z",  NotYetImplemented()  ),
+    AtomicClassNonBlockingMethod("getAndSet","(Z)Z",  ReadWrite()  )
   );
 
 }

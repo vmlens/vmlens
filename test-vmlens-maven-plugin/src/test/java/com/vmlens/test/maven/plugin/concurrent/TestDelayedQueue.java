@@ -41,7 +41,6 @@ public class TestDelayedQueue {
         }
     }
 
-    @Ignore
     @Test
     public void testDelayed() throws InterruptedException {
         Set<Integer> expected = new HashSet<>();
@@ -49,9 +48,8 @@ public class TestDelayedQueue {
         expected.add(2);
 
         Set<Integer> values = new HashSet<>();
-
-        try(AllInterleavings allInterleaving = new AllInterleavings("delayedQueue")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("delayedQueue")) {
+            while (allInterleavings.hasNext()) {
                 DelayQueue<DelayedString> queue = new DelayQueue<>();
                 queue.add(new DelayedString(System.currentTimeMillis() , "second"));
                 Thread first = new Thread() {
@@ -61,7 +59,7 @@ public class TestDelayedQueue {
                     }
                 };
                 first.start();
-                values.add(values.size());
+                values.add(queue.size());
                 first.join();
 
             }

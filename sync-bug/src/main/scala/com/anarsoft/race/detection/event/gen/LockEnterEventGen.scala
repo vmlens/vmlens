@@ -19,9 +19,9 @@ class LockEnterEventGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends LockEnterEvent  
+)    extends LockEnterEvent
 {
-override def toString() = {
+override def toString : String = {
   var text =  "LockEnterEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodCounter:" +  methodCounter 
@@ -35,7 +35,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: LockEnterEventGen => 
         {
@@ -98,23 +98,23 @@ object  LockEnterEventGen
    {
      val result = new LockEnterEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

@@ -14,8 +14,8 @@ public class TestAtomicInteger {
     public void testUpdate() throws InterruptedException {
        int count = 0;
 
-        try(AllInterleavings allInterleaving = new AllInterleavings("testAtomicInteger")) {
-            while (allInterleaving.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testAtomicInteger")) {
+            while (allInterleavings.hasNext()) {
                 final AtomicInteger atomicInteger = new AtomicInteger();
                 Thread first = new Thread() {
                     @Override
@@ -29,7 +29,7 @@ public class TestAtomicInteger {
                 count++;
             }
         }
-        assertThat(count,is(3));
+        assertThat(count,is(4));
     }
 
 }

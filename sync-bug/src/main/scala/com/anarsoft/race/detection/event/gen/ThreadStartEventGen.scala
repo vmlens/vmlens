@@ -18,9 +18,9 @@ class ThreadStartEventGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends ThreadStartEvent 
+)    extends ThreadStartEvent  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "ThreadStartEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", bytecodePosition:" +  bytecodePosition 
@@ -33,7 +33,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: ThreadStartEventGen => 
         {
@@ -91,21 +91,21 @@ object  ThreadStartEventGen
    {
      val result = new ThreadStartEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

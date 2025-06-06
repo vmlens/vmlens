@@ -14,5 +14,4 @@ class ProcessEvents(private val loadRuns: LoadRuns, private val processRun: Proc
     loopResultCollection.build();
   }
   
-
 }

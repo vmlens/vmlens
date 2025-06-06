@@ -14,14 +14,14 @@ class RunEndEventGen (
  ,  val runId  : Int  
 )    extends RunEndEvent  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "RunEndEventGen" 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: RunEndEventGen => 
         {
@@ -49,9 +49,9 @@ object  RunEndEventGen
    {
      val result = new RunEndEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

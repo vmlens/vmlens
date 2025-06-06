@@ -20,16 +20,16 @@ class VolatileFieldAccessEventGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends VolatileFieldAccessEvent 
+)    extends VolatileFieldAccessEvent  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "VolatileFieldAccessEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", bytecodePosition:" +  bytecodePosition 
   text = text + ", fieldId:" +  fieldId 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", methodId:" +  methodId 
-  text = text + ", operation:" +  operation 
+  text = text + ", interleaveoperation:" +  operation
   text = text + ", objectHashCode:" +  objectHashCode 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
@@ -37,7 +37,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: VolatileFieldAccessEventGen => 
         {
@@ -105,25 +105,25 @@ object  VolatileFieldAccessEventGen
    {
      val result = new VolatileFieldAccessEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

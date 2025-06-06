@@ -17,13 +17,13 @@ class NonVolatileDeSerializer extends DeserializeStrategy[LoadedNonVolatileEvent
     def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedNonVolatileEvent = {
        val id = buffer.get();
        
-       if( id == 2 ) {
+       if( id == 1 ) {
           return FieldAccessEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 4 ) {
+       if( id == 2 ) {
           return FieldAccessEventStaticGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 5 ) {
+       if( id == 3 ) {
           return ArrayAccessEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");

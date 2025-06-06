@@ -14,6 +14,10 @@ public class Position implements Comparable<Position>, WithThreadIndex {
         return new Position(threadIndex, positionInThread);
     }
 
+    public Position increment() {
+        return new Position(threadIndex,positionInThread+1);
+    }
+
     @Override
     public String toString() {
         return "Position{" +
@@ -58,6 +62,10 @@ public class Position implements Comparable<Position>, WithThreadIndex {
     @Override
     public int threadIndex() {
         return threadIndex;
+    }
+
+    public int positionInThread() {
+        return positionInThread;
     }
 
     public boolean greaterOrEquals(Position other) {

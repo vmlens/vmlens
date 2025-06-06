@@ -67,7 +67,7 @@ public class AllInterleavings implements AutoCloseable {
 
 	private static boolean hasNext(Object object) {
 		System.err.println("The vmlens java agent is not configured.");
-		System.err.println("See https://vmlens/docs/ for configuring the vmlens java agent.");
+		System.err.println("See https://vmlens.com/docs/ for configuring the vmlens java agent.");
 		return false;
 	}
 

@@ -1,0 +1,32 @@
+class:com/vmlens/test/guineapig/WithClinit
+method:<init>()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  RETURN
+method:calculate()I
+  load:Lcom/vmlens/test/guineapig/WithClinit;
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodEnter:(Ljava/lang/Object;I)V
+  BIPUSH
+  load:Lcom/vmlens/test/guineapig/WithClinit;
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
+  IRETURN
+  load:Lcom/vmlens/test/guineapig/WithClinit;
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW
+method:<clinit>()V
+  load:Lcom/vmlens/test/guineapig/WithClinit;
+  load:2
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/DoNotTraceCallback.methodEnter:(Ljava/lang/Object;I)V
+  INVOKESTATIC  com/vmlens/test/guineapig/WithClinit.calculate:()I
+  PUTSTATIC  com/vmlens/test/guineapig/WithClinit.value:I
+  load:Lcom/vmlens/test/guineapig/WithClinit;
+  load:2
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/DoNotTraceCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  load:Lcom/vmlens/test/guineapig/WithClinit;
+  load:2
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/DoNotTraceCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW

@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CreateOrderContext;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.CreateOrderContext;
 
 public interface AlternatingOrderElementStrategy {
 

@@ -10,6 +10,7 @@ public class EnterExitContext {
     private final ReadWriteLockMap readWriteLockMap;
 
     private Object returnValue;
+    private int intParam;
 
     public EnterExitContext(Object object,
                             int methodId,
@@ -43,5 +44,13 @@ public class EnterExitContext {
 
     public ReadWriteLockMap readWriteLockMap() {
         return readWriteLockMap;
+    }
+
+    public int intParam() {
+        return intParam;
+    }
+
+    public void setIntParam(int intParam) {
+        this.intParam = intParam;
     }
 }

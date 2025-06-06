@@ -62,6 +62,14 @@ public class ParallelizeLoop {
                 RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
                 serializableEvents.add(wrap(endEvent));
 
+                if(currentRun.runId() == 0) {
+                    createInitialRun(threadLocalForParallelize, serializableEvents);
+                    // we skip the first run to avoid
+                    // that the initializing logic which is only called once
+                    // leads to blocked runs
+                    return true;
+                }
+
                 ActualRun previous = currentRun.end(threadLocalForParallelize);
                 interleaveLoop.addActualRun(previous);
 
@@ -80,19 +88,24 @@ public class ParallelizeLoop {
                 }
                 return false;
             } else {
-                ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
-                currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
-                        runContext), loopId, maxRunId);
-                threadLocalForParallelize.setThreadLocalDataWhenInTest(
-                        runContext.createForMainTestThread(currentRun, threadLocalForParallelize, serializableEvents));
-                int tempRunId = maxRunId;
-                maxRunId++;
-                serializableEvents.add(wrap(new RunStartEvent(loopId, tempRunId)));
+                createInitialRun( threadLocalForParallelize, serializableEvents);
                 return true;
             }
         } finally {
             lock.unlock();
         }
+    }
+
+    private void createInitialRun(ThreadLocalForParallelize threadLocalForParallelize,
+                                  TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+        ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
+        currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
+                runContext), loopId, maxRunId);
+        threadLocalForParallelize.setThreadLocalDataWhenInTest(
+                runContext.createForMainTestThread(currentRun, threadLocalForParallelize, serializableEvents));
+        int tempRunId = maxRunId;
+        maxRunId++;
+        serializableEvents.add(wrap(new RunStartEvent(loopId, tempRunId)));
     }
 
     public void close(ThreadLocalForParallelize threadLocalForParallelize) {

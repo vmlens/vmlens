@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.reportbuilder
 
-import com.anarsoft.trace.agent.description.{TestLoopDescription, ThreadDescription, ThreadOrLoopDescriptionVisitor}
 import com.vmlens.report.ResultForVerify
+import com.vmlens.trace.agent.bootstrap.description.{TestLoopDescription, ThreadDescription, ThreadOrLoopDescriptionVisitor}
 
 class SetLoopNameInResultForVerifyVisitor(resultForVerify : ResultForVerify) extends ThreadOrLoopDescriptionVisitor {
 

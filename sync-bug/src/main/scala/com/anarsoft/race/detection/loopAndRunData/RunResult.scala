@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.loopAndRunData
 
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 
-trait RunResult extends Ordered[RunResult] {
+trait RunResult  {
 
   def foreach(f: EventForReportElement => Unit): Unit;
 

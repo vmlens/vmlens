@@ -17,7 +17,7 @@ class MethodEnterEventGen (
  ,  val runId  : Int  
 )    extends MethodEnterEvent  
 {
-override def toString() = {
+override def toString : String = {
   var text =  "MethodEnterEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodId:" +  methodId 
@@ -27,7 +27,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: MethodEnterEventGen => 
         {
@@ -70,15 +70,15 @@ object  MethodEnterEventGen
    {
      val result = new MethodEnterEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

@@ -12,6 +12,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelation
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 public class LockEnterImpl implements InterleaveAction, LockEnter {
 
@@ -82,5 +83,18 @@ public class LockEnterImpl implements InterleaveAction, LockEnter {
                 "threadIndex=" + threadIndex +
                 ", lockOrMonitor=" + lockOrMonitor +
                 '}';
+    }
+
+    @Override
+    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+        if(! (other instanceof LockEnterImpl)) {
+            return false;
+        }
+        LockEnterImpl otherLock = (LockEnterImpl) other;
+        if(threadIndex != otherLock.threadIndex)  {
+            return false;
+        }
+
+        return lockOrMonitor.key().equalsNormalized(normalizeContext,otherLock.key());
     }
 }

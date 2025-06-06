@@ -1,0 +1,20 @@
+class:com/vmlens/test/guineapig/MethodWithIntParam
+method:<init>()V
+  ALOAD
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  RETURN
+method:call(ILjava/lang/Object;)V
+  ALOAD
+  ILOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodEnterWithIntParam:(Ljava/lang/Object;II)V
+  ILOAD
+  ISTORE
+  ALOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD
+  load:1
+  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback.methodExit:(Ljava/lang/Object;I)V
+  ATHROW

@@ -20,9 +20,9 @@ class AtomicReadWriteLockExitEventGen (
  ,  val runId  : Int  
  ,  val runPosition  : Int  
  ,  val atomicMethodId  : Int  
-)    extends AtomicReadWriteLockExitEvent  
+)    extends AtomicReadWriteLockExitEvent
 {
-override def toString() = {
+override def toString : String = {
   var text =  "AtomicReadWriteLockExitEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodCounter:" +  methodCounter 
@@ -37,7 +37,7 @@ override def toString() = {
  text;
 }
 
-override def equals(other: Any) = {
+override def equals(other: Any) : Boolean = {
     other match {
       case that: AtomicReadWriteLockExitEventGen => 
         {
@@ -105,25 +105,25 @@ object  AtomicReadWriteLockExitEventGen
    {
      val result = new AtomicReadWriteLockExitEventGen (
           
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getLong()
+            data.getLong()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
           ,
-                data.getInt()
+            data.getInt()
      );
      result;
    }

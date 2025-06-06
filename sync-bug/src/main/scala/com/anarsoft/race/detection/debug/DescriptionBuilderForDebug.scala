@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.debug
 
 import com.anarsoft.race.detection.reportbuilder.DescriptionBuilder
-import com.anarsoft.trace.agent.description.{ClassDescription, ThreadOrLoopDescription}
+import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, ThreadOrLoopDescription}
 
 import java.io.PrintStream
 

@@ -45,7 +45,7 @@ public String toString() {
     "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
     "methodId=" + methodId +
-    "operation=" + operation +
+    "interleaveoperation=" + operation +
     "objectHashCode=" + objectHashCode +
     "loopId=" + loopId +
     "runId=" + runId +
@@ -62,7 +62,7 @@ public String toString() {
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  7 );
+buffer.put( (byte)  5 );
      buffer.putInt( threadIndex ); 
      buffer.putInt( bytecodePosition ); 
      buffer.putInt( fieldId ); 

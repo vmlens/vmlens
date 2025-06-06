@@ -24,12 +24,9 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
 
   def build(): UILoopsAndStacktraceLeafsBuilder = {
     val stacktraceLeafsMap = new mutable.HashMap[StacktraceNode, StacktraceLeaf]();
-
     val  resultForVerify = new ResultForVerify();
-    
 
-
-    // addVolatileAccessEvents the loops to the report builder
+    // addVolatileAccessEvents the loops to the report ordertree
     for (loopAndRun <- runCountAndResultList) {
       val runResult = loopAndRun.runResult;
       val run = new util.LinkedList[RunElement]()
@@ -53,7 +50,7 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
         loopAndRun.count + 1), run);
     }
 
-    // addVolatileAccessEvents the stacktrace leafs to the builder
+    // addVolatileAccessEvents the stacktrace leafs to the ordertree
     for (elem <- stacktraceLeafsMap) {
       reportBuilder.addStacktraceLeaf(elem._2)
     }
@@ -110,7 +107,7 @@ object LoopReportBuilderImpl {
 
     var text = result.text;
     for(id <- runResult.warningIdList ) {
-      text = text + ", " + Message.of(id).text();
+      text = text + ", " + "<span style=\"color: #FFC107;\">" + Message.of(id).text() + "</span>";
     }
     
     new TestResult(text,result.style);

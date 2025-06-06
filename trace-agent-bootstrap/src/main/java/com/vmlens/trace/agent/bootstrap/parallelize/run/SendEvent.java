@@ -30,7 +30,7 @@ public class SendEvent {
     }
 
     public void sendMessage(Message message) {
-        queueIn.offer(new LoopWarningEvent(run.loopId(), run.loopId(), message.id()));
+        queueIn.offer(new LoopWarningEvent(run.loopId(), run.runId(), message.id()));
     }
 
 }

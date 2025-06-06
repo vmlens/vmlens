@@ -1,23 +1,23 @@
 package com.vmlens.preanalyzed.factory
 
-import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicNonBlockingMethod, Read, ReadWrite, Write}
+import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicClassNonBlockingMethod, Read, ReadWrite, Write}
 
-private class AdderFactory(val className : String, val desc : String, val additional :  List[AtomicNonBlockingMethod]) {
+private class AdderFactory(val className : String, val desc : String, val additional :  List[AtomicClassNonBlockingMethod]) {
   private def atomic(): AtomicNonBlocking = AtomicNonBlocking(s"java/util/concurrent/atomic/$className",
     atomicMethods() ++ additional);
 
-  private def atomicMethods(): List[AtomicNonBlockingMethod] = List[AtomicNonBlockingMethod](
-    AtomicNonBlockingMethod("doubleValue","()D",  Read()  ),
-    AtomicNonBlockingMethod("intValue","()I", Read()   ),
-    AtomicNonBlockingMethod("reset","()V", Write()  ),
-    AtomicNonBlockingMethod("byteValue","()B",  Read()   ),
-    AtomicNonBlockingMethod("shortValue","()S",   Read()  ),
-    AtomicNonBlockingMethod("toString","()Ljava/lang/String;", Read()   ),
-    AtomicNonBlockingMethod("longValue","()J", Read()   ),
-    AtomicNonBlockingMethod("floatValue","()F",  Read()  ),
-    AtomicNonBlockingMethod("add",s"($desc)V", Write()  ),
-    AtomicNonBlockingMethod("sum",s"()$desc", Read()  ),
-    AtomicNonBlockingMethod("sumThenReset",s"()$desc", ReadWrite() )
+  private def atomicMethods(): List[AtomicClassNonBlockingMethod] = List[AtomicClassNonBlockingMethod](
+    AtomicClassNonBlockingMethod("doubleValue","()D",  Read()  ),
+    AtomicClassNonBlockingMethod("intValue","()I", Read()   ),
+    AtomicClassNonBlockingMethod("reset","()V", Write()  ),
+    AtomicClassNonBlockingMethod("byteValue","()B",  Read()   ),
+    AtomicClassNonBlockingMethod("shortValue","()S",   Read()  ),
+    AtomicClassNonBlockingMethod("toString","()Ljava/lang/String;", Read()   ),
+    AtomicClassNonBlockingMethod("longValue","()J", Read()   ),
+    AtomicClassNonBlockingMethod("floatValue","()F",  Read()  ),
+    AtomicClassNonBlockingMethod("add",s"($desc)V", Write()  ),
+    AtomicClassNonBlockingMethod("sum",s"()$desc", Read()  ),
+    AtomicClassNonBlockingMethod("sumThenReset",s"()$desc", ReadWrite() )
   );
 
 }
@@ -29,6 +29,6 @@ object AdderFactory {
 
   def longAdder(): AtomicNonBlocking =
     new AdderFactory("LongAdder", "J", List(
-      AtomicNonBlockingMethod("decrement","()V",  Write()  ),
-      AtomicNonBlockingMethod("increment","()V",  Write()) )).atomic();
+      AtomicClassNonBlockingMethod("decrement","()V",  Write()  ),
+      AtomicClassNonBlockingMethod("increment","()V",  Write()) )).atomic();
 }

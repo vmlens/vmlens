@@ -1,7 +1,7 @@
 package com.vmlens.report.assertion;
 
-import com.anarsoft.trace.agent.description.ClassDescription;
-import com.anarsoft.trace.agent.description.ThreadOrLoopDescription;
+import com.vmlens.trace.agent.bootstrap.description.ClassDescription;
+import com.vmlens.trace.agent.bootstrap.description.ThreadOrLoopDescription;
 
 public class OnDescriptionAndLeftBeforeRightNoOp implements OnDescriptionAndLeftBeforeRight {
 
