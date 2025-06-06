@@ -70,21 +70,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <!-- we clean here, snce trace-agent-bootstrap-jdk9 is the first project -->
-                <!-- which writes to dist -->
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>../vmlens-maven-plugin/_dist</directory>
-                            <includes>
-                                <include>**/*.jar</include>
-                            </includes>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.1</version>
@@ -97,7 +82,6 @@
                         <configuration>
                             <shadedArtifactAttached>false</shadedArtifactAttached>
                             <shadedClassifierName>agent_bootstrap</shadedClassifierName>
-
                             <relocations>
                                 <relocation>
                                     <pattern>gnu</pattern>
@@ -109,33 +93,6 @@
                                     <shadedPattern>com.vmlens.shaded.org.jctools</shadedPattern>
                                 </relocation>
                             </relocations>
-
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.2</version>
-                <executions>
-                    <execution>
-                        <id>copy-installed</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>${project.groupId}</groupId>
-                                    <artifactId>${project.artifactId}</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>${project.packaging}</type>
-                                    <destFileName>agent_bootstrap.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>../vmlens-maven-plugin/_dist/agent_lib</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
