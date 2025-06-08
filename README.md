@@ -36,7 +36,7 @@ See [test-vmlens-maven-plugin](https://github.com/vmlens/vmlens/tree/master/test
 
 ## maven
 
-To use vmlens with maven, configure a plugin tag to tell maven that the vmlens plugin should be executed at the test phase. And include the jar com.vmlens.api as test dependency.
+To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens plugin should be executed at the test phase. And include the jar com.vmlens.api as test dependency.
 
 ```XML
 <project>
@@ -72,6 +72,17 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
 ```
 
 See [pom.xml](https://github.com/vmlens/vmlens/blob/master/test-vmlens-maven-plugin/pom.xml) for an example.
+
+## Standalone
+
+To use VMLens as a standalone tool:
+
+1. Include com.vmlens.api from the [Maven Repository](https://mvnrepository.com/artifact/com.vmlens/api/1.2.3) as a test jar in your project.
+1. Download the jar standalone-1.2.3.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.3/) 
+1. Run java -jar standalone-1.2.3.jar install. This creates the agent directory and prints the vm parameter to System.out
+1. Add this vm parameter when you run your test
+2. Run java -jar standalone-1.2.3.jar report. This checks for data races and creates the report
+
 
 # Documentation
 
