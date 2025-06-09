@@ -2,15 +2,24 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebu
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
 
-public class StartOrEither {
+public abstract class StartOrEither implements NodeBuilder {
+
+    private NodeBuilder next;
 
     public Choice choice() {
-        return new Choice();
+        Choice temp = new Choice();
+        next = temp;
+        return temp;
     }
 
 
     public Either either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
-        return new Either(orderAlternativeA,orderAlternativeB);
+        Either temp = new Either(orderAlternativeA,orderAlternativeB);
+        next = temp;
+        return temp;
     }
 
+    public NodeBuilder getNext() {
+        return next;
+    }
 }

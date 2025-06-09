@@ -20,4 +20,9 @@ public class OrderTree {
     public LeftBeforeRight[] fixedOrder() {
         return fixedOrder;
     }
+
+    // To test the builder
+    public OrderTreeNode start() {
+        return start;
+    }
 }

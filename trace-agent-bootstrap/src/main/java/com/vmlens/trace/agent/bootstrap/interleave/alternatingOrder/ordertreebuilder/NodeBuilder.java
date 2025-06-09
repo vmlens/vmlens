@@ -5,5 +5,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Or
 public interface NodeBuilder {
 
     OrderTreeNode build();
+    NodeBuilder getNext();
 
 }

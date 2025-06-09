@@ -25,4 +25,19 @@ public class SingleChildNode implements OrderTreeNode {
         }
         return new NextNodeAndProcessFlag(next,processFlag);
     }
+
+    // to test the builder
+    public OrderTreeNode next() {
+        return next;
+    }
+
+    // to test the builder
+    public OrderAlternative firstAlternative() {
+        return firstAlternative;
+    }
+
+    // to test the builder
+    public OrderAlternative secondAlternative() {
+        return secondAlternative;
+    }
 }
