@@ -28,7 +28,7 @@ public class TestNonVolatileField {
 ```
 VMLens detects the data race and generates the following report:
 
-<img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/img/dataRaceReportNew.png">
+<img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/images/dataRaceReportNew.png">
 
 See [test-vmlens-maven-plugin](https://github.com/vmlens/vmlens/tree/master/test-vmlens-maven-plugin/src/test/java/com/vmlens/test/maven/plugin) for more examples.
 
