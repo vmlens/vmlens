@@ -34,7 +34,7 @@ See [test-vmlens-maven-plugin](https://github.com/vmlens/vmlens/tree/master/test
 
 # Installation
 
-## maven
+## Maven
 
 To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens plugin should be executed at the test phase. And include the jar com.vmlens.api as test dependency.
 
