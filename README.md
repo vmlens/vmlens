@@ -1,8 +1,8 @@
-# VMLens lets you test multi-threaded, concurrent java
+# VMLens lets you test multi-threaded, concurrent Java
 
 # Example
 
-The following example shows how to test multi-threaded, concurrent java with vmlens:
+The following example shows how to test multi-threaded, concurrent Java with vmlens:
 
 ```Java
 import com.vmlens.api.AllInterleavings;
