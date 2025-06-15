@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * -javaagent:C:\workspace\vmlens\test-vmlens-maven-plugin\target\vmlens-agent\agent.jar
+ * -javaagent:/Users/anarkrieger/workspace/vmlens/test-vmlens-maven-plugin/target/vmlens-agent/agent.jar
  *
  *
  */
@@ -18,8 +18,6 @@ public class TestSynchronizedBlock {
 
     @Test
     public void testUpdate() throws InterruptedException {
-
-
         AllInterleavings testUpdate = new AllInterleavings("testSynchronizedBlock");
         while (testUpdate.hasNext()) {
             j = 0;
@@ -40,8 +38,6 @@ public class TestSynchronizedBlock {
         synchronized (this) {
             j++;
         }
-
     }
-
 
 }

@@ -11,10 +11,7 @@ public class FactoryCollectionDoNotTrace implements FactoryCollection {
 
     private final FactoryTraceMethodEnterExit factoryForBoth;
 
-
     public FactoryCollectionDoNotTrace(MethodRepositoryForTransform methodCallIdMap) {
-
-
         this.factoryForBoth = new FactoryTraceMethodEnterExit(new MethodCallbackFactoryFactoryDoNotTrace(),
                 methodCallIdMap);
     }

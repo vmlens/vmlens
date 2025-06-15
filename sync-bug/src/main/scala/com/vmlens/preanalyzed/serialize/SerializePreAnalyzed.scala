@@ -26,7 +26,6 @@ object SerializePreAnalyzed {
     val list = new PreAnalyzedFactory().create();
     new SerializePreAnalyzed().serialize(list, dataOutputStream);
     dataOutputStream.close();
-
   }
 
 }

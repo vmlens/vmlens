@@ -48,8 +48,7 @@ class GroupInterleaveElementBuilder {
 
   def addThreadJoinedEvents(list: util.LinkedList[ThreadJoinedEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementThreadOperationImpl[ThreadJoinedEvent](
-        EventArray[ThreadJoinedEvent](list)));
+      new GroupInterleaveElementThreadOperationImpl[ThreadJoinedEvent](EventArray[ThreadJoinedEvent](list)))
   }
 
   def addLockEvents(list: util.LinkedList[WithLockEvent]): Unit = {
@@ -73,6 +72,11 @@ class GroupInterleaveElementBuilder {
       
 object  GroupInterleaveElementBuilder {
 
+  val create_container_lock: WithLockEvent => LockContainer = (event: WithLockEvent) => {
+    event.create()
+  }
+
+
   val create_container_volatile_field: VolatileFieldAccessEvent => EventContainer[VolatileFieldAccessEvent] =
     (event: VolatileFieldAccessEvent) => {
       EventWithReadWriteContainer[VolatileFieldAccessEvent](event)
@@ -83,7 +87,5 @@ object  GroupInterleaveElementBuilder {
       EventWithReadWriteContainer[AtomicNonBlockingEvent](event)
     };
 
-    val create_container_lock: WithLockEvent => LockContainer = 
-      (event: WithLockEvent) =>  event.create();
-  
+
 }

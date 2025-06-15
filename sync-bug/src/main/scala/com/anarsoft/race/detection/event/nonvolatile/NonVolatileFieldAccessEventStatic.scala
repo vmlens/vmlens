@@ -6,8 +6,7 @@ import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemory
 import com.vmlens.report.runelementtype.{NonVolatileAccess, RunElementType}
 import com.vmlens.report.runelementtype.memoryaccesskey.FieldIdAndObjectHashcode
 
-trait NonVolatileFieldAccessEventStatic extends LoadedNonVolatileEvent with
-  NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEventStatic]
+trait NonVolatileFieldAccessEventStatic extends LoadedNonVolatileEvent with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEventStatic]
   with WithSetStacktraceNode {
 
   def fieldId: Int

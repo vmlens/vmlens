@@ -109,7 +109,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       VMLensApi("com/vmlens/api/AllInterleavings"),
 
       Include("java/lang/Thread$"),
-      
+
+      Include("java/util/concurrent/Executors"),
+      Include("java/util/concurrent/ThreadPoolExecutor"),
       Filter("java/util/concurrent"),
       Filter("java/util/stream"),
       Filter("java/util/Arrays"),
