@@ -11,7 +11,7 @@ import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGen implements
-        NotThreadStartedInterleaveActionFactory, WithInMethodIdAndPosition {
+        NotThreadStartedInterleaveActionFactory, WithInMethodIdPositionReadWriteLockMap {
 
     private final LockType lockTypeClass;
     private Object object;

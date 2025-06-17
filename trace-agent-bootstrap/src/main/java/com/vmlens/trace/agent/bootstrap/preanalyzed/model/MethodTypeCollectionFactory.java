@@ -1,9 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.preanalyzed.model;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.AbstractMethodType;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.NotYetImplementedMethod;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.ThreadJoin;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.ThreadStart;
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.*;
 import gnu.trove.map.hash.THashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
@@ -51,6 +48,10 @@ public class MethodTypeCollectionFactory {
         add(ARRAY_NON_BLOCKING_READ_WRITE);
 
         add(NotYetImplementedMethod.SINGLETON);
+        
+        add(ThreadPoolStart.SINGLETON);
+        add(ThreadPoolJoin.JOIN_ALL);
+        add(ThreadPoolJoin.JOIN_TASK);
 
         return new MethodTypeCollection(methodTypeToId,idToMethodType);
     }

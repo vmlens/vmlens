@@ -4,6 +4,7 @@ package com.vmlens.trace.agent.bootstrap.preanalyzed.builder;
 import com.vmlens.trace.agent.bootstrap.lock.LockOperation;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;
+import com.vmlens.trace.agent.bootstrap.strategy.threadpool.StrategyThreadPool;
 
 public interface FactoryCollectionPreAnalyzedFactoryBuilder {
 
@@ -24,6 +25,11 @@ public interface FactoryCollectionPreAnalyzedFactoryBuilder {
     void notYetImplemented(String name, String desc);
 
     void noOpWhenMethodNotFound();
+
+    void setThreadPoolStart(String name, String desc);
+
+    void addThreadPoolJoin(String name, String desc, StrategyThreadPool strategyThreadPool);
+
 
 
 }

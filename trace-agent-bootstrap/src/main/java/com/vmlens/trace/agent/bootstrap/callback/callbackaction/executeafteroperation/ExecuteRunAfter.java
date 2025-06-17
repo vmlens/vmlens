@@ -4,10 +4,10 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.WithInMethodIdAndPosition;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.WithInMethodIdPositionReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class ExecuteRunAfter <EVENT extends RuntimeEvent & WithInMethodIdAndPosition>
+public class ExecuteRunAfter <EVENT extends RuntimeEvent & WithInMethodIdPositionReadWriteLockMap>
         implements ExecuteAfterOperation {
 
     private final EVENT event;

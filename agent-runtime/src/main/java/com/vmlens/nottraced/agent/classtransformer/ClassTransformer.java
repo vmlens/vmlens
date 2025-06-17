@@ -24,17 +24,8 @@ public class ClassTransformer {
         this.previousClassVisitor = previousClassVisitor;
     }
 
-    public byte[] transform(byte[] classfileBuffer, String name) {
-        ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        transform(classfileBuffer, name, classWriter);
-
-        return classWriter.toByteArray();
-    }
-
-    // Visible for test
-    public void transform(byte[] classfileBuffer,
-                          String name,
-                          ClassVisitor classWriter) {
+    public  byte[] transform(byte[] classfileBuffer,
+                          String name) {
 
         String normalizedName = name.replace('.', '/');
         ClassVisitor classVisitorAnalyze = createAnalyze(normalizedName);
@@ -42,8 +33,17 @@ public class ClassTransformer {
         readerForAnalyze.accept(classVisitorAnalyze, 0);
 
         ClassReader readerForTransform = new ClassReader(classfileBuffer);
+
+        ClassWriter classWriter;
+        if(factoryCollection.computeFrames()) {
+            classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+        } else {
+            classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        }
+
         ClassVisitor classVisitorTransform = createTransform(classWriter, normalizedName);
         readerForTransform.accept(classVisitorTransform, 0);
+        return classWriter.toByteArray();
     }
 
     private ClassVisitor createAnalyze(String className) {

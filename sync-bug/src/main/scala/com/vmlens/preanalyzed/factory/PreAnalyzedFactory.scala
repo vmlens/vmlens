@@ -64,6 +64,10 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       loadNotYetImplemented(),
 
       forGuineaPig(),
+
+      ThreadPool("com/vmlens/test/guineapig/ThreadPoolExecutorGuineaPig",List(
+        ThreadStart( "execute", "(Ljava/lang/Runnable;)V"),
+        JoinAll( "shutdown", "()V" ))),
       
       GetReadWriteLock("java/util/concurrent/locks/ReentrantReadWriteLock"),
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$ReadLock", ReadLock(), lockMethods()),
@@ -109,7 +113,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       VMLensApi("com/vmlens/api/AllInterleavings"),
 
       Include("java/lang/Thread$"),
-      
+
+      Include("java/util/concurrent/Executors"),
+      Include("java/util/concurrent/ThreadPoolExecutor"),
       Filter("java/util/concurrent"),
       Filter("java/util/stream"),
       Filter("java/util/Arrays"),

@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
@@ -17,11 +17,11 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.Pro
 public class RunStateNewThreadStarted implements RunState {
 
     private final RunStateContext runStateContext;
-    private final RunnableOrThreadWrapper startedThread;
+    private final ThreadWrapper startedThread;
     private final int threadIndexForNewTestTask;
 
     public RunStateNewThreadStarted(RunStateContext runStateContext,
-                                    RunnableOrThreadWrapper startedThread,
+                                    ThreadWrapper startedThread,
                                     int threadIndexForNewTestTask) {
         this.runStateContext = runStateContext;
         this.startedThread = startedThread;
@@ -46,7 +46,7 @@ public class RunStateNewThreadStarted implements RunState {
     }
 
     @Override
-    public RunState newTestTaskStarted(RunnableOrThreadWrapper newWrapper) {
+    public RunState newTestTaskStarted(ThreadWrapper newWrapper) {
        return this;
     }
 

@@ -28,6 +28,7 @@ public class OrderTreeBuilderTest {
         // Then
         assertThat(tree.iterator().hasNext(),is(false));
         assertThat(tree.fixedOrder()[0], is(fixed));
+        assertThat(tree.size(),is(0));
     }
 
     @Test
@@ -50,6 +51,7 @@ public class OrderTreeBuilderTest {
         // Then
         assertThat(createOrderContext.newOrder.size(),is(1));
         assertThat(createOrderContext.newOrder.get(0).element(),is(either1A));
+        assertThat(tree.size(),is(1));
     }
 
     @Test
@@ -87,6 +89,7 @@ public class OrderTreeBuilderTest {
 
         SingleChildNode nextElement = (SingleChildNode) addedElement.next();
         assertThat(nextElement.firstAlternative(),is(nextEither));
+        assertThat(tree.size(),is(4));
     }
 
 }

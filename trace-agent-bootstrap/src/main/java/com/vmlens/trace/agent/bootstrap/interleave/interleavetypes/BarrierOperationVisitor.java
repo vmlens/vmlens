@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.
 
 public interface BarrierOperationVisitor {
 
-    DependentOperationTuple visit(Position myPosition, BarrierNotify other, Position otherPosition);
-    DependentOperationTuple visit(Position myPosition, BarrierWait other, Position otherPosition);
+    AddToAlternatingOrder visit(Position myPosition, BarrierNotify other, Position otherPosition);
+    AddToAlternatingOrder visit(Position myPosition, BarrierWait other, Position otherPosition);
 
 }

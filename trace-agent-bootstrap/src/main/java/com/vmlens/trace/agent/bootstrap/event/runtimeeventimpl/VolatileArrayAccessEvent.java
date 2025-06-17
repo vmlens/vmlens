@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class VolatileArrayAccessEvent extends VolatileArrayAccessEventGen
-        implements NotThreadStartedInterleaveActionFactory, WithInMethodIdAndPosition {
+        implements NotThreadStartedInterleaveActionFactory, WithInMethodIdPositionReadWriteLockMap {
 
     private Object object;
 

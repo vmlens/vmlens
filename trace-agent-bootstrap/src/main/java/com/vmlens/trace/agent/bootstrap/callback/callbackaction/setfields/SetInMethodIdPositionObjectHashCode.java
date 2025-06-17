@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.WithInMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.WithInMethodIdPositionObjectHashCode;
 
 

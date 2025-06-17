@@ -14,8 +14,6 @@ import static org.mockito.Mockito.*;
 
 public class AgentClassFileTransformerIntTest {
 
-    private static final int CALLBACK_ID_WRITE_VOLATILE = 3;
-
     @Test
     public void arrayAccess() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
@@ -118,6 +116,18 @@ public class AgentClassFileTransformerIntTest {
         runTest("StaticMethodCallWithSynchronizedBlock");
         verify(methodCallbackImplMock, times(2)).methodEnter(any(), anyInt());
         verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
+    }
+
+    @Test
+    public void threadPool() throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        ThreadPoolCallbackImpl threadPoolCallbackImpl = mock(ThreadPoolCallbackImpl.class);
+        ThreadPoolCallback.setThreadPoolCallbackImpl(threadPoolCallbackImpl);
+        when(threadPoolCallbackImpl.start(any(), any(),anyInt())).thenReturn(true);
+
+        runTest("ThreadPoolExecutorGuineaPig");
+        verify(threadPoolCallbackImpl, times(1)).start(any(), any(),anyInt());
+        verify(threadPoolCallbackImpl, times(1)).join(any(), anyInt());
     }
 
 

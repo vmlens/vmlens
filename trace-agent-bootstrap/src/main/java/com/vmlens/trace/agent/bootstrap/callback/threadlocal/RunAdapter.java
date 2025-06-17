@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 
@@ -17,8 +17,8 @@ public class RunAdapter {
         run.after(afterContext);
     }
 
-    public void newTestTaskStarted(RunnableOrThreadWrapper newWrapper) {
-        run.newTestTaskStarted(newWrapper);
+    public void newTestTaskStarted(ThreadWrapper newWrapper) {
+        run.threadStarted(newWrapper);
     }
 
 }

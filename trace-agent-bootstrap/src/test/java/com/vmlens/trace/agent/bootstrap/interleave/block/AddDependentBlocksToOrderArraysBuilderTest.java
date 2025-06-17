@@ -23,7 +23,7 @@ public class AddDependentBlocksToOrderArraysBuilderTest {
                 lbr(1, 0, 0, 0));
 
         // When
-        OrderArraysBuilder builder = executeTest(1, 0, true);
+        OrderTreeBuilderWrapper builder = executeTest(1, 0, true);
 
         // Then
         assertThat(builder.alternatingOrderList().get(0).element(), is(expectedAlternatingOrderElement));
@@ -32,7 +32,7 @@ public class AddDependentBlocksToOrderArraysBuilderTest {
     @Test
     public void noBlocksAddedIfSameThreadIndex() {
         // When
-        OrderArraysBuilder builder = executeTest(0, 1, true);
+        OrderTreeBuilderWrapper builder = executeTest(0, 1, true);
 
         // Then
         assertThat(builder.alternatingOrderList().size(), is(0));
@@ -41,13 +41,13 @@ public class AddDependentBlocksToOrderArraysBuilderTest {
     @Test
     public void noBlocksAddedIfsAlternatingOrderReturnsFalse() {
         // When
-        OrderArraysBuilder builder = executeTest(1, 0, false);
+        OrderTreeBuilderWrapper builder = executeTest(1, 0, false);
 
         // Then
         assertThat(builder.alternatingOrderList().size(), is(0));
     }
 
-    private OrderArraysBuilder executeTest(int secondThreadIndex, int secondThreadPos, boolean startsAlternatingOrder) {
+    private OrderTreeBuilderWrapper executeTest(int secondThreadIndex, int secondThreadPos, boolean startsAlternatingOrder) {
         // Given
         Object dependedBlockKey = new Object();
         DependentBlockElement dependentBlockElementGuineaPig = new DependentBlockElementGuineaPig(startsAlternatingOrder);
@@ -60,7 +60,7 @@ public class AddDependentBlocksToOrderArraysBuilderTest {
         mapOfBlocks.addDependent(dependedBlockKey, new DependentBlock(firstEpos, firstEpos));
         mapOfBlocks.addDependent(dependedBlockKey, new DependentBlock(secondEpos, secondEpos));
 
-        OrderArraysBuilder builder = new OrderArraysBuilder();
+        OrderTreeBuilderWrapper builder = new OrderTreeBuilderWrapper();
 
         // When
         AddDependentBlocksToOrderArraysBuilder.add(mapOfBlocks.dependentBlocks(), builder);

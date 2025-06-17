@@ -14,5 +14,6 @@ public interface FactoryCollection {
                                                                                    int access,
                                                                                    int methodId,
                                                                                    MethodRepositoryForTransform methodRepositoryForTransform);
+    boolean computeFrames();
 
 }

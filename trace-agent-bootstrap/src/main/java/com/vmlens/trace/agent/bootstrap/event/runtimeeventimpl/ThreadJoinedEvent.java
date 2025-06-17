@@ -9,7 +9,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class ThreadJoinedEvent extends ThreadJoinedEventGen implements NotThreadStartedInterleaveActionFactory,
-        WithInMethodIdAndPosition {
+        WithInMethodIdPositionReadWriteLockMap {
 
     private final long joinedThreadId;
 

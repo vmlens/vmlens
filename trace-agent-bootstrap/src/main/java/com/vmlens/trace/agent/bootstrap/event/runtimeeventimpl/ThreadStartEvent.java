@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.ThreadSt
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveActionFactory, WithInMethodIdAndPosition {
+public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveActionFactory, WithInMethodIdPositionReadWriteLockMap {
 
     public void setThreadIndex(int threadIndex) {
         this.threadIndex = threadIndex;

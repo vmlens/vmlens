@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.block.OrderTreeBuilderWrapper;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
@@ -28,7 +28,7 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
 
     @Override
     public void addFixedOrder(Position myPosition,
-                              OrderArraysBuilder orderArraysBuilder,
+                              OrderTreeBuilderWrapper orderArraysBuilder,
                               ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         orderArraysBuilder.addFixedOrder(new LeftBeforeRight(myPosition, new Position(startedThreadIndex, 0)));
     }

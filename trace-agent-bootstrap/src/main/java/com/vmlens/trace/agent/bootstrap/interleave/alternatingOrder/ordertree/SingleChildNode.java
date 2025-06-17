@@ -40,4 +40,9 @@ public class SingleChildNode implements OrderTreeNode {
     public OrderAlternative secondAlternative() {
         return secondAlternative;
     }
+
+    @Override
+    public OrderTreeNode nextLeft() {
+        return next;
+    }
 }

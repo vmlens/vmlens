@@ -43,4 +43,9 @@ public class FactoryCollectionDoNotTrace implements FactoryCollection {
         return true;
     }
 
+    @Override
+    public boolean computeFrames() {
+        return false;
+    }
+
 }

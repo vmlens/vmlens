@@ -9,11 +9,12 @@ class SetStacktraceNodeInEvent {
     for (event <- eventArray) {
       threadIdToStacktraceNodeArray.get(event.threadIndex) match {
         case Some(x) => {
-          val stacktraceNode = x.array(event.methodCounter);
-          if (stacktraceNode != null) {
-            event.setStacktraceNode(stacktraceNode);
+          if( event.methodCounter < x.array.length) {
+            val stacktraceNode = x.array(event.methodCounter);
+            if (stacktraceNode != null) {
+              event.setStacktraceNode(stacktraceNode);
+            }
           }
-
         }
         case None => {
           // happens for example for the main thread

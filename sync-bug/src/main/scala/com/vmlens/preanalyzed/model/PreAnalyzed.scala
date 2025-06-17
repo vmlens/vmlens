@@ -46,3 +46,7 @@ case class NotYetImplementedClass(name : String) extends PreAnalyzed {
 case class DoNotTraceIn(name : String) extends PreAnalyzed {
   def take(className: String) : Boolean = className.equals(name);
 }
+
+case class ThreadPool(name : String, methods : List[ThreadPoolMethod]) extends PreAnalyzed {
+  def take(className: String) : Boolean = className.equals(name);
+}
