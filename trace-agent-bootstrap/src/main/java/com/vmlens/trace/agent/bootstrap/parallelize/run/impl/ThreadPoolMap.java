@@ -29,27 +29,26 @@ public class ThreadPoolMap {
         list.add(wrap(threadStartedByPoolContext.task()));
     }
 
-    public ParallelizeActionMultiJoin process(Run run, JoinAction threadJoinedAction) {
+    public TLinkedList<TLinkableWrapper<Thread>> process(JoinAction threadJoinedAction) {
 
         if(threadJoinedAction.taskOrPool() instanceof Runnable) {
-           return joinTask(run,(Runnable) threadJoinedAction.taskOrPool(),threadJoinedAction);
+           return joinTask((Runnable) threadJoinedAction.taskOrPool());
         } else {
-            return joinAll(run,threadJoinedAction.taskOrPool(),threadJoinedAction);
+            return joinAll(threadJoinedAction.taskOrPool());
         }
     }
 
-    private ParallelizeActionMultiJoin joinAll(Run run, Object pool,JoinAction threadJoinedAction) {
+    private TLinkedList<TLinkableWrapper<Thread>> joinAll(Object pool) {
         TLinkedList<TLinkableWrapper<Thread>> toBeJoinedList = new TLinkedList<>();
         TLinkedList<TLinkableWrapper<Runnable>> tasks = poolToTaskList.get(pool);
         for(TLinkableWrapper<Runnable> task : tasks) {
             toBeJoinedList.add(wrap(taskToThread.get(task.element())));
         }
-        return join(run,toBeJoinedList,threadJoinedAction);
+        return toBeJoinedList;
     }
 
-    private ParallelizeActionMultiJoin joinTask(Run run, Runnable task, JoinAction threadJoinedAction) {
-        TLinkedList<TLinkableWrapper<Thread>> toBeJoinedList = TLinkableWrapper.singleton(taskToThread.get(task));
-        return join(run,toBeJoinedList,threadJoinedAction);
+    private TLinkedList<TLinkableWrapper<Thread>> joinTask(Runnable task) {
+        return TLinkableWrapper.singleton(taskToThread.get(task));
 
     }
 

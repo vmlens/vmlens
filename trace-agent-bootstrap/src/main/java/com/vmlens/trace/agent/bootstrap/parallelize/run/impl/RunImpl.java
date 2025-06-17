@@ -7,9 +7,14 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
+import gnu.trove.list.linked.TLongLinkedList;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
 
 public class RunImpl implements Run {
 
@@ -103,12 +108,32 @@ public class RunImpl implements Run {
 
     @Override
     public void threadJoinedByPool(JoinAction threadJoinedAction) {
+        TLinkedList<TLinkableWrapper<Thread>> threadList = emptyList();
         lock.lock();
         try {
-            ParallelizeActionAfter parallelizeActionAfter = threadPoolMap.process(this,threadJoinedAction);
-            runStateMachine.after(new AfterContextForStateMachine(threadJoinedAction.threadLocalDataWhenInTest(),
-                    parallelizeActionAfter,threadJoinedAction.queueIn() ),new SendEvent(threadJoinedAction.queueIn(),this));
-            waitNotifyStrategy.notifyAndWaitTillActive(threadJoinedAction.threadLocalDataWhenInTest(),
+            threadList = threadPoolMap.process(threadJoinedAction);
+        } finally {
+            lock.unlock();
+        }
+        // join must happen outside the lock
+        TLongLinkedList joinedThreadIds = new TLongLinkedList();
+        for(TLinkableWrapper<Thread> toBeJoined : threadList) {
+            if(toBeJoined.element().isAlive()) {
+                try {
+                    toBeJoined.element().join();
+                    joinedThreadIds.add(toBeJoined.element().getId());
+
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        lock.lock();
+        try {
+        ParallelizeActionMultiJoin action = new ParallelizeActionMultiJoin(this, joinedThreadIds, threadJoinedAction.inMethodId(), threadJoinedAction.position());
+        runStateMachine.after(new AfterContextForStateMachine(threadJoinedAction.threadLocalDataWhenInTest(),
+                    action,threadJoinedAction.queueIn() ),new SendEvent(threadJoinedAction.queueIn(),this));
+        waitNotifyStrategy.notifyAndWaitTillActive(threadJoinedAction.threadLocalDataWhenInTest(),
                     runStateMachine,
                     threadActiveCondition,
                     new SendEvent(threadJoinedAction.queueIn(),this));

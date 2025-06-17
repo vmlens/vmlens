@@ -28,13 +28,18 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
     }
 
     @Override
-    public Integer activeThreadIndex() {
-        return null;
+    public Integer activeThreadIndex(TIntLinkedList activeThreadIndices) {
+        return  calculateActiveThreadIndex(activeThreadIndices);
     }
 
     @Override
     public ActualRun actualRun() {
         return actualRun;
+    }
+
+    public static int calculateActiveThreadIndex(TIntLinkedList activeThreadIndices) {
+        int position =  activeThreadIndices.size() - 1;
+        return activeThreadIndices.get(position);
     }
 
     /**
@@ -45,9 +50,9 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
     public static boolean calculateActiveByPositionInRun(int positionInRun,
                                                          int threadIndex,
                                                          TIntLinkedList activeThreadIndices) {
-         int position =  activeThreadIndices.size() - 1;
-        //int position =  positionInRun % activeThreadIndices.size();
-        return activeThreadIndices.get(position) == threadIndex;
+
+
+        return  calculateActiveThreadIndex(activeThreadIndices) == threadIndex;
     }
 
     @Override

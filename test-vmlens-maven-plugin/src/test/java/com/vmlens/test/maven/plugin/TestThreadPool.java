@@ -1,7 +1,6 @@
 package com.vmlens.test.maven.plugin;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;

@@ -76,13 +76,20 @@ public class ThreadForParallelize {
         }
 
         StackTraceElement[] elements = thread.getStackTrace();
+        // if we are in thread join we know that we are blocked
+        // might be called inside com.vmlens.trace.agent.bootstrap
+        for(StackTraceElement element : elements) {
+            if(element.getClassName().startsWith("java.lang.Thread") && element.getMethodName().startsWith("join")) {
+                return ThreadState.BLOCKED;
+            }
+        }
+
         for(StackTraceElement element : elements) {
             if(element.getClassName().startsWith("com.vmlens.trace.agent.bootstrap")) {
                 return ThreadState.ACTIVE;
             }
         }
 
-        //sendEvent.sendSerializable(new InfoMessageEventBuilder().add(elements).build());
         return ThreadState.BLOCKED;
     }
 

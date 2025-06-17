@@ -10,9 +10,6 @@ import java.util.concurrent.locks.Condition;
 
 public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
 
-
-    private static final long DEFAULT_WAIT_TIME = 5 * 60 * 1000;
-
     public WaitNotifyStrategyImpl() {
     }
 
@@ -33,6 +30,5 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
             Thread.currentThread().interrupt();
         }
     }
-
 
 }

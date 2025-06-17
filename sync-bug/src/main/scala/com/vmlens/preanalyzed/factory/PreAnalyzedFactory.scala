@@ -119,7 +119,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Include("java/lang/Thread$"),
 
       Include("java/util/concurrent/Executors"),
-      Include("java/util/concurrent/ThreadPoolExecutor"),
+      Include("java/util/concurrent/AbstractExecutorService"),
       Filter("java/util/concurrent"),
       Filter("java/util/stream"),
       Filter("java/util/Arrays"),
