@@ -23,7 +23,6 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
         this.eventQueueInternal = eventQueueInternal;
     }
 
-
     @Override
     public boolean process(CallbackAction callbackAction) {
         ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider
@@ -44,7 +43,8 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
 
         ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
         if (dataWhenInTest != null) {
-            dataWhenInTest.runAdapter().threadJoinedByPool(new JoinAction(taskOrPool,eventQueueInternal));
+            dataWhenInTest.runAdapter().threadJoinedByPool(new JoinAction(taskOrPool,eventQueueInternal,
+                    dataWhenInTest));
         }
 
     }

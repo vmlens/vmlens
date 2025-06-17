@@ -20,7 +20,7 @@ public class RunStateMachineImpl implements RunStateMachine  {
     }
 
     @Override
-    public void after(AfterContext afterContext, SendEvent sendEvent) {
+    public void after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
         currentState = currentState.after(afterContext,sendEvent);
     }
 

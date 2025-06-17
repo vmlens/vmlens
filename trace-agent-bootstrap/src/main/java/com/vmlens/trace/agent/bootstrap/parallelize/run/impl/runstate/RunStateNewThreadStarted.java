@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.AfterContextForStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
@@ -40,7 +41,7 @@ public class RunStateNewThreadStarted implements RunState {
     }
 
     @Override
-    public RunState after(AfterContext afterContext, SendEvent sendEvent) {
+    public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
         process(afterContext, sendEvent, runStateContext, threadIndexForNewTestTask);
         return this;
     }
@@ -66,6 +67,9 @@ public class RunStateNewThreadStarted implements RunState {
 
     @Override
     public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
+        if(runStateContext.isBlocked(sendEvent)) {
+            return new RunStateAndResult<>(new RunStateActive(runStateContext.withoutCalculated()),true);
+        }
         return new RunStateAndResult<>(this,false);
     }
 

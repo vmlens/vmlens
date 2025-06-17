@@ -17,7 +17,6 @@ public class TestThreadPool {
     private volatile int j = 0;
 
     @Test
-    @Disabled
     public void testReadWrite() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(1);

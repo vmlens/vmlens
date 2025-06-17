@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ParallelizeActionAfter;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
@@ -39,7 +40,7 @@ public class RunImpl implements Run {
         try {
             afterContext.runtimeEvent().setRunId(runId);
             afterContext.runtimeEvent().setLoopId(loopId);
-            runStateMachine.after(afterContext,SendEvent.create(afterContext,this));
+            runStateMachine.after(AfterContextForStateMachine.of(afterContext),SendEvent.create(afterContext,this));
             if(afterContext.runtimeEvent().isInterleaveActionFactory()) {
                 waitNotifyStrategy.notifyAndWaitTillActive(afterContext.threadLocalDataWhenInTest(),
                         runStateMachine,
@@ -104,7 +105,13 @@ public class RunImpl implements Run {
     public void threadJoinedByPool(JoinAction threadJoinedAction) {
         lock.lock();
         try {
-            threadPoolMap.process(threadJoinedAction);
+            ParallelizeActionAfter parallelizeActionAfter = threadPoolMap.process(this,threadJoinedAction);
+            runStateMachine.after(new AfterContextForStateMachine(threadJoinedAction.threadLocalDataWhenInTest(),
+                    parallelizeActionAfter,threadJoinedAction.queueIn() ),new SendEvent(threadJoinedAction.queueIn(),this));
+            waitNotifyStrategy.notifyAndWaitTillActive(threadJoinedAction.threadLocalDataWhenInTest(),
+                    runStateMachine,
+                    threadActiveCondition,
+                    new SendEvent(threadJoinedAction.queueIn(),this));
         } finally {
             lock.unlock();
         }

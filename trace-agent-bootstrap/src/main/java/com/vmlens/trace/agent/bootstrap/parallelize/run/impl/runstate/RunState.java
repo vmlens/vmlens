@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.AfterContextForStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 
@@ -19,7 +20,7 @@ public interface RunState {
     ActualRun actualRun();
 
     // writing
-    RunState  after(AfterContext afterContext, SendEvent sendEvent);
+    RunState  after(AfterContextForStateMachine afterContext, SendEvent sendEvent);
 
     RunState newTestTaskStarted(ThreadWrapper newWrapper);
 

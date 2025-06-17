@@ -7,6 +7,7 @@ public class ThreadPoolCallbackImpl {
 
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
 
+
     public ThreadPoolCallbackImpl(ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
             this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
         }
@@ -16,6 +17,6 @@ public class ThreadPoolCallbackImpl {
     }
 
     public void join(Object taskOrPool, int methodId) {
-
+        threadLocalWhenInTestAdapter.join(taskOrPool);
     }
 }
