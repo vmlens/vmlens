@@ -11,6 +11,8 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class RunImpl implements Run {
+
+    private final ThreadPoolMap threadPoolMap = new ThreadPoolMap();
     private final ReentrantLock lock;
     private final Condition threadActiveCondition;
     private final WaitNotifyStrategy waitNotifyStrategy;
@@ -91,17 +93,18 @@ public class RunImpl implements Run {
     public void threadStartedByPool(ThreadStartedByPoolContext context) {
         lock.lock();
         try {
-
+            threadPoolMap.add(context);
+            runStateMachine.newTestTaskStarted(new ThreadWrapper(context.startedThread()));
         } finally {
             lock.unlock();
         }
     }
 
     @Override
-    public void threadJoinedByPool(ThreadJoinedAction threadJoinedAction) {
+    public void threadJoinedByPool(JoinAction threadJoinedAction) {
         lock.lock();
         try {
-
+            threadPoolMap.process(threadJoinedAction);
         } finally {
             lock.unlock();
         }

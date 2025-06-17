@@ -68,6 +68,10 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       ThreadPool("com/vmlens/test/guineapig/ThreadPoolExecutorGuineaPig",List(
         ThreadStart( "execute", "(Ljava/lang/Runnable;)V"),
         JoinAll( "shutdown", "()V" ))),
+
+      ThreadPool("java/util/concurrent/ThreadPoolExecutor",List(
+        ThreadStart( "execute", "(Ljava/lang/Runnable;)V"),
+        JoinAll( "shutdown", "()V" ))),
       
       GetReadWriteLock("java/util/concurrent/locks/ReentrantReadWriteLock"),
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$ReadLock", ReadLock(), lockMethods()),

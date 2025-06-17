@@ -11,12 +11,11 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParallelize {
 
     private final RunAdapter runAdapter;
+
     private final int threadIndex;
     private int methodCount;
-
     private InMethodIdAndPosition inMethodIdAndPosition;
     private ExecuteAfterOperation executeAfterOperation;
-
 
     public ThreadLocalWhenInTest(RunForCallback run, int threadIndex) {
         this.runAdapter = new RunAdapter(run);

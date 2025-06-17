@@ -3,6 +3,8 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.JoinAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadStartedByPoolContext;
 
 public class RunAdapter {
 
@@ -21,4 +23,11 @@ public class RunAdapter {
         run.threadStarted(newWrapper);
     }
 
+    public void threadStartedByPool(ThreadStartedByPoolContext context) {
+        run.threadStartedByPool(context);
+    }
+
+    public void threadJoinedByPool(JoinAction threadJoinedAction) {
+        run.threadJoinedByPool(threadJoinedAction);
+    }
 }

@@ -23,8 +23,8 @@ public class TestThreadPool {
         expectedSet.add(1);
         expectedSet.add(2);
         Set<Integer> countSet = new HashSet<>();
-      //  try(AllInterleavings allInterleavings = new AllInterleavings("testThreadPool")) {
-      //      while (allInterleavings.hasNext()) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testThreadPool")) {
+            while (allInterleavings.hasNext()) {
                 ExecutorService executor = Executors.newFixedThreadPool(4);
                 j = 0;
                 executor.submit(new Runnable() {
@@ -36,9 +36,9 @@ public class TestThreadPool {
                 j++;
                 executor.shutdown();
                 countSet.add(j);
-         //   }
-        //    assertThat(countSet,is(expectedSet));
-      //  }
+            }
+            assertThat(countSet,is(expectedSet));
+        }
     }
 
 }

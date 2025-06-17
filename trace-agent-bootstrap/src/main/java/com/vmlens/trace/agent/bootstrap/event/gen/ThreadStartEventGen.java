@@ -12,6 +12,7 @@ public class ThreadStartEventGen  {
     protected int     methodId;
     protected int     startedThreadIndex;
     protected int     methodCounter;
+    protected int     eventType;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
@@ -27,6 +28,7 @@ public boolean equals(Object o) {
     if ( methodId != that.methodId) return false;
     if ( startedThreadIndex != that.startedThreadIndex) return false;
     if ( methodCounter != that.methodCounter) return false;
+    if ( eventType != that.eventType) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
@@ -41,6 +43,7 @@ public String toString() {
     "methodId=" + methodId +
     "startedThreadIndex=" + startedThreadIndex +
     "methodCounter=" + methodCounter +
+    "eventType=" + eventType +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
@@ -51,7 +54,7 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  33, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  37, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
@@ -62,6 +65,7 @@ buffer.put( (byte)  16 );
      buffer.putInt( methodId ); 
      buffer.putInt( startedThreadIndex ); 
      buffer.putInt( methodCounter ); 
+     buffer.putInt( eventType ); 
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 

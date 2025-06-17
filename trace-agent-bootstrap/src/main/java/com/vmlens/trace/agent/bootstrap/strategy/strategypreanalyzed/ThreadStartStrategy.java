@@ -6,6 +6,8 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroper
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 
+import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD;
+
 public class ThreadStartStrategy implements StrategyPreAnalyzed {
 
     public static final StrategyPreAnalyzed SINGLETON = new ThreadStartStrategy();
@@ -21,8 +23,12 @@ public class ThreadStartStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void methodExit(EnterExitContext context) {
+
+        ThreadStartEvent threadStartEvent = new ThreadStartEvent();
+        threadStartEvent.setEventType(THREAD.code());
+        
         ExecuteRunAfter<ThreadStartEvent> executeRunAfter  =
-                new ExecuteRunAfter<>(new ThreadStartEvent());
+                new ExecuteRunAfter<>(threadStartEvent);
 
         context.threadLocalWhenInTestAdapter().process(
                 new SetExecuteAfterOperation(executeRunAfter));

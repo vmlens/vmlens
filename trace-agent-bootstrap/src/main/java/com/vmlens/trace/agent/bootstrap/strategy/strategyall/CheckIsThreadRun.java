@@ -41,11 +41,6 @@ public class CheckIsThreadRun {
         }
 
 
-        for( int i = lastIndex -1; i > 0; i-- ) {
-            if(! stacktraces[i].getClassName().startsWith("com.vmlens.trace.agent.bootstrap")) {
-                return false;
-            }
-        }
         return true;
     }
 

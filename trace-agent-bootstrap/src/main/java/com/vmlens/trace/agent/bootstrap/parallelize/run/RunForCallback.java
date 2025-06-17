@@ -13,6 +13,6 @@ public interface RunForCallback {
 
     void threadStartedByPool(ThreadStartedByPoolContext context);
 
-    void threadJoinedByPool(ThreadJoinedAction threadJoinedAction);
+    void threadJoinedByPool(JoinAction threadJoinedAction);
 
 }

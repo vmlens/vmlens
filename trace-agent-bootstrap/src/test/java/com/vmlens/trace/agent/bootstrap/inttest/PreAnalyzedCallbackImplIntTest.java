@@ -9,6 +9,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.*;
 import org.junit.Test;
 
+import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD;
 import static com.vmlens.trace.agent.bootstrap.inttest.util.CallbackTestContainer.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,6 +34,7 @@ public class PreAnalyzedCallbackImplIntTest {
         threadStartEvent.setInMethodIdAndPosition(IN_METHOD_ID, POSITION,callbackTestContainer.readWriteLockMap());
         threadStartEvent.setLoopId(LOOP_ID);
         threadStartEvent.setRunId(RUN_ID);
+        threadStartEvent.setEventType(THREAD.code());
 
         // When
         executeCalls(callbackTestContainer,ThreadStartStrategy.SINGLETON);

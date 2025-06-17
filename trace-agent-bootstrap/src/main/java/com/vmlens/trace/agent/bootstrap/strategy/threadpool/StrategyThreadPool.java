@@ -4,5 +4,4 @@ public interface StrategyThreadPool {
 
         void methodEnter(EnterContext enterContext);
 
-
 }

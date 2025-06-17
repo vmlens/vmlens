@@ -43,7 +43,7 @@ public String toString() {
     "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
     "methodId=" + methodId +
-    "interleaveoperation=" + operation +
+    "operation=" + operation +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +

@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.JoinAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
 import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
@@ -24,14 +25,28 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
 
 
     @Override
-    public void process(CallbackAction callbackAction) {
+    public boolean process(CallbackAction callbackAction) {
         ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider
                 .threadLocalForParallelize();
 
         ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
         if (dataWhenInTest != null) {
             callbackAction.execute(dataWhenInTest,eventQueueInternal);
+            return true;
         }
+        return false;
+    }
+
+    @Override
+    public void join(Object taskOrPool) {
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider
+                .threadLocalForParallelize();
+
+        ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
+        if (dataWhenInTest != null) {
+            dataWhenInTest.runAdapter().threadJoinedByPool(new JoinAction(taskOrPool,eventQueueInternal));
+        }
+
     }
 
     @Override

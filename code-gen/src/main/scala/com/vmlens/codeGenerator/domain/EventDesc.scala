@@ -84,12 +84,12 @@ object EventDesc extends GenericDesc {
   val lockType = new FieldDesc("lockType", intTyp)
   val startedThreadIndex = new FieldDesc("startedThreadIndex", intTyp)
   val joinedThreadIndex = new FieldDesc("joinedThreadIndex", intTyp)
-  val operation = new FieldDesc("interleaveoperation", intTyp)
-//  val threadIdAtEvent = new FieldDesc("threadIdAtEvent", longTyp)
+  val operation = new FieldDesc("operation", intTyp)
   val loopId = new FieldDesc("loopId", intTyp)
   val runId = new FieldDesc("runId", intTyp)
   private val runPosition = new FieldDesc("runPosition", intTyp)
   val messageId = new FieldDesc("messageId", intTyp)
+  val eventType  = new FieldDesc("eventType", intTyp)
 
   
   def plusInterleaveFields(fields: ArrayBuffer[FieldDesc]): ArrayBuffer[FieldDesc] = {

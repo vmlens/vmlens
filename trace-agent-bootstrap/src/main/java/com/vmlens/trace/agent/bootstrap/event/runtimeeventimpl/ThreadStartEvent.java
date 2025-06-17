@@ -34,6 +34,10 @@ public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveA
         this.runPosition = runPosition;
     }
 
+    public void setEventType(int eventType) {
+        this.eventType = eventType;
+    }
+
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
         return new ThreadStart(threadIndex, startedThreadIndex);
@@ -41,6 +45,11 @@ public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveA
 
     @Override
     public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
+        this.methodId = inMethodId;
+        this.bytecodePosition = position;
+    }
+
+    public void setInMethodIdAndPosition(int inMethodId, int position) {
         this.methodId = inMethodId;
         this.bytecodePosition = position;
     }
