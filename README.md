@@ -77,7 +77,7 @@ See [pom.xml](https://github.com/vmlens/vmlens/blob/master/test-vmlens-maven-plu
 
 To use VMLens as a standalone tool:
 
-1. Include com.vmlens.api from the [Maven Repository](https://mvnrepository.com/artifact/com.vmlens/api/1.2.4) as a test jar in your project.
+1. Include com.vmlens.api from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/api/1.2.4/) as a test jar in your project.
 1. Download the jar standalone-1.2.4.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.4/) 
 1. Run java -jar standalone-1.2.4.jar install. This creates the agent directory and prints the vm parameter to System.out
 1. Add this vm parameter when you run your test
