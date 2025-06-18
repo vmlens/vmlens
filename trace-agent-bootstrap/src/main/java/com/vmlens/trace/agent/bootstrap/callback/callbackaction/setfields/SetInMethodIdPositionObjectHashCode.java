@@ -17,6 +17,10 @@ public class SetInMethodIdPositionObjectHashCode<EVENT extends WithInMethodIdPos
     public void setFields(EVENT event, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         long hashCode = System.identityHashCode(object);
         InMethodIdAndPosition toSet = threadLocalDataWhenInTest.inMethodIdAndPosition();
-        event.setInMethodIdPositionObjectHashCode(toSet.inMethodId(),toSet.position(),hashCode);
+        if(toSet != null) {
+            event.setInMethodIdPositionObjectHashCode(toSet.inMethodId(),toSet.position(),hashCode);
+        } else {
+            event.setInMethodIdPositionObjectHashCode(-1,-1,hashCode);
+        }
     }
 }
