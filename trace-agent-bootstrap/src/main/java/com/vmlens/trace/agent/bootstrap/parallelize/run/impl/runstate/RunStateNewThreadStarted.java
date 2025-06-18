@@ -67,9 +67,12 @@ public class RunStateNewThreadStarted implements RunState {
 
     @Override
     public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
-        if(runStateContext.isBlocked(sendEvent)) {
-            return new RunStateAndResult<>(new RunStateActive(runStateContext.withoutCalculated()),true);
-        }
+        /*
+         * we need to wait that the new thread was really started,
+         * checking for blocked leads to failing tests
+         * Perhaps because the thread does yet exist when the checkBlocked gets called
+         *
+         */
         return new RunStateAndResult<>(this,false);
     }
 
