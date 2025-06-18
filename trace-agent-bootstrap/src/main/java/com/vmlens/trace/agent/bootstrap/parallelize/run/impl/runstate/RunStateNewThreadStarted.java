@@ -67,9 +67,6 @@ public class RunStateNewThreadStarted implements RunState {
 
     @Override
     public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
-        if(runStateContext.isBlocked(sendEvent)) {
-            return new RunStateAndResult<>(new RunStateActive(runStateContext.withoutCalculated()),true);
-        }
         return new RunStateAndResult<>(this,false);
     }
 
