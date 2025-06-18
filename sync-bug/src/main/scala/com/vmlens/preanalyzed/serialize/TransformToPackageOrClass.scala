@@ -190,9 +190,6 @@ class TransformToPackageOrClass {
         case JoinAll(name , desc)  => {
           buffer.append(new PreAnalyzedMethod(name, desc, ThreadPoolJoin.JOIN_ALL))
         }
-        case JoinTask(name , desc) => {
-          buffer.append(new PreAnalyzedMethod(name, desc, ThreadPoolJoin.JOIN_TASK))
-        }
       }
     }
     buffer.toArray;

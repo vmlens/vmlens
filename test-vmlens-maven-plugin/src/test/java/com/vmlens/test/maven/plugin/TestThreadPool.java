@@ -39,4 +39,22 @@ public class TestThreadPool {
         }
     }
 
+    @Test
+    public void testShutdownMissing() throws InterruptedException {
+
+        try(AllInterleavings allInterleavings = new AllInterleavings("testShutdownMissing")) {
+            while (allInterleavings.hasNext()) {
+                ExecutorService executor = Executors.newFixedThreadPool(4);
+                j = 0;
+                executor.submit(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+
+        }
+    }
+
 }

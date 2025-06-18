@@ -51,11 +51,9 @@ public class MethodTypeCollectionFactory {
         
         add(ThreadPoolStart.SINGLETON);
         add(ThreadPoolJoin.JOIN_ALL);
-        add(ThreadPoolJoin.JOIN_TASK);
 
         return new MethodTypeCollection(methodTypeToId,idToMethodType);
     }
-
 
     private void add(AbstractMethodType methodType) {
         int id = index;

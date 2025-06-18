@@ -59,6 +59,7 @@ public class ParallelizeLoop {
         lock.lock();
         try {
             if (currentRun != null) {
+                currentRun.check();
                 RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
                 serializableEvents.add(wrap(endEvent));
 

@@ -26,7 +26,8 @@ public class StartNewThreadByPool implements CallbackAction {
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
         // create new thread (would be good to start it through the test factory)
-        Thread thread = new Thread(task);
+        Thread thread = new Thread(task, "VMLens Thread Pool");
+        thread.setDaemon(true);
 
         // call threadStartedByPool
         ThreadStartedByPoolContext threadStartedByPoolContext =

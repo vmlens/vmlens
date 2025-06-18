@@ -10,6 +10,7 @@ public class ThreadLocalForParallelize {
 
     private ThreadLocalWhenInTest parallelizedThreadLocal;
     private int doNotProcessCallbackCount;
+    private boolean inThreadPool;
 
     public ThreadLocalForParallelize(ThreadForParallelize threadForParallelize) {
         this.threadForParallelize = threadForParallelize;
@@ -31,10 +32,6 @@ public class ThreadLocalForParallelize {
         return doNotProcessCallbackCount == 0;
     }
 
-    public void incrementDoNotProcessCallbackCount() {
-        doNotProcessCallbackCount++;
-    }
-
     public void resetProcessCallbackCount() {
         doNotProcessCallbackCount = 0;
     }
@@ -51,9 +48,20 @@ public class ThreadLocalForParallelize {
         return threadForParallelize.getName();
     }
 
+    public void incrementDoNotProcessCallbackCount() {
+        doNotProcessCallbackCount++;
+    }
 
     public void decrementDoNotProcessCallbackCount() {
         doNotProcessCallbackCount--;
+    }
+
+    public boolean inThreadPool() {
+        return inThreadPool;
+    }
+
+    public void setInThreadPool(boolean inThreadPool) {
+        this.inThreadPool = inThreadPool;
     }
 
     public ThreadForParallelize threadForParallelize() {

@@ -25,12 +25,17 @@ public class ThreadPoolCallback {
     public static void join(Object task, int methodId) {
         if(canProcess()) {
             startProcess();
-            try {
-                threadPoolCallbackImpl.join(task, methodId);
-            } finally {
-                stopProcess();
-            }
+            setInThreadPool(true);
+            threadPoolCallbackImpl.join(task, methodId);
+            stopProcess();
         }
+    }
+
+    public static void joinExit() {
+           if( isInThreadPool()) {
+               setInThreadPool(false);
+              // stopProcess();
+           }
     }
 
     // visible for test

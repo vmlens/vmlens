@@ -4,21 +4,25 @@ import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.FactoryCollection;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.FactoryCollectionThreadPool;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-import com.vmlens.trace.agent.bootstrap.strategy.threadpool.StrategyThreadPool;
+import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+
 
 public class FactoryCollectionThreadPoolFactory implements FactoryCollectionFactory {
 
     private final NameAndDescriptor startThreadMethod;
-    private final THashMap<NameAndDescriptor, StrategyThreadPool> shutdownMethodToStrategy;
+    private final THashSet<NameAndDescriptor> shutdownMethodToStrategy;
+    private final MethodRepositoryForTransform methodCallIdMap;
 
     public FactoryCollectionThreadPoolFactory(NameAndDescriptor startThreadMethod,
-                                              THashMap<NameAndDescriptor, StrategyThreadPool> shutdownMethodToStrategy) {
+                                              THashSet<NameAndDescriptor> shutdownMethodToStrategy, MethodRepositoryForTransform methodCallIdMap) {
         this.startThreadMethod = startThreadMethod;
         this.shutdownMethodToStrategy = shutdownMethodToStrategy;
+        this.methodCallIdMap = methodCallIdMap;
     }
 
     @Override
     public FactoryCollection create() {
-        return new FactoryCollectionThreadPool(startThreadMethod,shutdownMethodToStrategy);
+        return new FactoryCollectionThreadPool(startThreadMethod,shutdownMethodToStrategy,methodCallIdMap);
     }
 }

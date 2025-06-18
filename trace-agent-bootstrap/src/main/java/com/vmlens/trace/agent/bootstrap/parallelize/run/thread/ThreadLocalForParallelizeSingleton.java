@@ -22,6 +22,15 @@ public class ThreadLocalForParallelizeSingleton {
         callbackStatePerThread.get().decrementDoNotProcessCallbackCount();;
     }
 
+    public static void setInThreadPool(boolean value) {
+        callbackStatePerThread.get().setInThreadPool(value);
+    }
+
+    public static boolean isInThreadPool() {
+        return  callbackStatePerThread.get().inThreadPool();
+    }
+
+
     public static boolean canProcess() {
         return callbackStatePerThread.get().canProcessCallback();
     }

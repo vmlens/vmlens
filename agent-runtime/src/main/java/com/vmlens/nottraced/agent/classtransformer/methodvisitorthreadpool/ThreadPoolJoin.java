@@ -27,7 +27,25 @@ public class ThreadPoolJoin  extends MethodVisitor  {
         super.visitCode();
         super.visitVarInsn(ALOAD, 0);
         threadPoolCallbackFactory.threadJoin();
+    }
 
+    @Override
+    public final void visitInsn(int inst) {
+        switch (inst) {
+            case RETURN:
+            case IRETURN:
+            case FRETURN:
+            case LRETURN:
+            case DRETURN:
+            case ATHROW:
+            case ARETURN:
+                threadPoolCallbackFactory.methodExit();
+                break;
+            default:
+                break;
+
+        }
+        super.visitInsn(inst);
     }
 
 }

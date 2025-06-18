@@ -2,6 +2,7 @@ package com.vmlens.nottraced.agent.applyclasstransformer.builder;
 
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.FactoryCollectionThreadPoolFactory;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
+import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
@@ -12,7 +13,7 @@ import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.*;
-import com.vmlens.trace.agent.bootstrap.strategy.threadpool.StrategyThreadPool;
+
 
 import static com.vmlens.nottraced.agent.classtransformer.factorycollection.MethodNotFoundAction.NO_OP;
 import static com.vmlens.nottraced.agent.classtransformer.factorycollection.MethodNotFoundAction.WARNING_AND_NOT_TRANSFORM;
@@ -21,8 +22,8 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
 
     private final THashMap<NameAndDescriptor, StrategyPreAnalyzed> methodToStrategy = new
             THashMap<>();
-    private final THashMap<NameAndDescriptor, StrategyThreadPool> methodToStrategyForThreadPool = new
-            THashMap<>();
+    private final THashSet<NameAndDescriptor> methodToStrategyForThreadPool = new
+            THashSet<>();
     private final MethodRepositoryForTransform methodCallIdMap;
     private final SelectMethodEnterStrategy preAnalyzedStrategy;
     private MethodNotFoundAction methodNotFoundAction = WARNING_AND_NOT_TRANSFORM;
@@ -89,8 +90,8 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
     }
 
     @Override
-    public void addThreadPoolJoin(String name, String desc, StrategyThreadPool strategyThreadPool) {
-        methodToStrategyForThreadPool.put(new NameAndDescriptor(name, desc),strategyThreadPool);
+    public void addThreadPoolJoin(String name, String desc) {
+        methodToStrategyForThreadPool.add(new NameAndDescriptor(name, desc));
     }
 
 
@@ -100,6 +101,6 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
     }
 
     public FactoryCollectionThreadPoolFactory buildForThreadPool() {
-        return new FactoryCollectionThreadPoolFactory(startThreadMethod,  methodToStrategyForThreadPool);
+        return new FactoryCollectionThreadPoolFactory(startThreadMethod,  methodToStrategyForThreadPool,methodCallIdMap);
     }
 }

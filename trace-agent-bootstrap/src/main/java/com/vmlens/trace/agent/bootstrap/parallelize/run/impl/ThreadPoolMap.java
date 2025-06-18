@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.JoinAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadStartedByPoolContext;
@@ -8,6 +7,8 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.list.linked.TLongLinkedList;
 import gnu.trove.map.hash.THashMap;
+
+import java.util.Iterator;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
@@ -69,4 +70,21 @@ public class ThreadPoolMap {
 
     }
 
+    public void checkAllThreadsJoined() {
+        boolean threadAlive = false;
+        Iterator<TLinkedList<TLinkableWrapper<Runnable>>> poolIter = poolToTaskList.values().iterator();
+        while(poolIter.hasNext()) {
+            TLinkedList<TLinkableWrapper<Runnable>> tasks = poolIter.next();
+            for(TLinkableWrapper<Runnable> task : tasks) {
+                Thread thread = taskToThread.get(task.element());
+                threadAlive |= thread.isAlive();
+            }
+
+        }
+        if(threadAlive) {
+           System.err.println("There are still threads from the thread pool running.");
+           System.err.println("Please stop all threads after one thread interleaving using shutdown().");
+        }
+
+    }
 }

@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ParallelizeActionAfter;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
@@ -152,5 +151,13 @@ public class RunImpl implements Run {
         return loopId;
     }
 
-
+    @Override
+    public void check() {
+        lock.lock();
+        try {
+            threadPoolMap.checkAllThreadsJoined();
+        } finally {
+            lock.unlock();
+        }
+    }
 }
