@@ -9,12 +9,16 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class ThreadJoinedEvent extends ThreadJoinedEventGen implements NotThreadStartedInterleaveActionFactory,
-        WithInMethodIdAndPosition {
+        WithInMethodIdPositionReadWriteLockMap {
 
-    private final long joinedThreadId;
+    private long joinedThreadId;
 
     public ThreadJoinedEvent(long joinedThreadId) {
         this.joinedThreadId = joinedThreadId;
+    }
+
+
+    public ThreadJoinedEvent() {
     }
 
     public void setThreadIndex(int threadIndex) {
@@ -34,6 +38,22 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements NotThread
         this.runPosition = runPosition;
     }
 
+    public void setJoinedThreadIndex(int joinedThreadIndex) {
+        this.joinedThreadIndex = joinedThreadIndex;
+    }
+
+    public void setBytecodePosition(int bytecodePosition) {
+        this.bytecodePosition = bytecodePosition;
+    }
+
+    public void setMethodId(int methodId) {
+        this.methodId = methodId;
+    }
+
+    public void setEventType(int eventType) {
+        this.eventType = eventType;
+    }
+    
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
         this.joinedThreadIndex = context.threadIndexForThreadId(joinedThreadId);

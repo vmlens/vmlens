@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.WithInMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.WithInMethodIdPositionObjectHashCode;
 
 
@@ -18,6 +17,10 @@ public class SetInMethodIdPositionObjectHashCode<EVENT extends WithInMethodIdPos
     public void setFields(EVENT event, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         long hashCode = System.identityHashCode(object);
         InMethodIdAndPosition toSet = threadLocalDataWhenInTest.inMethodIdAndPosition();
-        event.setInMethodIdPositionObjectHashCode(toSet.inMethodId(),toSet.position(),hashCode);
+        if(toSet != null) {
+            event.setInMethodIdPositionObjectHashCode(toSet.inMethodId(),toSet.position(),hashCode);
+        } else {
+            event.setInMethodIdPositionObjectHashCode(-1,-1,hashCode);
+        }
     }
 }

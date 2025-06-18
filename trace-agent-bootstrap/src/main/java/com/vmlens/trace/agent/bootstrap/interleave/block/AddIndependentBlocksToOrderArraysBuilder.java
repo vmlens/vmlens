@@ -7,7 +7,7 @@ import gnu.trove.list.linked.TLinkedList;
 public class AddIndependentBlocksToOrderArraysBuilder {
     public void add(TLinkedList<TLinkableWrapper<ElementAndPosition<IndependentBlock>>> inDependentBlocks,
                     ThreadIndexToMaxPosition threadIndexToMaxPosition,
-                    OrderArraysBuilder builder) {
+                    OrderTreeBuilderWrapper builder) {
         for (TLinkableWrapper<ElementAndPosition<IndependentBlock>> independent : inDependentBlocks) {
             independent.element().element().addFixedOrder(independent.element().position(), builder, threadIndexToMaxPosition);
         }

@@ -8,6 +8,10 @@ public interface ClassTransformerListBuilder {
     void addPreAnalyzedEquals(String name, FactoryCollectionPreAnalyzedFactoryBuilder
             factoryCollectionPreAnalyzedFactoryBuilder);
 
+
+    void addThreadPool(String name, FactoryCollectionPreAnalyzedFactoryBuilder
+            factoryCollectionPreAnalyzedFactoryBuilder);
+
     void addTraceStartsWith(String name);
 
     void addFilterStartsWith(String name);

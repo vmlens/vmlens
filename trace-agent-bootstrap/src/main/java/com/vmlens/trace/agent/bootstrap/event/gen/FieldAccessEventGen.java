@@ -41,7 +41,7 @@ public String toString() {
     "threadIndex=" + threadIndex +
     "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
-    "interleaveoperation=" + operation +
+    "operation=" + operation +
     "methodId=" + methodId +
     "objectHashCode=" + objectHashCode +
     "loopId=" + loopId +

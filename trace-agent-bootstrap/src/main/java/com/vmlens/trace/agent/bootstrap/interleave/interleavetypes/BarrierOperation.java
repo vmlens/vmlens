@@ -23,6 +23,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
 public interface BarrierOperation {
 
-    DependentOperationTuple accept(BarrierOperationVisitor visitor, Position visitorPosition, Position acceptingPosition);
+    AddToAlternatingOrder accept(BarrierOperationVisitor visitor, Position visitorPosition, Position acceptingPosition);
 
 }

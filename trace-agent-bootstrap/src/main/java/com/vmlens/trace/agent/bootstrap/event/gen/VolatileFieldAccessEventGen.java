@@ -45,7 +45,7 @@ public String toString() {
     "fieldId=" + fieldId +
     "methodCounter=" + methodCounter +
     "methodId=" + methodId +
-    "interleaveoperation=" + operation +
+    "operation=" + operation +
     "objectHashCode=" + objectHashCode +
     "loopId=" + loopId +
     "runId=" + runId +

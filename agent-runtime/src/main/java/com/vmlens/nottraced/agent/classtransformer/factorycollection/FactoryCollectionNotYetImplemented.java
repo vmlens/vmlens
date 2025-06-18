@@ -42,6 +42,9 @@ public class FactoryCollectionNotYetImplemented implements FactoryCollection {
         return result;
     }
 
-
+    @Override
+    public boolean computeFrames() {
+        return false;
+    }
 
 }

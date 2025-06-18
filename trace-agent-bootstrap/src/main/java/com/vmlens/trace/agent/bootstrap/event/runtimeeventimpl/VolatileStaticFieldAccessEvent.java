@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStaticGen  implements
-        NotThreadStartedInterleaveActionFactory, WithInMethodIdAndPosition {
+        NotThreadStartedInterleaveActionFactory, WithInMethodIdPositionReadWriteLockMap {
 
     public void setThreadIndex(int threadIndex) {
         this.threadIndex = threadIndex;

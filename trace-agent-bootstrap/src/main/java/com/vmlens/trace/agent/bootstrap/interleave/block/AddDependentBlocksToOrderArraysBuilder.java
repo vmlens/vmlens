@@ -11,14 +11,14 @@ import java.util.Iterator;
  */
 public class AddDependentBlocksToOrderArraysBuilder {
     public static void add(KeyToThreadIdToElementList<Object, DependentBlock> dependentBlocks,
-                    OrderArraysBuilder builder) {
+                    OrderTreeBuilderWrapper builder) {
         for (ThreadIndexToElementList<DependentBlock> threadIndexToElementList : dependentBlocks) {
             add(threadIndexToElementList,builder);
         }
     }
 
     private static void add(ThreadIndexToElementList<DependentBlock> threadIndexToElementList,
-                           OrderArraysBuilder builder) {
+                           OrderTreeBuilderWrapper builder) {
         for (TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>> oneThread : threadIndexToElementList) {
                 for (TLinkableWrapper<DependentBlock> current : oneThread.element()) {
                     Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<DependentBlock>>>> otherThreadBlocks =

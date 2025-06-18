@@ -25,5 +25,10 @@ public interface FactoryCollectionPreAnalyzedFactoryBuilder {
 
     void noOpWhenMethodNotFound();
 
+    void setThreadPoolStart(String name, String desc);
+
+    void addThreadPoolJoin(String name, String desc);
+
+
 
 }

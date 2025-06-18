@@ -17,4 +17,20 @@ public class TwoChildrenNode implements OrderTreeNode {
         }
         return new NextNodeAndProcessFlag(this.secondAlternative,true);
     }
+
+    // To test the builder
+    public OrderTreeNode firstAlternative() {
+        return firstAlternative;
+    }
+
+    // To test the builder
+    public OrderTreeNode secondAlternative() {
+        return secondAlternative;
+    }
+
+    @Override
+    public OrderTreeNode nextLeft() {
+        return firstAlternative;
+    }
+
 }

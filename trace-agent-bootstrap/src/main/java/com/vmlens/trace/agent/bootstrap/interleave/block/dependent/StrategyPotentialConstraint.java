@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.block.dependent;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.LeftBeforeRightPair;
-import com.vmlens.trace.agent.bootstrap.interleave.block.OrderArraysBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.block.OrderTreeBuilderWrapper;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 
 public class StrategyPotentialConstraint implements Strategy {
@@ -19,7 +19,7 @@ public class StrategyPotentialConstraint implements Strategy {
     @Override
     public void addToBuilder(DependentBlock myBlock,
                              DependentBlock blockFromOtherThread,
-                             OrderArraysBuilder orderArraysBuilder) {
+                             OrderTreeBuilderWrapper orderArraysBuilder) {
         orderArraysBuilder.addOptionalConstraint(new LeftBeforeRightPair(
                 leftBeforeRight(myBlock,blockFromOtherThread),
                 leftBeforeRight(blockFromOtherThread,myBlock) ,

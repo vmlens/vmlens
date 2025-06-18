@@ -4,7 +4,7 @@ import org.objectweb.asm.MethodVisitor;
 
 public abstract class MethodCallbackFactory {
 
-    public static final String METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT = "(Ljava/lang/Object;I)V";
+     public static final String METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT = "(Ljava/lang/Object;I)V";
 
     private final String BEFORE_METHOD_CALL = "beforeMethodCall";
     private final String AFTER_METHOD_CALL = "afterMethodCall";
@@ -12,6 +12,8 @@ public abstract class MethodCallbackFactory {
     private final String METHOD_EXIT_OBJECT_RETURN = "methodExitObjectReturn";
     private final String METHOD_DESCRIPTOR_INT_INT_INT_ARGUMENT = "(III)V";
     private final String METHOD_DESCRIPTOR_OBJECT_OBJECT_INT_ARGUMENT = "(Ljava/lang/Object;Ljava/lang/Object;I)V";
+
+
     private final MethodEnterStrategy methodEnterStrategy;
     protected final MethodVisitor methodVisitor;
 

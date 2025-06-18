@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+[agent-runtime] --> [trace-agent-bootstrap]
+
+[trace-agent-bootstrap] --> [sync-bug]
+
+[sync-bug] --> [report]
+
+note right of [agent-runtime] : bytecode transformation
+note right of [trace-agent-bootstrap] : interleave algorithm
+note right of [sync-bug] : data race algorithm, in Scala
+note right of [report] : report creation using mustache
+
+@enduml

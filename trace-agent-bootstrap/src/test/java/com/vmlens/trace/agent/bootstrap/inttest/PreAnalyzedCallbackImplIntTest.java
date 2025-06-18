@@ -5,10 +5,11 @@ import com.vmlens.trace.agent.bootstrap.inttest.util.CallbackTestContainer;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.*;
 import com.vmlens.trace.agent.bootstrap.lock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.lock.LockTypes;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.*;
 import org.junit.Test;
 
+import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD;
 import static com.vmlens.trace.agent.bootstrap.inttest.util.CallbackTestContainer.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,12 +28,13 @@ public class PreAnalyzedCallbackImplIntTest {
         CallbackTestContainer callbackTestContainer = CallbackTestContainer.create();
 
         // Expected
-        RunnableOrThreadWrapper runnableOrThreadWrapper = new RunnableOrThreadWrapper(OBJECT);
+        ThreadWrapper runnableOrThreadWrapper = new ThreadWrapper(OBJECT);
         ThreadStartEvent threadStartEvent = new ThreadStartEvent();
         threadStartEvent.setThreadIndex(TEST_THREAD_INDEX);
         threadStartEvent.setInMethodIdAndPosition(IN_METHOD_ID, POSITION,callbackTestContainer.readWriteLockMap());
         threadStartEvent.setLoopId(LOOP_ID);
         threadStartEvent.setRunId(RUN_ID);
+        threadStartEvent.setEventType(THREAD.code());
 
         // When
         executeCalls(callbackTestContainer,ThreadStartStrategy.SINGLETON);

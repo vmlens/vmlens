@@ -1,11 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunNewTestTaskStarted;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteRunAfter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
+
+import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD;
 
 public class ThreadStartStrategy implements StrategyPreAnalyzed {
 
@@ -17,13 +18,17 @@ public class ThreadStartStrategy implements StrategyPreAnalyzed {
     @Override
     public void methodEnter(EnterExitContext context) {
         context.threadLocalWhenInTestAdapter().process(
-                new RunNewTestTaskStarted(new RunnableOrThreadWrapper(context.object())));
+                new RunNewTestTaskStarted(new ThreadWrapper(context.object())));
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
+
+        ThreadStartEvent threadStartEvent = new ThreadStartEvent();
+        threadStartEvent.setEventType(THREAD.code());
+        
         ExecuteRunAfter<ThreadStartEvent> executeRunAfter  =
-                new ExecuteRunAfter<>(new ThreadStartEvent());
+                new ExecuteRunAfter<>(threadStartEvent);
 
         context.threadLocalWhenInTestAdapter().process(
                 new SetExecuteAfterOperation(executeRunAfter));

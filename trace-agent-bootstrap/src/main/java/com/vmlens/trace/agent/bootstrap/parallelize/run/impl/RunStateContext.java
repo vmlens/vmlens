@@ -42,7 +42,7 @@ public class RunStateContext {
     }
 
     public boolean isBlocked(SendEvent sendEvent) {
-        Integer activeThreadIndex = interleaveRun.activeThreadIndex();
+        Integer activeThreadIndex = interleaveRun.activeThreadIndex(runContext.getActiveThreadIndices(sendEvent));
         if(activeThreadIndex != null) {
             ThreadState state = runContext.isBlocked(activeThreadIndex, sendEvent);
             switch (state) {

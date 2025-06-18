@@ -12,5 +12,6 @@ public interface Run extends RunForCallback {
 
     ActualRun end(ThreadLocalForParallelize threadLocalForParallelize);
 
+    void check();
 
 }

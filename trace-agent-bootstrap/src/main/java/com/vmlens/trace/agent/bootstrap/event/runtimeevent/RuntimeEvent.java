@@ -9,22 +9,15 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 
 import java.nio.ByteBuffer;
 
-public interface RuntimeEvent extends SerializableEvent {
+public interface RuntimeEvent extends SerializableEvent, ParallelizeActionAfter {
 
-    void setThreadIndex(int threadIndex);
     void setMethodCounter(PerThreadCounter perThreadCounter);
+    void setThreadIndex(int threadIndex);
     void setLoopId(int loopId);
     void setRunId(int runId);
     void setRunPosition(int runPosition);
 
-    void setStartedThreadIndex(int startedThreadIndex);
-
     boolean isInterleaveActionFactory();
-
-    void after(InterleaveRun interleaveRun,
-                       CreateInterleaveActionContext context,
-                       ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
-                       SendEvent sendEvent);
 
     void serialize(ByteBuffer buffer) throws Exception;
 

@@ -7,6 +7,7 @@ import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated.calculateActiveByPositionInRun;
+import static com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated.calculateActiveThreadIndex;
 
 public class InterleaveRunWithCalculated implements InterleaveRun {
 
@@ -51,9 +52,9 @@ public class InterleaveRunWithCalculated implements InterleaveRun {
         return calculatedRunElementArray[actualRun.positionInRun()].threadIndex() == threadIndex;
     }
 
-    public Integer activeThreadIndex() {
+    public Integer activeThreadIndex(TIntLinkedList activeThreadIndices) {
         if (actualRun.positionInRun() >= calculatedRunElementArray.length) {
-            return null;
+            return calculateActiveThreadIndex(activeThreadIndices);
         }
         return calculatedRunElementArray[actualRun.positionInRun()].threadIndex();
     }

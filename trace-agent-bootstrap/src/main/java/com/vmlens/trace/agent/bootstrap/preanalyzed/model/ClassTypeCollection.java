@@ -30,6 +30,9 @@ public class ClassTypeCollection {
         if(classType instanceof DoNotTraceInClass) {
             return 6;
         }
+        if(classType instanceof ClassTypeThreadPool) {
+            return 7;
+        }
         throw new RuntimeException("unknown " + classType.getClass());
     }
 
@@ -54,6 +57,9 @@ public class ClassTypeCollection {
         }
         if(id == 6) {
             return DoNotTraceInClass.SINGLETON;
+        }
+        if(id == 7) {
+            return ClassTypeThreadPool.SINGLETON;
         }
         throw new RuntimeException("unknown " + id);
     }

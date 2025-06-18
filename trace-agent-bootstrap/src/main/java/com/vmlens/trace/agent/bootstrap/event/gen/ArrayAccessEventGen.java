@@ -42,7 +42,7 @@ public String toString() {
     "arrayIndex=" + arrayIndex +
     "methodCounter=" + methodCounter +
     "objectHashCode=" + objectHashCode +
-    "interleaveoperation=" + operation +
+    "operation=" + operation +
     "methodId=" + methodId +
     "loopId=" + loopId +
     "runId=" + runId +

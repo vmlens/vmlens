@@ -21,7 +21,7 @@ public class AlternatingOrderContainerFactory {
         KeyToThreadIdToElementList<Object, DependentBlock> deadlockDependentBlocks = new DeadlockDependentBlockFactory().
                 create(interleaveActionWitPositionAndRun.getLeft());
 
-        OrderArraysBuilder orderArraysBuilder = new OrderArraysBuilder();
+        OrderTreeBuilderWrapper orderArraysBuilder = new OrderTreeBuilderWrapper();
 
         AddDependentBlocksToOrderArraysBuilder.add(mapOfBlocksExceptDeadlock.dependentBlocks(), orderArraysBuilder);
         AddDependentBlocksToOrderArraysBuilder.add(deadlockDependentBlocks, orderArraysBuilder);

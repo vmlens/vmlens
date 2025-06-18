@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunStartEven
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachineFactory;
@@ -45,7 +45,7 @@ public class ParallelizeLoop {
 
     public void newTask(QueueIn queueIn,
                         ThreadLocalForParallelize threadLocalForParallelize,
-                        RunnableOrThreadWrapper beganTask) {
+                        ThreadWrapper beganTask) {
         lock.lock();
         try {
               currentRun.newTask(new NewTaskContext(queueIn, beganTask, threadLocalForParallelize));
@@ -59,6 +59,7 @@ public class ParallelizeLoop {
         lock.lock();
         try {
             if (currentRun != null) {
+                currentRun.check();
                 RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
                 serializableEvents.add(wrap(endEvent));
 

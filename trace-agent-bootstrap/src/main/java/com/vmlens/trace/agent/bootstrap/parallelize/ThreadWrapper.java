@@ -2,10 +2,10 @@ package com.vmlens.trace.agent.bootstrap.parallelize;
 
 import java.util.Objects;
 
-public class RunnableOrThreadWrapper {
+public class ThreadWrapper {
     public final Object runnable;
 
-    public RunnableOrThreadWrapper(Object runnable) {
+    public ThreadWrapper(Object runnable) {
         super();
         this.runnable = runnable;
     }
@@ -15,7 +15,7 @@ public class RunnableOrThreadWrapper {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RunnableOrThreadWrapper that = (RunnableOrThreadWrapper) o;
+        ThreadWrapper that = (ThreadWrapper) o;
 
         return Objects.equals(runnable, that.runnable);
     }

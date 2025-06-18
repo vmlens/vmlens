@@ -1,11 +1,13 @@
 package com.vmlens.test.maven.plugin;
 
 import com.vmlens.api.AllInterleavings;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.vmlens.api.Runner.runParallel;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -23,15 +25,7 @@ public class TestVolatileField {
         try(AllInterleavings allInterleavings = new AllInterleavings("testVolatileFieldReadWrite")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
-                Thread first = new Thread() {
-                    @Override
-                    public void run() {
-                        j++;
-                    }
-                };
-                first.start();
-                j++;
-                first.join();
+                runParallel(  () -> { j++;} , () -> { j++;}  );
                 countSet.add(j);
             }
             assertThat(countSet,is(expectedSet));

@@ -2,11 +2,12 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.AfterContextForStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
@@ -17,11 +18,11 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.Pro
 public class RunStateNewThreadStarted implements RunState {
 
     private final RunStateContext runStateContext;
-    private final RunnableOrThreadWrapper startedThread;
+    private final ThreadWrapper startedThread;
     private final int threadIndexForNewTestTask;
 
     public RunStateNewThreadStarted(RunStateContext runStateContext,
-                                    RunnableOrThreadWrapper startedThread,
+                                    ThreadWrapper startedThread,
                                     int threadIndexForNewTestTask) {
         this.runStateContext = runStateContext;
         this.startedThread = startedThread;
@@ -40,13 +41,13 @@ public class RunStateNewThreadStarted implements RunState {
     }
 
     @Override
-    public RunState after(AfterContext afterContext, SendEvent sendEvent) {
+    public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
         process(afterContext, sendEvent, runStateContext, threadIndexForNewTestTask);
         return this;
     }
 
     @Override
-    public RunState newTestTaskStarted(RunnableOrThreadWrapper newWrapper) {
+    public RunState newTestTaskStarted(ThreadWrapper newWrapper) {
        return this;
     }
 
@@ -66,6 +67,9 @@ public class RunStateNewThreadStarted implements RunState {
 
     @Override
     public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
+        if(runStateContext.isBlocked(sendEvent)) {
+            return new RunStateAndResult<>(new RunStateActive(runStateContext.withoutCalculated()),true);
+        }
         return new RunStateAndResult<>(this,false);
     }
 

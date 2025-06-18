@@ -1,8 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 
 public interface RunForCallback {
 
@@ -10,6 +9,10 @@ public interface RunForCallback {
 
     void newTask(NewTaskContext newTaskContext);
 
-    void newTestTaskStarted(RunnableOrThreadWrapper newWrapper);
+    void threadStarted(ThreadWrapper newWrapper);
+
+    void threadStartedByPool(ThreadStartedByPoolContext context);
+
+    void threadJoinedByPool(JoinAction threadJoinedAction);
 
 }

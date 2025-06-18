@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.HasNextResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopRepository;
@@ -30,7 +30,7 @@ public class ParallelizeFacade {
 
     public void newTask(QueueIn queueIn,
                         ThreadLocalForParallelize threadLocalWrapperForParallelize,
-                        RunnableOrThreadWrapper beganTask) {
+                        ThreadWrapper beganTask) {
         if (currentLoop != null) {
             currentLoop.newTask(queueIn, threadLocalWrapperForParallelize, beganTask);
         }

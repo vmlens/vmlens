@@ -1,9 +1,9 @@
 package com.vmlens.preanalyzed.serialize
 
 import com.vmlens.preanalyzed.model.*
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{ClassNotYetImplemented, ClassTypeAllStartWith, ClassTypeFilter, ClassTypeVmlensApi, DoNotTraceInClass, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{ClassNotYetImplemented, ClassTypeAllStartWith, ClassTypeFilter, ClassTypeThreadPool, ClassTypeVmlensApi, DoNotTraceInClass, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod, methodtypeimpl}
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.{ArrayNonBlockingMethod, GetReadWriteLockMethod, NonBlockingMethod, NotYetImplementedMethod, ThreadJoin, ThreadStart}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.{ArrayNonBlockingMethod, GetReadWriteLockMethod, NonBlockingMethod, NotYetImplementedMethod, ThreadJoin, ThreadPoolJoin, ThreadPoolStart, ThreadStart}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -51,6 +51,9 @@ class TransformToPackageOrClass {
           }
           case DoNotTraceIn(name) => {
             new PackageOrClass(name, DoNotTraceInClass.SINGLETON, Array.ofDim[PreAnalyzedMethod](0))
+          }
+          case ThreadPool(name, methods : List[ThreadPoolMethod]) => {
+            new PackageOrClass(name, ClassTypeThreadPool.SINGLETON, threadPoolMethod(methods))
           }
           }
       result.append(packageOrClass)
@@ -175,6 +178,21 @@ class TransformToPackageOrClass {
       }
 
     }
+  }
+
+  private def threadPoolMethod(methods : List[ThreadPoolMethod])  : Array[PreAnalyzedMethod]  = {
+    val buffer = new ArrayBuffer[PreAnalyzedMethod]();
+    for (elem <- methods) {
+      elem match {
+        case com.vmlens.preanalyzed.model.ThreadStart(name , desc ) => {
+          buffer.append(new PreAnalyzedMethod(name, desc, ThreadPoolStart.SINGLETON ))
+        }
+        case JoinAll(name , desc)  => {
+          buffer.append(new PreAnalyzedMethod(name, desc, ThreadPoolJoin.JOIN_ALL))
+        }
+      }
+    }
+    buffer.toArray;
   }
   
 

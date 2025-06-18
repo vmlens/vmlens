@@ -1,4 +1,4 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleavetypes;
 
-public interface VolatileOperation {
+public interface VolatileOperation extends AddToAlternatingOrder {
 }

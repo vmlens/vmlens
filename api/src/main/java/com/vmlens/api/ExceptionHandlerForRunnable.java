@@ -1,0 +1,23 @@
+package com.vmlens.api;
+
+public class ExceptionHandlerForRunnable implements Runnable {
+
+    private final Runnable runnable;
+    private final ExceptionContainer exceptionContainer;
+
+    public ExceptionHandlerForRunnable(Runnable runnable,
+                                       ExceptionContainer exceptionContainer) {
+        this.runnable = runnable;
+        this.exceptionContainer = exceptionContainer;
+    }
+
+    @Override
+    public void run() {
+        try{
+            runnable.run();
+        } catch(RuntimeException exp) {
+            exp.printStackTrace();
+            exceptionContainer.setException(exp);
+        }
+    }
+}

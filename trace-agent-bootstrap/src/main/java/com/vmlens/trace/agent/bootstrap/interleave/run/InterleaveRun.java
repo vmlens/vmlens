@@ -10,7 +10,7 @@ public interface InterleaveRun {
     TLinkedList<TLinkableWrapper<InterleaveAction>> run();
 
     boolean isActive(int threadIndex, TIntLinkedList activeThreadIndices);
-    Integer activeThreadIndex();
+    Integer activeThreadIndex(TIntLinkedList activeThreadIndices);
 
     ActualRun actualRun();
     boolean withCalculated();

@@ -15,6 +15,7 @@ class ThreadJoinedEventGen (
  ,  val methodId  : Int  
  ,  val joinedThreadIndex  : Int  
  ,  val methodCounter  : Int  
+ ,  val eventType  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
@@ -27,6 +28,7 @@ override def toString : String = {
   text = text + ", methodId:" +  methodId 
   text = text + ", joinedThreadIndex:" +  joinedThreadIndex 
   text = text + ", methodCounter:" +  methodCounter 
+  text = text + ", eventType:" +  eventType 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -62,6 +64,11 @@ override def equals(other: Any) : Boolean = {
                false;
              }
              else
+             if( eventType != that.eventType )
+             {
+               false;
+             }
+             else
              if( loopId != that.loopId )
              {
                false;
@@ -91,6 +98,8 @@ object  ThreadJoinedEventGen
    {
      val result = new ThreadJoinedEventGen (
           
+            data.getInt()
+          ,
             data.getInt()
           ,
             data.getInt()

@@ -1,6 +1,6 @@
 package com.vmlens.codeGenerator.domain
 
-import com.vmlens.codeGenerator.domain.EventDesc.{atomicMethodId, bytecodePosition, joinedThreadIndex, lockType, methodCounter, methodId, nextId, objectHashCode, operation, plusInterleaveFields, startedThreadIndex, threadIndex}
+import com.vmlens.codeGenerator.domain.EventDesc.{atomicMethodId, bytecodePosition, eventType, joinedThreadIndex, lockType, methodCounter, methodId, nextId, objectHashCode, operation, plusInterleaveFields, startedThreadIndex, threadIndex}
 import com.vmlens.codeGenerator.domain.EventDescNonVolatileField.fieldListObjectAccess
 
 import scala.collection.mutable.ArrayBuffer
@@ -14,6 +14,7 @@ object EventDescThread {
     fields.append(methodId);
     fields.append(startedThreadIndex);
     fields.append(methodCounter);
+    fields.append(eventType);
     fields;
   }
 
@@ -24,6 +25,7 @@ object EventDescThread {
     fields.append(methodId);
     fields.append(joinedThreadIndex);
     fields.append(methodCounter);
+    fields.append(eventType);
     fields;
   }
 

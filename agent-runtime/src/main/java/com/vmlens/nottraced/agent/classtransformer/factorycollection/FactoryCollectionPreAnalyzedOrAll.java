@@ -49,4 +49,9 @@ public abstract class FactoryCollectionPreAnalyzedOrAll  implements FactoryColle
         return nameAndDescriptor.name().equals("<clinit>");
     }
 
+    @Override
+    public boolean computeFrames() {
+        return false;
+    }
+
 }

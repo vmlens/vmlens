@@ -1,9 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFieldsNoOp;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 
 import java.util.Objects;
 
@@ -20,11 +17,15 @@ public class RunMethodStrategy implements StrategyAll {
 
     @Override
     public void methodEnter(MethodEnterExitContext enterExitContext) {
+        /*
+         * as we always start a new thread we use Thread.currentThread() to compare the threads
+         */
+
         if (enterExitContext.checkIsThreadRun().isThreadRun()) {
             enterExitContext.parallelizeFacade().newTask(
                         enterExitContext.threadLocalWhenInTestAdapter().eventQueue(),
                         enterExitContext.threadLocalWhenInTestAdapter().threadLocalForParallelize(),
-                    new RunnableOrThreadWrapper(Thread.currentThread()));
+                    new ThreadWrapper(Thread.currentThread()));
             methodEnterEvent(enterExitContext);
         } else {
             strategyIfNotThreadRun.methodEnter(enterExitContext);

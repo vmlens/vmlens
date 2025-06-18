@@ -11,13 +11,16 @@ import com.vmlens.codeGenerator.domain.EventDescVolatileField.{volatileField, vo
 import scala.collection.mutable
 import scala.collection.mutable.{ArrayBuffer, HashSet}
 
-class EventDesc(val name: String, val typ: EventTyp, val id: Int, private val internalFields: ArrayBuffer[FieldDesc], val scalaExtends: String ) {
+class EventDesc(val name: String,
+                val typ: EventTyp,
+                val id: Int,
+                private val internalFields: ArrayBuffer[FieldDesc],
+                val scalaExtends: String ) {
 
   def typName(): String = typ.name;
 
   def getByteArraySize(): Int = {
       var size = 0;
-
       for (f <- javaFields()) {
         size = size + f.typ.size;
       }
@@ -81,12 +84,12 @@ object EventDesc extends GenericDesc {
   val lockType = new FieldDesc("lockType", intTyp)
   val startedThreadIndex = new FieldDesc("startedThreadIndex", intTyp)
   val joinedThreadIndex = new FieldDesc("joinedThreadIndex", intTyp)
-  val operation = new FieldDesc("interleaveoperation", intTyp)
-//  val threadIdAtEvent = new FieldDesc("threadIdAtEvent", longTyp)
+  val operation = new FieldDesc("operation", intTyp)
   val loopId = new FieldDesc("loopId", intTyp)
   val runId = new FieldDesc("runId", intTyp)
   private val runPosition = new FieldDesc("runPosition", intTyp)
   val messageId = new FieldDesc("messageId", intTyp)
+  val eventType  = new FieldDesc("eventType", intTyp)
 
   
   def plusInterleaveFields(fields: ArrayBuffer[FieldDesc]): ArrayBuffer[FieldDesc] = {
@@ -139,7 +142,6 @@ object EventDesc extends GenericDesc {
       eventList.append(warning("LoopWarningEventGen", " extends LoopWarningEvent  ", typControl));
 
       eventList;
-
     }
 
 }

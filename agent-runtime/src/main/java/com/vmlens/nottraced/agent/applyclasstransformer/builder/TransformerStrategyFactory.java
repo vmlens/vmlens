@@ -46,10 +46,12 @@ public class TransformerStrategyFactory {
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
-    public TransformerStrategy createPreAnalyzed(FactoryCollectionPreAnalyzedFactory factoryCollectionPreAnalyzedBuilder) {
+    public TransformerStrategy create(FactoryCollectionFactory factoryCollectionPreAnalyzedBuilder) {
         return new TransformerStrategyForClassTransformer(factoryCollectionPreAnalyzedBuilder,
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
+
+
 
     public FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall() {
         return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new SelectMethodEnterStrategy());

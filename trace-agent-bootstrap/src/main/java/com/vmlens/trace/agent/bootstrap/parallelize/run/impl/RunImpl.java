@@ -3,14 +3,21 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.RunnableOrThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
+import gnu.trove.list.linked.TLongLinkedList;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.emptyList;
+
 public class RunImpl implements Run {
+
+    private final ThreadPoolMap threadPoolMap = new ThreadPoolMap();
     private final ReentrantLock lock;
     private final Condition threadActiveCondition;
     private final WaitNotifyStrategy waitNotifyStrategy;
@@ -37,7 +44,7 @@ public class RunImpl implements Run {
         try {
             afterContext.runtimeEvent().setRunId(runId);
             afterContext.runtimeEvent().setLoopId(loopId);
-            runStateMachine.after(afterContext,SendEvent.create(afterContext,this));
+            runStateMachine.after(AfterContextForStateMachine.of(afterContext),SendEvent.create(afterContext,this));
             if(afterContext.runtimeEvent().isInterleaveActionFactory()) {
                 waitNotifyStrategy.notifyAndWaitTillActive(afterContext.threadLocalDataWhenInTest(),
                         runStateMachine,
@@ -78,10 +85,57 @@ public class RunImpl implements Run {
     }
 
     @Override
-    public void newTestTaskStarted(RunnableOrThreadWrapper newWrapper) {
+    public void threadStarted(ThreadWrapper newWrapper) {
         lock.lock();
         try {
              runStateMachine.newTestTaskStarted(newWrapper);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void threadStartedByPool(ThreadStartedByPoolContext context) {
+        lock.lock();
+        try {
+            threadPoolMap.add(context);
+            runStateMachine.newTestTaskStarted(new ThreadWrapper(context.startedThread()));
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void threadJoinedByPool(JoinAction threadJoinedAction) {
+        TLinkedList<TLinkableWrapper<Thread>> threadList = emptyList();
+        lock.lock();
+        try {
+            threadList = threadPoolMap.process(threadJoinedAction);
+        } finally {
+            lock.unlock();
+        }
+        // join must happen outside the lock
+        TLongLinkedList joinedThreadIds = new TLongLinkedList();
+        for(TLinkableWrapper<Thread> toBeJoined : threadList) {
+            if(toBeJoined.element().isAlive()) {
+                try {
+                    toBeJoined.element().join();
+                    joinedThreadIds.add(toBeJoined.element().getId());
+
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        lock.lock();
+        try {
+        ParallelizeActionMultiJoin action = new ParallelizeActionMultiJoin(this, joinedThreadIds, threadJoinedAction.inMethodId(), threadJoinedAction.position());
+        runStateMachine.after(new AfterContextForStateMachine(threadJoinedAction.threadLocalDataWhenInTest(),
+                    action,threadJoinedAction.queueIn() ),new SendEvent(threadJoinedAction.queueIn(),this));
+        waitNotifyStrategy.notifyAndWaitTillActive(threadJoinedAction.threadLocalDataWhenInTest(),
+                    runStateMachine,
+                    threadActiveCondition,
+                    new SendEvent(threadJoinedAction.queueIn(),this));
         } finally {
             lock.unlock();
         }
@@ -97,5 +151,13 @@ public class RunImpl implements Run {
         return loopId;
     }
 
-
+    @Override
+    public void check() {
+        lock.lock();
+        try {
+            threadPoolMap.checkAllThreadsJoined();
+        } finally {
+            lock.unlock();
+        }
+    }
 }

@@ -7,10 +7,22 @@ public class OrderTree {
     // can be null, when only fixed orders exist
     private final OrderTreeNode start;
     private final LeftBeforeRight[] fixedOrder;
+    private final int size;
 
     public OrderTree(OrderTreeNode start, LeftBeforeRight[] fixedOrder) {
         this.start = start;
         this.fixedOrder = fixedOrder;
+        this.size = calculateSize(start);
+    }
+
+    private static int calculateSize(OrderTreeNode start) {
+        int size = 0;
+        OrderTreeNode current = start;
+        while(current != null) {
+            size++;
+            current = current.nextLeft();
+        }
+        return size;
     }
 
     public OrderTreeIterator iterator() {
@@ -20,4 +32,14 @@ public class OrderTree {
     public LeftBeforeRight[] fixedOrder() {
         return fixedOrder;
     }
+
+    // To test the builder
+    public OrderTreeNode start() {
+        return start;
+    }
+
+    public int size() {
+        return size;
+    }
+
 }
