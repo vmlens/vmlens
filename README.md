@@ -1,8 +1,8 @@
-# VMLens lets you test multi-threaded, concurrent java
+# VMLens lets you test multi-threaded, concurrent Java
 
 # Example
 
-The following example shows how to test multi-threaded, concurrent java with vmlens:
+The following example shows how to test multi-threaded, concurrent Java with vmlens:
 
 ```Java
 import com.vmlens.api.AllInterleavings;
@@ -28,15 +28,15 @@ public class TestNonVolatileField {
 ```
 VMLens detects the data race and generates the following report:
 
-<img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/img/dataRaceReportNew.png">
+<img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/images/dataRaceReportNew.png">
 
 See [test-vmlens-maven-plugin](https://github.com/vmlens/vmlens/tree/master/test-vmlens-maven-plugin/src/test/java/com/vmlens/test/maven/plugin) for more examples.
 
 # Installation
 
-## maven
+## Maven
 
-To use vmlens with maven, configure a plugin tag to tell maven that the vmlens plugin should be executed at the test phase. And include the jar com.vmlens.api as test dependency.
+To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens plugin should be executed at the test phase. And include the jar com.vmlens.api as test dependency.
 
 ```XML
 <project>
@@ -44,7 +44,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
 <dependency>
   <groupId>com.vmlens</groupId>
   <artifactId>api</artifactId>
-  <version>1.2.2</version>
+  <version>1.2.3</version>
   <scope>test</scope>
 </dependency>	
 	
@@ -54,7 +54,7 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
     <plugin>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens-maven-plugin</artifactId>
-	<version>1.2.2</version>
+	<version>1.2.3</version>
         <executions>
             <execution>
                 <id>test</id>
@@ -72,6 +72,17 @@ To use vmlens with maven, configure a plugin tag to tell maven that the vmlens p
 ```
 
 See [pom.xml](https://github.com/vmlens/vmlens/blob/master/test-vmlens-maven-plugin/pom.xml) for an example.
+
+## Standalone
+
+To use VMLens as a standalone tool:
+
+1. Include com.vmlens.api from the [Maven Repository](https://mvnrepository.com/artifact/com.vmlens/api/1.2.3) as a test jar in your project.
+1. Download the jar standalone-1.2.3.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.3/) 
+1. Run java -jar standalone-1.2.3.jar install. This creates the agent directory and prints the vm parameter to System.out
+1. Add this vm parameter when you run your test
+2. Run java -jar standalone-1.2.3.jar report. This checks for data races and creates the report
+
 
 # Documentation
 

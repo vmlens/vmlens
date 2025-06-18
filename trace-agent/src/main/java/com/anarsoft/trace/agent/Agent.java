@@ -62,7 +62,7 @@ public class /**/Agent {
 
 
         System.err.println("------------------------------");
-        System.err.println("agent started, Build: " + Version.LABEL);
+        System.err.println("agent started, Build: " + MavenBuildInfo.VERSION);
 
 
         try {
