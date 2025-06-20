@@ -93,6 +93,11 @@
             </dependency>
             <dependency>
                 <groupId>com.vmlens</groupId>
+                <artifactId>vmlens-maven-plugin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.vmlens</groupId>
                 <artifactId>test-util</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
@@ -266,6 +271,8 @@
         <module>test-vmlens-maven-plugin</module>
         <module>test-vmlens-testng</module>
         <module>standalone</module>
+		<module>vmlens-maven-plugin-integtest</module>
+        <module>test-cases</module>
     </modules>
 
     <profiles>

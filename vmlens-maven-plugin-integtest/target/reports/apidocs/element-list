@@ -1,0 +1,5 @@
+com.vmlens
+com.vmlens.expected.check
+com.vmlens.expected.domain
+com.vmlens.expected.factory
+com.vmlens.vmlens_maven_plugin_integtest
