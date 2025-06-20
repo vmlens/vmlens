@@ -32,33 +32,23 @@
             </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread start (Thread-21)</td>
-                    <td>  com/vmlens/inttest/interleave/MonitorIntTest.testUpdate   </td>
+                    <td>Thread start (Thread-8)</td>
+                    <td>  com/vmlens/inttest/nonvolatile/StaticFieldTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>enter monitor@951050903</td>
-                    <td>  com/vmlens/inttest/interleave/MonitorIntTest.testUpdate   </td>
+                    <td>read <span style="color: red;">data race</span> static com/vmlens/inttest/nonvolatile/StaticFieldTest.j</td>
+                    <td>  com/vmlens/inttest/nonvolatile/StaticFieldTest.testUpdate   </td>
+                </tr>
+                <tr>
+                    <td>Thread-8</td>
+                    <td>write <span style="color: red;">data race</span> static com/vmlens/inttest/nonvolatile/StaticFieldTest.j</td>
+                    <td><a href="stack3.html">com/vmlens/inttest/nonvolatile/StaticFieldTest.access$002 </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>exit monitor@951050903</td>
-                    <td>  com/vmlens/inttest/interleave/MonitorIntTest.testUpdate   </td>
-                </tr>
-                <tr>
-                    <td>Thread-21</td>
-                    <td>enter monitor@951050903</td>
-                    <td><a href="stack10.html">com/vmlens/inttest/interleave/MonitorIntTest$1.run </a>   </td>
-                </tr>
-                <tr>
-                    <td>Thread-21</td>
-                    <td>exit monitor@951050903</td>
-                    <td><a href="stack10.html">com/vmlens/inttest/interleave/MonitorIntTest$1.run </a>   </td>
-                </tr>
-                <tr>
-                    <td>main</td>
-                    <td>Thread join (Thread-21)</td>
-                    <td>  com/vmlens/inttest/interleave/MonitorIntTest.testUpdate   </td>
+                    <td>Thread join (Thread-8)</td>
+                    <td>  com/vmlens/inttest/nonvolatile/StaticFieldTest.testUpdate   </td>
                 </tr>
         </table>
     </div>

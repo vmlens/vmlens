@@ -32,48 +32,33 @@
             </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread start (Thread-38)</td>
-                    <td>  com/vmlens/inttest/nonvolatile/HashMapTest.testUpdate   </td>
+                    <td>Thread start (Thread-27)</td>
+                    <td>  com/vmlens/inttest/interleave/MonitorIntTest.testUpdate   </td>
+                </tr>
+                <tr>
+                    <td>Thread-27</td>
+                    <td>enter monitor@1003752023</td>
+                    <td><a href="stack11.html">com/vmlens/inttest/interleave/MonitorIntTest$1.run </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-27</td>
+                    <td>exit monitor@1003752023</td>
+                    <td><a href="stack11.html">com/vmlens/inttest/interleave/MonitorIntTest$1.run </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@769798433</td>
-                    <td><a href="stack4.html">java/util/HashMap.putVal </a>   </td>
+                    <td>enter monitor@1003752023</td>
+                    <td>  com/vmlens/inttest/interleave/MonitorIntTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@769798433</td>
-                    <td><a href="stack13.html">java/util/HashMap.resize </a>   </td>
+                    <td>exit monitor@1003752023</td>
+                    <td>  com/vmlens/inttest/interleave/MonitorIntTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>write <span style="color: red;">data race</span> java/util/HashMap.table@769798433</td>
-                    <td><a href="stack13.html">java/util/HashMap.resize </a>   </td>
-                </tr>
-                <tr>
-                    <td>Thread-38</td>
-                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@769798433</td>
-                    <td><a href="stack2.html">java/util/HashMap.putVal </a>   </td>
-                </tr>
-                <tr>
-                    <td>main</td>
-                    <td>read <span style="color: red;">data race</span>  array[4]@1665620686</td>
-                    <td><a href="stack4.html">java/util/HashMap.putVal </a>   </td>
-                </tr>
-                <tr>
-                    <td>main</td>
-                    <td>write <span style="color: red;">data race</span>  array[4]@1665620686</td>
-                    <td><a href="stack4.html">java/util/HashMap.putVal </a>   </td>
-                </tr>
-                <tr>
-                    <td>Thread-38</td>
-                    <td>read <span style="color: red;">data race</span>  array[4]@1665620686</td>
-                    <td><a href="stack2.html">java/util/HashMap.putVal </a>   </td>
-                </tr>
-                <tr>
-                    <td>main</td>
-                    <td>Thread join (Thread-38)</td>
-                    <td>  com/vmlens/inttest/nonvolatile/HashMapTest.testUpdate   </td>
+                    <td>Thread join (Thread-27)</td>
+                    <td>  com/vmlens/inttest/interleave/MonitorIntTest.testUpdate   </td>
                 </tr>
         </table>
     </div>

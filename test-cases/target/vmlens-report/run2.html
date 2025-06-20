@@ -32,33 +32,48 @@
             </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread start (Thread-17)</td>
-                    <td>  com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest.testUpdate   </td>
+                    <td>Thread start (Thread-5)</td>
+                    <td>  com/vmlens/inttest/nonvolatile/HashSetTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>enter write lock@1816147548</td>
-                    <td>  com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest.testUpdate   </td>
+                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@125881207</td>
+                    <td><a href="stack14.html">java/util/HashMap.putVal </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>exit write lock@1816147548</td>
-                    <td>  com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest.testUpdate   </td>
-                </tr>
-                <tr>
-                    <td>Thread-17</td>
-                    <td>enter read lock@1816147548</td>
-                    <td><a href="stack9.html">com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest$1.run </a>   </td>
-                </tr>
-                <tr>
-                    <td>Thread-17</td>
-                    <td>exit read lock@1816147548</td>
-                    <td><a href="stack9.html">com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest$1.run </a>   </td>
+                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@125881207</td>
+                    <td><a href="stack12.html">java/util/HashMap.resize </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread join (Thread-17)</td>
-                    <td>  com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest.testUpdate   </td>
+                    <td>write <span style="color: red;">data race</span> java/util/HashMap.table@125881207</td>
+                    <td><a href="stack12.html">java/util/HashMap.resize </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-5</td>
+                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@125881207</td>
+                    <td><a href="stack0.html">java/util/HashMap.putVal </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>read <span style="color: red;">data race</span>  array[4]@1763344271</td>
+                    <td><a href="stack14.html">java/util/HashMap.putVal </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>write <span style="color: red;">data race</span>  array[4]@1763344271</td>
+                    <td><a href="stack14.html">java/util/HashMap.putVal </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-5</td>
+                    <td>read <span style="color: red;">data race</span>  array[4]@1763344271</td>
+                    <td><a href="stack0.html">java/util/HashMap.putVal </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>Thread join (Thread-5)</td>
+                    <td>  com/vmlens/inttest/nonvolatile/HashSetTest.testUpdate   </td>
                 </tr>
         </table>
     </div>

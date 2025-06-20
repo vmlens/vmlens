@@ -32,23 +32,43 @@
             </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread start (Thread-42)</td>
-                    <td>  com/vmlens/inttest/nonvolatile/StaticFieldTest.testUpdate   </td>
+                    <td>Thread start (Thread-38)</td>
+                    <td>  com/vmlens/inttest/interleave/ExceptionTest.testUpdate   </td>
+                </tr>
+                <tr>
+                    <td>Thread-38</td>
+                    <td>read volatile com/vmlens/inttest/interleave/ExceptionTest.j@1853205005</td>
+                    <td><a href="stack6.html">com/vmlens/inttest/interleave/ExceptionTest.firstMethod </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-38</td>
+                    <td>write volatile com/vmlens/inttest/interleave/ExceptionTest.j@1853205005</td>
+                    <td><a href="stack6.html">com/vmlens/inttest/interleave/ExceptionTest.firstMethod </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-38</td>
+                    <td>read volatile com/vmlens/inttest/interleave/ExceptionTest.j@1853205005</td>
+                    <td><a href="stack17.html">com/vmlens/inttest/interleave/ExceptionTest.methodWithException </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>read <span style="color: red;">data race</span> static com/vmlens/inttest/nonvolatile/StaticFieldTest.j</td>
-                    <td>  com/vmlens/inttest/nonvolatile/StaticFieldTest.testUpdate   </td>
-                </tr>
-                <tr>
-                    <td>Thread-42</td>
-                    <td>write <span style="color: red;">data race</span> static com/vmlens/inttest/nonvolatile/StaticFieldTest.j</td>
-                    <td><a href="stack3.html">com/vmlens/inttest/nonvolatile/StaticFieldTest.access$002 </a>   </td>
+                    <td>read volatile com/vmlens/inttest/interleave/ExceptionTest.j@1853205005</td>
+                    <td>  com/vmlens/inttest/interleave/ExceptionTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread join (Thread-42)</td>
-                    <td>  com/vmlens/inttest/nonvolatile/StaticFieldTest.testUpdate   </td>
+                    <td>write volatile com/vmlens/inttest/interleave/ExceptionTest.j@1853205005</td>
+                    <td>  com/vmlens/inttest/interleave/ExceptionTest.testUpdate   </td>
+                </tr>
+                <tr>
+                    <td>Thread-38</td>
+                    <td>write volatile com/vmlens/inttest/interleave/ExceptionTest.j@1853205005</td>
+                    <td><a href="stack17.html">com/vmlens/inttest/interleave/ExceptionTest.methodWithException </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>Thread join (Thread-38)</td>
+                    <td>  com/vmlens/inttest/interleave/ExceptionTest.testUpdate   </td>
                 </tr>
         </table>
     </div>

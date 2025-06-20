@@ -32,43 +32,48 @@
             </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread start (Thread-12)</td>
-                    <td>  com/vmlens/inttest/interleave/ExceptionTest.testUpdate   </td>
-                </tr>
-                <tr>
-                    <td>Thread-12</td>
-                    <td>read volatile com/vmlens/inttest/interleave/ExceptionTest.j@1276611190</td>
-                    <td><a href="stack5.html">com/vmlens/inttest/interleave/ExceptionTest.firstMethod </a>   </td>
-                </tr>
-                <tr>
-                    <td>Thread-12</td>
-                    <td>write volatile com/vmlens/inttest/interleave/ExceptionTest.j@1276611190</td>
-                    <td><a href="stack5.html">com/vmlens/inttest/interleave/ExceptionTest.firstMethod </a>   </td>
+                    <td>Thread start (Thread-3)</td>
+                    <td>  com/vmlens/inttest/nonvolatile/HashMapTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>read volatile com/vmlens/inttest/interleave/ExceptionTest.j@1276611190</td>
-                    <td>  com/vmlens/inttest/interleave/ExceptionTest.testUpdate   </td>
+                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@398690014</td>
+                    <td><a href="stack4.html">java/util/HashMap.putVal </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>write volatile com/vmlens/inttest/interleave/ExceptionTest.j@1276611190</td>
-                    <td>  com/vmlens/inttest/interleave/ExceptionTest.testUpdate   </td>
-                </tr>
-                <tr>
-                    <td>Thread-12</td>
-                    <td>read volatile com/vmlens/inttest/interleave/ExceptionTest.j@1276611190</td>
-                    <td><a href="stack17.html">com/vmlens/inttest/interleave/ExceptionTest.methodWithException </a>   </td>
-                </tr>
-                <tr>
-                    <td>Thread-12</td>
-                    <td>write volatile com/vmlens/inttest/interleave/ExceptionTest.j@1276611190</td>
-                    <td><a href="stack17.html">com/vmlens/inttest/interleave/ExceptionTest.methodWithException </a>   </td>
+                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@398690014</td>
+                    <td><a href="stack13.html">java/util/HashMap.resize </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread join (Thread-12)</td>
-                    <td>  com/vmlens/inttest/interleave/ExceptionTest.testUpdate   </td>
+                    <td>write <span style="color: red;">data race</span> java/util/HashMap.table@398690014</td>
+                    <td><a href="stack13.html">java/util/HashMap.resize </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-3</td>
+                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@398690014</td>
+                    <td><a href="stack2.html">java/util/HashMap.putVal </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>read <span style="color: red;">data race</span>  array[4]@1526298704</td>
+                    <td><a href="stack4.html">java/util/HashMap.putVal </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>write <span style="color: red;">data race</span>  array[4]@1526298704</td>
+                    <td><a href="stack4.html">java/util/HashMap.putVal </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-3</td>
+                    <td>read <span style="color: red;">data race</span>  array[4]@1526298704</td>
+                    <td><a href="stack2.html">java/util/HashMap.putVal </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>Thread join (Thread-3)</td>
+                    <td>  com/vmlens/inttest/nonvolatile/HashMapTest.testUpdate   </td>
                 </tr>
         </table>
     </div>

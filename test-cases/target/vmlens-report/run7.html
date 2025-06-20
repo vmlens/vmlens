@@ -32,23 +32,33 @@
             </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread start (Thread-36)</td>
-                    <td>  com/vmlens/inttest/nonvolatile/ArrayTest.testUpdate   </td>
+                    <td>Thread start (Thread-21)</td>
+                    <td>  com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>read <span style="color: red;">data race</span>  array[6]@1136768342</td>
-                    <td>  com/vmlens/inttest/nonvolatile/ArrayTest.testUpdate   </td>
-                </tr>
-                <tr>
-                    <td>Thread-36</td>
-                    <td>write <span style="color: red;">data race</span>  array[6]@1136768342</td>
-                    <td><a href="stack6.html">com/vmlens/inttest/nonvolatile/ArrayTest$1.run </a>   </td>
+                    <td>enter write lock@360062456</td>
+                    <td>  com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread join (Thread-36)</td>
-                    <td>  com/vmlens/inttest/nonvolatile/ArrayTest.testUpdate   </td>
+                    <td>exit write lock@360062456</td>
+                    <td>  com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest.testUpdate   </td>
+                </tr>
+                <tr>
+                    <td>Thread-21</td>
+                    <td>enter read lock@360062456</td>
+                    <td><a href="stack9.html">com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest$1.run </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-21</td>
+                    <td>exit read lock@360062456</td>
+                    <td><a href="stack9.html">com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest$1.run </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>Thread join (Thread-21)</td>
+                    <td>  com/vmlens/inttest/interleave/lock/ReentrantReadWriteLockIntTest.testUpdate   </td>
                 </tr>
         </table>
     </div>

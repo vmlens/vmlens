@@ -32,48 +32,23 @@
             </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread start (Thread-40)</td>
-                    <td>  com/vmlens/inttest/nonvolatile/HashSetTest.testUpdate   </td>
+                    <td>Thread start (Thread-31)</td>
+                    <td>  com/vmlens/inttest/interleave/VolatileFieldIntTest.testUpdate   </td>
+                </tr>
+                <tr>
+                    <td>Thread-31</td>
+                    <td>write volatile com/vmlens/inttest/interleave/VolatileFieldIntTest.j@341878976</td>
+                    <td><a href="stack8.html">com/vmlens/inttest/interleave/VolatileFieldIntTest.access$002 </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@1762902523</td>
-                    <td><a href="stack14.html">java/util/HashMap.putVal </a>   </td>
+                    <td>read volatile com/vmlens/inttest/interleave/VolatileFieldIntTest.j@341878976</td>
+                    <td>  com/vmlens/inttest/interleave/VolatileFieldIntTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@1762902523</td>
-                    <td><a href="stack12.html">java/util/HashMap.resize </a>   </td>
-                </tr>
-                <tr>
-                    <td>main</td>
-                    <td>write <span style="color: red;">data race</span> java/util/HashMap.table@1762902523</td>
-                    <td><a href="stack12.html">java/util/HashMap.resize </a>   </td>
-                </tr>
-                <tr>
-                    <td>Thread-40</td>
-                    <td>read <span style="color: red;">data race</span> java/util/HashMap.table@1762902523</td>
-                    <td><a href="stack1.html">java/util/HashMap.putVal </a>   </td>
-                </tr>
-                <tr>
-                    <td>main</td>
-                    <td>read <span style="color: red;">data race</span>  array[4]@1725008249</td>
-                    <td><a href="stack14.html">java/util/HashMap.putVal </a>   </td>
-                </tr>
-                <tr>
-                    <td>main</td>
-                    <td>write <span style="color: red;">data race</span>  array[4]@1725008249</td>
-                    <td><a href="stack14.html">java/util/HashMap.putVal </a>   </td>
-                </tr>
-                <tr>
-                    <td>Thread-40</td>
-                    <td>read <span style="color: red;">data race</span>  array[4]@1725008249</td>
-                    <td><a href="stack1.html">java/util/HashMap.putVal </a>   </td>
-                </tr>
-                <tr>
-                    <td>main</td>
-                    <td>Thread join (Thread-40)</td>
-                    <td>  com/vmlens/inttest/nonvolatile/HashSetTest.testUpdate   </td>
+                    <td>Thread join (Thread-31)</td>
+                    <td>  com/vmlens/inttest/interleave/VolatileFieldIntTest.testUpdate   </td>
                 </tr>
         </table>
     </div>

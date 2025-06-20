@@ -32,23 +32,33 @@
             </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread start (Thread-35)</td>
-                    <td>  com/vmlens/inttest/interleave/VolatileFieldIntTest.testUpdate   </td>
+                    <td>Thread start (Thread-20)</td>
+                    <td>  com/vmlens/inttest/interleave/SynchronizedMethodIntTest.testUpdate   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>read volatile com/vmlens/inttest/interleave/VolatileFieldIntTest.j@1026871825</td>
-                    <td>  com/vmlens/inttest/interleave/VolatileFieldIntTest.testUpdate   </td>
-                </tr>
-                <tr>
-                    <td>Thread-35</td>
-                    <td>write volatile com/vmlens/inttest/interleave/VolatileFieldIntTest.j@1026871825</td>
-                    <td><a href="stack8.html">com/vmlens/inttest/interleave/VolatileFieldIntTest.access$002 </a>   </td>
+                    <td>enter monitor@1524126153</td>
+                    <td><a href="stack10.html">com/vmlens/inttest/interleave/SynchronizedMethodIntTest.synchronizedMethod </a>   </td>
                 </tr>
                 <tr>
                     <td>main</td>
-                    <td>Thread join (Thread-35)</td>
-                    <td>  com/vmlens/inttest/interleave/VolatileFieldIntTest.testUpdate   </td>
+                    <td>exit monitor@1524126153</td>
+                    <td><a href="stack10.html">com/vmlens/inttest/interleave/SynchronizedMethodIntTest.synchronizedMethod </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-20</td>
+                    <td>enter monitor@1524126153</td>
+                    <td><a href="stack1.html">com/vmlens/inttest/interleave/SynchronizedMethodIntTest.synchronizedMethod </a>   </td>
+                </tr>
+                <tr>
+                    <td>Thread-20</td>
+                    <td>exit monitor@1524126153</td>
+                    <td><a href="stack1.html">com/vmlens/inttest/interleave/SynchronizedMethodIntTest.synchronizedMethod </a>   </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>Thread join (Thread-20)</td>
+                    <td>  com/vmlens/inttest/interleave/SynchronizedMethodIntTest.testUpdate   </td>
                 </tr>
         </table>
     </div>
