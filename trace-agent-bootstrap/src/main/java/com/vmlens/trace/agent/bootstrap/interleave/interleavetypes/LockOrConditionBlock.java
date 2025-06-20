@@ -10,7 +10,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleavetypes;
  *      unlock
  *      readLockState
  *      tryLock
- *      convertLock -> is a lock, unlock in one interleaveoperation
+ *      convertLock:  is a lock, unlock in one interleaveoperation
  *
  * monitors only implement lock, unlock
  *

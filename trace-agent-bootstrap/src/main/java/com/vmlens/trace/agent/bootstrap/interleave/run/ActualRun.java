@@ -8,13 +8,8 @@ public class ActualRun {
     private final TLinkedList<TLinkableWrapper<InterleaveAction>> run =
             new TLinkedList<>();
 
-
     private int positionInRun;
 
-    /**
-     * @param interleaveAction
-     * @return
-     */
     public InterleaveInfo after(InterleaveAction interleaveAction) {
         run.add(new TLinkableWrapper<>(interleaveAction));
         InterleaveInfo interleaveInfo = new InterleaveInfo(positionInRun);
