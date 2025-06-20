@@ -1,47 +1,60 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.threadpool;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinTask;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TestForkJoin {
+public class TestThreadPool {
 
     private volatile int j = 0;
 
     @Test
-    @Disabled
     public void testReadWrite() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(1);
         expectedSet.add(2);
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleavings allInterleavings = new AllInterleavings("testForkJoin")) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testThreadPool")) {
             while (allInterleavings.hasNext()) {
-                ForkJoinPool pool = new ForkJoinPool(2);
+                ExecutorService executor = Executors.newFixedThreadPool(4);
                 j = 0;
-                ForkJoinTask<?> task = pool.submit(new Runnable() {
+                executor.submit(new Runnable() {
                     @Override
                     public void run() {
                         j++;
                     }
                 });
                 j++;
-                task.join();
+                executor.shutdown();
                 countSet.add(j);
             }
             assertThat(countSet,is(expectedSet));
         }
     }
 
+    @Test
+    public void testShutdownMissing() throws InterruptedException {
+
+        try(AllInterleavings allInterleavings = new AllInterleavings("testShutdownMissing")) {
+            while (allInterleavings.hasNext()) {
+                ExecutorService executor = Executors.newFixedThreadPool(4);
+                j = 0;
+                executor.submit(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+
+        }
+    }
 
 }

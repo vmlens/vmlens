@@ -1,12 +1,10 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.atomic;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
 import static org.hamcrest.CoreMatchers.is;

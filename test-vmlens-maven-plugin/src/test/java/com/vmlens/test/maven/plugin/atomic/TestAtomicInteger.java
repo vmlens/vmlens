@@ -1,4 +1,4 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.atomic;
 
 import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
