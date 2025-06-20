@@ -261,7 +261,6 @@
         <module>test-util</module>
         <module>api</module>
         <module>trace-agent-bootstrap</module>
-        <!-- trace-agent-bootstrap-jdk9 cleans vmlens-maven-plugin dist directory -->
         <module>trace-agent-bootstrap-jdk9</module>
         <module>trace-agent</module>
         <module>agent-runtime</module>
