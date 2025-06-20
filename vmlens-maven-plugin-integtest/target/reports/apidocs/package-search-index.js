@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.vmlens"},{"l":"com.vmlens.expected.check"},{"l":"com.vmlens.expected.domain"},{"l":"com.vmlens.expected.factory"},{"l":"com.vmlens.vmlens_maven_plugin_integtest"}];updateSearchResults();
