@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
  *  Tests thread join
  *  Tests blocking. e.g, that still only one thread is active
  */
-public class RunStateMachineImplTest {
+public class NewTestTaskTest {
 
     /**
      *
@@ -61,6 +61,11 @@ public class RunStateMachineImplTest {
         assertThat(runStateMachineWrapper.runStateMachineImpl().isActive(threadIndex(1),
                 runStateMachineWrapper.sendEvent()),is(true));
     }
+
+
+
+
+
 
 
 }

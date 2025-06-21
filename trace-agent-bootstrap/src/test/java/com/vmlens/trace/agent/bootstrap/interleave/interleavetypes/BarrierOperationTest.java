@@ -30,7 +30,6 @@ public class BarrierOperationTest {
     public void testAsymmetricWaitNotify() {
         runTestAsymmetricWaitNotify(wait,waitPosition,notify,notifyPosition);
         runTestAsymmetricWaitNotify(notify,notifyPosition,wait,waitPosition);
-
     }
 
     private void runTestAsymmetricWaitNotify(Barrier firstBarrier, Position firstPosition,

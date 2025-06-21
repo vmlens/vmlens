@@ -7,8 +7,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 public interface DependentBlockOrOperation<BLOCK_OR_OPERATION> {
 
     TreeBuilderNode addToAlternatingOrder(Position myPosition,
-                                        BLOCK_OR_OPERATION other,
-                                        BuildAlternatingOrderContext context,
+                                          BLOCK_OR_OPERATION other,
+                                          BuildAlternatingOrderContext context,
                                           TreeBuilderNode treeBuilderNode);
 
 }

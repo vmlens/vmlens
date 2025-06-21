@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.BarrierOperat
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.AddToAlternatingOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 
-public class BarrierNotify implements Barrier , BarrierOperationVisitor{
+public class BarrierNotify implements Barrier , BarrierOperationVisitor {
 
     private final BarrierKey barrierKey;
 
@@ -19,9 +19,9 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor{
 
     @Override
     public TreeBuilderNode addToAlternatingOrder(Position myPosition,
-                                                 DependentOperationAndPosition<Barrier> other,
-                                                 BuildAlternatingOrderContext context,
-                                                 TreeBuilderNode treeBuilderNode) {
+                                                     DependentOperationAndPosition<Barrier> other,
+                                                     BuildAlternatingOrderContext context,
+                                                     TreeBuilderNode treeBuilderNode) {
         AddToAlternatingOrder tuple = other.element().accept(this, myPosition, other.position());
         if(tuple != null) {
             return tuple.addToAlternatingOrder(context,treeBuilderNode);

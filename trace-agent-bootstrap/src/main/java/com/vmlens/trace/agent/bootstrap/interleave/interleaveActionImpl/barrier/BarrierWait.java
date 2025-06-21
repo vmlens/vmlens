@@ -20,9 +20,9 @@ public class BarrierWait implements Barrier, BarrierOperationVisitor {
 
     @Override
     public TreeBuilderNode addToAlternatingOrder(Position myPosition,
-                                                 DependentOperationAndPosition<Barrier> other,
-                                                 BuildAlternatingOrderContext context,
-                                                 TreeBuilderNode treeBuilderNode) {
+                                                     DependentOperationAndPosition<Barrier> other,
+                                                     BuildAlternatingOrderContext context,
+                                                     TreeBuilderNode treeBuilderNode) {
         AddToAlternatingOrder tuple = other.element().accept(this, myPosition, other.position());
         if(tuple != null) {
             return tuple.addToAlternatingOrder(context,treeBuilderNode);
