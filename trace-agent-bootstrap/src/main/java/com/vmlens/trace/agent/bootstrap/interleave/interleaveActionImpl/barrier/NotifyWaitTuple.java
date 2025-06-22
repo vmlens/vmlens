@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Al
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeTwoOrders;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveoperation.DependentOperationAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.AddToAlternatingOrder;
 
@@ -12,11 +12,11 @@ import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 
 public class NotifyWaitTuple implements AddToAlternatingOrder {
 
-    private final DependentOperationAndPosition<BarrierNotify> notify;
-    private final DependentOperationAndPosition<BarrierWait> wait;
+    private final BarrierOperationAndPosition<BarrierNotify> notify;
+    private final BarrierOperationAndPosition<BarrierWait> wait;
 
-    public NotifyWaitTuple(DependentOperationAndPosition<BarrierNotify> notify,
-                           DependentOperationAndPosition<BarrierWait> wait) {
+    public NotifyWaitTuple(BarrierOperationAndPosition<BarrierNotify> notify,
+                           BarrierOperationAndPosition<BarrierWait> wait) {
         this.notify = notify;
         this.wait = wait;
     }

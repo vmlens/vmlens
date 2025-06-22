@@ -1,13 +1,13 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveoperation;
+package com.vmlens.trace.agent.bootstrap.interleave.dependentoperation;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
-public interface DependentBlockOrOperation<BLOCK_OR_OPERATION> {
+public interface DependentOperation {
 
     TreeBuilderNode addToAlternatingOrder(Position myPosition,
-                                          BLOCK_OR_OPERATION other,
+                                          Object other,
                                           BuildAlternatingOrderContext context,
                                           TreeBuilderNode treeBuilderNode);
 

@@ -26,6 +26,11 @@ public class SingleChildNode implements OrderTreeNode {
         return new NextNodeAndProcessFlag(next,processFlag);
     }
 
+    @Override
+    public OrderTreeNode nextLeft() {
+        return next;
+    }
+
     // to test the builder
     public OrderTreeNode next() {
         return next;
@@ -41,8 +46,19 @@ public class SingleChildNode implements OrderTreeNode {
         return secondAlternative;
     }
 
-    @Override
-    public OrderTreeNode nextLeft() {
-        return next;
+
+    public boolean hasSameOrder(OrderTreeNode otherNode) {
+        if(! (otherNode instanceof SingleChildNode)) {
+            return false;
+        }
+
+        SingleChildNode other = (SingleChildNode) otherNode;
+
+        if(firstAlternative.equals(other.firstAlternative) && secondAlternative.equals(other.secondAlternative)) {
+            return true;
+        }
+        return firstAlternative.equals(other.secondAlternative) && secondAlternative.equals(other.firstAlternative);
     }
+
+
 }

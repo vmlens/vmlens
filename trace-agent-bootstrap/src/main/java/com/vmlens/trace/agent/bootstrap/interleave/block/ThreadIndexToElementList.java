@@ -135,7 +135,7 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
         return result;
     }
 
-    Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> iteratorStartingAt(int threadIndex) {
+    public Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> iteratorStartingAt(int threadIndex) {
         return threadList.listIterator(threadIndex);
     }
 

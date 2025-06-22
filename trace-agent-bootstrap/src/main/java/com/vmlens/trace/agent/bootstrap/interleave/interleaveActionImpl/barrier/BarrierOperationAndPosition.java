@@ -1,13 +1,13 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveoperation;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 
-public class DependentOperationAndPosition<ELEMENT> {
+public class BarrierOperationAndPosition<ELEMENT> {
 
     private final Position position;
     private final ELEMENT element;
 
-    public DependentOperationAndPosition(Position position, ELEMENT element) {
+    public BarrierOperationAndPosition(Position position, ELEMENT element) {
         this.position = position;
         this.element = element;
     }

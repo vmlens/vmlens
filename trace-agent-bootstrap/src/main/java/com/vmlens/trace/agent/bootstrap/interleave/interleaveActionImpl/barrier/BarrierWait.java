@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveoperation.DependentOperationAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.BarrierOperationVisitor;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.AddToAlternatingOrder;
@@ -17,12 +17,17 @@ public class BarrierWait implements Barrier, BarrierOperationVisitor {
     }
 
 
+    @Override
+    public BarrierKey key() {
+        return barrierKey;
+    }
 
     @Override
     public TreeBuilderNode addToAlternatingOrder(Position myPosition,
-                                                     DependentOperationAndPosition<Barrier> other,
+                                                    Object otherObj,
                                                      BuildAlternatingOrderContext context,
                                                      TreeBuilderNode treeBuilderNode) {
+        DependentOperationAndPosition<Barrier> other = (DependentOperationAndPosition<Barrier>) otherObj;
         AddToAlternatingOrder tuple = other.element().accept(this, myPosition, other.position());
         if(tuple != null) {
             return tuple.addToAlternatingOrder(context,treeBuilderNode);
@@ -37,8 +42,8 @@ public class BarrierWait implements Barrier, BarrierOperationVisitor {
 
     @Override
     public AddToAlternatingOrder visit(Position myPosition, BarrierNotify other, Position otherPosition) {
-        return new NotifyWaitTuple(new DependentOperationAndPosition<>(otherPosition,other),
-                new DependentOperationAndPosition<>(myPosition,this));
+        return new NotifyWaitTuple(new BarrierOperationAndPosition<>(otherPosition,other),
+                new BarrierOperationAndPosition<>(myPosition,this));
     }
 
     @Override

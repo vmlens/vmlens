@@ -8,6 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollecti
 import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
+// Fixme delete
 public abstract class InterleaveActionForDependentBlock implements InterleaveAction, DependentBlockElement {
 
     @Override

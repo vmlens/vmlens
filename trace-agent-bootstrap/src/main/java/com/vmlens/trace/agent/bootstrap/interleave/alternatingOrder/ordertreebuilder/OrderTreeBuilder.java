@@ -10,18 +10,14 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class OrderTreeBuilder {
 
-    private final TLinkedList<TLinkableWrapper<LeftBeforeRight>> fixedOrder = new TLinkedList<>();
     private final StartOrNext start = new StartOrNext();
 
-    public void addFixedOrder(LeftBeforeRight order) {
-        fixedOrder.add(wrap(order));
-    }
 
     public StartOrNext start() {
         return start;
     }
 
     public OrderTree build() {
-        return new OrderTree(start.build(),toArray(LeftBeforeRight.class,fixedOrder));
+        return new OrderTree(start.build());
     }
 }

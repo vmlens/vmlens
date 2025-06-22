@@ -9,7 +9,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWait;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.FutureKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveoperation.DependentOperationAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
