@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.Choice;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.OrderTreeBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
@@ -10,31 +10,12 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class OrderTreeBuilderTest {
-
-
-    @Test
-    public void fixedOnly() {
-        // Expected
-        LeftBeforeRight fixed = lbr(1, 1, 2, 2);
-
-        // Given
-        OrderTreeBuilder builder = new OrderTreeBuilder();
-
-        // When
-        builder.addFixedOrder(fixed);
-        OrderTree tree = builder.build();
-
-        // Then
-        assertThat(tree.iterator().hasNext(),is(false));
-        assertThat(tree.fixedOrder()[0], is(fixed));
-        assertThat(tree.size(),is(0));
-    }
+public class TreeBuilderTest {
 
     @Test
     public void either() {
         // Given
-        OrderTreeBuilder builder = new OrderTreeBuilder();
+        TreeBuilder builder = new TreeBuilder();
         LeftBeforeRight either1A = lbr(1, 1, 2, 2);
         LeftBeforeRight either1B = lbr(6, 6, 2, 2);
 
@@ -57,7 +38,7 @@ public class OrderTreeBuilderTest {
     @Test
     public void choice() {
         // Given
-        OrderTreeBuilder builder = new OrderTreeBuilder();
+        TreeBuilder builder = new TreeBuilder();
         LeftBeforeRight either1A = lbr(1, 1, 2, 2);
         LeftBeforeRight either1B = lbr(6, 6, 2, 2);
 

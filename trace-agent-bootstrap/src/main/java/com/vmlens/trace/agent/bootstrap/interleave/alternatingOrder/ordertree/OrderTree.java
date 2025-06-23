@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
-import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 
 public class OrderTree {
 

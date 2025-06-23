@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleavetypes;
 
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.DependentOperationAndPositionOrContainer;
+
 /**
  * A lock interleaveoperation is used for all blocking operations
  *
@@ -23,8 +25,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleavetypes;
  *       notify lock exit
  *       notify lock wait
  *
- *
  */
 
-public interface LockOrConditionContainer {
+public interface LockOrConditionContainer extends DependentOperationAndPositionOrContainer<LockOrConditionContainer> {
+
+    AddToAlternatingOrder accept(LockOrConditionContainerVisitor visitor);
+
 }

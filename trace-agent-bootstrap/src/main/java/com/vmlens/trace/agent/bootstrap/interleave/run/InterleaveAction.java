@@ -6,6 +6,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelation
 
 public interface InterleaveAction extends BlockBuilderWithThreadIndex {
 
+    // Fixme add to KeyToOperationCollection
+
     void addToBlockingLockRelationBuilder(Position position,
                                           BlockingLockRelationBuilder builder);
 

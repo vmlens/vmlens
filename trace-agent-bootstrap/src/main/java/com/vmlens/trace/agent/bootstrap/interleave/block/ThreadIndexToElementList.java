@@ -33,19 +33,19 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
             TLinkedList<TLinkableWrapper<ELEMENT>> clonedThread =
                     new TLinkedList<>();
             for (TLinkableWrapper<ELEMENT> element : oneThread.element()) {
-                clonedThread.add(new TLinkableWrapper<ELEMENT>(element.element()));
+                clonedThread.add(new TLinkableWrapper<>(element.element()));
             }
             clone.add(new TLinkableWrapper<>(clonedThread));
         }
-        return new ThreadIndexToElementList(clone, elementCount);
+        return new ThreadIndexToElementList<>(clone, elementCount);
     }
 
     public void add(ELEMENT element) {
         elementCount++;
         while(threadList.size() <= element.threadIndex()) {
-            threadList.add(new TLinkableWrapper(new TLinkedList()));
+            threadList.add(new TLinkableWrapper<>(new TLinkedList<>()));
         }
-        threadList.get(element.threadIndex()).element().add(new TLinkableWrapper(element));
+        threadList.get(element.threadIndex()).element().add(new TLinkableWrapper<>(element));
     }
 
     public int getPositionAtThreadIndex(int threadIndex) {

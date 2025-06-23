@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Al
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeTwoOrders;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.SingleChildNode;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.OrderTreeBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.VolatileAccess;
@@ -43,7 +43,7 @@ public class KeyToOperationTest {
         keyToOperation.put(read.key(),new DependentOperationAndPosition<>(pos(0,0) , read));
         keyToOperation.put(write.key(),new DependentOperationAndPosition<>(pos(1,0) , write));
 
-        OrderTreeBuilder orderTreeBuilder = new OrderTreeBuilder();
+        TreeBuilder orderTreeBuilder = new TreeBuilder();
         BuildAlternatingOrderContext context = mock(BuildAlternatingOrderContext.class);
 
         // When
@@ -71,7 +71,7 @@ public class KeyToOperationTest {
         keyToOperation.put(barrierNotify.key(),new DependentOperationAndPosition<>(pos(0,0) , barrierNotify));
         keyToOperation.put(barrierWait.key(),new DependentOperationAndPosition<>(pos(1,0) , barrierWait));
 
-        OrderTreeBuilder orderTreeBuilder = new OrderTreeBuilder();
+        TreeBuilder orderTreeBuilder = new TreeBuilder();
         BuildAlternatingOrderContext context = mock(BuildAlternatingOrderContext.class);
         when(context.getLastPositionForThreadIndex(1)).thenReturn(2);
 

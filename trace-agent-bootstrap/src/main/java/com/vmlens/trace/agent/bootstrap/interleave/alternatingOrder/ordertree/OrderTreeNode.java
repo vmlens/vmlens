@@ -6,4 +6,6 @@ public interface OrderTreeNode {
 
     OrderTreeNode nextLeft();
 
+    boolean hasSameOrder(OrderTreeNode other);
+
 }
