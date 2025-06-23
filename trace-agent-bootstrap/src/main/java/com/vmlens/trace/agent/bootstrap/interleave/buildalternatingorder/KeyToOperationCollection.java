@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
@@ -64,7 +65,9 @@ public class KeyToOperationCollection {
 
     public OrderTree buildOrderTree(BuildAlternatingOrderContext context) {
         TreeBuilder treeBuilder = new TreeBuilder();
-        volatileAccess.process(context,treeBuilder.start());
+        TreeBuilderNode node = volatileAccess.process(context, treeBuilder.start());
+        node = lockAndConditions.process(context, node);
+        node = barrier.process(context, node);
 
 
         return treeBuilder.build();

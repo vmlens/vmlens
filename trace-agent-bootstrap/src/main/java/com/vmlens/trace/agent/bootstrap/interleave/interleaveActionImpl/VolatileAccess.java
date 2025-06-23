@@ -7,7 +7,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Al
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
-import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.VolatileOperation;
@@ -31,11 +30,6 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
 
     public VolatileKey key() {
         return volatileAccessKey;
-    }
-
-    @Override
-    public void addToBlockingLockRelationBuilder(Position position, BlockingLockRelationBuilder builder) {
-        // Nothing To do
     }
 
 

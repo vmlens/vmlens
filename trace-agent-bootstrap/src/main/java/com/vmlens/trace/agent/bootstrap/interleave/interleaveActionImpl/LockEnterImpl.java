@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollecti
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
@@ -22,22 +21,21 @@ public class LockEnterImpl implements InterleaveAction, LockEnter {
     }
 
     @Override
-    public void addToBlockingLockRelationBuilder(Position position, BlockingLockRelationBuilder builder) {
-        ElementAndPosition<LockEnter> element = new ElementAndPosition<>(this, position);
-        builder.onLockEnter(element);
-    }
-
-    @Override
     public LockKey key() {
         return lockOrMonitor.key();
     }
 
-
     @Override
-    public void addToKeyToOperationCollection(Position myPosition, ActiveLockCollection mapContainingStack, KeyToOperationCollection result) {
-        // Fixme
+    public boolean isReadLock() {
+        return lockOrMonitor.key().isRead();
     }
 
+    @Override
+    public void addToKeyToOperationCollection(Position myPosition,
+                                              ActiveLockCollection mapContainingStack,
+                                              KeyToOperationCollection result) {
+        mapContainingStack.push(new ElementAndPosition<>(this,myPosition));
+    }
 
 
     @Override

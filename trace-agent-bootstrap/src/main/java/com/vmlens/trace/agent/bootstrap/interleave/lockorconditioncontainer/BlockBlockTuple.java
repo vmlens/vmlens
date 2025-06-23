@@ -19,7 +19,14 @@ public class BlockBlockTuple implements AddToAlternatingOrder  {
 
     @Override
     public TreeBuilderNode addToAlternatingOrder(BuildAlternatingOrderContext context, TreeBuilderNode treeBuilderNode) {
-        return treeBuilderNode.either(new AlternativeOneOrder(lbr(first.end().position(),second.start().position())),
-                new AlternativeOneOrder(lbr(second.end().position(),first.start().position())) );
+        /* enter and exist work on the same type of lock
+         * so it is only necessary to check the enter of the lock
+         * Fixme convert locks must be handeld special here
+         */
+        if(! first.start().isReadLock() || !  second.start().isReadLock()) {
+            return treeBuilderNode.either(new AlternativeOneOrder(lbr(first.end().position(),second.start().position())),
+                    new AlternativeOneOrder(lbr(second.end().position(),first.start().position())) );
+        }
+        return treeBuilderNode;
     }
 }

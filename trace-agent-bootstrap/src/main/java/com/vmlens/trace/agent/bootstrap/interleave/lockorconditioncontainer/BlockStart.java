@@ -15,4 +15,9 @@ public class BlockStart {
     public Position position() {
         return position;
     }
+
+    public boolean isReadLock() {
+       return operation.isReadLock();
+    }
+
 }

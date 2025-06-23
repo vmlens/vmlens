@@ -2,10 +2,14 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
+import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.Block;
+import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.BlockEnd;
 import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.BlockEndOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.BlockStart;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
@@ -21,15 +25,14 @@ public class LockExit implements InterleaveAction, BlockEndOperation {
 
 
     @Override
-    public void addToBlockingLockRelationBuilder(Position position, BlockingLockRelationBuilder builder) {
-        builder.onLockExit(position.threadIndex,lockOrMonitor.key());
-    }
-
-    @Override
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
-        // Fixme
+        ElementAndPosition<LockEnter> enter = mapContainingStack.pop(threadIndex, lockOrMonitor.key());
+        if(enter != null) {
+            result.addLockOrCondition(lockOrMonitor.key(),
+          new Block(new BlockStart(enter.position(),enter.element()), new BlockEnd(myPosition,this)));
+        }
     }
 
 
