@@ -1,13 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElementStrategy;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.OnlyWhenNotDeadlockActive;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
@@ -25,11 +22,6 @@ public class LockEnterImpl implements InterleaveAction, LockEnter {
     }
 
     @Override
-    public AlternatingOrderElementStrategy alternatingOrderElementStrategy() {
-        return new OnlyWhenNotDeadlockActive(lockOrMonitor.key());
-    }
-
-    @Override
     public void addToBlockingLockRelationBuilder(Position position, BlockingLockRelationBuilder builder) {
         ElementAndPosition<LockEnter> element = new ElementAndPosition<>(this, position);
         builder.onLockEnter(element);
@@ -40,18 +32,13 @@ public class LockEnterImpl implements InterleaveAction, LockEnter {
         return lockOrMonitor.key();
     }
 
-    @Override
-    public void blockBuilderAdd(Position myPosition,
-                                ActiveLockCollection mapContainingStack,
-                                MapOfBlocks result) {
-        mapContainingStack.push(new ElementAndPosition<>(this, myPosition));
-    }
 
     @Override
-    public boolean startsAlternatingOrder(DependentBlockElement interleaveAction) {
-        LockExit other = (LockExit) interleaveAction;
-        return lockOrMonitor.startsAlternatingOrder(other.lockOrMonitor());
+    public void addToKeyToOperationCollection(Position myPosition, ActiveLockCollection mapContainingStack, KeyToOperationCollection result) {
+        // Fixme
     }
+
+
 
     @Override
     public int threadIndex() {

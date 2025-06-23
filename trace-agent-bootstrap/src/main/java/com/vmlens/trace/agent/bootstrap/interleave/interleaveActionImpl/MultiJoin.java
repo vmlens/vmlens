@@ -2,12 +2,15 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.OrderTreeBuilderWrapper;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.list.linked.TIntLinkedList;
+import gnu.trove.list.linked.TLinkedList;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class MultiJoin extends InterleaveActionForInDependentBlock  {
 
@@ -20,14 +23,14 @@ public class MultiJoin extends InterleaveActionForInDependentBlock  {
     }
 
     @Override
-    public void addFixedOrder(Position myPosition, OrderTreeBuilderWrapper orderArraysBuilder, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
+    public void addFixedOrder(Position myPosition, TLinkedList<TLinkableWrapper<LeftBeforeRight>> result, ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         TIntIterator iter = joinedThreadIndices.iterator();
         while(iter.hasNext()) {
             int joinedThreadIndex = iter.next();
             int lastPosition = threadIndexToMaxPosition.getPositionAtThreadIndex(joinedThreadIndex);
             if(lastPosition > 0) {
-                orderArraysBuilder.addFixedOrder(new LeftBeforeRight(new Position(joinedThreadIndex, lastPosition - 1),
-                        myPosition));
+                result.add(wrap(new LeftBeforeRight(new Position(joinedThreadIndex, lastPosition - 1),
+                        myPosition)));
             }
         }
 

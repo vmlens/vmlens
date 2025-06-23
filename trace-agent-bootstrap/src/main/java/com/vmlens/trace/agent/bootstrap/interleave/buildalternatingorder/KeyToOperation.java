@@ -38,9 +38,10 @@ public class KeyToOperation<KEY, ELEMENT extends DependentOperationAndPositionOr
                     TLinkedList<TLinkableWrapper<ELEMENT>> otherThread = otherThreadBlocks.next().element();
                     // ToDo we should probably stop when more than n elements were created
                     for (TLinkableWrapper<ELEMENT> otherBlock : otherThread) {
-                        currentTreeBuilderNode =  current.element().addToAlternatingOrder(otherBlock.element(),
+                        TreeBuilderNode nextNode = current.element().addToAlternatingOrder(otherBlock.element(),
                                 context,
                                 currentTreeBuilderNode);
+                        currentTreeBuilderNode = nextNode;
                     }
                 }
             }

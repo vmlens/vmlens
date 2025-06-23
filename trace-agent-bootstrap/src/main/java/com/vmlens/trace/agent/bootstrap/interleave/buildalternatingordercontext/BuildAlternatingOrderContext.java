@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext;
 
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
+
 /**
  *
  * this is the context to process DependentBlockOrOperation
@@ -7,8 +9,16 @@ package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext
  *
  */
 
-public interface BuildAlternatingOrderContext {
+public class BuildAlternatingOrderContext {
 
-    int getLastPositionForThreadIndex(int threadIndex);
+    private final ThreadIndexToMaxPosition threadIndexToMaxPosition;
+
+    public BuildAlternatingOrderContext(ThreadIndexToMaxPosition threadIndexToMaxPosition) {
+        this.threadIndexToMaxPosition = threadIndexToMaxPosition;
+    }
+
+    public int getLastPositionForThreadIndex(int threadIndex) {
+        return threadIndexToMaxPosition.getPositionAtThreadIndex(threadIndex);
+    }
 
 }

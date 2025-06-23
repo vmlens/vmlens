@@ -4,10 +4,9 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.*;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
+import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.deadlock.DeadlockDependentBlockFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Pair;
@@ -20,10 +19,13 @@ public class AlternatingOrderContainerFactory {
         Pair<TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>>, ThreadIndexToElementList<Position>>
                 interleaveActionWitPositionAndRun = new InterleaveActionWithPositionFactory().create(actualRun);
 
+        KeyToOperationCollection collection = createCollection(interleaveActionWitPositionAndRun.getLeft());
 
 
-
-        return new AlternatingOrderContainer(orderArraysBuilder.build(), interleaveActionWitPositionAndRun.getRight());
+        return new AlternatingOrderContainer(
+                interleaveActionWitPositionAndRun.getRight(),
+                collection.buildFixedOrders(interleaveActionWitPositionAndRun.getRight()),
+                collection.buildOrderTree(new BuildAlternatingOrderContext(interleaveActionWitPositionAndRun.getRight())));
     }
 
     public KeyToOperationCollection createCollection(
@@ -43,7 +45,7 @@ public class AlternatingOrderContainerFactory {
             Iterator<TLinkableWrapper<ElementAndPosition<InterleaveAction>>> perThreadIterator = thread.element().iterator();
             while (perThreadIterator.hasNext()) {
                 TLinkableWrapper<ElementAndPosition<InterleaveAction>> current = perThreadIterator.next();
-                current.element().element().blockBuilderAdd(current.element().position(), mapContainingStack, result);
+                current.element().element().addToKeyToOperationCollection(current.element().position(), mapContainingStack, result);
             }
         }
         return result;

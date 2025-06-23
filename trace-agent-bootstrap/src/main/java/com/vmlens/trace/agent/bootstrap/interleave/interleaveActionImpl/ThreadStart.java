@@ -2,10 +2,13 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.OrderTreeBuilderWrapper;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ThreadStart extends InterleaveActionForInDependentBlock {
     private final int threadIndex;
@@ -28,9 +31,9 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
 
     @Override
     public void addFixedOrder(Position myPosition,
-                              OrderTreeBuilderWrapper orderArraysBuilder,
+                              TLinkedList<TLinkableWrapper<LeftBeforeRight>> result,
                               ThreadIndexToMaxPosition threadIndexToMaxPosition) {
-        orderArraysBuilder.addFixedOrder(new LeftBeforeRight(myPosition, new Position(startedThreadIndex, 0)));
+        result.add(wrap(new LeftBeforeRight(myPosition, new Position(startedThreadIndex, 0))));
     }
 
     @Override

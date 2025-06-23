@@ -1,7 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import gnu.trove.set.hash.THashSet;
 import gnu.trove.set.hash.TIntHashSet;
 
@@ -36,20 +34,5 @@ public class LockPairCombinationAndThreadIndices {
      * can return null
      *
      */
-    public ThreadIndexToElementList<DependentBlock> build()  {
-        if(second == null) {
-            return null;
-        }
-        if( threadIndexSet.size() < 2) {
-            return null;
-        }
-        ThreadIndexToElementList<DependentBlock> dependentBlockList = new ThreadIndexToElementList<>();
-        for(PositionPair positionPair : firstPositions) {
-            positionPair.addToDependentBlockList(first,dependentBlockList);
-        }
-        for(PositionPair positionPair : secondPositions) {
-            positionPair.addToDependentBlockList(second,dependentBlockList);
-        }
-        return dependentBlockList;
-    }
+
 }

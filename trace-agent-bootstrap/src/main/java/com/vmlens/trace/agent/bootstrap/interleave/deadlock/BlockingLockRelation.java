@@ -1,12 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.KeyToThreadIdToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
 import gnu.trove.map.hash.THashMap;
-
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  *
@@ -22,18 +16,5 @@ public class BlockingLockRelation {
         this.map = map;
     }
 
-    public KeyToThreadIdToElementList<Object, DependentBlock> build() {
-        KeyToThreadIdToElementList<Object, DependentBlock> result = new KeyToThreadIdToElementList<>();
-        // we go through all lock pair combination
-        Iterator<Map.Entry<LockPair, LockPairCombinationAndThreadIndices>> iterator =
-                map.entrySet().iterator();
-        while(iterator.hasNext()) {
-            Map.Entry<LockPair, LockPairCombinationAndThreadIndices> element = iterator.next();
-            ThreadIndexToElementList<DependentBlock> dependentBlocks = element.getValue().build();
-            if(dependentBlocks != null) {
-                result.putThreadIndexToElementList(element.getKey(),dependentBlocks);
-            }
-        }
-        return result;
-    }
+
 }

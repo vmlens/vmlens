@@ -1,18 +1,23 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.Barrier;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.IndependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockOrConditionContainer;
-import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.ThreadOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.toArray;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 /**
@@ -30,7 +35,7 @@ public class KeyToOperationCollection {
     private final KeyToOperation<VolatileKey, DependentOperationAndPosition<VolatileAccess>> volatileAccess = new KeyToOperation<>();
     private final KeyToOperation<LockKey, LockOrConditionContainer> lockAndConditions = new KeyToOperation<>();
     private final KeyToOperation<BarrierKey, DependentOperationAndPosition<Barrier>> barrier = new KeyToOperation<>();
-    private final TLinkedList<TLinkableWrapper<ThreadOperationAndPosition>> independentActions = new TLinkedList<>();
+    private final TLinkedList<TLinkableWrapper<ElementAndPosition<IndependentBlock>>> independentActions = new TLinkedList<>();
 
 
     public void addVolatile(VolatileKey key, DependentOperationAndPosition<VolatileAccess> operation) {
@@ -45,19 +50,24 @@ public class KeyToOperationCollection {
         barrier.put(key,operation);
     }
 
-    public void addIndependent(ThreadOperationAndPosition threadOperationAndPosition) {
+    public void addIndependent(ElementAndPosition<IndependentBlock> threadOperationAndPosition) {
         independentActions.add(wrap(threadOperationAndPosition));
     }
 
-    public void buildFixedOrders(ThreadIndexToMaxPosition threadIndexToMaxPosition) {
+    public LeftBeforeRight[] buildFixedOrders(ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         TLinkedList<TLinkableWrapper<LeftBeforeRight>> fixedOrder = new TLinkedList<>();
-        for(TLinkableWrapper<ThreadOperationAndPosition> action : independentActions) {
-
+        for(TLinkableWrapper<ElementAndPosition<IndependentBlock>> action : independentActions) {
+            action.element().element().addFixedOrder(action.element().position(),fixedOrder,threadIndexToMaxPosition);
         }
+        return toArray(LeftBeforeRight.class,fixedOrder);
     }
 
-    public void buildOrderTree() {
+    public OrderTree buildOrderTree(BuildAlternatingOrderContext context) {
+        TreeBuilder treeBuilder = new TreeBuilder();
+        volatileAccess.process(context,treeBuilder.start());
 
+
+        return treeBuilder.build();
     }
 
 

@@ -70,7 +70,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
             OrderTreeIterator iter = orderTree.iterator();
             int position = 0;
             while(iter.hasNext()) {
-                iter.advanceAndAddToOrder(createOrderContext,permutationIterator.at(position))
+                iter.advanceAndAddToOrder(createOrderContext,permutationIterator.at(position));
                 position++;
             }
 

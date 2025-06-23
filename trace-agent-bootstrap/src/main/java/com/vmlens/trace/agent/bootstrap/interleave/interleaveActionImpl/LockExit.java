@@ -2,20 +2,14 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElementStrategy;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.OnlyWhenNotDeadlockActive;
-import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.BlockEndOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
-public class LockExit implements InterleaveAction, DependentBlockElement, BlockEndOperation {
+public class LockExit implements InterleaveAction, BlockEndOperation {
 
     private final int threadIndex;
     private final Lock lockOrMonitor;
@@ -25,10 +19,6 @@ public class LockExit implements InterleaveAction, DependentBlockElement, BlockE
         this.lockOrMonitor = lockOrMonitor;
     }
 
-    @Override
-    public AlternatingOrderElementStrategy alternatingOrderElementStrategy() {
-        return new OnlyWhenNotDeadlockActive(lockOrMonitor.key());
-    }
 
     @Override
     public void addToBlockingLockRelationBuilder(Position position, BlockingLockRelationBuilder builder) {
@@ -36,22 +26,13 @@ public class LockExit implements InterleaveAction, DependentBlockElement, BlockE
     }
 
     @Override
-    public void blockBuilderAdd(Position myPosition,
-                                ActiveLockCollection mapContainingStack,
-                                MapOfBlocks result) {
-        ElementAndPosition<LockEnter> enter = mapContainingStack.pop(myPosition.threadIndex,lockOrMonitor.key());
-        if(enter != null) {
-            DependentBlock dependentBlock = new DependentBlock((ElementAndPosition) enter,
-                    new ElementAndPosition<>(this, myPosition));
-            result.addDependent(lockOrMonitor.key(), dependentBlock);
-        }
+    public void addToKeyToOperationCollection(Position myPosition,
+                                              ActiveLockCollection mapContainingStack,
+                                              KeyToOperationCollection result) {
+        // Fixme
     }
 
-    @Override
-    public boolean startsAlternatingOrder(DependentBlockElement interleaveAction) {
-        LockEnterImpl other = (LockEnterImpl) interleaveAction;
-        return lockOrMonitor.startsAlternatingOrder(other.lockOrMonitor());
-    }
+
 
     @Override
     public int threadIndex() {
