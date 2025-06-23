@@ -5,14 +5,14 @@ public class OrderTree {
 
     // can be null, when only fixed orders exist
     private final OrderTreeNode start;
-    private final int size;
+    private final int length;
 
     public OrderTree(OrderTreeNode start) {
         this.start = start;
-        this.size = calculateSize(start);
+        this.length = calculateLength(start);
     }
 
-    private static int calculateSize(OrderTreeNode start) {
+    private static int calculateLength(OrderTreeNode start) {
         int size = 0;
         OrderTreeNode current = start;
         while(current != null) {
@@ -26,8 +26,8 @@ public class OrderTree {
         return new OrderTreeIterator(start);
     }
 
-    public int size() {
-        return size;
+    public int length() {
+        return length;
     }
 
     // To test the builder

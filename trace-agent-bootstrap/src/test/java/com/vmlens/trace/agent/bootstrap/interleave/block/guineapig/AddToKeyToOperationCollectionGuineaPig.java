@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelation
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
-public class BlockBuilderGuineaPig implements InterleaveAction {
+public class AddToKeyToOperationCollectionGuineaPig implements InterleaveAction {
 
     private final DependentBlock dependentBlock;
     private final Object dependentBlockKey;
@@ -21,13 +21,13 @@ public class BlockBuilderGuineaPig implements InterleaveAction {
 
     }
 
-    public BlockBuilderGuineaPig(DependentBlock dependentBlock, Object dependentBlockKey) {
+    public AddToKeyToOperationCollectionGuineaPig(DependentBlock dependentBlock, Object dependentBlockKey) {
         this.inDependentBlock = null;
         this.dependentBlock = dependentBlock;
         this.dependentBlockKey = dependentBlockKey;
     }
 
-    public BlockBuilderGuineaPig(ElementAndPosition<IndependentBlock> inDependentBlock) {
+    public AddToKeyToOperationCollectionGuineaPig(ElementAndPosition<IndependentBlock> inDependentBlock) {
         this.inDependentBlock = inDependentBlock;
         this.dependentBlock = null;
         this.dependentBlockKey = null;

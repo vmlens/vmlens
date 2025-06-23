@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderNoOpWithThreadIndexGuineaPig;
+import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.AddToKeyToOperationCollectionNoOpWithThreadIndexGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveActionWithPositionFactory;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -20,9 +20,9 @@ public class InterleaveActionWithPositionFactoryTest {
     @Test
     public void addBlockBuilder() {
         // Given
-        InterleaveAction threadIndex_0_First = new BlockBuilderNoOpWithThreadIndexGuineaPig(0);
-        InterleaveAction threadIndex_1_First = new BlockBuilderNoOpWithThreadIndexGuineaPig(1);
-        InterleaveAction threadIndex_0_Second = new BlockBuilderNoOpWithThreadIndexGuineaPig(0);
+        InterleaveAction threadIndex_0_First = new AddToKeyToOperationCollectionNoOpWithThreadIndexGuineaPig(0);
+        InterleaveAction threadIndex_1_First = new AddToKeyToOperationCollectionNoOpWithThreadIndexGuineaPig(1);
+        InterleaveAction threadIndex_0_Second = new AddToKeyToOperationCollectionNoOpWithThreadIndexGuineaPig(0);
 
         TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = new TLinkedList<>();
         actualRun.add(wrap(threadIndex_0_First));

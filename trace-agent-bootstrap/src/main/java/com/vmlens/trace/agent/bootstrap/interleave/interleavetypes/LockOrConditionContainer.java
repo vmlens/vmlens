@@ -17,13 +17,18 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.Depende
  * as a wait releases also the lock and requires it, conditions must also be
  * processed with the same lock
  *
- * we have the following combinatorics of operations:
- *       readLockState
- *       lock enter lock exit
- *       lock enter wait
- *       wait lock exit
- *       notify lock exit
- *       notify lock wait
+ * if we have a block, for example try lock, lock exit
+ * we are sure to have the two order try lock lock exit try lock and lock exit and reverse
+ *
+ * so we process first the start of the block, which might be wait, try lock, lock convert or lock enter
+ * and then calculate the additional blocks
+ *
+ * try lock and lock convert requires choice
+ * spurious wake up does not
+ *      we handle this using flags, isTryLock and isWait
+ *
+ * we treat notify as single operation
+ *
  *
  */
 

@@ -32,7 +32,7 @@ public class TreeBuilderTest {
         // Then
         assertThat(createOrderContext.newOrder.size(),is(1));
         assertThat(createOrderContext.newOrder.get(0).element(),is(either1A));
-        assertThat(tree.size(),is(1));
+        assertThat(tree.length(),is(1));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class TreeBuilderTest {
 
         SingleChildNode nextElement = (SingleChildNode) addedElement.next();
         assertThat(nextElement.firstAlternative(),is(nextEither));
-        assertThat(tree.size(),is(4));
+        assertThat(tree.length(),is(4));
     }
 
 }

@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.AddToAlternatingOrder;
 
 public class BlockEnd {
 
@@ -13,8 +12,8 @@ public class BlockEnd {
         this.operation = operation;
     }
 
-    AddToAlternatingOrder createTuple(BlockStart blockEnd) {
 
+    public Position position() {
+        return position;
     }
-
 }

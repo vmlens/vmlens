@@ -12,6 +12,7 @@ public class BlockStart {
         this.operation = operation;
     }
 
-
-
+    public Position position() {
+        return position;
+    }
 }

@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelation
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
-public class BlockBuilderNoOpWithThreadIndexGuineaPig implements InterleaveAction {
+public class AddToKeyToOperationCollectionNoOpWithThreadIndexGuineaPig implements InterleaveAction {
 
     private final int threadIndex;
 
@@ -16,7 +16,7 @@ public class BlockBuilderNoOpWithThreadIndexGuineaPig implements InterleaveActio
 
     }
 
-    public BlockBuilderNoOpWithThreadIndexGuineaPig(int threadIndex) {
+    public AddToKeyToOperationCollectionNoOpWithThreadIndexGuineaPig(int threadIndex) {
         this.threadIndex = threadIndex;
     }
 

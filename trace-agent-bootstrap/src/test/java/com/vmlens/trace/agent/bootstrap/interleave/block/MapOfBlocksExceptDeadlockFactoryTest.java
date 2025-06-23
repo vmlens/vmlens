@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.block;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.BlockBuilderGuineaPig;
+import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.AddToKeyToOperationCollectionGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.DependentBlockElementGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.block.guineapig.IndependentBlockElementNoOpGuineaPig;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
@@ -37,12 +37,12 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
         TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>> actualRun
                 = new TLinkedList<>();
 
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
-                new BlockBuilderGuineaPig(firstBlock, firstKey), 0, 0)));
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
-                new BlockBuilderGuineaPig(secondBlock, firstKey), 0, 2)));
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
-                new BlockBuilderGuineaPig(thirdBlock, secondKey), 0, 2)));
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<AddToKeyToOperationCollection>>wrap(ElementAndPosition.<AddToKeyToOperationCollection>epos(
+                new AddToKeyToOperationCollectionGuineaPig(firstBlock, firstKey), 0, 0)));
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<AddToKeyToOperationCollection>>wrap(ElementAndPosition.<AddToKeyToOperationCollection>epos(
+                new AddToKeyToOperationCollectionGuineaPig(secondBlock, firstKey), 0, 2)));
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<AddToKeyToOperationCollection>>wrap(ElementAndPosition.<AddToKeyToOperationCollection>epos(
+                new AddToKeyToOperationCollectionGuineaPig(thirdBlock, secondKey), 0, 2)));
 
         MapOfBlocksExceptDeadlockFactory factory = new MapOfBlocksExceptDeadlockFactory();
 
@@ -68,10 +68,10 @@ public class MapOfBlocksExceptDeadlockFactoryTest {
         TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>> actualRun
                 = new TLinkedList<>();
 
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
-                new BlockBuilderGuineaPig(first), 0, 0)));
-        actualRun.add(TLinkableWrapper.<ElementAndPosition<BlockBuilder>>wrap(ElementAndPosition.<BlockBuilder>epos(
-                new BlockBuilderGuineaPig(second), 0, 2)));
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<AddToKeyToOperationCollection>>wrap(ElementAndPosition.<AddToKeyToOperationCollection>epos(
+                new AddToKeyToOperationCollectionGuineaPig(first), 0, 0)));
+        actualRun.add(TLinkableWrapper.<ElementAndPosition<AddToKeyToOperationCollection>>wrap(ElementAndPosition.<AddToKeyToOperationCollection>epos(
+                new AddToKeyToOperationCollectionGuineaPig(second), 0, 2)));
 
         MapOfBlocksExceptDeadlockFactory factory = new MapOfBlocksExceptDeadlockFactory();
 

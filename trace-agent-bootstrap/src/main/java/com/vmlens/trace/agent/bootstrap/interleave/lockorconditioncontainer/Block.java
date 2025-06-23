@@ -25,12 +25,13 @@ public class Block implements LockOrConditionContainer, LockOrConditionContainer
     public TreeBuilderNode addToAlternatingOrder(LockOrConditionContainer lockOrConditionContainer,
                                                  BuildAlternatingOrderContext context,
                                                  TreeBuilderNode treeBuilderNode) {
-        return null;
+        AddToAlternatingOrder tuple = lockOrConditionContainer.accept(this);
+        return tuple.addToAlternatingOrder(context,treeBuilderNode);
     }
 
     @Override
     public int threadIndex() {
-        return 0;
+        return start.position().threadIndex();
     }
 
     public BlockStart start() {
