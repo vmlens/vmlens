@@ -1,11 +1,13 @@
 package com.vmlens.codeGenerator.domain
 
 import com.vmlens.codeGenerator.domain.EventDescAtomicNonBlocking.{atomicArray, atomicNonBlocking}
+import com.vmlens.codeGenerator.domain.EventDescBarrier.barrier
+import com.vmlens.codeGenerator.domain.EventDescCondition.condition
 import com.vmlens.codeGenerator.domain.EventDescControl.{runStartAndEnd, warning}
 import com.vmlens.codeGenerator.domain.EventDescLockOrMonitor.{lock, methodWithLock, monitor}
 import com.vmlens.codeGenerator.domain.EventDescMethod.method
 import com.vmlens.codeGenerator.domain.EventDescNonVolatileField.{arrayAccess, normalField, staticField}
-import com.vmlens.codeGenerator.domain.EventDescThread.{threadStart, threadJoin}
+import com.vmlens.codeGenerator.domain.EventDescThread.{threadJoin, threadStart}
 import com.vmlens.codeGenerator.domain.EventDescVolatileField.{volatileField, volatileStaticField}
 
 import scala.collection.mutable
@@ -82,6 +84,8 @@ object EventDesc extends GenericDesc {
   val bytecodePosition = new FieldDesc("bytecodePosition", intTyp)
   val isShared = new FieldDesc("isShared", booleanTyp)
   val lockType = new FieldDesc("lockType", intTyp)
+  val barrierType = new FieldDesc("barrierType", intTyp)
+  val conditionType = new FieldDesc("conditionType", intTyp)
   val startedThreadIndex = new FieldDesc("startedThreadIndex", intTyp)
   val joinedThreadIndex = new FieldDesc("joinedThreadIndex", intTyp)
   val operation = new FieldDesc("operation", intTyp)
@@ -129,6 +133,9 @@ object EventDesc extends GenericDesc {
       
       eventList.append(monitor("MonitorEnterEventGen", " extends MonitorEnterEvent", typSyncActions));
       eventList.append(monitor("MonitorExitEventGen", " extends MonitorExitEvent", typSyncActions));
+
+      eventList.append(barrier("BarrierEventGen", " extends BarrierEvent  ", typSyncActions));
+      eventList.append(condition("ConditionEventGen", " extends ConditionEvent  ", typSyncActions));
       
       eventList.append(method("MethodEnterEventGen", " extends MethodEnterEvent  ", typMethod));
       eventList.append(method("MethodExitEventGen", " extends MethodExitEvent  ", typMethod));

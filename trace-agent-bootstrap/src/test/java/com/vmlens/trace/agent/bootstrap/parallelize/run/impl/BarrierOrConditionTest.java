@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated;
 import org.junit.Test;
 
 /**
@@ -11,11 +13,26 @@ import org.junit.Test;
  * Variations:
  *      blocking
  *      timeout
+ *
  */
 public class BarrierOrConditionTest {
 
+    /**
+     * before wait
+     * we can execute the event here
+     *          notify (when threads wait)
+     */
     @Test
-    public void happyFlow() {
+    public void waitNotifyHappyFlow() {
+        // Given
+        ActualRun actualRun = new ActualRun();
+        InterleaveRunWithoutCalculated interleaveRunWithoutCalculated
+                = new InterleaveRunWithoutCalculated(actualRun);
+        RunStateMachineHelper runStateMachineWrapper = new RunStateMachineHelper(interleaveRunWithoutCalculated);
+
+        // When
+
+        // Then
 
     }
 
