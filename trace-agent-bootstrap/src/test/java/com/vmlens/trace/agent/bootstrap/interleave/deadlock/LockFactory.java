@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOrTryLock;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
@@ -15,8 +15,8 @@ public class LockFactory {
         this.threadIndex = threadIndex;
     }
 
-    public ElementAndPosition<LockEnter> enter(Lock lock) {
-        ElementAndPosition<LockEnter> result = new ElementAndPosition<LockEnter>(new LockEnterImpl(threadIndex, lock),
+    public ElementAndPosition<LockEnterOrTryLock> enter(Lock lock) {
+        ElementAndPosition<LockEnterOrTryLock> result = new ElementAndPosition<LockEnterOrTryLock>(new LockEnterImpl(threadIndex, lock),
                 new Position(threadIndex, position));
         position++;
         return result;

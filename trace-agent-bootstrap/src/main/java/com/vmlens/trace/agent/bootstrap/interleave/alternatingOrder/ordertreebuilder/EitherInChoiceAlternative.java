@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Or
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeNode;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.SingleChildNode;
 
-public class EitherInChoiceAlternative implements ChoiceElement  {
+public class EitherInChoiceAlternative implements ChoiceElement , EitherInChoice {
 
     private final OrderAlternative orderAlternativeA;
     private final OrderAlternative orderAlternativeB;
@@ -17,7 +17,7 @@ public class EitherInChoiceAlternative implements ChoiceElement  {
         this.orderAlternativeB = orderAlternativeB;
     }
 
-    public EitherInChoiceAlternative either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
+    public EitherInChoice either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
         EitherInChoiceAlternative temp = new EitherInChoiceAlternative(orderAlternativeA,orderAlternativeB);
         next = temp;
         return temp;

@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOrTryLock;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
@@ -28,7 +28,7 @@ public class LockExit implements InterleaveAction, BlockEndOperation {
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
-        ElementAndPosition<LockEnter> enter = mapContainingStack.pop(threadIndex, lockOrMonitor.key());
+        ElementAndPosition<LockEnterOrTryLock> enter = mapContainingStack.pop(threadIndex, lockOrMonitor.key());
         if(enter != null) {
             result.addLockOrCondition(lockOrMonitor.key(),
           new Block(new BlockStart(enter.position(),enter.element()), new BlockEnd(myPosition,this)));

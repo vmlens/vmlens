@@ -2,9 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebu
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
 
-public interface TreeBuilderNode  {
+public interface EitherInChoice {
 
-    Choice choice();
-    Either either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB);
+    EitherInChoice either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB);
 
 }

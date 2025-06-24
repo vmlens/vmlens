@@ -13,5 +13,16 @@ public class PositionPair {
         this.child = child;
     }
 
+    public Position parent() {
+        return parent;
+    }
+
+    public Position child() {
+        return child;
+    }
+
+    int threadIndex() {
+        return parent.threadIndex();
+    }
 
 }

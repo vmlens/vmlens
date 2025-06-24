@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOrTryLock;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
-public class LockEnterImpl implements InterleaveAction, LockEnter {
+public class LockEnterImpl implements InterleaveAction, LockEnterOrTryLock {
 
     private final int threadIndex;
     private final Lock lockOrMonitor;

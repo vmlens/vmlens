@@ -1,6 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
+import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.DeadlockOperation;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
+
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -16,5 +22,18 @@ public class BlockingLockRelation {
         this.map = map;
     }
 
-
+    public TLinkedList<TLinkableWrapper<DeadlockOperation>> build() {
+        TLinkedList<TLinkableWrapper<DeadlockOperation>> result = new TLinkedList<>();
+        // we go through all lock pair combination
+        Iterator<Map.Entry<LockPair, LockPairCombinationAndThreadIndices>> iterator =
+                map.entrySet().iterator();
+        while(iterator.hasNext()) {
+            Map.Entry<LockPair, LockPairCombinationAndThreadIndices> element = iterator.next();
+            TLinkedList<TLinkableWrapper<DeadlockOperation>> dependentBlocks = element.getValue().build();
+            if(dependentBlocks != null) {
+                result.addAll(dependentBlocks);
+            }
+        }
+        return result;
+    }
 }

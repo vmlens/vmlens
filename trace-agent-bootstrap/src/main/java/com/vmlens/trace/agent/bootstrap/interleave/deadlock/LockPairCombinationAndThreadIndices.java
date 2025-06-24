@@ -1,7 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
+import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.DeadlockOperation;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.set.hash.THashSet;
 import gnu.trove.set.hash.TIntHashSet;
+
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class LockPairCombinationAndThreadIndices {
 
@@ -34,5 +39,22 @@ public class LockPairCombinationAndThreadIndices {
      * can return null
      *
      */
+    public TLinkedList<TLinkableWrapper<DeadlockOperation>> build()  {
+        if(second == null) {
+            return null;
+        }
+        if( threadIndexSet.size() < 2) {
+            return null;
+        }
+        TLinkedList<TLinkableWrapper<DeadlockOperation>> dependentBlockList = new TLinkedList<>();
+        for(PositionPair first : firstPositions) {
+            for(PositionPair second : secondPositions) {
+                if(first.threadIndex() != second.threadIndex()) {
+                    dependentBlockList.add(wrap(new DeadlockOperationImpl(first,second)));
+                }
+            }
 
+        }
+        return dependentBlockList;
+    }
 }

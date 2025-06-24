@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
@@ -12,11 +13,13 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.Volatile
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.Barrier;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.DeadlockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.IndependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockOrConditionContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
+import gnu.trove.map.hash.THashMap;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.toArray;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
@@ -38,6 +41,7 @@ public class KeyToOperationCollection {
     private final KeyToOperation<BarrierKey, DependentOperationAndPosition<Barrier>> barrier = new KeyToOperation<>();
     private final TLinkedList<TLinkableWrapper<ElementAndPosition<IndependentBlock>>> independentActions = new TLinkedList<>();
 
+    private TLinkedList<TLinkableWrapper<DeadlockOperation>> deadlocks;
 
     public void addVolatile(VolatileKey key, DependentOperationAndPosition<VolatileAccess> operation) {
         volatileAccess.put(key,operation);
@@ -55,6 +59,18 @@ public class KeyToOperationCollection {
         independentActions.add(wrap(threadOperationAndPosition));
     }
 
+    public void setDeadlocks(TLinkedList<TLinkableWrapper<DeadlockOperation>> deadlocks) {
+        this.deadlocks = deadlocks;
+    }
+
+    public THashMap<Position,DeadlockOperation> buildDeadLockMap() {
+        THashMap<Position,DeadlockOperation> map = new THashMap<>();
+        for(TLinkableWrapper<DeadlockOperation> op : deadlocks) {
+            op.element().addToMap(map);
+        }
+        return map;
+    }
+
     public LeftBeforeRight[] buildFixedOrders(ThreadIndexToMaxPosition threadIndexToMaxPosition) {
         TLinkedList<TLinkableWrapper<LeftBeforeRight>> fixedOrder = new TLinkedList<>();
         for(TLinkableWrapper<ElementAndPosition<IndependentBlock>> action : independentActions) {
@@ -69,9 +85,10 @@ public class KeyToOperationCollection {
         node = lockAndConditions.process(context, node);
         node = barrier.process(context, node);
 
+        for(TLinkableWrapper<DeadlockOperation> op : deadlocks) {
+            node = op.element().addToAlternatingOrder(node);
+        }
 
         return treeBuilder.build();
     }
-
-
 }

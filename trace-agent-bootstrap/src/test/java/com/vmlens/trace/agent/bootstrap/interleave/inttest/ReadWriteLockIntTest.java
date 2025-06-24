@@ -1,12 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.interleave.inttest;
 
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.ReadWriteLockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
-import org.junit.Ignore;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.lock.ReadWriteLockKey;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -59,8 +58,6 @@ public class ReadWriteLockIntTest {
     }
 
     @Test
-    @Ignore
-    // Fixme enable deadlock
     public void deadlockReadWrite() {
         // Given
         LockKey A = ReadWriteLockKey.readKey(1000L);
