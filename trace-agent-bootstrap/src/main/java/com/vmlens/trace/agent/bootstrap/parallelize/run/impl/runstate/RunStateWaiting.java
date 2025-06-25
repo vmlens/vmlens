@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
-
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
@@ -14,33 +13,30 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 import gnu.trove.set.hash.TIntHashSet;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ProcessAfter.process;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.RunStateActive.calculateIsActive;
 
-public class RunStateActive extends ProcessLockExitOrWaitTemplate implements RunState {
+public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements RunState {
 
+    private TIntHashSet notYetWaitingThreadIndices;
     private final RunStateContext runStateContext;
     private final int startedThreadIndex;
 
-    public RunStateActive(RunStateContext runStateContext) {
-        this.runStateContext = runStateContext;
-        this.startedThreadIndex = -1;
-    }
-
-    public RunStateActive(RunStateContext runStateContext,
-                          int startedThreadIndex) {
+    public RunStateWaiting(RunStateContext runStateContext,
+                           int startedThreadIndex,
+                           TIntHashSet notYetWaitingThreadIndices) {
         this.runStateContext = runStateContext;
         this.startedThreadIndex = startedThreadIndex;
+        this.notYetWaitingThreadIndices = notYetWaitingThreadIndices;
     }
-
-    public static boolean calculateIsActive(RunStateContext runStateContext,
-                                            ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
-                                            SendEvent sendEvent) {
-        return runStateContext.isActive(threadLocalDataWhenInTest.threadIndex(),sendEvent);
-    }
-
 
     @Override
-    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent) {
-       return calculateIsActive(runStateContext,threadLocalDataWhenInTest,sendEvent);
+    public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, SendEvent sendEvent) {
+        notYetWaitingThreadIndices = runStateContext.removeNotActive(notYetWaitingThreadIndices);
+        if(! notYetWaitingThreadIndices.isEmpty()) {
+            return false;
+        }
+
+        return calculateIsActive(runStateContext,threadLocalDataWhenInTest,sendEvent);
     }
 
     @Override
@@ -51,7 +47,11 @@ public class RunStateActive extends ProcessLockExitOrWaitTemplate implements Run
     @Override
     public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
         process(afterContext, sendEvent, runStateContext, startedThreadIndex);
-        return this;
+        notYetWaitingThreadIndices = runStateContext.removeNotActive(notYetWaitingThreadIndices);
+        if(! notYetWaitingThreadIndices.isEmpty()) {
+            return this;
+        }
+        return new RunStateActive(runStateContext,startedThreadIndex);
     }
 
     @Override
@@ -61,19 +61,22 @@ public class RunStateActive extends ProcessLockExitOrWaitTemplate implements Run
     }
 
     @Override
-    public  RunStateAndResult<ThreadLocalWhenInTest>
-                processNewTestTask(NewTaskContext newTaskContext,
-                                   Run run,
-                                   SendEvent sendEvent) {
-        return  RunStateAndResult.of(this, null);
+    public RunStateAndResult<ThreadLocalWhenInTest> processNewTestTask(NewTaskContext newTaskContext, Run run, SendEvent sendEvent) {
+        return RunStateAndResult.of(this, null);
     }
 
     @Override
     public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
-        if(runStateContext.isBlocked(sendEvent)) {
-            return new RunStateAndResult<>(new RunStateActive(runStateContext.withoutCalculated()),true);
+        notYetWaitingThreadIndices = runStateContext.removeNotActive(notYetWaitingThreadIndices);
+        if(! notYetWaitingThreadIndices.isEmpty()) {
+            return new RunStateAndResult<>(this,false);
         }
-        return new RunStateAndResult<>(this,false);
+        return  new RunStateAndResult<>(new RunStateActive(runStateContext,startedThreadIndex),false);
+    }
+
+    @Override
+    public TIntHashSet notYetWaitingThreadIndices() {
+        return notYetWaitingThreadIndices;
     }
 
     @Override
@@ -87,17 +90,13 @@ public class RunStateActive extends ProcessLockExitOrWaitTemplate implements Run
     }
 
     @Override
-    protected TIntHashSet notYetWaitingThreadIndices() {
-        return new TIntHashSet();
-    }
-
-    @Override
     protected RunState runStateWaiting(TIntHashSet newThreadIndices) {
-        return new RunStateWaiting(runStateContext,startedThreadIndex,newThreadIndices);
+        this.notYetWaitingThreadIndices = newThreadIndices;
+        return this;
     }
 
     @Override
     protected RunState runStateActive() {
-        return this;
+        return new RunStateActive(runStateContext,startedThreadIndex);
     }
 }

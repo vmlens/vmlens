@@ -7,6 +7,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalcu
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import gnu.trove.iterator.TIntIterator;
+import gnu.trove.set.hash.TIntHashSet;
 
 import static com.vmlens.trace.agent.bootstrap.exception.Message.TEST_BLOCKED_MESSAGE;
 
@@ -27,7 +29,7 @@ public class RunStateContext {
     }
 
     public boolean isActive(int threadIndex,SendEvent sendEvent) {
-        return interleaveRun.isActive(threadIndex,runContext.getActiveThreadIndices(sendEvent));
+        return interleaveRun.isActive(threadIndex,runContext.getActiveThreadIndices());
     }
 
     public ThreadIndexAndThreadStateMap runContext() {
@@ -42,9 +44,9 @@ public class RunStateContext {
     }
 
     public boolean isBlocked(SendEvent sendEvent) {
-        Integer activeThreadIndex = interleaveRun.activeThreadIndex(runContext.getActiveThreadIndices(sendEvent));
+        Integer activeThreadIndex = interleaveRun.activeThreadIndex(runContext.getActiveThreadIndices());
         if(activeThreadIndex != null) {
-            ThreadState state = runContext.isBlocked(activeThreadIndex, sendEvent);
+            ThreadState state = runContext.isBlocked(activeThreadIndex);
             switch (state) {
                 case TERMINATED : {
                     return true;
@@ -62,6 +64,24 @@ public class RunStateContext {
             }
         }
         return false;
+    }
+
+    public TIntHashSet removeNotActive(TIntHashSet waitingThreadIndices) {
+        TIntHashSet result = new TIntHashSet();
+        TIntIterator iter = waitingThreadIndices.iterator();
+        while(iter.hasNext()) {
+            int index = iter.next();
+            ThreadState state = runContext.isBlocked(index);
+            switch (state) {
+                case TERMINATED :
+                case BLOCKED :
+                    break;
+                case ACTIVE:
+                    result.add(index);
+                    break;
+            }
+        }
+        return result;
     }
 
     public int getThreadIndexForNewTestThread() {

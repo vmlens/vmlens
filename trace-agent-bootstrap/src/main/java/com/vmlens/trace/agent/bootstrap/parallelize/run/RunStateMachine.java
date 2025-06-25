@@ -31,10 +31,9 @@ public interface RunStateMachine {
     ActualRun end(ThreadLocalForParallelize threadLocalForParallelize);
 
     void beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
+                              ThreadLocalWhenInTest threadLocalDataWhenInTest,
                               SendEvent sendEvent);
 
-    void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                             SendEvent sendEvent);
 
 
 }

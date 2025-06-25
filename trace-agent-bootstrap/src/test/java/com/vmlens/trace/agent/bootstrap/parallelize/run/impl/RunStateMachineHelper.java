@@ -17,7 +17,6 @@ import gnu.trove.list.linked.TLinkedList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -46,7 +45,7 @@ public class RunStateMachineHelper {
 
     public static ThreadLocalForParallelize createThreadLocalForParallelize(ThreadState threadState) {
         ThreadForParallelize threadForParallelize = mock(ThreadForParallelize.class);
-        when(threadForParallelize.isBlocked(any())).thenReturn(threadState);
+        when(threadForParallelize.isBlocked()).thenReturn(threadState);
         return new ThreadLocalForParallelize(threadForParallelize);
     }
 
@@ -78,6 +77,13 @@ public class RunStateMachineHelper {
         ThreadWrapper threadWrapper = createThreadWrapper();
         runStateMachineImpl().newTestTaskStarted(threadWrapper);
         ThreadLocalForParallelize threadLocalForParallelize = createThreadLocalForParallelize(threadState);
+        NewTaskContext newTaskContext = new NewTaskContext(queueInMock(),threadWrapper,threadLocalForParallelize);
+        return runStateMachineImpl().processNewTestTask(newTaskContext, run(),sendEvent());
+    }
+
+    public ThreadLocalWhenInTest startThread(ThreadLocalForParallelize threadLocalForParallelize) {
+        ThreadWrapper threadWrapper = createThreadWrapper();
+        runStateMachineImpl().newTestTaskStarted(threadWrapper);
         NewTaskContext newTaskContext = new NewTaskContext(queueInMock(),threadWrapper,threadLocalForParallelize);
         return runStateMachineImpl().processNewTestTask(newTaskContext, run(),sendEvent());
     }

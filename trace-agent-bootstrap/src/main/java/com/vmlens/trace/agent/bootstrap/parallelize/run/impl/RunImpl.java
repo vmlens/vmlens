@@ -131,7 +131,7 @@ public class RunImpl implements Run {
         try {
         ParallelizeActionMultiJoin action = new ParallelizeActionMultiJoin(this, joinedThreadIds, threadJoinedAction.inMethodId(), threadJoinedAction.position());
         runStateMachine.after(new AfterContextForStateMachine(threadJoinedAction.threadLocalDataWhenInTest(),
-                    action,threadJoinedAction.queueIn() ),new SendEvent(threadJoinedAction.queueIn(),this));
+                    action ),new SendEvent(threadJoinedAction.queueIn(),this));
         waitNotifyStrategy.notifyAndWaitTillActive(threadJoinedAction.threadLocalDataWhenInTest(),
                     runStateMachine,
                     threadActiveCondition,

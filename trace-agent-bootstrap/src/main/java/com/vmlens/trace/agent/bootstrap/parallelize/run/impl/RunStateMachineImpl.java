@@ -60,13 +60,10 @@ public class RunStateMachineImpl implements RunStateMachine  {
 
     @Override
     public void beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
+                                     ThreadLocalWhenInTest threadLocalDataWhenInTest,
                                      SendEvent sendEvent) {
-
+        currentState = currentState.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,sendEvent);
     }
 
-    @Override
-    public void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                    SendEvent sendEvent) {
 
-    }
 }
