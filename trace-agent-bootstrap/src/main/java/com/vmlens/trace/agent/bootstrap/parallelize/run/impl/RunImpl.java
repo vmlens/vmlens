@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
@@ -136,6 +138,32 @@ public class RunImpl implements Run {
                     runStateMachine,
                     threadActiveCondition,
                     new SendEvent(threadJoinedAction.queueIn(),this));
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
+                                     ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                     QueueIn queueIn) {
+        lock.lock();
+        try {
+            runStateMachine.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,new SendEvent(queueIn,this));
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+        lock.lock();
+        try {
+            waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest,
+                        runStateMachine,
+                        threadActiveCondition,
+                        new SendEvent(queueIn,this));
+
         } finally {
             lock.unlock();
         }

@@ -12,6 +12,7 @@ public class BarrierEventGen  {
     protected int     methodCounter;
     protected long     objectHashCode;
     protected int     barrierType;
+    protected int     barrierKeyType;
     protected int     bytecodePosition;
     protected int     methodId;
     protected int     loopId;
@@ -28,6 +29,7 @@ public boolean equals(Object o) {
     if ( methodCounter != that.methodCounter) return false;
     if ( objectHashCode != that.objectHashCode) return false;
     if ( barrierType != that.barrierType) return false;
+    if ( barrierKeyType != that.barrierKeyType) return false;
     if ( bytecodePosition != that.bytecodePosition) return false;
     if ( methodId != that.methodId) return false;
     if ( loopId != that.loopId) return false;
@@ -43,6 +45,7 @@ public String toString() {
     "methodCounter=" + methodCounter +
     "objectHashCode=" + objectHashCode +
     "barrierType=" + barrierType +
+    "barrierKeyType=" + barrierKeyType +
     "bytecodePosition=" + bytecodePosition +
     "methodId=" + methodId +
     "loopId=" + loopId +
@@ -55,7 +58,7 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  41, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  45, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
@@ -65,6 +68,7 @@ buffer.put( (byte)  14 );
      buffer.putInt( methodCounter ); 
       buffer.putLong( objectHashCode );  
      buffer.putInt( barrierType ); 
+     buffer.putInt( barrierKeyType ); 
      buffer.putInt( bytecodePosition ); 
      buffer.putInt( methodId ); 
      buffer.putInt( loopId ); 

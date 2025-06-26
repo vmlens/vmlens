@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
@@ -17,6 +19,18 @@ public class RunAdapter {
     public void after(AfterContext afterContext) {
         afterContext.runtimeEvent().setThreadIndex(afterContext.threadLocalDataWhenInTest().threadIndex());
         run.after(afterContext);
+    }
+
+    public void beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
+                                     ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                     QueueIn queueIn) {
+        lockExitOrWaitEvent.setThreadIndex(threadLocalDataWhenInTest.threadIndex());
+        run.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,queueIn);
+    }
+
+    public void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                             QueueIn queueIn) {
+        run.afterLockExitOrWait(threadLocalDataWhenInTest,queueIn);
     }
 
     public void newTestTaskStarted(ThreadWrapper newWrapper) {

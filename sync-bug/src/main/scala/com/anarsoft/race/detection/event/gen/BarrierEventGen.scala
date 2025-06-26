@@ -14,6 +14,7 @@ class BarrierEventGen (
  ,  val methodCounter  : Int  
  ,  val objectHashCode  : Long  
  ,  val barrierType  : Int  
+ ,  val barrierKeyType  : Int  
  ,  val bytecodePosition  : Int  
  ,  val methodId  : Int  
  ,  val loopId  : Int  
@@ -27,6 +28,7 @@ override def toString : String = {
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", objectHashCode:" +  objectHashCode 
   text = text + ", barrierType:" +  barrierType 
+  text = text + ", barrierKeyType:" +  barrierKeyType 
   text = text + ", bytecodePosition:" +  bytecodePosition 
   text = text + ", methodId:" +  methodId 
   text = text + ", loopId:" +  loopId 
@@ -55,6 +57,11 @@ override def equals(other: Any) : Boolean = {
              }
              else
              if( barrierType != that.barrierType )
+             {
+               false;
+             }
+             else
+             if( barrierKeyType != that.barrierKeyType )
              {
                false;
              }
@@ -103,6 +110,8 @@ object  BarrierEventGen
             data.getInt()
           ,
             data.getLong()
+          ,
+            data.getInt()
           ,
             data.getInt()
           ,

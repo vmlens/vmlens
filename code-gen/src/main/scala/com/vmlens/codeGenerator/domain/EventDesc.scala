@@ -85,6 +85,7 @@ object EventDesc extends GenericDesc {
   val isShared = new FieldDesc("isShared", booleanTyp)
   val lockType = new FieldDesc("lockType", intTyp)
   val barrierType = new FieldDesc("barrierType", intTyp)
+  val barrierKeyType = new FieldDesc("barrierKeyType", intTyp)
   val conditionType = new FieldDesc("conditionType", intTyp)
   val startedThreadIndex = new FieldDesc("startedThreadIndex", intTyp)
   val joinedThreadIndex = new FieldDesc("joinedThreadIndex", intTyp)

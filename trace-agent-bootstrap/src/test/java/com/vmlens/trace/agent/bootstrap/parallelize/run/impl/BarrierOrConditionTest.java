@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierEvent;
+import com.vmlens.trace.agent.bootstrap.eventtype.BarrierKeyTypeFuture;
 import com.vmlens.trace.agent.bootstrap.eventtype.BarrierTypeWait;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated;
@@ -38,7 +39,7 @@ public class BarrierOrConditionTest {
     @Test
     public void waitNotifyHappyFlow() {
         // Given
-        BarrierEvent wait = new BarrierEvent(BarrierTypeWait.SINGLETON);
+        BarrierEvent wait = new BarrierEvent(BarrierTypeWait.SINGLETON, BarrierKeyTypeFuture.SINGLETON);
 
         ActualRun actualRun = new ActualRun();
         InterleaveRunWithoutCalculated interleaveRunWithoutCalculated
