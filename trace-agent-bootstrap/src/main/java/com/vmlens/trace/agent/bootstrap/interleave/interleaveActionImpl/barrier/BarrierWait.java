@@ -1,18 +1,27 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
 import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.BarrierOperationVisitor;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.AddToAlternatingOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+
+import java.util.Objects;
 
 public class BarrierWait implements Barrier, BarrierOperationVisitor {
 
+    private final int threadIndex;
     private final BarrierKey barrierKey;
 
-    public BarrierWait(BarrierKey barrierKey) {
+    public BarrierWait(int threadIndex,
+                       BarrierKey barrierKey) {
+        this.threadIndex = threadIndex;
         this.barrierKey = barrierKey;
     }
 
@@ -49,5 +58,42 @@ public class BarrierWait implements Barrier, BarrierOperationVisitor {
     @Override
     public AddToAlternatingOrder visit(Position myPosition, BarrierWait other, Position otherPosition) {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+
+        BarrierWait that = (BarrierWait) object;
+        return Objects.equals(barrierKey, that.barrierKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(barrierKey);
+    }
+
+    @Override
+    public int threadIndex() {
+        return threadIndex;
+    }
+
+    @Override
+    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+        if(! (other instanceof BarrierWait)) {
+            return false;
+        }
+        BarrierWait otherLock = (BarrierWait) other;
+        if(threadIndex != otherLock.threadIndex)  {
+            return false;
+        }
+        return barrierKey.equalsNormalized(normalizeContext,otherLock.barrierKey);
+    }
+
+    @Override
+    public void addToKeyToOperationCollection(Position myPosition,
+                                              ActiveLockCollection mapContainingStack,
+                                              KeyToOperationCollection result) {
+        result.addBarrier(barrierKey,new DependentOperationAndPosition<>(myPosition,this));
     }
 }
