@@ -23,8 +23,8 @@ public class BarrierOperationTest {
     private final Position waitPosition = pos(0,0);
 
     private final FutureKey futureKey = new FutureKey(5L);
-    private final BarrierNotify notify = new BarrierNotify(futureKey);
-    private final BarrierWait wait = new BarrierWait(futureKey);
+    private final BarrierNotify notify = new BarrierNotify(1,futureKey);
+    private final BarrierWait wait = new BarrierWait(1,futureKey);
 
     @Test
     public void testAsymmetricWaitNotify() {

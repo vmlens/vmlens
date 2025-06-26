@@ -1,5 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.eventtype;
 
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.Barrier;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
+
 public class BarrierTypeNotify implements BarrierType {
 
     public static final BarrierType SINGLETON = new BarrierTypeNotify();
@@ -12,5 +16,10 @@ public class BarrierTypeNotify implements BarrierType {
     @Override
     public Integer asWaitingThreadIndex(int threadIndex) {
         return null;
+    }
+
+    @Override
+    public Barrier create(int threadIndex, BarrierKey key) {
+        return new BarrierNotify(threadIndex,key);
     }
 }

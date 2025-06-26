@@ -64,8 +64,8 @@ public class KeyToOperationTest {
 
         // Given
         FutureKey futureKey = new FutureKey(1L);
-        BarrierNotify barrierNotify = new BarrierNotify(futureKey);
-        BarrierWait barrierWait = new BarrierWait(futureKey);
+        BarrierNotify barrierNotify = new BarrierNotify(1, futureKey);
+        BarrierWait barrierWait = new BarrierWait(1, futureKey);
 
         KeyToOperation<BarrierKey, DependentOperationAndPosition<Barrier>> keyToOperation = new KeyToOperation<>();
         keyToOperation.put(barrierNotify.key(),new DependentOperationAndPosition<>(pos(0,0) , barrierNotify));

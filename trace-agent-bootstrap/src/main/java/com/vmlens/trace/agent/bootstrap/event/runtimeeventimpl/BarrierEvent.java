@@ -9,19 +9,20 @@ import com.vmlens.trace.agent.bootstrap.eventtype.BarrierKeyTypeCollection;
 import com.vmlens.trace.agent.bootstrap.eventtype.BarrierType;
 import com.vmlens.trace.agent.bootstrap.eventtype.BarrierTypeCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent {
+public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent, WithInMethodIdPositionReadWriteLockMap {
 
     private final BarrierType barrierTypeClass;
     private final BarrierKeyType barrierKeyTypeClass;
+    private Object object;
 
     public BarrierEvent(BarrierType barrierType,
-                        BarrierKeyType barrierKeyTypeClass) {
+                        BarrierKeyType barrierKeyTypeClass,
+                        Object object) {
         this.barrierTypeClass = barrierType;
         this.barrierKeyTypeClass = barrierKeyTypeClass;
+        this.object = object;
         this.barrierType = BarrierTypeCollection.SINGLETON.toId(barrierType);
         this.barrierKeyType = BarrierKeyTypeCollection.SINGLETON.toId(barrierKeyTypeClass);
     }
@@ -65,7 +66,7 @@ public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return null;
+        return barrierTypeClass.create(threadIndex,barrierKeyTypeClass.create(objectHashCode));
     }
 
     @Override
@@ -74,7 +75,11 @@ public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent
     }
 
     @Override
-    public void after(InterleaveRun interleaveRun, CreateInterleaveActionContext context, ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize, SendEvent sendEvent) {
-
+    public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
+        this.objectHashCode = System.identityHashCode(object);
+        this.methodId = inMethodId;
+        this.bytecodePosition = position;
+        this.object = null;
     }
+
 }

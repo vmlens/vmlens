@@ -39,7 +39,7 @@ public class BarrierOrConditionTest {
     @Test
     public void waitNotifyHappyFlow() {
         // Given
-        BarrierEvent wait = new BarrierEvent(BarrierTypeWait.SINGLETON, BarrierKeyTypeFuture.SINGLETON);
+        BarrierEvent wait = new BarrierEvent(BarrierTypeWait.SINGLETON, BarrierKeyTypeFuture.SINGLETON, new Object());
 
         ActualRun actualRun = new ActualRun();
         InterleaveRunWithoutCalculated interleaveRunWithoutCalculated
