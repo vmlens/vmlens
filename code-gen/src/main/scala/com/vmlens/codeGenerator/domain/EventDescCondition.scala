@@ -6,20 +6,33 @@ import scala.collection.mutable.ArrayBuffer
 
 object EventDescCondition {
 
-  private def fieldListLockOrMonitor() = {
+  private def fieldListCondition() = {
     val fields = new ArrayBuffer[FieldDesc]();
     fields.append(threadIndex);
     fields.append(methodCounter);
     fields.append(objectHashCode);
-    fields.append(conditionType)
     fields.append(bytecodePosition);
     fields.append(methodId);
     fields;
   }
+  
+  private def fieldListWait() = {
+    val fields = fieldListCondition();
+    fields.append(lockType)
+    fields;
+  }
+
+  private def fieldListNotify() = {
+    val fields = fieldListCondition();
+    fields.append(conditionType)
+    fields;
+  }
 
 
-  def condition(eventName: String, extendsString: String, typControl: EventTyp): EventDesc =
-    new EventDesc(eventName, typControl, nextId(), plusInterleaveFields(fieldListLockOrMonitor()), extendsString)
+  def conditionWait(eventName: String, extendsString: String, typControl: EventTyp): EventDesc =
+    new EventDesc(eventName, typControl, nextId(), plusInterleaveFields(fieldListWait()), extendsString)
 
+  def conditionNotify(eventName: String, extendsString: String, typControl: EventTyp): EventDesc =
+    new EventDesc(eventName, typControl, nextId(), plusInterleaveFields(fieldListNotify()), extendsString)
 
 }

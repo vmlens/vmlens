@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.eventtype;
+package com.vmlens.trace.agent.bootstrap.barriertype;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
 

@@ -33,7 +33,7 @@ public class ReadWriteLockIntTest {
         expectedBuilder.group(exit1,enter0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ReadWriteLockIntTest {
         ExpectedBuilder expectedBuilder = new ExpectedBuilder();
 
         // Test
-        int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.build()).size();
+        int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected()).size();
         assertThat(count,is(0));
     }
 
@@ -80,7 +80,7 @@ public class ReadWriteLockIntTest {
         expectedBuilder.group(enterA_0,enterB_1,enterA_1,enterB_0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ReadWriteLockIntTest {
         ExpectedBuilder expectedBuilder = new ExpectedBuilder();
 
         // Test
-        int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.build()).size();
+        int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected()).size();
         assertThat(count,is(0));
     }
 

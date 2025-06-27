@@ -12,9 +12,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Expected {
 
+    private final boolean isExpected;
     private final List<ExpectedElement> expectedElements;
 
-    public Expected(List<ExpectedElement> expectedElements) {
+    public Expected(boolean isExpected,
+                    List<ExpectedElement> expectedElements) {
+        this.isExpected = isExpected;
         this.expectedElements = expectedElements;
     }
 

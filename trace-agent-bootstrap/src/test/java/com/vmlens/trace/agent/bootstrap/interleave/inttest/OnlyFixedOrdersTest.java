@@ -17,7 +17,7 @@ public class OnlyFixedOrdersTest {
         ExpectedBuilder expectedBuilder = new ExpectedBuilder();
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
 }

@@ -4,10 +4,10 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.BarrierEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
-import com.vmlens.trace.agent.bootstrap.eventtype.BarrierKeyType;
-import com.vmlens.trace.agent.bootstrap.eventtype.BarrierKeyTypeCollection;
-import com.vmlens.trace.agent.bootstrap.eventtype.BarrierType;
-import com.vmlens.trace.agent.bootstrap.eventtype.BarrierTypeCollection;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyType;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyTypeCollection;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierType;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierTypeCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 

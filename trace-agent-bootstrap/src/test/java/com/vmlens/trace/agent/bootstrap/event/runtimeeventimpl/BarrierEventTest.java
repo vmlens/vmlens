@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.eventtype.BarrierKeyTypeFuture;
-import com.vmlens.trace.agent.bootstrap.eventtype.BarrierTypeWait;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyTypeFuture;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierTypeWait;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWait;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.FutureKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;

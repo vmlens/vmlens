@@ -5,14 +5,14 @@ import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
 
-public class ThreadStartEventGen  {
+public class ConditionWaitExitEventGen  {
 
     protected int     threadIndex;
+    protected int     methodCounter;
+    protected long     objectHashCode;
     protected int     bytecodePosition;
     protected int     methodId;
-    protected int     startedThreadIndex;
-    protected int     methodCounter;
-    protected int     eventType;
+    protected int     lockType;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
@@ -22,13 +22,13 @@ public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ThreadStartEventGen that = (ThreadStartEventGen) o;
+    ConditionWaitExitEventGen that = (ConditionWaitExitEventGen) o;
     if ( threadIndex != that.threadIndex) return false;
+    if ( methodCounter != that.methodCounter) return false;
+    if ( objectHashCode != that.objectHashCode) return false;
     if ( bytecodePosition != that.bytecodePosition) return false;
     if ( methodId != that.methodId) return false;
-    if ( startedThreadIndex != that.startedThreadIndex) return false;
-    if ( methodCounter != that.methodCounter) return false;
-    if ( eventType != that.eventType) return false;
+    if ( lockType != that.lockType) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
@@ -37,13 +37,13 @@ public boolean equals(Object o) {
 
 @Override
 public String toString() {
-    return "ThreadStartEventGen{" +
+    return "ConditionWaitExitEventGen{" +
     "threadIndex=" + threadIndex +
+    "methodCounter=" + methodCounter +
+    "objectHashCode=" + objectHashCode +
     "bytecodePosition=" + bytecodePosition +
     "methodId=" + methodId +
-    "startedThreadIndex=" + startedThreadIndex +
-    "methodCounter=" + methodCounter +
-    "eventType=" + eventType +
+    "lockType=" + lockType +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
@@ -54,18 +54,18 @@ public String toString() {
 
  public void serialize(StreamRepository streamRepository) throws Exception {
      serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  37, EventConstants.MAX_ARRAY_SIZE * 1000));
+                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  41, EventConstants.MAX_ARRAY_SIZE * 1000));
 
  }
 
 public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  20 );
+buffer.put( (byte)  16 );
      buffer.putInt( threadIndex ); 
+     buffer.putInt( methodCounter ); 
+      buffer.putLong( objectHashCode );  
      buffer.putInt( bytecodePosition ); 
      buffer.putInt( methodId ); 
-     buffer.putInt( startedThreadIndex ); 
-     buffer.putInt( methodCounter ); 
-     buffer.putInt( eventType ); 
+     buffer.putInt( lockType ); 
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 

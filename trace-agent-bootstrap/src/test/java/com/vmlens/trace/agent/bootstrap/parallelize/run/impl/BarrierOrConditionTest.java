@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierEvent;
-import com.vmlens.trace.agent.bootstrap.eventtype.BarrierKeyTypeFuture;
-import com.vmlens.trace.agent.bootstrap.eventtype.BarrierTypeWait;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyTypeFuture;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierTypeWait;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;

@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.eventtype;
+package com.vmlens.trace.agent.bootstrap.barriertype;
 
 import gnu.trove.map.hash.THashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;

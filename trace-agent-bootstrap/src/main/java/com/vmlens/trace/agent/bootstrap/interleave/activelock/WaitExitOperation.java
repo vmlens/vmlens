@@ -3,12 +3,12 @@ package com.vmlens.trace.agent.bootstrap.interleave.activelock;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 
-public class LockEnterOperation implements LockStartOperation{
+public class WaitExitOperation implements LockStartOperation {
 
     private final Position position;
     private final LockKey key;
 
-    public LockEnterOperation(Position position, LockKey key) {
+    public WaitExitOperation(Position position, LockKey key) {
         this.position = position;
         this.key = key;
     }
@@ -35,11 +35,11 @@ public class LockEnterOperation implements LockStartOperation{
 
     @Override
     public boolean canBeDeadlockParent() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean canBeDeadlockChild() {
-        return true;
+        return false;
     }
 }

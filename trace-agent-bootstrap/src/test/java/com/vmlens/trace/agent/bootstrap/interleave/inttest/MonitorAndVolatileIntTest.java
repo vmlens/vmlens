@@ -34,7 +34,7 @@ public class MonitorAndVolatileIntTest {
         expectedBuilder.group(exit1,enter0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
 }

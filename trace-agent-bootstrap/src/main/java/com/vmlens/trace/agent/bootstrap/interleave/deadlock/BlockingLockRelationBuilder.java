@@ -39,6 +39,12 @@ public class BlockingLockRelationBuilder {
         if(parentKey.isRead() && childKey.isRead()) {
             return;
         }
+        if(! parent.canBeDeadlockParent()) {
+            return;
+        }
+        if(! child.canBeDeadlockChild()) {
+            return;
+        }
 
         PositionPair positionPair = new PositionPair(parent.position(),child.position());
         LockPair pair = new LockPair(parent,child);

@@ -1,16 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.interleave.lockcontainer;
 
 
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockStartOperation;
 
 public class BlockEndBuilder {
 
     private final BlockAndOperationBuilder blockAndOperationBuilder;
-    private final LockEnterOperation blockStart;
+    private final LockStartOperation blockStart;
 
 
     public BlockEndBuilder(BlockAndOperationBuilder blockAndOperationBuilder,
-                           LockEnterOperation blockStart) {
+                           LockStartOperation blockStart) {
         this.blockAndOperationBuilder = blockAndOperationBuilder;
         this.blockStart = blockStart;
     }

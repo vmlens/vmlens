@@ -30,7 +30,7 @@ public class ReentrantLockIntTest {
         expectedBuilder.group(exit1,enter0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
     @Test
@@ -57,6 +57,6 @@ public class ReentrantLockIntTest {
         expectedBuilder.group(exitB1,enterA0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 }

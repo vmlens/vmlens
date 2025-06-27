@@ -2,7 +2,7 @@ package com.vmlens.codeGenerator.domain
 
 import com.vmlens.codeGenerator.domain.EventDescAtomicNonBlocking.{atomicArray, atomicNonBlocking}
 import com.vmlens.codeGenerator.domain.EventDescBarrier.barrier
-import com.vmlens.codeGenerator.domain.EventDescCondition.condition
+import com.vmlens.codeGenerator.domain.EventDescCondition.{conditionNotify, conditionWait}
 import com.vmlens.codeGenerator.domain.EventDescControl.{runStartAndEnd, warning}
 import com.vmlens.codeGenerator.domain.EventDescLockOrMonitor.{lock, methodWithLock, monitor}
 import com.vmlens.codeGenerator.domain.EventDescMethod.method
@@ -136,7 +136,9 @@ object EventDesc extends GenericDesc {
       eventList.append(monitor("MonitorExitEventGen", " extends MonitorExitEvent", typSyncActions));
 
       eventList.append(barrier("BarrierEventGen", " extends BarrierEvent  ", typSyncActions));
-      eventList.append(condition("ConditionEventGen", " extends ConditionEvent  ", typSyncActions));
+      eventList.append(conditionWait("ConditionWaitEnterEventGen", " extends ConditionWaitEvent  ", typSyncActions));
+      eventList.append(conditionWait("ConditionWaitExitEventGen", " extends ConditionWaitEvent  ", typSyncActions));
+      eventList.append(conditionNotify("ConditionNotifyEventGen", " extends ConditionNotifyEvent  ", typSyncActions));
       
       eventList.append(method("MethodEnterEventGen", " extends MethodEnterEvent  ", typMethod));
       eventList.append(method("MethodExitEventGen", " extends MethodExitEvent  ", typMethod));

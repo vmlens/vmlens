@@ -9,26 +9,26 @@ import com.anarsoft.race.detection.event.directmemory._;
 import com.anarsoft.race.detection.event.interleave._;
 
 
-class ConditionEventGen (
+class ConditionWaitExitEventGen (
    val threadIndex  : Int  
  ,  val methodCounter  : Int  
  ,  val objectHashCode  : Long  
- ,  val conditionType  : Int  
  ,  val bytecodePosition  : Int  
  ,  val methodId  : Int  
+ ,  val lockType  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
-)    extends ConditionEvent  
+)    extends ConditionWaitExitEvent  
 {
 override def toString : String = {
-  var text =  "ConditionEventGen" 
+  var text =  "ConditionWaitExitEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", objectHashCode:" +  objectHashCode 
-  text = text + ", conditionType:" +  conditionType 
   text = text + ", bytecodePosition:" +  bytecodePosition 
   text = text + ", methodId:" +  methodId 
+  text = text + ", lockType:" +  lockType 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -37,7 +37,7 @@ override def toString : String = {
 
 override def equals(other: Any) : Boolean = {
     other match {
-      case that: ConditionEventGen => 
+      case that: ConditionWaitExitEventGen => 
         {
              if( threadIndex != that.threadIndex )
              {
@@ -54,17 +54,17 @@ override def equals(other: Any) : Boolean = {
                false;
              }
              else
-             if( conditionType != that.conditionType )
-             {
-               false;
-             }
-             else
              if( bytecodePosition != that.bytecodePosition )
              {
                false;
              }
              else
              if( methodId != that.methodId )
+             {
+               false;
+             }
+             else
+             if( lockType != that.lockType )
              {
                false;
              }
@@ -92,11 +92,11 @@ override def equals(other: Any) : Boolean = {
 }
 
 
-object  ConditionEventGen 
+object  ConditionWaitExitEventGen 
 {
    def applyFromJavaEvent(data : ByteBuffer) =
    {
-     val result = new ConditionEventGen (
+     val result = new ConditionWaitExitEventGen (
           
             data.getInt()
           ,

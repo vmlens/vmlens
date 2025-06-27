@@ -17,10 +17,10 @@ class MethodDeSerializer extends DeserializeStrategy[LoadedMethodEvent] {
     def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedMethodEvent = {
        val id = buffer.get();
        
-       if( id == 16 ) {
+       if( id == 18 ) {
           return MethodEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 17 ) {
+       if( id == 19 ) {
           return MethodExitEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");

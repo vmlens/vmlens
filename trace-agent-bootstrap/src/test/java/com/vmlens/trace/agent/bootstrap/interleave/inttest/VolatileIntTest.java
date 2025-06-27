@@ -28,7 +28,7 @@ public class VolatileIntTest {
         expectedBuilder.group(write1,read0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class VolatileIntTest {
         expectedBuilder.group(write1_1,write1_2,read0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class VolatileIntTest {
         ExpectedBuilder expectedBuilder = new ExpectedBuilder();
 
         // Test
-        int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.build()).size();
+        int count = new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected()).size();
         assertThat(count,is(0));
     }
 
