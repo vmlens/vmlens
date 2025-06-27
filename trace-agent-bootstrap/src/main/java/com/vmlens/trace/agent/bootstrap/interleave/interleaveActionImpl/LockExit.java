@@ -6,10 +6,10 @@ import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOrTryLock
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
-import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.Block;
-import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.BlockEnd;
-import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.BlockEndOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer.BlockStart;
+import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.Block;
+import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockEnd;
+import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockEndOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockStart;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 

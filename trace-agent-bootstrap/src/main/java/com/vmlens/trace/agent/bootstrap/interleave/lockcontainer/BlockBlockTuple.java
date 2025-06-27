@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer;
+package com.vmlens.trace.agent.bootstrap.interleave.lockcontainer;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.EitherInChoice;

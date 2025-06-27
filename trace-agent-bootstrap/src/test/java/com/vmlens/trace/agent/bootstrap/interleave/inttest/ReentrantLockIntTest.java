@@ -33,7 +33,30 @@ public class ReentrantLockIntTest {
         new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
     }
 
+    @Test
     public void chainedLocks() {
-        // Fixme implement
+        // Given
+        LockKey A = new ReentrantLockKey(1000L);
+        LockKey B = new ReentrantLockKey(100L);
+
+        IntTestBuilder builder = new IntTestBuilder();
+
+        IntTestOperation enterA0 = builder.enter(A,0);
+        builder.enter(B,0);
+        builder.exit(A,0);
+        IntTestOperation exitB0 = builder.exit(B,0);
+
+        IntTestOperation enterA1 = builder.enter(A,1);
+        builder.enter(B,1);
+        builder.exit(A,1);
+        IntTestOperation exitB1 = builder.exit(B,1);
+
+        // Expected
+        ExpectedBuilder expectedBuilder = new ExpectedBuilder();
+        expectedBuilder.group(exitB0,enterA1);
+        expectedBuilder.group(exitB1,enterA0);
+
+        // Test
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
     }
 }

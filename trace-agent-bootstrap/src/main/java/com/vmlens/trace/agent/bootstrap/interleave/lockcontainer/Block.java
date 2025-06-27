@@ -1,12 +1,12 @@
-package com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer;
+package com.vmlens.trace.agent.bootstrap.interleave.lockcontainer;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.AddToAlternatingOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockOrConditionContainer;
-import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockOrConditionContainerVisitor;
+import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockContainerVisitor;
 
-public class Block implements LockOrConditionContainer, LockOrConditionContainerVisitor {
+public class Block implements LockContainer, LockContainerVisitor {
 
     private final BlockStart start;
     private final BlockEnd end;
@@ -17,12 +17,12 @@ public class Block implements LockOrConditionContainer, LockOrConditionContainer
     }
 
     @Override
-    public AddToAlternatingOrder accept(LockOrConditionContainerVisitor visitor) {
+    public AddToAlternatingOrder accept(LockContainerVisitor visitor) {
         return visitor.visit(this);
     }
 
     @Override
-    public TreeBuilderNode addToAlternatingOrder(LockOrConditionContainer lockOrConditionContainer,
+    public TreeBuilderNode addToAlternatingOrder(LockContainer lockOrConditionContainer,
                                                  BuildAlternatingOrderContext context,
                                                  TreeBuilderNode treeBuilderNode) {
         AddToAlternatingOrder tuple = lockOrConditionContainer.accept(this);

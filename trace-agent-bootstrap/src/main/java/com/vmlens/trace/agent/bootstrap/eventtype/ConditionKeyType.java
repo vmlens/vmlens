@@ -1,5 +1,4 @@
 package com.vmlens.trace.agent.bootstrap.eventtype;
 
-public interface ConditionType {
-
+public class ConditionKeyType {
 }

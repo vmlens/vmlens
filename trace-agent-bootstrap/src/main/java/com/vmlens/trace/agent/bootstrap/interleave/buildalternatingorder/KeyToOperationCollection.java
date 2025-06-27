@@ -15,7 +15,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierk
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.DeadlockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.IndependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockOrConditionContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -37,7 +37,7 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 public class KeyToOperationCollection {
 
     private final KeyToOperation<VolatileKey, DependentOperationAndPosition<VolatileAccess>> volatileAccess = new KeyToOperation<>();
-    private final KeyToOperation<LockKey, LockOrConditionContainer> lockAndConditions = new KeyToOperation<>();
+    private final KeyToOperation<LockKey, LockContainer> lockAndConditions = new KeyToOperation<>();
     private final KeyToOperation<BarrierKey, DependentOperationAndPosition<Barrier>> barrier = new KeyToOperation<>();
     private final TLinkedList<TLinkableWrapper<ElementAndPosition<IndependentBlock>>> independentActions = new TLinkedList<>();
 
@@ -47,7 +47,7 @@ public class KeyToOperationCollection {
         volatileAccess.put(key,operation);
     }
 
-    public void addLockOrCondition(LockKey key, LockOrConditionContainer operation) {
+    public void addLockOrCondition(LockKey key, LockContainer operation) {
         lockAndConditions.put(key,operation);
     }
 

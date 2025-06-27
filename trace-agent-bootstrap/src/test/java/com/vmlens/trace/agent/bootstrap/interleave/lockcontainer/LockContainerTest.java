@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.lockorconditioncontainer;
+package com.vmlens.trace.agent.bootstrap.interleave.lockcontainer;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class LockOrConditionContainerTest {
+public class LockContainerTest {
 
     @Test
     public void monitorEnterExit() {
