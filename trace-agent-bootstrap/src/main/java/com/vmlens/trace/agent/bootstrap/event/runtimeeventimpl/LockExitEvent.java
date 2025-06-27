@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.event.gen.LockExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockExit;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
@@ -49,8 +48,7 @@ public class LockExitEvent extends LockExitEventGen implements LockEvent, LockEx
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        Lock monitor = new Lock(lockTypeClass.create(objectHashCode));
-        return new LockExit(threadIndex, monitor);
+        return new LockExit(threadIndex, lockTypeClass.create(objectHashCode));
     }
 
     public void setObjectHashCode(long objectHashCode) {

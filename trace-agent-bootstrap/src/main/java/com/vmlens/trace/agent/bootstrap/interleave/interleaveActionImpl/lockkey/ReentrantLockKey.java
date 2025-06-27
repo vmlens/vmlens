@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.lock;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey;
 
 public class ReentrantLockKey extends LockKey {
 

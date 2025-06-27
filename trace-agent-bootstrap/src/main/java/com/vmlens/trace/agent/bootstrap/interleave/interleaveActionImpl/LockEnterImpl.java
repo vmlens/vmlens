@@ -2,39 +2,28 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOrTryLock;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
-public class LockEnterImpl implements InterleaveAction, LockEnterOrTryLock {
+public class LockEnterImpl implements InterleaveAction  {
 
     private final int threadIndex;
-    private final Lock lockOrMonitor;
+    private final LockKey lockOrMonitor;
 
-    public LockEnterImpl(int threadIndex, Lock lockOrMonitor) {
+    public LockEnterImpl(int threadIndex, LockKey lockOrMonitor) {
         this.threadIndex = threadIndex;
         this.lockOrMonitor = lockOrMonitor;
     }
 
-    @Override
-    public LockKey key() {
-        return lockOrMonitor.key();
-    }
-
-    @Override
-    public boolean isReadLock() {
-        return lockOrMonitor.key().isRead();
-    }
 
     @Override
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
-        mapContainingStack.push(new ElementAndPosition<>(this,myPosition));
+        mapContainingStack.push(new LockEnterOperation(myPosition, lockOrMonitor));
     }
 
 
@@ -58,9 +47,6 @@ public class LockEnterImpl implements InterleaveAction, LockEnterOrTryLock {
         return lockOrMonitor.hashCode();
     }
 
-    public Lock lockOrMonitor() {
-        return lockOrMonitor;
-    }
 
     @Override
     public String toString() {
@@ -80,6 +66,6 @@ public class LockEnterImpl implements InterleaveAction, LockEnterOrTryLock {
             return false;
         }
 
-        return lockOrMonitor.key().equalsNormalized(normalizeContext,otherLock.key());
+        return lockOrMonitor.equalsNormalized(normalizeContext,otherLock.lockOrMonitor);
     }
 }

@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPo
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.VolatileAccess;
@@ -16,7 +16,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatile
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.DeadlockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.IndependentBlock;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockContainer;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;

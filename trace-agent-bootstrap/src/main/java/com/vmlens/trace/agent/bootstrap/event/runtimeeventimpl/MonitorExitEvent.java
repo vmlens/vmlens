@@ -5,8 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.MonitorExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NotThreadStartedInterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockExit;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class MonitorExitEvent extends MonitorExitEventGen implements
@@ -39,8 +38,7 @@ public class MonitorExitEvent extends MonitorExitEventGen implements
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        Lock monitor = new Lock(new MonitorKey(objectHashCode));
-        return new LockExit(threadIndex, monitor);
+        return new LockExit(threadIndex, new MonitorKey(objectHashCode));
     }
 
     @Override

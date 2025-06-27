@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.block;
+package com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection;
 
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;

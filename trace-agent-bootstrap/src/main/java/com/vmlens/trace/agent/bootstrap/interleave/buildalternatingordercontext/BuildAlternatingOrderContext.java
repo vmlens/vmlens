@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToMaxPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.DeadlockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockBlockTuple;
 import gnu.trove.map.hash.THashMap;

@@ -1,24 +1,24 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOrTryLock;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockStartOperation;
 
 import java.util.Objects;
 
 public class LockPair {
 
-    private final LockEnterOrTryLock parent;
-    private final LockEnterOrTryLock child;
+    private final LockStartOperation parent;
+    private final LockStartOperation child;
 
-    public LockPair(LockEnterOrTryLock parent, LockEnterOrTryLock child) {
+    public LockPair(LockStartOperation parent, LockStartOperation child) {
         this.parent = parent;
         this.child = child;
     }
 
-    public LockEnterOrTryLock parent() {
+    public LockStartOperation parent() {
         return parent;
     }
 
-    public LockEnterOrTryLock child() {
+    public LockStartOperation child() {
         return child;
     }
 

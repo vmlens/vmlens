@@ -1,8 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOrTryLock;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockStartOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
@@ -22,19 +21,19 @@ public class BlockingLockRelationBuilder {
         return new BlockingLockRelation(map);
     }
 
-    public void fill(TLinkedList<TLinkableWrapper<ElementAndPosition<LockEnterOrTryLock>>> list) {
+    public void fill(TLinkedList<TLinkableWrapper<LockStartOperation>> list) {
         for(int i = 0 ; i < list.size(); i++) {
-            TLinkableWrapper<ElementAndPosition<LockEnterOrTryLock>> parent = list.get(i);
+            TLinkableWrapper<LockStartOperation> parent = list.get(i);
             for(int j = i + 1 ; j <  list.size(); j++ ) {
-                TLinkableWrapper<ElementAndPosition<LockEnterOrTryLock>> child = list.get(j);
+                TLinkableWrapper<LockStartOperation> child = list.get(j);
                 add(parent.element(),child.element());
             }
         }
     }
 
-    private void add(ElementAndPosition<LockEnterOrTryLock> parent, ElementAndPosition<LockEnterOrTryLock> child ) {
-        LockKey parentKey = parent.element().key();
-        LockKey childKey = child.element().key();
+    private void add(LockStartOperation parent, LockStartOperation child ) {
+        LockKey parentKey = parent.key();
+        LockKey childKey = child.key();
 
         // if both keys are read they can not create a deadlock
         if(parentKey.isRead() && childKey.isRead()) {
@@ -42,7 +41,7 @@ public class BlockingLockRelationBuilder {
         }
 
         PositionPair positionPair = new PositionPair(parent.position(),child.position());
-        LockPair pair = new LockPair(parent.element(),child.element());
+        LockPair pair = new LockPair(parent,child);
         LockPair normalized = pair.normalized();
         LockPairCombinationAndThreadIndices list = map.get(normalized);
         if(list == null) {

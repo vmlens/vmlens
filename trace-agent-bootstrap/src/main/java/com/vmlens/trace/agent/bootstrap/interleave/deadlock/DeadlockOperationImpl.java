@@ -2,13 +2,13 @@ package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockStartOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeTwoOrders;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.Choice;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.EitherInChoice;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.DeadlockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockBlockTuple;
-import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockStart;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
@@ -63,7 +63,7 @@ public class DeadlockOperationImpl implements DeadlockOperation {
         return false;
     }
 
-    public boolean isPartOfDeadlock(BlockStart firstStart, BlockStart secondStart, BlockBlockTuple potential ) {
+    public boolean isPartOfDeadlock(LockStartOperation firstStart, LockStartOperation secondStart, BlockBlockTuple potential ) {
         if(firstStart.position().equals(first.parent()) && secondStart.position().equals(second.child())) {
             alternativeBlocks.add(wrap(potential));
             return true;

@@ -1,9 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.interleave.lockcontainer;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockEnterImpl;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
 
@@ -20,7 +19,7 @@ public class BlockAndOperationBuilder {
 
     public BlockEndBuilder enter() {
         return new BlockEndBuilder(this,
-        new BlockStart(pos(threadIndex,getAndIncrementPosition()), new LockEnterImpl(threadIndex,new Lock(lockKey))));
+        new LockEnterOperation(pos(threadIndex,getAndIncrementPosition()),lockKey));
     }
 
     public int getAndIncrementPosition() {

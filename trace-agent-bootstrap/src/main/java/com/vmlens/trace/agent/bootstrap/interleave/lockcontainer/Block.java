@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.lockcontainer;
 
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockStartOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.AddToAlternatingOrder;
@@ -8,10 +9,10 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.LockContainer
 
 public class Block implements LockContainer, LockContainerVisitor {
 
-    private final BlockStart start;
+    private final LockStartOperation start;
     private final BlockEnd end;
 
-    public Block(BlockStart start, BlockEnd end) {
+    public Block(LockStartOperation start, BlockEnd end) {
         this.start = start;
         this.end = end;
     }
@@ -34,7 +35,7 @@ public class Block implements LockContainer, LockContainerVisitor {
         return start.position().threadIndex();
     }
 
-    public BlockStart start() {
+    public LockStartOperation start() {
         return start;
     }
 

@@ -1,10 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.lock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.ReadWriteLockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.ReentrantLockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 
-import static com.vmlens.trace.agent.bootstrap.interleave.lock.ReadWriteLockKey.readKey;
+import static com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.ReadWriteLockKey.readKey;
 
 public class ReadLock extends ReadOrWriteLock {
 

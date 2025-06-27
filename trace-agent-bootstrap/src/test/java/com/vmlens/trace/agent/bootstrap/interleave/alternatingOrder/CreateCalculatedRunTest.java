@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 import com.vmlens.trace.agent.bootstrap.interleave.IntArray;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.IntArray.intArray;

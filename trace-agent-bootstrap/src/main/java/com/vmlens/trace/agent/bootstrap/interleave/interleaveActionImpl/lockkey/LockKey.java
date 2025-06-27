@@ -1,7 +1,6 @@
-package com.vmlens.trace.agent.bootstrap.interleave.lock;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey;
 
 
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 public abstract class LockKey implements Comparable<LockKey> {
@@ -31,8 +30,6 @@ public abstract class LockKey implements Comparable<LockKey> {
         int otherCode =   normalizeContext.normalizeObjectHashCode(other.objectHashCode);
         return myCode == otherCode;
     }
-
-
 
     @Override
     public final int compareTo(LockKey other) {

@@ -2,40 +2,34 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOrTryLock;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockStartOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.Block;
 import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockEnd;
-import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockEndOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.lockcontainer.BlockStart;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
-public class LockExit implements InterleaveAction, BlockEndOperation {
+public class LockExit implements InterleaveAction  {
 
     private final int threadIndex;
-    private final Lock lockOrMonitor;
+    private final LockKey lockOrMonitor;
 
-    public LockExit(int threadIndex, Lock lockOrMonitor) {
+    public LockExit(int threadIndex, LockKey lockOrMonitor) {
         this.threadIndex = threadIndex;
         this.lockOrMonitor = lockOrMonitor;
     }
-
 
     @Override
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
-        ElementAndPosition<LockEnterOrTryLock> enter = mapContainingStack.pop(threadIndex, lockOrMonitor.key());
+        LockStartOperation enter = mapContainingStack.pop(threadIndex, lockOrMonitor);
         if(enter != null) {
-            result.addLockOrCondition(lockOrMonitor.key(),
-          new Block(new BlockStart(enter.position(),enter.element()), new BlockEnd(myPosition,this)));
+            result.addLockOrCondition(lockOrMonitor,
+          new Block(enter, new BlockEnd(myPosition)));
         }
     }
-
-
 
     @Override
     public int threadIndex() {
@@ -57,10 +51,6 @@ public class LockExit implements InterleaveAction, BlockEndOperation {
         return lockOrMonitor.hashCode();
     }
 
-    public Lock lockOrMonitor() {
-        return lockOrMonitor;
-    }
-
     @Override
     public String toString() {
         return "LockExit{" +
@@ -79,6 +69,6 @@ public class LockExit implements InterleaveAction, BlockEndOperation {
             return false;
         }
 
-        return lockOrMonitor.key().equalsNormalized(normalizeContext,otherLock.lockOrMonitor.key());
+        return lockOrMonitor.equalsNormalized(normalizeContext,otherLock.lockOrMonitor);
     }
 }

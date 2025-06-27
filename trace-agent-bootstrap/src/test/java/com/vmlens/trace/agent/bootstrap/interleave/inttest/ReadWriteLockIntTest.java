@@ -4,8 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.ReadWriteLockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.ReadWriteLockKey;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
