@@ -4,11 +4,13 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.LockExitEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.lock.LockTypes.WRITE_LOCK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
 
 /**
  * Lock exit is special:
@@ -33,7 +35,8 @@ public class LockTest {
     @Test
     public void lockExit() {
         // Given
-        LockExitEvent wait = new LockExitEvent(WRITE_LOCK,new Object());
+        ReadWriteLockMap readWriteLockMap = mock(ReadWriteLockMap.class);
+        LockExitEvent wait = new LockExitEvent(WRITE_LOCK,readWriteLockMap);
 
         ActualRun actualRun = new ActualRun();
         InterleaveRunWithoutCalculated interleaveRunWithoutCalculated

@@ -86,7 +86,7 @@ object EventDesc extends GenericDesc {
   val lockType = new FieldDesc("lockType", intTyp)
   val barrierType = new FieldDesc("barrierType", intTyp)
   val barrierKeyType = new FieldDesc("barrierKeyType", intTyp)
-  val conditionType = new FieldDesc("conditionType", intTyp)
+  val conditionNotifyEventType = new FieldDesc("conditionNotifyEventType", intTyp)
   val startedThreadIndex = new FieldDesc("startedThreadIndex", intTyp)
   val joinedThreadIndex = new FieldDesc("joinedThreadIndex", intTyp)
   val operation = new FieldDesc("operation", intTyp)
@@ -136,10 +136,10 @@ object EventDesc extends GenericDesc {
       eventList.append(monitor("MonitorExitEventGen", " extends MonitorExitEvent", typSyncActions));
 
       eventList.append(barrier("BarrierEventGen", " extends BarrierEvent  ", typSyncActions));
-      eventList.append(conditionWait("ConditionWaitEnterEventGen", " extends ConditionWaitEvent  ", typSyncActions));
-      eventList.append(conditionWait("ConditionWaitExitEventGen", " extends ConditionWaitEvent  ", typSyncActions));
+      eventList.append(conditionWait("ConditionWaitEnterEventGen", " extends ConditionWaitEnterEvent  ", typSyncActions));
+      eventList.append(conditionWait("ConditionWaitExitEventGen", " extends ConditionWaitExitEvent  ", typSyncActions));
       eventList.append(conditionNotify("ConditionNotifyEventGen", " extends ConditionNotifyEvent  ", typSyncActions));
-      
+
       eventList.append(method("MethodEnterEventGen", " extends MethodEnterEvent  ", typMethod));
       eventList.append(method("MethodExitEventGen", " extends MethodExitEvent  ", typMethod));
       

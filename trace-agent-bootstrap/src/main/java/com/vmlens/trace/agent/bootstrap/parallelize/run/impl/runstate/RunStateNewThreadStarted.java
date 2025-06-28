@@ -78,7 +78,7 @@ public class RunStateNewThreadStarted implements RunState {
 
 
     @Override
-    public RunState beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
+    public RunState waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
         // Fixme probably not correct
         AfterContextForStateMachine afterContext = new
                 AfterContextForStateMachine(threadLocalDataWhenInTest,lockExitOrWaitEvent);

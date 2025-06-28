@@ -18,9 +18,9 @@ public interface RunForCallback {
 
     void threadJoinedByPool(JoinAction threadJoinedAction);
 
-    void beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
-                                    ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                    QueueIn queueIn);
+    void waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent,
+                                  ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                  QueueIn queueIn);
 
     void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest,
                              QueueIn queueIn);

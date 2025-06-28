@@ -30,8 +30,8 @@ public interface RunState {
 
     RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent);
 
-    RunState beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
-                                  ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                  SendEvent sendEvent);
+    RunState waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent,
+                                      ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                      SendEvent sendEvent);
 
 }

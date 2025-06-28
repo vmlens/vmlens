@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.activelock;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 
-public class LockEnterOperation implements LockStartOperation{
+public class LockEnterOperation implements LockStartOperation {
 
     private final Position position;
     private final LockKey key;

@@ -49,7 +49,7 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public RunState beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
+    public RunState waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
         return this;
     }
 }

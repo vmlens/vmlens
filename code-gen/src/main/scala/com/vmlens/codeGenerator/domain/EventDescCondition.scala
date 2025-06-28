@@ -24,7 +24,7 @@ object EventDescCondition {
 
   private def fieldListNotify() = {
     val fields = fieldListCondition();
-    fields.append(conditionType)
+    fields.append(conditionNotifyEventType)
     fields;
   }
 

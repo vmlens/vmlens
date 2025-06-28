@@ -62,7 +62,7 @@ public class RunStateMachineImpl implements RunStateMachine  {
     public void beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
                                      ThreadLocalWhenInTest threadLocalDataWhenInTest,
                                      SendEvent sendEvent) {
-        currentState = currentState.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,sendEvent);
+        currentState = currentState.waitCallOrBeforeLockExit(lockExitOrWaitEvent,threadLocalDataWhenInTest,sendEvent);
     }
 
 

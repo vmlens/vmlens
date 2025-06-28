@@ -15,7 +15,7 @@ class ConditionNotifyEventGen (
  ,  val objectHashCode  : Long  
  ,  val bytecodePosition  : Int  
  ,  val methodId  : Int  
- ,  val conditionType  : Int  
+ ,  val conditionNotifyEventType  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
@@ -28,7 +28,7 @@ override def toString : String = {
   text = text + ", objectHashCode:" +  objectHashCode 
   text = text + ", bytecodePosition:" +  bytecodePosition 
   text = text + ", methodId:" +  methodId 
-  text = text + ", conditionType:" +  conditionType 
+  text = text + ", conditionNotifyEventType:" +  conditionNotifyEventType 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -64,7 +64,7 @@ override def equals(other: Any) : Boolean = {
                false;
              }
              else
-             if( conditionType != that.conditionType )
+             if( conditionNotifyEventType != that.conditionNotifyEventType )
              {
                false;
              }

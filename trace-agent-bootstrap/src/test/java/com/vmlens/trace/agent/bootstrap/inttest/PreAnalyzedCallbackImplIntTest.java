@@ -60,7 +60,7 @@ public class PreAnalyzedCallbackImplIntTest {
         lockEnterEvent.setRunId(RUN_ID);
 
         // When
-        executeCalls(callbackTestContainer,new LockMethodStrategy(new LockEnter(), LockTypes.WRITE_LOCK));
+        executeCalls(callbackTestContainer,new LockEnterStrategy(new LockEnter(), LockTypes.WRITE_LOCK));
 
         // Then
         assertThat(callbackTestContainer.eventList().size(), is(1));

@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.trace.agent.bootstrap.lock.LockTypes;
 import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;
+import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.MethodWithLockStrategy;
 
 /**
  *
@@ -25,6 +26,6 @@ public class MethodWithLock extends AbstractMethodType {
     public void add(String name,
                     String desc,
                     FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodBuilder.addMethodWithLock(name,desc,lockType);
+        methodBuilder.addPreAnalyzedMethod(name,desc,new MethodWithLockStrategy(lockType));
     }
 }

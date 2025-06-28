@@ -11,9 +11,9 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.Pro
 
 public abstract class ProcessLockExitOrWaitTemplate {
 
-    public RunState beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
-                                  ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                  SendEvent sendEvent) {
+    public RunState waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent,
+                                             ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                             SendEvent sendEvent) {
         AfterContextForStateMachine afterContext = new
                 AfterContextForStateMachine(threadLocalDataWhenInTest,lockExitOrWaitEvent);
         process(afterContext, sendEvent, runStateContext(), startedThreadIndex());

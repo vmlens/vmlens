@@ -25,7 +25,7 @@ public class RunAdapter {
                                      ThreadLocalWhenInTest threadLocalDataWhenInTest,
                                      QueueIn queueIn) {
         lockExitOrWaitEvent.setThreadIndex(threadLocalDataWhenInTest.threadIndex());
-        run.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,queueIn);
+        run.waitCallOrBeforeLockExit(lockExitOrWaitEvent,threadLocalDataWhenInTest,queueIn);
     }
 
     public void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest,

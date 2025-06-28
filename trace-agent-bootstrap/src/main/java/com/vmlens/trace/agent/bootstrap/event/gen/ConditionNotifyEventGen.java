@@ -12,7 +12,7 @@ public class ConditionNotifyEventGen  {
     protected long     objectHashCode;
     protected int     bytecodePosition;
     protected int     methodId;
-    protected int     conditionType;
+    protected int     conditionNotifyEventType;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
@@ -28,7 +28,7 @@ public boolean equals(Object o) {
     if ( objectHashCode != that.objectHashCode) return false;
     if ( bytecodePosition != that.bytecodePosition) return false;
     if ( methodId != that.methodId) return false;
-    if ( conditionType != that.conditionType) return false;
+    if ( conditionNotifyEventType != that.conditionNotifyEventType) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
@@ -43,7 +43,7 @@ public String toString() {
     "objectHashCode=" + objectHashCode +
     "bytecodePosition=" + bytecodePosition +
     "methodId=" + methodId +
-    "conditionType=" + conditionType +
+    "conditionNotifyEventType=" + conditionNotifyEventType +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
@@ -65,7 +65,7 @@ buffer.put( (byte)  17 );
       buffer.putLong( objectHashCode );  
      buffer.putInt( bytecodePosition ); 
      buffer.putInt( methodId ); 
-     buffer.putInt( conditionType ); 
+     buffer.putInt( conditionNotifyEventType ); 
      buffer.putInt( loopId ); 
      buffer.putInt( runId ); 
      buffer.putInt( runPosition ); 

@@ -3,15 +3,15 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteRunAfter;
 import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
-import com.vmlens.trace.agent.bootstrap.lock.LockOperation;
+import com.vmlens.trace.agent.bootstrap.lock.LockEnterOperation;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 
-public class LockMethodStrategy implements StrategyPreAnalyzed  {
+public class LockEnterStrategy implements StrategyPreAnalyzed  {
 
-    private final LockOperation lockOperation;
+    private final LockEnterOperation lockOperation;
     private final LockType lockType;
 
-    public LockMethodStrategy(LockOperation lockOperation, LockType lockType) {
+    public LockEnterStrategy(LockEnterOperation lockOperation, LockType lockType) {
         this.lockOperation = lockOperation;
         this.lockType = lockType;
     }

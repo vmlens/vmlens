@@ -20,15 +20,22 @@ public class LockExit implements InterleaveAction  {
         this.lockOrMonitor = lockOrMonitor;
     }
 
+    static void processLockExit(LockKey lockOrMonitor,
+                                Position myPosition,
+                                ActiveLockCollection mapContainingStack,
+                                KeyToOperationCollection result) {
+        LockStartOperation enter = mapContainingStack.pop(myPosition.threadIndex(), lockOrMonitor);
+        if(enter != null) {
+            result.addLockOrCondition(lockOrMonitor,
+                    new Block(enter, new BlockEnd(myPosition)));
+        }
+    }
+
     @Override
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
-        LockStartOperation enter = mapContainingStack.pop(threadIndex, lockOrMonitor);
-        if(enter != null) {
-            result.addLockOrCondition(lockOrMonitor,
-          new Block(enter, new BlockEnd(myPosition)));
-        }
+        processLockExit(lockOrMonitor, myPosition, mapContainingStack, result);
     }
 
     @Override

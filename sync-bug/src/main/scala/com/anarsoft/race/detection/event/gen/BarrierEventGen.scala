@@ -13,7 +13,7 @@ class BarrierEventGen (
    val threadIndex  : Int  
  ,  val methodCounter  : Int  
  ,  val objectHashCode  : Long  
- ,  val barrierType  : Int  
+ ,  val barrierType  : Int
  ,  val barrierKeyType  : Int  
  ,  val bytecodePosition  : Int  
  ,  val methodId  : Int  

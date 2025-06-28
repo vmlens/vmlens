@@ -144,9 +144,9 @@ public class RunImpl implements Run {
     }
 
     @Override
-    public void beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
-                                     ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                     QueueIn queueIn) {
+    public void waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent,
+                                         ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                         QueueIn queueIn) {
         lock.lock();
         try {
             runStateMachine.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,new SendEvent(queueIn,this));

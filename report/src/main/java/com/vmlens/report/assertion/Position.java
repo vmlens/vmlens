@@ -35,4 +35,12 @@ public class Position {
         result = 31 * result + runPosition;
         return result;
     }
+
+    public int threadIndex() {
+        return threadIndex;
+    }
+
+    public int runPosition() {
+        return runPosition;
+    }
 }

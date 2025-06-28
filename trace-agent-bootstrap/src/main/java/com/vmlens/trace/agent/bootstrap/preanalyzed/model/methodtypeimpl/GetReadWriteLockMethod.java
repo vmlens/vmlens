@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 
 
 import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.GetReadWriteLockMethodStrategy;
 
 /**
  *
@@ -20,6 +21,6 @@ public class GetReadWriteLockMethod  extends AbstractMethodType  {
 
     @Override
     public void add(String name, String desc, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodBuilder.getReadWriteLock(name,desc);
+        methodBuilder.addPreAnalyzedMethod(name,desc, new GetReadWriteLockMethodStrategy());
     }
 }

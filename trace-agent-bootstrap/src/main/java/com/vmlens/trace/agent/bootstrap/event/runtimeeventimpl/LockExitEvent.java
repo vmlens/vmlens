@@ -6,18 +6,18 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActio
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class LockExitEvent extends LockExitEventGen implements LockEvent, LockExitOrWaitEvent {
+public class LockExitEvent extends LockExitEventGen implements LockExitOrWaitEvent, WithInMethodIdPositionObjectHashCode {
 
     private final LockType lockTypeClass;
-    private Object object;
+    private final ReadWriteLockMap readWriteLockMap;
 
-    public LockExitEvent(LockType lockTypeClass, Object object) {
+    public LockExitEvent(LockType lockTypeClass,
+                         ReadWriteLockMap readWriteLockMap) {
         this.lockTypeClass = lockTypeClass;
-        this.object = object;
+        this.readWriteLockMap = readWriteLockMap;
         this.lockType = lockTypeClass.id();
     }
 
@@ -56,11 +56,9 @@ public class LockExitEvent extends LockExitEventGen implements LockEvent, LockEx
     }
 
     @Override
-    public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
-        this.objectHashCode = lockTypeClass.getObjectHashCode(readWriteLockMap,System.identityHashCode(object));
+    public void setInMethodIdPositionObjectHashCode(int inMethodId, int position, long objectHashCode) {
+        this.objectHashCode = lockTypeClass.getObjectHashCode(readWriteLockMap,objectHashCode);
         this.methodId = inMethodId;
         this.bytecodePosition = position;
-        this.object = null;
     }
-
 }
