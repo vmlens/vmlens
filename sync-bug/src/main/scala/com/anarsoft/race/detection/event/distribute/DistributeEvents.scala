@@ -9,9 +9,9 @@ import java.util.Collections.sort
  * Distribute the events based on the loop and run id and then on the type
  * Add them for each run to the run context to put Groups.
  */
-class DistributeEvents[EVENT <: EventWithLoopAndRunId] {
+class DistributeEvents[EVENT <: EventWithLoopAndRunId](val createContext: () => LoadedEventContext[EVENT]) {
 
-  def distribute(events: List[EVENT], createContext: () => LoadedEventContext[EVENT], builder: RunDataListBuilder): Unit = {
+  def distribute(events: List[EVENT], builder: RunDataListBuilder): Unit = {
     var current: LoopAndRunIdAndContext[EVENT] = new LoopAndRunIdAndContextStart[EVENT]();
     sort(events, new CompareByLoopAndRunId());
     val iter = events.iterator();

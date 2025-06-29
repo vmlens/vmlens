@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import java.io.DataInputStream;
 
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.control._;
@@ -13,7 +13,7 @@ class BarrierEventGen (
    val threadIndex  : Int  
  ,  val methodCounter  : Int  
  ,  val objectHashCode  : Long  
- ,  val barrierType  : Int
+ ,  val barrierType  : Int  
  ,  val barrierKeyType  : Int  
  ,  val bytecodePosition  : Int  
  ,  val methodId  : Int  
@@ -101,29 +101,29 @@ override def equals(other: Any) : Boolean = {
 
 object  BarrierEventGen 
 {
-   def applyFromJavaEvent(data : ByteBuffer) =
+   def applyFromJavaEvent(data : DataInputStream) =
    {
      val result = new BarrierEventGen (
           
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getLong()
+            data.readLong()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
      );
      result;
    }

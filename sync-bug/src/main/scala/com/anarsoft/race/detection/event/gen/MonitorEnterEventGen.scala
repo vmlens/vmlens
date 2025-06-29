@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import java.io.DataInputStream;
 
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.control._;
@@ -87,25 +87,25 @@ override def equals(other: Any) : Boolean = {
 
 object  MonitorEnterEventGen 
 {
-   def applyFromJavaEvent(data : ByteBuffer) =
+   def applyFromJavaEvent(data : DataInputStream) =
    {
      val result = new MonitorEnterEventGen (
           
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getLong()
+            data.readLong()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
      );
      result;
    }

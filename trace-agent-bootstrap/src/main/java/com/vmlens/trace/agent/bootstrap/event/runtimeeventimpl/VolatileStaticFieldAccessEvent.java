@@ -61,4 +61,14 @@ public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStat
     public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
         // Nothing To do
     }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

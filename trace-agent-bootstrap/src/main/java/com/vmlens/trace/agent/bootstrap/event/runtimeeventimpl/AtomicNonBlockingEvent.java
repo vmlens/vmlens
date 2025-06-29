@@ -73,4 +73,14 @@ public class AtomicNonBlockingEvent extends AtomicNonBlockingEventGen implements
     public void setBytecodePosition(int bytecodePosition) {
         this.bytecodePosition = bytecodePosition;
     }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

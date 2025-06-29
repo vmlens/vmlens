@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer
+import java.io.DataInputStream
 
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.control._;
@@ -14,8 +14,8 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
    val blockSize : Int =  45 * 10000;
   
 
-    def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedInterleaveActionEvent = {
-       val id = buffer.get();
+    def deSerializeJavaEvent(buffer : DataInputStream) : LoadedInterleaveActionEvent = {
+       val id = buffer.readByte();
        
        if( id == 4 ) {
           return VolatileFieldAccessEventStaticGen.applyFromJavaEvent( buffer   );

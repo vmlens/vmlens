@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer
+import java.io.DataInputStream
 
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.control._;
@@ -14,8 +14,8 @@ class NonVolatileDeSerializer extends DeserializeStrategy[LoadedNonVolatileEvent
    val blockSize : Int =  41 * 10000;
   
 
-    def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedNonVolatileEvent = {
-       val id = buffer.get();
+    def deSerializeJavaEvent(buffer : DataInputStream) : LoadedNonVolatileEvent = {
+       val id = buffer.readByte();
        
        if( id == 1 ) {
           return FieldAccessEventGen.applyFromJavaEvent( buffer   );

@@ -72,4 +72,14 @@ public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGe
         this.bytecodePosition = bytecodePosition;
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
+
 }

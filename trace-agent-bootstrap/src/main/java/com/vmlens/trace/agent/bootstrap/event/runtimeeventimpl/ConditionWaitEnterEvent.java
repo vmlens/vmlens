@@ -73,4 +73,14 @@ public class ConditionWaitEnterEvent extends ConditionWaitEnterEventGen implemen
         this.bytecodePosition = position;
         this.object = null;
     }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

@@ -53,6 +53,16 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
         this.object = null;
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
+
     //  For Tests
     public void setObjectHashCode(long objectHashCode) {
         this.objectHashCode = objectHashCode;
@@ -65,4 +75,5 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
     public void setBytecodePosition(int bytecodePosition) {
         this.bytecodePosition = bytecodePosition;
     }
+
 }

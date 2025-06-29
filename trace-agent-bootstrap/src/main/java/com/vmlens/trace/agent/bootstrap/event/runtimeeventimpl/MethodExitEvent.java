@@ -30,4 +30,13 @@ public class MethodExitEvent extends MethodExitEventGen implements PluginEventOn
     public void setRunPosition(int runPosition) {
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

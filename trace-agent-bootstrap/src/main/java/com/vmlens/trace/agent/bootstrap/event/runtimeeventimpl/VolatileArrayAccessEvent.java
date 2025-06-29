@@ -72,4 +72,13 @@ public class VolatileArrayAccessEvent extends VolatileArrayAccessEventGen
                 operation);
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.description;
 
+import com.vmlens.trace.agent.bootstrap.event.LatestWrittenLoopAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
@@ -29,7 +30,7 @@ public class ClassDescription implements SerializableEvent {
     }
 
     @Override
-    public void serialize(StreamRepository streamRepository) throws Exception {
+    public void serialize(StreamRepository streamRepository, LatestWrittenLoopAndRunId latestWrittenLoopAndRunId) throws Exception {
         (new SerializeAndDeserializeClassDescription()).serialize(this,
                 streamRepository.description.getStream());
     }

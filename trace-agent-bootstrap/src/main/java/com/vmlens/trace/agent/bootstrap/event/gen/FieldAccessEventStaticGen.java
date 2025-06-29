@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
-
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId;
 
 public class FieldAccessEventStaticGen  {
 
@@ -49,22 +49,20 @@ public String toString() {
 
 
 
- public void serialize(StreamRepository streamRepository) throws Exception {
-     serialize( streamRepository.nonVolatile.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  33, EventConstants.MAX_ARRAY_SIZE * 1000));
-
+ public StreamWrapperWithLoopIdAndRunId getStream(StreamRepository streamRepository)  {
+     return streamRepository.nonVolatile;
  }
 
-public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  2 );
-     buffer.putInt( threadIndex ); 
-     buffer.putInt( fieldId ); 
-     buffer.putInt( methodCounter ); 
-     buffer.putInt( operation ); 
-     buffer.putInt( methodId ); 
-     buffer.putInt( loopId ); 
-     buffer.putInt( runId ); 
-     buffer.putInt( runPosition ); 
+public void serialize(DataOutputStream buffer) throws Exception {
+buffer.write( (byte)  2 );
+     buffer.writeInt( threadIndex ); 
+     buffer.writeInt( fieldId ); 
+     buffer.writeInt( methodCounter ); 
+     buffer.writeInt( operation ); 
+     buffer.writeInt( methodId ); 
+     buffer.writeInt( loopId ); 
+     buffer.writeInt( runId ); 
+     buffer.writeInt( runPosition ); 
 }
 
 

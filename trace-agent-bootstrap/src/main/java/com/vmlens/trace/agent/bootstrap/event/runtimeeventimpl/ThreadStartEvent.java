@@ -54,4 +54,13 @@ public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveA
         this.bytecodePosition = position;
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

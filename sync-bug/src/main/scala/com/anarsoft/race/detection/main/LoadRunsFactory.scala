@@ -1,29 +1,80 @@
 package com.anarsoft.race.detection.main
 
-import com.anarsoft.race.detection.event.loadanddistribute.DirTypeNameAndLoadAndDistributeOneFilePosition
-import com.anarsoft.race.detection.event.loadanddistribute.LoadAndDistributeOneFilePositionImpl.{control, interleave, method, nonVolatile}
-import com.anarsoft.race.detection.process.load.{LoadAndDistributeOneFilePosition, LoadRunsImpl, LoadStatisticAndDistributeOneFilePosition}
+import com.anarsoft.race.detection.event.distribute.EventWithLoopAndRunId
+import com.anarsoft.race.detection.event.gen.*
+import com.anarsoft.race.detection.event.load.DeserializeStrategy
+import com.anarsoft.race.detection.event.control.{LoadedControlEvent, LoadedControlContext}
+import com.anarsoft.race.detection.event.interleave.{LoadedInterleaveActionContext, LoadedInterleaveActionEvent}
+import com.anarsoft.race.detection.event.method.{LoadedMethodEventContext, LoadedMethodEvent}
+import com.anarsoft.race.detection.event.nonvolatile.{LoadedNonVolatileEvent, LoadedNonVolatileEventContext}
+import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.main.LoadRunsFactory.{nonVolatile, method, interleave, control}
+import com.anarsoft.race.detection.process.load.{LoadEventFile, LoadEventFileImpl, LoadEventFileNoop, LoadRunsImpl}
 import com.anarsoft.race.detection.process.main.LoadRuns
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.{CONTROL, INTERLEAVE, METHOD_EVENTS, NON_VOLATILE}
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
+import com.anarsoft.race.detection.event.distribute.LoadedEventContext
+import com.anarsoft.race.detection.event.distribute.DistributeEvents
 
 import java.nio.file.Path
+import java.nio.file.Files
 import scala.collection.mutable.ArrayBuffer
 
 
 class LoadRunsFactory {
 
   def create(dir: Path): LoadRuns = {
-    val arrayBuffer = new ArrayBuffer[LoadStatisticAndDistributeOneFilePosition]();
-    arrayBuffer.append(create(dir, INTERLEAVE, (path, name) => interleave(path, name)));
-    arrayBuffer.append(create(dir, CONTROL, (path, name) => control(path, name)));
-    arrayBuffer.append(create(dir, METHOD_EVENTS, (path, name) => method(path, name)));
-    arrayBuffer.append(create(dir, NON_VOLATILE, (path, name) => nonVolatile(path, name)));
+    val arrayBuffer = new ArrayBuffer[LoadEventFile]();
+    arrayBuffer.append(nonVolatile(getPath(dir, NON_VOLATILE)));
+    arrayBuffer.append(method(getPath(dir, METHOD_EVENTS)));
+    arrayBuffer.append(interleave(getPath(dir, INTERLEAVE)));
+    arrayBuffer.append(control(getPath(dir, CONTROL)));
     new LoadRunsImpl(arrayBuffer.toList);
   }
 
-  private def create(dir: Path, name: String,
-                     create: (Path, String) => LoadAndDistributeOneFilePosition): LoadStatisticAndDistributeOneFilePosition = {
-    LoadStatisticAndDistributeOneFilePosition(DirTypeNameAndLoadAndDistributeOneFilePosition(dir, name,
-      create(dir, name)))
+  def getPath(dir : Path, fileName : String)  :  Path = dir.resolve(fileName + EVENT_FILE_POSTFIX);
+
+
+}
+
+object LoadRunsFactory {
+
+  def nonVolatile(filePath : Path) : LoadEventFile = create[LoadedNonVolatileEvent](filePath : Path,
+    new NonVolatileDeSerializer(),
+    () => {
+      new LoadedNonVolatileEventContext()
+    });
+
+
+  def method(filePath : Path): LoadEventFile = create[LoadedMethodEvent](filePath ,
+    new MethodDeSerializer(),
+    () => {
+      new LoadedMethodEventContext()
+    });
+
+  def interleave(filePath : Path): LoadEventFile = create[LoadedInterleaveActionEvent](filePath,
+    new InterleaveDeSerializer(),
+    () => {
+      new LoadedInterleaveActionContext()
+    });
+
+  def control(filePath : Path): LoadEventFile = create[LoadedControlEvent](filePath ,
+    new ControlDeSerializer(),
+    () => {
+      new LoadedControlContext()
+    });
+
+
+  private def create[EVENT <: EventWithLoopAndRunId](filePath : Path,
+                                                     deserializeStrategy: DeserializeStrategy[EVENT],
+                                                     createContext: () => LoadedEventContext[EVENT]): LoadEventFile = {
+    if (!Files.exists(filePath)) {
+      new LoadEventFileNoop();
+    }
+    else {
+      val distributeEvents = new DistributeEvents[EVENT](createContext);
+      new LoadEventFileImpl(filePath, deserializeStrategy, distributeEvents);
+    }
+
   }
 }

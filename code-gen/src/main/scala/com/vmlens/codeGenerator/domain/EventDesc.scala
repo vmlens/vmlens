@@ -73,8 +73,6 @@ object EventDesc extends GenericDesc {
   val classId = new FieldDesc("classId", intTyp)
   val methodCounter = new FieldDesc("methodCounter", intTyp)
   
-  
-  val isWrite = new FieldDesc("isWrite", booleanTyp)
   val methodId = new FieldDesc("methodId", intTyp)
   val atomicMethodId = new FieldDesc("atomicMethodId", intTyp)
 
@@ -82,7 +80,7 @@ object EventDesc extends GenericDesc {
   val objectHashCode = new FieldDesc("objectHashCode", longTyp)
   val monitorId = new FieldDesc("monitorId", intTyp)
   val bytecodePosition = new FieldDesc("bytecodePosition", intTyp)
-  val isShared = new FieldDesc("isShared", booleanTyp)
+ //val isShared = new FieldDesc("isShared", booleanTyp)
   val lockType = new FieldDesc("lockType", intTyp)
   val barrierType = new FieldDesc("barrierType", intTyp)
   val barrierKeyType = new FieldDesc("barrierKeyType", intTyp)

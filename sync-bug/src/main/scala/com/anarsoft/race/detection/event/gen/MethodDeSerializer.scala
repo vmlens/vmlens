@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer
+import java.io.DataInputStream
 
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.control._;
@@ -14,8 +14,8 @@ class MethodDeSerializer extends DeserializeStrategy[LoadedMethodEvent] {
    val blockSize : Int =  21 * 10000;
   
 
-    def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedMethodEvent = {
-       val id = buffer.get();
+    def deSerializeJavaEvent(buffer : DataInputStream) : LoadedMethodEvent = {
+       val id = buffer.readByte();
        
        if( id == 18 ) {
           return MethodEnterEventGen.applyFromJavaEvent( buffer   );

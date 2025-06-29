@@ -45,4 +45,14 @@ public class MonitorEnterEvent extends MonitorEnterEventGen implements
     public void setObjectHashCode(long objectHashCode) {
         this.objectHashCode = objectHashCode;
     }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

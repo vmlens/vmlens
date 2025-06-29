@@ -61,4 +61,14 @@ public class LockExitEvent extends LockExitEventGen implements LockExitOrWaitEve
         this.methodId = inMethodId;
         this.bytecodePosition = position;
     }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

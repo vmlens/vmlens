@@ -149,6 +149,8 @@ public class RunImpl implements Run {
                                          QueueIn queueIn) {
         lock.lock();
         try {
+            lockExitOrWaitEvent.setRunId(runId);
+            lockExitOrWaitEvent.setLoopId(loopId);
             runStateMachine.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,new SendEvent(queueIn,this));
         } finally {
             lock.unlock();

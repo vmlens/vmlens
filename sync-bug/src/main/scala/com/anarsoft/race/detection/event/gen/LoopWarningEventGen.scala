@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer;
+import java.io.DataInputStream;
 
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.control._;
@@ -52,15 +52,15 @@ override def equals(other: Any) : Boolean = {
 
 object  LoopWarningEventGen 
 {
-   def applyFromJavaEvent(data : ByteBuffer) =
+   def applyFromJavaEvent(data : DataInputStream) =
    {
      val result = new LoopWarningEventGen (
           
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
           ,
-            data.getInt()
+            data.readInt()
      );
      result;
    }

@@ -50,4 +50,14 @@ public class ArrayAccessEvent extends ArrayAccessEventGen implements
         this.runPosition = runPosition;
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
+
 }
