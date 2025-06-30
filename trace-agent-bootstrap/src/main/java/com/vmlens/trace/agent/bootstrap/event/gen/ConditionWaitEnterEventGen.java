@@ -12,7 +12,7 @@ public class ConditionWaitEnterEventGen  {
     protected long     objectHashCode;
     protected int     bytecodePosition;
     protected int     methodId;
-    protected int     lockType;
+    protected int     lockKeyCategory;
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
@@ -28,7 +28,7 @@ public boolean equals(Object o) {
     if ( objectHashCode != that.objectHashCode) return false;
     if ( bytecodePosition != that.bytecodePosition) return false;
     if ( methodId != that.methodId) return false;
-    if ( lockType != that.lockType) return false;
+    if ( lockKeyCategory != that.lockKeyCategory) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
@@ -43,7 +43,7 @@ public String toString() {
     "objectHashCode=" + objectHashCode +
     "bytecodePosition=" + bytecodePosition +
     "methodId=" + methodId +
-    "lockType=" + lockType +
+    "lockKeyCategory=" + lockKeyCategory +
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
@@ -63,7 +63,7 @@ buffer.write( (byte)  15 );
       buffer.writeLong( objectHashCode );  
      buffer.writeInt( bytecodePosition ); 
      buffer.writeInt( methodId ); 
-     buffer.writeInt( lockType ); 
+     buffer.writeInt( lockKeyCategory ); 
      buffer.writeInt( loopId ); 
      buffer.writeInt( runId ); 
      buffer.writeInt( runPosition ); 

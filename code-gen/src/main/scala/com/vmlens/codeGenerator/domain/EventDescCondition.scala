@@ -18,7 +18,7 @@ object EventDescCondition {
   
   private def fieldListWait() = {
     val fields = fieldListCondition();
-    fields.append(lockType)
+    fields.append(lockKeyCategory)
     fields;
   }
 

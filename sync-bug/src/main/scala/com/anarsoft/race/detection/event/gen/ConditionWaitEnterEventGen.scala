@@ -15,7 +15,7 @@ class ConditionWaitEnterEventGen (
  ,  val objectHashCode  : Long  
  ,  val bytecodePosition  : Int  
  ,  val methodId  : Int  
- ,  val lockType  : Int  
+ ,  val lockKeyCategory  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
@@ -28,7 +28,7 @@ override def toString : String = {
   text = text + ", objectHashCode:" +  objectHashCode 
   text = text + ", bytecodePosition:" +  bytecodePosition 
   text = text + ", methodId:" +  methodId 
-  text = text + ", lockType:" +  lockType 
+  text = text + ", lockKeyCategory:" +  lockKeyCategory 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
@@ -64,7 +64,7 @@ override def equals(other: Any) : Boolean = {
                false;
              }
              else
-             if( lockType != that.lockType )
+             if( lockKeyCategory != that.lockKeyCategory )
              {
                false;
              }

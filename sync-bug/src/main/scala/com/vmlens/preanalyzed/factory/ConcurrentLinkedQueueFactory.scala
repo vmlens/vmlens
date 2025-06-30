@@ -1,6 +1,7 @@
 package com.vmlens.preanalyzed.factory
 
-import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicClassNonBlockingMethod, Filter, PreAnalyzedList, Read, ReadWrite, Write}
+import com.vmlens.preanalyzed.model.classmodel.{AtomicNonBlocking, Filter}
+import com.vmlens.preanalyzed.model.{AtomicClassNonBlockingMethod, PreAnalyzedList, Read, ReadWrite, Write}
 
 object ConcurrentLinkedQueueFactory {
 

@@ -1,6 +1,7 @@
 package com.vmlens.preanalyzed.factory
 
 import com.vmlens.preanalyzed.model._
+import com.vmlens.preanalyzed.model.classmodel._
 
 object ConcurrentHashMapFactory {
 

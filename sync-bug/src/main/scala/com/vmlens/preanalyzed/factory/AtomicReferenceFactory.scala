@@ -1,6 +1,7 @@
 package com.vmlens.preanalyzed.factory
 
-import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicClassNonBlockingMethod, NotYetImplemented, Read, ReadWrite, Write}
+import com.vmlens.preanalyzed.model.classmodel.AtomicNonBlocking
+import com.vmlens.preanalyzed.model.{AtomicClassNonBlockingMethod, NotYetImplemented, Read, ReadWrite, Write}
 
 object AtomicReferenceFactory {
 

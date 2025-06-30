@@ -1,9 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
+public class NewConditionStrategy implements StrategyPreAnalyzed {
 
-public class GetReadWriteLockMethodStrategy implements StrategyPreAnalyzed {
-
-    public GetReadWriteLockMethodStrategy() {
+    public NewConditionStrategy() {
     }
 
     @Override
@@ -13,7 +12,11 @@ public class GetReadWriteLockMethodStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void methodExit(EnterExitContext context) {
-        context.readWriteLockMap().addUnderlying(System.identityHashCode(context.returnValue()),
+        // for read locks the condition is null
+        if(context.returnValue() == null) {
+            return;
+        }
+        context.readWriteLockMap().addCondition(System.identityHashCode(context.returnValue()),
                 System.identityHashCode(context.object()));
     }
 

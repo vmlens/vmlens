@@ -5,6 +5,7 @@ import com.vmlens.preanalyzed.factory.AdderFactory.{doubleAdder, longAdder}
 import com.vmlens.preanalyzed.factory.AtomicBooleanFactory.atomicBoolean
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongArrayFactory.{atomicIntegerArray, atomicLongArray}
 import com.vmlens.preanalyzed.model.*
+import com.vmlens.preanalyzed.model.classmodel.*
 import com.vmlens.preanalyzed.factory.ConcurrentHashMapFactory.concurrentHashMap
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongFactory.{atomicInteger, atomicLong}
 import com.vmlens.preanalyzed.factory.AtomicMarkableReferenceFactory.atomicMarkableReference
@@ -15,6 +16,8 @@ import com.vmlens.preanalyzed.factory.ConcurrentLinkedDequeFactory.concurrentLin
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLinkedQueue
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
+import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit}
+import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
@@ -22,11 +25,11 @@ import scala.io.Source
 class PreAnalyzedFactory {
 
 
-  def create(): List[PreAnalyzed] = flatten(createWithLists());
+  def create(): List[ClassModel] = flatten(createWithLists());
 
 
   private def loadNotYetImplemented(): PreAnalyzedList = {
-    val result = new ArrayBuffer[PreAnalyzed]();
+    val result = new ArrayBuffer[ClassModel]();
     val source = Source.fromResource("notYetImplementedClasses.txt")
 
     try {
@@ -140,8 +143,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
     );
   }
   
-  private def flatten(orig: List[PreAnalyzedOrList]): List[PreAnalyzed] = {
-    val result = new ArrayBuffer[PreAnalyzed]
+  private def flatten(orig: List[PreAnalyzedOrList]): List[ClassModel] = {
+    val result = new ArrayBuffer[ClassModel]
     for (elem <- orig) {
       for (preAnalyzed <- elem.asList()) {
         result.append(preAnalyzed);

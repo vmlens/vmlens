@@ -21,8 +21,7 @@ class LockContainerTest  extends AnyFlatSpec with Matchers {
   
   def check(builder : WithLockEventTestBuilder): Unit = {
     val THREAD_INDEX = 3;
- 
-
+    
     val firstReadExit = builder.exit(LockTypes.READ_LOCK.id(), THREAD_INDEX);
     val writeExit = builder.exit(LockTypes.WRITE_LOCK.id(), THREAD_INDEX);
     val secondReadExit = builder.exit(LockTypes.READ_LOCK.id(), THREAD_INDEX);

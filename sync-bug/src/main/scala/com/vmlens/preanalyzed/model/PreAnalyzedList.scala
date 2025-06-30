@@ -1,6 +1,6 @@
 package com.vmlens.preanalyzed.model
 
-case class PreAnalyzedList(list : List[PreAnalyzed]) extends PreAnalyzedOrList {
+case class PreAnalyzedList(list : List[ClassModel]) extends PreAnalyzedOrList {
 
-  override def asList(): List[PreAnalyzed] = list;
+  override def asList(): List[ClassModel] = list;
 }

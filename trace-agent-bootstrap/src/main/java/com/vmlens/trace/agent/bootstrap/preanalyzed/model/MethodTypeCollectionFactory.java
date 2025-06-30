@@ -35,6 +35,7 @@ public class MethodTypeCollectionFactory {
 
         add(ENTER_WRITE_LOCK);
         add(EXIT_WRITE_LOCK);
+        add(NEW_CONDITION);
 
         add(METHOD_WITH_READ_LOCK);
         add(METHOD_WITH_WRITE_LOCK);
