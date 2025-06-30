@@ -1,14 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteRunAfter;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdAndPosition;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.NotInAtomicCallbackStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
-import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadStartedByPoolContext;
 
-import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD;
 import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD_POOL;
 
 public class StartNewThreadByPool implements CallbackAction {
@@ -16,7 +14,7 @@ public class StartNewThreadByPool implements CallbackAction {
     private final Object pool;
     private final Runnable task;
     private final int threadCount;
-
+    private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();
 
     public StartNewThreadByPool(Object pool,
                                 Runnable task,
@@ -48,5 +46,10 @@ public class StartNewThreadByPool implements CallbackAction {
 
         AfterContext afterContext = new AfterContext(threadLocalDataWhenInTest,threadStartEvent,queueIn);
         threadLocalDataWhenInTest.runAdapter().after(afterContext);
+    }
+
+    @Override
+    public boolean notInAtomicCallback(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        return notInAtomicCallbackStrategy.notInAtomicCallback(threadLocalDataWhenInTest);
     }
 }

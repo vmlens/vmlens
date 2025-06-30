@@ -30,8 +30,10 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
 
         ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
         if (dataWhenInTest != null) {
-            callbackAction.execute(dataWhenInTest,eventQueueInternal);
-            return true;
+            if(callbackAction.notInAtomicCallback(dataWhenInTest)) {
+                callbackAction.execute(dataWhenInTest,eventQueueInternal);
+                return true;
+            }
         }
         return false;
     }

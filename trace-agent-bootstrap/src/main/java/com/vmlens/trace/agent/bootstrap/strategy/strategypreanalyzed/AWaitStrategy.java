@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitOrWait;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunBeforeLockExitOrWait;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.AtomicBegin;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.AtomicEnd;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ConditionWaitEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ConditionWaitExitEvent;
@@ -22,7 +24,7 @@ public class AWaitStrategy implements StrategyPreAnalyzed  {
         ConditionWaitEnterEvent event = new ConditionWaitEnterEvent(context.readWriteLockMap());
         RunBeforeLockExitOrWait<ConditionWaitEnterEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdPositionObjectHashCode<>(context.object()));
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicBegin());
         context.threadLocalWhenInTestAdapter().process(action);
     }
 
@@ -31,7 +33,7 @@ public class AWaitStrategy implements StrategyPreAnalyzed  {
         ConditionWaitExitEvent event = new ConditionWaitExitEvent(context.readWriteLockMap());
         RunBeforeLockExitOrWait<ConditionWaitExitEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdPositionObjectHashCode<>(context.object()));
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicEnd());
         context.threadLocalWhenInTestAdapter().process(action);
         context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitOrWait());
     }

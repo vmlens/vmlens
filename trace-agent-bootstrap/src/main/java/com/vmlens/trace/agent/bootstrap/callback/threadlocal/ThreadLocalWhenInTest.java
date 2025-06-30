@@ -11,8 +11,9 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParallelize {
 
     private final RunAdapter runAdapter;
-
     private final int threadIndex;
+
+    private int inAtomicCount = 0;
     private int methodCount;
     private InMethodIdAndPosition inMethodIdAndPosition;
     private ExecuteAfterOperation executeAfterOperation;
@@ -56,4 +57,11 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
         return methodCount;
     }
 
+    public int inAtomicCount() {
+        return inAtomicCount;
+    }
+
+    public void setInAtomicCount(int inAtomicCount) {
+        this.inAtomicCount = inAtomicCount;
+    }
 }

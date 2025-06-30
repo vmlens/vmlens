@@ -1,7 +1,6 @@
 package com.vmlens.test.maven.plugin.lock;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.locks.Condition;
@@ -14,7 +13,6 @@ public class TestCondition {
     private boolean flag = false;
 
     @Test
-    @Ignore
     public void testLock() throws Throwable {
         try(AllInterleavings allInterleavings = new AllInterleavings("testCondition")) {
             while (allInterleavings.hasNext()) {

@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitOrWait;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunBeforeLockExitOrWait;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.LockExitEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
@@ -26,7 +27,7 @@ public class LockExitStrategy implements StrategyPreAnalyzed {
 
         RunBeforeLockExitOrWait<LockExitEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdPositionObjectHashCode<>(context.object()));
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new WithoutAtomic());
 
         context.threadLocalWhenInTestAdapter().process(action);
     }

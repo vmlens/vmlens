@@ -10,13 +10,14 @@ import com.vmlens.preanalyzed.factory.ConcurrentHashMapFactory.concurrentHashMap
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongFactory.{atomicInteger, atomicLong}
 import com.vmlens.preanalyzed.factory.AtomicMarkableReferenceFactory.atomicMarkableReference
 import com.vmlens.preanalyzed.factory.AtomicReferenceArrayFactory.atomicReferenceArray
+import com.vmlens.preanalyzed.factory.ConditionFactory.condition
 import com.vmlens.preanalyzed.factory.AtomicReferenceFactory.atomicReference
 import com.vmlens.preanalyzed.factory.AtomicStampedReferenceFactory.atomicStampedReference
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedDequeFactory.concurrentLinkedDeque
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLinkedQueue
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
-import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit}
+import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 
 import scala.collection.mutable.ArrayBuffer
@@ -80,6 +81,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$ReadLock", ReadLock(), lockMethods()),
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$WriteLock", WriteLock(), lockMethods()),
       Lock("java/util/concurrent/locks/ReentrantLock", ReentrantLock(), lockMethods()),
+
+      condition(),
 
       Include("java/util/concurrent/PriorityBlockingQueue"),
       Filter("java/util/concurrent/PriorityBlockingQueue$"),
@@ -157,6 +160,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
     List[LockMethod](LockMethod("lock", "()V", LockEnter()),
       LockMethod("tryLock", "()Z", LockEnter()),
       LockMethod("tryLock", "(JLjava/util/concurrent/TimeUnit;)Z ", LockEnter()),
-      LockMethod("unlock", "()V", LockExit()));
+      LockMethod("unlock", "()V", LockExit()),
+      LockMethod("newCondition", "()Ljava/util/concurrent/locks/Condition;", NewCondition()));
 
 }
