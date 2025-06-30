@@ -12,6 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestAtomicArray {
 
+    private int j = 0;
+
     @Test
     public void testUpdate() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();
@@ -36,4 +38,25 @@ public class TestAtomicArray {
         assertThat(countSet,is(expectedSet));
     }
 
+    @Test
+    public void testHappensBefore() throws InterruptedException {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testHappensBefore")) {
+            while (allInterleavings.hasNext()) {
+                final AtomicIntegerArray atomicInteger = new AtomicIntegerArray(8);
+                Thread first = new Thread() {
+                    @Override
+                    public void run() {
+                        j = 9;
+                        atomicInteger.set(5, 5);
+                    }
+                };
+                first.start();
+                int value = atomicInteger.get(5);
+                if(value == 5) {
+                    value = j;
+                }
+                first.join();
+            }
+        }
+    }
 }

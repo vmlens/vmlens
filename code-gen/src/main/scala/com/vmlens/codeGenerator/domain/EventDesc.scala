@@ -122,7 +122,6 @@ object EventDesc extends GenericDesc {
       eventList.append(volatileField("VolatileFieldAccessEventGen", " extends VolatileFieldAccessEvent  ", typSyncActions));
       
       eventList.append(atomicNonBlocking("AtomicNonBlockingEventGen", " extends AtomicNonBlockingEvent ", typSyncActions));
-      eventList.append(atomicArray("VolatileArrayAccessEventGen", " extends VolatileArrayAccessEvent", typSyncActions));
       
       eventList.append(lock("LockEnterEventGen", " extends LockEnterEvent", typSyncActions));
       eventList.append(lock("LockExitEventGen", " extends LockExitEvent", typSyncActions));

@@ -57,7 +57,7 @@ public String toString() {
  }
 
 public void serialize(DataOutputStream buffer) throws Exception {
-buffer.write( (byte)  8 );
+buffer.write( (byte)  7 );
      buffer.writeInt( threadIndex ); 
      buffer.writeInt( methodCounter ); 
       buffer.writeLong( objectHashCode );  

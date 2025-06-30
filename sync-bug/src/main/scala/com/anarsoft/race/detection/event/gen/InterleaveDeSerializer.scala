@@ -27,42 +27,39 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
           return AtomicNonBlockingEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 7 ) {
-          return VolatileArrayAccessEventGen.applyFromJavaEvent( buffer   );
-       }
-       if( id == 8 ) {
           return LockEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 9 ) {
+       if( id == 8 ) {
           return LockExitEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 10 ) {
+       if( id == 9 ) {
           return AtomicReadWriteLockExitEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 11 ) {
+       if( id == 10 ) {
           return AtomicReadWriteLockEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 12 ) {
+       if( id == 11 ) {
           return MonitorEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 13 ) {
+       if( id == 12 ) {
           return MonitorExitEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 14 ) {
+       if( id == 13 ) {
           return BarrierEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 15 ) {
+       if( id == 14 ) {
           return ConditionWaitEnterEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 16 ) {
+       if( id == 15 ) {
           return ConditionWaitExitEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 17 ) {
+       if( id == 16 ) {
           return ConditionNotifyEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 20 ) {
+       if( id == 19 ) {
           return ThreadStartEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 21 ) {
+       if( id == 20 ) {
           return ThreadJoinedEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");
