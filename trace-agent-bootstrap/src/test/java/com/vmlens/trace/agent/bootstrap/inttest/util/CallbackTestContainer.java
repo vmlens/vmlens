@@ -90,7 +90,7 @@ public class CallbackTestContainer {
                 methodRepository,
                 threadLocalWhenInTestAdapter, checkIsThreadRun,readWriteLockMap);
         PreAnalyzedCallbackImpl preAnalyzedCallbackImpl = new PreAnalyzedCallbackImpl(methodRepository,
-                threadLocalWhenInTestAdapter,readWriteLockMap);
+                threadLocalWhenInTestAdapter,readWriteLockMap,new ParallelizeFacadePassThrough(run));
 
         FieldRepositoryImpl fieldRepository = new FieldRepositoryImpl();
         FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldRepository,

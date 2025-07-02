@@ -24,6 +24,10 @@ class ConditionWaitIntTest  extends AnyFlatSpec with Matchers{
     
     val enter0 = firstThread.conditionWaitEnter(lockKey)
     val exit1 = secondThread.conditionWaitExit(lockKey)
+
+    // expected
+    val expected = new mutable.HashSet[LeftBeforeRight]();
+    expected.add(new LeftBeforeRight(enter0, exit1))
     
     // When
     val collected = new mutable.HashSet[LeftBeforeRight]();
@@ -31,10 +35,7 @@ class ConditionWaitIntTest  extends AnyFlatSpec with Matchers{
     new ProcessRunImpl(new CollectLeftBeforeRight(collected),new OnEventNoOp()).process(data);
     
     // Then
-    val expected = new mutable.HashSet[LeftBeforeRight]();
-    expected.add(new LeftBeforeRight(enter0,exit1))
-    
+    collected should be(expected)
   }
   
-
 }

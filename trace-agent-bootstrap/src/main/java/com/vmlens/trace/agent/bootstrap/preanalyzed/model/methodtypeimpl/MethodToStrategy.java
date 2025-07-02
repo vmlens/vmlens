@@ -1,12 +1,23 @@
 package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyTypeFuture;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierTypeNotify;
+import com.vmlens.trace.agent.bootstrap.barriertype.BarrierTypeWait;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.AWaitStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.*;
 
 public class MethodToStrategy extends AbstractMethodType  {
 
-    public static final AbstractMethodType CONDITION_AWAIT = new MethodToStrategy(new AWaitStrategy());
+    public static final AbstractMethodType CONDITION_AWAIT = new MethodToStrategy(new ConditionAWaitStrategy());
+
+
+    public static final AbstractMethodType FUTURE_GET = new MethodToStrategy(new BarrierWaitStrategy(
+            BarrierTypeWait.SINGLETON,
+            BarrierKeyTypeFuture.SINGLETON));
+    public static final AbstractMethodType FUTURE_SET = new MethodToStrategy(new BarrierNotifyStrategy( 
+            BarrierTypeNotify.SINGLETON,
+            BarrierKeyTypeFuture.SINGLETON));
+    public static final AbstractMethodType FUTURE_RUN = new MethodToStrategy(new FutureRunStrategy());
     
     
     private final StrategyPreAnalyzed strategyPreAnalyzed;

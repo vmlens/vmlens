@@ -34,4 +34,6 @@ public interface RunState {
                                       ThreadLocalWhenInTest threadLocalDataWhenInTest,
                                       SendEvent sendEvent);
 
+
+    RunState afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest);
 }

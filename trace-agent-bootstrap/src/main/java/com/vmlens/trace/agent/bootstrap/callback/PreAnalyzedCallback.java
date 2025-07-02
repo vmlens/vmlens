@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.impl.PreAnalyzedCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
+import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
 
@@ -13,7 +14,7 @@ public class PreAnalyzedCallback {
     private static volatile PreAnalyzedCallbackImpl preAnalyzedCallbackImpl = new  PreAnalyzedCallbackImpl(
             MethodRepositorySingleton.INSTANCE,
             new ThreadLocalWhenInTestAdapterImpl(),
-            ReadWriteLockMap.INSTANCE);
+            ReadWriteLockMap.INSTANCE, ParallelizeFacade.parallelize());
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
         if(canProcess()) {

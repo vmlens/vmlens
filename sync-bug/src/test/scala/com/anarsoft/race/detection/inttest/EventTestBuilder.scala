@@ -21,7 +21,7 @@ class EventTestBuilder(val runDataTestBuilder: RunDataTestBuilder, val threadInd
      lockKey.category(),
      runDataTestBuilder.loopId,
      runDataTestBuilder.runId,
-     runDataTestBuilder.getAndIncrementRunPosition())
+     position.runPosition())
     event.addToContext(runDataTestBuilder.loadedInterleaveActionContext)
     position;
   }
@@ -36,8 +36,7 @@ class EventTestBuilder(val runDataTestBuilder: RunDataTestBuilder, val threadInd
       lockKey.category(),
       runDataTestBuilder.loopId,
       runDataTestBuilder.runId,
-      runDataTestBuilder.getAndIncrementRunPosition()
-    )
+      position.runPosition())
     event.addToContext(runDataTestBuilder.loadedInterleaveActionContext)
     position;
   }
@@ -59,7 +58,7 @@ class EventTestBuilder(val runDataTestBuilder: RunDataTestBuilder, val threadInd
       0,
       runDataTestBuilder.loopId,
       runDataTestBuilder.runId,
-      runDataTestBuilder.getAndIncrementRunPosition())
+      position.runPosition())
     barrierEvent.addToContext(runDataTestBuilder.loadedInterleaveActionContext)
 
     position;

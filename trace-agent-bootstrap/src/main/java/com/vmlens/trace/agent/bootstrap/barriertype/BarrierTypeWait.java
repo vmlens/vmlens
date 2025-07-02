@@ -22,4 +22,9 @@ public class BarrierTypeWait implements BarrierType {
     public Barrier create(int threadIndex, BarrierKey key) {
         return new BarrierWait(threadIndex,key);
     }
+
+    @Override
+    public void accept(BarrierTypeVisitor visitor) {
+        visitor.visit(this);
+    }
 }

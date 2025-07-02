@@ -30,6 +30,15 @@ public abstract class ProcessLockExitOrWaitTemplate {
         return runStateActive();
     }
 
+    public RunState afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        TIntHashSet newThreadIndices = notYetWaitingThreadIndices();
+        newThreadIndices.remove(threadLocalDataWhenInTest.threadIndex());
+        if(! newThreadIndices.isEmpty()) {
+            return runStateWaiting(newThreadIndices);
+        }
+        return runStateActive();
+    }
+
     protected abstract RunStateContext runStateContext();
     protected abstract int startedThreadIndex();
     protected abstract TIntHashSet notYetWaitingThreadIndices();

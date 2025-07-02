@@ -85,4 +85,10 @@ public class RunStateNewThreadStarted implements RunState {
         process(afterContext, sendEvent, runStateContext, threadIndexForNewTestTask);
         return this;
     }
+
+    @Override
+    public RunState afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        // Fixme probably not correct
+        return this;
+    }
 }

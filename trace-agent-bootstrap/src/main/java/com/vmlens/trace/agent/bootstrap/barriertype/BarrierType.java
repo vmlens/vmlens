@@ -7,5 +7,6 @@ public interface BarrierType {
 
     Integer asWaitingThreadIndex(int threadIndex);
     Barrier create(int threadIndex, BarrierKey key);
+    void accept(BarrierTypeVisitor visitor);
 
 }

@@ -24,4 +24,14 @@ public class FutureKey extends BarrierKey {
     public long objecthashcode() {
         return objecthashcode;
     }
+
+    @Override
+    protected int category() {
+        return CATEGORY_FUTURE;
+    }
+
+    @Override
+    public void accept(BarrierKeyVisitor visitor) {
+        visitor.visit(this);
+    }
 }

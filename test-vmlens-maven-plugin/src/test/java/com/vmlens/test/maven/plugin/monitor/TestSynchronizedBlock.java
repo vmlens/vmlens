@@ -1,4 +1,4 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.monitor;
 
 import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
@@ -8,8 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * -javaagent:C:\workspace\vmlens\test-vmlens-maven-plugin\target\vmlens-agent\agent.jar
- *
- *
  */
 
 public class TestSynchronizedBlock {
@@ -18,8 +16,6 @@ public class TestSynchronizedBlock {
 
     @Test
     public void testUpdate() throws InterruptedException {
-
-
         AllInterleavings testUpdate = new AllInterleavings("testSynchronizedBlock");
         while (testUpdate.hasNext()) {
             j = 0;
@@ -40,8 +36,6 @@ public class TestSynchronizedBlock {
         synchronized (this) {
             j++;
         }
-
     }
-
 
 }

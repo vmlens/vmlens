@@ -17,6 +17,7 @@ import com.vmlens.preanalyzed.factory.ConcurrentLinkedDequeFactory.concurrentLin
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLinkedQueue
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
+import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 
@@ -123,6 +124,10 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       VMLensApi("com/vmlens/api/AllInterleavings"),
 
       Include("java/lang/Thread$"),
+
+      futureTask(),
+      
+      Include("java/util/concurrent/FutureTask"),
 
       Include("java/util/concurrent/Executors"),
       Include("java/util/concurrent/AbstractExecutorService"),

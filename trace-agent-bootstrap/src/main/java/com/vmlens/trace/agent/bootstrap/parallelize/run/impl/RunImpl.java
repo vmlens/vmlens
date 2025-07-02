@@ -161,6 +161,7 @@ public class RunImpl implements Run {
     public void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
         lock.lock();
         try {
+            runStateMachine.afterLockExitOrWait(threadLocalDataWhenInTest);
             waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest,
                         runStateMachine,
                         threadActiveCondition,

@@ -8,7 +8,6 @@ public class BarrierTypeNotify implements BarrierType {
 
     public static final BarrierType SINGLETON = new BarrierTypeNotify();
 
-
     private BarrierTypeNotify() {
 
     }
@@ -21,5 +20,10 @@ public class BarrierTypeNotify implements BarrierType {
     @Override
     public Barrier create(int threadIndex, BarrierKey key) {
         return new BarrierNotify(threadIndex,key);
+    }
+
+    @Override
+    public void accept(BarrierTypeVisitor visitor) {
+        visitor.visit(this);
     }
 }

@@ -17,7 +17,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ConditionWaitExit
  *
  */
 
-public class AWaitStrategy implements StrategyPreAnalyzed  {
+public class ConditionAWaitStrategy implements StrategyPreAnalyzed  {
 
     @Override
     public void methodEnter(EnterExitContext context) {

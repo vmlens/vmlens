@@ -1,4 +1,4 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.monitor;
 
 import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
@@ -6,14 +6,12 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestSynchronizedMethodAndVolatileField {
-
-    private volatile int j = 0;
+public class TestSynchronizedMethod {
 
     @Test
     public void testUpdate() throws InterruptedException {
         Map map = new HashMap();
-        AllInterleavings testUpdate = new AllInterleavings("testSynchronizedMethodAndVolatileField");
+        AllInterleavings testUpdate = new AllInterleavings("testSynchronizedMethod");
         while (testUpdate.hasNext()) {
             Thread first = new Thread() {
                 @Override
@@ -21,11 +19,9 @@ public class TestSynchronizedMethodAndVolatileField {
                     update(map);
                 }
             };
-            j++;
             first.start();
             update(map);
             first.join();
-            j++;
         }
     }
 

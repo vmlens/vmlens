@@ -1,11 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFieldsNoOp;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;
-
-import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.methodEnterEvent;
-import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.methodExitEvent;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.methodEnterEvent;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.methodExitEvent;
 
 public class NormalMethodStrategy implements StrategyAll {
 

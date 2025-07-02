@@ -34,6 +34,6 @@ public interface RunStateMachine {
                               ThreadLocalWhenInTest threadLocalDataWhenInTest,
                               SendEvent sendEvent);
 
-
+    void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest);
 
 }

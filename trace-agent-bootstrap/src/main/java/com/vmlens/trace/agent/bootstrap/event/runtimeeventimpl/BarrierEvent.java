@@ -11,15 +11,15 @@ import com.vmlens.trace.agent.bootstrap.barriertype.BarrierTypeCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent, WithInMethodIdPositionReadWriteLockMap {
+public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent,
+        WithInMethodIdPositionReadWriteLockMap  {
 
     private final BarrierType barrierTypeClass;
     private final BarrierKeyType barrierKeyTypeClass;
     private Object object;
 
     public BarrierEvent(BarrierType barrierType,
-                        BarrierKeyType barrierKeyTypeClass,
-                        Object object) {
+                        BarrierKeyType barrierKeyTypeClass, Object object) {
         this.barrierTypeClass = barrierType;
         this.barrierKeyTypeClass = barrierKeyTypeClass;
         this.object = object;
@@ -79,7 +79,6 @@ public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent
         this.objectHashCode = System.identityHashCode(object);
         this.methodId = inMethodId;
         this.bytecodePosition = position;
-        this.object = null;
     }
 
     @Override

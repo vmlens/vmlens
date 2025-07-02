@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
+import com.vmlens.trace.agent.bootstrap.strategy.EventContext;
 
-public class MonitorContext {
+public class MonitorContext implements EventContext {
 
     private final Object object;
     private final int methodId;

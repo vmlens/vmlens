@@ -1,11 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
-
 import java.util.Objects;
 
-import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.methodEnterEvent;
-import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.methodExitEvent;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.methodExitEvent;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.newTask;
 
 public class RunMethodStrategy implements StrategyAll {
 
@@ -22,11 +20,7 @@ public class RunMethodStrategy implements StrategyAll {
          */
 
         if (enterExitContext.checkIsThreadRun().isThreadRun()) {
-            enterExitContext.parallelizeFacade().newTask(
-                        enterExitContext.threadLocalWhenInTestAdapter().eventQueue(),
-                        enterExitContext.threadLocalWhenInTestAdapter().threadLocalForParallelize(),
-                    new ThreadWrapper(Thread.currentThread()));
-            methodEnterEvent(enterExitContext);
+            newTask(enterExitContext);
         } else {
             strategyIfNotThreadRun.methodEnter(enterExitContext);
         }

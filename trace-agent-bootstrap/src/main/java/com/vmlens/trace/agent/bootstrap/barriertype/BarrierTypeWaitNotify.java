@@ -21,4 +21,9 @@ public class BarrierTypeWaitNotify implements BarrierType {
         return null;
     }
 
+    @Override
+    public void accept(BarrierTypeVisitor visitor) {
+        visitor.visit(this);
+    }
+
 }

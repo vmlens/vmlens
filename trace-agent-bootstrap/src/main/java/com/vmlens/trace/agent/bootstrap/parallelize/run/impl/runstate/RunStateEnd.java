@@ -52,4 +52,9 @@ public class RunStateEnd implements RunState {
     public RunState waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
         return this;
     }
+
+    @Override
+    public RunState afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        return this;
+    }
 }

@@ -25,4 +25,14 @@ public class PhaserKey extends BarrierKey {
     public int hashCode() {
         return Long.hashCode(objecthashcode);
     }
+
+    @Override
+    protected int category() {
+        return CATEGORY_PHASER;
+    }
+
+    @Override
+    public void accept(BarrierKeyVisitor visitor) {
+        visitor.visit(this);
+    }
 }
