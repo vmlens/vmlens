@@ -22,17 +22,17 @@ public class TestCondition {
                 runParallelWithException(
                         () -> {
                             lock.lock();
-                            while(! flag) {
-                                condition.await();
-                            }
-                            lock.unlock(); } ,
-                        () -> {
-                            lock.lock();
                             flag = true;
                             condition.signal();
                             lock.unlock();
-                        }
-                        );
+                        },
+                        () -> {
+                            lock.lock();
+                            while(! flag) {
+                                condition.await();
+                            }
+                            lock.unlock(); }
+                );
             }
         }
     }

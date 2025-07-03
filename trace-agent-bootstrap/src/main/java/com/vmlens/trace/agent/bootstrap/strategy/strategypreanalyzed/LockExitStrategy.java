@@ -28,7 +28,6 @@ public class LockExitStrategy implements StrategyPreAnalyzed {
         RunBeforeLockExitOrWait<LockExitEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
                 new SetInMethodIdPositionObjectHashCode<>(context.object()), new WithoutAtomic());
-
         context.threadLocalWhenInTestAdapter().process(action);
     }
 
