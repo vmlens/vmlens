@@ -11,7 +11,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentO
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.Barrier;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWait;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWaitEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.FutureKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileFieldKey;
@@ -65,7 +65,7 @@ public class KeyToOperationTest {
         // Given
         FutureKey futureKey = new FutureKey(1L);
         BarrierNotify barrierNotify = new BarrierNotify(1, futureKey);
-        BarrierWait barrierWait = new BarrierWait(1, futureKey);
+        BarrierWaitEnter barrierWait = new BarrierWaitEnter(1, futureKey);
 
         KeyToOperation<BarrierKey, DependentOperationAndPosition<Barrier>> keyToOperation = new KeyToOperation<>();
         keyToOperation.put(barrierNotify.key(),new DependentOperationAndPosition<>(pos(0,0) , barrierNotify));

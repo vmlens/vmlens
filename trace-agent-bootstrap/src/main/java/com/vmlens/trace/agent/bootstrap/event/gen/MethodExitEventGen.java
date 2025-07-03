@@ -45,7 +45,7 @@ public String toString() {
  }
 
 public void serialize(DataOutputStream buffer) throws Exception {
-buffer.write( (byte)  18 );
+buffer.write( (byte)  20 );
      buffer.writeInt( threadIndex ); 
      buffer.writeInt( methodId ); 
      buffer.writeInt( methodCounter ); 

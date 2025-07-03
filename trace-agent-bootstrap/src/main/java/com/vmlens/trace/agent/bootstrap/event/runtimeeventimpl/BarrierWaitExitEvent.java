@@ -1,29 +1,21 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
+import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyType;
+import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeCollection;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.gen.BarrierEventGen;
+import com.vmlens.trace.agent.bootstrap.event.gen.BarrierWaitExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
-import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyType;
-import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyTypeCollection;
-import com.vmlens.trace.agent.bootstrap.barriertype.BarrierType;
-import com.vmlens.trace.agent.bootstrap.barriertype.BarrierTypeCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWaitExit;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent,
-        WithInMethodIdPositionReadWriteLockMap  {
+public class BarrierWaitExitEvent extends BarrierWaitExitEventGen
+        implements LockExitOrWaitEvent, WithInMethodIdPositionObjectHashCode {
 
-    private final BarrierType barrierTypeClass;
     private final BarrierKeyType barrierKeyTypeClass;
-    private Object object;
 
-    public BarrierEvent(BarrierType barrierType,
-                        BarrierKeyType barrierKeyTypeClass, Object object) {
-        this.barrierTypeClass = barrierType;
+    public BarrierWaitExitEvent(BarrierKeyType barrierKeyTypeClass) {
         this.barrierKeyTypeClass = barrierKeyTypeClass;
-        this.object = object;
-        this.barrierType = BarrierTypeCollection.SINGLETON.toId(barrierType);
         this.barrierKeyType = BarrierKeyTypeCollection.SINGLETON.toId(barrierKeyTypeClass);
     }
 
@@ -60,28 +52,6 @@ public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent
     }
 
     @Override
-    public Integer waitingThreadIndex() {
-        return barrierTypeClass.asWaitingThreadIndex(threadIndex);
-    }
-
-    @Override
-    public InterleaveAction create(CreateInterleaveActionContext context) {
-        return barrierTypeClass.create(threadIndex,barrierKeyTypeClass.create(objectHashCode));
-    }
-
-    @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
-        this.methodCounter = perThreadCounter.methodCount();
-    }
-
-    @Override
-    public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
-        this.objectHashCode = System.identityHashCode(object);
-        this.methodId = inMethodId;
-        this.bytecodePosition = position;
-    }
-
-    @Override
     public int loopId() {
         return loopId;
     }
@@ -91,4 +61,25 @@ public class BarrierEvent extends BarrierEventGen implements LockExitOrWaitEvent
         return runId;
     }
 
+    @Override
+    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+        this.methodCounter = perThreadCounter.methodCount();
+    }
+
+    @Override
+    public Integer waitingThreadIndex() {
+        return null;
+    }
+
+    @Override
+    public InterleaveAction create(CreateInterleaveActionContext context) {
+        return new BarrierWaitExit(threadIndex,barrierKeyTypeClass.create(objectHashCode));
+    }
+
+    @Override
+    public void setInMethodIdPositionObjectHashCode(int inMethodId, int position, long objectHashCode) {
+        this.objectHashCode = objectHashCode;
+        this.methodId = inMethodId;
+        this.bytecodePosition = position;
+    }
 }

@@ -82,7 +82,6 @@ object EventDesc extends GenericDesc {
   val bytecodePosition = new FieldDesc("bytecodePosition", intTyp)
   val lockType = new FieldDesc("lockType", intTyp)
   val lockKeyCategory = new FieldDesc("lockKeyCategory", intTyp)
-  val barrierType = new FieldDesc("barrierType", intTyp)
   val barrierKeyType = new FieldDesc("barrierKeyType", intTyp)
   val conditionNotifyEventType = new FieldDesc("conditionNotifyEventType", intTyp)
   val startedThreadIndex = new FieldDesc("startedThreadIndex", intTyp)
@@ -132,9 +131,17 @@ object EventDesc extends GenericDesc {
       eventList.append(monitor("MonitorEnterEventGen", " extends MonitorEnterEvent", typSyncActions));
       eventList.append(monitor("MonitorExitEventGen", " extends MonitorExitEvent", typSyncActions));
 
-      eventList.append(barrier("BarrierEventGen", " extends BarrierEvent  ", typSyncActions));
+      // For Phaser we also need here WaitEnterAndNotify Event
+      eventList.append(barrier("BarrierWaitEnterEventGen", " extends BarrierWaitEnterEvent", typSyncActions));
+      eventList.append(barrier("BarrierWaitExitEventGen", " extends BarrierWaitExitEvent  ", typSyncActions));
+      // Notify works on all related barriers, e.g. similar to notify all
+      // probably makes sense to integrate the count for phaser an so on?
+      eventList.append(barrier("BarrierNotifyEventGen", " extends BarrierNotifyEvent", typSyncActions));
+      
+      
       eventList.append(conditionWait("ConditionWaitEnterEventGen", " extends ConditionWaitEnterEvent  ", typSyncActions));
       eventList.append(conditionWait("ConditionWaitExitEventGen", " extends ConditionWaitExitEvent  ", typSyncActions));
+      // only used in the report
       eventList.append(conditionNotify("ConditionNotifyEventGen", " extends ConditionNotifyEvent  ", typSyncActions));
 
       eventList.append(method("MethodEnterEventGen", " extends MethodEnterEvent  ", typMethod));

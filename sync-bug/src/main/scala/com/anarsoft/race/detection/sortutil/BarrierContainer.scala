@@ -1,9 +1,9 @@
 package com.anarsoft.race.detection.sortutil
 
-import com.anarsoft.race.detection.event.interleave.{BarrierEvent, MonitorEnterEvent, MonitorEvent, MonitorExitEvent}
+import com.anarsoft.race.detection.event.interleave.{BarrierEvent, BarrierNotifyEvent, MonitorEvent, MonitorExitEvent}
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify
 
-class BarrierContainer(val barrierWait: Option[BarrierEvent],
-                       val barrierNotify: Option[BarrierEvent])
+class BarrierContainer(val barrierNotify: Option[BarrierNotifyEvent])
               extends EventContainer[BarrierEvent] {
 
   override def put(elem: BarrierEvent): EventContainer[BarrierEvent] =
@@ -11,7 +11,7 @@ class BarrierContainer(val barrierWait: Option[BarrierEvent],
 
 
   override def foreachOpposite(elem: BarrierEvent, f: BarrierEvent => Unit): Unit =
-    elem.foreachOpposite(this, f);
+    elem.onNotify( barrierNotify,f);
 
 }
 

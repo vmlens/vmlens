@@ -1,12 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyType;
-import com.vmlens.trace.agent.bootstrap.barriertype.BarrierType;
+import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyType;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitOrWait;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunBeforeLockExitOrWait;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdAndPosition;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierEvent;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.AtomicBegin;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.AtomicEnd;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdPositionObjectHashCode;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierWaitEnterEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierWaitExitEvent;
 
 
 /**
@@ -17,25 +18,29 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierEvent;
 
 public class BarrierWaitStrategy implements StrategyPreAnalyzed {
     
-    private final BarrierType barrierType;
+
     private final BarrierKeyType barrierKeyType;
 
-    public BarrierWaitStrategy(BarrierType barrierType, BarrierKeyType barrierKeyType) {
-        this.barrierType = barrierType;
+    public BarrierWaitStrategy(BarrierKeyType barrierKeyType) {
         this.barrierKeyType = barrierKeyType;
     }
 
     @Override
     public void methodEnter(EnterExitContext context) {
-        BarrierEvent event = new BarrierEvent(barrierType,barrierKeyType,context.object());
-        RunBeforeLockExitOrWait<BarrierEvent> action = new
+        BarrierWaitEnterEvent event = new BarrierWaitEnterEvent(barrierKeyType);
+        RunBeforeLockExitOrWait<BarrierWaitEnterEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdAndPosition<>(context.readWriteLockMap()), new WithoutAtomic());
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicBegin());
         context.threadLocalWhenInTestAdapter().process(action);
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
+        BarrierWaitExitEvent event = new BarrierWaitExitEvent(barrierKeyType);
+        RunBeforeLockExitOrWait<BarrierWaitExitEvent> action = new
+                RunBeforeLockExitOrWait<>(event,
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicEnd());
+        context.threadLocalWhenInTestAdapter().process(action);
         context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitOrWait());
     }
 

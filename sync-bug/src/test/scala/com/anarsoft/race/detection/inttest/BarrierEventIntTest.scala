@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import com.anarsoft.race.detection.process.run.ProcessRunImpl
-import com.vmlens.trace.agent.bootstrap.barriertype.{BarrierKeyTypeFuture, BarrierTypeNotify, BarrierTypeWait}
+import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeFuture
 
 import scala.collection.mutable
 
@@ -26,8 +26,8 @@ class BarrierEventIntTest  extends AnyFlatSpec with Matchers {
     val secondThread = runTestBuilder.createEventTestBuilder(1);
     val hashCode = 100L;
 
-    val set0 = firstThread.barrier(BarrierTypeNotify.SINGLETON,BarrierKeyTypeFuture.SINGLETON,hashCode)
-    val get1 = secondThread.barrier(BarrierTypeWait.SINGLETON,BarrierKeyTypeFuture.SINGLETON,hashCode)
+    val set0 = firstThread.barrierNotify(BarrierKeyTypeFuture.SINGLETON,hashCode)
+    val get1 = secondThread.barrierWaitExit(BarrierKeyTypeFuture.SINGLETON,hashCode)
 
     // When
     val collected = new mutable.HashSet[LeftBeforeRight]();

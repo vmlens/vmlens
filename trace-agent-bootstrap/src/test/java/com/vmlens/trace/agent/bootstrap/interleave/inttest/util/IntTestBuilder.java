@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.inttest.util;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.*;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWait;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWaitEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
@@ -45,7 +45,7 @@ public class IntTestBuilder {
     }
 
     public IntTestOperation barrierWait(BarrierKey key, int threadIndex) {
-        BarrierWait barrierWait = new BarrierWait(threadIndex,key);
+        BarrierWaitEnter barrierWait = new BarrierWaitEnter(threadIndex,key);
         actualRun.add(wrap(barrierWait));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }

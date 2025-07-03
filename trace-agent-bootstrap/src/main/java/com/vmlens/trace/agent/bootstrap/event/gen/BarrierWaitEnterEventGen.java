@@ -5,12 +5,11 @@ import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId;
 
-public class BarrierEventGen  {
+public class BarrierWaitEnterEventGen  {
 
     protected int     threadIndex;
     protected int     methodCounter;
     protected long     objectHashCode;
-    protected int     barrierType;
     protected int     barrierKeyType;
     protected int     bytecodePosition;
     protected int     methodId;
@@ -23,11 +22,10 @@ public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    BarrierEventGen that = (BarrierEventGen) o;
+    BarrierWaitEnterEventGen that = (BarrierWaitEnterEventGen) o;
     if ( threadIndex != that.threadIndex) return false;
     if ( methodCounter != that.methodCounter) return false;
     if ( objectHashCode != that.objectHashCode) return false;
-    if ( barrierType != that.barrierType) return false;
     if ( barrierKeyType != that.barrierKeyType) return false;
     if ( bytecodePosition != that.bytecodePosition) return false;
     if ( methodId != that.methodId) return false;
@@ -39,11 +37,10 @@ public boolean equals(Object o) {
 
 @Override
 public String toString() {
-    return "BarrierEventGen{" +
+    return "BarrierWaitEnterEventGen{" +
     "threadIndex=" + threadIndex +
     "methodCounter=" + methodCounter +
     "objectHashCode=" + objectHashCode +
-    "barrierType=" + barrierType +
     "barrierKeyType=" + barrierKeyType +
     "bytecodePosition=" + bytecodePosition +
     "methodId=" + methodId +
@@ -64,7 +61,6 @@ buffer.write( (byte)  13 );
      buffer.writeInt( threadIndex ); 
      buffer.writeInt( methodCounter ); 
       buffer.writeLong( objectHashCode );  
-     buffer.writeInt( barrierType ); 
      buffer.writeInt( barrierKeyType ); 
      buffer.writeInt( bytecodePosition ); 
      buffer.writeInt( methodId ); 

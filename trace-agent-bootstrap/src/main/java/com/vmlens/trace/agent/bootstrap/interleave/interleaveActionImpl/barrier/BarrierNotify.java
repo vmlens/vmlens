@@ -55,7 +55,7 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
     }
 
     @Override
-    public AddToAlternatingOrder visit(Position myPosition, BarrierWait other, Position otherPosition) {
+    public AddToAlternatingOrder visit(Position myPosition, BarrierWaitEnter other, Position otherPosition) {
         return new NotifyWaitTuple(new BarrierOperationAndPosition<>(myPosition,this),
                 new BarrierOperationAndPosition<>(otherPosition,other));
     }

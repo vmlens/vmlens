@@ -14,13 +14,13 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 import java.util.Objects;
 
-public class BarrierWait implements Barrier, BarrierOperationVisitor {
+public class BarrierWaitEnter implements Barrier, BarrierOperationVisitor {
 
     private final int threadIndex;
     private final BarrierKey barrierKey;
 
-    public BarrierWait(int threadIndex,
-                       BarrierKey barrierKey) {
+    public BarrierWaitEnter(int threadIndex,
+                            BarrierKey barrierKey) {
         this.threadIndex = threadIndex;
         this.barrierKey = barrierKey;
     }
@@ -56,7 +56,7 @@ public class BarrierWait implements Barrier, BarrierOperationVisitor {
     }
 
     @Override
-    public AddToAlternatingOrder visit(Position myPosition, BarrierWait other, Position otherPosition) {
+    public AddToAlternatingOrder visit(Position myPosition, BarrierWaitEnter other, Position otherPosition) {
         return null;
     }
 
@@ -64,7 +64,7 @@ public class BarrierWait implements Barrier, BarrierOperationVisitor {
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
 
-        BarrierWait that = (BarrierWait) object;
+        BarrierWaitEnter that = (BarrierWaitEnter) object;
         return Objects.equals(barrierKey, that.barrierKey);
     }
 
@@ -80,10 +80,10 @@ public class BarrierWait implements Barrier, BarrierOperationVisitor {
 
     @Override
     public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
-        if(! (other instanceof BarrierWait)) {
+        if(! (other instanceof BarrierWaitEnter)) {
             return false;
         }
-        BarrierWait otherLock = (BarrierWait) other;
+        BarrierWaitEnter otherLock = (BarrierWaitEnter) other;
         if(threadIndex != otherLock.threadIndex)  {
             return false;
         }

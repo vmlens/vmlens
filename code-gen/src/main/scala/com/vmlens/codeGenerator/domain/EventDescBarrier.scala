@@ -1,6 +1,6 @@
 package com.vmlens.codeGenerator.domain
 
-import com.vmlens.codeGenerator.domain.EventDesc.{bytecodePosition, barrierType, barrierKeyType, methodCounter, methodId, nextId, objectHashCode, plusInterleaveFields, threadIndex}
+import com.vmlens.codeGenerator.domain.EventDesc.{bytecodePosition, barrierKeyType, methodCounter, methodId, nextId, objectHashCode, plusInterleaveFields, threadIndex}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -11,7 +11,6 @@ object EventDescBarrier {
     fields.append(threadIndex);
     fields.append(methodCounter);
     fields.append(objectHashCode);
-    fields.append(barrierType)    
     fields.append(barrierKeyType)
     fields.append(bytecodePosition);
     fields.append(methodId);

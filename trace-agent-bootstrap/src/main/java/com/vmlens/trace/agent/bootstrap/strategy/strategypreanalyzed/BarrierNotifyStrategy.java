@@ -1,10 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.barriertype.BarrierKeyType;
-import com.vmlens.trace.agent.bootstrap.barriertype.BarrierType;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteRunAfter;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierEvent;
+import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyType;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitOrWait;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunBeforeLockExitOrWait;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdPositionObjectHashCode;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierNotifyEvent;
 
 /**
  * methodExit after barrier notify event
@@ -12,26 +13,30 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierEvent;
 
 public class BarrierNotifyStrategy implements StrategyPreAnalyzed {
 
-    private final BarrierType barrierType;
     private final BarrierKeyType barrierKeyType;
 
-    public BarrierNotifyStrategy(BarrierType barrierType, BarrierKeyType barrierKeyType) {
-        this.barrierType = barrierType;
+    public BarrierNotifyStrategy(BarrierKeyType barrierKeyType) {
         this.barrierKeyType = barrierKeyType;
     }
 
     @Override
     public void methodEnter(EnterExitContext context) {
-        // Nothing to do
+        /**
+         * notify is similar to monitor exit
+         * we must send the event before the actual notification
+         *
+         */
+        BarrierNotifyEvent event = new BarrierNotifyEvent(barrierKeyType);
+        RunBeforeLockExitOrWait<BarrierNotifyEvent> action = new
+                RunBeforeLockExitOrWait<>(event,
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new WithoutAtomic());
+
+        context.threadLocalWhenInTestAdapter().process(action);
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
-        ExecuteRunAfter<BarrierEvent> runtimeEventAndSetInMethodIdAndPositionImpl =
-                new ExecuteRunAfter<>(new BarrierEvent(barrierType,barrierKeyType,context.object()));
-
-        context.threadLocalWhenInTestAdapter().process(
-                new SetExecuteAfterOperation(runtimeEventAndSetInMethodIdAndPositionImpl));
+        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitOrWait());
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
-import com.anarsoft.race.detection.event.interleave.barrier.{BarrierEventType, BarrierEventTypeBuilder}
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
-import com.anarsoft.race.detection.sortutil.{BarrierContainer, MonitorContainer}
+import com.anarsoft.race.detection.sortutil.{BarrierContainer, EventContainer, MonitorContainer}
 import com.vmlens.report.runelementtype.{BarrierOperation, RunElementType}
-import com.vmlens.trace.agent.bootstrap.barriertype.{BarrierKeyTypeCollection, BarrierType, BarrierTypeCollection}
+import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeCollection
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey
 
 /**
@@ -15,28 +15,43 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierk
  * action happen-before actions subsequent to a successful return from the corresponding await in other threads.
  *
  * see https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html
+ *
+ * Memory consistency effects: Actions taken by the asynchronous computation happen-before actions following the
+ * corresponding Future.get() in another thread.
+ *
+ *
+ * Fixme clarify should by await an event with waitNotify or should it depend on the key
+ * How to model phaser?
+ *
+ * With Future we have
+ *
+ * wait enter
+ *          notify
+ * wait exit
+ *
+ * wait enter does nothing
+ *
+ * notify creates relation to wait exit
+ *
+ * for cyclic barrier we have
+ *
+ * wait enter and notify
+ *
+ * wait exit
+ *
+ * I suppose that Phaser awaitAdvance is the sam as wait notify
+ * and Phaser advance the same as notify
+ *
  */
 
-trait BarrierEvent extends LoadedInterleaveActionEvent  with EventForReportElement
+trait BarrierEvent extends LoadedInterleaveActionEvent
+  with EventForReportElement
   with WithSetStacktraceNode
   with SyncActionEventWithCompareType[BarrierEvent] {
 
-  
-  def barrierType: Int;
   def barrierKeyType: Int;
   def objectHashCode: Long;
 
-
-
-  def create(): BarrierContainer = getBarrierEventType.create(this)
-
-  def update(barrierContainer: BarrierContainer): BarrierContainer =
-    getBarrierEventType.update(this,barrierContainer);
-
-  def foreachOpposite(barrierContainer: BarrierContainer, f: BarrierEvent => Unit): Unit =
-    getBarrierEventType.foreachOpposite(this,barrierContainer, f);
-
-  
   override def compareType(other: BarrierEvent): Int = {
     getBarrierKey.compareTo(other.getBarrierKey)
   }
@@ -45,16 +60,11 @@ trait BarrierEvent extends LoadedInterleaveActionEvent  with EventForReportEleme
     context.barrierEvents.add(this);
   }
 
-  override def runElementType: RunElementType =
-    new BarrierOperation( getBarrierEventType.getOperationType , getBarrierKey );
+  def update(container : EventContainer[BarrierEvent]) : EventContainer[BarrierEvent];
+  def onNotify( barrierNotify: Option[BarrierNotifyEvent],f: BarrierEvent => Unit) : Unit;
+  def create() : EventContainer[BarrierEvent];
 
-  private def getBarrierEventType: BarrierEventType = {
-    val builder = new BarrierEventTypeBuilder();
-    BarrierTypeCollection.SINGLETON.fromId(barrierType).accept(builder);
-    builder.build();
-  };
-
-  private def getBarrierKey: BarrierKey =
+  def getBarrierKey: BarrierKey =
     BarrierKeyTypeCollection.SINGLETON.fromId(barrierKeyType).create(objectHashCode);
-  
+
 }

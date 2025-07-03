@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebui
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.Barrier;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWait;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWaitEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.FutureKey;
 import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class BarrierOperationTest {
 
     private final FutureKey futureKey = new FutureKey(5L);
     private final BarrierNotify notify = new BarrierNotify(1,futureKey);
-    private final BarrierWait wait = new BarrierWait(1,futureKey);
+    private final BarrierWaitEnter wait = new BarrierWaitEnter(1,futureKey);
 
     @Test
     public void testAsymmetricWaitNotify() {
