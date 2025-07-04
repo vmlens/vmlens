@@ -1,21 +1,18 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
-import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 
 public class OrderTree {
 
     // can be null, when only fixed orders exist
     private final OrderTreeNode start;
-    private final LeftBeforeRight[] fixedOrder;
-    private final int size;
+    private final int length;
 
-    public OrderTree(OrderTreeNode start, LeftBeforeRight[] fixedOrder) {
+    public OrderTree(OrderTreeNode start) {
         this.start = start;
-        this.fixedOrder = fixedOrder;
-        this.size = calculateSize(start);
+        this.length = calculateLength(start);
     }
 
-    private static int calculateSize(OrderTreeNode start) {
+    private static int calculateLength(OrderTreeNode start) {
         int size = 0;
         OrderTreeNode current = start;
         while(current != null) {
@@ -29,17 +26,13 @@ public class OrderTree {
         return new OrderTreeIterator(start);
     }
 
-    public LeftBeforeRight[] fixedOrder() {
-        return fixedOrder;
+    public int length() {
+        return length;
     }
 
     // To test the builder
     public OrderTreeNode start() {
         return start;
-    }
-
-    public int size() {
-        return size;
     }
 
 }

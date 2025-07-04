@@ -5,9 +5,7 @@ import com.anarsoft.race.detection.sortutil.lockcontainer.{LockContainer, NoLock
 import com.vmlens.trace.agent.bootstrap.lock.LockTypes
 
 trait WithLockEnterEvent extends WithLockEventGeneric[WithLockEnterEvent] {
-
- 
-
+  
   def asEither(): Either[WithLockEnterEvent, WithLockExitEvent] = Left(this);
 
   def create(): LockContainer = new LockContainer(lockTypeClass().create(this),new NoLock[WithLockExitEvent]());

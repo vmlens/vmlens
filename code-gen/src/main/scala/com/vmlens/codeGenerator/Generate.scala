@@ -16,8 +16,6 @@ object Generate {
 
     generatorList.append(new EventCodeGenerator("trace-agent-bootstrap/src/main/java/com/vmlens/trace/agent/bootstrap/event/gen",
       "templates/JavaEvent.mustache", ".java", false));
-    generatorList.append(new ForAllEventsCodeGenerator("trace-agent-bootstrap/src/main/java/com/vmlens/trace/agent/bootstrap/event/gen",
-      "templates/EventConstants.mustache", "EventConstants.java"));
     generatorList.append(new EventCodeGenerator("sync-bug/src/main/scala/com/anarsoft/race/detection/event/gen",
       "templates/ScalaEvent.mustache", ".scala", true));
     generatorList.append(new EventTypCodeGenerator("sync-bug/src/main/scala/com/anarsoft/race/detection/event/gen",
@@ -30,8 +28,7 @@ object Generate {
       generator.generate(eventDescList, eventTypList);
     }
   }
-
-
+  
   def main(args: Array[String]) : Unit = {
     generate();
   }

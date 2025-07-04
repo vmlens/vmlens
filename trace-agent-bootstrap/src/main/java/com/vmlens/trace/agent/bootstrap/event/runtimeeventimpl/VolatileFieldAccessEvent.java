@@ -68,11 +68,20 @@ public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implem
                 operation);
     }
 
-
     @Override
     public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
         objectHashCode = System.identityHashCode(object);
         object = null;
+    }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
     }
 
 }

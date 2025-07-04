@@ -4,7 +4,6 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.LockEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockEnterImpl;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
@@ -43,8 +42,7 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        Lock monitor = new Lock(lockTypeClass.create(objectHashCode));
-        return new LockEnterImpl(threadIndex, monitor);
+        return new LockEnterImpl(threadIndex, lockTypeClass.create(objectHashCode));
     }
 
     @Override
@@ -53,6 +51,16 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
         this.methodId = inMethodId;
         this.bytecodePosition = position;
         this.object = null;
+    }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
     }
 
     //  For Tests
@@ -67,4 +75,5 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
     public void setBytecodePosition(int bytecodePosition) {
         this.bytecodePosition = bytecodePosition;
     }
+
 }

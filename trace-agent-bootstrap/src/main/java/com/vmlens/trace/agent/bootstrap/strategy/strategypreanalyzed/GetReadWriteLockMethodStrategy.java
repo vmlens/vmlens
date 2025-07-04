@@ -1,8 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
 
-import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
-
 public class GetReadWriteLockMethodStrategy implements StrategyPreAnalyzed {
 
     public GetReadWriteLockMethodStrategy() {

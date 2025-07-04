@@ -1,14 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockStartOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
-
-import java.util.Iterator;
 
 /**
  * creates the lock relation by using the currently active locks
@@ -18,42 +14,40 @@ import java.util.Iterator;
 public class BlockingLockRelationBuilder {
 
     private final THashMap<LockPair,LockPairCombinationAndThreadIndices> map = new THashMap<>();
-    private final ActiveLockCollection activeLockCollection = new ActiveLockCollection();
 
-    public void onLockEnter(ElementAndPosition<LockEnter> enter) {
-        activeLockCollection.push(enter);
-        fill(activeLockCollection.listAt(enter.threadIndex()));
-    }
 
-    public void onLockExit(int threadIndex,  LockKey forLockOrMonitor) {
-        activeLockCollection.pop(threadIndex,forLockOrMonitor);
-    }
 
     public BlockingLockRelation build() {
         return new BlockingLockRelation(map);
     }
 
-    private void fill(TLinkedList<TLinkableWrapper<ElementAndPosition<LockEnter>>> list) {
+    public void fill(TLinkedList<TLinkableWrapper<LockStartOperation>> list) {
         for(int i = 0 ; i < list.size(); i++) {
-            TLinkableWrapper<ElementAndPosition<LockEnter>> parent = list.get(i);
+            TLinkableWrapper<LockStartOperation> parent = list.get(i);
             for(int j = i + 1 ; j <  list.size(); j++ ) {
-                TLinkableWrapper<ElementAndPosition<LockEnter>> child = list.get(j);
+                TLinkableWrapper<LockStartOperation> child = list.get(j);
                 add(parent.element(),child.element());
             }
         }
     }
 
-    private void add(ElementAndPosition<LockEnter> parent,ElementAndPosition<LockEnter> child ) {
-        LockKey parentKey = parent.element().key();
-        LockKey childKey = child.element().key();
+    private void add(LockStartOperation parent, LockStartOperation child ) {
+        LockKey parentKey = parent.key();
+        LockKey childKey = child.key();
 
-        // if both keys are read the can not create a deadlock
+        // if both keys are read they can not create a deadlock
         if(parentKey.isRead() && childKey.isRead()) {
+            return;
+        }
+        if(! parent.canBeDeadlockParent()) {
+            return;
+        }
+        if(! child.canBeDeadlockChild()) {
             return;
         }
 
         PositionPair positionPair = new PositionPair(parent.position(),child.position());
-        LockPair pair = new LockPair(parentKey,childKey);
+        LockPair pair = new LockPair(parent,child);
         LockPair normalized = pair.normalized();
         LockPairCombinationAndThreadIndices list = map.get(normalized);
         if(list == null) {

@@ -22,6 +22,7 @@ public class CheckIsThreadRun {
             return false;
         }
 
+        
         /*
             In case of runnable we have two run methods
 

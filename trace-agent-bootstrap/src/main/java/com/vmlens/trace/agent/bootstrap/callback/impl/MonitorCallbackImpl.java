@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback.impl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.MonitorContext;
 
-import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.*;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.*;
 
 
 public class MonitorCallbackImpl {

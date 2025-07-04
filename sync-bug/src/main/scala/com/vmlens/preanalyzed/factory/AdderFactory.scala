@@ -1,6 +1,7 @@
 package com.vmlens.preanalyzed.factory
 
-import com.vmlens.preanalyzed.model.{AtomicNonBlocking, AtomicClassNonBlockingMethod, Read, ReadWrite, Write}
+import com.vmlens.preanalyzed.model.classmodel.AtomicNonBlocking
+import com.vmlens.preanalyzed.model.{AtomicClassNonBlockingMethod, Read, ReadWrite, Write}
 
 private class AdderFactory(val className : String, val desc : String, val additional :  List[AtomicClassNonBlockingMethod]) {
   private def atomic(): AtomicNonBlocking = AtomicNonBlocking(s"java/util/concurrent/atomic/$className",

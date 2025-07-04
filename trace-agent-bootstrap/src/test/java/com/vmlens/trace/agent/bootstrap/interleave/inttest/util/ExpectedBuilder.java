@@ -12,8 +12,12 @@ public class ExpectedBuilder {
         expectedElements.add(new ExpectedElement(Arrays.asList(operations)));
     }
 
-    public Expected build() {
-        return new Expected(expectedElements);
+    public Expected buildExpected() {
+        return new Expected(true,expectedElements);
+    }
+
+    public Expected buildNotExpected() {
+        return new Expected(false,expectedElements);
     }
 
 }

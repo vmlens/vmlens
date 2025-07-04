@@ -3,21 +3,21 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.LockExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockExit;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class LockExitEvent extends LockExitEventGen implements LockEvent {
+public class LockExitEvent extends LockExitEventGen implements LockExitOrWaitEvent, WithInMethodIdPositionObjectHashCode {
 
     private final LockType lockTypeClass;
-    private Object object;
+    private final ReadWriteLockMap readWriteLockMap;
 
-    public LockExitEvent(LockType lockTypeClass, Object object) {
+    public LockExitEvent(LockType lockTypeClass,
+                         ReadWriteLockMap readWriteLockMap) {
         this.lockTypeClass = lockTypeClass;
-        this.object = object;
+        this.readWriteLockMap = readWriteLockMap;
         this.lockType = lockTypeClass.id();
     }
 
@@ -25,7 +25,10 @@ public class LockExitEvent extends LockExitEventGen implements LockEvent {
         this.threadIndex = threadIndex;
     }
 
-
+    @Override
+    public Integer waitingThreadIndex() {
+        return null;
+    }
 
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
@@ -45,8 +48,7 @@ public class LockExitEvent extends LockExitEventGen implements LockEvent {
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        Lock monitor = new Lock(lockTypeClass.create(objectHashCode));
-        return new LockExit(threadIndex, monitor);
+        return new LockExit(threadIndex, lockTypeClass.create(objectHashCode));
     }
 
     public void setObjectHashCode(long objectHashCode) {
@@ -54,11 +56,19 @@ public class LockExitEvent extends LockExitEventGen implements LockEvent {
     }
 
     @Override
-    public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
-        this.objectHashCode = lockTypeClass.getObjectHashCode(readWriteLockMap,System.identityHashCode(object));
+    public void setInMethodIdPositionObjectHashCode(int inMethodId, int position, long objectHashCode) {
+        this.objectHashCode = lockTypeClass.getObjectHashCode(readWriteLockMap,objectHashCode);
         this.methodId = inMethodId;
         this.bytecodePosition = position;
-        this.object = null;
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

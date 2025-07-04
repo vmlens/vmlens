@@ -1,58 +1,30 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElementStrategy;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.OnlyWhenNotDeadlockActive;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
-import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockEnterOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
-public class LockEnterImpl implements InterleaveAction, LockEnter {
+public class LockEnterImpl implements InterleaveAction  {
 
     private final int threadIndex;
-    private final Lock lockOrMonitor;
+    private final LockKey lockOrMonitor;
 
-    public LockEnterImpl(int threadIndex, Lock lockOrMonitor) {
+    public LockEnterImpl(int threadIndex, LockKey lockOrMonitor) {
         this.threadIndex = threadIndex;
         this.lockOrMonitor = lockOrMonitor;
     }
-
+    
     @Override
-    public AlternatingOrderElementStrategy alternatingOrderElementStrategy() {
-        return new OnlyWhenNotDeadlockActive(lockOrMonitor.key());
+    public void addToKeyToOperationCollection(Position myPosition,
+                                              ActiveLockCollection mapContainingStack,
+                                              KeyToOperationCollection result) {
+        mapContainingStack.push(new LockEnterOperation(myPosition, lockOrMonitor));
     }
-
-    @Override
-    public void addToBlockingLockRelationBuilder(Position position, BlockingLockRelationBuilder builder) {
-        ElementAndPosition<LockEnter> element = new ElementAndPosition<>(this, position);
-        builder.onLockEnter(element);
-    }
-
-    @Override
-    public LockKey key() {
-        return lockOrMonitor.key();
-    }
-
-    @Override
-    public void blockBuilderAdd(Position myPosition,
-                                ActiveLockCollection mapContainingStack,
-                                MapOfBlocks result) {
-        mapContainingStack.push(new ElementAndPosition<>(this, myPosition));
-    }
-
-    @Override
-    public boolean startsAlternatingOrder(DependentBlockElement interleaveAction) {
-        LockExit other = (LockExit) interleaveAction;
-        return lockOrMonitor.startsAlternatingOrder(other.lockOrMonitor());
-    }
-
+    
     @Override
     public int threadIndex() {
         return threadIndex;
@@ -72,11 +44,7 @@ public class LockEnterImpl implements InterleaveAction, LockEnter {
     public int hashCode() {
         return lockOrMonitor.hashCode();
     }
-
-    public Lock lockOrMonitor() {
-        return lockOrMonitor;
-    }
-
+    
     @Override
     public String toString() {
         return "LockEnterImpl{" +
@@ -94,7 +62,6 @@ public class LockEnterImpl implements InterleaveAction, LockEnter {
         if(threadIndex != otherLock.threadIndex)  {
             return false;
         }
-
-        return lockOrMonitor.key().equalsNormalized(normalizeContext,otherLock.key());
+        return lockOrMonitor.equalsNormalized(normalizeContext,otherLock.lockOrMonitor);
     }
 }

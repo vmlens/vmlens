@@ -27,6 +27,6 @@ public class ThreadJoinAndVolatileIntTest {
         expectedBuilder.group(write1,read0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 }

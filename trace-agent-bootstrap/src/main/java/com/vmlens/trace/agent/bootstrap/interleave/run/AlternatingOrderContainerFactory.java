@@ -1,11 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.*;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.deadlock.DeadlockDependentBlockFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.Pair;
@@ -16,19 +17,32 @@ public class AlternatingOrderContainerFactory {
         Pair<TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>>, ThreadIndexToElementList<Position>>
                 interleaveActionWitPositionAndRun = new InterleaveActionWithPositionFactory().create(actualRun);
 
-        MapOfBlocks mapOfBlocksExceptDeadlock = new MapOfBlocksExceptDeadlockFactory().create(
-                interleaveActionWitPositionAndRun.getLeft());
-        KeyToThreadIdToElementList<Object, DependentBlock> deadlockDependentBlocks = new DeadlockDependentBlockFactory().
-                create(interleaveActionWitPositionAndRun.getLeft());
+        KeyToOperationCollection collection = createCollection(interleaveActionWitPositionAndRun.getLeft());
 
-        OrderTreeBuilderWrapper orderArraysBuilder = new OrderTreeBuilderWrapper();
+        BuildAlternatingOrderContext context = new BuildAlternatingOrderContext(
+                interleaveActionWitPositionAndRun.getRight(),collection.buildDeadLockMap());
 
-        AddDependentBlocksToOrderArraysBuilder.add(mapOfBlocksExceptDeadlock.dependentBlocks(), orderArraysBuilder);
-        AddDependentBlocksToOrderArraysBuilder.add(deadlockDependentBlocks, orderArraysBuilder);
-        new AddIndependentBlocksToOrderArraysBuilder().add(mapOfBlocksExceptDeadlock.inDependentBlocks(),
+        return new AlternatingOrderContainer(
                 interleaveActionWitPositionAndRun.getRight(),
-                orderArraysBuilder);
+                collection.buildFixedOrders(interleaveActionWitPositionAndRun.getRight()),
+                collection.buildOrderTree(context));
+    }
 
-        return new AlternatingOrderContainer(orderArraysBuilder.build(), interleaveActionWitPositionAndRun.getRight());
+    public KeyToOperationCollection createCollection(
+            TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>> actualRun) {
+        ThreadIndexToElementList<ElementAndPosition<InterleaveAction>> threadIndexToElementList = new
+                ThreadIndexToElementList<>();
+        for (TLinkableWrapper<ElementAndPosition<InterleaveAction>> blockBuilder : actualRun) {
+            threadIndexToElementList.add(blockBuilder.element());
+        }
+        KeyToOperationCollection result = new KeyToOperationCollection();
+        ActiveLockCollection mapContainingStack = new ActiveLockCollection();
+        for (TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>>> thread : threadIndexToElementList) {
+            for (TLinkableWrapper<ElementAndPosition<InterleaveAction>> current : thread.element()) {
+                current.element().element().addToKeyToOperationCollection(current.element().position(), mapContainingStack, result);
+            }
+        }
+        result.setDeadlocks(mapContainingStack.build().build());
+        return result;
     }
 }

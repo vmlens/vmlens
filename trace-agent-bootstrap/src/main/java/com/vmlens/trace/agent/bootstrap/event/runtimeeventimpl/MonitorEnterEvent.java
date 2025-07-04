@@ -5,8 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.MonitorEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NotThreadStartedInterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockEnterImpl;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.Lock;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class MonitorEnterEvent extends MonitorEnterEventGen implements
@@ -39,12 +38,21 @@ public class MonitorEnterEvent extends MonitorEnterEventGen implements
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        Lock monitor = new Lock(new MonitorKey(objectHashCode));
-        return new LockEnterImpl(threadIndex, monitor);
+        return new LockEnterImpl(threadIndex, new MonitorKey(objectHashCode));
     }
 
     @Override
     public void setObjectHashCode(long objectHashCode) {
         this.objectHashCode = objectHashCode;
+    }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
     }
 }

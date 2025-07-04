@@ -2,8 +2,9 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
+import com.vmlens.trace.agent.bootstrap.strategy.NewTaskContext;
 
-public class MethodEnterExitContext extends MonitorContext {
+public class MethodEnterExitContext extends MonitorContext implements NewTaskContext {
 
 
     private final CheckIsThreadRun checkIsThreadRun;

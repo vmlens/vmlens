@@ -1,15 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl;
 
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlternatingOrderElementStrategy;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.element.AlwaysEnabled;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlockElement;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.block.MapOfBlocks;
-import com.vmlens.trace.agent.bootstrap.interleave.deadlock.BlockingLockRelationBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
+import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleavetypes.VolatileOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 import static com.vmlens.trace.agent.bootstrap.MemoryAccessType.IS_READ;
 
-public class VolatileAccess extends InterleaveActionForDependentBlock {
+public class VolatileAccess implements VolatileOperation, InterleaveAction {
     private final int threadIndex;
     private final VolatileKey volatileAccessKey;
     private final int operation;
@@ -28,36 +28,19 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
         this.operation = operation;
     }
 
-    @Override
-    public AlternatingOrderElementStrategy alternatingOrderElementStrategy() {
-        return new AlwaysEnabled();
-    }
-
-    @Override
-    public void addToBlockingLockRelationBuilder(Position position, BlockingLockRelationBuilder builder) {
-        // Nothing To do
-    }
-
-    @Override
-    public void blockBuilderAdd(Position myPosition,
-                                ActiveLockCollection mapContainingStack,
-                                MapOfBlocks result) {
-        DependentBlock dependentBlock = new DependentBlock(new ElementAndPosition<>(this, myPosition),
-                new ElementAndPosition<>(this, myPosition));
-        result.addDependent(volatileAccessKey, dependentBlock);
-    }
-
-    @Override
-    protected Object blockKey() {
+    public VolatileKey key() {
         return volatileAccessKey;
     }
 
+
     @Override
-    public boolean startsAlternatingOrder(DependentBlockElement other) {
-        VolatileAccess otherVolatileFieldAccess = (VolatileAccess) other;
-        // if at least one interleaveoperation is a write
-        return otherVolatileFieldAccess.operation > IS_READ ||  operation > IS_READ;
+    public void addToKeyToOperationCollection(Position myPosition,
+                                              ActiveLockCollection mapContainingStack,
+                                              KeyToOperationCollection result) {
+        result.addVolatile(volatileAccessKey,new DependentOperationAndPosition<>(myPosition,this));
     }
+
+
 
     @Override
     public int threadIndex() {
@@ -72,6 +55,11 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
         return threadIndex == that.threadIndex &&
                 operation == that.operation &&
                 Objects.equals(volatileAccessKey, that.volatileAccessKey);
+    }
+
+    @Override
+    public int operation() {
+        return operation;
     }
 
     @Override
@@ -104,5 +92,19 @@ public class VolatileAccess extends InterleaveActionForDependentBlock {
             return false;
         }
         return volatileAccessKey.equalsNormalized(normalizeContext,otherLock.volatileAccessKey);
+    }
+
+    @Override
+    public TreeBuilderNode addToAlternatingOrder(Position myPosition,
+                                                 Object otherObj,
+                                                 BuildAlternatingOrderContext context,
+                                                 TreeBuilderNode treeBuilderNode) {
+        DependentOperationAndPosition<VolatileOperation> other = (DependentOperationAndPosition<VolatileOperation>) otherObj;
+        // if at least one interleaveoperation is a write
+        if( operation > IS_READ || other.element().operation()  > IS_READ ) {
+            treeBuilderNode = treeBuilderNode.either(new AlternativeOneOrder(LeftBeforeRight.lbr(myPosition,other.position())),
+                    new AlternativeOneOrder(LeftBeforeRight.lbr(other.position(),myPosition)));
+        }
+        return treeBuilderNode;
     }
 }

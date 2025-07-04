@@ -2,10 +2,9 @@ package com.vmlens.trace.agent.bootstrap.preanalyzed.model;
 
 import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.ClassTransformerListBuilder;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.ClassType;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.PreAnalyzedMethod;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.PreAnalyzedSpecificMethods;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.ThreadStart;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.ThreadStartStrategy;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
@@ -29,7 +28,7 @@ public class PreAnalyzedSpecificMethodsTest {
 
         // Then
         verify(classBuilder).addPreAnalyzedEquals(eq("java.lang.Thread"), any());
-        verify(methodBuilder).addThreadStart("start", "()V");
+        verify(methodBuilder).addPreAnalyzedMethod("start", "()V", ThreadStartStrategy.SINGLETON);
         verify(methodBuilder).noOpWhenMethodNotFound();
     }
 

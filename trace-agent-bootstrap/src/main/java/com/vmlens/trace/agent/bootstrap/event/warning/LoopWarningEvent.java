@@ -9,4 +9,14 @@ public class LoopWarningEvent extends LoopWarningEventGen implements Warning {
         this.runId = runId;
         this.messageId = messageId;
     }
+
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

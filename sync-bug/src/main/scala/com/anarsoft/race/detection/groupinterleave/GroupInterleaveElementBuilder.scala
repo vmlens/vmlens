@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.groupinterleave
 
-import com.anarsoft.race.detection.event.interleave.{AtomicNonBlockingEvent, LockEvent, MonitorEvent, ThreadJoinedEvent, ThreadStartEvent, VolatileFieldAccessEvent, VolatileFieldAccessEventStatic, WithLockEvent}
+import com.anarsoft.race.detection.event.interleave.{AtomicNonBlockingEvent, BarrierEvent, LockEvent, MonitorEvent, ThreadJoinedEvent, ThreadStartEvent, VolatileFieldAccessEvent, VolatileFieldAccessEventStatic, WithLockEvent}
 import com.anarsoft.race.detection.sortutil.lockcontainer.LockContainer
 import com.anarsoft.race.detection.sortutil.{EventContainer, EventWithReadWriteContainer, MonitorContainer}
 import com.anarsoft.race.detection.util.EventArray
@@ -63,6 +63,13 @@ class GroupInterleaveElementBuilder {
       new GroupInterleaveElementSyncActionImpl[MonitorEvent](
         EventArray[MonitorEvent](list),
         (event: MonitorEvent) => MonitorContainer(event)));
+  }
+
+  def addBarrierEvents(list: util.LinkedList[BarrierEvent]): Unit = {
+    arrayBuffer.append(
+      new GroupInterleaveElementSyncActionImpl[BarrierEvent](
+        EventArray[BarrierEvent](list),
+        (event: BarrierEvent) => event.create()));
   }
   
   def build(): List[GroupInterleaveElement] = {

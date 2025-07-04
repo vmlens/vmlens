@@ -1,6 +1,8 @@
 package com.vmlens.preanalyzed.factory
 
-import com.vmlens.preanalyzed.model.{AtomicArrayNonBlockingMethod, AtomicNonBlocking, AtomicNonBlockingMethod, Read}
+import com.vmlens.preanalyzed.model.{AtomicArrayNonBlockingMethod, AtomicNonBlockingMethod, Read}
+import com.vmlens.preanalyzed.model.classmodel.AtomicNonBlocking
+
 
 object ForGuineaPig {
 

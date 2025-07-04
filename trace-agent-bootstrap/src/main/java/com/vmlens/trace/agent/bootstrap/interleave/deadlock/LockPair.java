@@ -1,29 +1,29 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.activelock.LockStartOperation;
 
 import java.util.Objects;
 
 public class LockPair {
 
-    private final LockKey parent;
-    private final LockKey child;
+    private final LockStartOperation parent;
+    private final LockStartOperation child;
 
-    public LockPair(LockKey parent, LockKey child) {
+    public LockPair(LockStartOperation parent, LockStartOperation child) {
         this.parent = parent;
         this.child = child;
     }
 
-    public LockKey parent() {
+    public LockStartOperation parent() {
         return parent;
     }
 
-    public LockKey child() {
+    public LockStartOperation child() {
         return child;
     }
 
     public  LockPair normalized() {
-        if(parent.compareTo(child) < 0)  {
+        if(parent.key().compareTo(child.key()) < 0)  {
             return this;
         }
         return new LockPair(child,parent);
@@ -34,13 +34,13 @@ public class LockPair {
         if (o == null || getClass() != o.getClass()) return false;
 
         LockPair lockPair = (LockPair) o;
-        return Objects.equals(parent, lockPair.parent) && Objects.equals(child, lockPair.child);
+        return Objects.equals(parent.key(), lockPair.parent.key()) && Objects.equals(child.key(), lockPair.child.key());
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(parent);
-        result = 31 * result + Objects.hashCode(child);
+        int result = Objects.hashCode(parent.key());
+        result = 31 * result + Objects.hashCode(child.key());
         return result;
     }
 }

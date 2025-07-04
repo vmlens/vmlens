@@ -5,16 +5,21 @@ import com.vmlens.preanalyzed.factory.AdderFactory.{doubleAdder, longAdder}
 import com.vmlens.preanalyzed.factory.AtomicBooleanFactory.atomicBoolean
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongArrayFactory.{atomicIntegerArray, atomicLongArray}
 import com.vmlens.preanalyzed.model.*
+import com.vmlens.preanalyzed.model.classmodel.*
 import com.vmlens.preanalyzed.factory.ConcurrentHashMapFactory.concurrentHashMap
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongFactory.{atomicInteger, atomicLong}
 import com.vmlens.preanalyzed.factory.AtomicMarkableReferenceFactory.atomicMarkableReference
 import com.vmlens.preanalyzed.factory.AtomicReferenceArrayFactory.atomicReferenceArray
+import com.vmlens.preanalyzed.factory.ConditionFactory.condition
 import com.vmlens.preanalyzed.factory.AtomicReferenceFactory.atomicReference
 import com.vmlens.preanalyzed.factory.AtomicStampedReferenceFactory.atomicStampedReference
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedDequeFactory.concurrentLinkedDeque
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLinkedQueue
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
+import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
+import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
+import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
@@ -22,11 +27,11 @@ import scala.io.Source
 class PreAnalyzedFactory {
 
 
-  def create(): List[PreAnalyzed] = flatten(createWithLists());
+  def create(): List[ClassModel] = flatten(createWithLists());
 
 
   private def loadNotYetImplemented(): PreAnalyzedList = {
-    val result = new ArrayBuffer[PreAnalyzed]();
+    val result = new ArrayBuffer[ClassModel]();
     val source = Source.fromResource("notYetImplementedClasses.txt")
 
     try {
@@ -78,6 +83,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$WriteLock", WriteLock(), lockMethods()),
       Lock("java/util/concurrent/locks/ReentrantLock", ReentrantLock(), lockMethods()),
 
+      condition(),
+
       Include("java/util/concurrent/PriorityBlockingQueue"),
       Filter("java/util/concurrent/PriorityBlockingQueue$"),
 
@@ -118,6 +125,10 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       Include("java/lang/Thread$"),
 
+      futureTask(),
+      
+      Include("java/util/concurrent/FutureTask"),
+
       Include("java/util/concurrent/Executors"),
       Include("java/util/concurrent/AbstractExecutorService"),
       Filter("java/util/concurrent"),
@@ -140,8 +151,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
     );
   }
   
-  private def flatten(orig: List[PreAnalyzedOrList]): List[PreAnalyzed] = {
-    val result = new ArrayBuffer[PreAnalyzed]
+  private def flatten(orig: List[PreAnalyzedOrList]): List[ClassModel] = {
+    val result = new ArrayBuffer[ClassModel]
     for (elem <- orig) {
       for (preAnalyzed <- elem.asList()) {
         result.append(preAnalyzed);
@@ -154,6 +165,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
     List[LockMethod](LockMethod("lock", "()V", LockEnter()),
       LockMethod("tryLock", "()Z", LockEnter()),
       LockMethod("tryLock", "(JLjava/util/concurrent/TimeUnit;)Z ", LockEnter()),
-      LockMethod("unlock", "()V", LockExit()));
+      LockMethod("unlock", "()V", LockExit()),
+      LockMethod("newCondition", "()Ljava/util/concurrent/locks/Condition;", NewCondition()));
 
 }

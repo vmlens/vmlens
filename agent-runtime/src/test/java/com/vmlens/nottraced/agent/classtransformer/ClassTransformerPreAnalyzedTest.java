@@ -13,7 +13,6 @@ public class ClassTransformerPreAnalyzedTest {
 
         // When and Then
         runTestClassTransformer.runTest("java.util.concurrent.atomic.AtomicInteger", "/atomicInteger.txt");
-
     }
 
     @Test
@@ -23,7 +22,6 @@ public class ClassTransformerPreAnalyzedTest {
 
         // When and Then
         runTestClassTransformer.runTest("com.vmlens.test.guineapig.MethodWithIntParam", "/methodWithIntParam.txt");
-
     }
 
 }

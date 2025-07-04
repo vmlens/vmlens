@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
-
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId;
 
 public class MethodEnterEventGen  {
 
@@ -40,19 +40,17 @@ public String toString() {
 
 
 
- public void serialize(StreamRepository streamRepository) throws Exception {
-     serialize( streamRepository.method.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  21, EventConstants.MAX_ARRAY_SIZE * 1000));
-
+ public StreamWrapperWithLoopIdAndRunId getStream(StreamRepository streamRepository)  {
+     return streamRepository.method;
  }
 
-public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  14 );
-     buffer.putInt( threadIndex ); 
-     buffer.putInt( methodId ); 
-     buffer.putInt( methodCounter ); 
-     buffer.putInt( loopId ); 
-     buffer.putInt( runId ); 
+public void serialize(DataOutputStream buffer) throws Exception {
+buffer.write( (byte)  19 );
+     buffer.writeInt( threadIndex ); 
+     buffer.writeInt( methodId ); 
+     buffer.writeInt( methodCounter ); 
+     buffer.writeInt( loopId ); 
+     buffer.writeInt( runId ); 
 }
 
 

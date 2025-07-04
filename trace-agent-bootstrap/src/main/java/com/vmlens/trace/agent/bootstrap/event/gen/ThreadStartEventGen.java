@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
-import java.nio.ByteBuffer;
+import java.io.DataOutputStream;
 import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
-
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId;
 
 public class ThreadStartEventGen  {
 
@@ -52,23 +52,21 @@ public String toString() {
 
 
 
- public void serialize(StreamRepository streamRepository) throws Exception {
-     serialize( streamRepository.interleave.
-                     getByteBuffer(new LoopIdAndRunId(loopId,runId),  37, EventConstants.MAX_ARRAY_SIZE * 1000));
-
+ public StreamWrapperWithLoopIdAndRunId getStream(StreamRepository streamRepository)  {
+     return streamRepository.interleave;
  }
 
-public void serialize(ByteBuffer buffer) throws Exception {
-buffer.put( (byte)  16 );
-     buffer.putInt( threadIndex ); 
-     buffer.putInt( bytecodePosition ); 
-     buffer.putInt( methodId ); 
-     buffer.putInt( startedThreadIndex ); 
-     buffer.putInt( methodCounter ); 
-     buffer.putInt( eventType ); 
-     buffer.putInt( loopId ); 
-     buffer.putInt( runId ); 
-     buffer.putInt( runPosition ); 
+public void serialize(DataOutputStream buffer) throws Exception {
+buffer.write( (byte)  21 );
+     buffer.writeInt( threadIndex ); 
+     buffer.writeInt( bytecodePosition ); 
+     buffer.writeInt( methodId ); 
+     buffer.writeInt( startedThreadIndex ); 
+     buffer.writeInt( methodCounter ); 
+     buffer.writeInt( eventType ); 
+     buffer.writeInt( loopId ); 
+     buffer.writeInt( runId ); 
+     buffer.writeInt( runPosition ); 
 }
 
 

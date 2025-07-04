@@ -49,8 +49,6 @@ java/util/concurrent/CompletableFuture$UniWhenComplete
 java/util/concurrent/CountDownLatch
 java/util/concurrent/CountDownLatch$Sync
 java/util/concurrent/CountedCompleter
-java/util/concurrent/CyclicBarrier
-java/util/concurrent/CyclicBarrier$Generation
 java/util/concurrent/Exchanger
 java/util/concurrent/Exchanger$Node
 java/util/concurrent/Exchanger$Participant

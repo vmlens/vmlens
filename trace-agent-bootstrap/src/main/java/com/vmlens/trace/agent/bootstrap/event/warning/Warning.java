@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event.warning;
 
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ControlEvent;
 
-public interface Warning extends SerializableEvent {
+public interface Warning extends ControlEvent {
 
 }

@@ -1,11 +1,13 @@
 package com.vmlens.codeGenerator.domain
 
 import com.vmlens.codeGenerator.domain.EventDescAtomicNonBlocking.{atomicArray, atomicNonBlocking}
+import com.vmlens.codeGenerator.domain.EventDescBarrier.barrier
+import com.vmlens.codeGenerator.domain.EventDescCondition.{conditionNotify, conditionWait}
 import com.vmlens.codeGenerator.domain.EventDescControl.{runStartAndEnd, warning}
 import com.vmlens.codeGenerator.domain.EventDescLockOrMonitor.{lock, methodWithLock, monitor}
 import com.vmlens.codeGenerator.domain.EventDescMethod.method
 import com.vmlens.codeGenerator.domain.EventDescNonVolatileField.{arrayAccess, normalField, staticField}
-import com.vmlens.codeGenerator.domain.EventDescThread.{threadStart, threadJoin}
+import com.vmlens.codeGenerator.domain.EventDescThread.{threadJoin, threadStart}
 import com.vmlens.codeGenerator.domain.EventDescVolatileField.{volatileField, volatileStaticField}
 
 import scala.collection.mutable
@@ -71,8 +73,6 @@ object EventDesc extends GenericDesc {
   val classId = new FieldDesc("classId", intTyp)
   val methodCounter = new FieldDesc("methodCounter", intTyp)
   
-  
-  val isWrite = new FieldDesc("isWrite", booleanTyp)
   val methodId = new FieldDesc("methodId", intTyp)
   val atomicMethodId = new FieldDesc("atomicMethodId", intTyp)
 
@@ -80,8 +80,10 @@ object EventDesc extends GenericDesc {
   val objectHashCode = new FieldDesc("objectHashCode", longTyp)
   val monitorId = new FieldDesc("monitorId", intTyp)
   val bytecodePosition = new FieldDesc("bytecodePosition", intTyp)
-  val isShared = new FieldDesc("isShared", booleanTyp)
   val lockType = new FieldDesc("lockType", intTyp)
+  val lockKeyCategory = new FieldDesc("lockKeyCategory", intTyp)
+  val barrierKeyType = new FieldDesc("barrierKeyType", intTyp)
+  val conditionNotifyEventType = new FieldDesc("conditionNotifyEventType", intTyp)
   val startedThreadIndex = new FieldDesc("startedThreadIndex", intTyp)
   val joinedThreadIndex = new FieldDesc("joinedThreadIndex", intTyp)
   val operation = new FieldDesc("operation", intTyp)
@@ -119,7 +121,6 @@ object EventDesc extends GenericDesc {
       eventList.append(volatileField("VolatileFieldAccessEventGen", " extends VolatileFieldAccessEvent  ", typSyncActions));
       
       eventList.append(atomicNonBlocking("AtomicNonBlockingEventGen", " extends AtomicNonBlockingEvent ", typSyncActions));
-      eventList.append(atomicArray("VolatileArrayAccessEventGen", " extends VolatileArrayAccessEvent", typSyncActions));
       
       eventList.append(lock("LockEnterEventGen", " extends LockEnterEvent", typSyncActions));
       eventList.append(lock("LockExitEventGen", " extends LockExitEvent", typSyncActions));
@@ -129,7 +130,20 @@ object EventDesc extends GenericDesc {
       
       eventList.append(monitor("MonitorEnterEventGen", " extends MonitorEnterEvent", typSyncActions));
       eventList.append(monitor("MonitorExitEventGen", " extends MonitorExitEvent", typSyncActions));
+
+      // For Phaser we also need here WaitEnterAndNotify Event
+      eventList.append(barrier("BarrierWaitEnterEventGen", " extends BarrierWaitEnterEvent", typSyncActions));
+      eventList.append(barrier("BarrierWaitExitEventGen", " extends BarrierWaitExitEvent  ", typSyncActions));
+      // Notify works on all related barriers, e.g. similar to notify all
+      // probably makes sense to integrate the count for phaser an so on?
+      eventList.append(barrier("BarrierNotifyEventGen", " extends BarrierNotifyEvent", typSyncActions));
       
+      
+      eventList.append(conditionWait("ConditionWaitEnterEventGen", " extends ConditionWaitEnterEvent  ", typSyncActions));
+      eventList.append(conditionWait("ConditionWaitExitEventGen", " extends ConditionWaitExitEvent  ", typSyncActions));
+      // only used in the report
+      eventList.append(conditionNotify("ConditionNotifyEventGen", " extends ConditionNotifyEvent  ", typSyncActions));
+
       eventList.append(method("MethodEnterEventGen", " extends MethodEnterEvent  ", typMethod));
       eventList.append(method("MethodExitEventGen", " extends MethodExitEvent  ", typMethod));
       

@@ -17,6 +17,5 @@ public class SetInMethodIdAndPosition<EVENT extends WithInMethodIdPositionReadWr
     public void setFields(EVENT event, ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         InMethodIdAndPosition toSet = threadLocalDataWhenInTest.inMethodIdAndPosition();
         event.setInMethodIdAndPosition(toSet.inMethodId(),toSet.position(),readWriteLockMap);
-
     }
 }

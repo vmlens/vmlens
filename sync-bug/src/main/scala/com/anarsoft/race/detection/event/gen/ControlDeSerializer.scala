@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.gen;
 
-import java.nio.ByteBuffer
+import java.io.DataInputStream
 
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.control._;
@@ -14,16 +14,16 @@ class ControlDeSerializer extends DeserializeStrategy[LoadedControlEvent] {
    val blockSize : Int =  13 * 10000;
   
 
-    def deSerializeJavaEvent(buffer : ByteBuffer) : LoadedControlEvent = {
-       val id = buffer.get();
+    def deSerializeJavaEvent(buffer : DataInputStream) : LoadedControlEvent = {
+       val id = buffer.readByte();
        
-       if( id == 18 ) {
+       if( id == 23 ) {
           return RunStartEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 19 ) {
+       if( id == 24 ) {
           return RunEndEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 20 ) {
+       if( id == 25 ) {
           return LoopWarningEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");

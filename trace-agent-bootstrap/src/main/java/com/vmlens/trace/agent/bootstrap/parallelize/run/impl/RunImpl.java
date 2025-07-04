@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
@@ -131,11 +133,40 @@ public class RunImpl implements Run {
         try {
         ParallelizeActionMultiJoin action = new ParallelizeActionMultiJoin(this, joinedThreadIds, threadJoinedAction.inMethodId(), threadJoinedAction.position());
         runStateMachine.after(new AfterContextForStateMachine(threadJoinedAction.threadLocalDataWhenInTest(),
-                    action,threadJoinedAction.queueIn() ),new SendEvent(threadJoinedAction.queueIn(),this));
+                    action ),new SendEvent(threadJoinedAction.queueIn(),this));
         waitNotifyStrategy.notifyAndWaitTillActive(threadJoinedAction.threadLocalDataWhenInTest(),
                     runStateMachine,
                     threadActiveCondition,
                     new SendEvent(threadJoinedAction.queueIn(),this));
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent,
+                                         ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                         QueueIn queueIn) {
+        lock.lock();
+        try {
+            lockExitOrWaitEvent.setRunId(runId);
+            lockExitOrWaitEvent.setLoopId(loopId);
+            runStateMachine.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,new SendEvent(queueIn,this));
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+        lock.lock();
+        try {
+            runStateMachine.afterLockExitOrWait(threadLocalDataWhenInTest);
+            waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest,
+                        runStateMachine,
+                        threadActiveCondition,
+                        new SendEvent(queueIn,this));
+
         } finally {
             lock.unlock();
         }

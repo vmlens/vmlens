@@ -30,5 +30,13 @@ public class MethodEnterEvent extends MethodEnterEventGen implements PluginEvent
         // Nothing to do
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
 
+    @Override
+    public int runId() {
+        return runId;
+    }
 }

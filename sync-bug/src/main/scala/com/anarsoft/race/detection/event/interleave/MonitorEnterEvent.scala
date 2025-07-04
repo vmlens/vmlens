@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.sortutil.MonitorContainer
 import com.vmlens.report.runelementtype.{LockAccess, LockOperation, ReportLockType, RunElementType}
 
 
-trait MonitorEnterEvent extends   MonitorEvent {
+trait MonitorEnterEvent extends MonitorEvent {
   
   override def create(): MonitorContainer = {
     new MonitorContainer(Some(this), None);

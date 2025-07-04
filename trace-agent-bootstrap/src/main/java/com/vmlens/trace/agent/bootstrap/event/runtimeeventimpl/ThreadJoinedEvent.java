@@ -66,4 +66,14 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements NotThread
         this.bytecodePosition = position;
     }
 
+    @Override
+    public int loopId() {
+        return loopId;
+    }
+
+    @Override
+    public int runId() {
+        return runId;
+    }
+
 }

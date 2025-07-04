@@ -2,8 +2,9 @@ package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.BlockBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToKeyToOperationCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToKeyToOperationCollectionWithThreadIndex;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -26,12 +27,12 @@ public class InterleaveActionWithPositionFactory {
         return new ImmutablePair<>(runWithPosition, run);
     }
 
-    private void add(BlockBuilderWithThreadIndex element) {
+    private void add(AddToKeyToOperationCollectionWithThreadIndex element) {
         int position = getPositionAtThreadIndex(element.threadIndex());
         add(new ElementAndPosition<>(element, pos(element.threadIndex(), position)));
     }
 
-    public void add(ElementAndPosition<BlockBuilder> withPosition) {
+    public void add(ElementAndPosition<AddToKeyToOperationCollection> withPosition) {
         run.add(withPosition.position());
         runWithPosition.add(new TLinkableWrapper(new ElementAndPosition(withPosition.element(), withPosition.position())));
     }

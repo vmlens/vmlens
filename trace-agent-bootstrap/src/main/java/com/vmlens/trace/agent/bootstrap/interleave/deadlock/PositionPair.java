@@ -1,11 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.deadlock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock;
-import com.vmlens.trace.agent.bootstrap.interleave.block.ThreadIndexToElementList;
-
-import static com.vmlens.trace.agent.bootstrap.interleave.block.dependent.DependentBlock.createOptionalConstraint;
 
 
 public class PositionPair {
@@ -18,9 +13,16 @@ public class PositionPair {
         this.child = child;
     }
 
-    public void addToDependentBlockList(LockPair lockPair, ThreadIndexToElementList<DependentBlock> dependentBlockList) {
-        dependentBlockList.add(createOptionalConstraint(lockPair.parent(),lockPair.child(),
-                new ElementAndPosition<>(new DeadlockDependentBlockElement(lockPair.parent()),parent),
-                new ElementAndPosition<>(new DeadlockDependentBlockElement(lockPair.child()),child)));
+    public Position parent() {
+        return parent;
     }
+
+    public Position child() {
+        return child;
+    }
+
+    int threadIndex() {
+        return parent.threadIndex();
+    }
+
 }

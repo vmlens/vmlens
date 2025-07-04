@@ -12,6 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestReentrant {
 
+    private int i = 0;
+
     @Test
     public void testLock() throws InterruptedException {
         try(AllInterleavings allInterleavings = new AllInterleavings("reentrantLock")) {
@@ -21,11 +23,13 @@ public class TestReentrant {
                     @Override
                     public void run() {
                         lock.lock();
+                        i++;
                         lock.unlock();
                     }
                 };
             first.start();
             lock.lock();
+            i++;
             lock.unlock();
             first.join();
             }

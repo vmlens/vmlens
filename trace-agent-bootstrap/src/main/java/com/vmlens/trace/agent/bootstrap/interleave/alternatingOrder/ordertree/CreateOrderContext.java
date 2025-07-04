@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.set.hash.THashSet;

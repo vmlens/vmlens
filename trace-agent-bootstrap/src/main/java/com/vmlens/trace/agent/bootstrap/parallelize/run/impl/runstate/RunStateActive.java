@@ -4,7 +4,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
@@ -12,10 +11,11 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.AfterContextForStat
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateAndResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
+import gnu.trove.set.hash.TIntHashSet;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ProcessAfter.process;
 
-public class RunStateActive implements RunState {
+public class RunStateActive extends ProcessLockExitOrWaitTemplate implements RunState {
 
     private final RunStateContext runStateContext;
     private final int startedThreadIndex;
@@ -31,9 +31,16 @@ public class RunStateActive implements RunState {
         this.startedThreadIndex = startedThreadIndex;
     }
 
+    public static boolean calculateIsActive(RunStateContext runStateContext,
+                                            ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,
+                                            SendEvent sendEvent) {
+        return runStateContext.isActive(threadLocalDataWhenInTest.threadIndex(),sendEvent);
+    }
+
+
     @Override
     public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent) {
-        return runStateContext.isActive(threadLocalDataWhenInTest.threadIndex(),sendEvent);
+       return calculateIsActive(runStateContext,threadLocalDataWhenInTest,sendEvent);
     }
 
     @Override
@@ -69,4 +76,28 @@ public class RunStateActive implements RunState {
         return new RunStateAndResult<>(this,false);
     }
 
+    @Override
+    public RunStateContext runStateContext() {
+        return runStateContext;
+    }
+
+    @Override
+    public int startedThreadIndex() {
+        return startedThreadIndex;
+    }
+
+    @Override
+    protected TIntHashSet notYetWaitingThreadIndices() {
+        return new TIntHashSet();
+    }
+
+    @Override
+    protected RunState runStateWaiting(TIntHashSet newThreadIndices) {
+        return new RunStateWaiting(runStateContext,startedThreadIndex,newThreadIndices);
+    }
+
+    @Override
+    protected RunState runStateActive() {
+        return this;
+    }
 }

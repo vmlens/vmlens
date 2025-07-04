@@ -16,6 +16,7 @@ class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveA
   val threadJoinedEvents = new util.LinkedList[ThreadJoinedEvent]();
   val monitorEvents = new util.LinkedList[MonitorEvent]()
   val lockEvents = new util.LinkedList[WithLockEvent]()
+  val barrierEvents = new util.LinkedList[BarrierEvent]()
 
   def addLoadedEvent(event: LoadedInterleaveActionEvent): Unit = {
     event.addToContext(this);
@@ -31,6 +32,7 @@ class LoadedInterleaveActionContext extends LoadedEventContext[LoadedInterleaveA
     groupBuilder.addThreadJoinedEvents(threadJoinedEvents);
     groupBuilder.addLockEvents(lockEvents);
     groupBuilder.addMonitorEvents(monitorEvents);
+    groupBuilder.addBarrierEvents(barrierEvents);
 
     builder.addSyncActionElements(loopAndRunId, groupBuilder.build())
   }

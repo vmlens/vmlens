@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteSynchronizedMethodExit;
 
-import static com.vmlens.trace.agent.bootstrap.strategy.strategyall.EventUtil.*;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.*;
 
 public class SynchronizedMethodStrategy implements StrategyAll {
 

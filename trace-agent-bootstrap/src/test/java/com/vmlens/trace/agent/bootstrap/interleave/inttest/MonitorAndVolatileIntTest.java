@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.inttest;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileFieldKey;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.lock.MonitorKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestOperation;
@@ -34,7 +34,7 @@ public class MonitorAndVolatileIntTest {
         expectedBuilder.group(exit1,enter0);
 
         // Test
-        new IntTestRunner().runTest(builder.build(),expectedBuilder.build());
+        new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
 }

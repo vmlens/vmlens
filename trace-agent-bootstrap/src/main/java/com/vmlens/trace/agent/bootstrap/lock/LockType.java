@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.lock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.lock.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 
 public interface LockType {
 

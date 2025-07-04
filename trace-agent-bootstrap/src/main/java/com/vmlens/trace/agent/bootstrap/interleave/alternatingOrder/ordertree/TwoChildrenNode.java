@@ -33,4 +33,17 @@ public class TwoChildrenNode implements OrderTreeNode {
         return firstAlternative;
     }
 
+    @Override
+    public boolean hasSameOrder(OrderTreeNode otherNode) {
+        if(! (otherNode instanceof TwoChildrenNode)) {
+            return false;
+        }
+
+        TwoChildrenNode other = (TwoChildrenNode) otherNode;
+
+        if(firstAlternative.hasSameOrder(other.firstAlternative) && secondAlternative.hasSameOrder(other.secondAlternative)) {
+            return true;
+        }
+        return firstAlternative.hasSameOrder(other.secondAlternative) && secondAlternative.hasSameOrder(other.firstAlternative);
+    }
 }

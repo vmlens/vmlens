@@ -3,7 +3,10 @@ package com.vmlens.trace.agent.bootstrap.inttest.util;
 import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
 import com.vmlens.trace.agent.bootstrap.callback.impl.PreAnalyzedCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.*;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
@@ -11,7 +14,6 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateMachineFactoryImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
@@ -74,13 +76,8 @@ public class CallbackTestContainer {
         WaitNotifyStrategyMock waitNotifyStrategyMock = new WaitNotifyStrategyMock();
 
         Run run = new RunImpl(new ReentrantLock(),waitNotifyStrategyMock,runStateMachine,LOOP_ID,RUN_ID);
-
-
         ThreadLocalWhenInTest threadLocalWhenInTest = new ThreadLocalWhenInTest(run, TEST_THREAD_INDEX);
-
-
         ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter = createThreadLocalWhenInTestAdapter(threadLocalWhenInTest, queueInMock);
-
 
         MethodRepositoryImpl methodRepository = new MethodRepositoryImpl();
 
@@ -93,11 +90,9 @@ public class CallbackTestContainer {
                 methodRepository,
                 threadLocalWhenInTestAdapter, checkIsThreadRun,readWriteLockMap);
         PreAnalyzedCallbackImpl preAnalyzedCallbackImpl = new PreAnalyzedCallbackImpl(methodRepository,
-                threadLocalWhenInTestAdapter,readWriteLockMap);
+                threadLocalWhenInTestAdapter,readWriteLockMap,new ParallelizeFacadePassThrough(run));
 
         FieldRepositoryImpl fieldRepository = new FieldRepositoryImpl();
-
-
         FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(fieldRepository,
                 threadLocalWhenInTestAdapter,readWriteLockMap);
 
