@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>report</artifactId>
+    <name>report</name>
     <url>https://github.com/vmlens/vlmens</url>
 
     <licenses>

@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>test-util</artifactId>
+    <name>test-util</name>
 
     <licenses>
         <license>

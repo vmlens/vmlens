@@ -3,19 +3,19 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebu
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeNode;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.TwoChildrenNode;
 
+import static java.lang.Math.max;
+
 public class Choice implements NodeBuilder {
 
-    private ChoiceAlternative alternativeA;
-    private ChoiceAlternative alternativeB;
+    private final ChoiceAlternative alternativeA =  new ChoiceAlternative();
+    private final ChoiceAlternative alternativeB =  new ChoiceAlternative();
     private StartOrNext next;
 
     public ChoiceAlternative alternativeA() {
-        alternativeA = new ChoiceAlternative();
         return alternativeA;
     }
 
     public ChoiceAlternative alternativeB() {
-        alternativeB = new ChoiceAlternative();
         return alternativeB;
     }
 
@@ -31,38 +31,13 @@ public class Choice implements NodeBuilder {
     @Override
     public OrderTreeNode build() {
         // First fill both alternatives so that they have the same size
-        ChoiceElement firstLast = alternativeA.next();
-        ChoiceElement first = alternativeA.next();
-        int firstCount = 0;
-        while(first != null)  {
-            firstLast = first;
-            firstCount++;
-            first = first.getNext();
-        }
-
-        ChoiceElement secondLast = alternativeB.next();
-        ChoiceElement second = alternativeB.next();
-        int secondCount = 0;
-        while(second != null)  {
-            secondLast = second;
-            secondCount++;
-            second = second.getNext();
-        }
-
-        for( int i = firstCount; i < secondCount;i++ ) {
-            firstLast.fill();
-            firstLast = firstLast.getNext();
-        }
-
-        for( int i = secondCount; i < firstCount;i++ ) {
-            secondLast.fill();
-            secondLast = secondLast.getNext();
-        }
-
+        int length = max(alternativeA.getLength(),alternativeB.getLength());
+        alternativeA.fill(length);
+        alternativeB.fill(length);
 
         // Set next as last element for both alternatives
-        firstLast.setLast(next);
-        secondLast.setLast(next);
+        alternativeA.setLast(next);
+        alternativeB.setLast(next);
 
         return new TwoChildrenNode(alternativeA.build(),alternativeB.build());
     }
@@ -71,4 +46,5 @@ public class Choice implements NodeBuilder {
     public NodeBuilder getNext() {
         return next;
     }
+
 }

@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>code-gen</artifactId>
+    <name>code-gen</name>
 
     <dependencies>
         <dependency>
