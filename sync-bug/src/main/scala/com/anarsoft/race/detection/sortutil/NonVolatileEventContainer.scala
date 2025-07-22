@@ -3,7 +3,7 @@ package com.anarsoft.race.detection.sortutil
 class NonVolatileEventContainer [EVENT <: EventWithReadWrite[EVENT]]
 (private val read: Option[EVENT], private val write: Option[EVENT]) extends EventContainer[EVENT] {
 
-  override def put(event: EVENT): EventContainer[EVENT] = EventWithReadWriteContainer(read, write, event);
+  override def put(event: EVENT): EventContainer[EVENT] = NonVolatileEventContainer(read, write, event);
 
 
   override def foreachOpposite(event: EVENT, f: EVENT => Unit): Unit = {
@@ -23,7 +23,7 @@ object NonVolatileEventContainer {
     apply(None, None, event);
 
   def apply[EVENT <: EventWithReadWrite[EVENT]](existingRead: Option[EVENT],
-                                                existingWrite: Option[EVENT], event: EVENT) = {
+                                                existingWrite: Option[EVENT], event: EVENT): NonVolatileEventContainer[EVENT] = {
     var resultRead = existingRead;
     var resultWrite = existingWrite;
 
@@ -33,6 +33,6 @@ object NonVolatileEventContainer {
     if (event.isWrite) {
       resultWrite = Some(event)
     }
-    new EventWithReadWriteContainer(resultRead, resultWrite)
+    new NonVolatileEventContainer(resultRead, resultWrite)
   }
 }

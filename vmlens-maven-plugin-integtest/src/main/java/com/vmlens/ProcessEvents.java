@@ -3,7 +3,6 @@ package com.vmlens;
 import com.vmlens.expected.check.BuildEventListMap;
 import com.vmlens.expected.check.CheckLeftBeforeRight;
 import com.vmlens.expected.check.CheckLockEnterExit;
-import com.vmlens.expected.check.CheckVolatileFieldAccessCount;
 import com.vmlens.expected.factory.TestCaseCollectionFactory;
 import com.vmlens.report.LoopToDataRaceCount;
 import com.vmlens.report.ResultForVerify;
@@ -19,8 +18,8 @@ import static org.hamcrest.Matchers.is;
 public class ProcessEvents {
 
     public static void main(String[] args) {
-        process(new File("C:\\workspace\\vmlens-extension\\test-cases\\target\\vmlens-agent\\vmlens"),
-                new File("C:\\workspace\\vmlens-extension\\test-cases\\target\\vmlens-report"));
+        process(new File("C:\\workspace\\vmlens\\test-cases\\target\\vmlens-agent\\vmlens"),
+                new File("C:\\workspace\\vmlens\\test-cases\\target\\vmlens-report"));
     }
 
     static void process(File eventDirectory, File reportDirectory) {
@@ -40,10 +39,6 @@ public class ProcessEvents {
         Map<Integer, List<EventForAssertion>> loopIdToEventForAssertionList = buildEventListMap.build();
         List<EventForAssertion> list = loopIdToEventForAssertionList.get(loopId);
         new CheckLockEnterExit().check(list);
-
-       // loopId = loopNameToId.get("allFieldsTracedIntTest");
-       // list = loopIdToEventForAssertionList.get(loopId);
-       // new CheckVolatileFieldAccessCount().check(list);
     }
 
     private static void checkDataRaces(ResultForVerify result ) {
@@ -52,6 +47,7 @@ public class ProcessEvents {
         testWithDataRace.add("arrayTest");
         testWithDataRace.add("hashMapTest");
         testWithDataRace.add("hashSetTest");
+        testWithDataRace.add("writeWriteDataRace");
         checkDataRaces(testWithDataRace,result);
     }
 
