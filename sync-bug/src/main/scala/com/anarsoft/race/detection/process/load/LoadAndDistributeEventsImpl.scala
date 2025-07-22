@@ -10,28 +10,30 @@ import java.util
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-class LoadEventFileImpl[EVENT <: EventWithLoopAndRunId](val filePath : Path,
-                                                        val deserializeStrategy : DeserializeStrategy[EVENT],
-                                                        val distribute : DistributeEvents[EVENT]) 
-      extends LoadEventFile {
+class LoadAndDistributeEventsImpl[EVENT <: EventWithLoopAndRunId](val filePath : Path,
+                                                                  val deserializeStrategy : DeserializeStrategy[EVENT],
+                                                                  val distribute : DistributeEvents[EVENT])
+      extends LoadAndDistributeEvents {
   
   def load(builder: RunDataListBuilder): Unit = {
+    distribute.distribute(loadEvents(),builder);
+  }
+
+  def loadEvents() : util.LinkedList[EVENT] = {
     val eventList = new util.LinkedList[EVENT]();
-    val dataInputStream = new DataInputStream(new FileInputStream (filePath.toFile));
+    val dataInputStream = new DataInputStream(new FileInputStream(filePath.toFile));
     try {
       while (true) {
-
         val event = deserializeStrategy.deSerializeJavaEvent(dataInputStream);
         eventList.add(event);
-        
       }
     } catch {
       case _: EOFException =>
-     
+
     } finally {
       dataInputStream.close()
     }
-    distribute.distribute(eventList,builder);
+    eventList;
   }
   
 }

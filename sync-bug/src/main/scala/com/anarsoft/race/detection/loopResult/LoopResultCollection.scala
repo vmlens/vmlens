@@ -29,11 +29,19 @@ class LoopResultCollection {
         } else if (x.runResult.warningIdList.size > runResult.warningIdList.size) {
             loopIdToResult.put(loopId, RunCountAndResult(count, x.runResult))
           } else {
-          loopIdToResult.put(loopId, RunCountAndResult(count, x.runResult))
+          // currently through a problem in the classloading filter
+          // ThreadLocalForParallelizeSingleton.canProcess return false
+          // typically for the first run so we filter it here
+          if(x.runResult.runId == 0) {
+            loopIdToResult.put(loopId, RunCountAndResult(count, runResult))
+          } else {
+            loopIdToResult.put(loopId, RunCountAndResult(count, x.runResult))
+          }
+
+
         }
         
       }
-      
 
       case None => {
         loopIdToResult.put(loopId, RunCountAndResult(runResult.runId, runResult))

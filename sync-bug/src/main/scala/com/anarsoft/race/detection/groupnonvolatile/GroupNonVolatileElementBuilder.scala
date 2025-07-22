@@ -22,7 +22,6 @@ class GroupNonVolatileElementBuilder {
     arrayBuffer.append(new GroupNonVolatileElementImpl(EventArray[ArrayAccessEvent](list)));
   }
 
-
   def build(): List[GroupNonVolatileElement] = {
     arrayBuffer.toList
   }

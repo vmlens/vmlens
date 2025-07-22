@@ -6,7 +6,7 @@ import com.anarsoft.race.detection.process.main.LoadRuns
 import scala.collection.mutable
 
 
-class LoadRunsImpl(val loadEventFiles : List[LoadEventFile]) extends LoadRuns {
+class LoadRunsImpl(val loadEventFiles : List[LoadAndDistributeEvents]) extends LoadRuns {
 
   override def foreach(f: RunData => Unit): Unit = {
     val builder = new RunDataListBuilderImpl();

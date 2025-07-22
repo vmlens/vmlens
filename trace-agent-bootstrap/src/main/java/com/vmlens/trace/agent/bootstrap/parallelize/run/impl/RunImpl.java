@@ -183,7 +183,7 @@ public class RunImpl implements Run {
     }
 
     @Override
-    public void check() {
+    public void checkAllThreadsJoined() {
         lock.lock();
         try {
             threadPoolMap.checkAllThreadsJoined();

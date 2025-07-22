@@ -1,6 +1,5 @@
 package com.vmlens.nottraced.agent.write;
 
-import com.vmlens.trace.agent.bootstrap.event.LatestWrittenLoopAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
@@ -53,7 +52,6 @@ public class WriteEventToFile implements Runnable {
 
         testAndAddShutdownHook();
         boolean process = true;
-        LatestWrittenLoopAndRunId latestWrittenLoopAndRunId = new LatestWrittenLoopAndRunId();
         while (process) {
             try {
                 SerializableEvent in = eventQueue.take();
@@ -63,7 +61,7 @@ public class WriteEventToFile implements Runnable {
                         process = false;
                         setPoisonedEventReceived();
                     } else {
-                        in.serialize(streamRepository, latestWrittenLoopAndRunId);
+                        in.serialize(streamRepository);
                     }
                 } else {
                     Thread.yield();

@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.event.warning;
 
-import com.vmlens.trace.agent.bootstrap.event.LatestWrittenLoopAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 
@@ -28,7 +27,7 @@ public class InfoMessageEvent implements SerializableEvent {
     }
 
     @Override
-    public void serialize(StreamRepository streamRepository, LatestWrittenLoopAndRunId latestWrittenLoopAndRunId) throws Exception {
+    public void serialize(StreamRepository streamRepository) throws Exception {
         DataOutputStream stream = streamRepository.agentLog.getStream();
         serialize(stream);
     }
