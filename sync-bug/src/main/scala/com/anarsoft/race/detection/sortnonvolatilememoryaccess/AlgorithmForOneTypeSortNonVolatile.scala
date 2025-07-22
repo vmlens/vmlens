@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.processeventbytype.AlgorithmForOneType
-import com.anarsoft.race.detection.sortutil.{EventWithReadWriteContainer, ThreadIdToLastSortableEvent}
+import com.anarsoft.race.detection.sortutil.{NonVolatileEventContainer, ThreadIdToLastSortableEvent}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -12,8 +12,8 @@ private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAcces
   // visible for test 
   val sortedMemoryAccessList = new SortedMemoryAccessList();
   
-  val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[EVENT](
-    (event) => EventWithReadWriteContainer[EVENT](event));
+  private val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[EVENT](
+    (event) => NonVolatileEventContainer[EVENT](event));
 
   override def prozess(event: EVENT): Unit = {
     var sortable = true;

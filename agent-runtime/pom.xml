@@ -58,10 +58,6 @@
         </dependency>
         <dependency>
             <groupId>com.vmlens</groupId>
-            <artifactId>annotation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vmlens</groupId>
             <artifactId>test-util</artifactId>
             <scope>test</scope>
         </dependency>

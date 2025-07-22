@@ -29,7 +29,7 @@ class LoopResultCollection {
         } else if (x.runResult.warningIdList.size > runResult.warningIdList.size) {
             loopIdToResult.put(loopId, RunCountAndResult(count, x.runResult))
           } else {
-          loopIdToResult.put(loopId, RunCountAndResult(count, runResult))
+          loopIdToResult.put(loopId, RunCountAndResult(count, x.runResult))
         }
         
       }
