@@ -25,6 +25,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Ensure version stable
+      run: |
+        VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "Maven version: $VERSION"
+        if [[ "$VERSION" == *SNAPSHOT* ]]; then
+          echo "SNAPSHOT version detected"
+          exit 1
+        fi
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Upload build artifacts
