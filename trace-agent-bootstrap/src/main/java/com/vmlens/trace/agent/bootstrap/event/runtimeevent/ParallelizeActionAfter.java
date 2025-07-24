@@ -6,8 +6,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 
 public interface ParallelizeActionAfter {
 
-    void setStartedThreadIndex(int startedThreadIndex);
-
     void after(InterleaveRun interleaveRun,
                CreateInterleaveActionContext context,
                ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,

@@ -1,8 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunNewTestTaskStarted;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteRunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitWaitOrThreadStart;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunBeforeLockExitOrWait;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 
@@ -17,21 +18,19 @@ public class ThreadStartStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void methodEnter(EnterExitContext context) {
-        context.threadLocalWhenInTestAdapter().process(
-                new RunNewTestTaskStarted(new ThreadWrapper(context.object())));
+
+        ThreadStartEvent threadStartEvent = new ThreadStartEvent(new ThreadWrapper(context.object()),THREAD.code());
+
+        RunBeforeLockExitOrWait<ThreadStartEvent> action = new
+                RunBeforeLockExitOrWait<>(threadStartEvent,
+                new SetInMethodIdAndPosition<>(context.readWriteLockMap()), new WithoutAtomic());
+        context.threadLocalWhenInTestAdapter().process(action);
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
 
-        ThreadStartEvent threadStartEvent = new ThreadStartEvent();
-        threadStartEvent.setEventType(THREAD.code());
-        
-        ExecuteRunAfter<ThreadStartEvent> executeRunAfter  =
-                new ExecuteRunAfter<>(threadStartEvent);
-
-        context.threadLocalWhenInTestAdapter().process(
-                new SetExecuteAfterOperation(executeRunAfter));
+        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitWaitOrThreadStart());
     }
 
     @Override

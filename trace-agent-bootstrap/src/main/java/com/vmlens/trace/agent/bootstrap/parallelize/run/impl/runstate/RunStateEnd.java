@@ -1,9 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
@@ -32,11 +31,6 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public RunState newTestTaskStarted(ThreadWrapper newWrapper) {
-        return this;
-    }
-
-    @Override
     public  RunStateAndResult<ThreadLocalWhenInTest> processNewTestTask(NewTaskContext newTaskContext,
                        Run run,
                        SendEvent sendEvent) {
@@ -49,12 +43,12 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public RunState waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
+    public RunState beforeLockExitWaitOrThreadStart(ExecuteBeforeEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
         return this;
     }
 
     @Override
-    public RunState afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public RunState afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return this;
     }
 }

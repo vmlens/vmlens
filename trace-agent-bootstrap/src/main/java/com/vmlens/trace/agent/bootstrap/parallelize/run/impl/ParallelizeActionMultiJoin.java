@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ParallelizeActionAfter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadJoinedEvent;
@@ -13,7 +12,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.iterator.TLongIterator;
 import gnu.trove.list.linked.TIntLinkedList;
-import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.list.linked.TLongLinkedList;
 
 import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD_POOL;
@@ -34,11 +32,6 @@ public class ParallelizeActionMultiJoin implements ParallelizeActionAfter {
         this.position = position;
     }
 
-
-    @Override
-    public void setStartedThreadIndex(int startedThreadIndex) {
-        // Nothing to do
-    }
 
     @Override
     public void after(InterleaveRun interleaveRun,

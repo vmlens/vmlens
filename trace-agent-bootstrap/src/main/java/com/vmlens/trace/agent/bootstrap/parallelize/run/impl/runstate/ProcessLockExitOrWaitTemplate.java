@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.AfterContextForStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateContext;
@@ -9,28 +9,24 @@ import gnu.trove.set.hash.TIntHashSet;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ProcessAfter.process;
 
-public abstract class ProcessLockExitOrWaitTemplate {
+public abstract class ProcessLockExitOrWaitTemplate implements RunState {
 
-    public RunState waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent,
-                                             ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                             SendEvent sendEvent) {
+    public RunState beforeLockExitWaitOrThreadStart(ExecuteBeforeEvent lockExitOrWaitEvent,
+                                                    ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                                    SendEvent sendEvent) {
+        // here the threadStartedThreadIndex gets set
+        // so we need to call it before process
+        NextStateBuilderImpl nextStateBuilderImpl = new NextStateBuilderImpl(this);
+        lockExitOrWaitEvent.addToBuilder(nextStateBuilderImpl);
+
         AfterContextForStateMachine afterContext = new
                 AfterContextForStateMachine(threadLocalDataWhenInTest,lockExitOrWaitEvent);
-        process(afterContext, sendEvent, runStateContext(), startedThreadIndex());
+        process(afterContext, sendEvent, runStateContext());
 
-        TIntHashSet newThreadIndices = notYetWaitingThreadIndices();
-        Integer waiting = lockExitOrWaitEvent.waitingThreadIndex();
-        if(waiting != null) {
-            newThreadIndices.add(waiting);
-        }
-        newThreadIndices = runStateContext().removeNotActive(newThreadIndices);
-        if(! newThreadIndices.isEmpty()) {
-            return runStateWaiting(newThreadIndices);
-        }
-        return runStateActive();
+        return nextStateBuilderImpl.build();
     }
 
-    public RunState afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public RunState afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         TIntHashSet newThreadIndices = notYetWaitingThreadIndices();
         newThreadIndices.remove(threadLocalDataWhenInTest.threadIndex());
         if(! newThreadIndices.isEmpty()) {
@@ -40,7 +36,6 @@ public abstract class ProcessLockExitOrWaitTemplate {
     }
 
     protected abstract RunStateContext runStateContext();
-    protected abstract int startedThreadIndex();
     protected abstract TIntHashSet notYetWaitingThreadIndices();
     protected abstract RunState runStateWaiting(TIntHashSet newThreadIndices);
     protected abstract RunState runStateActive();

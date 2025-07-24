@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
@@ -18,17 +17,9 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.Pro
 public class RunStateActive extends ProcessLockExitOrWaitTemplate implements RunState {
 
     private final RunStateContext runStateContext;
-    private final int startedThreadIndex;
 
     public RunStateActive(RunStateContext runStateContext) {
         this.runStateContext = runStateContext;
-        this.startedThreadIndex = -1;
-    }
-
-    public RunStateActive(RunStateContext runStateContext,
-                          int startedThreadIndex) {
-        this.runStateContext = runStateContext;
-        this.startedThreadIndex = startedThreadIndex;
     }
 
     public static boolean calculateIsActive(RunStateContext runStateContext,
@@ -50,14 +41,8 @@ public class RunStateActive extends ProcessLockExitOrWaitTemplate implements Run
 
     @Override
     public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
-        process(afterContext, sendEvent, runStateContext, startedThreadIndex);
+        process(afterContext, sendEvent, runStateContext);
         return this;
-    }
-
-    @Override
-    public RunState newTestTaskStarted(ThreadWrapper startedThread) {
-        int threadIndexForNewTestTask = runStateContext.getThreadIndexForNewTestThread();
-        return new RunStateNewThreadStarted(runStateContext, startedThread,threadIndexForNewTestTask);
     }
 
     @Override
@@ -81,10 +66,6 @@ public class RunStateActive extends ProcessLockExitOrWaitTemplate implements Run
         return runStateContext;
     }
 
-    @Override
-    public int startedThreadIndex() {
-        return startedThreadIndex;
-    }
 
     @Override
     protected TIntHashSet notYetWaitingThreadIndices() {
@@ -93,7 +74,7 @@ public class RunStateActive extends ProcessLockExitOrWaitTemplate implements Run
 
     @Override
     protected RunState runStateWaiting(TIntHashSet newThreadIndices) {
-        return new RunStateWaiting(runStateContext,startedThreadIndex,newThreadIndices);
+        return new RunStateWaiting(runStateContext,newThreadIndices);
     }
 
     @Override

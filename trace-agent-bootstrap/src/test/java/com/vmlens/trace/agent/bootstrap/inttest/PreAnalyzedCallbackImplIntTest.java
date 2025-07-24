@@ -29,12 +29,11 @@ public class PreAnalyzedCallbackImplIntTest {
 
         // Expected
         ThreadWrapper runnableOrThreadWrapper = new ThreadWrapper(OBJECT);
-        ThreadStartEvent threadStartEvent = new ThreadStartEvent();
+        ThreadStartEvent threadStartEvent = new ThreadStartEvent(runnableOrThreadWrapper,THREAD.code());
         threadStartEvent.setThreadIndex(TEST_THREAD_INDEX);
         threadStartEvent.setInMethodIdAndPosition(IN_METHOD_ID, POSITION,callbackTestContainer.readWriteLockMap());
         threadStartEvent.setLoopId(LOOP_ID);
         threadStartEvent.setRunId(RUN_ID);
-        threadStartEvent.setEventType(THREAD.code());
 
         // When
         executeCalls(callbackTestContainer,ThreadStartStrategy.SINGLETON);

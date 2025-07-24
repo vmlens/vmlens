@@ -3,12 +3,21 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.ThreadStartEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.ThreadStart;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 
-public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveActionFactory, WithInMethodIdPositionReadWriteLockMap {
+public class ThreadStartEvent extends ThreadStartEventGen implements ExecuteBeforeEvent, WithInMethodIdPositionReadWriteLockMap {
+
+    private ThreadWrapper threadWrapper;
+
+    public ThreadStartEvent(ThreadWrapper threadWrapper, int eventType) {
+        this.threadWrapper = threadWrapper;
+        this.eventType = eventType;
+    }
 
     public void setThreadIndex(int threadIndex) {
         this.threadIndex = threadIndex;
@@ -16,10 +25,6 @@ public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveA
 
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
-    }
-
-    public void setStartedThreadIndex(int startedThreadIndex) {
-        this.startedThreadIndex = startedThreadIndex;
     }
 
     public void setLoopId(int loopId) {
@@ -32,10 +37,6 @@ public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveA
 
     public void setRunPosition(int runPosition) {
         this.runPosition = runPosition;
-    }
-
-    public void setEventType(int eventType) {
-        this.eventType = eventType;
     }
 
     @Override
@@ -62,5 +63,10 @@ public class ThreadStartEvent extends ThreadStartEventGen implements InterleaveA
     @Override
     public int runId() {
         return runId;
+    }
+
+    @Override
+    public void addToBuilder(NextStateBuilder nextStateBuilder) {
+        this.startedThreadIndex = nextStateBuilder.addThreadStarted(threadWrapper);
     }
 }

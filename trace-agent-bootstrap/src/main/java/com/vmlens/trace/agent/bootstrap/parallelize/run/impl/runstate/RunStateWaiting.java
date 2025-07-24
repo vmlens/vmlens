@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
@@ -19,13 +18,11 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
 
     private TIntHashSet notYetWaitingThreadIndices;
     private final RunStateContext runStateContext;
-    private final int startedThreadIndex;
+
 
     public RunStateWaiting(RunStateContext runStateContext,
-                           int startedThreadIndex,
                            TIntHashSet notYetWaitingThreadIndices) {
         this.runStateContext = runStateContext;
-        this.startedThreadIndex = startedThreadIndex;
         this.notYetWaitingThreadIndices = notYetWaitingThreadIndices;
     }
 
@@ -46,18 +43,12 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
 
     @Override
     public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
-        process(afterContext, sendEvent, runStateContext, startedThreadIndex);
+        process(afterContext, sendEvent, runStateContext);
         notYetWaitingThreadIndices = runStateContext.removeNotActive(notYetWaitingThreadIndices);
         if(! notYetWaitingThreadIndices.isEmpty()) {
             return this;
         }
-        return new RunStateActive(runStateContext,startedThreadIndex);
-    }
-
-    @Override
-    public RunState newTestTaskStarted(ThreadWrapper startedThread) {
-        int threadIndexForNewTestTask = runStateContext.getThreadIndexForNewTestThread();
-        return new RunStateNewThreadStarted(runStateContext, startedThread,threadIndexForNewTestTask);
+        return new RunStateActive(runStateContext);
     }
 
     @Override
@@ -71,7 +62,7 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
         if(! notYetWaitingThreadIndices.isEmpty()) {
             return new RunStateAndResult<>(this,false);
         }
-        return  new RunStateAndResult<>(new RunStateActive(runStateContext,startedThreadIndex),false);
+        return  new RunStateAndResult<>(new RunStateActive(runStateContext),false);
     }
 
     @Override
@@ -84,10 +75,6 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
         return runStateContext;
     }
 
-    @Override
-    public int startedThreadIndex() {
-        return startedThreadIndex;
-    }
 
     @Override
     protected RunState runStateWaiting(TIntHashSet newThreadIndices) {
@@ -97,6 +84,6 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
 
     @Override
     protected RunState runStateActive() {
-        return new RunStateActive(runStateContext,startedThreadIndex);
+        return new RunStateActive(runStateContext);
     }
 }

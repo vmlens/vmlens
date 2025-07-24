@@ -5,13 +5,13 @@ import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeCollection;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.BarrierNotifyEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NotThreadStartedInterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class BarrierNotifyEvent extends BarrierNotifyEventGen
-        implements NotThreadStartedInterleaveActionFactory, WithInMethodIdPositionObjectHashCode, LockExitOrWaitEvent {
+        implements WithInMethodIdPositionObjectHashCode, ExecuteBeforeEvent {
 
     private final BarrierKeyType barrierKeyTypeClass;
 
@@ -84,7 +84,7 @@ public class BarrierNotifyEvent extends BarrierNotifyEventGen
     }
 
     @Override
-    public Integer waitingThreadIndex() {
-        return null;
+    public void addToBuilder(NextStateBuilder nextStateBuilder) {
+        nextStateBuilder.addExitEvent();
     }
 }

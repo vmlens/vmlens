@@ -3,7 +3,8 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.ConditionWaitEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.ConditionWaitEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.MonitorKey;
@@ -11,7 +12,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class ConditionWaitEnterEvent extends ConditionWaitEnterEventGen implements
-        LockExitOrWaitEvent, WithInMethodIdPositionObjectHashCode  {
+        ExecuteBeforeEvent, WithInMethodIdPositionObjectHashCode  {
 
     private LockKey lockKey;
     private final ReadWriteLockMap readWriteLockMap;
@@ -96,9 +97,8 @@ public class ConditionWaitEnterEvent extends ConditionWaitEnterEventGen implemen
     }
 
     @Override
-    public Integer waitingThreadIndex() {
-        return threadIndex;
+    public void addToBuilder(NextStateBuilder nextStateBuilder) {
+        nextStateBuilder.addWaitingThreadIndex(threadIndex);
     }
-
 
 }

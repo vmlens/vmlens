@@ -45,7 +45,7 @@ public class LockTest {
         ThreadLocalWhenInTest newThread = runStateMachineWrapper.startThread(ThreadState.ACTIVE);
 
         // When
-        runStateMachineWrapper.runStateMachineImpl().beforeLockExitOrWait(wait,newThread,runStateMachineWrapper.sendEvent());
+        runStateMachineWrapper.runStateMachineImpl().beforeLockExitWaitOrThreadStart(wait,newThread,runStateMachineWrapper.sendEvent());
 
         // Then
         assertThat(runStateMachineWrapper.runStateMachineImpl().isActive(runStateMachineWrapper.mainThread(),
