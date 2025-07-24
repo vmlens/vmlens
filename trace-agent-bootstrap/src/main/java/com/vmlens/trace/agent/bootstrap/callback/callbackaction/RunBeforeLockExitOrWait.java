@@ -4,9 +4,9 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallb
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFields;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 
-public class RunBeforeLockExitOrWait<EVENT extends LockExitOrWaitEvent> implements CallbackAction {
+public class RunBeforeLockExitOrWait<EVENT extends ExecuteBeforeEvent> implements CallbackAction {
 
     private final EVENT runtimeEvent;
     private final SetFields<EVENT> setFieldsStrategy;
@@ -22,7 +22,7 @@ public class RunBeforeLockExitOrWait<EVENT extends LockExitOrWaitEvent> implemen
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
         setFieldsStrategy.setFields(runtimeEvent,threadLocalDataWhenInTest);
-        threadLocalDataWhenInTest.runAdapter().beforeLockExitOrWait(runtimeEvent,threadLocalDataWhenInTest,queueIn);
+        threadLocalDataWhenInTest.runAdapter().beforeLockExitWaitOrThreadStart(runtimeEvent,threadLocalDataWhenInTest,queueIn);
     }
 
     @Override

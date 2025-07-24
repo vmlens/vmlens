@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallb
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadStartedByPoolContext;
 
 import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD_POOL;
@@ -31,21 +32,18 @@ public class StartNewThreadByPool implements CallbackAction {
         thread.setDaemon(true);
 
         // call threadStartedByPool
+        ThreadStartEvent threadStartEvent = new ThreadStartEvent(new ThreadWrapper(thread),THREAD_POOL.code());
+        threadStartEvent.setInMethodIdAndPosition(threadLocalDataWhenInTest.inMethodIdAndPosition().inMethodId(),
+                threadLocalDataWhenInTest.inMethodIdAndPosition().position());
         ThreadStartedByPoolContext threadStartedByPoolContext =
-                new ThreadStartedByPoolContext(pool,task,thread);
+                new ThreadStartedByPoolContext(pool,task,thread,threadLocalDataWhenInTest,queueIn,threadStartEvent);
         threadLocalDataWhenInTest.runAdapter().threadStartedByPool(threadStartedByPoolContext);
 
         // start thread with Task
         thread.start();
 
-        // process new Thread Started event
-        ThreadStartEvent threadStartEvent = new ThreadStartEvent();
-        threadStartEvent.setEventType(THREAD_POOL.code());
-        threadStartEvent.setInMethodIdAndPosition(threadLocalDataWhenInTest.inMethodIdAndPosition().inMethodId(),
-                threadLocalDataWhenInTest.inMethodIdAndPosition().position());
-
-        AfterContext afterContext = new AfterContext(threadLocalDataWhenInTest,threadStartEvent,queueIn);
-        threadLocalDataWhenInTest.runAdapter().after(afterContext);
+        // after thread Start
+        threadLocalDataWhenInTest.runAdapter().afterLockExitWaitOrThreadStart(threadLocalDataWhenInTest,queueIn);
     }
 
     @Override

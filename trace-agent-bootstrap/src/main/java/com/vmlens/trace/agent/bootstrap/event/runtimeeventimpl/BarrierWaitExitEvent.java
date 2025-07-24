@@ -5,12 +5,13 @@ import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeCollection;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.BarrierWaitExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWaitExit;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
 
 public class BarrierWaitExitEvent extends BarrierWaitExitEventGen
-        implements LockExitOrWaitEvent, WithInMethodIdPositionObjectHashCode {
+        implements ExecuteBeforeEvent, WithInMethodIdPositionObjectHashCode {
 
     private final BarrierKeyType barrierKeyTypeClass;
 
@@ -67,11 +68,6 @@ public class BarrierWaitExitEvent extends BarrierWaitExitEventGen
     }
 
     @Override
-    public Integer waitingThreadIndex() {
-        return null;
-    }
-
-    @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
         return new BarrierWaitExit(threadIndex,barrierKeyTypeClass.create(objectHashCode));
     }
@@ -81,5 +77,10 @@ public class BarrierWaitExitEvent extends BarrierWaitExitEventGen
         this.objectHashCode = objectHashCode;
         this.methodId = inMethodId;
         this.bytecodePosition = position;
+    }
+
+    @Override
+    public void addToBuilder(NextStateBuilder nextStateBuilder) {
+        nextStateBuilder.addExitEvent();
     }
 }

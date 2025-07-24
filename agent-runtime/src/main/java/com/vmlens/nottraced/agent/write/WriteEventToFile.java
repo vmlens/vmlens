@@ -1,8 +1,11 @@
 package com.vmlens.nottraced.agent.write;
 
-import com.vmlens.trace.agent.bootstrap.event.LatestWrittenLoopAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
+
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 
 import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
@@ -43,9 +46,12 @@ public class WriteEventToFile implements Runnable {
         // we never want tracing in this thread
         startProcess();
 
+        long timerForDeadlockDetection = System.currentTimeMillis();
+        ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+        boolean deadlockLogged = false;
+
         testAndAddShutdownHook();
         boolean process = true;
-        LatestWrittenLoopAndRunId latestWrittenLoopAndRunId = new LatestWrittenLoopAndRunId();
         while (process) {
             try {
                 SerializableEvent in = eventQueue.take();
@@ -55,22 +61,40 @@ public class WriteEventToFile implements Runnable {
                         process = false;
                         setPoisonedEventReceived();
                     } else {
-                        in.serialize(streamRepository,latestWrittenLoopAndRunId);
+                        in.serialize(streamRepository);
                     }
                 } else {
                     Thread.yield();
+                }
+
+                if (!deadlockLogged) {
+                    if ((timerForDeadlockDetection + 1000) < System.currentTimeMillis()) {
+                        long[] threadIds = bean.findDeadlockedThreads();
+                        if (threadIds != null) {
+                            ThreadInfo[] infos = bean.getThreadInfo(threadIds, Integer.MAX_VALUE);
+                            for (ThreadInfo info : infos) {
+                                System.err.println("Deadlock detected on thread: " + info.getThreadName());
+                                for (StackTraceElement element : info.getStackTrace()) {
+                                    System.err.println("   " + element.toString());
+                                }
+                            }
+                            deadlockLogged = true;
+                        }
+                    }
                 }
             } catch (Throwable e) {
                 e.printStackTrace();
             }
         }
     }
+
     private void setPoisonedEventReceived() {
         synchronized (poisonedEventReceivedMonitor) {
             poisonedEventReceived = true;
             poisonedEventReceivedMonitor.notifyAll();
         }
     }
+
     public void waitForPoisonedEventReceived() throws InterruptedException {
         synchronized (poisonedEventReceivedMonitor) {
             while (!poisonedEventReceived) {

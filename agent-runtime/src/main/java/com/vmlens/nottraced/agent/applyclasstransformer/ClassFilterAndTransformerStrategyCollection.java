@@ -2,9 +2,7 @@ package com.vmlens.nottraced.agent.applyclasstransformer;
 
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import org.visualj.View;
 
-@View("agent.runtime")
 public class ClassFilterAndTransformerStrategyCollection {
 
     private final TLinkedList<TLinkableWrapper<ClassFilterAndTransformerStrategy>> classArrayTransformerList;

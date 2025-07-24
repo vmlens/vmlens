@@ -3,9 +3,8 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -87,21 +86,13 @@ public class RunImpl implements Run {
     }
 
     @Override
-    public void threadStarted(ThreadWrapper newWrapper) {
-        lock.lock();
-        try {
-             runStateMachine.newTestTaskStarted(newWrapper);
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    @Override
     public void threadStartedByPool(ThreadStartedByPoolContext context) {
         lock.lock();
         try {
             threadPoolMap.add(context);
-            runStateMachine.newTestTaskStarted(new ThreadWrapper(context.startedThread()));
+            runStateMachine.beforeLockExitWaitOrThreadStart(context.threadStartEvent(),
+                    context.threadLocalDataWhenInTest(),
+                    new SendEvent(context.queueIn(),this));
         } finally {
             lock.unlock();
         }
@@ -144,24 +135,26 @@ public class RunImpl implements Run {
     }
 
     @Override
-    public void waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent,
-                                         ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                         QueueIn queueIn) {
+    public void beforeLockExitWaitOrThreadStart(ExecuteBeforeEvent lockExitOrWaitEvent,
+                                                ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                                QueueIn queueIn) {
         lock.lock();
         try {
             lockExitOrWaitEvent.setRunId(runId);
             lockExitOrWaitEvent.setLoopId(loopId);
-            runStateMachine.beforeLockExitOrWait(lockExitOrWaitEvent,threadLocalDataWhenInTest,new SendEvent(queueIn,this));
+            runStateMachine.beforeLockExitWaitOrThreadStart(lockExitOrWaitEvent,
+                    threadLocalDataWhenInTest,
+                    new SendEvent(queueIn,this));
         } finally {
             lock.unlock();
         }
     }
 
     @Override
-    public void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
+    public void afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
         lock.lock();
         try {
-            runStateMachine.afterLockExitOrWait(threadLocalDataWhenInTest);
+            runStateMachine.afterLockExitWaitOrThreadStart(threadLocalDataWhenInTest);
             waitNotifyStrategy.notifyAndWaitTillActive(threadLocalDataWhenInTest,
                         runStateMachine,
                         threadActiveCondition,
@@ -183,7 +176,7 @@ public class RunImpl implements Run {
     }
 
     @Override
-    public void check() {
+    public void checkAllThreadsJoined() {
         lock.lock();
         try {
             threadPoolMap.checkAllThreadsJoined();

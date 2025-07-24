@@ -1,11 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
-import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.JoinAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadStartedByPoolContext;
 
 public class RunAdapter {
@@ -21,20 +20,16 @@ public class RunAdapter {
         run.after(afterContext);
     }
 
-    public void beforeLockExitOrWait(LockExitOrWaitEvent lockExitOrWaitEvent,
-                                     ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                     QueueIn queueIn) {
+    public void beforeLockExitWaitOrThreadStart(ExecuteBeforeEvent lockExitOrWaitEvent,
+                                                ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                                QueueIn queueIn) {
         lockExitOrWaitEvent.setThreadIndex(threadLocalDataWhenInTest.threadIndex());
-        run.waitCallOrBeforeLockExit(lockExitOrWaitEvent,threadLocalDataWhenInTest,queueIn);
+        run.beforeLockExitWaitOrThreadStart(lockExitOrWaitEvent,threadLocalDataWhenInTest,queueIn);
     }
 
-    public void afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                             QueueIn queueIn) {
-        run.afterLockExitOrWait(threadLocalDataWhenInTest,queueIn);
-    }
-
-    public void newTestTaskStarted(ThreadWrapper newWrapper) {
-        run.threadStarted(newWrapper);
+    public void afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                               QueueIn queueIn) {
+        run.afterLockExitWaitOrThreadStart(threadLocalDataWhenInTest,queueIn);
     }
 
     public void threadStartedByPool(ThreadStartedByPoolContext context) {

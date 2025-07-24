@@ -5,13 +5,13 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallb
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 
-public class RunAfterLockExitOrWait  implements CallbackAction {
+public class RunAfterLockExitWaitOrThreadStart implements CallbackAction {
 
     private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();
 
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
-        threadLocalDataWhenInTest.runAdapter().afterLockExitOrWait(threadLocalDataWhenInTest,queueIn);
+        threadLocalDataWhenInTest.runAdapter().afterLockExitWaitOrThreadStart(threadLocalDataWhenInTest,queueIn);
     }
 
 

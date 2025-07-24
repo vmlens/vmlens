@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.LockExitOrWaitEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
@@ -17,16 +17,20 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.Pro
 
 public class RunStateNewThreadStarted implements RunState {
 
+
     private final RunStateContext runStateContext;
     private final ThreadWrapper startedThread;
     private final int threadIndexForNewTestTask;
+    private final RunState previousState;
 
     public RunStateNewThreadStarted(RunStateContext runStateContext,
                                     ThreadWrapper startedThread,
-                                    int threadIndexForNewTestTask) {
+                                    int threadIndexForNewTestTask,
+                                    RunState previousState) {
         this.runStateContext = runStateContext;
         this.startedThread = startedThread;
         this.threadIndexForNewTestTask = threadIndexForNewTestTask;
+        this.previousState = previousState;
     }
 
     @Override
@@ -42,14 +46,11 @@ public class RunStateNewThreadStarted implements RunState {
 
     @Override
     public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
-        process(afterContext, sendEvent, runStateContext, threadIndexForNewTestTask);
+        process(afterContext, sendEvent, runStateContext);
         return this;
     }
 
-    @Override
-    public RunState newTestTaskStarted(ThreadWrapper newWrapper) {
-       return this;
-    }
+
 
     @Override
     public RunStateAndResult<ThreadLocalWhenInTest> processNewTestTask(NewTaskContext newTaskContext,
@@ -62,7 +63,7 @@ public class RunStateNewThreadStarted implements RunState {
                 run, newTaskContext.threadLocalForParallelize(), threadIndexForNewTestTask, sendEvent);
         newTaskContext.threadLocalForParallelize().setThreadLocalDataWhenInTest(threadLocalDataWhenInTest);
 
-        return RunStateAndResult.of(new RunStateActive(runStateContext),threadLocalDataWhenInTest);
+        return RunStateAndResult.of(previousState,threadLocalDataWhenInTest);
     }
 
     @Override
@@ -78,16 +79,16 @@ public class RunStateNewThreadStarted implements RunState {
 
 
     @Override
-    public RunState waitCallOrBeforeLockExit(LockExitOrWaitEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
+    public RunState beforeLockExitWaitOrThreadStart(ExecuteBeforeEvent lockExitOrWaitEvent, ThreadLocalWhenInTest threadLocalDataWhenInTest, SendEvent sendEvent) {
         // Fixme probably not correct
         AfterContextForStateMachine afterContext = new
                 AfterContextForStateMachine(threadLocalDataWhenInTest,lockExitOrWaitEvent);
-        process(afterContext, sendEvent, runStateContext, threadIndexForNewTestTask);
+        process(afterContext, sendEvent, runStateContext);
         return this;
     }
 
     @Override
-    public RunState afterLockExitOrWait(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public RunState afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         // Fixme probably not correct
         return this;
     }

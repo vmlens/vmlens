@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyType;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitOrWait;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitWaitOrThreadStart;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunBeforeLockExitOrWait;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdPositionObjectHashCode;
@@ -36,7 +36,7 @@ public class BarrierNotifyStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void methodExit(EnterExitContext context) {
-        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitOrWait());
+        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitWaitOrThreadStart());
     }
 
     @Override

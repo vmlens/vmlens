@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
@@ -17,6 +18,7 @@ import gnu.trove.list.linked.TLinkedList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -75,16 +77,11 @@ public class RunStateMachineHelper {
 
     public ThreadLocalWhenInTest startThread(ThreadState threadState) {
         ThreadWrapper threadWrapper = createThreadWrapper();
-        runStateMachineImpl().newTestTaskStarted(threadWrapper);
+        ThreadStartEvent event = new ThreadStartEvent(threadWrapper,THREAD.code());
+        runStateMachineImpl().beforeLockExitWaitOrThreadStart(event,mainThread,sendEvent());
         ThreadLocalForParallelize threadLocalForParallelize = createThreadLocalForParallelize(threadState);
         NewTaskContext newTaskContext = new NewTaskContext(queueInMock(),threadWrapper,threadLocalForParallelize);
         return runStateMachineImpl().processNewTestTask(newTaskContext, run(),sendEvent());
     }
 
-    public ThreadLocalWhenInTest startThread(ThreadLocalForParallelize threadLocalForParallelize) {
-        ThreadWrapper threadWrapper = createThreadWrapper();
-        runStateMachineImpl().newTestTaskStarted(threadWrapper);
-        NewTaskContext newTaskContext = new NewTaskContext(queueInMock(),threadWrapper,threadLocalForParallelize);
-        return runStateMachineImpl().processNewTestTask(newTaskContext, run(),sendEvent());
-    }
 }

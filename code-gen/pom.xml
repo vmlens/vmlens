@@ -6,10 +6,11 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.6</version>
+        <version>1.2.7</version>
     </parent>
 
     <artifactId>code-gen</artifactId>
+    <name>code-gen</name>
 
     <dependencies>
         <dependency>

@@ -35,6 +35,7 @@ public class TestCaseCollectionFactory {
         nameToTestCase.put("concurrentLinkedDeque",new EmptyIntTestFactory().create());
         nameToTestCase.put("exceptionTest",new EmptyIntTestFactory().create());
         nameToTestCase.put("reentrantTryLockWithTimeout",new EmptyIntTestFactory().create());
+        nameToTestCase.put("writeWriteDataRace",new EmptyIntTestFactory().create());
 
         return new TestCaseCollection(nameToTestCase);
     }

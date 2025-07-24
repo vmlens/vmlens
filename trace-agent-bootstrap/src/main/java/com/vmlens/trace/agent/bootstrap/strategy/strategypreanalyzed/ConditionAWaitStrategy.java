@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitOrWait;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitWaitOrThreadStart;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunBeforeLockExitOrWait;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.AtomicBegin;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.AtomicEnd;
@@ -35,7 +35,7 @@ public class ConditionAWaitStrategy implements StrategyPreAnalyzed  {
                 RunBeforeLockExitOrWait<>(event,
                 new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicEnd());
         context.threadLocalWhenInTestAdapter().process(action);
-        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitOrWait());
+        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitWaitOrThreadStart());
     }
 
     @Override

@@ -10,7 +10,7 @@ class ThreadIdToLastSortableEventTest extends AnyFlatSpec with Matchers {
     val threadIdToLastSortableEvent = new ThreadIdToLastSortableEvent[NonVolatileMemoryAccessEventGuineaPig](
       (event) => EventWithReadWriteContainer(event))
 
-    val memoryAccessEventBuilder = new MemoryAccessEventBuilder();
+    val memoryAccessEventBuilder = new MemoryAccessEventBuilder(1);
 
     val firstReadThreadOne = memoryAccessEventBuilder.threadId(1).read();
     threadIdToLastSortableEvent.foreachOppositeAndPut(firstReadThreadOne, (previous) => {

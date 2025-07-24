@@ -7,10 +7,11 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.6</version>
+        <version>1.2.7</version>
     </parent>
 
     <artifactId>standalone</artifactId>
+    <name>standalone</name>
 
     <url>https://github.com/vmlens/vlmens</url>
     <description>api to control vmlens</description>
