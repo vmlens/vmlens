@@ -87,11 +87,6 @@
                                     <pattern>gnu</pattern>
                                     <shadedPattern>com.vmlens.shaded.gnu</shadedPattern>
                                 </relocation>
-
-                                <relocation>
-                                    <pattern>org.jctools</pattern>
-                                    <shadedPattern>com.vmlens.shaded.org.jctools</shadedPattern>
-                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>

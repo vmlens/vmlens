@@ -25,6 +25,16 @@ public class Setup {
         this.argLine = argLine;
     }
 
+    public static void reCreate(File directory) {
+        FileUtils.deleteQuietly(directory);
+        directory.mkdirs();
+    }
+
+    public static String eventDir(File agentDirectory) {
+        return agentDirectory.getAbsolutePath() + EVENT_DIRECTORY;
+    }
+
+
     public EventDirectoryAndArgLine setup() {
         try {
 
@@ -42,28 +52,21 @@ public class Setup {
             String dir = eventDir(agentDirectory);
             File eventDir = new File(dir);
             eventDir.mkdirs();
-
-            String additionalArgs = argLine;
-            if (additionalArgs == null) {
-                additionalArgs = "";
-            }
-
-            String agentVmArg = "-javaagent:\"" +
-                    agentDirectory.getAbsolutePath() + "/agent.jar\"  " + additionalArgs;
-
-            return new EventDirectoryAndArgLine(eventDir,agentVmArg);
+            return new EventDirectoryAndArgLine(eventDir,vmArg());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void reCreate(File directory) {
-        FileUtils.deleteQuietly(directory);
-        directory.mkdirs();
-    }
+    public String vmArg() {
+        String additionalArgs = argLine;
+        if (additionalArgs == null) {
+            additionalArgs = "";
+        }
 
-    public static String eventDir(File agentDirectory) {
-        return agentDirectory.getAbsolutePath() + EVENT_DIRECTORY;
+        String arg =  "-javaagent:" +
+                agentDirectory.getAbsolutePath() + "/agent.jar " + additionalArgs;
+        return arg.trim();
     }
 
 }

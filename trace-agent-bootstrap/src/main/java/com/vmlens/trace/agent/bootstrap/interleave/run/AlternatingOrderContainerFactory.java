@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
+import com.vmlens.trace.agent.bootstrap.Pair;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
@@ -9,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOp
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
-import org.apache.commons.lang3.tuple.Pair;
+
 
 public class AlternatingOrderContainerFactory {
 
