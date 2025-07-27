@@ -26,6 +26,16 @@ public class LoadClassesAtStart {
         this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton");
         this.getClass().getClassLoader().loadClass("org.objectweb.asm.ConstantDynamic");
         this.getClass().getClassLoader().loadClass("java.util.concurrent.locks.LockSupport");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.ArrayCallback");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.DoNotTraceCallback");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.FieldCallback");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.MethodCallback");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.MonitorCallback");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.PreAnalyzedCallback");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.ThreadPoolCallback");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.VmlensApiCallback");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.WaitNotifyProxy");
+
 
     }
 }

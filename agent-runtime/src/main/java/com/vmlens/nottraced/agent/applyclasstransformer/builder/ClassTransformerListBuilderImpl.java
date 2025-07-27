@@ -17,11 +17,7 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     public ClassTransformerListBuilderImpl(TransformerStrategyFactory transformerStrategyFactory) {
         this.transformerStrategyFactory = transformerStrategyFactory;
     }
-
-    private void add(ClassFilter classFilter, TransformerStrategy transformerStrategy) {
-        classArrayTransformerList.add(wrap(new ClassFilterAndTransformerStrategy(classFilter, transformerStrategy)));
-    }
-
+    
     @Override
     public FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall() {
         return transformerStrategyFactory.createTraceNoMethodCall();
@@ -41,7 +37,7 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     }
 
     @Override
-    public void addVmlensApi(String name) {
+    public void addVMLensApi(String name) {
         add(new ClassFilterEquals(name), transformerStrategyFactory.createVmlensApi());
     }
 
@@ -60,11 +56,22 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     }
 
     @Override
+    public void addFilterInnerIncludeAnonymous(String name) {
+        add(new ClassFilterStartsWith(name), transformerStrategyFactory.createNoOp());
+    }
+
+    @Override
     public void addDoNotTraceIn(String name) {
-        add(new ClassFilterEquals(name), transformerStrategyFactory.createDoNotTraceIn());
+        add(new ClassFilterEquals(name),
+                new TransformerStrategyFilterInnerClasses(name,transformerStrategyFactory.createAll()));
     }
 
     public ClassFilterAndTransformerStrategyCollection build() {
         return new ClassFilterAndTransformerStrategyCollection(classArrayTransformerList);
+    }
+
+
+    private void add(ClassFilter classFilter, TransformerStrategy transformerStrategy) {
+        classArrayTransformerList.add(wrap(new ClassFilterAndTransformerStrategy(classFilter, transformerStrategy)));
     }
 }

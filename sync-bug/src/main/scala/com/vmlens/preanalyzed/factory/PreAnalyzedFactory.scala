@@ -121,9 +121,11 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       atomicReferenceArray(),
 
       ThreadModel("java/lang/Thread"),
+      FilterInnerIncludeAnonymousClass("java/lang/Thread$"),
+
       VMLensApi("com/vmlens/api/AllInterleavings"),
 
-      Include("java/lang/Thread$"),
+
 
       futureTask(),
       
@@ -146,6 +148,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Filter("java"),
       Filter("sun"),
       Filter("jdk"),
+
+      // Need to run gradle 8
+      Filter("org/apache/commons"),
 
       Include(""),
     );

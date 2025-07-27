@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
 public class Setup {
 
@@ -40,16 +39,9 @@ public class Setup {
                 target.close();
             }
 
-            Properties properties = new Properties();
             String dir = eventDir(agentDirectory);
-
             File eventDir = new File(dir);
             eventDir.mkdirs();
-
-            properties.setProperty("eventDir", dir);
-            FileOutputStream stream = new FileOutputStream(agentDirectory.getAbsolutePath() + "/run.properties");
-            properties.store(stream, "");
-            stream.close();
 
             String additionalArgs = argLine;
             if (additionalArgs == null) {

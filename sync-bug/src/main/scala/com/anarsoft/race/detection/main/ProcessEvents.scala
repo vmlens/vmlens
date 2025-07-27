@@ -20,9 +20,14 @@ class ProcessEvents(val eventDir: Path,
                     val onEvent : OnEvent) {
 
   def process(): ResultForVerify = {
-
     val dir = reportDir.toFile
     reCreate(dir);
+
+
+    val printStream = new PrintStream(reportDir.resolve("agentlog.txt").toFile)
+    new LoadAgentLog(eventDir).load(printStream);
+    printStream.close();
+
 
     val loadDescription = new LoadDescriptionImpl(eventDir)
     val loadRuns = new LoadRunsFactory().create(eventDir)
@@ -35,9 +40,7 @@ class ProcessEvents(val eventDir: Path,
     val createReports = new CreateReport(reportDir);
     createReports.createReport(reportBuilder.build())
 
-    val printStream = new PrintStream(reportDir.resolve("agentlog.txt").toFile)
-    new LoadAgentLog(eventDir).load(printStream);
-    printStream.close();
+
 
     reportBuilder.buildResultForVerify();
   }

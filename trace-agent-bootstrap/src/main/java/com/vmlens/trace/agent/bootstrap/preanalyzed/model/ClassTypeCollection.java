@@ -33,6 +33,9 @@ public class ClassTypeCollection {
         if(classType instanceof ClassTypeThreadPool) {
             return 7;
         }
+        if(classType instanceof ClassTypeFilterInnerIncludeAnonymous) {
+            return 8;
+        }
         throw new RuntimeException("unknown " + classType.getClass());
     }
 
@@ -60,6 +63,9 @@ public class ClassTypeCollection {
         }
         if(id == 7) {
             return ClassTypeThreadPool.SINGLETON;
+        }
+        if(id == 8) {
+            return ClassTypeFilterInnerIncludeAnonymous.SINGLETON;
         }
         throw new RuntimeException("unknown " + id);
     }
