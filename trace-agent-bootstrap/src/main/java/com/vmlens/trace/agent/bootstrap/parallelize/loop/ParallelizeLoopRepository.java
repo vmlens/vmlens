@@ -31,6 +31,21 @@ public class ParallelizeLoopRepository {
             if (parallelizeLoop == null) {
                 parallelizeLoop = parallelizeLoopFactory.create(maxLoopId);
                 try {
+                    /*
+                    we need to use reflection since AllInterleavings might not be loaded by the bootstrap classloader in gradle
+                    class com.vmlens.api.AllInterleavings cannot be cast to class com.vmlens.api.AllInterleavings (com.vmlens.api.AllInterleavings is in module com.vmlens.api@1.2.8-SNAPSHOT of loader 'app'; com.vmlens.api.AllInterleavings is in unnamed module of loader 'bootstrap')
+                        java.lang.ClassCastException: class com.vmlens.api.AllInterleavings cannot be cast to class com.vmlens.api.AllInterleavings (com.vmlens.api.AllInterleavings is in module com.vmlens.api@1.2.8-SNAPSHOT of loader 'app'; com.vmlens.api.AllInterleavings is in unnamed module of loader 'bootstrap')
+	                    at com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopRepository.getOrCreate(ParallelizeLoopRepository.java:33)
+	                    at com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade.hasNext(ParallelizeFacade.java:41)
+	                    at com.vmlens.trace.agent.bootstrap.callback.impl.VmlensApiCallbackImpl.hasNext(VmlensApiCallbackImpl.java:16)
+	                    at com.vmlens.trace.agent.bootstrap.callback.VmlensApiCallback.hasNext(VmlensApiCallback.java:28)
+	                    at com.vmlens.api@1.2.8-SNAPSHOT/com.vmlens.api.AllInterleavings.hasNext(AllInterleavings.java:55)
+	                    at org.hiero.consensus.model@0.65.0-SNAPSHOT/org.hiero.consensus.model.sequence.map.ConcurrentSequenceMapTest.readFromCopyAndUpdateMutable(ConcurrentSequenceMapTest.java:32)
+	                    at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	                    at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	                    at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+                     */
+
                     Field field = config.getClass().getField("name");
                     String name = field.get(config).toString();
                     serializableEvents.add(wrap(new TestLoopDescription(maxLoopId, name)));
