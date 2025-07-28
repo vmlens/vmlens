@@ -1,28 +1,27 @@
 package com.vmlens.nottraced.agent;
 
 
-import com.vmlens.trace.agent.bootstrap.description.ClassDescription;
+import com.vmlens.agent.AgentRuntime;
 import com.vmlens.nottraced.agent.applyclasstransformer.ClassFilterAndTransformerStrategyCollectionFactory;
 import com.vmlens.nottraced.agent.write.*;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
-import com.vmlens.agent.AgentRuntime;
+import com.vmlens.trace.agent.bootstrap.description.ClassDescription;
 import com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
-import java.util.Properties;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.stopProcess;
 
 public class AgentRuntimeImpl implements AgentRuntime {
 
+    private static final String EVENT_DIRECTORY = "/vmlens/";
 
     public void run(String args, Instrumentation inst) {
         try {
@@ -35,16 +34,9 @@ public class AgentRuntimeImpl implements AgentRuntime {
                             .getPath());
             String libPath = agentFile.toString().substring(0,
                     agentFile.toString().length() - "/agent_runtime.jar".length());
-            String inputFileName = libPath + "/run.properties";
 
+            String outputFileName = libPath + EVENT_DIRECTORY;
 
-            Properties properties = new Properties();
-            properties.load(new FileInputStream(inputFileName));
-
-            String outputFileName = properties.getProperty("eventDir");
-            if (outputFileName == null) {
-                throw new RuntimeException("eventDir is missing in vmlens agent properties");
-            }
             File outputDir = new File(outputFileName);
             System.err.println("writing events to " + outputDir.getAbsolutePath());
 
@@ -60,6 +52,10 @@ public class AgentRuntimeImpl implements AgentRuntime {
                 }
             }
 
+            String filterFileName =  libPath + "/filter.txt";
+            ClassFilterFromFile classFilterFromFile = ClassFilterFromFile.create(filterFileName);
+
+
             new LoadClassesAtStart().loadClasses();
 
             TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
@@ -74,7 +70,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
             AgentClassFileTransformer agentClassFileTransformer = new AgentClassFileTransformer(
                     ClassFilterAndTransformerStrategyCollectionFactory.createFactory(libPath,
                             writeClassDescriptionAndWarningWrapper),
-                    writeClassDescriptionAndWarningWrapper);
+                    writeClassDescriptionAndWarningWrapper,classFilterFromFile);
 
             startProcess();
 

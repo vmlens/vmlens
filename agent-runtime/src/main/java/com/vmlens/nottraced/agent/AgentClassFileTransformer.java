@@ -6,7 +6,6 @@ import com.vmlens.nottraced.agent.applyclasstransformer.TransformerContext;
 import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategy;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarning;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
-import org.objectweb.asm.Opcodes;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -20,15 +19,17 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLoca
 
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
-    public static final int ASM_API_VERSION = Opcodes.ASM7;
     private final ClassFilterAndTransformerStrategyCollection classArrayTransformerCollection;
     private final WriteClassDescriptionAndWarning writeClassDescriptionAndWarning;
+    private final ClassFilterFromFile classFilterFromFile;
 
     public AgentClassFileTransformer(ClassFilterAndTransformerStrategyCollectionFactory classArrayTransformerFactory,
-                                     WriteClassDescriptionAndWarning writeClassDescriptionAndWarning) {
+                                     WriteClassDescriptionAndWarning writeClassDescriptionAndWarning,
+                                     ClassFilterFromFile classFilterFromFile) {
         super();
         this.classArrayTransformerCollection = classArrayTransformerFactory.create();
         this.writeClassDescriptionAndWarning = writeClassDescriptionAndWarning;
+        this.classFilterFromFile = classFilterFromFile;
     }
 
     private static void logTransformedClass(String className, byte[] transformedArray) {
@@ -57,6 +58,11 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
               if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
             }
+
+            if(classFilterFromFile.filter(name)) {
+                return null;
+            }
+
             TransformerContext context = new TransformerContext(classfileBuffer, name);
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {

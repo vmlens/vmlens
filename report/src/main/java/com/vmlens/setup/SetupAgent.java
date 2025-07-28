@@ -7,9 +7,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
-public class Setup {
+public class SetupAgent {
 
     public static final String AGENT_DIRECTORY = "vmlens-agent";
     public static final String REPORT_DIRECTORY = "vmlens-report";
@@ -20,11 +19,21 @@ public class Setup {
     private final File agentDirectory;
     private final String argLine;
 
-    public Setup(File agentDirectory,
-                 String argLine) {
+    public SetupAgent(File agentDirectory,
+                      String argLine) {
         this.agentDirectory = agentDirectory;
         this.argLine = argLine;
     }
+
+    public static void reCreate(File directory) {
+        FileUtils.deleteQuietly(directory);
+        directory.mkdirs();
+    }
+
+    public static String eventDir(File agentDirectory) {
+        return agentDirectory.getAbsolutePath() + EVENT_DIRECTORY;
+    }
+
 
     public EventDirectoryAndArgLine setup() {
         try {
@@ -40,38 +49,24 @@ public class Setup {
                 target.close();
             }
 
-            Properties properties = new Properties();
             String dir = eventDir(agentDirectory);
-
             File eventDir = new File(dir);
             eventDir.mkdirs();
-
-            properties.setProperty("eventDir", dir);
-            FileOutputStream stream = new FileOutputStream(agentDirectory.getAbsolutePath() + "/run.properties");
-            properties.store(stream, "");
-            stream.close();
-
-            String additionalArgs = argLine;
-            if (additionalArgs == null) {
-                additionalArgs = "";
-            }
-
-            String agentVmArg = "-javaagent:\"" +
-                    agentDirectory.getAbsolutePath() + "/agent.jar\"  " + additionalArgs;
-
-            return new EventDirectoryAndArgLine(eventDir,agentVmArg);
+            return new EventDirectoryAndArgLine(eventDir,vmArg());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void reCreate(File directory) {
-        FileUtils.deleteQuietly(directory);
-        directory.mkdirs();
-    }
+    public String vmArg() {
+        String additionalArgs = argLine;
+        if (additionalArgs == null) {
+            additionalArgs = "";
+        }
 
-    public static String eventDir(File agentDirectory) {
-        return agentDirectory.getAbsolutePath() + EVENT_DIRECTORY;
+        String arg =  "-javaagent:" +
+              new File( agentDirectory.getAbsolutePath() , "agent.jar").getAbsolutePath() + " " + additionalArgs;
+        return arg.trim();
     }
 
 }

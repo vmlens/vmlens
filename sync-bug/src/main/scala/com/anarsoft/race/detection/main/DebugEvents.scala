@@ -13,13 +13,12 @@ class DebugEvents(val dir : Path) {
   
   def process(): Unit = {
     val stream = new PrintStream("debug.text");
-
+    new LoadAgentLog(dir).load(stream);
     new LoadDescriptionImpl(dir).load(new DescriptionBuilderForDebug(stream));
     val loadEvents = new LoadRunsFactory().create(dir).asInstanceOf[LoadRunsImpl]
     val runDataListBuilderForDebug = new RunDataListBuilderForDebug(stream);
     loadEvents.load(runDataListBuilderForDebug)
-    new LoadAgentLog(dir).load(stream);
-
+   
     stream.close();
   }
 
