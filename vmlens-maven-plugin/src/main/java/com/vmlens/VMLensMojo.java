@@ -5,7 +5,7 @@ import com.vmlens.report.ResultForVerify;
 import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp;
 import com.vmlens.report.assertion.OnEventNoOp;
 import com.vmlens.setup.EventDirectoryAndArgLine;
-import com.vmlens.setup.Setup;
+import com.vmlens.setup.SetupAgent;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
@@ -17,8 +17,8 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
 
-import static com.vmlens.setup.Setup.AGENT_DIRECTORY;
-import static com.vmlens.setup.Setup.REPORT_DIRECTORY;
+import static com.vmlens.setup.SetupAgent.AGENT_DIRECTORY;
+import static com.vmlens.setup.SetupAgent.REPORT_DIRECTORY;
 
 @Mojo(  name = "test",
         defaultPhase = LifecyclePhase.TEST,
@@ -50,7 +50,7 @@ public class VMLensMojo extends SurefireMojo {
     }
 
     private void prepareAgent() {
-        EventDirectoryAndArgLine setup = new Setup(agentDirectory, getArgLine()).setup();
+        EventDirectoryAndArgLine setup = new SetupAgent(agentDirectory, getArgLine()).setup();
         getLog().info(setup.argLine());
         setArgLine(setup.argLine());
         eventDirectory = setup.eventDirectory();

@@ -53,10 +53,6 @@
             <artifactId>trove4j</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vmlens</groupId>
-            <artifactId>api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>

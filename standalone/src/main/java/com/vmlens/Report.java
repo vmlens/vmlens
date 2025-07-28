@@ -7,7 +7,7 @@ import picocli.CommandLine;
 
 import java.io.File;
 
-import static com.vmlens.setup.Setup.*;
+import static com.vmlens.setup.SetupAgent.*;
 
 @CommandLine.Command(name = "report", description = "Creates the report.")
 public class Report implements Runnable {

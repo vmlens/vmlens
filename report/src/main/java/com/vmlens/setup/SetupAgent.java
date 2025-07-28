@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class Setup {
+public class SetupAgent {
 
     public static final String AGENT_DIRECTORY = "vmlens-agent";
     public static final String REPORT_DIRECTORY = "vmlens-report";
@@ -19,8 +19,8 @@ public class Setup {
     private final File agentDirectory;
     private final String argLine;
 
-    public Setup(File agentDirectory,
-                 String argLine) {
+    public SetupAgent(File agentDirectory,
+                      String argLine) {
         this.agentDirectory = agentDirectory;
         this.argLine = argLine;
     }
@@ -65,7 +65,7 @@ public class Setup {
         }
 
         String arg =  "-javaagent:" +
-                agentDirectory.getAbsolutePath() + "/agent.jar " + additionalArgs;
+              new File( agentDirectory.getAbsolutePath() , "agent.jar").getAbsolutePath() + " " + additionalArgs;
         return arg.trim();
     }
 

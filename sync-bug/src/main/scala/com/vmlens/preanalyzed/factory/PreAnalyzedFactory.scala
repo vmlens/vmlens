@@ -124,9 +124,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       FilterInnerIncludeAnonymousClass("java/lang/Thread$"),
 
       VMLensApi("com/vmlens/api/AllInterleavings"),
-
-
-
+      
       futureTask(),
       
       Include("java/util/concurrent/FutureTask"),
@@ -150,7 +148,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Filter("jdk"),
 
       // Need to run gradle 8
-      Filter("org/apache/commons"),
+      Filter("org/apache/commons/lang/StringUtils"),
 
       Include(""),
     );

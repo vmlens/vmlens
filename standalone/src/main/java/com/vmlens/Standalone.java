@@ -5,8 +5,8 @@ import picocli.CommandLine;
 import java.io.File;
 
 import static com.vmlens.Standalone.DESCRIPTION;
-import static com.vmlens.setup.Setup.AGENT_DIRECTORY;
-import static com.vmlens.setup.Setup.REPORT_DIRECTORY;
+import static com.vmlens.setup.SetupAgent.AGENT_DIRECTORY;
+import static com.vmlens.setup.SetupAgent.REPORT_DIRECTORY;
 
 @CommandLine.Command(name = "", description = DESCRIPTION, subcommands = {
         Install.class,

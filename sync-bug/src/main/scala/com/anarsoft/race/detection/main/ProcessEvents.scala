@@ -9,7 +9,7 @@ import com.vmlens.report.ResultForVerify
 import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp, OnEvent, OnEventNoOp}
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.createreport.CreateReport
-import com.vmlens.setup.Setup.reCreate
+import com.vmlens.setup.SetupAgent.reCreate
 
 import java.io.{File, PrintStream}
 import java.nio.file.{Path, Paths}
