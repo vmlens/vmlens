@@ -55,13 +55,8 @@ public class CreateReport {
 
             List<UIRunElement> uiRunElements = new LinkedList<>();
             for (UIRunElementWithStacktraceLeaf element : loop.uiRunElementWithStacktraceRoots()) {
-                UIRunElement runElement = element.runElement();
-                if (element.stacktraceLeaf().reportLink() != null) {
-                    runElement.setLink(element.stacktraceLeaf().reportLink());
-                }
-                uiRunElements.add(runElement);
+                uiRunElements.add(element.createRunElement());
             }
-
             OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
             createOneReport.createUIRun(uiRunElements, writer);
             writer.close();

@@ -1,9 +1,8 @@
 package com.vmlens;
 
 import com.anarsoft.race.detection.main.ProcessEvents;
+import com.anarsoft.race.detection.process.run.ProcessRunContextBuilder;
 import com.vmlens.report.ResultForVerify;
-import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp;
-import com.vmlens.report.assertion.OnEventNoOp;
 import com.vmlens.setup.EventDirectoryAndArgLine;
 import com.vmlens.setup.SetupAgent;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -59,7 +58,7 @@ public class VMLensMojo extends SurefireMojo {
     protected void createReport(MojoFailureException mojoFailureException) throws MojoFailureException {
         ResultForVerify result = new ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
-                new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp()).process();
+                new ProcessRunContextBuilder().build()).process();
 
         handleResult(result,reportDirectory,mojoFailureException,this.getLog());
     }

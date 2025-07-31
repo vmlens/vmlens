@@ -6,9 +6,9 @@ import com.anarsoft.race.detection.sortutil.{NonVolatileEventContainer, ThreadId
 import scala.collection.mutable.ArrayBuffer
 
 private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAccessEvent[EVENT]]
-(private val partialOrder: PartialOrder, val result: ArrayBuffer[SortedMemoryAccessList])
-  extends AlgorithmForOneType[EVENT] {
-
+          (private val partialOrder: PartialOrder,
+           val result: ArrayBuffer[SortedMemoryAccessList],
+           val showAllMemoryAccess : Boolean)  extends AlgorithmForOneType[EVENT] {
   // visible for test 
   val sortedMemoryAccessList = new SortedMemoryAccessList();
   
@@ -32,9 +32,12 @@ private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAcces
   }
 
   override def stop(): Unit = {
-    if (sortedMemoryAccessList.dataRaces.nonEmpty) {
+    if(showAllMemoryAccess){
       result.append(sortedMemoryAccessList);
+    } else {
+      if (sortedMemoryAccessList.dataRaces.nonEmpty) {
+        result.append(sortedMemoryAccessList);
+      }
     }
-    
   }
 }

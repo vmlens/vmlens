@@ -5,7 +5,7 @@ import com.vmlens.report.assertion.OnEventNoOp
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.{MonitorKey, ReentrantLockKey}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import com.anarsoft.race.detection.process.run.ProcessRunImpl
+import com.anarsoft.race.detection.process.run.{ProcessRunContextBuilder, ProcessRunImpl}
 
 import scala.collection.mutable
 
@@ -32,7 +32,9 @@ class ConditionWaitIntTest  extends AnyFlatSpec with Matchers{
     // When
     val collected = new mutable.HashSet[LeftBeforeRight]();
     val data = runTestBuilder.build();
-    new ProcessRunImpl(new CollectLeftBeforeRight(collected),new OnEventNoOp()).process(data);
+    new ProcessRunImpl(new ProcessRunContextBuilder()
+      .withOnDescriptionAndLeftBeforeRight(new CollectLeftBeforeRight(collected))
+      .build()).process(data);
     
     // Then
     collected should be(expected)

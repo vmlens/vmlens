@@ -5,14 +5,20 @@ public class UIRunElement {
     private final String operation;
     private final String method;
     private final String threadName;
+    private final boolean isSeparator;
 
     private boolean hasLink;
     private String link;
 
-    public UIRunElement(String operation, String method, String threadName) {
+    public static UIRunElement createNewRun(int runId) {
+        return new UIRunElement("New Run", "" , "" , true);
+    }
+
+    public UIRunElement(String operation, String method, String threadName, boolean isSeparator) {
         this.operation = operation;
         this.method = method;
         this.threadName = threadName;
+        this.isSeparator = isSeparator;
     }
 
     public void setLink(String link) {
@@ -38,5 +44,9 @@ public class UIRunElement {
 
     public String link() {
         return link;
+    }
+
+    public boolean isSeparator() {
+        return isSeparator;
     }
 }

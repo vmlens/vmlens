@@ -22,7 +22,7 @@ class DataRaceIntTest extends AnyFlatSpec with Matchers {
     val runId = 0;
     val loopIdAndRunId = LoopAndRunId(loopId, runId);
 
-    val processRunImpl = new ProcessRunImpl(new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp());
+    val processRunImpl = new ProcessRunImpl(new ProcessRunContextBuilder().build());
 
     val nonVolatileElements = nonVolatileReadWrite(loopIdAndRunId);
 
@@ -58,7 +58,7 @@ class DataRaceIntTest extends AnyFlatSpec with Matchers {
     val builder = new GroupInterleaveElementBuilder();
     builder.addVolatileAccessEvents(list);
 
-    val processRunImpl = new ProcessRunImpl(new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp());
+    val processRunImpl = new ProcessRunImpl(new ProcessRunContextBuilder().build());
 
     // When
     val runData = RunData.forLoopAndRun(loopIdAndRunId).copy(nonVolatileElements = nonVolatileReadWrite(loopIdAndRunId),

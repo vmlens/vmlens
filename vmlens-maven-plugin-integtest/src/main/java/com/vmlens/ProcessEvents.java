@@ -1,5 +1,6 @@
 package com.vmlens;
 
+import com.anarsoft.race.detection.process.run.ProcessRunContext;
 import com.vmlens.expected.check.BuildEventListMap;
 import com.vmlens.expected.check.CheckLeftBeforeRight;
 import com.vmlens.expected.check.CheckLockEnterExit;
@@ -31,8 +32,8 @@ public class ProcessEvents {
 
         ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
-                check,
-                buildEventListMap).process();
+                new ProcessRunContext(check,
+                buildEventListMap,false,false)).process();
         checkDataRaces(result);
 
         int loopId = loopNameToId.get("readWriteLockTest");

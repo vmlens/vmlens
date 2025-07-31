@@ -12,9 +12,14 @@
             </tr>
             {{#elements}}
                 <tr>
-                    <td>{{threadName}}</td>
-                    <td>{{{operation}}}</td>
-                    <td>{{#hasLink}}<a href="{{link}}">{{method}} </a> {{/hasLink}}{{^hasLink}}  {{method}} {{/hasLink}}  </td>
+                    {{#isSeparator}}
+                        <td colspan="3">{{{operation}}}</td>
+                    {{/isSeparator}}
+                    {{^isSeparator}}
+                        <td>{{threadName}}</td>
+                        <td>{{{operation}}}</td>
+                        <td>{{#hasLink}}<a href="{{link}}">{{method}} </a> {{/hasLink}}{{^hasLink}}  {{method}} {{/hasLink}}  </td>
+                    {{/isSeparator}}
                 </tr>
             {{/elements}}
         </table>

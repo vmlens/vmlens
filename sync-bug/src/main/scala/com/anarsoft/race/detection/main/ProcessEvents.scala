@@ -3,7 +3,7 @@ package com.anarsoft.race.detection.main
 import com.anarsoft.race.detection.process.loadAgentLog.LoadAgentLog
 import com.anarsoft.race.detection.process.loadDescription.LoadDescriptionImpl
 import com.anarsoft.race.detection.process.main.MainProcess
-import com.anarsoft.race.detection.process.run.ProcessRunImpl
+import com.anarsoft.race.detection.process.run.{ProcessRunContext, ProcessRunContextBuilder, ProcessRunImpl}
 import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl
 import com.vmlens.report.ResultForVerify
 import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp, OnEvent, OnEventNoOp}
@@ -16,8 +16,7 @@ import java.nio.file.{Path, Paths}
 
 class ProcessEvents(val eventDir: Path,
                     val reportDir: Path,
-                    val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight,
-                    val onEvent : OnEvent) {
+                    processRunContext : ProcessRunContext) {
 
   def process(): ResultForVerify = {
     val dir = reportDir.toFile
@@ -31,16 +30,15 @@ class ProcessEvents(val eventDir: Path,
 
     val loadDescription = new LoadDescriptionImpl(eventDir)
     val loadRuns = new LoadRunsFactory().create(eventDir)
-    val processRun = new ProcessRunImpl(onTestLoopAndLeftBeforeRight,onEvent);
+    val processRun = new ProcessRunImpl(processRunContext);
     val loopReportBuilder = new LoopReportBuilderImpl(new ReportBuilder());
 
-    val mainProcess = new MainProcess(loadDescription, loadRuns, processRun, loopReportBuilder,onTestLoopAndLeftBeforeRight);
+    val mainProcess = new MainProcess(loadDescription, loadRuns, processRun, loopReportBuilder,
+      processRunContext.onTestLoopAndLeftBeforeRight);
     val reportBuilder = mainProcess.process();
 
     val createReports = new CreateReport(reportDir);
     createReports.createReport(reportBuilder.build())
-
-
 
     reportBuilder.buildResultForVerify();
   }
@@ -50,7 +48,11 @@ object ProcessEvents {
   def main(args: Array[String]): Unit = {
     val dir = Paths.get(args(0));
     val reportDir = Paths.get(args(1));
-    new ProcessEvents(dir, reportDir, new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp()).process();
+    new ProcessEvents(dir, reportDir, new ProcessRunContextBuilder().
+      withShowAllRuns().
+      withShowAllMemoryAccess().
+      build()).
+      process();
 
   }
 }

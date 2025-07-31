@@ -1,19 +1,43 @@
 package com.anarsoft.race.detection.loopAndRunData
 
+import com.anarsoft.race.detection.event.distribute.EventWithLoopAndRunId
+import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementForResult
+import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileMemoryAccessElementForResult
+import com.anarsoft.race.detection.reportbuilder.StaticMemoryAccessId
+
+import scala.collection.mutable
+
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 
-trait RunResult  {
+class RunResult(loopAndRunId: LoopAndRunId,
+  nonVolatileMemoryAccessElements: List[GroupNonVolatileMemoryAccessElementForResult],
+  interleaveEvents: List[EventWithLoopAndRunId],
+  syncActionElements: List[GroupInterleaveElementForResult],
+  val warningIdList : Set[Int],
+  val  isFailure: Boolean)  {
 
-  def foreach(f: EventForReportElement => Unit): Unit;
+     def loopId: Int = loopAndRunId.loopId;
 
-  def isFailure: Boolean;
+     def runId: Int = loopAndRunId.runId;
 
-  def dataRaceCount: Int;
+  def foreach(f: EventForReportElement => Unit): Unit = {
+      for (element <- nonVolatileMemoryAccessElements) {
+        for (sortedList <- element.sortedLists) {
+          sortedList.foreach(f)
+        }
+      }
+      for (element <- syncActionElements) {
+        element.foreach(f)
+      }
+    }
 
-  def warningIdList : Set[Int];
-  
-  def loopId: Int;
 
-  def runId: Int;;
+    def dataRaceCount: Int = {
+      val dataRaceSet = new mutable.HashSet[StaticMemoryAccessId]();
+      for (elem <- nonVolatileMemoryAccessElements) {
+        dataRaceSet.addAll(elem.dataRaces);
+      }
+      dataRaceSet.size
+    }
   
 }

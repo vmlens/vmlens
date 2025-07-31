@@ -37,6 +37,8 @@ public class ReportBuildAlgo {
 
             List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceLeafs = new LinkedList<>();
 
+            Integer currentRun = null;
+
             for (RunElement runElement : loopAndRun.runElements()) {
                 String firstStacktraceMethodName = null;
 
@@ -56,7 +58,7 @@ public class ReportBuildAlgo {
                 }
 
                 UIRunElement uiRunElement = new UIRunElement(runElement.operationTextFactory().asString(descriptionContext),
-                        firstStacktraceMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex()));
+                        firstStacktraceMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex()),false);
 
                 UIStacktraceLeaf uiStacktraceLeaf;
                 if (stacktraceElements.size() > 0) {
@@ -69,6 +71,18 @@ public class ReportBuildAlgo {
                     uiStacktraceLeaf = EMPTY_STACKTRACE_LEAF;
                 }
 
+                if(currentRun == null) {
+                    currentRun = runElement.runId();
+                } else {
+                    if(currentRun != runElement.runId()) {
+                        UIRunElementWithStacktraceLeaf uiRunElementWithStacktraceLeaf =
+                                new UIRunElementWithStacktraceLeaf(UIRunElement.createNewRun(runElement.runId()), EMPTY_STACKTRACE_LEAF);
+                        uiRunElementWithStacktraceLeafs.add(uiRunElementWithStacktraceLeaf);
+                        currentRun = runElement.runId();
+                    }
+
+
+                }
                 UIRunElementWithStacktraceLeaf uiRunElementWithStacktraceLeaf =
                         new UIRunElementWithStacktraceLeaf(uiRunElement, uiStacktraceLeaf);
                 uiRunElementWithStacktraceLeafs.add(uiRunElementWithStacktraceLeaf);

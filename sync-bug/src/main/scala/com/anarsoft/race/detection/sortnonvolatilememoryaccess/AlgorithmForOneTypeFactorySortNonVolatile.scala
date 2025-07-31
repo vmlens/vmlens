@@ -6,11 +6,11 @@ import scala.collection.mutable.ArrayBuffer
 
 
 private class AlgorithmForOneTypeFactorySortNonVolatile[EVENT <: NonVolatileMemoryAccessEvent[EVENT]]
-(val partialOrder: PartialOrder, val result: ArrayBuffer[SortedMemoryAccessList])
+        (val partialOrder: PartialOrder, val result: ArrayBuffer[SortedMemoryAccessList], val showAllMemoryAccess : Boolean)
   extends AlgorithmForOneTypeFactory[EVENT] {
 
   override def create(): AlgorithmForOneType[EVENT] = {
-    new AlgorithmForOneTypeSortNonVolatile[EVENT](partialOrder, result);
+    new AlgorithmForOneTypeSortNonVolatile[EVENT](partialOrder, result,showAllMemoryAccess);
   }
 
 }
