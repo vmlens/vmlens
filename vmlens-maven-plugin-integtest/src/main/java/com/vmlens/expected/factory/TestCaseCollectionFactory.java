@@ -30,12 +30,14 @@ public class TestCaseCollectionFactory {
         nameToTestCase.put("hashMapTest",new EmptyIntTestFactory().create());
 
         // Not Checked
+        nameToTestCase.put("threadPoolInsideTest",new EmptyIntTestFactory().create());
         nameToTestCase.put("allFieldsTracedIntTest",new EmptyIntTestFactory().create());
         nameToTestCase.put("atomicIntegerTest",new EmptyIntTestFactory().create());
         nameToTestCase.put("concurrentLinkedDeque",new EmptyIntTestFactory().create());
         nameToTestCase.put("exceptionTest",new EmptyIntTestFactory().create());
         nameToTestCase.put("reentrantTryLockWithTimeout",new EmptyIntTestFactory().create());
         nameToTestCase.put("writeWriteDataRace",new EmptyIntTestFactory().create());
+        nameToTestCase.put("putIfAbsentAndGetKeysWithSequenceNumber",new EmptyIntTestFactory().create());
 
         return new TestCaseCollection(nameToTestCase);
     }

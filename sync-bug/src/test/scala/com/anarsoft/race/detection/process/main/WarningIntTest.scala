@@ -3,7 +3,7 @@ package com.anarsoft.race.detection.process.main
 import com.anarsoft.race.detection.event.control.ControlEvent
 import com.anarsoft.race.detection.event.gen.LoopWarningEventGen
 import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilderImpl}
-import com.anarsoft.race.detection.process.run.ProcessRunImpl
+import com.anarsoft.race.detection.process.run.{ProcessRunContextBuilder, ProcessRunImpl}
 import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRightNoOp, OnEventNoOp}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -22,10 +22,10 @@ class WarningIntTest extends AnyFlatSpec with Matchers {
     val loadRunsMock = new LoadRunsMock(runDataListBuilderImpl.build());
 
     // When
-    val result = new ProcessEvents(loadRunsMock,new ProcessRunImpl(new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp())).process();
+    val result = new ProcessEvents(loadRunsMock,new ProcessRunImpl(new ProcessRunContextBuilder().build())).process();
 
     // Then
-    result(0).runResult.warningIdList should be (Set(22));
+    result(0).warningIdList should be (Set(22));
 
   }
 }

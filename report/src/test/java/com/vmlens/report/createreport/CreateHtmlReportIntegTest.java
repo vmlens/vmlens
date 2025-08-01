@@ -10,14 +10,14 @@ import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CreateReportIntegTest {
+public class CreateHtmlReportIntegTest {
 
     @Test
     public void createReport() throws IOException {
         Path outputDir = Files.createTempDirectory("testDir");
         System.out.println("writing report to " + outputDir);
 
-        CreateReport createReport = new CreateReport(outputDir);
+        CreateHtmlReport createHtmlReport = new CreateHtmlReport(outputDir);
 
         List<UIStacktraceElement> stacktraceElements = new LinkedList<>();
         UIStacktraceElement first = new UIStacktraceElement("org.apache.commons.text.StringEscapeUtils.escapeHtml3");
@@ -34,14 +34,14 @@ public class CreateReportIntegTest {
         List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceRoots = new
                 LinkedList<>();
 
-        UIRunElement uiRunElement = new UIRunElement("<b>interleaveoperation</b> for field", "method", "4");
+        UIRunElement uiRunElement = new UIRunElement(1, "<b>interleaveoperation</b> for field", "method", "4" , false);
         uiRunElementWithStacktraceRoots.add(new UIRunElementWithStacktraceLeaf(uiRunElement, root));
 
         UILoopAndRunElementWithStacktraceLeafs uiLoopAndRunElementWithStacktraceRoots =
                 new UILoopAndRunElementWithStacktraceLeafs(uiLoop, uiRunElementWithStacktraceRoots);
 
         uiLoopAndRunElementsList.add(uiLoopAndRunElementWithStacktraceRoots);
-        createReport.createReport(new UILoopsAndStacktraceLeafs(rootNodes, uiLoopAndRunElementsList));
+        createHtmlReport.createReport(new UILoopsAndStacktraceLeafs(rootNodes, uiLoopAndRunElementsList));
 
         FileUtils.deleteDirectory(outputDir.toFile());
     }

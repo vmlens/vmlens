@@ -9,7 +9,7 @@ class LeftBeforeRightPerThread {
   private val treeMap = TreeMap[Integer, Integer]();
 
   def maxPositionForKeyBefore(right: Int): Option[Int] = {
-    val iter = treeMap.headMap(right, true).values().iterator();
+    val iter = treeMap.headMap(right, false).values().iterator();
     var maxLeft = -1;
     while (iter.hasNext) {
       val value = iter.next();

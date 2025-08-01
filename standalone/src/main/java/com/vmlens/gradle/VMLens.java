@@ -1,9 +1,8 @@
 package com.vmlens.gradle;
 
 import com.anarsoft.race.detection.main.ProcessEvents;
+import com.anarsoft.race.detection.process.run.ProcessRunContextBuilder;
 import com.vmlens.report.ResultForVerify;
-import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp;
-import com.vmlens.report.assertion.OnEventNoOp;
 import com.vmlens.setup.EventDirectoryAndArgLine;
 import com.vmlens.setup.SetupAgent;
 
@@ -11,6 +10,23 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class VMLens {
+
+    private final ProcessRunContextBuilder processRunContextBuilder = new ProcessRunContextBuilder();
+
+    public VMLens withShowAllRuns() {
+        processRunContextBuilder.withShowAllRuns();
+        return this;
+    }
+
+    public VMLens withShowAllMemoryAccess() {
+        processRunContextBuilder.withShowAllMemoryAccess();
+        return this;
+    }
+
+    public VMLens withTxtFormat() {
+        processRunContextBuilder.withTxtFormat();
+        return this;
+    }
 
     public void process(File buildDir) {
         File agentDirectory = new File(buildDir, SetupAgent.AGENT_DIRECTORY);
@@ -23,8 +39,7 @@ public class VMLens {
                 new ProcessEvents(
                         eventPath,
                         reportPath,
-                        new OnDescriptionAndLeftBeforeRightNoOp(),
-                        new OnEventNoOp()
+                        processRunContextBuilder.build()
                 );
 
         ResultForVerify result = processEvents.process();

@@ -10,7 +10,7 @@ class AlgorithmForOneTypeSortNonVolatileTest extends AnyFlatSpec with Matchers  
   "AlgorithmForOneTypeSortNonVolatile" should "addMethodEvents events with the same thread index to the list" in {
     // Given
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder(1).threadId(5);
-    val algorithm = new AlgorithmForOneTypeSortNonVolatile[NonVolatileMemoryAccessEventGuineaPig](null, null);
+    val algorithm = new AlgorithmForOneTypeSortNonVolatile[NonVolatileMemoryAccessEventGuineaPig](null, null, false);
 
     // When
     algorithm.prozess(memoryAccessEventBuilder.read());
@@ -24,7 +24,7 @@ class AlgorithmForOneTypeSortNonVolatileTest extends AnyFlatSpec with Matchers  
   "AlgorithmForOneTypeSortNonVolatile" should " detect a data race for two writes " in {
     // Given
     val partialOrder = mock(classOf[PartialOrder]);
-    val algorithm = new AlgorithmForOneTypeSortNonVolatile[NonVolatileMemoryAccessEventGuineaPig](partialOrder, null);
+    val algorithm = new AlgorithmForOneTypeSortNonVolatile[NonVolatileMemoryAccessEventGuineaPig](partialOrder, null,false);
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder(1);
 
     // When
@@ -38,7 +38,7 @@ class AlgorithmForOneTypeSortNonVolatileTest extends AnyFlatSpec with Matchers  
   "AlgorithmForOneTypeSortNonVolatile" should " detect a data race for read before write " in {
     // Given
     val partialOrder = mock(classOf[PartialOrder]);
-    val algorithm = new AlgorithmForOneTypeSortNonVolatile[NonVolatileMemoryAccessEventGuineaPig](partialOrder, null);
+    val algorithm = new AlgorithmForOneTypeSortNonVolatile[NonVolatileMemoryAccessEventGuineaPig](partialOrder, null,false);
     val memoryAccessEventBuilder = new MemoryAccessEventBuilder(1);
 
     // When

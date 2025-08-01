@@ -4,21 +4,20 @@ import com.anarsoft.race.detection.createlastthreadposition.LastThreadPositionMa
 import com.anarsoft.race.detection.createstacktrace.ServiceCalculateMethodCountToStacktraceNode
 import com.anarsoft.race.detection.event.control.ProcessContext
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileMemoryAccessElementForResult
-import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult, RunResultImpl}
+import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult}
 import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContextImpl, PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.main.ProcessRun
 import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnEvent}
 
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
-class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight,
-                     val onEvent : OnEvent) extends ProcessRun {
+class ProcessRunImpl(val runContext : ProcessRunContext) extends ProcessRun {
 
   def process(runData: RunData): RunResult = {
-    onTestLoopAndLeftBeforeRight.startRun(runData.loopAndRunId.loopId,runData.loopAndRunId.runId);
+    runContext.onTestLoopAndLeftBeforeRight.startRun(runData.loopAndRunId.loopId,runData.loopAndRunId.runId);
 
     for(elem <-  runData.interLeaveElements) {
-      elem.addToOnEvent(onEvent);
+      elem.addToOnEvent(runContext.onEvent);
     }
 
     // calculate the stacktrace map
@@ -43,7 +42,7 @@ class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBefo
     }
     
     // calculate the partial order
-    val partialOrderContainer = new PartialOrderContainer(onTestLoopAndLeftBeforeRight);
+    val partialOrderContainer = new PartialOrderContainer(runContext.onTestLoopAndLeftBeforeRight);
     val buildPartialOrderContext = new BuildPartialOrderContextImpl(partialOrderContainer,lastThreadPositionMap);
     for (syncActionElement <- runData.interLeaveElements) {
       syncActionElement.addToPartialOrderBuilder(buildPartialOrderContext);
@@ -53,7 +52,7 @@ class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBefo
     val partialOrder = new PartialOrderImpl(partialOrderContainer);
     val nonVolatileResult = new ArrayBuffer[GroupNonVolatileMemoryAccessElementForResult]();
     for (nonVolatileElement <- runData.nonVolatileElements) {
-      nonVolatileResult.append(nonVolatileElement.sort(partialOrder));
+      nonVolatileResult.append(nonVolatileElement.sort(partialOrder,runContext.showAllMemoryAccess));
     }
 
     val processContext = new ProcessContext();
@@ -63,7 +62,7 @@ class ProcessRunImpl(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBefo
     }
 
 
-    new RunResultImpl(runData.loopAndRunId, nonVolatileResult.toList, runData.controlEvents,
+    new RunResult(runData.loopAndRunId, nonVolatileResult.toList, runData.controlEvents,
       runData.interLeaveElements,processContext.warningList.toSet,processContext.isFailure);
   }
 }

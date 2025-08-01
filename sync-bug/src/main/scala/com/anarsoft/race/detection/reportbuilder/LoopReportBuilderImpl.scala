@@ -2,7 +2,8 @@ package com.anarsoft.race.detection.reportbuilder
 
 
 import com.anarsoft.race.detection.loopAndRunData.RunResult
-import com.anarsoft.race.detection.process.main.{LoopReportBuilder, RunCountAndResult, UILoopsAndStacktraceLeafsBuilder}
+import com.anarsoft.race.detection.loopResult.LoopResult
+import com.anarsoft.race.detection.process.main.{LoopReportBuilder, UILoopsAndStacktraceLeafsBuilder}
 import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl.toTestResult
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.vmlens.report.ResultForVerify
@@ -16,9 +17,9 @@ import scala.collection.mutable.ArrayBuffer
 
 class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuilder {
 
-  private val runCountAndResultList = new ArrayBuffer[RunCountAndResult]();
+  private val runCountAndResultList = new ArrayBuffer[LoopResult]();
 
-  override def addRunResult(runResult: RunCountAndResult): Unit = {
+  override def addRunResult(runResult: LoopResult): Unit = {
     runCountAndResultList.append(runResult)
   }
 
@@ -27,8 +28,8 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
     val  resultForVerify = new ResultForVerify();
 
     // addVolatileAccessEvents the loops to the report ordertree
-    for (loopAndRun <- runCountAndResultList) {
-      val runResult = loopAndRun.runResult;
+    for (runResult <- runCountAndResultList) {
+ 
       val run = new util.LinkedList[RunElement]()
 
       for (eventForReport <- runResult) {
@@ -47,7 +48,7 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
       
       
       reportBuilder.addLoopAndRun(new TestLoop(runResult.loopId, toTestResult(runResult),
-        loopAndRun.count + 1), run);
+        runResult.count + 1), run);
     }
 
     // addVolatileAccessEvents the stacktrace leafs to the ordertree
@@ -94,7 +95,7 @@ class LoopReportBuilderImpl(reportBuilder: ReportBuilder) extends LoopReportBuil
 
 object LoopReportBuilderImpl {
 
-  def toTestResult(runResult : RunResult) : TestResult =  {
+  def toTestResult(runResult : LoopResult) : TestResult =  {
     val result : TestResultLabel = if (runResult.isFailure && runResult.dataRaceCount > 0) {
       TestResultLabel.FailureAndDataRace
     } else if (runResult.isFailure) {

@@ -1,13 +1,12 @@
 package com.vmlens;
 
 import com.anarsoft.race.detection.main.ProcessEvents;
-import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp;
-import com.vmlens.report.assertion.OnEventNoOp;
+import com.anarsoft.race.detection.process.run.ProcessRunContextBuilder;
 import picocli.CommandLine;
 
 import java.io.File;
 
-import static com.vmlens.setup.SetupAgent.*;
+import static com.vmlens.setup.SetupAgent.eventDir;
 
 @CommandLine.Command(name = "report", description = "Creates the report.")
 public class Report implements Runnable {
@@ -22,7 +21,7 @@ public class Report implements Runnable {
 
         new ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
-                new OnDescriptionAndLeftBeforeRightNoOp(), new OnEventNoOp()).process();
+                new ProcessRunContextBuilder().build()).process();
 
         System.out.println("Report written to: " + reportDirectory.getAbsolutePath());
     }

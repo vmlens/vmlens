@@ -10,7 +10,10 @@ public class UIRunElementWithStacktraceLeaf {
         this.stacktraceLeaf = stacktraceLeaf;
     }
 
-    public UIRunElement runElement() {
+    public UIRunElement createRunElement() {
+        if (stacktraceLeaf.reportLink() != null) {
+            runElement.setLink(stacktraceLeaf().reportLink());
+        }
         return runElement;
     }
 

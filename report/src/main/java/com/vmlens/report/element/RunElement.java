@@ -20,6 +20,10 @@ public class RunElement {
         this.inMethodId = inMethodId;
     }
 
+    public int runId() {
+        return loopRunAndThreadIndex.runId();
+    }
+
     public LoopRunAndThreadIndex loopRunAndThreadIndex() {
         return loopRunAndThreadIndex;
     }

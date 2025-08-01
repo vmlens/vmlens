@@ -20,10 +20,9 @@ class GroupNonVolatileElementImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT]
     new SetStacktraceNodeInEvent().process(eventArray, threadIdToStacktraceNodeArray);
   }
 
-  def sort(partialOrder: PartialOrder): GroupNonVolatileMemoryAccessElementForResult = {
-    val sorted = new SortNonVolatileMemoryAccess[EVENT]().sort(eventArray, partialOrder);
+  def sort(partialOrder: PartialOrder, showAllMemoryAccess : Boolean): GroupNonVolatileMemoryAccessElementForResult = {
+    val sorted = new SortNonVolatileMemoryAccess[EVENT]().sort(eventArray, partialOrder,showAllMemoryAccess);
     GroupNonVolatileMemoryAccessElementForResult(sorted);
   }
-
-
+  
 }

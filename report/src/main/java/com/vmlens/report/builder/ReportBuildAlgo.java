@@ -3,6 +3,7 @@ package com.vmlens.report.builder;
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.element.RunElement;
 import com.vmlens.report.element.StacktraceElement;
+import com.vmlens.report.runelementtype.NonVolatileAccess;
 import com.vmlens.report.uielement.*;
 
 import java.util.*;
@@ -37,6 +38,8 @@ public class ReportBuildAlgo {
 
             List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceLeafs = new LinkedList<>();
 
+            Integer currentRun = null;
+
             for (RunElement runElement : loopAndRun.runElements()) {
                 String firstStacktraceMethodName = null;
 
@@ -55,8 +58,12 @@ public class ReportBuildAlgo {
                     firstStacktraceMethodName = descriptionContext.methodName(runElement.inMethodId());
                 }
 
-                UIRunElement uiRunElement = new UIRunElement(runElement.operationTextFactory().asString(descriptionContext),
-                        firstStacktraceMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex()));
+                String operation = runElement.operationTextFactory().asString(descriptionContext);
+                UIRunElement uiRunElement = new UIRunElement(runElement.runPosition(),
+                        operation,
+                        firstStacktraceMethodName,
+                        descriptionContext.threadName(runElement.loopRunAndThreadIndex()),
+                        false);
 
                 UIStacktraceLeaf uiStacktraceLeaf;
                 if (stacktraceElements.size() > 0) {
@@ -69,8 +76,19 @@ public class ReportBuildAlgo {
                     uiStacktraceLeaf = EMPTY_STACKTRACE_LEAF;
                 }
 
+                if(currentRun == null) {
+                    currentRun = runElement.runId();
+                } else {
+                    if(currentRun != runElement.runId()) {
+                        UIRunElementWithStacktraceLeaf uiRunElementWithStacktraceLeaf =
+                                new UIRunElementWithStacktraceLeaf(UIRunElement.createNewRun(runElement.runId()), EMPTY_STACKTRACE_LEAF);
+                        uiRunElementWithStacktraceLeafs.add(uiRunElementWithStacktraceLeaf);
+                        currentRun = runElement.runId();
+                    }
+                }
+
                 UIRunElementWithStacktraceLeaf uiRunElementWithStacktraceLeaf =
-                        new UIRunElementWithStacktraceLeaf(uiRunElement, uiStacktraceLeaf);
+                            new UIRunElementWithStacktraceLeaf(uiRunElement, uiStacktraceLeaf);
                 uiRunElementWithStacktraceLeafs.add(uiRunElementWithStacktraceLeaf);
             }
 

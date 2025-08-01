@@ -10,7 +10,7 @@ trait GroupNonVolatileElement {
 
   def setStacktraceNode(threadIdToStacktraceNodeArray: Map[Int, Array[StacktraceNode]]): Unit;
 
-  def sort(partialOrder: PartialOrder): GroupNonVolatileMemoryAccessElementForResult;
+  def sort(partialOrder: PartialOrder,showAllMemoryAccess : Boolean): GroupNonVolatileMemoryAccessElementForResult;
 
 
   

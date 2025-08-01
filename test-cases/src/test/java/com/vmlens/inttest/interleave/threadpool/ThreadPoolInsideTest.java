@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 
 public class ThreadPoolInsideTest {
 
-    private  volatile int j = 0;
+    private volatile int j = 0;
 
     public class UpdateField implements Runnable {
 
@@ -19,7 +19,6 @@ public class ThreadPoolInsideTest {
         }
     }
 
-    @Ignore
     @Test
     public void testUpdate() throws InterruptedException {
         AllInterleavings testUpdate = new AllInterleavings("threadPoolInsideTest");
