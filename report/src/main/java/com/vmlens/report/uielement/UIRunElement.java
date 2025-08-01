@@ -2,6 +2,7 @@ package com.vmlens.report.uielement;
 
 public class UIRunElement {
 
+    private final int positionInRun;
     private final String operation;
     private final String method;
     private final String threadName;
@@ -11,10 +12,11 @@ public class UIRunElement {
     private String link;
 
     public static UIRunElement createNewRun(int runId) {
-        return new UIRunElement("New Run", "" , "" , true);
+        return new UIRunElement(-1,"New Run", "" , "" , true);
     }
 
-    public UIRunElement(String operation, String method, String threadName, boolean isSeparator) {
+    public UIRunElement(int positionInRun, String operation, String method, String threadName, boolean isSeparator) {
+        this.positionInRun = positionInRun;
         this.operation = operation;
         this.method = method;
         this.threadName = threadName;
@@ -48,5 +50,9 @@ public class UIRunElement {
 
     public boolean isSeparator() {
         return isSeparator;
+    }
+
+    public int positionInRun() {
+        return positionInRun;
     }
 }

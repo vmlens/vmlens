@@ -23,6 +23,11 @@ public class VMLens {
         return this;
     }
 
+    public VMLens withTxtFormat() {
+        processRunContextBuilder.withTxtFormat();
+        return this;
+    }
+
     public void process(File buildDir) {
         File agentDirectory = new File(buildDir, SetupAgent.AGENT_DIRECTORY);
         File reportDirectory = new File(buildDir, SetupAgent.REPORT_DIRECTORY);

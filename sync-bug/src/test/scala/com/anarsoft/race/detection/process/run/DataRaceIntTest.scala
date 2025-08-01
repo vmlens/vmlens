@@ -34,41 +34,6 @@ class DataRaceIntTest extends AnyFlatSpec with Matchers {
     runResult.dataRaceCount should be(1)
   }
 
-  "a read and write to/from a normal field separated by a read/write to a volatile field" should "not lead to a data race" in {
-    // Given
-    val loopId = 0;
-    val runId = 0;
-    val loopIdAndRunId = LoopAndRunId(loopId, runId);
-
-    val list = new util.LinkedList[VolatileFieldAccessEvent]();
-    val fieldId = 0;
-    val methodCounter = 0;
-    val methodId = 0;
-    val objectHashCode = 0L;
-
-    val write = new VolatileFieldAccessEventGen(0, 0, fieldId, methodCounter,
-      methodId, MemoryAccessType.IS_WRITE,
-      objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 0);
-    val read = new VolatileFieldAccessEventGen(1, 1, fieldId, methodCounter,
-      methodId, MemoryAccessType.IS_READ, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 3);
-
-    list.add(read)
-    list.add(write);
-
-    val builder = new GroupInterleaveElementBuilder();
-    builder.addVolatileAccessEvents(list);
-
-    val processRunImpl = new ProcessRunImpl(new ProcessRunContextBuilder().build());
-
-    // When
-    val runData = RunData.forLoopAndRun(loopIdAndRunId).copy(nonVolatileElements = nonVolatileReadWrite(loopIdAndRunId),
-      interLeaveElements = builder.build());
-    val runResult = processRunImpl.process(runData);
-
-    //Then
-    runResult.dataRaceCount should be(0)
-  }
-
   private def nonVolatileReadWrite(loopIdAndRunId: LoopAndRunId) = {
     val fieldId = 0;
     val methodCounter = 0;

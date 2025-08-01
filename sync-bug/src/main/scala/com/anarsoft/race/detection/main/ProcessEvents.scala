@@ -8,10 +8,10 @@ import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl
 import com.vmlens.report.ResultForVerify
 import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp, OnEvent, OnEventNoOp}
 import com.vmlens.report.builder.ReportBuilder
-import com.vmlens.report.createreport.CreateReport
+import com.vmlens.report.createreport.{CreateHtmlReport, CreateTxtReport}
 import com.vmlens.setup.SetupAgent.reCreate
 
-import java.io.{File, PrintStream}
+import java.io.PrintStream
 import java.nio.file.{Path, Paths}
 
 class ProcessEvents(val eventDir: Path,
@@ -37,7 +37,11 @@ class ProcessEvents(val eventDir: Path,
       processRunContext.onTestLoopAndLeftBeforeRight);
     val reportBuilder = mainProcess.process();
 
-    val createReports = new CreateReport(reportDir);
+    val createReports = if(processRunContext.txtFormat) {
+      new CreateTxtReport(reportDir)
+    } else {
+      new CreateHtmlReport(reportDir)
+    }
     createReports.createReport(reportBuilder.build())
 
     reportBuilder.buildResultForVerify();
@@ -51,6 +55,7 @@ object ProcessEvents {
     new ProcessEvents(dir, reportDir, new ProcessRunContextBuilder().
       withShowAllRuns().
       withShowAllMemoryAccess().
+      withTxtFormat().
       build()).
       process();
 

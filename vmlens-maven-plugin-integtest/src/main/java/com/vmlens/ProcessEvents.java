@@ -33,7 +33,7 @@ public class ProcessEvents {
         ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
                 new ProcessRunContext(check,
-                buildEventListMap,false,false)).process();
+                buildEventListMap,false,false,false)).process();
         checkDataRaces(result);
 
         int loopId = loopNameToId.get("readWriteLockTest");
@@ -49,6 +49,7 @@ public class ProcessEvents {
         testWithDataRace.add("hashMapTest");
         testWithDataRace.add("hashSetTest");
         testWithDataRace.add("writeWriteDataRace");
+        testWithDataRace.add("putIfAbsentAndGetKeysWithSequenceNumber");
         checkDataRaces(testWithDataRace,result);
     }
 

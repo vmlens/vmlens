@@ -6,8 +6,8 @@ class ProcessRunContextBuilder {
 
   private var showAllMemoryAccess = false
   private var showAllRuns: Boolean = false;
+  private var txtFormat: Boolean = false;
   private var onDescriptionAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight = new OnDescriptionAndLeftBeforeRightNoOp();
-
 
   def withShowAllMemoryAccess(): ProcessRunContextBuilder = {
     showAllMemoryAccess = true;
@@ -16,6 +16,11 @@ class ProcessRunContextBuilder {
   
   def withShowAllRuns() : ProcessRunContextBuilder = {
     showAllRuns = true;
+    this;
+  }
+
+  def withTxtFormat(): ProcessRunContextBuilder = {
+    txtFormat = true;
     this;
   }
   
@@ -27,6 +32,7 @@ class ProcessRunContextBuilder {
   def build() = new ProcessRunContext(onDescriptionAndLeftBeforeRight, 
     new OnEventNoOp(),
     showAllMemoryAccess,
-    showAllRuns);
+    showAllRuns,
+    txtFormat);
   
 }
