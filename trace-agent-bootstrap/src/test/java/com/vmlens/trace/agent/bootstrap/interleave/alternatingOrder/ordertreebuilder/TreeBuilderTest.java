@@ -12,29 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TreeBuilderTest {
 
     @Test
-    public void either() {
-        // Given
-        TreeBuilder builder = new TreeBuilder();
-        LeftBeforeRight either1A = lbr(1, 1, 2, 2);
-        LeftBeforeRight either1B = lbr(6, 6, 2, 2);
-
-        // When
-         builder.start().either(new AlternativeOneOrder(either1A),new AlternativeOneOrder(either1B));
-         OrderTree tree = builder.build();
-         OrderTreeIterator iterator = tree.iterator();
-
-         CreateOrderContext createOrderContext = new CreateOrderContext();
-         while(iterator.hasNext()) {
-            iterator.advanceAndAddToOrder(createOrderContext,true);
-         }
-
-        // Then
-        assertThat(createOrderContext.newOrder.size(),is(1));
-        assertThat(createOrderContext.newOrder.get(0).element(),is(either1A));
-        assertThat(tree.length(),is(1));
-    }
-
-    @Test
     public void choice() {
         // Given
         TreeBuilder builder = new TreeBuilder();

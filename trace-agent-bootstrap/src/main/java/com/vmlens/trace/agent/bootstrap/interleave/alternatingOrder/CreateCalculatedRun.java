@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 
 /**
  * hides the algorithm to calculate a run out of an order.
@@ -16,16 +15,17 @@ import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadI
  * I can go forward till I have found a constraint, e.g. the maximum so that still
  * pos &lt; right.
  * Than I can remove all constraints with left =&lt; pos
- * ToDo test, really equals?
  */
 public class CreateCalculatedRun {
-    private final LeftBeforeRight[] currentOrder;
-    private final ThreadIndexToElementList<Position> actualRun;
+    private final OrderArrayList orderArrayList;
+    private final ElementsPerThreadList<Position> actualRun;
 
-    public CreateCalculatedRun(LeftBeforeRight[] currentOrder,
-                               ThreadIndexToElementList<Position> actualRun) {
-        this.currentOrder = currentOrder;
-        this.actualRun = actualRun.safeClone();
+
+
+    public CreateCalculatedRun(OrderArrayList orderArrayList,
+                               ElementsPerThreadList<Position> actualRun) {
+        this.orderArrayList = orderArrayList;
+        this.actualRun = actualRun;
     }
 
     public CalculatedRun create() {
@@ -33,10 +33,10 @@ public class CreateCalculatedRun {
         int currentPosInArray = 0;
         while (!actualRun.isEmpty()) {
             boolean somethingFound = false;
-            for (int i = 0; i <= actualRun.maxThreadIndex(); i++) {
-                while (!actualRun.isEmptyAtIndex(i) && !constraintFound(actualRun.getAtIndex(i))) {
-                    removeConstraints(actualRun.getAtIndex(i));
-                    calculatedRunElementArray[currentPosInArray] = actualRun.getAndRemoveAtIndex(i);
+            for (ElementsPerThread<Position>   elementsPerThread : actualRun.threadArray()) {
+                while (!elementsPerThread.isEmpty() && !constraintFound(elementsPerThread.first())) {
+                    removeConstraints(elementsPerThread.first());
+                    calculatedRunElementArray[currentPosInArray] = elementsPerThread.removeFirst();
                     currentPosInArray++;
                     somethingFound = true;
                 }
@@ -48,7 +48,8 @@ public class CreateCalculatedRun {
         return new CalculatedRun(calculatedRunElementArray);
     }
     private boolean constraintFound(Position position) {
-        for(LeftBeforeRight constraint : currentOrder) {
+        for(int i = 0; i < orderArrayList.length(); i++) {
+            LeftBeforeRight constraint = orderArrayList.get(i);
             if(constraint != null) {
                 if(position.greaterOrEquals(constraint.right)) {
                     return true;
@@ -58,10 +59,10 @@ public class CreateCalculatedRun {
         return false;
     }
     private void removeConstraints(Position position) {
-        for(int i = 0; i < currentOrder.length; i++) {
-            if(currentOrder[i] != null) {
-                if (position.greaterOrEquals(currentOrder[i].left)) {
-                    currentOrder[i] = null;
+        for(int i = 0; i < orderArrayList.length(); i++) {
+            if(orderArrayList.get(i) != null) {
+                if (position.greaterOrEquals(orderArrayList.get(i).left)) {
+                    orderArrayList.setToNull(i);
                 }
             }
         }

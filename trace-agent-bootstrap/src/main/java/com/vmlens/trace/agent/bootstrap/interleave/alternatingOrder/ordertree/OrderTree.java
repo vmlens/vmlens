@@ -23,7 +23,7 @@ public class OrderTree {
     }
 
     public OrderTreeIterator iterator() {
-        return new OrderTreeIterator(start);
+        return new OrderTreeIteratorImpl(start);
     }
 
     public int length() {
