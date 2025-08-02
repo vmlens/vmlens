@@ -1,6 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection;
 
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementsPerThread;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementsPerThreadList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -24,6 +26,16 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
 
     public ThreadIndexToElementList() {
         this(new TLinkedList<>(), 0);
+    }
+
+    public ElementsPerThreadList<ELEMENT> create(Class<ELEMENT> clazz) {
+        ElementsPerThread<ELEMENT>[] threadArray = new ElementsPerThread[threadList.size()];
+        int index = 0;
+        for(TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> element :   threadList) {
+            threadArray[index] = create(clazz,element.element());
+            index++;
+        }
+        return new ElementsPerThreadList<>(threadArray,elementCount);
     }
 
     public ThreadIndexToElementList<ELEMENT> safeClone() {
@@ -137,6 +149,11 @@ public class ThreadIndexToElementList<ELEMENT extends WithThreadIndex> implement
 
     public Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> iteratorStartingAt(int threadIndex) {
         return threadList.listIterator(threadIndex);
+    }
+
+    private ElementsPerThread<ELEMENT> create(Class<ELEMENT> clazz,TLinkedList<TLinkableWrapper<ELEMENT>> list) {
+        ELEMENT[] array = TLinkableWrapper.toArray(clazz, list);
+        return new ElementsPerThread<>(array);
     }
 
 }
