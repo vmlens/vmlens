@@ -14,9 +14,9 @@ import java.util.Iterator;
  */
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
-    private final ThreadIndexToElementList<Position> actualRun;
-    private final LeftBeforeRight[] fixedOrderArray;
-    private final OrderTree orderTree;
+    private ThreadIndexToElementList<Position> actualRun;
+    private LeftBeforeRight[] fixedOrderArray;
+    private OrderTree orderTree;
 
     public AlternatingOrderContainer(ThreadIndexToElementList<Position> actualRun,
                                      LeftBeforeRight[] fixedOrderArray,
@@ -39,8 +39,8 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
     private class AlternatingOrderContainerIterator implements
             Iterator<CalculatedRun> {
 
-        private final PermutationIterator permutationIterator;
-        private final CalculatedRunFactory calculatedRunFactory;
+        private PermutationIterator permutationIterator;
+        private CalculatedRunFactory calculatedRunFactory;
 
         public AlternatingOrderContainerIterator() {
             this.permutationIterator = new PermutationIterator(orderTree.length());
@@ -50,7 +50,20 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
         @Override
         public boolean hasNext() {
-            return permutationIterator.hasNext();
+            if(permutationIterator == null) {
+                return false;
+            }
+
+            boolean temp =  permutationIterator.hasNext();
+            if(!temp) {
+                permutationIterator = null;
+                calculatedRunFactory = null;
+                actualRun = null;
+                fixedOrderArray = null;
+                orderTree = null;
+            }
+
+            return temp;
         }
 
         /**
