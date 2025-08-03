@@ -2,6 +2,7 @@ package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryDoNotTrace;
+import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
@@ -26,16 +27,16 @@ public abstract class FactoryCollectionPreAnalyzedOrAll  implements FactoryColle
     }
 
     @Override
-    public final TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(NameAndDescriptor nameAndDescriptor,
-                                                                                          int access,
-                                                                                          int methodId,
-                                                                                          MethodRepositoryForTransform methodRepositoryForTransform) {
-        if(doNotTraceIn(nameAndDescriptor)) {
+    public final TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context) {
+        if(doNotTraceIn(context.nameAndDescriptor())) {
             TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-            factoryForDoNotTrace.addToTransform(nameAndDescriptor, result);
+            factoryForDoNotTrace.addToTransform(context.nameAndDescriptor(), result);
             return result;
         }
-        return getTransformAndSetStrategyAfterFilter(nameAndDescriptor,access,methodId,methodRepositoryForTransform);
+        return getTransformAndSetStrategyAfterFilter(context.nameAndDescriptor(),
+                context.access(),
+                context.methodId(),
+                context.methodRepositoryForTransform());
     }
 
     protected abstract TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyzeAfterFilter

@@ -2,12 +2,11 @@ package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryDoNotTrace;
+import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
-import com.vmlens.nottraced.agent.classtransformer.methodvisitormethodenterexit.TryCatchBlockCounter;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorthreadpool.ThreadPoolJoin;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorthreadpool.ThreadPoolThreadStart;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -37,19 +36,16 @@ public class FactoryCollectionThreadPool implements FactoryCollection {
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(NameAndDescriptor nameAndDescriptor,
-                                                                                          int access,
-                                                                                          int methodId,
-                                                                                          MethodRepositoryForTransform methodRepositoryForTransform) {
-       if(nameAndDescriptor.equals(startThreadMethod)) {
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context) {
+       if(context.nameAndDescriptor().equals(startThreadMethod)) {
            return TLinkableWrapper.singleton(ThreadPoolThreadStart.factory());
        }
 
-       if(shutdownMethod.contains(nameAndDescriptor)) {
+       if(shutdownMethod.contains(context.nameAndDescriptor())) {
            return TLinkableWrapper.singleton(ThreadPoolJoin.factory());
        }
        TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-       factoryForBoth.addToTransform(nameAndDescriptor, result);
+       factoryForBoth.addToTransform(context.nameAndDescriptor(), result);
        return result;
     }
 

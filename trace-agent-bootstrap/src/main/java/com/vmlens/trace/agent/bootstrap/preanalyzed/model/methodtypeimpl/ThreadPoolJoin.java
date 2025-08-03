@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodTypeContext;
 
 
 public class ThreadPoolJoin extends AbstractMethodType {
@@ -13,7 +13,7 @@ public class ThreadPoolJoin extends AbstractMethodType {
     }
 
     @Override
-    public void add(String name, String desc, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodBuilder.addThreadPoolJoin(name,desc);
+    public void add(MethodTypeContext context) {
+        context.methodBuilder().addThreadPoolJoin(context.name(),context.desc());
     }
 }

@@ -29,8 +29,9 @@ public class PreAnalyzedMethod {
         return new PreAnalyzedMethod(name, desc, methodType);
     }
 
-    public void add(FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodType.add(name, desc, methodBuilder);
+    public void add(String className, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
+        MethodTypeContext context = new MethodTypeContext(className,name, desc, methodBuilder);
+        methodType.add(context);
     }
 
     public void serialize(DataOutputStream out) throws IOException {

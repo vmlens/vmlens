@@ -2,6 +2,7 @@ package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryDoNotTrace;
+import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
@@ -28,13 +29,10 @@ public class FactoryCollectionDoNotTrace implements FactoryCollection {
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(NameAndDescriptor nameAndDescriptor,
-                                                                                          int access,
-                                                                                          int methodId,
-                                                                                          MethodRepositoryForTransform methodRepositoryForTransform) {
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context) {
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-        if(doNotTraceInMethod(nameAndDescriptor,access)) {
-            factoryForBoth.addToTransform(nameAndDescriptor, result);
+        if(doNotTraceInMethod(context.nameAndDescriptor(),context.access())) {
+            factoryForBoth.addToTransform(context.nameAndDescriptor(), result);
         }
         return result;
     }

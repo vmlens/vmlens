@@ -16,7 +16,7 @@ public class ClassTypeThreadPool extends AbstractClassType {
     public void addToBuilder(String name, PreAnalyzedMethod[] methods, ClassTransformerListBuilder classBuilder) {
         FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder = classBuilder.createTraceNoMethodCall();
         for(PreAnalyzedMethod m : methods) {
-            m.add(methodBuilder);
+            m.add(name,methodBuilder);
         }
         classBuilder.addThreadPool(name,methodBuilder);
     }

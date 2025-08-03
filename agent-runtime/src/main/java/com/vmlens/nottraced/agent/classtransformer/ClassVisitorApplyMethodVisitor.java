@@ -1,6 +1,7 @@
 package com.vmlens.nottraced.agent.classtransformer;
 
 import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapter;
+import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.FactoryContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
@@ -53,8 +54,9 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
         int inMethodId = methodCallIdMap.asInt(new MethodCallId(className, name, descriptor));
 
         NameAndDescriptor nameAndDescriptor = new NameAndDescriptor(name, descriptor);
+        FactoryCollectionAdapterContext adapterContext = new FactoryCollectionAdapterContext(className,nameAndDescriptor, access, inMethodId, methodCallIdMap);
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> factoryList =
-                factoryCollectionAdapter.get(nameAndDescriptor, access, inMethodId, methodCallIdMap);
+                factoryCollectionAdapter.get(adapterContext);
 
         FactoryContext context = new FactoryContext();
         context.setMethodId(inMethodId);

@@ -39,6 +39,7 @@ public class TestCaseCollectionFactory {
         nameToTestCase.put("writeWriteDataRace",new EmptyIntTestFactory().create());
         nameToTestCase.put("putIfAbsentAndGetKeysWithSequenceNumber",new EmptyIntTestFactory().create());
         nameToTestCase.put("hiero.testAdd",new EmptyIntTestFactory().create());
+        nameToTestCase.put("childWithProtectedFieldTest",new EmptyIntTestFactory().create());
 
         return new TestCaseCollection(nameToTestCase);
     }

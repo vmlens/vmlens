@@ -3,6 +3,7 @@ package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryPreAnalyzed;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodEnterStrategyWithoutParam;
+import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
@@ -29,16 +30,14 @@ public class FactoryCollectionNotYetImplemented implements FactoryCollection {
     }
 
     @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(NameAndDescriptor nameAndDescriptor,
-                                                                                          int access,
-                                                                                          int methodId,
-                                                                                          MethodRepositoryForTransform methodRepositoryForTransform) {
-        if ((access & ACC_PUBLIC) != ACC_PUBLIC) {
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context) {
+        if ((context.access() & ACC_PUBLIC) != ACC_PUBLIC) {
             return TLinkableWrapper.emptyList();
         }
-        methodRepositoryForTransform.setStrategyPreAnalyzed(methodId, new NotYetImplementedStrategy(nameAndDescriptor.name()));
+        context.methodRepositoryForTransform().setStrategyPreAnalyzed(context.methodId(),
+                new NotYetImplementedStrategy(context.className(), context.nameAndDescriptor().name()));
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-        factoryForBoth.addToTransform(nameAndDescriptor, result);
+        factoryForBoth.addToTransform(context.nameAndDescriptor(), result);
         return result;
     }
 
