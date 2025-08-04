@@ -1,10 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.fieldrepository;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class FieldRepositoryImplTest {
 
@@ -46,6 +46,19 @@ public class FieldRepositoryImplTest {
         use(fieldRepository);
     }
 
+    @Test
+    public void firstGetIdThanSetStrategy() {
+        // Given
+        FieldRepositoryImpl fieldRepository = new FieldRepositoryImpl();
+
+        // When
+        int isAsInt = fieldRepository.asInt(normalField);
+        int idSetStrategy = fieldRepository.getIdAndSetFieldIsNormal(normalField);
+
+        // Then
+        assertThat(isAsInt,is(idSetStrategy));
+    }
+
     private void analyze(FieldRepositoryImpl fieldRepository) {
         fieldRepository.getIdAndSetFieldIsVolatile(volatileField);
         fieldRepository.getIdAndSetFieldIsVolatile(staticVolatileField);
@@ -61,10 +74,10 @@ public class FieldRepositoryImplTest {
     }
 
     private void use(FieldRepositoryImpl fieldRepository) {
-        assertThat(fieldRepository.get(volatileFieldId), Matchers.is(FieldRepositoryImpl.VOLATILE_FIELD_STRATEGY));
-        assertThat(fieldRepository.get(staticVolatileFieldId), Matchers.is(FieldRepositoryImpl.VOLATILE_FIELD_STRATEGY));
-        assertThat(fieldRepository.get(normalFieldId), Matchers.is(FieldRepositoryImpl.NORMAL_FIELD_STRATEGY));
-        assertThat(fieldRepository.get(staticFieldId), Matchers.is(FieldRepositoryImpl.NORMAL_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(volatileFieldId), is(FieldRepositoryImpl.VOLATILE_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(staticVolatileFieldId), is(FieldRepositoryImpl.VOLATILE_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(normalFieldId), is(FieldRepositoryImpl.NORMAL_FIELD_STRATEGY));
+        assertThat(fieldRepository.get(staticFieldId), is(FieldRepositoryImpl.NORMAL_FIELD_STRATEGY));
     }
 
 }

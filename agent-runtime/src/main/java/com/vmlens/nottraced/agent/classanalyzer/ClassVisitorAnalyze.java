@@ -17,7 +17,7 @@ import org.objectweb.asm.MethodVisitor;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.toArray;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
-import static org.objectweb.asm.Opcodes.ACC_STATIC;
+
 
 public class ClassVisitorAnalyze extends ClassVisitor {
 
@@ -84,13 +84,5 @@ public class ClassVisitorAnalyze extends ClassVisitor {
                 toArray(MethodDescription.class, methodDescriptionList),
                 toArray(FieldInClassDescription.class, fieldDescriptionList), superClass, interfaces);
         writeClassDescription.write(classDescription);
-
     }
-
-    private boolean isStatic(int access) {
-        return (access & ACC_STATIC) == ACC_STATIC;
-    }
-
-
-
 }

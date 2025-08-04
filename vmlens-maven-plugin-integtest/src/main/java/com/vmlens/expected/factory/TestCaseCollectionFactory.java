@@ -40,6 +40,7 @@ public class TestCaseCollectionFactory {
         nameToTestCase.put("putIfAbsentAndGetKeysWithSequenceNumber",new EmptyIntTestFactory().create());
         nameToTestCase.put("hiero.testAdd",new EmptyIntTestFactory().create());
         nameToTestCase.put("childWithProtectedFieldTest",new EmptyIntTestFactory().create());
+        nameToTestCase.put("innerChild",new EmptyIntTestFactory().create());
 
         return new TestCaseCollection(nameToTestCase);
     }

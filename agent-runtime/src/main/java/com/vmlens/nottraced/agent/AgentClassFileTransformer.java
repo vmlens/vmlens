@@ -67,9 +67,10 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
-               /* if(name.endsWith("MethodType")) {
+           /*     if(name.contains("nonvolatile/innerclass")) {
                     logTransformedClass(name, transformed);
-                } */
+                }
+            */
                 return transformed;
             }
         } catch (Throwable e) {

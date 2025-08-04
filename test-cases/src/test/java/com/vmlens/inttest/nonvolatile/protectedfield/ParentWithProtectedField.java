@@ -1,4 +1,4 @@
-package com.vmlens.inttest.nonvolatile;
+package com.vmlens.inttest.nonvolatile.protectedfield;
 
 public class ParentWithProtectedField {
 
