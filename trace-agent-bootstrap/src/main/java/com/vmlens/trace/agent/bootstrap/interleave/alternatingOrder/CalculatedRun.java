@@ -16,6 +16,11 @@ public class CalculatedRun {
         return calculatedRunElementArray;
     }
 
+    public CalculatedRun copy() {
+        return new  CalculatedRun(Arrays.copyOf(calculatedRunElementArray,
+                calculatedRunElementArray.length));
+    }
+
     @Override
     public String toString() {
         return "CalculatedRun{" +

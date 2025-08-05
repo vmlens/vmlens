@@ -79,7 +79,8 @@ public class CreateCalculatedRunTest {
     }
 
     private CreateCalculatedRun create(LeftBeforeRight[] order,ThreadIndexToElementList<Position> actualRun) {
-        return new CreateCalculatedRun(new OrderArrayList(order),actualRun.create(Position.class));
+        Position[] calculatedRunElementArray = new Position[actualRun.elementCount()];
+        return new CreateCalculatedRun(new OrderArrayList(order),actualRun.create(Position.class),calculatedRunElementArray);
 
     }
 

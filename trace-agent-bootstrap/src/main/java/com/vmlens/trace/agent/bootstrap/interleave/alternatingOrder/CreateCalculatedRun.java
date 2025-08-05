@@ -19,17 +19,18 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 public class CreateCalculatedRun {
     private final OrderArrayList orderArrayList;
     private final ElementsPerThreadList<Position> actualRun;
-
+    private final Position[] calculatedRunElementArray;
 
 
     public CreateCalculatedRun(OrderArrayList orderArrayList,
-                               ElementsPerThreadList<Position> actualRun) {
+                               ElementsPerThreadList<Position> actualRun,
+                               Position[] calculatedRunElementArray) {
         this.orderArrayList = orderArrayList;
         this.actualRun = actualRun;
+        this.calculatedRunElementArray = calculatedRunElementArray;
     }
 
     public CalculatedRun create() {
-        Position[] calculatedRunElementArray = new Position[actualRun.elementCount()];
         int currentPosInArray = 0;
         while (!actualRun.isEmpty()) {
             boolean somethingFound = false;

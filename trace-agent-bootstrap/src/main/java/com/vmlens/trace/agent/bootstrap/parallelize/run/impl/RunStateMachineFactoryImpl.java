@@ -6,7 +6,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithCalculat
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachineFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.RunStateActive;
 
 public class RunStateMachineFactoryImpl implements RunStateMachineFactory {
 

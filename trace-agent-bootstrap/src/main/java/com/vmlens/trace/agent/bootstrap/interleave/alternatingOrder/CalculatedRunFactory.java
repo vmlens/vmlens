@@ -31,8 +31,8 @@ public class CalculatedRunFactory {
             position++;
         }
         permutationIterator.advance();
-
-        return new CreateCalculatedRun(orderArrayList, actualRun).create();
+        Position[] calculatedRunElementArray = new Position[actualRun.elementCount()];
+        return new CreateCalculatedRun(orderArrayList, actualRun,calculatedRunElementArray).create();
     }
 
 }
