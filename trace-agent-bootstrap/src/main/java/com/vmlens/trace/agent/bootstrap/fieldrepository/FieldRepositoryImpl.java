@@ -38,31 +38,23 @@ public class FieldRepositoryImpl implements FieldRepositoryForCallback, FieldRep
 
     @Override
     public synchronized int getIdAndSetFieldIsVolatile(FieldOwnerAndName fieldOwnerAndName) {
-        setStrategy(fieldOwnerAndName, VOLATILE_FIELD_STRATEGY);
-        return asInt(fieldOwnerAndName);
+        int temp =  asInt(fieldOwnerAndName);
+        idToStrategy.put(temp, VOLATILE_FIELD_STRATEGY);
+        return temp;
     }
 
     @Override
     public synchronized int getIdAndSetFieldIsNormal(FieldOwnerAndName fieldOwnerAndName) {
-        setStrategy(fieldOwnerAndName, NORMAL_FIELD_STRATEGY);
-        return asInt(fieldOwnerAndName);
+        int temp =  asInt(fieldOwnerAndName);
+        idToStrategy.put(temp, NORMAL_FIELD_STRATEGY);
+        return temp;
     }
 
     @Override
     public synchronized int getIdAndSetFieldIsFinal(FieldOwnerAndName fieldOwnerAndName) {
-        setStrategy(fieldOwnerAndName, FINAL_FIELD_STRATEGY);
-        return asInt(fieldOwnerAndName);
-    }
-
-    private void setStrategy(FieldOwnerAndName fieldId, FieldStrategy fieldStrategy) {
-        if (fieldIdIdToInt.contains(fieldId)) {
-            int id = fieldIdIdToInt.get(fieldId);
-            idToStrategy.put(id, fieldStrategy);
-        }
-        int temp = maxIndex;
-        maxIndex++;
-        fieldIdIdToInt.put(fieldId, temp);
-        idToStrategy.put(temp, fieldStrategy);
+        int temp =  asInt(fieldOwnerAndName);
+        idToStrategy.put(temp, FINAL_FIELD_STRATEGY);
+        return temp;
     }
 
 }

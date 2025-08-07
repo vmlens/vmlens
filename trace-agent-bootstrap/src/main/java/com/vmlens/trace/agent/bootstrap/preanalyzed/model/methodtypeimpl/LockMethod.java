@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 
 import com.vmlens.trace.agent.bootstrap.lock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.lock.LockTypes;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodTypeContext;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.LockEnterStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.LockExitStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.NewConditionStrategy;
@@ -28,7 +28,7 @@ public class LockMethod  extends AbstractMethodType  {
     }
 
     @Override
-    public void add(String name, String desc,FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodBuilder.addPreAnalyzedMethod(name,desc,strategyPreAnalyzed);
+    public void add(MethodTypeContext context) {
+        context.methodBuilder().addPreAnalyzedMethod(context.name(),context.desc(),strategyPreAnalyzed);
     }
 }

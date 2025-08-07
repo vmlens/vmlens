@@ -50,6 +50,9 @@ public class ProcessEvents {
         testWithDataRace.add("hashSetTest");
         testWithDataRace.add("writeWriteDataRace");
         testWithDataRace.add("putIfAbsentAndGetKeysWithSequenceNumber");
+        testWithDataRace.add("hiero.testAdd");
+        testWithDataRace.add("innerChild");
+       // testWithDataRace.add("childWithProtectedFieldTest");
         checkDataRaces(testWithDataRace,result);
     }
 

@@ -2,17 +2,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.CreateOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
-
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.toArray;
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 
 /**
@@ -21,9 +14,9 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
  */
 public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
-    private final ThreadIndexToElementList<Position> actualRun;
-    private final LeftBeforeRight[] fixedOrderArray;
-    private final OrderTree orderTree;
+    private ThreadIndexToElementList<Position> actualRun;
+    private LeftBeforeRight[] fixedOrderArray;
+    private OrderTree orderTree;
 
     public AlternatingOrderContainer(ThreadIndexToElementList<Position> actualRun,
                                      LeftBeforeRight[] fixedOrderArray,
@@ -46,42 +39,39 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
     private class AlternatingOrderContainerIterator implements
             Iterator<CalculatedRun> {
 
-        private final PermutationIterator permutationIterator;
+        private PermutationIterator permutationIterator;
+        private CalculatedRunFactory calculatedRunFactory;
 
         public AlternatingOrderContainerIterator() {
             this.permutationIterator = new PermutationIterator(orderTree.length());
+            this.calculatedRunFactory = new CalculatedRunFactory(fixedOrderArray,actualRun);
 
         }
 
         @Override
         public boolean hasNext() {
-            return permutationIterator.hasNext();
-        }
+            if(permutationIterator == null) {
+                return false;
+            }
 
+            boolean temp =  permutationIterator.hasNext();
+            if(!temp) {
+                permutationIterator = null;
+                calculatedRunFactory = null;
+                actualRun = null;
+                fixedOrderArray = null;
+                orderTree = null;
+            }
+
+            return temp;
+        }
 
         /**
          * can return null
          */
         @Override
         public CalculatedRun next() {
-            TLinkedList<TLinkableWrapper<LeftBeforeRight>> newOrder = new TLinkedList<>();
-            CreateOrderContext createOrderContext = new CreateOrderContext(newOrder);
-
-            OrderTreeIterator iter = orderTree.iterator();
-            int position = 0;
-            while(iter.hasNext()) {
-                iter.advanceAndAddToOrder(createOrderContext,permutationIterator.at(position));
-                position++;
-            }
-
-            for (int i = 0; i < fixedOrderArray.length; i++) {
-                newOrder.add(wrap(fixedOrderArray[i]));
-            }
-
-            permutationIterator.advance();
-
-            LeftBeforeRight[] orderArray = toArray(LeftBeforeRight.class, newOrder);
-            return  new CreateCalculatedRun(orderArray, actualRun).create();
+            return calculatedRunFactory.create(orderTree.iterator(),permutationIterator);
         }
 
     }

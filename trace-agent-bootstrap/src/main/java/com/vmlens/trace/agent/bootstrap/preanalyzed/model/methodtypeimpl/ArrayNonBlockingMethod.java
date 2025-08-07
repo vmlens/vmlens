@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodTypeContext;
 
 public class ArrayNonBlockingMethod  extends AbstractMethodType {
 
@@ -17,8 +17,8 @@ public class ArrayNonBlockingMethod  extends AbstractMethodType {
     }
 
     @Override
-    public void add(String name, String desc, FactoryCollectionPreAnalyzedFactoryBuilder methodBuilder) {
-        methodBuilder.addNonBlockingArrayMethod(name,desc,operation);
+    public void add(MethodTypeContext context) {
+        context.methodBuilder().addNonBlockingArrayMethod(context.name(),context.desc(),operation);
     }
     
 }

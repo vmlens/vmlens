@@ -7,16 +7,19 @@ import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 
 public class NotYetImplementedAction implements CallbackAction {
 
+    private final String className;
     private final String methodName;
     private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();
 
-    public NotYetImplementedAction(String methodName) {
+    public NotYetImplementedAction(String className,
+                                   String methodName) {
+        this.className = className;
         this.methodName = methodName;
     }
 
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
-        System.err.println("The method " + methodName + " can currently not be tested with vmlens.");
+        System.err.println("The method " + className+ "." + methodName + " can currently not be tested with vmlens.");
     }
 
 

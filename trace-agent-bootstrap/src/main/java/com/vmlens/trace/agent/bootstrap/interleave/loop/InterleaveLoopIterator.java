@@ -44,14 +44,15 @@ public class InterleaveLoopIterator implements Iterator<CalculatedRun> {
 
     private CalculatedRun nextElement() {
         CalculatedRun temp = currentIterator.next();
-        if( temp == null) {
+        if(temp == null) {
             return null;
         }
         if(alreadyExecuted.contains(temp)) {
             return null;
         }
-        alreadyExecuted.add(temp);
-        return temp;
+        CalculatedRun result = temp.copy();
+        alreadyExecuted.add(result);
+        return result;
     }
 
     @Override

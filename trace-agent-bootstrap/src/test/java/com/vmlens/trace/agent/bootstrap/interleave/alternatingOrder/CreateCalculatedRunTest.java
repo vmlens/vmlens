@@ -24,7 +24,7 @@ public class CreateCalculatedRunTest {
         ThreadIndexToElementList<Position> actualRun = new ThreadIndexToElementList<>();
         actualRun.add(pos(0, 0));
         actualRun.add(pos(1, 0));
-        CreateCalculatedRun createCalculatedRun = new CreateCalculatedRun(order, actualRun);
+        CreateCalculatedRun createCalculatedRun = create(order, actualRun);
 
         // When
         CalculatedRun calculatedRun = createCalculatedRun.create();
@@ -45,7 +45,7 @@ public class CreateCalculatedRunTest {
         actualRun.add(pos(1, 0));
         actualRun.add(pos(1, 1));
         actualRun.add(pos(1, 2));
-        CreateCalculatedRun createCalculatedRun = new CreateCalculatedRun(order, actualRun);
+        CreateCalculatedRun createCalculatedRun = create(order, actualRun);
 
         // When
         CalculatedRun calculatedRun = createCalculatedRun.create();
@@ -68,7 +68,7 @@ public class CreateCalculatedRunTest {
         actualRun.add(pos(1, 0));
         actualRun.add(pos(1, 1));
         actualRun.add(pos(2, 0));
-        CreateCalculatedRun createCalculatedRun = new CreateCalculatedRun(order, actualRun);
+        CreateCalculatedRun createCalculatedRun = create(order, actualRun);
 
         // When
         CalculatedRun calculatedRun = createCalculatedRun.create();
@@ -76,6 +76,11 @@ public class CreateCalculatedRunTest {
         // Then
         IntArray array = toIntArray(calculatedRun.calculatedRunElementArray());
         assertThat(array, is(expectedIndices));
+    }
+
+    private CreateCalculatedRun create(LeftBeforeRight[] order,ThreadIndexToElementList<Position> actualRun) {
+        Position[] calculatedRunElementArray = new Position[actualRun.elementCount()];
+        return new CreateCalculatedRun(new OrderArrayList(order),actualRun.create(Position.class),calculatedRunElementArray);
 
     }
 

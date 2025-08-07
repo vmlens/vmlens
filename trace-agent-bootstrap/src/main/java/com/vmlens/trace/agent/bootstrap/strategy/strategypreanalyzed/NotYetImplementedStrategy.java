@@ -4,20 +4,23 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.NotYetImplemente
 
 public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
 
+    private final String className;
     private final String methodName;
 
-    public NotYetImplementedStrategy(String methodName) {
+    public NotYetImplementedStrategy(String className,
+                                     String methodName) {
+        this.className = className;
         this.methodName = methodName;
     }
 
     @Override
     public void methodEnter(EnterExitContext context) {
-        throwException(context);
+        processNotYetImplemented(context);
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
-        throwException(context);
+        processNotYetImplemented(context);
     }
 
     @Override
@@ -30,8 +33,8 @@ public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
         // Nothing to do
     }
 
-    private void throwException(EnterExitContext context) {
-        context.threadLocalWhenInTestAdapter().process(new NotYetImplementedAction(methodName));
+    private void processNotYetImplemented(EnterExitContext context) {
+        context.threadLocalWhenInTestAdapter().process(new NotYetImplementedAction(className,methodName));
 
     }
 }

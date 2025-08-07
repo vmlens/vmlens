@@ -62,4 +62,10 @@ public class ParallelizeLoopRepository {
         }
     }
 
+    public void remove(Object obj) {
+        synchronized (lock) {
+            object2ParallelizeLoop.remove(obj);
+        }
+    }
+
 }

@@ -1,10 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
-public class OrderTreeIterator {
+public class OrderTreeIteratorImpl implements OrderTreeIterator {
 
     private OrderTreeNode current;
 
-    public OrderTreeIterator(OrderTreeNode current) {
+    public OrderTreeIteratorImpl(OrderTreeNode current) {
         this.current = current;
     }
 
@@ -22,6 +22,5 @@ public class OrderTreeIterator {
         current = result.next();
         return result.process();
     }
-
 
 }
