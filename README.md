@@ -73,6 +73,55 @@ To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens p
 
 See [pom.xml](https://github.com/vmlens/vmlens/blob/master/test-vmlens-maven-plugin/pom.xml) for an example.
 
+## Gradle
+
+To use VMLens with Gradle add the java agent as vm parameter for the test and process the events after the test run to create the VMLens Report:
+
+See [build.gradle.kts](https://github.com/vmlens/vmlens-examples/blob/master/build.gradle.kts) for an example.
+
+```Java
+import com.vmlens.gradle.VMLens
+
+plugins {
+  ...
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation("com.vmlens:api:1.2.10")
+    ...
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.vmlens:standalone:1.2.10")
+    }
+}
+
+tasks.register("vmlensReport") {
+    doLast {
+        VMLens().process(layout.buildDirectory.getAsFile().get());
+    }
+}
+
+tasks.test {
+    doFirst{
+        jvmArgs(VMLens().setup(layout.buildDirectory.getAsFile().get()))
+    }
+    // VMLens currently does not work with jacoco
+    jvmArgumentProviders.removeIf { it::class.java.simpleName == "JacocoAgent" }
+    useJUnitPlatform()
+    finalizedBy("vmlensReport")
+}
+```
+
+
 ## Standalone
 
 To use VMLens as a standalone tool:
