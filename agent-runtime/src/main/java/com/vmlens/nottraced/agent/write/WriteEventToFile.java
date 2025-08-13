@@ -2,6 +2,7 @@ package com.vmlens.nottraced.agent.write;
 
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
@@ -47,6 +48,7 @@ public class WriteEventToFile implements Runnable {
         startProcess();
 
         long timerForDeadlockDetection = System.currentTimeMillis();
+        long timerForDemonThreadDetection = System.currentTimeMillis();
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
         boolean deadlockLogged = false;
 
@@ -65,10 +67,30 @@ public class WriteEventToFile implements Runnable {
                     }
                 } else {
                     Thread.yield();
+                    if ((timerForDemonThreadDetection + 500) < System.currentTimeMillis()) {
+                        timerForDemonThreadDetection = System.currentTimeMillis();
+                        long[] threadIds = bean.getAllThreadIds();
+                        ThreadInfo[] infos = bean.getThreadInfo(threadIds);
+                        boolean nonDemonThreadActive = false;
+                        for (ThreadInfo info : infos) {
+                            if(! info.isDaemon() &&
+                                    info.getThreadState() != Thread.State.TERMINATED &&
+                                    ! ThreadLocalForParallelize.ANARSOFT_THREAD_NAME.equals(info.getThreadName()) &&
+                                    ! info.getThreadName().startsWith("DestroyJavaVM"))  {
+                                nonDemonThreadActive = true;
+                            }
+                        }
+                        if(! nonDemonThreadActive) {
+                            close();
+                            process = false;
+                            setPoisonedEventReceived();
+                        }
+                    }
                 }
 
                 if (!deadlockLogged) {
-                    if ((timerForDeadlockDetection + 1000) < System.currentTimeMillis()) {
+                    if ((timerForDeadlockDetection + 500) < System.currentTimeMillis()) {
+                        timerForDeadlockDetection = System.currentTimeMillis();
                         long[] threadIds = bean.findDeadlockedThreads();
                         if (threadIds != null) {
                             ThreadInfo[] infos = bean.getThreadInfo(threadIds, Integer.MAX_VALUE);
@@ -99,7 +121,6 @@ public class WriteEventToFile implements Runnable {
         synchronized (poisonedEventReceivedMonitor) {
             while (!poisonedEventReceived) {
                 poisonedEventReceivedMonitor.wait();
-                ;
             }
         }
     }

@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.10</version>
+    <version>1.2.11</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -65,6 +65,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>24.1-jre</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jgrapht</groupId>
+                <artifactId>jgrapht-core</artifactId>
+                <version>1.4.0</version>
             </dependency>
             <dependency>
                 <groupId>com.samskivert</groupId>
@@ -305,8 +310,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.14.0</version>
                     <configuration>
-                        <source>1.8</source>
-                        <source>1.8</source>
+                        <source>1.9</source>
+                        <target>1.9</target>
                     </configuration>
                 </plugin>
                 <plugin>

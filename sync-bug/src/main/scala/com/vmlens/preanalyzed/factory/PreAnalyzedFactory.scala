@@ -147,6 +147,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Filter("sun"),
       Filter("jdk"),
 
+      Filter("net/bytebuddy"),
+      Filter("org/objenesis"),
+
       // Need to run gradle 8
       Filter("org/apache/commons/lang/StringUtils"),
 
