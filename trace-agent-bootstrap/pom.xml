@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.10</version>
+        <version>1.2.11</version>
     </parent>
 
     <artifactId>trace-agent-bootstrap</artifactId>
@@ -48,6 +48,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>net.sf.trove4j</groupId>
             <artifactId>trove4j</artifactId>

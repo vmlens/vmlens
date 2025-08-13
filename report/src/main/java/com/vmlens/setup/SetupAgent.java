@@ -25,9 +25,16 @@ public class SetupAgent {
         this.argLine = argLine;
     }
 
-    public static void reCreate(File directory) {
+    public static boolean reCreate(File directory) {
+        if(directory.exists())  {
+            if(new File(directory,"filter.txt").exists()) {
+                return false;
+            }
+        }
+
         FileUtils.deleteQuietly(directory);
         directory.mkdirs();
+        return true;
     }
 
     public static String eventDir(File agentDirectory) {
@@ -38,19 +45,21 @@ public class SetupAgent {
     public EventDirectoryAndArgLine setup() {
         try {
 
-            reCreate(agentDirectory);
-
-            for (String jar : jars) {
-                FileOutputStream target = null;
-                target = new FileOutputStream(agentDirectory.getAbsolutePath() + "/" + jar);
-                InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("agent_lib/" + jar);
-                IOUtils.copy(input, target);
-                input.close();
-                target.close();
+            if(reCreate(agentDirectory)) {
+                for (String jar : jars) {
+                    FileOutputStream target = null;
+                    target = new FileOutputStream(agentDirectory.getAbsolutePath() + "/" + jar);
+                    InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("agent_lib/" + jar);
+                    IOUtils.copy(input, target);
+                    input.close();
+                    target.close();
+                }
             }
+
 
             String dir = eventDir(agentDirectory);
             File eventDir = new File(dir);
+            FileUtils.deleteQuietly(eventDir);
             eventDir.mkdirs();
             return new EventDirectoryAndArgLine(eventDir,vmArg());
         } catch (IOException e) {

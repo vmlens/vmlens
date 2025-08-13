@@ -5,7 +5,6 @@ source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # List of directories
 JDKS=(
-#   "8.0.452-amzn"
     "11.0.27-amzn"
     "17.0.12-graal"
     "21.0.7.fx-zulu"
