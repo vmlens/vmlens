@@ -54,7 +54,7 @@ To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens p
     <plugin>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens-maven-plugin</artifactId>
-	<version>1.2.11</version>
+        <version>1.2.11</version>
         <executions>
             <execution>
                 <id>test</id>
