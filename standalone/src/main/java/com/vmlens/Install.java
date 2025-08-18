@@ -13,6 +13,6 @@ public class Install implements Runnable {
     @Override
     public void run() {
         EventDirectoryAndArgLine result = new SetupAgent(parent.agentDirectory, "").setup();
-        System.out.println("use " + result.argLine() + "as vm parameter");
+        System.out.println("use \"" + result.argLine() + "\" as vm parameter");
     }
 }
