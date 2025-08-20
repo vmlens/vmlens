@@ -27,7 +27,7 @@ public class FactoryTraceMethodEnterExit {
         this.methodCallIdMap = methodCallIdMap;
     }
 
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor) {
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> addCountTryCatchBlocks(NameAndDescriptor nameAndDescriptor) {
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = new TLinkedList<>();
         TryCatchBlockCounter tryCatchBlockCounter = new TryCatchBlockCounter();
         MethodEnterExitAnalyzeFactory methodEnterExitAnalyzeFactory = new MethodEnterExitAnalyzeFactory(tryCatchBlockCounter);
@@ -36,8 +36,8 @@ public class FactoryTraceMethodEnterExit {
         return result;
     }
 
-    public void addToTransform(NameAndDescriptor nameAndDescriptor,
-                               TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result) {
+    public void addTraceMethodEnterExit(NameAndDescriptor nameAndDescriptor,
+                                        TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result) {
         TryCatchBlockCounter tryCatchBlockCounter = nameAndDescriptorToTryCatchBlockCounter.get(nameAndDescriptor);
         result.add(wrap(new MethodEnterExitTransformFactory(tryCatchBlockCounter.tryCatchBlockCount(), factoryFactory)));
     }
@@ -48,7 +48,7 @@ public class FactoryTraceMethodEnterExit {
      *
      * @param result
      */
-    public void addMethodCall(TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result) {
+    public void addTraceMethodCall(TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result) {
         result.add(wrap(AddMethodCall.factory(methodCallIdMap, factoryFactory)));
     }
 

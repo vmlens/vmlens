@@ -39,7 +39,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
 
             TransformerStrategy strategy =  RunTestClassTransformer.createFromLoaded().getStrategy(name);
 
-            TransformerContext transformerContext = new TransformerContext(targetArray, name);
+            TransformerContext transformerContext = new TransformerContext(targetArray, name,false);
 
 
             if(strategy == null) {

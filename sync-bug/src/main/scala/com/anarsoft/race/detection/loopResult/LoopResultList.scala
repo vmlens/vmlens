@@ -15,15 +15,35 @@ class LoopResultList(val loopId : Int) extends LoopResult  {
     }
   }
 
-  override def isFailure: Boolean = false
+  override def isFailure: Boolean = {
+    var isFailure = false;
+    for(result <- resultList) {
+      isFailure = isFailure | result.isFailure;
+    }
+    isFailure;
+  }
 
-  override def dataRaceCount: Int = 0
+  override def dataRaceCount: Int = {
+    var maxCount = 0;
+    for (result <- resultList) {
+      maxCount = Math.max(maxCount,result.dataRaceCount);
+    }
+    maxCount;
+  }
 
-  override def warningIdList: Set[Int] = Set();
+  override def warningIdList: Set[Int] = {
+    var warnings: Set[Int] = Set();
+    for (result <- resultList) {
+      if(warnings.size < result.warningIdList.size) {
+        warnings = result.warningIdList;
+      }
+    }
+    warnings;
+  }
 
   override def add(runResult: RunResult): Unit = {
     resultList.append(runResult);
   }
 
-  override def count: Int = 0
+  override def count: Int = resultList.size
 }

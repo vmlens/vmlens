@@ -22,6 +22,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
     private final ClassFilterAndTransformerStrategyCollection classArrayTransformerCollection;
     private final WriteClassDescriptionAndWarning writeClassDescriptionAndWarning;
     private final ClassFilterFromFile classFilterFromFile;
+    private volatile boolean isInReTransform = true;
 
     public AgentClassFileTransformer(ClassFilterAndTransformerStrategyCollectionFactory classArrayTransformerFactory,
                                      WriteClassDescriptionAndWarning writeClassDescriptionAndWarning,
@@ -63,14 +64,14 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
                 return null;
             }
 
-            TransformerContext context = new TransformerContext(classfileBuffer, name);
+            TransformerContext context = new TransformerContext(classfileBuffer, name, isInReTransform);
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
-           /*     if(name.contains("nonvolatile/innerclass")) {
+                if(name.contains("org/apache/commons/lang/StringUtils")) {
                     logTransformedClass(name, transformed);
                 }
-            */
+
                 return transformed;
             }
         } catch (Throwable e) {
@@ -84,4 +85,9 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
         }
         return null;
     }
+
+    public void isInTransform() {
+        this.isInReTransform = false;
+    }
+
 }

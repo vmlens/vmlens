@@ -151,7 +151,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Filter("org/objenesis"),
 
       // Need to run gradle 8
-      Filter("org/apache/commons/lang/StringUtils"),
+      //Filter("org/apache/commons/lang/StringUtils"),
 
       Include(""),
     );

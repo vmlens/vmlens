@@ -13,7 +13,8 @@ public class TransformerStrategyFilterInnerClassesTest {
     @Test
     public void innerClass() {
         // Given
-        TransformerContext transformerContext = new TransformerContext(null, "java/lang/Thread$Inner");
+        TransformerContext transformerContext = new TransformerContext(null,
+                "java/lang/Thread$Inner",false);
 
         // When
         byte[] array = createTransformerStrategy().transform(transformerContext);
@@ -25,7 +26,8 @@ public class TransformerStrategyFilterInnerClassesTest {
     @Test
     public void anonymousClass() {
         // Given
-        TransformerContext transformerContext = new TransformerContext(null,"java/lang/Thread$12");
+        TransformerContext transformerContext = new TransformerContext(null,
+                "java/lang/Thread$12",false);
 
         // When
         byte[] array = createTransformerStrategy().transform(transformerContext);

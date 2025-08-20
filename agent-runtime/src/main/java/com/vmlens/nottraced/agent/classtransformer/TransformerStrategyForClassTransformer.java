@@ -32,6 +32,6 @@ public class TransformerStrategyForClassTransformer implements TransformerStrate
                 writeClassDescription);
         ClassTransformer classTransformer = new ClassTransformer(factoryCollectionFactory.create(),
                 methodRepositoryForAnalyze, classVisitorAnalyze);
-        return classTransformer.transform(context.classfileBuffer(), context.name());
+        return classTransformer.transform(context.classfileBuffer(), context.name(), context.isInReTransform());
     }
 }

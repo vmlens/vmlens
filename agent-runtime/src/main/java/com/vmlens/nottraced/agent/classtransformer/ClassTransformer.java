@@ -25,10 +25,11 @@ public class ClassTransformer {
     }
 
     public  byte[] transform(byte[] classfileBuffer,
-                          String name) {
+                             String name,
+                             boolean isInRetransform) {
 
         String normalizedName = name.replace('.', '/');
-        ClassVisitor classVisitorAnalyze = createAnalyze(normalizedName);
+        ClassVisitor classVisitorAnalyze = createAnalyze(normalizedName,isInRetransform);
         ClassReader readerForAnalyze = new ClassReader(classfileBuffer);
         readerForAnalyze.accept(classVisitorAnalyze, 0);
 
@@ -41,23 +42,25 @@ public class ClassTransformer {
             classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         }
 
-        ClassVisitor classVisitorTransform = createTransform(classWriter, normalizedName);
+        ClassVisitor classVisitorTransform = createTransform(classWriter, normalizedName,isInRetransform);
         readerForTransform.accept(classVisitorTransform, 0);
         return classWriter.toByteArray();
     }
 
-    private ClassVisitor createAnalyze(String className) {
+    private ClassVisitor createAnalyze(String className,
+                                       boolean isInRetransform) {
         return new ClassVisitorApplyMethodVisitor(previousClassVisitor,
                 className,
                 methodCallIdMap,
-                new FactoryCollectionAdapterForAnalyze(factoryCollection));
+                new FactoryCollectionAdapterForAnalyze(factoryCollection),isInRetransform);
     }
 
     private ClassVisitor createTransform(ClassVisitor classWriter,
-                                         String className) {
+                                         String className,
+                                         boolean isInRetransform) {
         return new ClassVisitorApplyMethodVisitor(classWriter,
                 className,
                 methodCallIdMap,
-                new FactoryCollectionAdapterForTransform(factoryCollection));
+                new FactoryCollectionAdapterForTransform(factoryCollection),isInRetransform);
     }
 }

@@ -106,10 +106,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
                         alreadyTransformed.add(correctedClassName);
                     }
                 }
-            } else {
-              //  InfoMessageEventBuilder ordertree = new InfoMessageEventBuilder();
-              //  ordertree.add("not transformable:" + cl.getName());
-              //  writeClassDescriptionAndWarning.write(ordertree.build());
             }
         }
         Class[] toBeRetransformed = new Class[transformableClasses.size()];
@@ -125,7 +121,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
         if (toBeRetransformed.length > 0) {
              inst.retransformClasses(toBeRetransformed);
         }
-
     }
 
     protected void instrument(Instrumentation inst,
@@ -134,5 +129,6 @@ public class AgentRuntimeImpl implements AgentRuntime {
         inst.addTransformer(agentClassFileTransformer, true);
         THashSet<String> alreadyTransformed = new THashSet<>();
         retransform(inst, alreadyTransformed, writeClassDescriptionDuringStartup);
+        agentClassFileTransformer.isInTransform();
     }
 }

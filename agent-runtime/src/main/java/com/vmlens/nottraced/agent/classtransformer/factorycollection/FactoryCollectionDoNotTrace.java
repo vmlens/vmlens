@@ -23,7 +23,7 @@ public class FactoryCollectionDoNotTrace implements FactoryCollection {
     @Override
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor, int access) {
         if(doNotTraceInMethod(nameAndDescriptor,access)) {
-            return factoryForBoth.getAnalyze(nameAndDescriptor);
+            return factoryForBoth.addCountTryCatchBlocks(nameAndDescriptor);
         }
         return TLinkableWrapper.emptyList();
     }
@@ -32,7 +32,7 @@ public class FactoryCollectionDoNotTrace implements FactoryCollection {
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context) {
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
         if(doNotTraceInMethod(context.nameAndDescriptor(),context.access())) {
-            factoryForBoth.addToTransform(context.nameAndDescriptor(), result);
+            factoryForBoth.addTraceMethodEnterExit(context.nameAndDescriptor(), result);
         }
         return result;
     }

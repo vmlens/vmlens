@@ -28,7 +28,7 @@ public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {
 
     @Override
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyzeAfterFilter(NameAndDescriptor nameAndDescriptor, int access) {
-        return factoryForBoth.getAnalyze(nameAndDescriptor);
+        return factoryForBoth.addCountTryCatchBlocks(nameAndDescriptor);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {
         result.add(wrap(AddMonitorCall.factory()));
         result.add(wrap(AddFieldAccessCall.factory(fieldIdMap)));
         result.add(wrap(AddArrayAccessAccessCall.factory()));
-        factoryForBoth.addToTransform(nameAndDescriptor, result);
-        factoryForBoth.addMethodCall(result);
+        factoryForBoth.addTraceMethodEnterExit(nameAndDescriptor, result);
+        factoryForBoth.addTraceMethodCall(result);
         return result;
     }
 

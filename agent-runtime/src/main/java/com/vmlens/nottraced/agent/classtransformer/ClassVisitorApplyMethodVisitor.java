@@ -21,17 +21,20 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
     private final String className;
     private final MethodRepositoryForTransform methodCallIdMap;
     private final FactoryCollectionAdapter factoryCollectionAdapter;
+    private final boolean isInRetransform;
 
     private int classVersion;
 
     public ClassVisitorApplyMethodVisitor(ClassVisitor classVisitor,
                                           String className,
                                           MethodRepositoryForTransform methodCallIdMap,
-                                          FactoryCollectionAdapter factoryCollectionAdapter) {
+                                          FactoryCollectionAdapter factoryCollectionAdapter,
+                                          boolean isInRetransform) {
         super(ASMConstants.ASM_API_VERSION, classVisitor);
         this.className = className;
         this.methodCallIdMap = methodCallIdMap;
         this.factoryCollectionAdapter = factoryCollectionAdapter;
+        this.isInRetransform = isInRetransform;
     }
 
     @Override
@@ -54,7 +57,12 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
         int inMethodId = methodCallIdMap.asInt(new MethodCallId(className, name, descriptor));
 
         NameAndDescriptor nameAndDescriptor = new NameAndDescriptor(name, descriptor);
-        FactoryCollectionAdapterContext adapterContext = new FactoryCollectionAdapterContext(className,nameAndDescriptor, access, inMethodId, methodCallIdMap);
+        FactoryCollectionAdapterContext adapterContext = new FactoryCollectionAdapterContext(className,
+                nameAndDescriptor,
+                access,
+                inMethodId,
+                methodCallIdMap);
+
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> factoryList =
                 factoryCollectionAdapter.get(adapterContext);
 
@@ -74,6 +82,11 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor {
     }
 
     private boolean useExpandedFrames() {
+        /*
+        asm stores major version and minor version in one int
+        & 0xFF makes sure we are only looking at the unsigned low 8 bits of the class file’s major version,
+        ignoring the minor version and any higher bits.
+         */
         int major = classVersion & 0xFF;
         return major < Opcodes.V1_6;
     }
