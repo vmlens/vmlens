@@ -8,7 +8,7 @@ public class ConstructorChild extends ConstructorParent {
     }
 
     public ConstructorChild() {
-        super(calculate());
+        this(calculate());
     }
 
     private static int calculate() {

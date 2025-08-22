@@ -18,8 +18,8 @@ e.g. no need to analyze when contructor
 FactoryCollectionAdapterForTransform should call getTransformForConstructorAndSetStrategy
 from FactoryCollection
 
-FactoryCollection is implemented by 5 classes but the only classes need to transform the constructor is 
-FactoryCollectionAll and perhaps FactoryCollectionDoNotTrace 
+FactoryCollection is implemented by 5 classes but the only class need to transform the constructor is 
+FactoryCollectionAll 
 
 
 The method getTransformForConstructorAndSetStrategy should return a list of methodvisitors to 
@@ -45,7 +45,10 @@ at the enter and exit we should not load the existing class:
 
 }
 ```
-insted call a static method with out any argument
+instead call a static method with out any argument
+
+Tests are here: ConstructorCallTest
+
 
 
 

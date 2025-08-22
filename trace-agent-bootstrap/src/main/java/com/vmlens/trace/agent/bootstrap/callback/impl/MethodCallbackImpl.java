@@ -55,4 +55,12 @@ public class MethodCallbackImpl {
                 parallelizeFacade);
         methodIdToStrategy.strategyAll(methodId).methodExit(enterExitContext);
     }
+
+    public void constructorMethodEnter(int methodId) {
+
+    }
+
+    public void constructorMethodExit(int methodId) {
+
+    }
 }
