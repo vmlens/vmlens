@@ -49,6 +49,8 @@ instead call a static method with out any argument
 
 Tests are here: ConstructorCallTest
 
+see also: Fixme TraceConstructor
+
 
 
 

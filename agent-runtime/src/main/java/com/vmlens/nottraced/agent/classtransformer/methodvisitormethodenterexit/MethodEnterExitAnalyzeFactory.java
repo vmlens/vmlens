@@ -4,6 +4,7 @@ import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.AnalyzeF
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.FactoryContext;
 import org.objectweb.asm.MethodVisitor;
 
+// Fixme Remove
 public class MethodEnterExitAnalyzeFactory implements AnalyzeFactory {
 
     private final TryCatchBlockCounter tryCatchBlockCounter;

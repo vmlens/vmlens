@@ -1,13 +1,13 @@
 package com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory;
 
+import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methodenterexitstrategy.MethodEnterExitStrategy;
+
 public class FactoryContext {
 
     private int methodId;
-    private boolean useExpandedFrames;
-    private boolean isStatic;
-    private boolean isConstructor;
     private String className;
-    private String description;
+    private MethodEnterExitStrategy methodEnterExitStrategy;
+    private boolean isConstructor;
 
     public int methodId() {
         return methodId;
@@ -15,30 +15,6 @@ public class FactoryContext {
 
     public void setMethodId(int methodId) {
         this.methodId = methodId;
-    }
-
-    public boolean useExpandedFrames() {
-        return useExpandedFrames;
-    }
-
-    public void setUseExpandedFrames(boolean useExpandedFrames) {
-        this.useExpandedFrames = useExpandedFrames;
-    }
-
-    public boolean isStatic() {
-        return isStatic;
-    }
-
-    public void setStatic(boolean aStatic) {
-        isStatic = aStatic;
-    }
-
-    public boolean isConstructor() {
-        return isConstructor;
-    }
-
-    public void setConstructor(boolean constructor) {
-        isConstructor = constructor;
     }
 
     public String className() {
@@ -49,11 +25,19 @@ public class FactoryContext {
         this.className = className;
     }
 
-    public String description() {
-        return description;
+    public MethodEnterExitStrategy methodEnterExitStrategy() {
+        return methodEnterExitStrategy;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMethodEnterExitStrategy(MethodEnterExitStrategy methodEnterExitStrategy) {
+        this.methodEnterExitStrategy = methodEnterExitStrategy;
+    }
+
+    public boolean isConstructor() {
+        return isConstructor;
+    }
+
+    public void setIsConstructor(boolean isConstructor) {
+        this.isConstructor = isConstructor;
     }
 }

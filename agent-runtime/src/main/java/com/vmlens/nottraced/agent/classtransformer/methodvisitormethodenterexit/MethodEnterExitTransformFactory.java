@@ -7,6 +7,7 @@ import org.objectweb.asm.MethodVisitor;
 
 public class MethodEnterExitTransformFactory implements TransformFactory {
 
+    // Fixme remove
     private final int tryCatchBlockCount;
     private final MethodCallbackFactoryFactory factoryFactory;
 
@@ -18,14 +19,7 @@ public class MethodEnterExitTransformFactory implements TransformFactory {
 
     @Override
     public MethodVisitor create(FactoryContext factoryContext, MethodVisitor previous) {
-        return new MethodEnterExitTransform(factoryContext.methodId(),
-                tryCatchBlockCount,
-                factoryContext.useExpandedFrames(),
-                previous, factoryContext.isStatic(),
-                factoryContext.isConstructor(),
-                factoryContext.className(),
-                factoryContext.description(),
-                factoryFactory);
+        return new MethodEnterExitTransform(previous,factoryContext,factoryFactory);
     }
 
 }

@@ -2,6 +2,7 @@ package com.vmlens.nottraced.agent.inttest;
 
 import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
 import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
+import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -17,7 +18,7 @@ public class OldBytecodeTest extends AbstractIntTest {
      *   e.g. jdk 1.1
      */
 
-    //@Test
+    @Test
     public void staticMethodCallWithSynchronizedBlock() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);

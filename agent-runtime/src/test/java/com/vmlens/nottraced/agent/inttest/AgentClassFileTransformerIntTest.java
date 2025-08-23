@@ -94,7 +94,7 @@ public class AgentClassFileTransformerIntTest extends AbstractIntTest{
         runTest("TestVolatileField");
     }
 
-    //@Test
+    @Test
     public void staticMethodCall() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
@@ -106,7 +106,7 @@ public class AgentClassFileTransformerIntTest extends AbstractIntTest{
         verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
     }
 
-    //@Test
+    @Test
     public void staticMethodCallWithSynchronizedBlock() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
@@ -128,7 +128,5 @@ public class AgentClassFileTransformerIntTest extends AbstractIntTest{
         verify(threadPoolCallbackImpl, times(1)).start(any(), any(),anyInt());
         verify(threadPoolCallbackImpl, times(1)).join(any(), anyInt());
     }
-
-
 
 }

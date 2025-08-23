@@ -5,6 +5,7 @@ import org.objectweb.asm.MethodVisitor;
 
 import static com.vmlens.nottraced.agent.classtransformer.ASMConstants.ASM_API_VERSION;
 
+// Fixme Remove
 public class MethodEnterExitAnalyze extends MethodVisitor {
 
     private final TryCatchBlockCounter tryCatchBlockCounter;
