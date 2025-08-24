@@ -27,6 +27,10 @@ package com.vmlens.api;
  */
 public class AllInterleavings implements AutoCloseable {
 
+	private final static String ERROR_MESSAGE_PART_1 = "The vmlens java agent is not configured.";
+	private final static String ERROR_MESSAGE_PART_2 = "See https://vmlens.com/docs/ for configuring the vmlens java agent.";
+	private final boolean throwExceptionWhenNoAgent;
+
 	/**
      * The name shown in the report.
 	 * 
@@ -40,8 +44,13 @@ public class AllInterleavings implements AutoCloseable {
      * @param name The name shown in the report.
 	 */
 	public AllInterleavings(String name) {
-		super();
-		this.name = name;
+		this(name,false);
+	}
+
+
+	public AllInterleavings(String name, boolean throwExceptionWhenNoAgent) {
+        this.name = name;
+		this.throwExceptionWhenNoAgent = throwExceptionWhenNoAgent;
 	}
 
 	/**
@@ -50,7 +59,6 @@ public class AllInterleavings implements AutoCloseable {
 	 * 
 	 * @return true if  there are still thread interleaving to be executed otherwise false.
 	 */
-
 	public  boolean hasNext() {
 		return hasNext(this);
 	}
@@ -58,20 +66,21 @@ public class AllInterleavings implements AutoCloseable {
 	
 	/**
 	 * closes this instance
-	 * 
 	 */
-	
 	public void close()  {
 		close(this);
 	}
 
-	private static boolean hasNext(Object object) {
-		System.err.println("The vmlens java agent is not configured.");
-		System.err.println("See https://vmlens.com/docs/ for configuring the vmlens java agent.");
+	private boolean hasNext(Object object) {
+		if(throwExceptionWhenNoAgent) {
+			throw new RuntimeException(ERROR_MESSAGE_PART_1 + " " + ERROR_MESSAGE_PART_2);
+		}
+		System.err.println(ERROR_MESSAGE_PART_1);
+		System.err.println(ERROR_MESSAGE_PART_2);
 		return false;
 	}
 
-	private static void close(Object obj) {
+	private void close(Object obj) {
 		
 	}
 

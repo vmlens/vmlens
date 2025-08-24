@@ -117,7 +117,7 @@ public class AgentClassFileTransformerIntTest extends AbstractIntTest{
         verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
     }
 
-    //@Test
+    @Test
     public void threadPool() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         ThreadPoolCallbackImpl threadPoolCallbackImpl = mock(ThreadPoolCallbackImpl.class);

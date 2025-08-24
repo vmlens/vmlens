@@ -14,6 +14,9 @@ public class SynchronizedMethodStrategy implements StrategyAll {
 
     @Override
     public void methodEnter(MethodEnterExitContext enterExitContext) {
+        if(enterExitContext.isThreadRun()) {
+            newTask(enterExitContext);
+        }
         methodEnterEvent(enterExitContext);
         monitorEnter(enterExitContext,-1);
     }

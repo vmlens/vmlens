@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodExitEvent;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.strategyall.RunMethodStrategy;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.inttest.util.CallbackTestContainer.*;
@@ -52,29 +51,6 @@ public class MethodCallbackImplIntTest {
         assertThat(callbackTestContainer.eventList().size(), is(2));
         assertThat(callbackTestContainer.eventList().get(0), is(methodEnter));
         assertThat(callbackTestContainer.eventList().get(1), is(methodExit));
-    }
-
-    @Test
-    public void runMethod() {
-        // Expected
-        int methodId = 5;
-        MethodEnterEvent methodEnter = new MethodEnterEvent(methodId);
-        methodEnter.setThreadIndex(TEST_THREAD_INDEX);
-        methodEnter.setMethodCounter(perThreadCounter(1));
-        methodEnter.setLoopId(LOOP_ID);
-        methodEnter.setRunId(RUN_ID);
-
-        // Given
-        Object object = new Object();
-        CallbackTestContainer callbackTestContainer = CallbackTestContainer.create();
-        callbackTestContainer.setStrategyAll(methodId, new RunMethodStrategy(NormalMethodStrategy.SINGLETON));
-
-        // When
-        callbackTestContainer.methodCallbackImpl().methodEnter(object, methodId);
-
-        // Then
-        assertThat(callbackTestContainer.eventList().size(), is(1));
-        assertThat(callbackTestContainer.eventList().get(0), is(methodEnter));
     }
 
 }

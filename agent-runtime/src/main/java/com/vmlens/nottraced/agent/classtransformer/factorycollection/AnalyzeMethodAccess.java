@@ -9,19 +9,11 @@ public class AnalyzeMethodAccess {
         this.onMethodAccess = onMethodAccess;
     }
 
-    public void analyze(int access, boolean isPotentialThreadRun) {
+    public void analyze(int access) {
         if ((access & ACC_SYNCHRONIZED) == ACC_SYNCHRONIZED) {
-            if (isPotentialThreadRun) {
-                onMethodAccess.onSynchronizedAndThreadRun();
-            } else {
-                onMethodAccess.onSynchronized();
-            }
+            onMethodAccess.onSynchronized();
         } else {
-            if (isPotentialThreadRun) {
-                onMethodAccess.onThreadRun();
-            } else {
-                onMethodAccess.onNotSynchronized();
-            }
+            onMethodAccess.onNotSynchronized();
         }
     }
 }

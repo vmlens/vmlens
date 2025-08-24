@@ -1,26 +1,32 @@
-package com.vmlens.test.maven.plugin;
+package com.vmlens.test.maven.plugin.loop;
 
 import com.vmlens.api.AllInterleavings;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class TestNonVolatileField {
-    private int j = 0;
+public class TestStopThread {
+
+    private volatile boolean stop = false;
+
     @Ignore
     @Test
     public void testUpdate() throws InterruptedException {
-        try(AllInterleavings allInterleavins = new AllInterleavings("testNonVolatileField")) {
+        try(AllInterleavings allInterleavins = new AllInterleavings("testStopThread")) {
             while (allInterleavins.hasNext()) {
+                stop = false;
                 Thread first = new Thread() {
                     @Override
                     public void run() {
-                        j++;
+                        while(!stop) {
+                            Thread.yield();
+                        }
                     }
                 };
                 first.start();
-                j++;
+                stop = true;
                 first.join();
             }
         }
     }
+
 }

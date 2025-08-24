@@ -5,6 +5,9 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.stopProcess;
+
 public class ThreadPoolCallbackImpl {
 
     private final ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter;
@@ -12,15 +15,29 @@ public class ThreadPoolCallbackImpl {
 
     public ThreadPoolCallbackImpl(ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter) {
             this.threadLocalWhenInTestAdapter = threadLocalWhenInTestAdapter;
-        }
+    }
 
-        public boolean start(Object pool, Object task, int methodId) {
-            return threadLocalWhenInTestAdapter.process(new StartNewThreadByPool(pool,
-                    (Runnable) task,
-                    threadCount.getAndIncrement()));
+    public boolean start(Object pool, Object task, int methodId) {
+        if(canProcess()) {
+            startProcess();
+            try {
+                return threadLocalWhenInTestAdapter.process(new StartNewThreadByPool(pool,
+                        (Runnable) task,
+                        threadCount.getAndIncrement()));
+            } finally {
+                stopProcess();
+            }
+        }
+        return false;
     }
 
     public void join(Object taskOrPool, int methodId) {
-        threadLocalWhenInTestAdapter.join(taskOrPool);
+        if(canProcess()) {
+            startProcess();
+            setInThreadPool(true);
+            threadLocalWhenInTestAdapter.join(taskOrPool);
+            stopProcess();
+        }
+
     }
 }

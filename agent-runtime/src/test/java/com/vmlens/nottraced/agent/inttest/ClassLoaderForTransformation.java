@@ -36,11 +36,8 @@ public class ClassLoaderForTransformation extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
             byte[] targetArray = new LoadClassArray().load(name);
-
             TransformerStrategy strategy =  RunTestClassTransformer.createFromLoaded().getStrategy(name);
-
             TransformerContext transformerContext = new TransformerContext(targetArray, name,false);
-
 
             if(strategy == null) {
                 System.out.println("not transformed " + name);

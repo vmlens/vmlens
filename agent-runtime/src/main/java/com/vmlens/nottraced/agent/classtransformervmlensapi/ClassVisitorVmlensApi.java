@@ -14,7 +14,7 @@ public class ClassVisitorVmlensApi extends ClassVisitor {
     public MethodVisitor visitMethod(int access, String name, String descriptor,
                                      String signature, String[] exceptions) {
 
-        return new MethodVisitorReplaceStaticMethodCallTarget(
+        return new MethodVisitorReplaceMethodCall(
                 super.visitMethod(access, name, descriptor, signature, exceptions));
 
     }

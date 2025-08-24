@@ -1,20 +1,39 @@
 class:com/vmlens/api/AllInterleavings
 method:<init>(Ljava/lang/String;)V
   ALOAD
+  ALOAD
+  ICONST_0
+  INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;Z)V
+  RETURN
+method:<init>(Ljava/lang/String;Z)V
+  ALOAD
   INVOKESPECIAL  java/lang/Object.<init>:()V
   ALOAD
   ALOAD
   PUTFIELD  com/vmlens/api/AllInterleavings.name:Ljava/lang/String;
+  ALOAD
+  ILOAD
+  PUTFIELD  com/vmlens/api/AllInterleavings.throwExceptionWhenNoAgent:Z
   RETURN
 method:hasNext()Z
+  ALOAD
   ALOAD
   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.hasNext:(Ljava/lang/Object;)Z
   IRETURN
 method:close()V
   ALOAD
+  ALOAD
   INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.close:(Ljava/lang/Object;)V
   RETURN
 method:hasNext(Ljava/lang/Object;)Z
+  ALOAD
+  GETFIELD  com/vmlens/api/AllInterleavings.throwExceptionWhenNoAgent:Z
+  IFEQ
+  NEW  java/lang/RuntimeException
+  DUP
+  load:The vmlens java agent is not configured. See https://vmlens.com/docs/ for configuring the vmlens java agent.
+  INVOKESPECIAL  java/lang/RuntimeException.<init>:(Ljava/lang/String;)V
+  ATHROW
   GETSTATIC  java/lang/System.err:Ljava/io/PrintStream;
   load:The vmlens java agent is not configured.
   INVOKEVIRTUAL  java/io/PrintStream.println:(Ljava/lang/String;)V

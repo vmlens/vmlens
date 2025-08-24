@@ -37,13 +37,9 @@ public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {
             int access,
             int methodId,
             MethodRepositoryForTransform methodRepositoryForTransform) {
-        boolean isPotentialThreadRun = false;
-        if ((!isStatic(access)) && nameAndDescriptor.name().equals("run") && nameAndDescriptor.descriptor().equals("()V")) {
-            isPotentialThreadRun = true;
-        }
 
-        new AnalyzeMethodAccess(new OnMethodAccess(methodRepositoryForTransform, methodId)).analyze(access,
-                isPotentialThreadRun);
+        new AnalyzeMethodAccess(new OnMethodAccess(methodRepositoryForTransform, methodId))
+                .analyze(access);
 
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = new TLinkedList<>();
         result.add(wrap(AddMonitorCall.factory()));

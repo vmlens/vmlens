@@ -15,6 +15,10 @@ class LoadDescriptionImpl(dir: Path) extends LoadDescription {
     loadClassDescription(descriptionBuilder);
     loadThreadAndLoopDescription(descriptionBuilder);
   }
+  
+  def hasThreadAndLoopDescription() : Boolean = 
+    dir.resolve(THREAD_AND_LOOP_DESCRIPTION + EVENT_FILE_POSTFIX).toFile.exists()
+  
 
   private def loadClassDescription(descriptionBuilder: DescriptionBuilder): Unit = {
     val stream = new DataInputStream(Files.newInputStream(dir.resolve(DESCRIPTION + EVENT_FILE_POSTFIX)))
