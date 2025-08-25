@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
-import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.methodEnterEvent;
-import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.methodExitEvent;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.*;
 
 public class NormalMethodStrategy implements StrategyAll {
 
@@ -10,10 +9,11 @@ public class NormalMethodStrategy implements StrategyAll {
     private NormalMethodStrategy() {
     }
 
-
-
     @Override
     public void methodEnter(MethodEnterExitContext enterExitContext) {
+        if(enterExitContext.isThreadRun()) {
+            newTask(enterExitContext);
+        }
         methodEnterEvent(enterExitContext);
     }
 

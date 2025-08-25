@@ -12,7 +12,7 @@ public class ApplyClassTransformer {
     public byte[] transform(byte[] classfileBuffer, String name) {
         TransformerStrategy transformer = classArrayTransformerCollection.get(name);
         if (transformer != null) {
-            TransformerContext context = new TransformerContext(classfileBuffer, name);
+            TransformerContext context = new TransformerContext(classfileBuffer, name,false);
             return transformer.transform(context);
         }
         return null;

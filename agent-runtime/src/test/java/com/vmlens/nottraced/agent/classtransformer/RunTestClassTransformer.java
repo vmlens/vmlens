@@ -70,7 +70,7 @@ public class RunTestClassTransformer {
         TransformerStrategy strategy = getStrategy(className);
 
         byte[] classfileBuffer = new LoadClassArray().loadResource(calculateFileName(className));
-        TransformerContext transformerContext = new TransformerContext(classfileBuffer, className);
+        TransformerContext transformerContext = new TransformerContext(classfileBuffer, className, false);
         byte[] transformed = strategy.transform(transformerContext);
 
         StringWriter out = new StringWriter();

@@ -18,6 +18,10 @@ class ProcessEvents(val eventDir: Path,
                     val reportDir: Path,
                     processRunContext : ProcessRunContext) {
 
+
+  def hasThreadAndLoopDescription() : Boolean =
+    new LoadDescriptionImpl(eventDir).hasThreadAndLoopDescription();
+
   def process(): ResultForVerify = {
     val dir = reportDir.toFile
     reCreate(dir);

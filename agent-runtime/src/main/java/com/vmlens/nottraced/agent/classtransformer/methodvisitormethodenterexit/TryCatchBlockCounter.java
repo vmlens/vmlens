@@ -1,5 +1,6 @@
 package com.vmlens.nottraced.agent.classtransformer.methodvisitormethodenterexit;
 
+// Fixme remove
 public class TryCatchBlockCounter {
 
     private int tryCatchBlockCount = 0;

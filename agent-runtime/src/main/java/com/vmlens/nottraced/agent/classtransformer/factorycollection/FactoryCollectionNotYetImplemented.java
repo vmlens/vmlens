@@ -26,7 +26,7 @@ public class FactoryCollectionNotYetImplemented implements FactoryCollection {
         if ((access & ACC_PUBLIC) != ACC_PUBLIC) {
             return TLinkableWrapper.emptyList();
         }
-        return factoryForBoth.getAnalyze(nameAndDescriptor);
+        return factoryForBoth.addCountTryCatchBlocks(nameAndDescriptor);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class FactoryCollectionNotYetImplemented implements FactoryCollection {
         context.methodRepositoryForTransform().setStrategyPreAnalyzed(context.methodId(),
                 new NotYetImplementedStrategy(context.className(), context.nameAndDescriptor().name()));
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-        factoryForBoth.addToTransform(context.nameAndDescriptor(), result);
+        factoryForBoth.addTraceMethodEnterExit(context.nameAndDescriptor(), result);
         return result;
     }
 

@@ -11,24 +11,11 @@ public class ThreadPoolCallback {
             new ThreadLocalWhenInTestAdapterImpl());
 
     public static boolean start(Object pool, Object task,int methodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-               return threadPoolCallbackImpl.start(pool, task, methodId);
-            } finally {
-                stopProcess();
-            }
-        }
-        return false;
+        return threadPoolCallbackImpl.start(pool, task, methodId);
     }
 
     public static void join(Object task, int methodId) {
-        if(canProcess()) {
-            startProcess();
-            setInThreadPool(true);
-            threadPoolCallbackImpl.join(task, methodId);
-            stopProcess();
-        }
+        threadPoolCallbackImpl.join(task, methodId);
     }
 
     public static void joinExit() {

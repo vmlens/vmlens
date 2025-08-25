@@ -39,16 +39,16 @@ public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOr
         StrategyPreAnalyzed strategy = methodToStrategy.get(nameAndDescriptor);
         if (strategy != null) {
             if(preAnalyzedStrategy.useWithInParam(nameAndDescriptor)) {
-                return factoryTraceMethodEnterWithIntParamExit.getAnalyze(nameAndDescriptor);
+                return factoryTraceMethodEnterWithIntParamExit.addCountTryCatchBlocks(nameAndDescriptor);
             }
-            return factoryTraceMethodEnterExit.getAnalyze(nameAndDescriptor);
+            return factoryTraceMethodEnterExit.addCountTryCatchBlocks(nameAndDescriptor);
         }
         switch (methodNotFoundAction) {
             case NO_OP: {
                 return TLinkableWrapper.emptyList();
             }
             case WARNING_AND_NOT_TRANSFORM: {
-                return factoryTraceMethodEnterExit.getAnalyze(nameAndDescriptor);
+                return factoryTraceMethodEnterExit.addCountTryCatchBlocks(nameAndDescriptor);
             }
         }
         return TLinkableWrapper.emptyList();
@@ -64,9 +64,9 @@ public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOr
             methodRepositoryForTransform.setStrategyPreAnalyzed(methodId, strategy);
             TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
             if(preAnalyzedStrategy.useWithInParam(nameAndDescriptor)) {
-                factoryTraceMethodEnterWithIntParamExit.addToTransform(nameAndDescriptor, result);
+                factoryTraceMethodEnterWithIntParamExit.addTraceMethodEnterExit(nameAndDescriptor, result);
             } else {
-                factoryTraceMethodEnterExit.addToTransform(nameAndDescriptor, result);
+                factoryTraceMethodEnterExit.addTraceMethodEnterExit(nameAndDescriptor, result);
             }
             return result;
         }

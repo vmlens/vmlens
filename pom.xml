@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.11</version>
+    <version>1.2.12</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -156,6 +156,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>4.2</version>
+            </dependency>
+            <!-- to test classes with bytecode smaller than 1.5 -->
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>1.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -359,9 +365,12 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <source>1.8</source>
+                    <source>1.9</source>
                     <excludePackageNames>*.internal.*</excludePackageNames>
                     <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <charset>UTF-8</charset>
                 </configuration>
             </plugin>
         </plugins>

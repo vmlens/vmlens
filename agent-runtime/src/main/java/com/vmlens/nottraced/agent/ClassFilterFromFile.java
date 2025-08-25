@@ -56,5 +56,4 @@ public class ClassFilterFromFile {
         return false;
     }
 
-
 }

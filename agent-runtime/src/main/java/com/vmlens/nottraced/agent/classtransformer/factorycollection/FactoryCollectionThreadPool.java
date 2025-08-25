@@ -32,7 +32,7 @@ public class FactoryCollectionThreadPool implements FactoryCollection {
     @Override
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor,
                                                                           int access) {
-        return  factoryForBoth.getAnalyze(nameAndDescriptor);
+        return  factoryForBoth.addCountTryCatchBlocks(nameAndDescriptor);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class FactoryCollectionThreadPool implements FactoryCollection {
            return TLinkableWrapper.singleton(ThreadPoolJoin.factory());
        }
        TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-       factoryForBoth.addToTransform(context.nameAndDescriptor(), result);
+       factoryForBoth.addTraceMethodEnterExit(context.nameAndDescriptor(), result);
        return result;
     }
 

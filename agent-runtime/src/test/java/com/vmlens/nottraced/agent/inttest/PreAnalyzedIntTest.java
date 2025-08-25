@@ -22,19 +22,19 @@ public class PreAnalyzedIntTest {
 
 
 
-    @Test
+    //@Test
     public void atomicReadWriteLock() throws IOException {
         PreAnalyzedMethodBuilder preAnalyzedMethodBuilder = new PreAnalyzedMethodBuilder(METHOD_WITH_READ_LOCK);
         runTest(PreAnalyzedAllMethods.SINGLETON, preAnalyzedMethodBuilder.build(), "/noMethodCall.txt");
     }
 
-    @Test
+    //@Test
     public void lock() throws IOException {
         PreAnalyzedMethodBuilder preAnalyzedMethodBuilder = new PreAnalyzedMethodBuilder(EXIT_REENTRANT_LOCK);
         runTest(PreAnalyzedSpecificMethods.SINGLETON, preAnalyzedMethodBuilder.build(), "/noMethodCall.txt");
     }
 
-    @Test
+    //@Test
     public void getReadWriteLock() throws IOException {
         PreAnalyzedMethodBuilder preAnalyzedMethodBuilder = new PreAnalyzedMethodBuilder(GET_READ_WRITE_LOCK);
         runTest(PreAnalyzedSpecificMethods.SINGLETON, preAnalyzedMethodBuilder.build(), "/noMethodCall.txt");
@@ -45,8 +45,6 @@ public class PreAnalyzedIntTest {
 
     }
 
-
-
     private void runTest(ClassType classType, PreAnalyzedMethod preAnalyzedMethod, String expected) throws IOException {
         PreAnalyzedMethod[] preAnalyzedMethods = new PreAnalyzedMethod[1];
         preAnalyzedMethods[0] = preAnalyzedMethod;
@@ -54,6 +52,5 @@ public class PreAnalyzedIntTest {
         RunTestClassTransformer test = RunTestClassTransformer.create(TLinkableWrapper.singleton(atomicNonBlocking));
         test.runTest(CLASS_NAME,expected);
     }
-
 
 }

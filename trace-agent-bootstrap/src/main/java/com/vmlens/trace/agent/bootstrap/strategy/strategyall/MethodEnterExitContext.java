@@ -20,8 +20,8 @@ public class MethodEnterExitContext extends MonitorContext implements NewTaskCon
         this.parallelizeFacade = parallelizeFacade;
     }
 
-    public CheckIsThreadRun checkIsThreadRun() {
-        return checkIsThreadRun;
+    public boolean isThreadRun() {
+        return checkIsThreadRun.isThreadRun();
     }
 
     public ParallelizeFacade parallelizeFacade() {

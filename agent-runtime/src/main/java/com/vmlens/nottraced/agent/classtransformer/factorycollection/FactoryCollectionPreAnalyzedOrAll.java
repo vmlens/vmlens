@@ -21,7 +21,7 @@ public abstract class FactoryCollectionPreAnalyzedOrAll  implements FactoryColle
     public final TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor,
                                                                           int access) {
         if(doNotTraceIn(nameAndDescriptor)) {
-            return factoryForDoNotTrace.getAnalyze(nameAndDescriptor);
+            return factoryForDoNotTrace.addCountTryCatchBlocks(nameAndDescriptor);
         }
         return getAnalyzeAfterFilter(nameAndDescriptor,access);
     }
@@ -30,7 +30,7 @@ public abstract class FactoryCollectionPreAnalyzedOrAll  implements FactoryColle
     public final TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context) {
         if(doNotTraceIn(context.nameAndDescriptor())) {
             TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-            factoryForDoNotTrace.addToTransform(context.nameAndDescriptor(), result);
+            factoryForDoNotTrace.addTraceMethodEnterExit(context.nameAndDescriptor(), result);
             return result;
         }
         return getTransformAndSetStrategyAfterFilter(context.nameAndDescriptor(),

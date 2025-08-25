@@ -41,12 +41,7 @@ public class TestVolatileField {
         try(AllInterleavings allInterleavings = new AllInterleavings("testVolatileFieldWrite")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
-                Thread first = new Thread() {
-                    @Override
-                    public void run() {
-                        j = 5;
-                    }
-                };
+                Thread first = new Thread(() -> j = 5);
                 first.start();
                 j = 9;
                 first.join();

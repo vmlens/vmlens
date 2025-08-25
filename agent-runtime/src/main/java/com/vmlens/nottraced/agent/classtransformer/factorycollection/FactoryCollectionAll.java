@@ -28,7 +28,7 @@ public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {
 
     @Override
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyzeAfterFilter(NameAndDescriptor nameAndDescriptor, int access) {
-        return factoryForBoth.getAnalyze(nameAndDescriptor);
+        return factoryForBoth.addCountTryCatchBlocks(nameAndDescriptor);
     }
 
     @Override
@@ -37,20 +37,16 @@ public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {
             int access,
             int methodId,
             MethodRepositoryForTransform methodRepositoryForTransform) {
-        boolean isPotentialThreadRun = false;
-        if ((!isStatic(access)) && nameAndDescriptor.name().equals("run") && nameAndDescriptor.descriptor().equals("()V")) {
-            isPotentialThreadRun = true;
-        }
 
-        new AnalyzeMethodAccess(new OnMethodAccess(methodRepositoryForTransform, methodId)).analyze(access,
-                isPotentialThreadRun);
+        new AnalyzeMethodAccess(new OnMethodAccess(methodRepositoryForTransform, methodId))
+                .analyze(access);
 
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = new TLinkedList<>();
         result.add(wrap(AddMonitorCall.factory()));
         result.add(wrap(AddFieldAccessCall.factory(fieldIdMap)));
         result.add(wrap(AddArrayAccessAccessCall.factory()));
-        factoryForBoth.addToTransform(nameAndDescriptor, result);
-        factoryForBoth.addMethodCall(result);
+        factoryForBoth.addTraceMethodEnterExit(nameAndDescriptor, result);
+        factoryForBoth.addTraceMethodCall(result);
         return result;
     }
 

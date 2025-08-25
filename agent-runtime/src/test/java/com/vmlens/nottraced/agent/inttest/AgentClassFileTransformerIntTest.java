@@ -6,13 +6,12 @@ import com.vmlens.trace.agent.bootstrap.callback.impl.*;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class AgentClassFileTransformerIntTest {
+public class AgentClassFileTransformerIntTest extends AbstractIntTest{
 
     @Test
     public void arrayAccess() throws ClassNotFoundException, InstantiationException,
@@ -118,7 +117,7 @@ public class AgentClassFileTransformerIntTest {
         verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
     }
 
-    //@Test
+    @Test
     public void threadPool() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         ThreadPoolCallbackImpl threadPoolCallbackImpl = mock(ThreadPoolCallbackImpl.class);
@@ -130,15 +129,4 @@ public class AgentClassFileTransformerIntTest {
         verify(threadPoolCallbackImpl, times(1)).join(any(), anyInt());
     }
 
-
-    private void runTest(String className) throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
-        ClassLoader cl = new ClassLoaderForTransformation(this.getClass().getClassLoader());
-        Object objectUnderTest = cl.loadClass("com.vmlens.test.guineapig." + className).newInstance();
-        for (Method m : objectUnderTest.getClass().getMethods()) {
-            if (m.getName().equals("update")) {
-                m.invoke(objectUnderTest);
-            }
-        }
-    }
 }

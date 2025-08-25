@@ -82,7 +82,7 @@ public class CallbackTestContainer {
         MethodRepositoryImpl methodRepository = new MethodRepositoryImpl();
 
         CheckIsThreadRun checkIsThreadRun = mock(CheckIsThreadRun.class);
-        when(checkIsThreadRun.isThreadRun()).thenReturn(true);
+        when(checkIsThreadRun.isThreadRun()).thenReturn(false);
 
         ReadWriteLockMap readWriteLockMap = new  ReadWriteLockMap();
 

@@ -42,6 +42,10 @@ public class VMLens {
                         processRunContextBuilder.build()
                 );
 
+        if(! processEvents.hasThreadAndLoopDescription()) {
+            return;
+        }
+
         ResultForVerify result = processEvents.process();
 
         if (result.dataRaceCount() > 0) {

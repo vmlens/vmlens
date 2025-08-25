@@ -73,11 +73,16 @@ public class WriteEventToFile implements Runnable {
                         ThreadInfo[] infos = bean.getThreadInfo(threadIds);
                         boolean nonDemonThreadActive = false;
                         for (ThreadInfo info : infos) {
-                            if(! info.isDaemon() &&
-                                    info.getThreadState() != Thread.State.TERMINATED &&
-                                    ! ThreadLocalForParallelize.ANARSOFT_THREAD_NAME.equals(info.getThreadName()) &&
-                                    ! info.getThreadName().startsWith("DestroyJavaVM"))  {
-                                nonDemonThreadActive = true;
+                            /*  If a thread of the given ID is a virtual thread, is not alive, or does not exist,
+                             *  the corresponding element in the returned array will contain null.
+                             */
+                            if(info != null) {
+                                if(! info.isDaemon() &&
+                                        info.getThreadState() != Thread.State.TERMINATED &&
+                                        ! ThreadLocalForParallelize.ANARSOFT_THREAD_NAME.equals(info.getThreadName()) &&
+                                        ! info.getThreadName().startsWith("DestroyJavaVM"))  {
+                                    nonDemonThreadActive = true;
+                                }
                             }
                         }
                         if(! nonDemonThreadActive) {

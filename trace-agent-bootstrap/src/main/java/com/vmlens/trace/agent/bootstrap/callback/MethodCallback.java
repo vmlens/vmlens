@@ -64,6 +64,28 @@ public class MethodCallback {
         }
     }
 
+    public static void constructorMethodEnter(int methodId) {
+        if(canProcess()) {
+            startProcess();
+            try {
+                methodCallbackImpl.constructorMethodEnter(methodId);
+            } finally {
+                stopProcess();
+            }
+        }
+    }
+
+    public static void constructorMethodExit(int methodId) {
+        if(canProcess()) {
+            startProcess();
+            try {
+                methodCallbackImpl.constructorMethodExit(methodId);
+            } finally {
+                stopProcess();
+            }
+        }
+    }
+
     // Visible for Test
     public static void setMethodCallbackImpl(MethodCallbackImpl methodCallbackImpl) {
         MethodCallback.methodCallbackImpl = methodCallbackImpl;
