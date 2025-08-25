@@ -42,4 +42,5 @@ jobs:
         name: my-artifact
         path: |
           test-vmlens-maven-plugin/target/vmlens-report/
-          test-vmlens-maven-plugin/target/vmlens-agent/vmlens
+          test-vmlens-maven-plugin/target/vmlens-agent/vmlens/
+          vmlens-maven-plugin/target/invoker/
