@@ -21,6 +21,8 @@ import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 
+import java.lang.invoke.MethodType;
+
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 
@@ -149,9 +151,6 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       Filter("net/bytebuddy"),
       Filter("org/objenesis"),
-
-      // Need to run gradle 8
-      //Filter("org/apache/commons/lang/StringUtils"),
 
       Include(""),
     );
