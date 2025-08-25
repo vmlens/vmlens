@@ -368,6 +368,9 @@
                     <source>1.8</source>
                     <excludePackageNames>*.internal.*</excludePackageNames>
                     <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <charset>UTF-8</charset>
                 </configuration>
             </plugin>
         </plugins>
