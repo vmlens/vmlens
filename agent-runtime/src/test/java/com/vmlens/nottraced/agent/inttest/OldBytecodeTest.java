@@ -17,9 +17,8 @@ public class OldBytecodeTest extends AbstractIntTest {
      *   class version 45.3 (196653)
      *   e.g. jdk 1.1
      */
-
     @Test
-    public void staticMethodCallWithSynchronizedBlock() throws ClassNotFoundException, InstantiationException,
+    public void oldByteCodeForExampleStringUtilsCanBeTransformed() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
         MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);

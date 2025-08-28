@@ -68,6 +68,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 */
       DoNotTraceIn("java/lang/invoke/MethodType"),
 
+      DoNotTraceIn("com/vmlens/test/guineapig/DoNotTraceIn"),
+
       loadNotYetImplemented(),
 
       forGuineaPig(),
@@ -123,6 +125,10 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       atomicReferenceArray(),
 
       ThreadModel("java/lang/Thread"),
+      
+      // Not sure if I need this,
+      // anonymous classes are called
+      // using the containing class name not the class they extend
       FilterInnerIncludeAnonymousClass("java/lang/Thread$"),
 
       VMLensApi("com/vmlens/api/AllInterleavings"),

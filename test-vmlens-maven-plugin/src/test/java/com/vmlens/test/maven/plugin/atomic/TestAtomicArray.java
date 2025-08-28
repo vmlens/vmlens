@@ -23,15 +23,15 @@ public class TestAtomicArray {
         Set<Integer> countSet = new HashSet<>();
         try(AllInterleavings allInterleavings = new AllInterleavings("testAtomicArray")) {
             while (allInterleavings.hasNext()) {
-                final AtomicIntegerArray atomicInteger = new AtomicIntegerArray(8);
+                final AtomicIntegerArray atomicArray = new AtomicIntegerArray(8);
                 Thread first = new Thread() {
                     @Override
                     public void run() {
-                        atomicInteger.incrementAndGet(3);
+                        atomicArray.incrementAndGet(3);
                     }
                 };
                 first.start();
-                countSet.add(atomicInteger.incrementAndGet(3));
+                countSet.add(atomicArray.incrementAndGet(3));
                 first.join();
             }
         }

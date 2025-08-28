@@ -56,8 +56,9 @@ object ProcessEvents {
   def main(args: Array[String]): Unit = {
     val dir = Paths.get(args(0));
     val reportDir = Paths.get(args(1));
-    new ProcessEvents(dir, reportDir, new ProcessRunContextBuilder().
-      build()).
+    new ProcessEvents(dir, reportDir, new ProcessRunContextBuilder()
+      .withShowAllRuns()
+      .build()).
       process();
 
   }
