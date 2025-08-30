@@ -1,7 +1,8 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.NotInAtomicCallbackStrategy;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
@@ -9,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 /**
  * Used for pre analyzed methods to set the in method id for the runtime action
  */
-public class SetInMethodIdAndPositionAtThreadLocal implements CallbackAction {
+public class SetInMethodIdAndPositionAtThreadLocal implements InTestAction {
 
     private final InMethodIdAndPosition inMethodIdAndPosition;
     private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();

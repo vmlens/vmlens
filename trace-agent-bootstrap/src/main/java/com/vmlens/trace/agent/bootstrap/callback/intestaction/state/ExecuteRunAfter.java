@@ -1,6 +1,6 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;

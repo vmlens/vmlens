@@ -11,7 +11,6 @@ import com.anarsoft.race.detection.event.interleave._;
 
 class MethodExitEventGen (
    val threadIndex  : Int  
- ,  val methodId  : Int  
  ,  val methodCounter  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
@@ -20,7 +19,6 @@ class MethodExitEventGen (
 override def toString : String = {
   var text =  "MethodExitEventGen" 
   text = text + ", threadIndex:" +  threadIndex 
-  text = text + ", methodId:" +  methodId 
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
@@ -32,11 +30,6 @@ override def equals(other: Any) : Boolean = {
       case that: MethodExitEventGen => 
         {
              if( threadIndex != that.threadIndex )
-             {
-               false;
-             }
-             else
-             if( methodId != that.methodId )
              {
                false;
              }
@@ -70,8 +63,6 @@ object  MethodExitEventGen
    {
      val result = new MethodExitEventGen (
           
-            data.readInt()
-          ,
             data.readInt()
           ,
             data.readInt()

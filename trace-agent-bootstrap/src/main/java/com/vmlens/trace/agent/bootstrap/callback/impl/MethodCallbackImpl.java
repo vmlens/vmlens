@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.OnAfterMethodCall;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetInMethodIdAndPositionAtThreadLocal;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.OnAfterMethodCall;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.SetInMethodIdAndPositionAtThreadLocal;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;

@@ -1,7 +1,8 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.NotInAtomicCallbackStrategy;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
@@ -10,7 +11,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadStartedByPoolConte
 
 import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD_POOL;
 
-public class StartNewThreadByPool implements CallbackAction {
+public class StartNewThreadByPool implements InTestAction {
 
     private final Object pool;
     private final Runnable task;

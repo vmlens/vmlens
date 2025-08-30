@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.StartNewThreadByPool;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.StartNewThreadByPool;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 
 import java.util.concurrent.atomic.AtomicInteger;

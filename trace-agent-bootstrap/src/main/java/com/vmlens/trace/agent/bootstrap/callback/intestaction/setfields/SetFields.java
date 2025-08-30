@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 

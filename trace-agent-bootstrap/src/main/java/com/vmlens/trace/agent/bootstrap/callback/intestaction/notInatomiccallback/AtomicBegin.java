@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 

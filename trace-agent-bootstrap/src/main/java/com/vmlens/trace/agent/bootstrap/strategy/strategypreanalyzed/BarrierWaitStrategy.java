@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyType;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfterLockExitWaitOrThreadStart;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunBeforeLockExitOrWait;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.AtomicBegin;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.AtomicEnd;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetInMethodIdPositionObjectHashCode;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfterLockExitWaitOrThreadStart;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunBeforeLockExitOrWait;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.AtomicBegin;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.AtomicEnd;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierWaitEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierWaitExitEvent;
 

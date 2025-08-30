@@ -1,6 +1,6 @@
 package com.vmlens.api;
 
-public class ExceptionHandlerForRunnableWithException implements Runnable {
+class ExceptionHandlerForRunnableWithException implements Runnable {
 
     private final RunnableWithException runnable;
     private final ThrowableExceptionContainer exceptionContainer;

@@ -8,7 +8,6 @@ import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndR
 public class MethodExitEventGen  {
 
     protected int     threadIndex;
-    protected int     methodId;
     protected int     methodCounter;
     protected int     loopId;
     protected int     runId;
@@ -20,7 +19,6 @@ public boolean equals(Object o) {
 
     MethodExitEventGen that = (MethodExitEventGen) o;
     if ( threadIndex != that.threadIndex) return false;
-    if ( methodId != that.methodId) return false;
     if ( methodCounter != that.methodCounter) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
@@ -31,7 +29,6 @@ public boolean equals(Object o) {
 public String toString() {
     return "MethodExitEventGen{" +
     "threadIndex=" + threadIndex +
-    "methodId=" + methodId +
     "methodCounter=" + methodCounter +
     "loopId=" + loopId +
     "runId=" + runId +
@@ -47,7 +44,6 @@ public String toString() {
 public void serialize(DataOutputStream buffer) throws Exception {
 buffer.write( (byte)  20 );
      buffer.writeInt( threadIndex ); 
-     buffer.writeInt( methodId ); 
      buffer.writeInt( methodCounter ); 
      buffer.writeInt( loopId ); 
      buffer.writeInt( runId ); 

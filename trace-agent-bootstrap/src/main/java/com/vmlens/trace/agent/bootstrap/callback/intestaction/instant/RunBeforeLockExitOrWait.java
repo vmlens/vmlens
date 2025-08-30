@@ -1,12 +1,13 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.NotInAtomicCallbackStrategy;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFields;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetFields;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 
-public class RunBeforeLockExitOrWait<EVENT extends ExecuteBeforeEvent> implements CallbackAction {
+public class RunBeforeLockExitOrWait<EVENT extends ExecuteBeforeEvent> implements InTestAction {
 
     private final EVENT runtimeEvent;
     private final SetFields<EVENT> setFieldsStrategy;

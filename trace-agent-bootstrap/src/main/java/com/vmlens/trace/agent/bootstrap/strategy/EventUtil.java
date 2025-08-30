@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.strategy;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFieldsNoOp;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObjectHashCode;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetFieldsNoOp;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodExitEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorEnterEvent;
@@ -38,7 +38,7 @@ public class EventUtil {
     }
 
     public static RunAfter<MethodExitEvent> createMethodExit(EventContext context) {
-        return new RunAfter<>(new MethodExitEvent(context.methodId()),
+        return new RunAfter<>(new MethodExitEvent(),
                 new SetFieldsNoOp<>());
     }
 

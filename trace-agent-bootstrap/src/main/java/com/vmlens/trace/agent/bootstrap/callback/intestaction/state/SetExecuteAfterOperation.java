@@ -1,12 +1,12 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteAfterOperation;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.NotInAtomicCallbackStrategy;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 
-public class SetExecuteAfterOperation implements CallbackAction {
+public class SetExecuteAfterOperation implements InTestAction {
 
     private final ExecuteAfterOperation runtimeEventAndSetInMethodIdAndPosition;
     private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();

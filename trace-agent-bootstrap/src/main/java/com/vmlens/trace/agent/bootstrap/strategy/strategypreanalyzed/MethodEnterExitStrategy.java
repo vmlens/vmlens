@@ -1,20 +1,18 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.methodExitEvent;
-import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.newTask;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.*;
 
 /**
- *
- * used for FutureTask and similar classes.
- * So all pre analyzed classes which implement runnable
+ * when we only need a method enter/exit in a preanalyzed class
+ * for example future run
  *
  */
 
-public class FutureRunStrategy implements StrategyPreAnalyzed {
+public class MethodEnterExitStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void methodEnter(EnterExitContext context) {
-        newTask(context);
+        methodEnterEvent(context);
     }
 
     @Override

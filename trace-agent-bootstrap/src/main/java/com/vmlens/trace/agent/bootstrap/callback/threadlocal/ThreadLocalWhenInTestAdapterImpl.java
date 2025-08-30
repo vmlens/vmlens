@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.JoinAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
@@ -24,14 +24,14 @@ public class ThreadLocalWhenInTestAdapterImpl implements ThreadLocalWhenInTestAd
     }
 
     @Override
-    public boolean process(CallbackAction callbackAction) {
+    public boolean process(InTestAction inTestAction) {
         ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider
                 .threadLocalForParallelize();
 
         ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
         if (dataWhenInTest != null) {
-            if(callbackAction.notInAtomicCallback(dataWhenInTest)) {
-                callbackAction.execute(dataWhenInTest,eventQueueInternal);
+            if(inTestAction.notInAtomicCallback(dataWhenInTest)) {
+                inTestAction.execute(dataWhenInTest,eventQueueInternal);
                 return true;
             }
         }

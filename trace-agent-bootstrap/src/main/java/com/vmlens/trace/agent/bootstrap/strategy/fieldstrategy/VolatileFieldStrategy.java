@@ -1,11 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteAfterOperation;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteRunAfter;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFieldsNoOp;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObjectHashCode;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.SetExecuteAfterOperation;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteAfterOperation;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteRunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileFieldAccessEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileStaticFieldAccessEvent;

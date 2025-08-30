@@ -1,14 +1,16 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.NotInAtomicCallbackStrategy;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.notInatomiccallback.WithoutAtomic;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFields;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.AfterContext;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetFields;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 
 
-public class RunAfter<EVENT extends RuntimeEvent> implements CallbackAction {
+public class RunAfter<EVENT extends RuntimeEvent> implements InTestAction {
 
     private final EVENT runtimeEvent;
     private final SetFields<EVENT> setFieldsStrategy;

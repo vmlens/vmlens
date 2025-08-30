@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.NotYetImplementedAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.NotYetImplementedAction;
 
 public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
 
