@@ -6,6 +6,7 @@ import com.vmlens.nottraced.agent.classtransformer.methodvisitor.AddArrayAccessA
 import com.vmlens.nottraced.agent.classtransformer.methodvisitor.AddFieldAccessCall;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitor.AddMonitorCall;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
+import com.vmlens.nottraced.agent.classtransformer.methodvisitormethodenterexit.MethodEnterExitTransform;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
@@ -42,6 +43,7 @@ public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {
                 .analyze(access);
 
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = new TLinkedList<>();
+        result.add(wrap(MethodEnterExitTransform.factory()));
         result.add(wrap(AddMonitorCall.factory()));
         result.add(wrap(AddFieldAccessCall.factory(fieldIdMap)));
         result.add(wrap(AddArrayAccessAccessCall.factory()));

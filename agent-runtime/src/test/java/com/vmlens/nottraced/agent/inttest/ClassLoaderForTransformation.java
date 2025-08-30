@@ -11,7 +11,7 @@ import java.io.OutputStream;
 
 public class ClassLoaderForTransformation extends ClassLoader {
 
-    private static final boolean TRACE_CLASSES = false;
+    private static final boolean TRACE_CLASSES = true;
     private final ClassLoader testClassLoader;
 
 

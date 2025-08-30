@@ -4,6 +4,7 @@ package com.vmlens.nottraced.agent.classtransformer;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClassTransformerAllTest {
 
-    //@Test
+    @Test
     public void methodCall() throws IOException {
         // Given
         RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
