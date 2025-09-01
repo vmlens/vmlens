@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.stopProcess;
+import com.vmlens.trace.agent.bootstrap.callback.impl.DoNotTraceCallbackImpl;
 
 /**
  *
@@ -30,12 +29,17 @@ import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLoca
 
 public class DoNotTraceCallback {
 
+    private static volatile DoNotTraceCallbackImpl doNotTraceCallbackImpl = new DoNotTraceCallbackImpl();
+
     public static void methodEnter(Object object, int methodId) {
-        startProcess();
+        doNotTraceCallbackImpl.methodEnter(object,methodId);
     }
 
     public static void methodExit(Object object, int methodId) {
-        stopProcess();
+        doNotTraceCallbackImpl.methodExit(object,methodId);
     }
 
+    public static void setDoNotTraceCallbackImpl(DoNotTraceCallbackImpl doNotTraceCallbackImpl) {
+        DoNotTraceCallback.doNotTraceCallbackImpl = doNotTraceCallbackImpl;
+    }
 }

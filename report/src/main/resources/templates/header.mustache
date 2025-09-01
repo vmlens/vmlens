@@ -17,35 +17,3 @@
     <![endif]-->
 </head>
 <body>
-{{#showHeader}}
-
-<header class="navbar navbar-static-top">
-  <div class="container" style="padding-top: 10px">
-    <div class="navbar-header">
-	  </div>   	 
-   	   <ul class="nav navbar-nav navbar-right" style="padding-top: 10px">
-   	 	 {{#headerList}} 
-   	 	  <li {{#active}} class="active" {{/active}} > <a  href="{{root}}{{href}}" >{{name}}</a> </li>  
-   	 	 {{/headerList}}
-   	   </ul>	 
-	
-	</div>
-
-</header>
-{{/showHeader}}
-
-{{#title}}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="text-center"><h1 style="display: inline;">
-                    {{#titlePrefix}}
-                        <strong style=" color: #cc0000;">{{titlePrefix}}</strong>
-                    {{/titlePrefix}}
-                    {{{title}}}  </h1>
-                    <a href="{{helpLink}}"><img src="{{root}}img/help.png"/>Help</a></div>
-            </div>
-        </div>
-        <hr>
-    </div>
-{{/title}}

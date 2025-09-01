@@ -45,5 +45,5 @@ class LoopResultList(val loopId : Int) extends LoopResult  {
     resultList.append(runResult);
   }
 
-  override def count: Int = resultList.size
+  override def count: Int = resultList.size - 1;
 }

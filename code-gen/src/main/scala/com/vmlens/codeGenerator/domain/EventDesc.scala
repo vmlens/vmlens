@@ -5,7 +5,7 @@ import com.vmlens.codeGenerator.domain.EventDescBarrier.barrier
 import com.vmlens.codeGenerator.domain.EventDescCondition.{conditionNotify, conditionWait}
 import com.vmlens.codeGenerator.domain.EventDescControl.{runStartAndEnd, warning}
 import com.vmlens.codeGenerator.domain.EventDescLockOrMonitor.{lock, methodWithLock, monitor}
-import com.vmlens.codeGenerator.domain.EventDescMethod.method
+import com.vmlens.codeGenerator.domain.EventDescMethod.{methodEnter,methodExit}
 import com.vmlens.codeGenerator.domain.EventDescNonVolatileField.{arrayAccess, normalField, staticField}
 import com.vmlens.codeGenerator.domain.EventDescThread.{threadJoin, threadStart}
 import com.vmlens.codeGenerator.domain.EventDescVolatileField.{volatileField, volatileStaticField}
@@ -144,8 +144,8 @@ object EventDesc extends GenericDesc {
       // only used in the report
       eventList.append(conditionNotify("ConditionNotifyEventGen", " extends ConditionNotifyEvent  ", typSyncActions));
 
-      eventList.append(method("MethodEnterEventGen", " extends MethodEnterEvent  ", typMethod));
-      eventList.append(method("MethodExitEventGen", " extends MethodExitEvent  ", typMethod));
+      eventList.append(methodEnter("MethodEnterEventGen", " extends MethodEnterEvent  ", typMethod));
+      eventList.append(methodExit("MethodExitEventGen", " extends MethodExitEvent  ", typMethod));
       
       eventList.append(threadStart("ThreadStartEventGen", " extends ThreadStartEvent  ", typSyncActions));
       eventList.append(threadJoin("ThreadJoinedEventGen", " extends ThreadJoinedEvent  ", typSyncActions));

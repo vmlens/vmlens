@@ -1,6 +1,6 @@
 package com.vmlens.api;
 
-public class ThrowableExceptionContainer {
+class ThrowableExceptionContainer {
 
     private volatile Throwable exception;
 

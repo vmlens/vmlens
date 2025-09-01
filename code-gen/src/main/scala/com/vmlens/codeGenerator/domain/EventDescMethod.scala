@@ -8,7 +8,7 @@ import scala.collection.mutable.ArrayBuffer
 
 object EventDescMethod {
 
-  private def fieldListMethod() = {
+  private def fieldListMethodEnter() = {
     val fields = new ArrayBuffer[FieldDesc]();
     fields.append(threadIndex);
     fields.append(methodId);
@@ -18,8 +18,20 @@ object EventDescMethod {
     fields;
   }
 
-  def method(eventName: String, extendsString: String, typControl: EventTyp): EventDesc =
-    new EventDesc(eventName, typControl, nextId(), fieldListMethod(), extendsString)
+  private def fieldListMethodExit() = {
+    val fields = new ArrayBuffer[FieldDesc]();
+    fields.append(threadIndex);
+    fields.append(methodCounter);
+    fields.append(loopId);
+    fields.append(runId);
+    fields;
+  }
+
+  def methodEnter(eventName: String, extendsString: String, typControl: EventTyp): EventDesc =
+    new EventDesc(eventName, typControl, nextId(), fieldListMethodEnter(), extendsString)
+
+  def methodExit(eventName: String, extendsString: String, typControl: EventTyp): EventDesc =
+    new EventDesc(eventName, typControl, nextId(), fieldListMethodExit(), extendsString)
 
 
 }

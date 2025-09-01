@@ -3,9 +3,9 @@ package com.vmlens.report.runelementtype;
 public enum ReportLockType {
 
     MONITOR("monitor","monitor") ,
-    REENTRANT_LOCK("reentrant lock", "write") ,
+    REENTRANT_LOCK("reentrant lock", "write lock") ,
     READ_LOCK("read lock" , "read") ,
-    WRITE_LOCK("write lock" , "write");
+    WRITE_LOCK("write lock" , "write lock");
 
     private final String text;
     private final String textForMethodWithLock;

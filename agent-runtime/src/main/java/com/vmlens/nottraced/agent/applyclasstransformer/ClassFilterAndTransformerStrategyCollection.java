@@ -41,11 +41,6 @@ public class ClassFilterAndTransformerStrategyCollection {
 
         for (TLinkableWrapper<ClassFilterAndTransformerStrategy> transformerWrapper : classArrayTransformerList) {
             ClassFilterAndTransformerStrategy transformer = transformerWrapper.element();
-
-           /* if("java/io/StringReader".equals(name)) {
-                String x = name;
-            }
-             */
             if (transformer.appliesTo(name)) {
                 return transformer.transformStrategy();
             }

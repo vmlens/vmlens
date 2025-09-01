@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteSynchronizedMethodExit;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.SetExecuteAfterOperation;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteSynchronizedMethodExit;
 
 import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.*;
 

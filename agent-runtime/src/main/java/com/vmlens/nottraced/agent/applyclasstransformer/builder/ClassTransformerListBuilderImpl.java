@@ -57,13 +57,14 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
 
     @Override
     public void addFilterInnerIncludeAnonymous(String name) {
-        add(new ClassFilterStartsWith(name), transformerStrategyFactory.createNoOp());
+        add(new ClassFilterStartsWith(name), new TransformerStrategyFilterInnerClasses(name,
+                transformerStrategyFactory.createAll()));
     }
 
     @Override
     public void addDoNotTraceIn(String name) {
         add(new ClassFilterEquals(name),
-                new TransformerStrategyFilterInnerClasses(name,transformerStrategyFactory.createAll()));
+                transformerStrategyFactory.createDoNotTraceIn());
     }
 
     public ClassFilterAndTransformerStrategyCollection build() {

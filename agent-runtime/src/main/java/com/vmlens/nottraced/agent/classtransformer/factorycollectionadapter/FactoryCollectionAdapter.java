@@ -8,5 +8,4 @@ public interface FactoryCollectionAdapter {
 
     TLinkedList<TLinkableWrapper<MethodVisitorFactory>> get(FactoryCollectionAdapterContext context);
 
-
 }

@@ -1,6 +1,6 @@
 package com.vmlens.api;
 
-public class RuntimeExceptionContainer {
+class RuntimeExceptionContainer {
 
     private volatile RuntimeException exception;
 

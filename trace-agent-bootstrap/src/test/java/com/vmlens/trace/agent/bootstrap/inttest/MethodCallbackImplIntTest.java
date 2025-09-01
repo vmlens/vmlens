@@ -32,7 +32,7 @@ public class MethodCallbackImplIntTest {
         methodEnter.setLoopId(LOOP_ID);
         methodEnter.setRunId(RUN_ID);
 
-        MethodExitEvent methodExit = new MethodExitEvent(methodId);
+        MethodExitEvent methodExit = new MethodExitEvent();
         methodExit.setThreadIndex(TEST_THREAD_INDEX);
         methodExit.setMethodCounter(perThreadCounter(2));
         methodExit.setLoopId(LOOP_ID);

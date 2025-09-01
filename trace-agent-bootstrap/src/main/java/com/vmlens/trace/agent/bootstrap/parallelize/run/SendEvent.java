@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.AfterContext;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;

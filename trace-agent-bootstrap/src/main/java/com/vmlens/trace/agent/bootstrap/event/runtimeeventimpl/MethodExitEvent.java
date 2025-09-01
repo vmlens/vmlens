@@ -7,8 +7,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.PluginEventOnly;
 
 public class MethodExitEvent extends MethodExitEventGen implements PluginEventOnly {
 
-    public MethodExitEvent(int methodId) {
-        this.methodId = methodId;
+    public MethodExitEvent() {
     }
 
     public void setThreadIndex(int threadIndex) {

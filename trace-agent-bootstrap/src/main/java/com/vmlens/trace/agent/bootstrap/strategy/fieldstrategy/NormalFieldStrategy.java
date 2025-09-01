@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetFieldsNoOp;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObjectHashCode;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetFieldsNoOp;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.FieldAccessEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.FieldAccessEventStatic;
@@ -18,10 +18,10 @@ public class NormalFieldStrategy implements FieldStrategy {
         fieldAccessEvent.setMethodId(inMethodId);
         fieldAccessEvent.setOperation(memoryAccessType);
 
-        CallbackAction callbackAction = new RunAfter<>(fieldAccessEvent,
+        InTestAction inTestAction = new RunAfter<>(fieldAccessEvent,
                 new SetObjectHashCode<>(fromObject));
 
-        threadLocalWhenInTestAdapter.process(callbackAction);
+        threadLocalWhenInTestAdapter.process(inTestAction);
     }
 
     @Override
@@ -33,9 +33,9 @@ public class NormalFieldStrategy implements FieldStrategy {
         fieldAccessEvent.setMethodId(inMethodId);
         fieldAccessEvent.setOperation(memoryAccessType);
 
-        CallbackAction callbackAction = new RunAfter<>(fieldAccessEvent,
+        InTestAction inTestAction = new RunAfter<>(fieldAccessEvent,
                 new SetFieldsNoOp<>());
 
-        threadLocalWhenInTestAdapter.process(callbackAction);
+        threadLocalWhenInTestAdapter.process(inTestAction);
     }
 }

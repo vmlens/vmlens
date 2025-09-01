@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.OnAfterMethodCall;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.OnAfterMethodCall;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;

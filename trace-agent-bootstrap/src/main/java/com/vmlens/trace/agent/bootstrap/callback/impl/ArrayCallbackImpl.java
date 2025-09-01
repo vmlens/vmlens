@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.callback.impl;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.RunAfter;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.setfields.SetObjectHashCode;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ArrayAccessEvent;
 
@@ -29,10 +29,10 @@ public class ArrayCallbackImpl {
         arrayAccessEvent.setMethodId(inMethodId);
         arrayAccessEvent.setOperation(operation);
 
-        CallbackAction callbackAction = new RunAfter<>(arrayAccessEvent,
+        InTestAction inTestAction = new RunAfter<>(arrayAccessEvent,
                 new SetObjectHashCode<>(array));
 
-        threadLocalWhenInTestAdapter.process(callbackAction);
+        threadLocalWhenInTestAdapter.process(inTestAction);
     }
 
 }

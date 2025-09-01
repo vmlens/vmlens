@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.SetExecuteAfterOperation;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.executeafteroperation.ExecuteRunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.SetExecuteAfterOperation;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteRunAfter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.AtomicNonBlockingEvent;
 
 public class NonBlockingStrategy implements StrategyPreAnalyzed {

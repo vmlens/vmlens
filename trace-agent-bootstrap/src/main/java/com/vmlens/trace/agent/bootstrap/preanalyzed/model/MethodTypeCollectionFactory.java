@@ -57,7 +57,7 @@ public class MethodTypeCollectionFactory {
 
         add(FUTURE_GET);
         add(FUTURE_SET);
-        add(FUTURE_RUN);
+        add(METHOD_ENTER_EXIT);
 
 
         return new MethodTypeCollection(methodTypeToId,idToMethodType);

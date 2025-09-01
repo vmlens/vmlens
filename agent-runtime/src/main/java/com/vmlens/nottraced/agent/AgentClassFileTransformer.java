@@ -16,7 +16,6 @@ import java.security.ProtectionDomain;
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.stopProcess;
 
-
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
     private final ClassFilterAndTransformerStrategyCollection classArrayTransformerCollection;
@@ -68,10 +67,10 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
-              /*  if(name.contains("org/apache/commons/lang/StringUtils")) {
+          /*     if(name.contains("java/util/concurrent/ConcurrentHashMap")) {
                     logTransformedClass(name, transformed);
                 }
-                */
+            */
                 return transformed;
             }
         } catch (Throwable e) {
