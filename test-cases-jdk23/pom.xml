@@ -3,69 +3,50 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
         <version>1.2.14-SNAPSHOT</version>
     </parent>
 
-
-    <artifactId>test-vmlens-testng</artifactId>
-    <name>test-vmlens-testng</name>
-
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <organization>
-        <name>vmlens</name>
-        <url>https://www.vmlens.com</url>
-    </organization>
-
-
-    <developers>
-        <developer>
-            <name>Thomas Krieger</name>
-            <email>thomas.krieger@vmlens.com</email>
-            <organization>vmlens</organization>
-            <organizationUrl>https://www.vmlens.com</organizationUrl>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
-        <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
-        <url>git@github.com:vmlens/vlmens.git</url>
-    </scm>
+    <artifactId>test-cases-jdk23</artifactId>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
     <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>java-hamcrest</artifactId>
+            <groupId>org.jpos</groupId>
+            <artifactId>jpos</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-core</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -73,7 +54,7 @@
             <plugins>
                 <plugin>
                     <groupId>com.vmlens</groupId>
-                    <artifactId>vmlens-maven-plugin</artifactId>
+                    <artifactId>vmlens-maven-plugin-integtest</artifactId>
                     <version>${project.version}</version>
                 </plugin>
             </plugins>
@@ -88,8 +69,17 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.vmlens</groupId>
-                <artifactId>vmlens-maven-plugin</artifactId>
+                <artifactId>vmlens-maven-plugin-integtest</artifactId>
                 <executions>
                     <execution>
                         <id>test</id>
@@ -101,5 +91,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

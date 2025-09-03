@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.13</version>
+    <version>1.2.14-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -50,6 +50,11 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.17.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-annotations</artifactId>
+                <version>4.9.3</version>
             </dependency>
             <dependency>
                 <groupId>com.github.spullara.mustache.java</groupId>
@@ -214,6 +219,11 @@
                 <version>2.0.0.0</version>
             </dependency>
             <dependency>
+                <groupId>org.jpos</groupId>
+                <artifactId>jpos</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>5.12.2</version>
@@ -247,6 +257,11 @@
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala3-library_3</artifactId>
                 <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.batch</groupId>
+                <artifactId>spring-batch-core</artifactId>
+                <version>6.0.0-M2</version>
             </dependency>
             <dependency>
                 <groupId>org.scalatest</groupId>
@@ -305,6 +320,15 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>jdk17</id>
+            <activation>
+                <jdk>[23,)</jdk>
+            </activation>
+            <modules>
+                <module>test-cases-jdk23</module>
+            </modules>
         </profile>
     </profiles>
 

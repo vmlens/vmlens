@@ -1,6 +1,7 @@
 package com.vmlens;
 
 import com.anarsoft.race.detection.process.run.ProcessRunContext;
+import com.anarsoft.race.detection.process.run.ProcessRunContextBuilder;
 import com.vmlens.expected.check.BuildEventListMap;
 import com.vmlens.expected.check.CheckLeftBeforeRight;
 import com.vmlens.expected.check.CheckLockEnterExit;
@@ -24,6 +25,21 @@ public class ProcessEvents {
     }
 
     static void process(File eventDirectory, File reportDirectory) {
+        if(reportDirectory.getAbsolutePath().contains("jdk23")) {
+            processJdk23(eventDirectory,reportDirectory);
+        } else {
+            processJdk11(eventDirectory,reportDirectory);
+        }
+    }
+
+    private static void processJdk23(File eventDirectory, File reportDirectory) {
+        ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
+                reportDirectory.toPath(),
+                new ProcessRunContextBuilder().build()).process();
+
+    }
+
+    private static void processJdk11(File eventDirectory, File reportDirectory) {
         Map<String,Integer> loopNameToId = new HashMap<>();
         CheckLeftBeforeRight check = new CheckLeftBeforeRight(new TestCaseCollectionFactory().create(),
                 loopNameToId);
@@ -33,7 +49,7 @@ public class ProcessEvents {
         ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
                 new ProcessRunContext(check,
-                buildEventListMap,false,false,false)).process();
+                        buildEventListMap,false,false,false)).process();
         checkDataRaces(result);
 
         int loopId = loopNameToId.get("readWriteLockTest");
@@ -41,6 +57,7 @@ public class ProcessEvents {
         List<EventForAssertion> list = loopIdToEventForAssertionList.get(loopId);
         new CheckLockEnterExit().check(list);
     }
+
 
     private static void checkDataRaces(ResultForVerify result ) {
         Set<String> testWithDataRace = new HashSet<>();
