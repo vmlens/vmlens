@@ -11,8 +11,8 @@ public abstract class BarrierKey implements Comparable<BarrierKey> {
         if(getClass() != other.getClass()) {
             return false;
         }
-        int myCode = normalizeContext.normalizeObjectHashCode(objecthashcode());
-        int otherCode =   normalizeContext.normalizeObjectHashCode(other.objecthashcode());
+        int myCode = normalizeContext.normalizeObjectHashCode(objectHashcode());
+        int otherCode =   normalizeContext.normalizeObjectHashCode(other.objectHashcode());
         return myCode == otherCode;
     }
 
@@ -22,10 +22,10 @@ public abstract class BarrierKey implements Comparable<BarrierKey> {
             return Integer.compare(category(),other.category());
         }
 
-        return Long.compare(objecthashcode(), other.objecthashcode());
+        return Long.compare(objectHashcode(), other.objectHashcode());
     }
 
     public abstract void accept(BarrierKeyVisitor visitor);
-    public abstract long objecthashcode();
+    public abstract long objectHashcode();
     protected abstract int category();
 }

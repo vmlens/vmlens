@@ -22,10 +22,10 @@ public class VolatileAccessTest {
         when(descriptionContext.fieldName(anyInt())).thenReturn("field");
 
         // When
-        String text = runElementType.asString(descriptionContext);
+        String text = runElementType.element(descriptionContext);
 
         // Then
-        assertThat(text,is("write volatile field@657"));
+        assertThat(text,is("field@657"));
     }
 
 }

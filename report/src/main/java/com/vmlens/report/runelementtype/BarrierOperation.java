@@ -15,10 +15,15 @@ public class BarrierOperation implements RunElementType  {
     }
 
     @Override
-    public String asString(DescriptionContext context) {
+    public String operation() {
         BarrierKeyTextBuilder barrierKeyTextBuilder = new BarrierKeyTextBuilder();
         barrierKey.accept(barrierKeyTextBuilder);
-        return barrierOperationType.text() + " " + barrierKeyTextBuilder.build();
+        return barrierKeyTextBuilder.build() + " " + barrierOperationType.text();
+    }
+
+    @Override
+    public String element(DescriptionContext context) {
+        return "" + barrierKey.objectHashcode();
     }
 
     @Override

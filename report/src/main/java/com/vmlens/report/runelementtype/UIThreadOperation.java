@@ -1,12 +1,12 @@
 package com.vmlens.report.runelementtype;
 
-public enum BarrierOperationType {
-    
-    NOTIFY("Notify") , WAIT_ENTER("Wait Enter") , WAIT_EXIT("Wait Exit") ;
+public enum UIThreadOperation {
+    START("Start") , JOIN("Join");
+
 
     private final String text;
 
-    BarrierOperationType(String text) {
+    UIThreadOperation(String text) {
         this.text = text;
     }
 

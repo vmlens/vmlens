@@ -4,7 +4,6 @@ import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.runelementtype.memoryaccesskey.MemoryAccessKey;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
-import org.apache.commons.text.StringEscapeUtils;
 
 public class VolatileAccess implements RunElementType {
 
@@ -17,8 +16,13 @@ public class VolatileAccess implements RunElementType {
     }
 
     @Override
-    public String asString(DescriptionContext context) {
-        return MemoryAccessType.asString(operation) +  " volatile " + memoryAccessKey.asString(context);
+    public String operation() {
+        return "Volatile " +  MemoryAccessType.asString(operation);
+    }
+
+    @Override
+    public String element(DescriptionContext context) {
+        return   memoryAccessKey.asString(context);
     }
 
     @Override

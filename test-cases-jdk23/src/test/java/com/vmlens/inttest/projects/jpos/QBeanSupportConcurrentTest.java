@@ -17,7 +17,6 @@ public class QBeanSupportConcurrentTest {
                 });
                 qbeanSupport.running();
                 first.join();
-
             }
         }
     }

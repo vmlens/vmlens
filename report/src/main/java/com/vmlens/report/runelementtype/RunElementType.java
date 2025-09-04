@@ -5,7 +5,9 @@ import com.vmlens.report.description.NeedsDescriptionCallback;
 
 public interface RunElementType {
 
-    String asString(DescriptionContext context);
+    String operation();
+
+    String element(DescriptionContext context);
 
     void addToNeedsDescription(NeedsDescriptionCallback callback);
     

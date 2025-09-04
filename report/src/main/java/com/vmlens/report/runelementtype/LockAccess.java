@@ -16,8 +16,13 @@ public class LockAccess implements RunElementType {
     }
 
     @Override
-    public String asString(DescriptionContext context) {
-        return monitorOperation.text() + " " +  lockType.text() +  "@" + objectHashCode ;
+    public String operation() {
+        return lockType.text()  +  " "  + monitorOperation.text() ;
+    }
+
+    @Override
+    public String element(DescriptionContext context) {
+        return "" + objectHashCode;
     }
 
     @Override

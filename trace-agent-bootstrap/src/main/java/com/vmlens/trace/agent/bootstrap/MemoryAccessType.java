@@ -17,13 +17,13 @@ public class MemoryAccessType {
 
     public static String asString(int operation) {
         if (operation == IS_READ) {
-            return "read";
+            return "Read";
         }
         if (operation == IS_WRITE) {
-            return "write";
+            return "Write";
         }
         if (operation == IS_READ_WRITE) {
-            return "readWrite";
+            return "ReadWrite";
         }
         return "unknown";
     }

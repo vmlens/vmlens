@@ -10,12 +10,12 @@ public class BarrierKeyTextBuilder implements BarrierKeyVisitor {
     
     @Override
     public void visit(FutureKey futureKey) {
-        text = "Future@" + futureKey.objecthashcode();
+        text = "Future" ;
     }
 
     @Override
     public void visit(PhaserKey phaserKey) {
-        text = "Phaser@" + phaserKey.objecthashcode();
+        text = "Phaser";
     }
     
     public String build() {

@@ -34,7 +34,7 @@ public class CreateHtmlReportIntegTest {
         List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceRoots = new
                 LinkedList<>();
 
-        UIRunElement uiRunElement = new UIRunElement(1, "<b>interleaveoperation</b> for field", "method", "4" , false);
+        UIRunElement uiRunElement = new UIRunElement(1, "<b>interleaveoperation</b> for field", "","method", "4" , false);
         uiRunElementWithStacktraceRoots.add(new UIRunElementWithStacktraceLeaf(uiRunElement, root));
 
         UILoopAndRunElementWithStacktraceLeafs uiLoopAndRunElementWithStacktraceRoots =

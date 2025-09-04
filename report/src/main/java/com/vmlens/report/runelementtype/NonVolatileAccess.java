@@ -18,8 +18,13 @@ public class NonVolatileAccess implements RunElementType  {
     }
 
     @Override
-    public String asString(DescriptionContext context) {
-        return MemoryAccessType.asString(operation) +  modifier() + memoryAccessKey.asString(context);
+    public String operation() {
+        return modifier() + MemoryAccessType.asString(operation);
+    }
+
+    @Override
+    public String element(DescriptionContext context) {
+        return  memoryAccessKey.asString(context);
     }
 
     @Override
@@ -29,9 +34,9 @@ public class NonVolatileAccess implements RunElementType  {
 
     private String modifier() {
         if(isDataRace) {
-            return " <span style=\"color: red;\">data race</span> ";
+            return "<span style=\"color: red;\">Data Race</span> ";
         }
-        return " ";
+        return "";
     }
 
 }

@@ -21,7 +21,7 @@ public class FutureKey extends BarrierKey {
         return Long.hashCode(objecthashcode);
     }
 
-    public long objecthashcode() {
+    public long objectHashcode() {
         return objecthashcode;
     }
 

@@ -3,20 +3,32 @@ package com.vmlens.report.runelementtype;
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.element.LoopRunAndThreadIndex;
+import com.vmlens.trace.agent.bootstrap.event.EventTypeThread;
 
 public class ThreadRunElementType implements RunElementType {
 
-    private final String text;
+    private final EventTypeThread eventTypeThread;
+    private final UIThreadOperation threadOperation;
+    
     private final LoopRunAndThreadIndex onThreadIndex;
 
-    public ThreadRunElementType(String text, LoopRunAndThreadIndex onThreadIndex) {
-        this.text = text;
+    public ThreadRunElementType(EventTypeThread eventTypeThread, 
+                                UIThreadOperation threadOperation, 
+                                LoopRunAndThreadIndex onThreadIndex) {
+        this.eventTypeThread = eventTypeThread;
+        this.threadOperation = threadOperation;
         this.onThreadIndex = onThreadIndex;
     }
 
     @Override
-    public String asString(DescriptionContext context) {
-        return String.format(text, context.threadName(onThreadIndex));
+    public String operation() {
+        return eventTypeThread.text() + " " + threadOperation.text();
+    }
+    
+
+    @Override
+    public String element(DescriptionContext context) {
+        return context.threadName(onThreadIndex);
     }
 
     @Override

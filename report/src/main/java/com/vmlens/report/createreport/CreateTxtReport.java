@@ -31,7 +31,7 @@ public class CreateTxtReport implements CreateReport {
                 uiRunElements.add(element.createRunElement());
             }
             OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
-            createOneReport.createUIRun(uiRunElements, writer);
+            createOneReport.createUIRun(uiRunElements, "" , writer);
             writer.close();
         }
     }

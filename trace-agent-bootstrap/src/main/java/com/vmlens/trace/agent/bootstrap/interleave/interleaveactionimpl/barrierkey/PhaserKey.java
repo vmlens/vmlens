@@ -9,7 +9,7 @@ public class PhaserKey extends BarrierKey {
     }
 
     @Override
-    public long objecthashcode() {
+    public long objectHashcode() {
         return objecthashcode;
     }
 
