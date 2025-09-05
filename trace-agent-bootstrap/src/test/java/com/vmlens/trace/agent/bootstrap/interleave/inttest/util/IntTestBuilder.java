@@ -1,13 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.interleave.inttest.util;
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.*;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWaitEnter;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.*;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierWaitEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 

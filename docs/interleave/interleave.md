@@ -1,9 +1,29 @@
 # Problem
 
-Complicated logic and same state.
-Solution: Separate logic into pipeline of n steps.
-Separate State handling and functional steps
-Challenge: Interfaces for data between the steps, what should be one step?
+Package structure
+Complicated logic and some state handling.
+
+# Structure
+
+state:
+    run
+    loop
+    alternatingorder
+    threadindexcollection
+
+data:
+    interleaveaction
+
+process:
+    buildalternatingorder
+    buildcalculatedrun
+
+
+# Dynamic
+
+client(actualRun) -> loop(actualRun,state)   {  actualRun         ->   buildalternatingorder(actualRun)
+                                                alternatingorder  ->   buildcalculatedrun(alternatingorder) }
+                           
 
 
 

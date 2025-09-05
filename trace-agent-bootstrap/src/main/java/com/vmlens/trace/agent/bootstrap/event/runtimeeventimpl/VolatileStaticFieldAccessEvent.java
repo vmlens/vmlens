@@ -4,9 +4,9 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileFieldAccessEventStaticGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.VolatileAccess;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileStaticFieldKey;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.VolatileAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileStaticFieldKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStaticGen  implements

@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.KeyToThreadIdToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 

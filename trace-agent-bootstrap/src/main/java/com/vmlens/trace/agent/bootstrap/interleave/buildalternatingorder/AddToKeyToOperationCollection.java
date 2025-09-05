@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.activelock.ActiveLockCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.activelock.ActiveLockCollection;
 
 public interface AddToKeyToOperationCollection {
     void addToKeyToOperationCollection(Position myPosition,

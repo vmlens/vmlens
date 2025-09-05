@@ -6,16 +6,15 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Al
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.SingleChildNode;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
-import com.vmlens.trace.agent.bootstrap.interleave.dependentoperation.DependentOperationAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.VolatileAccess;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.Barrier;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierWaitEnter;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.FutureKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileFieldKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.VolatileAccess;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.Barrier;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierWaitEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.FutureKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileFieldKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileKey;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;

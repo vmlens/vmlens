@@ -2,7 +2,7 @@ package com.vmlens.report.runelementtype;
 
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
 
 public class BarrierOperation implements RunElementType  {
 

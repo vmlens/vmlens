@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.event.impl
 
 import com.anarsoft.race.detection.event.interleave.locktype.{LockType, ReentrantLock, WriteLock}
 import com.anarsoft.race.detection.event.interleave.{WithLockEventGeneric, WithLockExitEvent}
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey
 
 trait LockTypeClassFromCategory[EVENT <: WithLockEventGeneric[EVENT]]  {
 

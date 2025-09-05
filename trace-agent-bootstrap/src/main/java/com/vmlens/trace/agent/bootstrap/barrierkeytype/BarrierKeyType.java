@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.barrierkeytype;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
 
 public interface BarrierKeyType {
 

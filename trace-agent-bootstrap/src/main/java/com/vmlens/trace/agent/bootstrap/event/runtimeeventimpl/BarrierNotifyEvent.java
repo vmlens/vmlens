@@ -7,8 +7,8 @@ import com.vmlens.trace.agent.bootstrap.event.gen.BarrierNotifyEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 
 public class BarrierNotifyEvent extends BarrierNotifyEventGen
         implements WithInMethodIdPositionObjectHashCode, ExecuteBeforeEvent {

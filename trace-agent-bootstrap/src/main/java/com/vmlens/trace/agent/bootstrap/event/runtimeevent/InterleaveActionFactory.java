@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeevent;
 
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveInfo;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;

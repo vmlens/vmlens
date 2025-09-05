@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ParallelizeActionAfter;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadJoinedEvent;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.MultiJoin;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MultiJoin;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveInfo;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;

@@ -5,8 +5,8 @@ import com.vmlens.trace.agent.bootstrap.event.gen.ThreadStartEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.ThreadStart;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.ThreadStart;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 

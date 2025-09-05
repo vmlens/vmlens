@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingordercontext.BuildAlternatingOrderContext;
 
 /**
  * this is either a block, e.g. start and end position
