@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.inttest.util;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.run.AlternatingOrderContainerFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
