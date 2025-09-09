@@ -1,11 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.strategy;
 
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapter;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 
 public interface EventContext {
 
     int methodId();
-    ThreadLocalWhenInTestAdapter threadLocalWhenInTestAdapter();
     Object object();
+    InTestActionProcessor inTestActionProcessor();
 
 }

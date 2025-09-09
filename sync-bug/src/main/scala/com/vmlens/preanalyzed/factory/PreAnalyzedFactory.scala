@@ -142,7 +142,34 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Filter("java/util/concurrent"),
       Filter("java/util/stream"),
       Filter("java/util/Arrays"),
-
+      
+      /*
+      ion.CallbackActionProcessorImpl.canProcess(CallbackActionProcessorImpl.java:88)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.process(CallbackActionProcessorImpl.java:93)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.processWithCheckNewThread(CallbackActionProcessorImpl.java:75)
+	  at com.vmlens.trace.agent.bootstrap.callback.MethodCallback.methodEnter(MethodCallback.java:37)
+	  at java.util.Objects.requireNonNull(Objects.java:219)
+	  at java.lang.StackWalker.forEach(StackWalker.java:520)
+	  at com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize.getStacktraceDepth(ThreadForParallelize.java:111)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.ThreadLocalForCallbackAction.canProcess(ThreadLocalForCallbackAction.java:33)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.canProcess(CallbackActionProcessorImpl.java:88)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.process(CallbackActionProcessorImpl.java:93)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.processWithCheckNewThread(CallbackActionProcessorImpl.java:75)
+	  at com.vmlens.trace.agent.bootstrap.callback.MethodCallback.methodEnter(MethodCallback.java:37)
+	  at java.util.Objects.requireNonNull(Objects.java:219)
+	  at java.lang.StackWalker.forEach(StackWalker.java:520)
+	  at com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize.getStacktraceDepth(ThreadForParallelize.java:111)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.ThreadLocalForCallbackAction.canProcess(ThreadLocalForCallbackAction.java:33)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.canProcess(CallbackActionProcessorImpl.java:88)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.process(CallbackActionProcessorImpl.java:93)
+	  at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.processWithCheckNewThread(CallbackActionProcessorImpl.java:75)
+	  at com.vmlens.trace.agent.bootstrap.callback.MethodCallback.methodEnter(MethodCallback.java:37)
+	  at java.util.Objects.requireNonNull(Objects.java:219)
+	  a
+       */
+      
+      Filter("java/util/Objects"),
+      
       Include("java/util/"),
       Include("java/text/"),
 
@@ -151,6 +178,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       // Best is to use pre analyzed for field access
       //Include("java/lang/reflect"),
 
+
+      
       Filter("java"),
       Filter("sun"),
       Filter("jdk"),

@@ -8,16 +8,23 @@ We therefore implement the method calls as commands.
 
 # Data Types
 
-CallbackAction : DoNotTraceIn or CallStrategy
-CallStrategy : [X]Action
+CallbackAction : [X]Action
 
 For example: BeforeFieldAccessAction, AfterFieldAccessAction
 
 
-# Dataflow
+# Dynamic
 
 Callback -> new CallbackAction[X] -> 
 CallbackActionProcessor(callbackAction) -> doubleDispatch( callbackAction , strategy )
+
+CallbackActionProcessor -> process[WithCheckThreadStarted]{
+                            Do Not Trace checks,
+                            [checkThreadStarted],
+                            MethodExitEvents erzeugen,
+                            check in test thread,
+                            execute callbackAction,
+                           }
 
 # Structure
 

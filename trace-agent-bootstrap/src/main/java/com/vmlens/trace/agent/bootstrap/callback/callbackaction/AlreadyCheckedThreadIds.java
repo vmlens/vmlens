@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
 import gnu.trove.set.hash.TLongHashSet;
 

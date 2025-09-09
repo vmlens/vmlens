@@ -9,7 +9,7 @@ import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
 
 import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.incrementInsideVMLens;
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;
@@ -45,7 +45,7 @@ public class WriteEventToFile implements Runnable {
     @Override
     public void run() {
         // we never want tracing in this thread
-        startProcess();
+        incrementInsideVMLens();
 
         long timerForDeadlockDetection = System.currentTimeMillis();
         long timerForDemonThreadDetection = System.currentTimeMillis();

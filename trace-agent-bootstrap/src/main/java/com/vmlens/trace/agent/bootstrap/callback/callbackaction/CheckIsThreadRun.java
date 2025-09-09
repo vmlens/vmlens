@@ -1,10 +1,12 @@
-package com.vmlens.trace.agent.bootstrap.strategy.strategyall;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
 public class CheckIsThreadRun {
 
+    public final static CheckIsThreadRun SINGLETON = new CheckIsThreadRun();
+
     private final AlreadyCheckedThreadIds alreadyCheckedThreadIds;
 
-    public CheckIsThreadRun(AlreadyCheckedThreadIds alreadyCheckedThreadIds) {
+    private CheckIsThreadRun(AlreadyCheckedThreadIds alreadyCheckedThreadIds) {
         this.alreadyCheckedThreadIds = alreadyCheckedThreadIds;
     }
 

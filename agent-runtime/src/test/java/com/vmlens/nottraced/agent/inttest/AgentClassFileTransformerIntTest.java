@@ -2,14 +2,17 @@ package com.vmlens.nottraced.agent.inttest;
 
 
 import com.vmlens.trace.agent.bootstrap.callback.*;
-import com.vmlens.trace.agent.bootstrap.callback.impl.*;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.*;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class AgentClassFileTransformerIntTest extends AbstractIntTest{
 
@@ -17,15 +20,13 @@ public class AgentClassFileTransformerIntTest extends AbstractIntTest{
     public void arrayAccess() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
 
-        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
 
-        ArrayCallbackImpl arrayCallbackImpl = mock(ArrayCallbackImpl.class);
-        ArrayCallback.setArrayCallbackImpl(arrayCallbackImpl);
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
+        ArrayCallback.setCallbackActionProcessor(callbackActionProcessor);
 
         runTest("ArrayAccess");
-        verify(arrayCallbackImpl, times(4)).beforeArrayWrite(any(), anyInt(), anyInt());
-        verify(arrayCallbackImpl, times(3)).beforeArrayRead(any(), anyInt(), anyInt());
+        assertThat(callbackActionProcessor.getCount(ArrayAccessAction.class), is(7));
     }
 
 
@@ -33,100 +34,97 @@ public class AgentClassFileTransformerIntTest extends AbstractIntTest{
     public void transformVolatileField() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
 
-        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
-
-        FieldCallbackImpl fieldCallbackImplMock = mock(FieldCallbackImpl.class);
-        FieldCallback.setFieldCallbackImpl(fieldCallbackImplMock);
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
+        FieldCallback.setCallbackActionProcessor(callbackActionProcessor);
 
         runTest("VolatileFieldAccess");
-        verify(fieldCallbackImplMock).beforeFieldRead(any(), anyInt(), anyInt(), anyInt());
-        verify(fieldCallbackImplMock).beforeFieldWrite(any(), anyInt(), anyInt(), anyInt());
-        verify(fieldCallbackImplMock, times(2)).afterFieldAccess();
+        assertThat(callbackActionProcessor.getCount(BeforeFieldAccessAction.class), is(2));
+        assertThat(callbackActionProcessor.getCount(AfterFieldAccessAction.class), is(2));
     }
 
     @Test
     public void withAllInterleavings() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
 
-        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
-        VmlensApiCallbackImpl vmlensApiCallbackImplMock = mock(VmlensApiCallbackImpl.class);
-        VmlensApiCallback.setVmlensApiCallback(vmlensApiCallbackImplMock);
+        CallbackActionProcessor callbackActionProcessor = mock(CallbackActionProcessor.class);
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
+        VmlensApiCallback.setCallbackActionProcessor(callbackActionProcessor);
 
         runTest("WithAllInterleavings");
-        verify(vmlensApiCallbackImplMock).hasNext(any());
+        verify(callbackActionProcessor).vmlensApiHasNext(any());
 
     }
 
     @Test
     public void monitorAndWaitNotify() throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException, InvocationTargetException, InterruptedException {
-        MonitorCallbackImpl monitorCallbackImplMock = mock(MonitorCallbackImpl.class);
-        MonitorCallback.setMonitorCallbackImpl(monitorCallbackImplMock);
+            IllegalAccessException, InvocationTargetException  {
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
+        MonitorCallback.setCallbackActionProcessor(callbackActionProcessor);
+
         runTest("MonitorBlock");
-        verify(monitorCallbackImplMock).afterMonitorEnter(any(), anyInt(), anyInt());
-        verify(monitorCallbackImplMock).afterMonitorExit(any(), anyInt(), anyInt());
+        assertThat(callbackActionProcessor.getCount(AfterMonitorEnterAction.class), is(1));
+        assertThat(callbackActionProcessor.getCount(AfterMonitorExitAction.class), is(1));
 
     }
 
     @Test
     public void methodCall() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
-        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-
-        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
 
         runTest("MethodCall");
-        verify(methodCallbackImplMock).methodEnter(any(), anyInt());
-        verify(methodCallbackImplMock, times(1)).methodExit(any(), anyInt());
+        assertThat(callbackActionProcessor.getCount(MethodEnterAction.class), is(1));
+        assertThat(callbackActionProcessor.getCount(MethodExitAction.class), is(1));
     }
 
     @Test
     public void testVolatileField() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
-        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
-
-        FieldCallbackImpl fieldCallbackImplMock = mock(FieldCallbackImpl.class);
-        FieldCallback.setFieldCallbackImpl(fieldCallbackImplMock);
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
+        FieldCallback.setCallbackActionProcessor(callbackActionProcessor);
 
         runTest("TestVolatileField");
+        assertThat(callbackActionProcessor.getCount(BeforeFieldAccessAction.class), is(3));
+        assertThat(callbackActionProcessor.getCount(AfterFieldAccessAction.class), is(3));
     }
 
     @Test
     public void staticMethodCall() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
-        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-
-        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
 
         runTest("StaticMethodCall");
-        verify(methodCallbackImplMock, times(2)).methodEnter(any(), anyInt());
-        verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
+        assertThat(callbackActionProcessor.getCount(MethodEnterAction.class), is(2));
+        assertThat(callbackActionProcessor.getCount(MethodExitAction.class), is(2));
     }
 
     @Test
     public void staticMethodCallWithSynchronizedBlock() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
-        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
 
         runTest("StaticMethodCallWithSynchronizedBlock");
-        verify(methodCallbackImplMock, times(2)).methodEnter(any(), anyInt());
-        verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
+        assertThat(callbackActionProcessor.getCount(MethodEnterAction.class), is(2));
+        assertThat(callbackActionProcessor.getCount(MethodExitAction.class), is(2));
     }
 
     @Test
     public void threadPool() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
-        ThreadPoolCallbackImpl threadPoolCallbackImpl = mock(ThreadPoolCallbackImpl.class);
-        ThreadPoolCallback.setThreadPoolCallbackImpl(threadPoolCallbackImpl);
-        when(threadPoolCallbackImpl.start(any(), any(),anyInt())).thenReturn(true);
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
+        ThreadPoolCallback.setCallbackActionProcessor(callbackActionProcessor);
+
 
         runTest("ThreadPoolExecutorGuineaPig");
-        verify(threadPoolCallbackImpl, times(1)).start(any(), any(),anyInt());
-        verify(threadPoolCallbackImpl, times(1)).join(any(), anyInt());
+        assertThat(callbackActionProcessor.getCount(ThreadPoolStartAction.class), is(1));
+        assertThat(callbackActionProcessor.getCount(ThreadPoolJoinAction.class), is(1));
     }
 
 }

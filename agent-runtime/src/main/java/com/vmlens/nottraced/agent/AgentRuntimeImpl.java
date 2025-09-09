@@ -6,6 +6,7 @@ import com.vmlens.nottraced.agent.applyclasstransformer.ClassFilterAndTransforme
 import com.vmlens.nottraced.agent.write.*;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
 import com.vmlens.trace.agent.bootstrap.description.ClassDescription;
 import com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
@@ -16,8 +17,8 @@ import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.stopProcess;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.decrementInsideVMLens;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.incrementInsideVMLens;
 
 public class AgentRuntimeImpl implements AgentRuntime {
 
@@ -57,6 +58,15 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
 
             new LoadClassesAtStart().loadClasses();
+            /*
+             *    Exception in thread "surefire-forkedjvm-command-thread" java.lang.NullPointerException: Cannot invoke "com.vmlens.trace.agent.bootstrap.callback.callbackaction.CheckIsThreadRun.isThreadRun()" because "this.checkIsThreadRun" is null
+	         *       at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.process(CallbackActionProcessorImpl.java:97)
+	         *       at com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl.processWithCheckNewThread(CallbackActionProcessorImpl.java:75)
+	         *       at com.vmlens.trace.agent.bootstrap.callback.MethodCallback.methodEnter(MethodCallback.java:37)
+	         *       at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java)
+	         *       at java.base/java.lang.Thread.run(Thread.java:1447)
+             */
+            CallbackActionProcessorImpl callbackActionProcessorImpl = new CallbackActionProcessorImpl();
 
             TLinkedList<TLinkableWrapper<ClassDescription>> classAnalyzedEventList = new TLinkedList<>();
             TLinkedList<TLinkableWrapper<InfoMessageEvent>> infoMessageEventList = new TLinkedList<>();
@@ -72,7 +82,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
                             writeClassDescriptionAndWarningWrapper),
                     writeClassDescriptionAndWarningWrapper,classFilterFromFile);
 
-            startProcess();
+            incrementInsideVMLens();
 
             instrument(inst, agentClassFileTransformer, writeClassDescriptionDuringStartup);
             writeClassDescriptionAndWarningWrapper
@@ -87,7 +97,7 @@ public class AgentRuntimeImpl implements AgentRuntime {
                 EventQueueSingleton.eventQueue.offer(classDescription.element());
             }
 
-            stopProcess();
+            decrementInsideVMLens();
         } catch (Throwable e) {
             e.printStackTrace();
         }

@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMet
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.AtomicReadWriteLockEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.AtomicReadWriteLockExitEvent;
 import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;
+import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
 public class MethodWithLockStrategy implements StrategyPreAnalyzed {
 
@@ -26,7 +27,7 @@ public class MethodWithLockStrategy implements StrategyPreAnalyzed {
                 RunAfter<>(event,
                 new SetInMethodIdPositionObjectHashCode<>(context.object()));
 
-        context.threadLocalWhenInTestAdapter().process(action);
+        context.inTestActionProcessor().process(action);
     }
 
     @Override
@@ -36,19 +37,8 @@ public class MethodWithLockStrategy implements StrategyPreAnalyzed {
 
         ExecuteRunAfter<AtomicReadWriteLockExitEvent> runtimeEventAndSetInMethodIdAndPositionImpl =
                 new ExecuteRunAfter<>(event);
-        context.threadLocalWhenInTestAdapter().process(
+        context.inTestActionProcessor().process(
                 new SetExecuteAfterOperation(runtimeEventAndSetInMethodIdAndPositionImpl));
     }
 
-    @Override
-    public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Fixme same as before at all -> problem multiple
-        // method calls requires stack?  e.g. how to store the method id and position?
-    }
-
-    @Override
-    public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Fixme same as before at all -> problem multiple
-        // method calls requires stack? -> e.g. how to store the method id and position?
-    }
 }

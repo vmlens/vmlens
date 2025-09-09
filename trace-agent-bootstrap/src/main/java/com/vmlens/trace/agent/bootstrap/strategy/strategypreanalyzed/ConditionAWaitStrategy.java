@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallbac
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ConditionWaitEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ConditionWaitExitEvent;
+import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
 /**
  *  methodEnter call waitCallOrBeforeLockExit with wait enter
@@ -25,7 +26,7 @@ public class ConditionAWaitStrategy implements StrategyPreAnalyzed  {
         RunBeforeLockExitOrWait<ConditionWaitEnterEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
                 new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicBegin());
-        context.threadLocalWhenInTestAdapter().process(action);
+        context.inTestActionProcessor().process(action);
     }
 
     @Override
@@ -34,17 +35,9 @@ public class ConditionAWaitStrategy implements StrategyPreAnalyzed  {
         RunBeforeLockExitOrWait<ConditionWaitExitEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
                 new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicEnd());
-        context.threadLocalWhenInTestAdapter().process(action);
-        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitWaitOrThreadStart());
+        context.inTestActionProcessor().process(action);
+        context.inTestActionProcessor().process(new RunAfterLockExitWaitOrThreadStart());
     }
 
-    @Override
-    public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
 
-    }
-
-    @Override
-    public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-
-    }
 }

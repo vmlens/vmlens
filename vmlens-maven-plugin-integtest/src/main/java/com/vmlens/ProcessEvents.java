@@ -36,7 +36,7 @@ public class ProcessEvents {
         ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
                 new ProcessRunContextBuilder().build()).process();
-
+        checkDataRacesJdk23(result);
     }
 
     private static void processJdk11(File eventDirectory, File reportDirectory) {
@@ -50,7 +50,7 @@ public class ProcessEvents {
                 reportDirectory.toPath(),
                 new ProcessRunContext(check,
                         buildEventListMap,false,false,false)).process();
-        checkDataRaces(result);
+        checkDataRacesJdk11(result);
 
         int loopId = loopNameToId.get("readWriteLockTest");
         Map<Integer, List<EventForAssertion>> loopIdToEventForAssertionList = buildEventListMap.build();
@@ -58,8 +58,7 @@ public class ProcessEvents {
         new CheckLockEnterExit().check(list);
     }
 
-
-    private static void checkDataRaces(ResultForVerify result ) {
+    private static void checkDataRacesJdk11(ResultForVerify result ) {
         Set<String> testWithDataRace = new HashSet<>();
         testWithDataRace.add("staticField");
         testWithDataRace.add("arrayTest");
@@ -70,6 +69,13 @@ public class ProcessEvents {
         testWithDataRace.add("hiero.testAdd");
         testWithDataRace.add("innerChild");
        // testWithDataRace.add("childWithProtectedFieldTest");
+        checkDataRaces(testWithDataRace,result);
+    }
+
+    private static void checkDataRacesJdk23(ResultForVerify result ) {
+        Set<String> testWithDataRace = new HashSet<>();
+        testWithDataRace.add("qBeanSupportConcurrentTest");
+        testWithDataRace.add("jdbcJobExecutionDao");
         checkDataRaces(testWithDataRace,result);
     }
 

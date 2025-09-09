@@ -19,9 +19,6 @@ public class ContextConcurrentTest {
         }
     }
 
-    /**
-     * here the exit reenatrant get lost
-     */
     @Test
     public void testResumeResumeAndPause() throws Throwable {
         try (AllInterleavings allInterleavings = new AllInterleavings("ContextConcurrentTest.testResumeResumeAndPause")) {

@@ -12,9 +12,11 @@ public class QBeanSupportConcurrentTest {
         try (AllInterleavings allInterleavings = new AllInterleavings("qBeanSupportConcurrentTest")) {
             while (allInterleavings.hasNext()) {
                 QBeanSupport qbeanSupport = new QBeanSupport();
+                qbeanSupport.setState(0);
                 Thread first = new Thread(() -> {
                     qbeanSupport.start();
                 });
+                first.start();
                 qbeanSupport.running();
                 first.join();
             }

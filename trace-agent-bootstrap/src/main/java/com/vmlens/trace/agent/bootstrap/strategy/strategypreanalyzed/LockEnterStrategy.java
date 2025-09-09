@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteRunAf
 import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockEnterOperation;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
+import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
 public class LockEnterStrategy implements StrategyPreAnalyzed  {
 
@@ -26,17 +27,8 @@ public class LockEnterStrategy implements StrategyPreAnalyzed  {
         ExecuteRunAfter<LockEvent> runtimeEventAndSetInMethodIdAndPositionImpl =
                 new ExecuteRunAfter<>(lockOperation.create(lockType,context.object()));
 
-        context.threadLocalWhenInTestAdapter().process(
+        context.inTestActionProcessor().process(
                 new SetExecuteAfterOperation(runtimeEventAndSetInMethodIdAndPositionImpl));
     }
 
-    @Override
-    public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Nothing to do
-    }
-
-    @Override
-    public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Nothing to do
-    }
 }

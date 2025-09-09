@@ -7,16 +7,10 @@ public class TestVolatileField {
     volatile int j = 0;
 
     @Test
-    public void testUpdate() throws InterruptedException {
+    public void update() throws InterruptedException {
         j = 0;
-        Thread first = new Thread() {
-            @Override
-            public void run() {
-                j++;
-            }
-        };
-        first.start();
+
         j++;
-        first.join();
+
     }
 }
