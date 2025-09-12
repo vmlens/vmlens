@@ -1,4 +1,4 @@
-# VMLens lets you unit test multi-threaded, concurrent Java
+# Deterministic Unit Tests for Multi-Threaded Java
 
 # Example
 
