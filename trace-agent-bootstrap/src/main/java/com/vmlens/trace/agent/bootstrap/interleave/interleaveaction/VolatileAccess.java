@@ -2,14 +2,14 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.activelock.ActiveLockCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileKey;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.interleavetypes.VolatileOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.VolatileOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 import java.util.Objects;

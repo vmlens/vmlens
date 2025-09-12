@@ -16,3 +16,10 @@ KeyToOperationCollection ->  {  volatileAccess,
                                 barrier,
                                 independentActions }
 
+# Groups
+
+ * independent
+ * dependent
+   * volatila
+   * barriers
+ * locks

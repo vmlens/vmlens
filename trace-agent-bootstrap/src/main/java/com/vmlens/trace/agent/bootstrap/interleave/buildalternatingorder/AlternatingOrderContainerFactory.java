@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.Pair;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.activelock.ActiveLockCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;

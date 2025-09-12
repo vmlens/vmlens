@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Al
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.interleavetypes.AddToAlternatingOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 
