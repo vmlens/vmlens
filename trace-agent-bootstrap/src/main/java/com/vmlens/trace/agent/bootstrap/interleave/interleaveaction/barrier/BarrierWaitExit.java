@@ -62,4 +62,9 @@ public class BarrierWaitExit implements Barrier  {
         }
         return barrierKey.equalsNormalized(normalizeContext,otherLock.barrierKey);
     }
+
+    @Override
+    public boolean startsThread() {
+        return false;
+    }
 }

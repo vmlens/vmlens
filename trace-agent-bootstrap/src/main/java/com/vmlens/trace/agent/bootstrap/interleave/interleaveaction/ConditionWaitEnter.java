@@ -49,4 +49,9 @@ public class ConditionWaitEnter implements InterleaveAction  {
         }
         return lockOrMonitor.equalsNormalized(normalizeContext,otherLock.lockOrMonitor);
     }
+
+    @Override
+    public boolean startsThread() {
+        return false;
+    }
 }

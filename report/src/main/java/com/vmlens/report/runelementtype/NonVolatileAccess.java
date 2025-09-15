@@ -39,4 +39,8 @@ public class NonVolatileAccess implements RunElementType  {
         return "";
     }
 
+    @Override
+    public String object(DescriptionContext context) {
+        return memoryAccessKey.objectHashCode();
+    }
 }

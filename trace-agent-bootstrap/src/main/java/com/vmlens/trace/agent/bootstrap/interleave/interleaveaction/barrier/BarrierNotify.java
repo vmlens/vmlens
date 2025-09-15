@@ -97,4 +97,9 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
         result.addBarrier(barrierKey,new DependentOperationAndPosition<>(myPosition,this));
 
     }
+
+    @Override
+    public boolean startsThread() {
+        return false;
+    }
 }

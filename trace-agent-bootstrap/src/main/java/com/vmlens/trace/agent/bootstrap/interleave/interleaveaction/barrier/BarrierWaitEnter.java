@@ -96,4 +96,9 @@ public class BarrierWaitEnter implements Barrier, BarrierOperationVisitor {
                                               KeyToOperationCollection result) {
         result.addBarrier(barrierKey,new DependentOperationAndPosition<>(myPosition,this));
     }
+
+    @Override
+    public boolean startsThread() {
+        return false;
+    }
 }

@@ -1,11 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.exception;
 
 public enum Message {
-    TEST_BLOCKED_MESSAGE(1, "test blocked");
+    TEST_BLOCKED_MESSAGE(1, "Test Blocked");
 
     private final int id;
     private final String text;
-
 
     Message(int id, String text) {
         this.id = id;

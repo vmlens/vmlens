@@ -28,11 +28,16 @@ public class ThreadRunElementType implements RunElementType {
 
     @Override
     public String element(DescriptionContext context) {
-        return context.threadName(onThreadIndex);
+        return "";
     }
 
     @Override
     public void addToNeedsDescription(NeedsDescriptionCallback callback) {
 
+    }
+
+    @Override
+    public String object(DescriptionContext context) {
+        return context.threadName(onThreadIndex);
     }
 }

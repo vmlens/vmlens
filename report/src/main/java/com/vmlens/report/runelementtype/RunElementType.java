@@ -10,5 +10,6 @@ public interface RunElementType {
     String element(DescriptionContext context);
 
     void addToNeedsDescription(NeedsDescriptionCallback callback);
-    
+
+    String object(DescriptionContext context);
 }

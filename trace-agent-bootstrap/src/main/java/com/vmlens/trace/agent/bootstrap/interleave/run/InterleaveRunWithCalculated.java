@@ -1,11 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
+
+import java.util.Arrays;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated.calculateActiveByPositionInRun;
 import static com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunWithoutCalculated.calculateActiveThreadIndex;
@@ -26,8 +30,12 @@ public class InterleaveRunWithCalculated implements InterleaveRun {
 
     @Override
     public InterleaveInfo after(InterleaveAction interleaveAction) {
-        calculatedRunPerThread.popIfNotEmpty(interleaveAction.threadIndex());
-        return actualRun.after(interleaveAction);
+        InterleaveInfo info = actualRun.after(interleaveAction);
+        if( info != null) {
+            calculatedRunPerThread.popIfNotEmpty(interleaveAction.threadIndex());
+        }
+        return info;
+
     }
 
     @Override
@@ -68,5 +76,11 @@ public class InterleaveRunWithCalculated implements InterleaveRun {
     @Override
     public boolean withCalculated() {
         return true;
+    }
+
+    @Override
+    public void logCalculatedRun(SendEvent sendEvent) {
+        String[] message = new String[] {Arrays.toString(calculatedRunElementArray) , ""  +actualRun.positionInRun() };
+        sendEvent.sendSerializable(new InfoMessageEvent(message));
     }
 }

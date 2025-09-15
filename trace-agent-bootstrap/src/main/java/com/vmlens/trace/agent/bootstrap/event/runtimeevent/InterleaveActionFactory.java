@@ -16,9 +16,11 @@ public interface InterleaveActionFactory extends RuntimeEvent {
                   ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
                   SendEvent sendEvent)  {
         InterleaveInfo interleaveInfo = interleaveRun.after(create(context));
-        setRunPosition(interleaveInfo.runPosition());
-        setMethodCounter(threadLocalWhenInTestForParallelize);
-        sendEvent.sendSerializable(this);
+        if(interleaveInfo != null) {
+            setRunPosition(interleaveInfo.runPosition());
+            setMethodCounter(threadLocalWhenInTestForParallelize);
+            sendEvent.sendSerializable(this);
+        }
     }
 
     @Override

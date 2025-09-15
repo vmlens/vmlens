@@ -23,7 +23,7 @@ public class BarrierOperation implements RunElementType  {
 
     @Override
     public String element(DescriptionContext context) {
-        return "" + barrierKey.objectHashcode();
+        return "";
     }
 
     @Override
@@ -31,5 +31,8 @@ public class BarrierOperation implements RunElementType  {
         // No description needed
     }
 
-
+    @Override
+    public String object(DescriptionContext context) {
+        return "" +  barrierKey.objectHashcode();
+    }
 }

@@ -55,4 +55,9 @@ public class ThreadJoin extends InterleaveActionForInDependentBlock {
 
         return joinedThreadIndex == otherLock.joinedThreadIndex;
     }
+
+    @Override
+    public boolean startsThread() {
+        return false;
+    }
 }

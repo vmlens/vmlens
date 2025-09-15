@@ -37,13 +37,13 @@ public class TestConcurrentQueue {
         runOrderTest(createQueue, name + "Order");
     }
 
+    volatile int i = 0;
+
     private void runCountTest(Supplier<Queue<String>> createQueue, String name) throws InterruptedException {
         Set<Integer> expected = new HashSet<>();
         expected.add(1);
         expected.add(2);
-
         Set<Integer> values = new HashSet<>();
-
         try(AllInterleavings allInterleavings = new AllInterleavings(name)) {
             while (allInterleavings.hasNext()) {
                 Queue<String> queue = createQueue.get();
@@ -52,13 +52,12 @@ public class TestConcurrentQueue {
                     @Override
                     public void run() {
                         queue.add("first");
+                        i = 6;
                     }
                 };
                 first.start();
                 values.add(queue.size());
-
                 first.join();
-
             }
             assertThat(values,is(expected));
         }

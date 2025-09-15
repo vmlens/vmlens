@@ -30,7 +30,7 @@ public class ReportBuildAlgo {
         for (LoopAndRun loopAndRun : loopAndRuns) {
             UITestLoop uiTestLoop = new UITestLoop(descriptionContext.loopName(loopAndRun.loop().loopId()),
                     loopAndRun.loop().count(),
-                    loopAndRun.loop().testResult().text(), loopAndRun.loop().testResult().style());
+                    loopAndRun.loop().testResult().text());
 
 
             loopAndRun.runElements().sort(new RunElementByRunPositionComparator());
@@ -59,9 +59,11 @@ public class ReportBuildAlgo {
 
                 String operation = runElement.operationTextFactory().operation();
                 String element = runElement.operationTextFactory().element(descriptionContext);
+                String object = runElement.operationTextFactory().object(descriptionContext);
                 UIRunElement uiRunElement = new UIRunElement(runElement.runPosition(),
                         operation,
                         element,
+                        object,
                         firstStacktraceMethodName,
                         descriptionContext.threadName(runElement.loopRunAndThreadIndex()),
                         false);

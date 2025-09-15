@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.description.ThreadDescription;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;
@@ -95,4 +96,23 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
         return false;
     }
 
+    public void logStackTrace(Integer activeThreadIndex, SendEvent sendEvent) {
+        StackTraceElement[] activeStackTrace = threadIndexToThreadState.get(activeThreadIndex).getStackTrace();
+        StackTraceElement[]  myStacktrace = Thread.currentThread().getStackTrace();
+        String[] message = new String[activeStackTrace.length + myStacktrace.length + 2];
+        int i = 0;
+        message[i] = "Blocked:";
+        i++;
+        for(StackTraceElement element :  activeStackTrace ) {
+            message[i] = element.getClassName() + "." + element.getMethodName();
+            i++;
+        }
+        message[i] = "Waiting:";
+        i++;
+        for(StackTraceElement element :  myStacktrace) {
+            message[i] = element.getClassName() + "." + element.getMethodName();
+            i++;
+        }
+        sendEvent.sendSerializable(new InfoMessageEvent(message));
+    }
 }

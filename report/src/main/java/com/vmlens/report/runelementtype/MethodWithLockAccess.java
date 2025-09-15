@@ -27,11 +27,16 @@ public class MethodWithLockAccess implements RunElementType {
 
     @Override
     public String element(DescriptionContext context) {
-        return context.methodName(atomicMethodId) + "@" + objectHashCode;
+        return context.methodName(atomicMethodId);
     }
 
     @Override
     public void addToNeedsDescription(NeedsDescriptionCallback callback) {
         callback.needsMethod(atomicMethodId);
+    }
+
+    @Override
+    public String object(DescriptionContext context) {
+        return ""  + objectHashCode;
     }
 }

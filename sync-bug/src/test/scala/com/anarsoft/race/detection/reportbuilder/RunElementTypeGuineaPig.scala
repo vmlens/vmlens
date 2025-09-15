@@ -12,4 +12,6 @@ class RunElementTypeGuineaPig extends RunElementType {
   override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {
 
   }
+
+  override def `object`(context : DescriptionContext): String = "";
 }

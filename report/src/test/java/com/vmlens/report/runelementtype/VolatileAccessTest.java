@@ -25,7 +25,7 @@ public class VolatileAccessTest {
         String text = runElementType.element(descriptionContext);
 
         // Then
-        assertThat(text,is("field@657"));
+        assertThat(text,is("field"));
     }
 
 }

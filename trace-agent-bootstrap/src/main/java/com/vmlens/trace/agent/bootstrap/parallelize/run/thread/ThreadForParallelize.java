@@ -112,4 +112,8 @@ public class ThreadForParallelize {
         return stackFrameCounter.count();
     }
 
+    public StackTraceElement[] getStackTrace() {
+        return thread.getStackTrace();
+    }
+
 }

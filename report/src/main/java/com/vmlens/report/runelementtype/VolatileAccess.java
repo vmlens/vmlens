@@ -29,4 +29,9 @@ public class VolatileAccess implements RunElementType {
     public void addToNeedsDescription(NeedsDescriptionCallback callback) {
         memoryAccessKey.addToNeedsDescription(callback);
     }
+
+    @Override
+    public String object(DescriptionContext context) {
+        return  memoryAccessKey.objectHashCode();
+    }
 }

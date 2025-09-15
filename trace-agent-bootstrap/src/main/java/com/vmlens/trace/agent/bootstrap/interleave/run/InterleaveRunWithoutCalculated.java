@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
@@ -59,5 +60,10 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
     @Override
     public boolean withCalculated() {
         return false;
+    }
+
+    @Override
+    public void logCalculatedRun(SendEvent sendEvent) {
+
     }
 }

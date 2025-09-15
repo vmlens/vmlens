@@ -108,10 +108,10 @@ object LoopReportBuilderImpl {
 
     var text = result.text;
     for(id <- runResult.warningIdList ) {
-      text = text + ", " + "<span style=\"color: #FFC107;\">" + Message.of(id).text() + "</span>";
+      text = text + ", "  + Message.of(id).text();
     }
     
-    new TestResult(text,result.style);
+    new TestResult(text);
   }
   
 }

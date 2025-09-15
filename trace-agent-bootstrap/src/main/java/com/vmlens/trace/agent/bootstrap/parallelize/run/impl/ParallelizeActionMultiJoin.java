@@ -32,7 +32,6 @@ public class ParallelizeActionMultiJoin implements ParallelizeActionAfter {
         this.position = position;
     }
 
-
     @Override
     public void after(InterleaveRun interleaveRun,
                       CreateInterleaveActionContext context,
@@ -46,22 +45,22 @@ public class ParallelizeActionMultiJoin implements ParallelizeActionAfter {
         }
 
         InterleaveInfo info = interleaveRun.after(new MultiJoin(threadLocalWhenInTestForParallelize.threadIndex(), threadIndices));
-
-        TIntIterator indexIter = threadIndices.iterator();
-        while(indexIter.hasNext()) {
-            int index = indexIter.next();
-            ThreadJoinedEvent threadJoinedEvent = new ThreadJoinedEvent();
-            threadJoinedEvent.setEventType(THREAD_POOL.code());
-            threadJoinedEvent.setThreadIndex(threadLocalWhenInTestForParallelize.threadIndex());
-            threadJoinedEvent.setLoopId(loopId);
-            threadJoinedEvent.setRunId(runId);
-            threadJoinedEvent.setRunPosition(info.runPosition());
-            threadJoinedEvent.setMethodCounter(threadLocalWhenInTestForParallelize);
-            threadJoinedEvent.setBytecodePosition(position);
-            threadJoinedEvent.setMethodId(inMethodId);
-            threadJoinedEvent.setJoinedThreadIndex(index);
-            sendEvent.sendSerializable(threadJoinedEvent);
+        if(info != null) {
+            TIntIterator indexIter = threadIndices.iterator();
+            while(indexIter.hasNext()) {
+                int index = indexIter.next();
+                ThreadJoinedEvent threadJoinedEvent = new ThreadJoinedEvent();
+                threadJoinedEvent.setEventType(THREAD_POOL.code());
+                threadJoinedEvent.setThreadIndex(threadLocalWhenInTestForParallelize.threadIndex());
+                threadJoinedEvent.setLoopId(loopId);
+                threadJoinedEvent.setRunId(runId);
+                threadJoinedEvent.setRunPosition(info.runPosition());
+                threadJoinedEvent.setMethodCounter(threadLocalWhenInTestForParallelize);
+                threadJoinedEvent.setBytecodePosition(position);
+                threadJoinedEvent.setMethodId(inMethodId);
+                threadJoinedEvent.setJoinedThreadIndex(index);
+                sendEvent.sendSerializable(threadJoinedEvent);
+            }
         }
-
     }
 }

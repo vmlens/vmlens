@@ -8,14 +8,10 @@ import java.util.Set;
 
 public class HashSetTest {
 
-
-
     @Test
     public void testUpdate() throws InterruptedException {
         Set set = new HashSet();
-
         AllInterleavings testUpdate = new AllInterleavings("hashSetTest");
-
         while (testUpdate.hasNext()) {
             Thread first = new Thread() {
                 @Override
