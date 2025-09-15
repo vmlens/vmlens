@@ -17,4 +17,9 @@ public class FactoryCollectionAdapterForAnalyze implements FactoryCollectionAdap
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> get(FactoryCollectionAdapterContext context) {
         return factoryCollection.getAnalyze(context.nameAndDescriptor(),context.access());
     }
+
+    @Override
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getForConstructor(FactoryCollectionAdapterContext context) {
+        return new TLinkedList<TLinkableWrapper<MethodVisitorFactory>>();
+    }
 }

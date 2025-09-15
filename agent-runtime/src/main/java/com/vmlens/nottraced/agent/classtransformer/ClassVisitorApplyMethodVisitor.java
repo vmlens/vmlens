@@ -53,9 +53,6 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
                                      String signature,
                                      String[] exceptions) {
         MethodVisitor previous = super.visitMethod(access, name, descriptor, signature, exceptions);
-        if ("<init>".equals(name)) {
-            return previous;
-        }
         if ((access & ACC_NATIVE) == ACC_NATIVE) {
             return previous;
         }
@@ -79,7 +76,7 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
         context.setIsConstructor(isConstructor);
 
         boolean isStatic = ((access & ACC_STATIC) == ACC_STATIC);
-        context.setMethodEnterExitStrategy(createMethodEnterExitStrategy(isStatic));
+        context.setMethodEnterExitStrategy(createMethodEnterExitStrategy(isStatic, isConstructor));
 
         MethodVisitor current = previous;
         for (TLinkableWrapper<MethodVisitorFactory> element : factoryList) {
@@ -147,10 +144,11 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
         return major >= Opcodes.V1_5;
     }
 
-    private MethodEnterExitStrategy createMethodEnterExitStrategy(boolean isStatic) {
-        // Fixme TraceConstructor check for constructor and return strategy for constructor
-
+    private MethodEnterExitStrategy createMethodEnterExitStrategy(boolean isStatic, boolean isConstructor) {
         if(! isStatic) {
+            if (isConstructor) {
+                return new Constructor();
+            }
             return new NormalMethod();
         }
 

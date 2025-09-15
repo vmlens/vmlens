@@ -17,4 +17,9 @@ public class FactoryCollectionAdapterForTransform implements FactoryCollectionAd
     public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> get(FactoryCollectionAdapterContext context) {
         return factoryCollection.getTransformAndSetStrategy(context);
     }
+
+    @Override
+    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getForConstructor(FactoryCollectionAdapterContext context) {
+        return factoryCollection.getTransformAndSetStrategy(context);
+    }
 }

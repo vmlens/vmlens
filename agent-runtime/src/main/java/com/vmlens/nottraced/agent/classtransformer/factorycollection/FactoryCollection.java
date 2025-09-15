@@ -11,6 +11,6 @@ public interface FactoryCollection {
     TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor, int access);
 
     TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context);
-    boolean computeFrames();
 
+    boolean computeFrames();
 }

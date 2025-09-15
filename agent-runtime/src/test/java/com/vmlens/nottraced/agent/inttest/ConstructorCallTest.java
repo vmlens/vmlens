@@ -11,23 +11,27 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
+import org.junit.Test;
+
 public class ConstructorCallTest extends AbstractIntTest  {
 
+    @Test
     public void constructorParent() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
         MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
 
         runTest("ConstructorParent");
-        verify(methodCallbackImplMock, times(2)).constructorMethodEnter( anyInt());
-        verify(methodCallbackImplMock, times(2)).constructorMethodExit(any());
+        verify(methodCallbackImplMock, times(4)).constructorMethodEnter(anyInt());
+        verify(methodCallbackImplMock, times(4)).constructorMethodExit(anyInt());
     }
 
+    //@Test
     public void constructorChild() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
         MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
         MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
 
         runTest("ConstructorChild");
-        verify(methodCallbackImplMock, times(2)).constructorMethodEnter( anyInt());
+        verify(methodCallbackImplMock, times(2)).constructorMethodEnter(anyInt());
         verify(methodCallbackImplMock, times(2)).constructorMethodExit(any());
 
     }
