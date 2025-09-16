@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>test-cases</name>
-    <url>http://maven.apache.org</url>
+    <url>https://vmlens.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

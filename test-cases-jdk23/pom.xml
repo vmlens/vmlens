@@ -9,7 +9,12 @@
         <version>1.2.14</version>
     </parent>
 
+    <name>test-cases-jdk23</name>
+    <packaging>jar</packaging>
+
+
     <artifactId>test-cases-jdk23</artifactId>
+    <url>https://vmlens.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

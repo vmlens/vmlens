@@ -12,7 +12,7 @@
 
     <name>vmlens-maven-plugin Maven Plugin</name>
 
-    <url>http://vmlens.com</url>
+    <url>https://vmlens.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

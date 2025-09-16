@@ -14,7 +14,6 @@
     <name>standalone</name>
 
     <url>https://github.com/vmlens/vlmens</url>
-    <description>api to control vmlens</description>
 
     <licenses>
         <license>
