@@ -1,93 +1,58 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.AfterMethodCallAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.BeforeMethodCallAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodExitAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
-import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
-import com.vmlens.trace.agent.bootstrap.strategy.strategyall.CheckIsThreadRun;
+import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapter;
+import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapterAll;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction.methodEnterAction;
+import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodExitAction.methodExitAction;
 
 public class MethodCallback {
 
-    private static volatile MethodCallbackImpl methodCallbackImpl = new MethodCallbackImpl(
-            ParallelizeFacade.parallelize(),
-            MethodRepositorySingleton.INSTANCE,
-            new ThreadLocalWhenInTestAdapterImpl(),
-            new CheckIsThreadRun(),
-            ReadWriteLockMap.INSTANCE);
+    private static volatile CallbackActionProcessor callbackActionProcessor = new CallbackActionProcessorImpl();
+    private static final ReadWriteLockMap readWriteLockMap = ReadWriteLockMap.INSTANCE;
+    private static final MethodStrategyAdapter methodStrategyAdapter =
+            new MethodStrategyAdapterAll(MethodRepositorySingleton.INSTANCE);
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                // calledMethodId is only used in PreAnalyzedCallback
-                methodCallbackImpl.beforeMethodCall(inMethodId, position);
-        } finally {
-            stopProcess();
-        }
+        BeforeMethodCallAction beforeMethodCallAction = new BeforeMethodCallAction(inMethodId,position);
+        callbackActionProcessor.process(beforeMethodCallAction);
     }
-}
 
     public static void afterMethodCall(int inMethodId, int position, int calledMethodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                // calledMethodId is only used in PreAnalyzedCallback
-                methodCallbackImpl.afterMethodCall(inMethodId, position);
-            } finally {
-                stopProcess();
-            }
-        }
+        AfterMethodCallAction afterMethodCallAction = new AfterMethodCallAction(inMethodId,position,readWriteLockMap);
+        callbackActionProcessor.process(afterMethodCallAction);
     }
 
     public static void methodEnter(Object object, int methodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                methodCallbackImpl.methodEnter(object, methodId);
-            } finally {
-                stopProcess();
-            }
-        }
+        MethodEnterAction methodEnterAction = methodEnterAction(object,
+                methodId,methodStrategyAdapter);
+        callbackActionProcessor.processWithCheckNewThread(methodEnterAction);
     }
 
     public static void methodExit(Object object, int methodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                methodCallbackImpl.methodExit(object, methodId);
-            } finally {
-                stopProcess();
-            }
-        }
+        MethodExitAction methodEnterAction = methodExitAction(object,
+                methodId,methodStrategyAdapter);
+        callbackActionProcessor.process(methodEnterAction);
     }
 
     public static void constructorMethodEnter(int methodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                methodCallbackImpl.constructorMethodEnter(methodId);
-            } finally {
-                stopProcess();
-            }
-        }
+
     }
 
     public static void constructorMethodExit(int methodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                methodCallbackImpl.constructorMethodExit(methodId);
-            } finally {
-                stopProcess();
-            }
-        }
+
     }
 
     // Visible for Test
-    public static void setMethodCallbackImpl(MethodCallbackImpl methodCallbackImpl) {
-        MethodCallback.methodCallbackImpl = methodCallbackImpl;
+    public static void setCallbackActionProcessor(CallbackActionProcessor callbackActionProcessor) {
+        MethodCallback.callbackActionProcessor = callbackActionProcessor;
     }
 }

@@ -15,11 +15,16 @@ public class FieldIdAndObjectHashcode implements MemoryAccessKey {
 
     @Override
     public String asString(DescriptionContext context) {
-        return context.fieldName(fieldId) + "@" + objectHashCode;
+        return context.fieldName(fieldId) ;
     }
 
     @Override
     public void addToNeedsDescription(NeedsDescriptionCallback callback) {
         callback.needsField(fieldId);
+    }
+
+    @Override
+    public String objectHashCode() {
+        return ""  + objectHashCode;
     }
 }

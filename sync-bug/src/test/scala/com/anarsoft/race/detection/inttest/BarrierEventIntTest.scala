@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.inttest
 
 import com.vmlens.report.assertion.LeftBeforeRight
 import com.vmlens.report.assertion.OnEventNoOp
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.{MonitorKey, ReentrantLockKey}
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.{MonitorKey, ReentrantLockKey}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import com.anarsoft.race.detection.process.run.{ProcessRunContextBuilder, ProcessRunImpl}

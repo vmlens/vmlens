@@ -2,8 +2,7 @@ package com.vmlens.report.runelementtype;
 
 public enum BarrierOperationType {
     
-    NOTIFY("notify") , WAIT_ENTER("wait enter") , WAIT_EXIT("wait exit") ;
-
+    NOTIFY("Notify") , WAIT_ENTER("Wait Enter") , WAIT_EXIT("Wait Exit") ;
 
     private final String text;
 

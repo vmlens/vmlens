@@ -13,8 +13,8 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.startProcess;
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.stopProcess;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+
 
 public class AgentClassFileTransformer implements ClassFileTransformer {
 
@@ -53,7 +53,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String name, Class<?> cl, ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) throws IllegalClassFormatException {
 
-        startProcess();
+        incrementInsideVMLens();
         try {
               if (loader != null && loader.equals(this.getClass().getClassLoader())) {
                 return null;
@@ -80,7 +80,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             return null;
         }
         finally {
-           stopProcess();
+            decrementInsideVMLens();
         }
         return null;
     }

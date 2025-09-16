@@ -14,7 +14,6 @@ public class ClassLoaderForTransformation extends ClassLoader {
     private static final boolean TRACE_CLASSES = false;
     private final ClassLoader testClassLoader;
 
-
     public ClassLoaderForTransformation(ClassLoader testClassLoader) {
         super(null);
         this.testClassLoader = testClassLoader;
@@ -25,7 +24,6 @@ public class ClassLoaderForTransformation extends ClassLoader {
         if (name.startsWith("java.util.concurrent.atomic")) {
             return testClassLoader.loadClass(name);
         }
-
         if (name.startsWith("com.vmlens.trace.agent")) {
             return testClassLoader.loadClass(name);
         }

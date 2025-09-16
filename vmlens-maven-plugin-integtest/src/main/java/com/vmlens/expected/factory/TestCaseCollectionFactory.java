@@ -41,6 +41,7 @@ public class TestCaseCollectionFactory {
         nameToTestCase.put("hiero.testAdd",new EmptyIntTestFactory().create());
         nameToTestCase.put("childWithProtectedFieldTest",new EmptyIntTestFactory().create());
         nameToTestCase.put("innerChild",new EmptyIntTestFactory().create());
+        nameToTestCase.put("whileLoop",new EmptyIntTestFactory().create());
 
         return new TestCaseCollection(nameToTestCase);
     }

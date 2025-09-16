@@ -6,15 +6,12 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 public class ThreadLocalForParallelize extends ThreadLocalForCallbackAction {
 
     public static final String ANARSOFT_THREAD_NAME = "anarsoft";
-
-    private final ThreadForParallelize threadForParallelize;
-
     private ThreadLocalWhenInTest parallelizedThreadLocal;
 
     private boolean inThreadPool;
 
     public ThreadLocalForParallelize(ThreadForParallelize threadForParallelize) {
-        this.threadForParallelize = threadForParallelize;
+        super(threadForParallelize);
     }
 
     public ThreadLocalWhenInTest getThreadLocalDataWhenInTest() {

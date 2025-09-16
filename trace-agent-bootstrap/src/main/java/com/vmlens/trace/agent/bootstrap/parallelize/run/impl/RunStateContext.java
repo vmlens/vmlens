@@ -54,6 +54,8 @@ public class RunStateContext {
                 case BLOCKED : {
                     if(interleaveRun.withCalculated()) {
                         sendEvent.sendMessage(TEST_BLOCKED_MESSAGE);
+                        interleaveRun.logCalculatedRun(sendEvent);
+                        runContext.logStackTrace(activeThreadIndex,sendEvent);
                     }
                     return true;
                 }

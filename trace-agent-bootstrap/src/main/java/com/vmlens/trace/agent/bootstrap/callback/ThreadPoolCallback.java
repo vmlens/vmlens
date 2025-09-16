@@ -1,32 +1,33 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.callback.impl.ThreadPoolCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.ThreadPoolJoinAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.ThreadPoolStartAction;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadPoolCallback {
 
-    private static volatile ThreadPoolCallbackImpl threadPoolCallbackImpl = new ThreadPoolCallbackImpl(
-            new ThreadLocalWhenInTestAdapterImpl());
+    private static volatile CallbackActionProcessor callbackActionProcessor = new CallbackActionProcessorImpl();
+    private static final AtomicInteger threadCount = new AtomicInteger();
 
     public static boolean start(Object pool, Object task,int methodId) {
-        return threadPoolCallbackImpl.start(pool, task, methodId);
+        return callbackActionProcessor.process(new ThreadPoolStartAction(pool, (Runnable) task, threadCount));
     }
 
     public static void join(Object task, int methodId) {
-        threadPoolCallbackImpl.join(task, methodId);
+        callbackActionProcessor.process(new ThreadPoolJoinAction(task));
     }
 
     public static void joinExit() {
-           if( isInThreadPool()) {
-               setInThreadPool(false);
-              // stopProcess();
-           }
+
     }
 
     // visible for test
-    public static void setThreadPoolCallbackImpl(ThreadPoolCallbackImpl threadPoolCallbackImpl) {
-        ThreadPoolCallback.threadPoolCallbackImpl = threadPoolCallbackImpl;
+
+
+    public static void setCallbackActionProcessor(CallbackActionProcessor callbackActionProcessor) {
+        ThreadPoolCallback.callbackActionProcessor = callbackActionProcessor;
     }
 }

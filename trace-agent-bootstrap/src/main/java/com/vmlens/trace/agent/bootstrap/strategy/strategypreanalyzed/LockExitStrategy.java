@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallbac
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.LockExitEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
+import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
 /**
  *  methodEnter call waitCallOrBeforeLockExit
@@ -28,21 +29,12 @@ public class LockExitStrategy implements StrategyPreAnalyzed {
         RunBeforeLockExitOrWait<LockExitEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
                 new SetInMethodIdPositionObjectHashCode<>(context.object()), new WithoutAtomic());
-        context.threadLocalWhenInTestAdapter().process(action);
+        context.inTestActionProcessor().process(action);
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
-        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitWaitOrThreadStart());
+        context.inTestActionProcessor().process(new RunAfterLockExitWaitOrThreadStart());
     }
 
-    @Override
-    public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
-
-    }
-
-    @Override
-    public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-
-    }
 }

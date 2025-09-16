@@ -1,14 +1,14 @@
 package com.vmlens.nottraced.agent.inttest;
 
 import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
-import com.vmlens.trace.agent.bootstrap.callback.impl.MethodCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodExitAction;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OldBytecodeTest extends AbstractIntTest {
 
@@ -20,12 +20,12 @@ public class OldBytecodeTest extends AbstractIntTest {
     @Test
     public void oldByteCodeForExampleStringUtilsCanBeTransformed() throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
-        MethodCallbackImpl methodCallbackImplMock = mock(MethodCallbackImpl.class);
-        MethodCallback.setMethodCallbackImpl(methodCallbackImplMock);
+        CallbackActionProcessorMock callbackActionProcessor = new CallbackActionProcessorMock();
+        MethodCallback.setCallbackActionProcessor(callbackActionProcessor);
 
         runTest("CallApacheStringUtil");
-        verify(methodCallbackImplMock, times(2)).methodEnter(any(), anyInt());
-        verify(methodCallbackImplMock, times(2)).methodExit(any(), anyInt());
+        assertThat(callbackActionProcessor.getCount(MethodEnterAction.class), is(2));
+        assertThat(callbackActionProcessor.getCount(MethodExitAction.class), is(2));
     }
 
 

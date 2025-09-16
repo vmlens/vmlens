@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.lock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.ReadWriteLockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.ReentrantLockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.ReadWriteLockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.ReentrantLockKey;
 import gnu.trove.map.hash.TLongLongHashMap;
 
 public class ReadWriteLockMap {

@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
@@ -14,5 +16,6 @@ public interface InterleaveRun {
 
     ActualRun actualRun();
     boolean withCalculated();
+    void logCalculatedRun(SendEvent sendEvent);
 
 }

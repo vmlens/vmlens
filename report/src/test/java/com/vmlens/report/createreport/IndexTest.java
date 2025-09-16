@@ -16,7 +16,7 @@ public class IndexTest {
     //@Test
     public void createReport() throws IOException {
         // Given
-        UITestLoop uiLoop = new UITestLoop("name", 0, "resultText", "style");
+        UITestLoop uiLoop = new UITestLoop("name", 0, "resultText");
         uiLoop.setLink("link");
 
         CreateOneReport createOneReport = new CreateOneReport("index");

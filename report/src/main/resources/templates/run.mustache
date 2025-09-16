@@ -5,26 +5,33 @@
 <div class="container-fluid">
     <div class="row">
         <table class="table table-striped text-start">
-            <thead>
+            <thead class="sticky-head">
                 <tr>
-                    <th>Thread</th>
-                    <th>Operation</th>
-                    <th>
+                    <th colspan="5">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span>Method</span>
+                            <span><a href="index.html">Overview</a>/{{runName}}</span>
                             <a href="{{{reportHelpLink}}}" title="Help">Help</a>
                         </div>
                     </th>
+                </tr>
+                <tr>
+                    <th>Thread</th>
+                    <th>Operation</th>
+                    <th>Element</th>
+                    <th>Object</th>
+                    <th>Method</th>
                 </tr>
             </thead>
             {{#elements}}
                 <tr>
                     {{#isSeparator}}
-                        <td colspan="3">{{{operation}}}</td>
+                        <td colspan="5">{{{operation}}}</td>
                     {{/isSeparator}}
                     {{^isSeparator}}
                         <td>{{threadName}}</td>
                         <td>{{{operation}}}</td>
+                        <td>{{{element}}}</td>
+                        <td>{{{object}}}</td>
                         <td>{{#hasLink}}<a href="{{link}}">{{method}} </a> {{/hasLink}}{{^hasLink}}  {{method}} {{/hasLink}}  </td>
                     {{/isSeparator}}
                 </tr>

@@ -4,6 +4,8 @@ import com.vmlens.trace.agent.bootstrap.Pair;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.InitialBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.UpdateBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import org.junit.Test;
 

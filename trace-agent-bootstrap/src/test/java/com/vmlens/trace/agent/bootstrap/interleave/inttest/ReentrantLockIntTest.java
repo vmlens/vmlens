@@ -1,13 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.interleave.inttest;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
 import org.junit.Test;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.ReentrantLockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.ReentrantLockKey;
 
 public class ReentrantLockIntTest {
 

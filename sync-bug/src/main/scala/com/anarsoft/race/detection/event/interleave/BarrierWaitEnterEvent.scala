@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.sortutil.{BarrierContainer, EventContainer}
 import com.vmlens.report.runelementtype.{BarrierOperation, BarrierOperationType, RunElementType}
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify
 
 
 trait BarrierWaitEnterEvent extends BarrierEvent {

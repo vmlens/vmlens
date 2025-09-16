@@ -3,7 +3,6 @@ package com.vmlens.report.builder;
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.element.RunElement;
 import com.vmlens.report.element.StacktraceElement;
-import com.vmlens.report.runelementtype.NonVolatileAccess;
 import com.vmlens.report.uielement.*;
 
 import java.util.*;
@@ -31,7 +30,7 @@ public class ReportBuildAlgo {
         for (LoopAndRun loopAndRun : loopAndRuns) {
             UITestLoop uiTestLoop = new UITestLoop(descriptionContext.loopName(loopAndRun.loop().loopId()),
                     loopAndRun.loop().count(),
-                    loopAndRun.loop().testResult().text(), loopAndRun.loop().testResult().style());
+                    loopAndRun.loop().testResult().text());
 
 
             loopAndRun.runElements().sort(new RunElementByRunPositionComparator());
@@ -58,9 +57,13 @@ public class ReportBuildAlgo {
                     firstStacktraceMethodName = descriptionContext.methodName(runElement.inMethodId());
                 }
 
-                String operation = runElement.operationTextFactory().asString(descriptionContext);
+                String operation = runElement.operationTextFactory().operation();
+                String element = runElement.operationTextFactory().element(descriptionContext);
+                String object = runElement.operationTextFactory().object(descriptionContext);
                 UIRunElement uiRunElement = new UIRunElement(runElement.runPosition(),
                         operation,
+                        element,
+                        object,
                         firstStacktraceMethodName,
                         descriptionContext.threadName(runElement.loopRunAndThreadIndex()),
                         false);

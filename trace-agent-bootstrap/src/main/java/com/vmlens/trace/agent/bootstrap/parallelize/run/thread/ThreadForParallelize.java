@@ -105,4 +105,15 @@ public class ThreadForParallelize {
         return thread.getName();
     }
 
+    public int getStacktraceDepth() {
+        StackFrameCounter stackFrameCounter = new StackFrameCounter();
+        StackWalker walker = StackWalker.getInstance();
+        walker.forEach( stackFrameCounter );
+        return stackFrameCounter.count();
+    }
+
+    public StackTraceElement[] getStackTrace() {
+        return thread.getStackTrace();
+    }
+
 }

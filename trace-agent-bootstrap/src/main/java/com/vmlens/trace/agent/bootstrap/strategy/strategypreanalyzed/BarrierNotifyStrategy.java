@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunBeforeL
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierNotifyEvent;
+import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
 /**
  * methodExit after barrier notify event
@@ -31,21 +32,12 @@ public class BarrierNotifyStrategy implements StrategyPreAnalyzed {
                 RunBeforeLockExitOrWait<>(event,
                 new SetInMethodIdPositionObjectHashCode<>(context.object()), new WithoutAtomic());
 
-        context.threadLocalWhenInTestAdapter().process(action);
+        context.inTestActionProcessor().process(action);
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
-        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitWaitOrThreadStart());
+        context.inTestActionProcessor().process(new RunAfterLockExitWaitOrThreadStart());
     }
 
-    @Override
-    public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
-
-    }
-
-    @Override
-    public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-
-    }
 }

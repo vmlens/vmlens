@@ -6,6 +6,7 @@ import com.vmlens.report.description.NeedsDescriptionCallback;
 public interface MemoryAccessKey {
 
     String asString(DescriptionContext context);
+    String objectHashCode();
     void addToNeedsDescription(NeedsDescriptionCallback callback);
 
 }

@@ -15,12 +15,16 @@ public class ArrayObjectHashCodeAndIndex implements MemoryAccessKey  {
 
     @Override
     public String asString(DescriptionContext context) {
-        return " array[" + arrayIndex  + "]@" + objectHashCode;
+        return " array[" + arrayIndex + "]" ;
     }
 
     @Override
     public void addToNeedsDescription(NeedsDescriptionCallback callback) {
    
     }
-    
+
+    @Override
+    public String objectHashCode() {
+        return "" + objectHashCode;
+    }
 }

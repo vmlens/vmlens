@@ -1,78 +1,48 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.callback.impl.FieldCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
+import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.AfterFieldAccessAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.BeforeFieldAccessAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.BeforeStaticFieldAccessAction;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton;
-
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
 
 
 public class FieldCallback {
 
-    private static volatile FieldCallbackImpl fieldCallbackImpl = new FieldCallbackImpl(
-            FieldRepositorySingleton.INSTANCE,
-            new ThreadLocalWhenInTestAdapterImpl(),
-            ReadWriteLockMap.INSTANCE);
+    private static volatile CallbackActionProcessor callbackActionProcessor = new CallbackActionProcessorImpl();
+    private static final FieldRepositoryForCallback fieldIdToStrategy =  FieldRepositorySingleton.INSTANCE;
+    private static final ReadWriteLockMap readWriteLockMap =  ReadWriteLockMap.INSTANCE;
 
     public static void beforeFieldRead(Object fromObject, int fieldId, int position, int inMethodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                fieldCallbackImpl.beforeFieldRead(fromObject, fieldId, position, inMethodId);
-            } finally {
-                stopProcess();
-            }
-        }
+        callbackActionProcessor.process(new BeforeFieldAccessAction(fieldIdToStrategy,
+                fromObject,  fieldId,  position,  inMethodId, MemoryAccessType.IS_READ));
     }
 
     public static void beforeFieldWrite(Object fromObject, int fieldId, int position, int inMethodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                fieldCallbackImpl.beforeFieldWrite(fromObject, fieldId, position, inMethodId);
-            } finally {
-                stopProcess();
-            }
-        }
+        callbackActionProcessor.process(new BeforeFieldAccessAction(fieldIdToStrategy,
+                fromObject,  fieldId,  position,  inMethodId, MemoryAccessType.IS_WRITE));
     }
 
     public static void beforeStaticFieldRead(int fieldId, int position, int inMethodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                fieldCallbackImpl.beforeStaticFieldRead(fieldId, position, inMethodId);
-            } finally {
-                stopProcess();
-            }
-        }
+        callbackActionProcessor.process(new BeforeStaticFieldAccessAction(fieldIdToStrategy,
+                 fieldId,  position,  inMethodId, MemoryAccessType.IS_READ));
     }
 
 
     public static void beforeStaticFieldWrite(int fieldId, int position, int inMethodId) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                fieldCallbackImpl.beforeStaticFieldWrite(fieldId, position, inMethodId);
-            } finally {
-                stopProcess();
-            }
-        }
+        callbackActionProcessor.process(new BeforeStaticFieldAccessAction(fieldIdToStrategy,
+                fieldId,  position,  inMethodId, MemoryAccessType.IS_WRITE));
     }
 
     public static void afterFieldAccess() {
-        if(canProcess()) {
-            startProcess();
-            try {
-                fieldCallbackImpl.afterFieldAccess();
-            } finally {
-                stopProcess();
-            }
-        }
+        callbackActionProcessor.process(new AfterFieldAccessAction(readWriteLockMap));
     }
 
-    public static void setFieldCallbackImpl(FieldCallbackImpl fieldCallbackImpl) {
-        FieldCallback.fieldCallbackImpl = fieldCallbackImpl;
+    public static void setCallbackActionProcessor(CallbackActionProcessor callbackActionProcessor) {
+        FieldCallback.callbackActionProcessor = callbackActionProcessor;
     }
 }

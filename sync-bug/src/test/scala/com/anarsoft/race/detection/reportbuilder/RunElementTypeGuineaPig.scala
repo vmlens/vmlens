@@ -4,9 +4,14 @@ import com.vmlens.report.description.{DescriptionContext, NeedsDescriptionCallba
 import com.vmlens.report.runelementtype.RunElementType
 
 class RunElementTypeGuineaPig extends RunElementType {
-  override def asString(context: DescriptionContext): String = "test"
+
+  override def operation(): String = "test"
+
+  override def element(context: DescriptionContext): String = "element"
 
   override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {
 
   }
+
+  override def `object`(context : DescriptionContext): String = "";
 }

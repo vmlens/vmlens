@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.sortutil
 
 import com.anarsoft.race.detection.event.interleave.{BarrierEvent, BarrierNotifyEvent, MonitorEvent, MonitorExitEvent}
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrier.BarrierNotify
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify
 
 class BarrierContainer(val barrierNotify: Option[BarrierNotifyEvent])
               extends EventContainer[BarrierEvent] {

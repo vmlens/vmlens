@@ -30,11 +30,11 @@ public class CreateHtmlReportIntegTest {
 
         List<UILoopAndRunElementWithStacktraceLeafs> uiLoopAndRunElementsList = new LinkedList<>();
 
-        UITestLoop uiLoop = new UITestLoop("name", 0, "resultText", "style=\"color: red;\"");
+        UITestLoop uiLoop = new UITestLoop("name", 0, "resultText");
         List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceRoots = new
                 LinkedList<>();
 
-        UIRunElement uiRunElement = new UIRunElement(1, "<b>interleaveoperation</b> for field", "method", "4" , false);
+        UIRunElement uiRunElement = new UIRunElement(1, "<b>interleaveoperation</b> for field", "", "object" , "method", "4" , false);
         uiRunElementWithStacktraceRoots.add(new UIRunElementWithStacktraceLeaf(uiRunElement, root));
 
         UILoopAndRunElementWithStacktraceLeafs uiLoopAndRunElementWithStacktraceRoots =

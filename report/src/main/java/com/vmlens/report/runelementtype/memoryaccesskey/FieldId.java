@@ -21,4 +21,9 @@ public class FieldId implements MemoryAccessKey {
         callback.needsField(fieldId);
     }
 
+    @Override
+    public String objectHashCode() {
+        return "";
+    }
+
 }

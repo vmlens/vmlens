@@ -2,7 +2,7 @@ package com.vmlens.report.runelementtype;
 
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
 
 public class BarrierOperation implements RunElementType  {
 
@@ -15,10 +15,15 @@ public class BarrierOperation implements RunElementType  {
     }
 
     @Override
-    public String asString(DescriptionContext context) {
+    public String operation() {
         BarrierKeyTextBuilder barrierKeyTextBuilder = new BarrierKeyTextBuilder();
         barrierKey.accept(barrierKeyTextBuilder);
-        return barrierOperationType.text() + " " + barrierKeyTextBuilder.build();
+        return barrierKeyTextBuilder.build() + " " + barrierOperationType.text();
+    }
+
+    @Override
+    public String element(DescriptionContext context) {
+        return "";
     }
 
     @Override
@@ -26,5 +31,8 @@ public class BarrierOperation implements RunElementType  {
         // No description needed
     }
 
-
+    @Override
+    public String object(DescriptionContext context) {
+        return "" +  barrierKey.objectHashcode();
+    }
 }

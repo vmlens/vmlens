@@ -1,6 +1,7 @@
 package com.vmlens;
 
 import com.anarsoft.race.detection.process.run.ProcessRunContext;
+import com.anarsoft.race.detection.process.run.ProcessRunContextBuilder;
 import com.vmlens.expected.check.BuildEventListMap;
 import com.vmlens.expected.check.CheckLeftBeforeRight;
 import com.vmlens.expected.check.CheckLockEnterExit;
@@ -24,6 +25,21 @@ public class ProcessEvents {
     }
 
     static void process(File eventDirectory, File reportDirectory) {
+        if(reportDirectory.getAbsolutePath().contains("jdk23")) {
+            processJdk23(eventDirectory,reportDirectory);
+        } else {
+            processJdk11(eventDirectory,reportDirectory);
+        }
+    }
+
+    private static void processJdk23(File eventDirectory, File reportDirectory) {
+        ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
+                reportDirectory.toPath(),
+                new ProcessRunContextBuilder().build()).process();
+        checkDataRacesJdk23(result);
+    }
+
+    private static void processJdk11(File eventDirectory, File reportDirectory) {
         Map<String,Integer> loopNameToId = new HashMap<>();
         CheckLeftBeforeRight check = new CheckLeftBeforeRight(new TestCaseCollectionFactory().create(),
                 loopNameToId);
@@ -33,8 +49,8 @@ public class ProcessEvents {
         ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
                 new ProcessRunContext(check,
-                buildEventListMap,false,false,false)).process();
-        checkDataRaces(result);
+                        buildEventListMap,false,false,false)).process();
+        checkDataRacesJdk11(result);
 
         int loopId = loopNameToId.get("readWriteLockTest");
         Map<Integer, List<EventForAssertion>> loopIdToEventForAssertionList = buildEventListMap.build();
@@ -42,7 +58,7 @@ public class ProcessEvents {
         new CheckLockEnterExit().check(list);
     }
 
-    private static void checkDataRaces(ResultForVerify result ) {
+    private static void checkDataRacesJdk11(ResultForVerify result ) {
         Set<String> testWithDataRace = new HashSet<>();
         testWithDataRace.add("staticField");
         testWithDataRace.add("arrayTest");
@@ -53,6 +69,13 @@ public class ProcessEvents {
         testWithDataRace.add("hiero.testAdd");
         testWithDataRace.add("innerChild");
        // testWithDataRace.add("childWithProtectedFieldTest");
+        checkDataRaces(testWithDataRace,result);
+    }
+
+    private static void checkDataRacesJdk23(ResultForVerify result ) {
+        Set<String> testWithDataRace = new HashSet<>();
+        testWithDataRace.add("qBeanSupportConcurrentTest");
+        testWithDataRace.add("jdbcJobExecutionDao");
         checkDataRaces(testWithDataRace,result);
     }
 

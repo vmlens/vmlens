@@ -5,7 +5,7 @@ import com.anarsoft.race.detection.event.interleave.{BarrierNotifyEvent, Barrier
 import com.vmlens.report.assertion.Position
 import com.anarsoft.race.detection.event.gen.{BarrierNotifyEventGen, BarrierWaitExitEventGen, ConditionWaitEnterEventGen, ConditionWaitExitEventGen}
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.{BarrierKeyType, BarrierKeyTypeCollection}
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.LockKey
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey
 
 class EventTestBuilder(val runDataTestBuilder: RunDataTestBuilder, val threadIndex: Int) {
 

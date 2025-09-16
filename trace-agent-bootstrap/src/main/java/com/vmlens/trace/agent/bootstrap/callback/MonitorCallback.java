@@ -1,39 +1,26 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.callback.impl.MonitorCallbackImpl;
-import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTestAdapterImpl;
-
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.AfterMonitorEnterAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.AfterMonitorExitAction;
 
 public class MonitorCallback {
 
-    private static volatile MonitorCallbackImpl monitorCallbackImpl = new MonitorCallbackImpl(
-            new ThreadLocalWhenInTestAdapterImpl());
+    private static volatile CallbackActionProcessor callbackActionProcessor = new CallbackActionProcessorImpl();
 
     public static void afterMonitorEnter(Object monitor, int inMethod, int position) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                monitorCallbackImpl.afterMonitorEnter(monitor, inMethod, position);
-            } finally {
-                stopProcess();
-            }
-        }
+        AfterMonitorEnterAction afterMonitorEnterAction = new AfterMonitorEnterAction(monitor,inMethod,position);
+        callbackActionProcessor.process(afterMonitorEnterAction);
     }
 
     public static void afterMonitorExit(Object monitor, int inMethod, int position) {
-        if(canProcess()) {
-            startProcess();
-            try {
-                monitorCallbackImpl.afterMonitorExit(monitor, inMethod, position);
-            } finally {
-                stopProcess();
-            }
-        }
+        AfterMonitorExitAction afterMonitorExitAction = new AfterMonitorExitAction(monitor,inMethod,position);
+        callbackActionProcessor.process(afterMonitorExitAction);
     }
 
     // Visible for Test
-    public static void setMonitorCallbackImpl(MonitorCallbackImpl monitorCallbackImpl) {
-        MonitorCallback.monitorCallbackImpl = monitorCallbackImpl;
+    public static void setCallbackActionProcessor(CallbackActionProcessor callbackActionProcessor) {
+        MonitorCallback.callbackActionProcessor = callbackActionProcessor;
     }
 }

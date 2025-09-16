@@ -1,8 +1,8 @@
 package com.vmlens.report.runelementtype;
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.BarrierKeyVisitor;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.FutureKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.barrierkey.PhaserKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKeyVisitor;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.FutureKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.PhaserKey;
 
 public class BarrierKeyTextBuilder implements BarrierKeyVisitor {
     
@@ -10,12 +10,12 @@ public class BarrierKeyTextBuilder implements BarrierKeyVisitor {
     
     @Override
     public void visit(FutureKey futureKey) {
-        text = "Future@" + futureKey.objecthashcode();
+        text = "Future" ;
     }
 
     @Override
     public void visit(PhaserKey phaserKey) {
-        text = "Phaser@" + phaserKey.objecthashcode();
+        text = "Phaser";
     }
     
     public String build() {

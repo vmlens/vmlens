@@ -35,6 +35,14 @@ public class LoadClassesAtStart {
         this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.ThreadPoolCallback");
         this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.VmlensApiCallback");
         this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.WaitNotifyProxy");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.callbackaction.CheckIsThreadRun");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.callbackaction.ThreadLocalForCallbackAction");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProviderImpl");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.callbackaction.CheckIsThreadRun");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade");
+        this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton");
+
 
 
     }

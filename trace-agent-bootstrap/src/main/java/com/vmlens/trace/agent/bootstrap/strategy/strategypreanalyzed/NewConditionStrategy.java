@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
+import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
+
 public class NewConditionStrategy implements StrategyPreAnalyzed {
 
     public NewConditionStrategy() {
@@ -20,13 +22,4 @@ public class NewConditionStrategy implements StrategyPreAnalyzed {
                 System.identityHashCode(context.object()));
     }
 
-    @Override
-    public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Nothing to do
-    }
-
-    @Override
-    public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Nothing to do
-    }
 }

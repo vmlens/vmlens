@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
+import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
+
 import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.*;
 
 /**
@@ -20,13 +22,4 @@ public class MethodEnterExitStrategy implements StrategyPreAnalyzed {
         methodExitEvent(context);
     }
 
-    @Override
-    public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
-
-    }
-
-    @Override
-    public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-
-    }
 }

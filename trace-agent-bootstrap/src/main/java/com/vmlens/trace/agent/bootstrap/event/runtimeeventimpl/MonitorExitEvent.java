@@ -4,9 +4,9 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.MonitorExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.LockExit;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveactionimpl.lockkey.MonitorKey;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockExit;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.MonitorKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 
 public class MonitorExitEvent extends MonitorExitEventGen implements
         InterleaveActionFactory, WithObjectHashCode {

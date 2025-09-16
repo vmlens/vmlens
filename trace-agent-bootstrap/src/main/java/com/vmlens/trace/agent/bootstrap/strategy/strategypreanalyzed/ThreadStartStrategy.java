@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallbac
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdAndPosition;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadStartEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
+import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
 import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD;
 
@@ -24,22 +25,13 @@ public class ThreadStartStrategy implements StrategyPreAnalyzed {
         RunBeforeLockExitOrWait<ThreadStartEvent> action = new
                 RunBeforeLockExitOrWait<>(threadStartEvent,
                 new SetInMethodIdAndPosition<>(context.readWriteLockMap()), new WithoutAtomic());
-        context.threadLocalWhenInTestAdapter().process(action);
+        context.inTestActionProcessor().process(action);
     }
 
     @Override
     public void methodExit(EnterExitContext context) {
 
-        context.threadLocalWhenInTestAdapter().process(new RunAfterLockExitWaitOrThreadStart());
+        context.inTestActionProcessor().process(new RunAfterLockExitWaitOrThreadStart());
     }
 
-    @Override
-    public void beforeMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Nothing to do
-    }
-
-    @Override
-    public void afterMethodCall(BeforeAfterContext beforeAfterContext) {
-        // Nothing to do
-    }
 }

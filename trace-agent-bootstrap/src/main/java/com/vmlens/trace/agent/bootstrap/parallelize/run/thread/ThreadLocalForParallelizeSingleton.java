@@ -10,30 +10,17 @@ public class ThreadLocalForParallelizeSingleton {
         }
     };
 
-    public static void resetProcessCount() {
-        callbackStatePerThread.get().resetProcessCallbackCount();
-    }
-
-    public static void startProcess() {
-        callbackStatePerThread.get().incrementDoNotProcessCallbackCount();
-    }
-
-    public static void stopProcess() {
-        callbackStatePerThread.get().decrementDoNotProcessCallbackCount();;
-    }
-
-    public static void setInThreadPool(boolean value) {
-        callbackStatePerThread.get().setInThreadPool(value);
-    }
-
-    public static boolean isInThreadPool() {
-        return  callbackStatePerThread.get().inThreadPool();
-    }
 
 
-    public static boolean canProcess() {
-        return callbackStatePerThread.get().canProcessCallback();
+
+    public static void incrementInsideVMLens() {
+        callbackStatePerThread.get().incrementInsideVMLens();
     }
+
+    public static void decrementInsideVMLens() {
+        callbackStatePerThread.get().decrementInsideVMLens();
+    }
+
 
 
 }

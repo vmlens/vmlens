@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback;
 
-import com.vmlens.trace.agent.bootstrap.callback.impl.DoNotTraceCallbackImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
 
 /**
  *
@@ -29,17 +30,18 @@ import com.vmlens.trace.agent.bootstrap.callback.impl.DoNotTraceCallbackImpl;
 
 public class DoNotTraceCallback {
 
-    private static volatile DoNotTraceCallbackImpl doNotTraceCallbackImpl = new DoNotTraceCallbackImpl();
+    private static volatile CallbackActionProcessor callbackActionProcessor = new CallbackActionProcessorImpl();
 
     public static void methodEnter(Object object, int methodId) {
-        doNotTraceCallbackImpl.methodEnter(object,methodId);
+        callbackActionProcessor.startDoNotTrace();
     }
 
     public static void methodExit(Object object, int methodId) {
-        doNotTraceCallbackImpl.methodExit(object,methodId);
+        callbackActionProcessor.endDoNotTrace();
     }
 
-    public static void setDoNotTraceCallbackImpl(DoNotTraceCallbackImpl doNotTraceCallbackImpl) {
-        DoNotTraceCallback.doNotTraceCallbackImpl = doNotTraceCallbackImpl;
+    // For Test
+    public static void setCallbackActionProcessor(CallbackActionProcessor callbackActionProcessor) {
+        DoNotTraceCallback.callbackActionProcessor = callbackActionProcessor;
     }
 }

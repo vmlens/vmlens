@@ -5,7 +5,7 @@ import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContext, WithP
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.vmlens.report.element.LoopRunAndThreadIndex
-import com.vmlens.report.runelementtype.{RunElementType, ThreadRunElementType}
+import com.vmlens.report.runelementtype.{RunElementType, UIThreadOperation, ThreadRunElementType}
 import com.vmlens.trace.agent.bootstrap.event.EventTypeThread
 
 
@@ -27,6 +27,6 @@ trait ThreadStartEvent extends LoadedInterleaveActionEvent
 
   override def runElementType: RunElementType = {
     val threadType = EventTypeThread.fromCode(eventType);
-    new ThreadRunElementType(threadType.text() + " start (%s)", new LoopRunAndThreadIndex(loopId, runId, startedThreadIndex));
+    new ThreadRunElementType(threadType, UIThreadOperation.START , new LoopRunAndThreadIndex(loopId, runId, startedThreadIndex));
   }
 }
