@@ -35,7 +35,6 @@ public class InterleaveRunWithCalculated implements InterleaveRun {
             calculatedRunPerThread.popIfNotEmpty(interleaveAction.threadIndex());
         }
         return info;
-
     }
 
     @Override

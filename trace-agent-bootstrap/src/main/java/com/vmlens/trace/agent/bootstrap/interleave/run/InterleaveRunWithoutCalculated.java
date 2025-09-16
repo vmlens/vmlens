@@ -52,8 +52,6 @@ public class InterleaveRunWithoutCalculated implements InterleaveRun {
     public static boolean calculateActiveByPositionInRun(int positionInRun,
                                                          int threadIndex,
                                                          TIntLinkedList activeThreadIndices) {
-
-
         return  calculateActiveThreadIndex(activeThreadIndices) == threadIndex;
     }
 
