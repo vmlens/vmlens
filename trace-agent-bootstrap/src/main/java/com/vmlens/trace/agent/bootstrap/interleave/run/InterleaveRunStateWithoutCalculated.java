@@ -17,7 +17,7 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
     }
 
     @Override
-    public StateAndThreadIndex activeThreadIndex(TIntLinkedList activeThreadIndices, int positionInRun) {
+    public StateAndThreadIndex activeThreadIndex(TIntLinkedList activeThreadIndices) {
         TIntIterator iter = activeThreadIndices.iterator();
         while(iter.hasNext()) {
             int index = iter.next();
@@ -31,7 +31,8 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
     }
 
     @Override
-    public StateAndIsActive isActive(int threadIndex, int positionInRun, TIntLinkedList activeThreadIndices) {
+    public StateAndIsActive isActive(int threadIndex,
+                                     TIntLinkedList activeThreadIndices) {
         TIntIterator iter = activeThreadIndices.iterator();
         while(iter.hasNext()) {
             int index = iter.next();
@@ -45,7 +46,9 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
     }
 
     @Override
-    public InterleaveRunState after(ProcessEventContext context, InterleaveRun interleaveRun, EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent) {
+    public InterleaveRunState after(ProcessEventContext context,
+                                    InterleaveRun interleaveRun,
+                                    EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent) {
         PluginEventOnly pluginEvent = runtimeEvent.asPluginEventOnly();
         if(pluginEvent != null) {
             interleaveRun.process(context,pluginEvent);
@@ -58,7 +61,7 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
     }
 
     @Override
-    public InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext, SendEvent sendEvent, int activeThreadIndex, int positionInRun) {
+    public InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext, SendEvent sendEvent, int activeThreadIndex) {
         return new InterleaveRunStateWithoutCalculated(activeThreadIndex);
     }
 

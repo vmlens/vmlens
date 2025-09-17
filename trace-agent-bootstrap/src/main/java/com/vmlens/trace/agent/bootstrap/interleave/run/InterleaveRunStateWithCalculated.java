@@ -18,6 +18,7 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
 
     private final Position[] calculatedRunElementArray;
     private final ThreadIndexToElementList<Position> calculatedRunPerThread;
+    private int arrayIndex;
 
     public InterleaveRunStateWithCalculated(Position[] calculatedRunElementArray) {
         this.calculatedRunElementArray = calculatedRunElementArray;
@@ -28,18 +29,18 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
     }
 
     @Override
-    public StateAndThreadIndex activeThreadIndex(TIntLinkedList activeThreadIndices, int positionInRun) {
-        if (positionInRun >= calculatedRunElementArray.length) {
+    public StateAndThreadIndex activeThreadIndex(TIntLinkedList activeThreadIndices) {
+        if (arrayIndex >= calculatedRunElementArray.length) {
             int position = activeThreadIndices.size() - 1;
             int index = activeThreadIndices.get(position);
             return new StateAndThreadIndex(new InterleaveRunStateWithoutCalculated(index), index);
         }
-        return new StateAndThreadIndex(this,calculatedRunElementArray[positionInRun].threadIndex());
+        return new StateAndThreadIndex(this,calculatedRunElementArray[arrayIndex].threadIndex());
     }
 
     @Override
-    public StateAndIsActive isActive(int threadIndex, int positionInRun, TIntLinkedList activeThreadIndices) {
-        if (positionInRun >= calculatedRunElementArray.length) {
+    public StateAndIsActive isActive(int threadIndex, TIntLinkedList activeThreadIndices) {
+        if (arrayIndex >= calculatedRunElementArray.length) {
             int position = activeThreadIndices.size() - 1;
             int index = activeThreadIndices.get(position);
             return new StateAndIsActive(new InterleaveRunStateWithoutCalculated(index), index == threadIndex);
@@ -55,8 +56,7 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
         if(calculatedRunPerThread.isEmptyAtIndex(threadIndex)) {
             return  new StateAndIsActive(this,true);
         }
-
-        return new StateAndIsActive(this,calculatedRunElementArray[positionInRun].threadIndex() == threadIndex);
+        return new StateAndIsActive(this,calculatedRunElementArray[arrayIndex].threadIndex() == threadIndex);
     }
 
     @Override
@@ -70,6 +70,7 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
         InterleaveActionFactory interleaveActionFactory = runtimeEvent.asInterleaveActionFactory();
         if(interleaveActionFactory != null) {
             int index = interleaveRun.process(context,interleaveActionFactory);
+            arrayIndex++;
             calculatedRunPerThread.popIfNotEmpty(index);
         }
         return this;
@@ -78,10 +79,9 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
     @Override
     public InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext,
                                                    SendEvent sendEvent,
-                                                   int activeThreadIndex,
-                                                   int positionInRun) {
+                                                   int activeThreadIndex) {
         sendEvent.sendMessage(TEST_BLOCKED_MESSAGE);
-        logCalculatedRun(sendEvent,positionInRun);
+        logCalculatedRun(sendEvent);
         runContext.logStackTrace(activeThreadIndex,sendEvent);
         return new InterleaveRunStateWithoutCalculated(activeThreadIndex);
     }
@@ -91,8 +91,8 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
         return new InterleaveRunStateWithoutCalculated(activeThreadIndex);
     }
 
-    private void logCalculatedRun(SendEvent sendEvent, int positionInRun) {
-        String[] message = new String[] {Arrays.toString(calculatedRunElementArray) , "" + positionInRun};
+    private void logCalculatedRun(SendEvent sendEvent) {
+        String[] message = new String[] {Arrays.toString(calculatedRunElementArray) , "" + arrayIndex};
         sendEvent.sendSerializable(new InfoMessageEvent(message));
     }
 }

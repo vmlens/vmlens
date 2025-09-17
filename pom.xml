@@ -88,11 +88,6 @@
             </dependency>
             <dependency>
                 <groupId>com.vmlens</groupId>
-                <artifactId>annotation</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.vmlens</groupId>
                 <artifactId>api</artifactId>
                 <version>${project.version}</version>
             </dependency>

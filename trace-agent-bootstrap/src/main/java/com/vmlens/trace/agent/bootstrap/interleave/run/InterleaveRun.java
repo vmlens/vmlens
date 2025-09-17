@@ -38,19 +38,19 @@ public class InterleaveRun {
     }
 
     public boolean isActive(int threadIndex, TIntLinkedList activeThreadIndices) {
-        StateAndIsActive stateAndIsActive = state.isActive(threadIndex,positionInRun,activeThreadIndices);
+        StateAndIsActive stateAndIsActive = state.isActive(threadIndex,activeThreadIndices);
         state = stateAndIsActive.state();
         return stateAndIsActive.isActive();
     }
 
     public int activeThreadIndex(TIntLinkedList activeThreadIndices) {
-        StateAndThreadIndex stateAndThreadIndex =  state.activeThreadIndex(activeThreadIndices,positionInRun);
+        StateAndThreadIndex stateAndThreadIndex =  state.activeThreadIndex(activeThreadIndices);
         state = stateAndThreadIndex.state();
         return stateAndThreadIndex.threadIndex();
     }
 
     public void onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext, SendEvent sendEvent, int activeThreadIndex) {
-        state = state.onBlockedWithLogging(runContext,sendEvent,activeThreadIndex,positionInRun);
+        state = state.onBlockedWithLogging(runContext,sendEvent,activeThreadIndex);
     }
 
     public void onBlockedWithoutLogging(int activeThreadIndex) {

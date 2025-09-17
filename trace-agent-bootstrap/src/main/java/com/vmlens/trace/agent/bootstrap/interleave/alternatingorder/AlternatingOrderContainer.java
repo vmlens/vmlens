@@ -46,7 +46,6 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
         public AlternatingOrderContainerIterator() {
             this.permutationIterator = new PermutationIterator(orderTree.length());
             this.calculatedRunFactory = new CalculatedRunFactory(fixedOrderArray,actualRun);
-
         }
 
         @Override
@@ -63,10 +62,8 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
                 fixedOrderArray = null;
                 orderTree = null;
             }
-
             return temp;
         }
-
         /**
          * can return null
          */
