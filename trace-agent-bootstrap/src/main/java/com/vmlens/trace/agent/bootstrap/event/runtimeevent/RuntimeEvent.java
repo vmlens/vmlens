@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndR
 
 import java.io.DataOutputStream;
 
-public interface RuntimeEvent extends SerializableEvent, ParallelizeActionAfter {
+public interface RuntimeEvent extends SerializableEvent, EitherPluginEventOnlyOrInterleaveActionFactory {
 
     @Override
     default void serialize(StreamRepository streamRepository) throws Exception {
@@ -24,9 +24,9 @@ public interface RuntimeEvent extends SerializableEvent, ParallelizeActionAfter 
     void setRunId(int runId);
     void setRunPosition(int runPosition);
 
-    boolean isInterleaveActionFactory();
     void serialize(DataOutputStream buffer) throws Exception;
     StreamWrapperWithLoopIdAndRunId getStream(StreamRepository streamRepository);
+
 
 
 

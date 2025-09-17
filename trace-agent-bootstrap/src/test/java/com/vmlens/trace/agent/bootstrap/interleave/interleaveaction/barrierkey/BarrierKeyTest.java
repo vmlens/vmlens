@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey;
 
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

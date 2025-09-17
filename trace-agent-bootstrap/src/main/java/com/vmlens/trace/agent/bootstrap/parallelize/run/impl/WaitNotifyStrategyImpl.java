@@ -22,7 +22,7 @@ public class WaitNotifyStrategyImpl implements WaitNotifyStrategy {
             threadActiveCondition.signalAll();
             while (!runStateMachine.isActive(threadLocalDataWhenInTest,sendEvent)) {
                 threadActiveCondition.await(100, TimeUnit.MICROSECONDS);
-                if(runStateMachine.checkStopWaiting(sendEvent)) {
+                if(runStateMachine.checkStopWaiting(sendEvent,threadLocalDataWhenInTest.threadIndex())) {
                     return;
                 }
             }

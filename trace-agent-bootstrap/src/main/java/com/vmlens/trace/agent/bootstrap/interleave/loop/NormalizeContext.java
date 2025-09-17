@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.run;
+package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import gnu.trove.map.hash.TLongIntHashMap;
 

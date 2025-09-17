@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.depende
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 
 import java.util.Objects;
 

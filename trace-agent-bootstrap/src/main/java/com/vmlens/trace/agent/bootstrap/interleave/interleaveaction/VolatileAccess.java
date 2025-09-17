@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAl
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileKey;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.VolatileOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 
 import java.util.Objects;
 

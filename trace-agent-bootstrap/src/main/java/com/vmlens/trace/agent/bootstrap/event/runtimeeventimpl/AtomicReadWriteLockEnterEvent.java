@@ -3,13 +3,13 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.AtomicReadWriteLockEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 
 public class AtomicReadWriteLockEnterEvent extends AtomicReadWriteLockEnterEventGen implements
-        InterleaveActionFactory, WithInMethodIdPositionObjectHashCode {
+        InterleaveActionFactoryAndRuntimeEvent, WithInMethodIdPositionObjectHashCode {
 
     private final LockType lockTypeClass;
 

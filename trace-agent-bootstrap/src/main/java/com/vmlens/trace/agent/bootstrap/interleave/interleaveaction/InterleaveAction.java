@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 
 
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToKeyToOperationCollectionWithThreadIndex;
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 
 public interface InterleaveAction extends AddToKeyToOperationCollectionWithThreadIndex {
 

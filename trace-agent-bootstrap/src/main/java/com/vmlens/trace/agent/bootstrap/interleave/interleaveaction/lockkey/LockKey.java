@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey;
 
 
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 
 public abstract class LockKey implements Comparable<LockKey> {
 

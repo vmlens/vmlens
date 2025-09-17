@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
@@ -48,8 +48,8 @@ public class RunStateMachineImpl implements RunStateMachine  {
     }
 
     @Override
-    public boolean checkStopWaiting(SendEvent sendEvent) {
-        RunStateAndResult<Boolean> result = currentState.checkBlocked(sendEvent);
+    public boolean checkStopWaiting(SendEvent sendEvent,int waitingThreadIndex) {
+        RunStateAndResult<Boolean> result = currentState.checkBlocked(sendEvent,waitingThreadIndex);
         currentState = result.runState();
         return result.result();
     }

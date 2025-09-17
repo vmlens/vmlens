@@ -1,4 +1,4 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-public class LoopTest {
+public class SingleThreadFilter {
 }

@@ -2,16 +2,16 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ParallelizeActionAfter;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.EitherPluginEventOnlyOrInterleaveActionFactory;
 
 public class AfterContextForStateMachine {
 
     private final ThreadLocalWhenInTest threadLocalDataWhenInTest;
-    private final ParallelizeActionAfter runtimeEvent;
+    private final EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent;
 
 
     public AfterContextForStateMachine(ThreadLocalWhenInTest threadLocalDataWhenInTest,
-                                       ParallelizeActionAfter runtimeEvent) {
+                                       EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent) {
         this.threadLocalDataWhenInTest = threadLocalDataWhenInTest;
         this.runtimeEvent = runtimeEvent;
     }
@@ -27,7 +27,7 @@ public class AfterContextForStateMachine {
         return threadLocalDataWhenInTest;
     }
 
-    public ParallelizeActionAfter runtimeEvent() {
+    public EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent() {
         return runtimeEvent;
     }
 

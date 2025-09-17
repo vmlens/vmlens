@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
@@ -21,11 +20,6 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public ActualRun actualRun() {
-        return null;
-    }
-
-    @Override
     public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
         return this;
     }
@@ -38,7 +32,7 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent,int waitingThreadIndex) {
         return new RunStateAndResult<>(this,false);
     }
 
@@ -50,5 +44,10 @@ public class RunStateEnd implements RunState {
     @Override
     public RunState afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return this;
+    }
+
+    @Override
+    public ActualRun actualRun() {
+        return null;
     }
 }

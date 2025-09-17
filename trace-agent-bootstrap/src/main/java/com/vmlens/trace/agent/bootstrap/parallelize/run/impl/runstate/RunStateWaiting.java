@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
@@ -32,13 +31,7 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
         if(! notYetWaitingThreadIndices.isEmpty()) {
             return false;
         }
-
         return calculateIsActive(runStateContext,threadLocalDataWhenInTest,sendEvent);
-    }
-
-    @Override
-    public ActualRun actualRun() {
-        return runStateContext.actualRun();
     }
 
     @Override
@@ -57,7 +50,7 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent,int waitingThreadIndex) {
         notYetWaitingThreadIndices = runStateContext.removeNotActive(notYetWaitingThreadIndices);
         if(! notYetWaitingThreadIndices.isEmpty()) {
             return new RunStateAndResult<>(this,false);
@@ -85,5 +78,10 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
     @Override
     protected RunState runStateActive() {
         return new RunStateActive(runStateContext);
+    }
+
+    @Override
+    public ActualRun actualRun() {
+        return runStateContext.actualRun();
     }
 }

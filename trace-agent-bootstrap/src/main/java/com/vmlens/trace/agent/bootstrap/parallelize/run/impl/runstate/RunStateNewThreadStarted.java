@@ -2,7 +2,6 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
@@ -40,17 +39,10 @@ public class RunStateNewThreadStarted implements RunState {
     }
 
     @Override
-    public ActualRun actualRun() {
-        return runStateContext.actualRun();
-    }
-
-    @Override
     public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
         process(afterContext, sendEvent, runStateContext);
         return this;
     }
-
-
 
     @Override
     public RunStateAndResult<ThreadLocalWhenInTest> processNewTestTask(NewTaskContext newTaskContext,
@@ -67,7 +59,7 @@ public class RunStateNewThreadStarted implements RunState {
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent,int waitingThreadIndex) {
         /*
          * we need to wait that the new thread was really started,
          * checking for blocked leads to failing tests
@@ -91,5 +83,10 @@ public class RunStateNewThreadStarted implements RunState {
     public RunState afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         // Fixme probably not correct
         return this;
+    }
+
+    @Override
+    public ActualRun actualRun() {
+        return runStateContext.actualRun();
     }
 }
