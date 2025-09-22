@@ -85,7 +85,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    testImplementation("com.vmlens:api:1.2.13")
+    testImplementation("com.vmlens:api:1.2.14")
     ...
 }
 buildscript {
@@ -93,7 +93,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.vmlens:standalone:1.2.13")
+        classpath("com.vmlens:standalone:1.2.14")
     }
 }
 tasks.register("vmlensReport") {
@@ -118,11 +118,11 @@ See [build.gradle.kts](https://github.com/vmlens/vmlens-examples/blob/master/bui
 
 To use VMLens as a standalone tool:
 
-1. Include com.vmlens.api from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/api/1.2.13/) as a test jar in your project.
-1. Download the jar standalone-1.2.13.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.13/) 
-1. Run java -jar standalone-1.2.13.jar install. This creates the agent directory and prints the vm parameter to System.out
+1. Include com.vmlens.api from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/api/1.2.14/) as a test jar in your project.
+1. Download the jar standalone-1.2.14.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.14/) 
+1. Run java -jar standalone-1.2.14.jar install. This creates the agent directory and prints the vm parameter to System.out
 1. Add this vm parameter when you run your test
-2. Run java -jar standalone-1.2.13.jar report. This checks for data races and creates the report
+2. Run java -jar standalone-1.2.14.jar report. This checks for data races and creates the report
 
 
 # Documentation
