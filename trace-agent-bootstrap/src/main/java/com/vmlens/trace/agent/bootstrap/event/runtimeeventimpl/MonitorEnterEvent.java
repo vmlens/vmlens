@@ -55,4 +55,9 @@ public class MonitorEnterEvent extends MonitorEnterEventGen implements
     public int runId() {
         return runId;
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

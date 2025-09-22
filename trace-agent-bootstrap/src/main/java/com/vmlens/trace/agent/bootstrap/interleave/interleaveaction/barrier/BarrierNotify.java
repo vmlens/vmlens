@@ -98,8 +98,4 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
 
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

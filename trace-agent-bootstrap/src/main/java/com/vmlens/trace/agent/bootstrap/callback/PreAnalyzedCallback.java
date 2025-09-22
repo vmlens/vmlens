@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.AfterMethodCallAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.BeforeMethodCallAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodExitAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
@@ -18,15 +20,18 @@ import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.Meth
 public class PreAnalyzedCallback {
 
     private static volatile CallbackActionProcessor callbackActionProcessor = new CallbackActionProcessorImpl();
-    private static final MethodStrategyAdapter methodStrategyAdapter = new MethodStrategyAdapterPreAnalyzed(ReadWriteLockMap.INSTANCE,
+    private static final ReadWriteLockMap readWriteLockMap = ReadWriteLockMap.INSTANCE;
+    private static final MethodStrategyAdapter methodStrategyAdapter = new MethodStrategyAdapterPreAnalyzed(readWriteLockMap,
             MethodRepositorySingleton.INSTANCE);
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
-
+        BeforeMethodCallAction beforeMethodCallAction = new BeforeMethodCallAction(inMethodId,position);
+        callbackActionProcessor.process(beforeMethodCallAction);
     }
 
     public static void afterMethodCall(int inMethodId, int position, int calledMethodId) {
-
+        AfterMethodCallAction afterMethodCallAction = new AfterMethodCallAction(inMethodId,position,readWriteLockMap);
+        callbackActionProcessor.process(afterMethodCallAction);
     }
 
     public static void methodEnter(Object object, int methodId) {

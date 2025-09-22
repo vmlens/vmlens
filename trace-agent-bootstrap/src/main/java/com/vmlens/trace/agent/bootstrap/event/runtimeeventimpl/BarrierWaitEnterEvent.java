@@ -87,4 +87,9 @@ public class BarrierWaitEnterEvent extends BarrierWaitEnterEventGen
     public void addToBuilder(NextStateBuilder nextStateBuilder) {
         nextStateBuilder.addWaitingThreadIndex(threadIndex);
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

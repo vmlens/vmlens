@@ -11,4 +11,6 @@ public interface PluginEventOnly extends RuntimeEvent {
     default PluginEventOnly asPluginEventOnly() {
         return this;
     }
+
+    int threadIndex();
 }

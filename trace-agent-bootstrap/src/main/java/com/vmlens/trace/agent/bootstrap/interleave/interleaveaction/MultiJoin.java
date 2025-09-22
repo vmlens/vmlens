@@ -49,8 +49,4 @@ public class MultiJoin extends InterleaveActionForInDependentBlock  {
         return threadIndex;
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

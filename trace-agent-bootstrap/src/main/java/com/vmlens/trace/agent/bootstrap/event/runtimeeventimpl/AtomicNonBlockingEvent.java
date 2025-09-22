@@ -83,4 +83,9 @@ public class AtomicNonBlockingEvent extends AtomicNonBlockingEventGen implements
     public int runId() {
         return runId;
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

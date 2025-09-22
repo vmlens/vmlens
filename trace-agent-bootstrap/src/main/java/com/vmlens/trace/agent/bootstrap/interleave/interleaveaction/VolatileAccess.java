@@ -107,8 +107,4 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
         return treeBuilderNode;
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

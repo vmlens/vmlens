@@ -1,7 +1,12 @@
 package com.vmlens.nottraced.agent;
 
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
+
 public class LoadClassesAtStart {
     public void loadClasses() throws ClassNotFoundException {
+
+        final ReadWriteLockMap instance = ReadWriteLockMap.INSTANCE;
+
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.TLinkableAdapter");
         this.getClass().getClassLoader().loadClass("com.vmlens.shaded.gnu.trove.list.linked.TLinkedList");
@@ -42,8 +47,6 @@ public class LoadClassesAtStart {
         this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.callback.callbackaction.CheckIsThreadRun");
         this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade");
         this.getClass().getClassLoader().loadClass("com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton");
-
-
 
     }
 }

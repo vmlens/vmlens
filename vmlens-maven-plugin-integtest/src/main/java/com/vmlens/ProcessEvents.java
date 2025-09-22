@@ -68,6 +68,7 @@ public class ProcessEvents {
         testWithDataRace.add("putIfAbsentAndGetKeysWithSequenceNumber");
         testWithDataRace.add("hiero.testAdd");
         testWithDataRace.add("innerChild");
+        testWithDataRace.add("whileLoop");
        // testWithDataRace.add("childWithProtectedFieldTest");
         checkDataRaces(testWithDataRace,result);
     }

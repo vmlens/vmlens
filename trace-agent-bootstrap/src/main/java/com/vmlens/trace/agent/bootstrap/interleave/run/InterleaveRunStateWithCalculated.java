@@ -19,6 +19,7 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
     private final Position[] calculatedRunElementArray;
     private final ThreadIndexToElementList<Position> calculatedRunPerThread;
     private int arrayIndex;
+    private final LoopCounter loopCounter = new LoopCounterSingleElement();
 
     public InterleaveRunStateWithCalculated(Position[] calculatedRunElementArray) {
         this.calculatedRunElementArray = calculatedRunElementArray;
@@ -66,14 +67,16 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
         PluginEventOnly pluginEvent = runtimeEvent.asPluginEventOnly();
         if(pluginEvent != null) {
             interleaveRun.process(context,pluginEvent);
+            return loopCounter.onPluginEvent(pluginEvent.threadIndex(),context.context(),context.sendEvent(),this);
         }
         InterleaveActionFactory interleaveActionFactory = runtimeEvent.asInterleaveActionFactory();
         if(interleaveActionFactory != null) {
             int index = interleaveRun.process(context,interleaveActionFactory);
             arrayIndex++;
             calculatedRunPerThread.popIfNotEmpty(index);
+            return loopCounter.onPluginEvent(index,context.context(),context.sendEvent(),this);
         }
-        return this;
+       throw new RuntimeException("should not be called");
     }
 
     @Override

@@ -69,4 +69,9 @@ public class ThreadStartEvent extends ThreadStartEventGen implements ExecuteBefo
     public void addToBuilder(NextStateBuilder nextStateBuilder) {
         this.startedThreadIndex = nextStateBuilder.addThreadStarted(threadWrapper);
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return true;
+    }
 }

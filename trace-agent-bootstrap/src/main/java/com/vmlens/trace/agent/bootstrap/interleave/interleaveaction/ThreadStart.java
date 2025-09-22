@@ -70,8 +70,4 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
         return startedThreadIndex == otherLock.startedThreadIndex;
     }
 
-    @Override
-    public boolean startsThread() {
-        return true;
-    }
 }

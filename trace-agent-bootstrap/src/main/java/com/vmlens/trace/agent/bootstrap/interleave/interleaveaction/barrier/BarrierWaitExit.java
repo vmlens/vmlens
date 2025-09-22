@@ -35,7 +35,6 @@ public class BarrierWaitExit implements Barrier  {
         return treeBuilderNode;
     }
 
-
     @Override
     public int threadIndex() {
         return threadIndex;
@@ -63,8 +62,4 @@ public class BarrierWaitExit implements Barrier  {
         return barrierKey.equalsNormalized(normalizeContext,otherLock.barrierKey);
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

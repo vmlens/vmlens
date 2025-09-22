@@ -12,6 +12,11 @@ public class FieldAccessEventStatic extends FieldAccessEventStaticGen implements
         this.threadIndex = threadIndex;
     }
 
+    public int threadIndex() {
+        return threadIndex;
+    }
+
+
     @Override
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();

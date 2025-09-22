@@ -29,12 +29,14 @@ public class InterleaveRun {
     }
 
     public void after(EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent,
-                      CreateInterleaveActionContext context,
+                      ThreadIndexAndThreadStateMap context,
                       ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
                       SendEvent sendEvent) {
-        ProcessEventContext processEventContext = new ProcessEventContext(
-                context,threadLocalWhenInTestForParallelize,sendEvent);
-        state = state.after(processEventContext,this,runtimeEvent);
+        if(singleThreadFilter.take(runtimeEvent)) {
+            ProcessEventContext processEventContext = new ProcessEventContext(
+                    context,threadLocalWhenInTestForParallelize,sendEvent);
+            state = state.after(processEventContext,this,runtimeEvent);
+        }
     }
 
     public boolean isActive(int threadIndex, TIntLinkedList activeThreadIndices) {

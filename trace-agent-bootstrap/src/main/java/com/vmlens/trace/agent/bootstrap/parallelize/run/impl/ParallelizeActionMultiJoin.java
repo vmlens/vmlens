@@ -72,4 +72,9 @@ public class ParallelizeActionMultiJoin implements EitherPluginEventOnlyOrInterl
         }
         return new MultiJoin(threadLocalWhenInTestForParallelize.threadIndex(), threadIndices);
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

@@ -68,6 +68,7 @@ public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOr
             } else {
                 factoryTraceMethodEnterExit.addTraceMethodEnterExit(nameAndDescriptor, result);
             }
+            factoryTraceMethodEnterExit.addTraceMethodCall(result);
             return result;
         }
         switch (methodNotFoundAction) {

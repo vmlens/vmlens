@@ -76,4 +76,9 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements Interleav
         return runId;
     }
 
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
+
 }

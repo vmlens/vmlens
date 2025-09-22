@@ -72,4 +72,9 @@ public class LockExitEvent extends LockExitEventGen implements ExecuteBeforeEven
     public void addToBuilder(NextStateBuilder nextStateBuilder) {
         nextStateBuilder.addExitEvent();
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

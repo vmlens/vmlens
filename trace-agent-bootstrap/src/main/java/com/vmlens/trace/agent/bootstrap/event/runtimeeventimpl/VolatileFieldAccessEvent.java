@@ -84,4 +84,8 @@ public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implem
         return runId;
     }
 
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

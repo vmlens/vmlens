@@ -56,4 +56,9 @@ public class MonitorExitEvent extends MonitorExitEventGen implements
         return runId;
     }
 
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
+
 }

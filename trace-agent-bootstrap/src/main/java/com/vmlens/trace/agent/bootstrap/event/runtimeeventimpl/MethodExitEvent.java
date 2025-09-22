@@ -14,6 +14,10 @@ public class MethodExitEvent extends MethodExitEventGen implements PluginEventOn
         this.threadIndex = threadIndex;
     }
 
+    public int threadIndex() {
+        return threadIndex;
+    }
+
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.incrementAndGetMethodCount();
     }

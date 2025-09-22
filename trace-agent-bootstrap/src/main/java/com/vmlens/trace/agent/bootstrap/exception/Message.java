@@ -1,7 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.exception;
 
 public enum Message {
-    TEST_BLOCKED_MESSAGE(1, "Test Blocked");
+    TEST_BLOCKED_MESSAGE(1, "Test Blocked") ,
+    SYNC_ACTION_LOOP_MESSAGE(2, "Synchronized Action Loop"),
+    NON_VOLATILE_LOOP_MESSAGE(3, "Non Volatile Loop");
 
     private final int id;
     private final String text;

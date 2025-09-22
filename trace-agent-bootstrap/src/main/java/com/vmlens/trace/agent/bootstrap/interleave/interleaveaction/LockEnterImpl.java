@@ -64,8 +64,4 @@ public class LockEnterImpl implements InterleaveAction  {
         return lockOrMonitor.equalsNormalized(normalizeContext,otherLock.lockOrMonitor);
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

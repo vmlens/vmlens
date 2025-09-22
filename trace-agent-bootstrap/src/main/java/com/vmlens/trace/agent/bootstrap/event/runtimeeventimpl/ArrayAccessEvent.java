@@ -13,6 +13,11 @@ public class ArrayAccessEvent extends ArrayAccessEventGen implements
         this.threadIndex = threadIndex;
     }
 
+    public int threadIndex() {
+        return threadIndex;
+    }
+
+
     public void setArrayIndex(int arrayIndex) {
         this.arrayIndex = arrayIndex;
     }

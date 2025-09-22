@@ -71,4 +71,9 @@ public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStat
     public int runId() {
         return runId;
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

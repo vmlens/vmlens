@@ -1,17 +1,17 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 
 public class ProcessEventContext {
 
 
-    private final CreateInterleaveActionContext context;
+    private final ThreadIndexAndThreadStateMap context;
     private final ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize;
     private final SendEvent sendEvent;
 
-    public ProcessEventContext(CreateInterleaveActionContext context,
+    public ProcessEventContext(ThreadIndexAndThreadStateMap context,
                                ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
                                SendEvent sendEvent) {
         this.context = context;
@@ -19,7 +19,7 @@ public class ProcessEventContext {
         this.sendEvent = sendEvent;
     }
 
-    public CreateInterleaveActionContext context() {
+    public ThreadIndexAndThreadStateMap context() {
         return context;
     }
 

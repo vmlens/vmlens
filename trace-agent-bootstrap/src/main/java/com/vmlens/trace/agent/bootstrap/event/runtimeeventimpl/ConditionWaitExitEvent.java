@@ -100,4 +100,9 @@ public class ConditionWaitExitEvent extends ConditionWaitExitEventGen implements
     public void addToBuilder(NextStateBuilder nextStateBuilder) {
         nextStateBuilder.addExitEvent();
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

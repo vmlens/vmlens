@@ -83,4 +83,9 @@ public class BarrierWaitExitEvent extends BarrierWaitExitEventGen
     public void addToBuilder(NextStateBuilder nextStateBuilder) {
         nextStateBuilder.addExitEvent();
     }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
 }

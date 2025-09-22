@@ -101,4 +101,9 @@ public class ConditionWaitEnterEvent extends ConditionWaitEnterEventGen implemen
         nextStateBuilder.addWaitingThreadIndex(threadIndex);
     }
 
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
+
 }

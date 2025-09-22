@@ -80,4 +80,9 @@ public class AtomicReadWriteLockEnterEvent extends AtomicReadWriteLockEnterEvent
         return runId;
     }
 
+    @Override
+    public boolean startsNewThread() {
+        return false;
+    }
+
 }

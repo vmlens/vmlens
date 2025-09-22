@@ -11,7 +11,7 @@ import gnu.trove.list.linked.TIntLinkedList;
 public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  {
 
     private final int currentThreadIndex;
-
+    private final LoopCounter loopCounter = new LoopCounterSingleElement();
     public InterleaveRunStateWithoutCalculated(int activeThreadIndex) {
         this.currentThreadIndex = activeThreadIndex;
     }
@@ -52,12 +52,15 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
         PluginEventOnly pluginEvent = runtimeEvent.asPluginEventOnly();
         if(pluginEvent != null) {
             interleaveRun.process(context,pluginEvent);
+            return loopCounter.onPluginEvent(pluginEvent.threadIndex(),context.context(),context.sendEvent(),this);
+
         }
         InterleaveActionFactory interleaveActionFactory = runtimeEvent.asInterleaveActionFactory();
         if(interleaveActionFactory != null) {
-            interleaveRun.process(context,interleaveActionFactory);
+            int index = interleaveRun.process(context,interleaveActionFactory);
+            return loopCounter.onPluginEvent(index,context.context(),context.sendEvent(),this);
         }
-        return this;
+        throw new RuntimeException("should not be called");
     }
 
     @Override

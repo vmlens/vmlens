@@ -16,8 +16,14 @@ public interface InterleaveActionFactoryAndRuntimeEvent extends RuntimeEvent , I
                                            int positionInRun) {
         this.setRunPosition(positionInRun);
         this.setMethodCounter(threadLocalWhenInTestForParallelize);
+
+        InterleaveAction interleaveAction = create(context);
+        /* the create method sets the joined thread index in joined events
+         * so sendSerializable must come after create
+         */
         sendEvent.sendSerializable(this);
-        return create(context);
+
+        return interleaveAction;
     }
 
     @Override

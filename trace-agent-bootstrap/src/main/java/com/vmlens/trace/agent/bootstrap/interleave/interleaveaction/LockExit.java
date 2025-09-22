@@ -78,8 +78,4 @@ public class LockExit implements InterleaveAction  {
         return lockOrMonitor.equalsNormalized(normalizeContext,otherLock.lockOrMonitor);
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }
