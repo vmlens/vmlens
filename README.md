@@ -44,7 +44,7 @@ To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens p
 <dependency>
   <groupId>com.vmlens</groupId>
   <artifactId>api</artifactId>
-  <version>1.2.13</version>
+  <version>1.2.14</version>
   <scope>test</scope>
 </dependency>	
 	
@@ -54,7 +54,7 @@ To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens p
     <plugin>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens-maven-plugin</artifactId>
-        <version>1.2.13</version>
+        <version>1.2.14</version>
         <executions>
             <execution>
                 <id>test</id>
