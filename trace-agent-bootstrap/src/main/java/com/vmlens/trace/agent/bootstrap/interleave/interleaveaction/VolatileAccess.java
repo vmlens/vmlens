@@ -39,8 +39,6 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
         result.addVolatile(volatileAccessKey,new DependentOperationAndPosition<>(myPosition,this));
     }
 
-
-
     @Override
     public int threadIndex() {
         return threadIndex;

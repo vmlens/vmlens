@@ -1,14 +1,12 @@
 package com.vmlens.test.maven.plugin.loop;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestStopThread {
 
     private volatile boolean stop = false;
 
-    @Ignore
     @Test
     public void testUpdate() throws InterruptedException {
         try(AllInterleavings allInterleavins = new AllInterleavings("testStopThread")) {

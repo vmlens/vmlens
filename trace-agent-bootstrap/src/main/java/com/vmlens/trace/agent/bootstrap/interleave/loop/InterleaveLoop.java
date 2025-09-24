@@ -2,10 +2,11 @@ package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.InterleaveActionLoopFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ActualRun;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -41,10 +42,12 @@ public class InterleaveLoop implements IteratorQueue {
     }
 
     public void addActualRun(ActualRun actualRun) {
-        addActualRun(actualRun.run());
+        TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = new
+                InterleaveActionLoopFactory().create(actualRun.run());
+        addActualRunWithLoops(withLoops);
     }
 
-    void addActualRun(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
+    private void addActualRunWithLoops(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
         ThreadIndexToElementList<InterleaveAction> newRun = create(run);
         if(alreadyProcessed(newRun))  {
             return;

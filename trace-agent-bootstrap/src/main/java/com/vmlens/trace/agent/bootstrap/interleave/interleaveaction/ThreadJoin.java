@@ -26,8 +26,6 @@ public class ThreadJoin extends InterleaveActionForInDependentBlock {
             result.add(wrap(new LeftBeforeRight(new Position(joinedThreadIndex, lastPosition - 1),
                     myPosition)));
         }
-
-
     }
 
     @Override
