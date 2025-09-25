@@ -9,6 +9,10 @@ import java.nio.file.{Files, Path}
 
 class LoadAgentLog(dir: Path) {
 
+  def hasAgentLog(): Boolean = 
+    Files.exists(dir.resolve(AGENTLOG + EVENT_FILE_POSTFIX))
+  
+
   def load(output: PrintStream): Unit = {
     val stream = new DataInputStream(Files.newInputStream(dir.resolve(AGENTLOG + EVENT_FILE_POSTFIX)))
     val deserializeInfoMessageEvent = new DeserializeInfoMessageEvent();

@@ -60,7 +60,11 @@ public class VMLensMojo extends SurefireMojo {
                 reportDirectory.toPath(),
                 new ProcessRunContextBuilder().build()).process();
 
-        handleResult(result,reportDirectory,mojoFailureException,this.getLog());
+        if(result.noTestsRun()) {
+            this.getLog().info("No VMLens tests run.");
+        } else {
+            handleResult(result,reportDirectory,mojoFailureException,this.getLog());
+        }
     }
 
     // Visible for Test
