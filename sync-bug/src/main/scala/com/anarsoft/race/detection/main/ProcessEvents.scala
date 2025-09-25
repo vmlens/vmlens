@@ -23,12 +23,20 @@ class ProcessEvents(val eventDir: Path,
     new LoadDescriptionImpl(eventDir).hasThreadAndLoopDescription();
 
   def process(): ResultForVerify = {
+    val agentLog = new LoadAgentLog(eventDir);
+
+    if( ! agentLog.hasAgentLog()) {
+      val result = new ResultForVerify();
+      result.setNoTestsRun(true);
+      return result;
+    }
+
     val dir = reportDir.toFile
     reCreate(dir);
 
 
     val printStream = new PrintStream(reportDir.resolve("agentlog.txt").toFile)
-    new LoadAgentLog(eventDir).load(printStream);
+    agentLog.load(printStream);
     printStream.close();
 
 
