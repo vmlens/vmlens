@@ -47,18 +47,18 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
 
     @Override
     public InterleaveRunState after(ProcessEventContext context,
-                                    InterleaveRun interleaveRun,
+                                    AfterCallback afterCallback,
                                     EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent) {
         PluginEventOnly pluginEvent = runtimeEvent.asPluginEventOnly();
         if(pluginEvent != null) {
-            interleaveRun.process(context,pluginEvent);
-            return loopCounter.onPluginEvent(pluginEvent.threadIndex(),context.context(),context.sendEvent(),this);
+            afterCallback.process(context,pluginEvent);
+            return loopCounter.onPluginEvent(pluginEvent.threadIndex(),context.context(),afterCallback,this);
 
         }
         InterleaveActionFactory interleaveActionFactory = runtimeEvent.asInterleaveActionFactory();
         if(interleaveActionFactory != null) {
-            int index = interleaveRun.process(context,interleaveActionFactory);
-            return loopCounter.onInterleaveActionFactory(index,context.context(),context.sendEvent(),this);
+            int index = afterCallback.process(context,interleaveActionFactory);
+            return loopCounter.onInterleaveActionFactory(index,context.context(),afterCallback,this);
         }
         throw new RuntimeException("should not be called");
     }

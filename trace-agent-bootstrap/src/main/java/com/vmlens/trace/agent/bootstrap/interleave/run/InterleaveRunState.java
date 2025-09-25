@@ -11,7 +11,7 @@ public interface InterleaveRunState {
 
 
     InterleaveRunState after(ProcessEventContext context,
-                             InterleaveRun interleaveRun,
+                             AfterCallback afterCallback,
                              EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent);
 
     InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext,

@@ -1,11 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
 import gnu.trove.iterator.TIntIterator;
-
-import static com.vmlens.trace.agent.bootstrap.exception.Message.NON_VOLATILE_LOOP_MESSAGE;
-import static com.vmlens.trace.agent.bootstrap.exception.Message.SYNC_ACTION_LOOP_MESSAGE;
 
 public class LoopCounterSingleElement implements LoopCounter {
 
@@ -16,7 +12,7 @@ public class LoopCounterSingleElement implements LoopCounter {
     @Override
     public InterleaveRunState onPluginEvent(int threadIndex,
                                             ThreadIndexAndThreadStateMap context,
-                                            SendEvent sendEvent,
+                                            AfterCallback afterCallback,
                                             InterleaveRunState previous) {
         if(forThreadIndex != threadIndex) {
             forThreadIndex = threadIndex;
@@ -30,14 +26,14 @@ public class LoopCounterSingleElement implements LoopCounter {
             return previous;
         }
 
-        sendEvent.sendMessage(NON_VOLATILE_LOOP_MESSAGE);
+        afterCallback.onNonVolatileLoop();
         return createInterleaveRunState(threadIndex,context);
     }
 
     @Override
     public InterleaveRunState onInterleaveActionFactory(int threadIndex,
                                                         ThreadIndexAndThreadStateMap context,
-                                                        SendEvent sendEvent,
+                                                        AfterCallback afterCallback,
                                                         InterleaveRunState previous) {
         if(forThreadIndex != threadIndex) {
             forThreadIndex = threadIndex;
@@ -52,7 +48,7 @@ public class LoopCounterSingleElement implements LoopCounter {
             return previous;
         }
 
-        sendEvent.sendMessage(SYNC_ACTION_LOOP_MESSAGE);
+        afterCallback.onSynchronizedActionLoop();
         return createInterleaveRunState(threadIndex,context);
     }
 

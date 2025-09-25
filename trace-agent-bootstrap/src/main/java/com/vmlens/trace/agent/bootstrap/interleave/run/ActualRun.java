@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate;
+package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;

@@ -19,6 +19,7 @@ public class InterleaveRun {
     private final SingleThreadFilter singleThreadFilter = new SingleThreadFilter();
     private int positionInRun;
     private InterleaveRunState state;
+    private boolean hasLoop;
 
     public InterleaveRun() {
         state = new InterleaveRunStateWithoutCalculated(0);
@@ -35,7 +36,8 @@ public class InterleaveRun {
         if(singleThreadFilter.take(runtimeEvent)) {
             ProcessEventContext processEventContext = new ProcessEventContext(
                     context,threadLocalWhenInTestForParallelize,sendEvent);
-            state = state.after(processEventContext,this,runtimeEvent);
+            AfterCallback afterCallback = new AfterCallback(this,sendEvent);
+            state = state.after(processEventContext,afterCallback,runtimeEvent);
         }
     }
 
@@ -59,8 +61,8 @@ public class InterleaveRun {
         state = state.onBlockedWithoutLogging(activeThreadIndex);
     }
 
-    public TLinkedList<TLinkableWrapper<InterleaveAction>> run() {
-        return run;
+    public ActualRun run() {
+        return new ActualRun(run,hasLoop);
     }
 
     void process(ProcessEventContext context, PluginEventOnly pluginEventOnly) {
@@ -79,4 +81,7 @@ public class InterleaveRun {
         return action.threadIndex();
     }
 
+    public void setHasLoop() {
+        this.hasLoop = true;
+    }
 }

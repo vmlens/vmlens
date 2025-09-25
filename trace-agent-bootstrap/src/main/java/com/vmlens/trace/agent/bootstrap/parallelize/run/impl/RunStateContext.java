@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTe
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ActualRun;
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.set.hash.TIntHashSet;
@@ -84,7 +84,7 @@ public class RunStateContext {
     }
 
     public ActualRun actualRun() {
-        return new ActualRun(interleaveRun.run());
+        return interleaveRun.run();
     }
 
 }
