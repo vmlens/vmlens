@@ -36,6 +36,9 @@ public class ClassTypeCollection {
         if(classType instanceof ClassTypeFilterInnerIncludeAnonymous) {
             return 8;
         }
+        if(classType instanceof DoNotTraceInContainsClassName) {
+            return 9;
+        }
         throw new RuntimeException("unknown " + classType.getClass());
     }
 
@@ -66,6 +69,9 @@ public class ClassTypeCollection {
         }
         if(id == 8) {
             return ClassTypeFilterInnerIncludeAnonymous.SINGLETON;
+        }
+        if(id == 9) {
+            return DoNotTraceInContainsClassName.SINGLETON;
         }
         throw new RuntimeException("unknown " + id);
     }

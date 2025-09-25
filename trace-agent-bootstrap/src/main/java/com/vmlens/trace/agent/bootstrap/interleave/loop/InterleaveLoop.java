@@ -20,10 +20,10 @@ public class InterleaveLoop implements IteratorQueue {
 
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =
          new TLinkedList<>();
-
     private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> stillToBeProcessedAlternatingOrderContainer =
             new TLinkedList<>();
     private final InterleaveLoopIterator iterator;
+    private boolean containsLoop;
 
     public InterleaveLoop() {
         this.iterator = new InterleaveLoopIterator(this);
@@ -42,8 +42,12 @@ public class InterleaveLoop implements IteratorQueue {
     }
 
     public void addActualRun(ActualRun actualRun) {
-        TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = new
-                InterleaveActionLoopFactory().create(actualRun.run());
+        containsLoop = actualRun.containsLoop() | containsLoop;
+        TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = actualRun.run();
+
+        if(containsLoop)  {
+            withLoops = new InterleaveActionLoopFactory().create(actualRun.run());
+        }
         addActualRunWithLoops(withLoops);
     }
 
@@ -79,16 +83,15 @@ public class InterleaveLoop implements IteratorQueue {
         if(existing.elementCount() != newRun.elementCount()) {
             return false;
         }
-        NormalizeContext normalizeContext = new NormalizeContext();
         Iterator<InterleaveAction> newIter = newRun.elementIterator();
         Iterator<InterleaveAction> existingIter = existing.elementIterator();
         while(newIter.hasNext()) {
-            // we need to call existingIter.hasNext() since in hasNext is the logi
+            // we need to call existingIter.hasNext() since in hasNext is the logic
             // to move the elements forward
             existingIter.hasNext();
             InterleaveAction existingAction  = existingIter.next();
             InterleaveAction newAction = newIter.next();
-            if(! existingAction.equalsNormalized(normalizeContext,newAction)) {
+            if(! existingAction.equalsNormalized(newAction)) {
                 return false;
             }
         }

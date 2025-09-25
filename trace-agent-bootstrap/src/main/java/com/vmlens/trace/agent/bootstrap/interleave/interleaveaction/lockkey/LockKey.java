@@ -1,8 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey;
 
 
-import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
-
 public abstract class LockKey implements Comparable<LockKey> {
 
     public static final int CATEGORY_MONITOR = 1;
@@ -22,13 +20,8 @@ public abstract class LockKey implements Comparable<LockKey> {
         return objectHashCode;
     }
 
-    public boolean equalsNormalized(NormalizeContext normalizeContext, LockKey other) {
-        if(category() != other.category()) {
-            return false;
-        }
-        int myCode = normalizeContext.normalizeObjectHashCode(objectHashCode);
-        int otherCode =   normalizeContext.normalizeObjectHashCode(other.objectHashCode);
-        return myCode == otherCode;
+    public boolean equalsNormalized(LockKey other) {
+        return category() == other.category();
     }
 
     @Override

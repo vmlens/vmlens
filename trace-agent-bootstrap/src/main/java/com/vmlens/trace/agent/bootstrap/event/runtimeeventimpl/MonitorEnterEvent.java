@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.MonitorEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockEnterImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 
@@ -38,7 +39,7 @@ public class MonitorEnterEvent extends MonitorEnterEventGen implements
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new LockEnterImpl(threadIndex, new MonitorKey(objectHashCode));
+        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), new MonitorKey(objectHashCode));
     }
 
     @Override

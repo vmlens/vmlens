@@ -67,6 +67,12 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
                 transformerStrategyFactory.createDoNotTraceIn());
     }
 
+    @Override
+    public void addDoNotTraceInContainsClassName(String name) {
+        add(new ClassFilterStartsWith(name),
+                transformerStrategyFactory.createDoNotTraceIn());
+    }
+
     public ClassFilterAndTransformerStrategyCollection build() {
         return new ClassFilterAndTransformerStrategyCollection(classArrayTransformerList);
     }

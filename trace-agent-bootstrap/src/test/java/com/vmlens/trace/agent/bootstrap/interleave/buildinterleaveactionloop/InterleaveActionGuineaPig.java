@@ -4,7 +4,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public class InterleaveActionGuineaPig implements InterleaveAction {
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+    public boolean equalsNormalized(InterleaveAction other) {
         InterleaveActionGuineaPig otherGuineaPig = (InterleaveActionGuineaPig)  other;
         return equals(otherGuineaPig);
     }
@@ -33,7 +32,7 @@ public class InterleaveActionGuineaPig implements InterleaveAction {
 
     @Override
     public int threadIndex() {
-        return 0;
+        return threadIndex;
     }
 
     @Override

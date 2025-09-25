@@ -74,7 +74,7 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
             int index = interleaveRun.process(context,interleaveActionFactory);
             arrayIndex++;
             calculatedRunPerThread.popIfNotEmpty(index);
-            return loopCounter.onPluginEvent(index,context.context(),context.sendEvent(),this);
+            return loopCounter.onInterleaveActionFactory(index,context.context(),context.sendEvent(),this);
         }
        throw new RuntimeException("should not be called");
     }

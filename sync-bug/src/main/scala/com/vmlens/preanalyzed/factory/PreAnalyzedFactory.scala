@@ -67,8 +67,9 @@ at java.lang.invoke.MethodType.makeImpl(MethodType.java:358)
 at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives.java:399)
 */
       DoNotTraceIn("java/lang/invoke/MethodType"),
-
       DoNotTraceIn("com/vmlens/test/guineapig/DoNotTraceIn"),
+     // DoNotTraceInContains("org/mockito/"),
+
 
       loadNotYetImplemented(),
 

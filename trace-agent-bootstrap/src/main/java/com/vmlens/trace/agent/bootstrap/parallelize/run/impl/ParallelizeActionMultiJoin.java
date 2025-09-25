@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFacto
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.PluginEventOnly;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadJoinedEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MultiJoin;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
@@ -70,7 +71,8 @@ public class ParallelizeActionMultiJoin implements EitherPluginEventOnlyOrInterl
             threadJoinedEvent.setJoinedThreadIndex(index);
             sendEvent.sendSerializable(threadJoinedEvent);
         }
-        return new MultiJoin(threadLocalWhenInTestForParallelize.threadIndex(), threadIndices);
+        return new MultiJoin(new MethodIdByteCodePositionAndThreadIndex(inMethodId, position, threadLocalWhenInTestForParallelize.threadIndex()),
+                threadIndices);
     }
 
     @Override

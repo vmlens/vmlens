@@ -1,19 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey;
 
-import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
-
 public abstract class BarrierKey implements Comparable<BarrierKey> {
 
     protected static final int CATEGORY_FUTURE = 0;
     protected static final int CATEGORY_PHASER = 1;
 
-    public boolean equalsNormalized(NormalizeContext normalizeContext, BarrierKey other) {
-        if(getClass() != other.getClass()) {
-            return false;
-        }
-        int myCode = normalizeContext.normalizeObjectHashCode(objectHashcode());
-        int otherCode =   normalizeContext.normalizeObjectHashCode(other.objectHashcode());
-        return myCode == otherCode;
+    public boolean equalsNormalized(BarrierKey other) {
+        return getClass() == other.getClass();
     }
 
     @Override

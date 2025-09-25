@@ -58,7 +58,7 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
         InterleaveActionFactory interleaveActionFactory = runtimeEvent.asInterleaveActionFactory();
         if(interleaveActionFactory != null) {
             int index = interleaveRun.process(context,interleaveActionFactory);
-            return loopCounter.onPluginEvent(index,context.context(),context.sendEvent(),this);
+            return loopCounter.onInterleaveActionFactory(index,context.context(),context.sendEvent(),this);
         }
         throw new RuntimeException("should not be called");
     }

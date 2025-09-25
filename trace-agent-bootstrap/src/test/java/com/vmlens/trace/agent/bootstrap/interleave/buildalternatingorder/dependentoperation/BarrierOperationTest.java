@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
+import static com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.MethodIdByteCodePositionAndThreadIndexFactory.threadIndex;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -22,8 +23,8 @@ public class BarrierOperationTest {
     private final Position waitPosition = pos(0,0);
 
     private final FutureKey futureKey = new FutureKey(5L);
-    private final BarrierNotify notify = new BarrierNotify(1,futureKey);
-    private final BarrierWaitEnter wait = new BarrierWaitEnter(1,futureKey);
+    private final BarrierNotify notify = new BarrierNotify(threadIndex(1),futureKey);
+    private final BarrierWaitEnter wait = new BarrierWaitEnter(threadIndex(1),futureKey);
 
     @Test
     public void testAsymmetricWaitNotify() {

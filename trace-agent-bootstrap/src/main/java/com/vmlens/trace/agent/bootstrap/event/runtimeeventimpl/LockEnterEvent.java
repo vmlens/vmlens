@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.LockEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.lock.LockEvent;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
@@ -42,7 +43,7 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new LockEnterImpl(threadIndex, lockTypeClass.create(objectHashCode));
+        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), lockTypeClass.create(objectHashCode));
     }
 
     @Override

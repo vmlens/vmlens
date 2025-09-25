@@ -11,6 +11,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAc
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
+import static com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.MethodIdByteCodePositionAndThreadIndexFactory.threadIndex;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class IntTestBuilder {
@@ -19,13 +20,14 @@ public class IntTestBuilder {
     private final  TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = new TLinkedList<>();
 
     public IntTestOperation enter(LockKey lockKey, int threadIndex) {
-        LockEnterImpl lockEnterImpl = new LockEnterImpl(threadIndex,lockKey);
+        LockEnterImpl lockEnterImpl = new LockEnterImpl(threadIndex(threadIndex),
+                lockKey);
         actualRun.add(wrap(lockEnterImpl));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
 
     public IntTestOperation exit(LockKey lockKey, int threadIndex) {
-        LockExit lockExit = new LockExit(threadIndex,lockKey);
+        LockExit lockExit = new LockExit(threadIndex(threadIndex),lockKey);
         actualRun.add(wrap(lockExit));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
@@ -39,37 +41,37 @@ public class IntTestBuilder {
     }
 
     public IntTestOperation join(int joinedThreadIndex, int threadIndex) {
-        ThreadJoin threadJoin = new ThreadJoin(threadIndex,joinedThreadIndex);
+        ThreadJoin threadJoin = new ThreadJoin(threadIndex(threadIndex),joinedThreadIndex);
         actualRun.add(wrap(threadJoin));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
 
     public IntTestOperation barrierWait(BarrierKey key, int threadIndex) {
-        BarrierWaitEnter barrierWait = new BarrierWaitEnter(threadIndex,key);
+        BarrierWaitEnter barrierWait = new BarrierWaitEnter(threadIndex(threadIndex),key);
         actualRun.add(wrap(barrierWait));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
 
     public IntTestOperation barrierNotify(BarrierKey key, int threadIndex) {
-        BarrierNotify barrierNotify = new BarrierNotify(threadIndex,key);
+        BarrierNotify barrierNotify = new BarrierNotify(threadIndex(threadIndex),key);
         actualRun.add(wrap(barrierNotify));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
 
     public IntTestOperation conditionWaitEnter(LockKey key, int threadIndex) {
-        ConditionWaitEnter condition = new ConditionWaitEnter(threadIndex,key);
+        ConditionWaitEnter condition = new ConditionWaitEnter(threadIndex(threadIndex),key);
         actualRun.add(wrap(condition));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
 
     public IntTestOperation conditionWaitExit(LockKey key, int threadIndex) {
-        ConditionWaitExit condition = new ConditionWaitExit(threadIndex,key);
+        ConditionWaitExit condition = new ConditionWaitExit(threadIndex(threadIndex),key);
         actualRun.add(wrap(condition));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
 
     private IntTestOperation volatileAccess(VolatileKey volatileAccessKey, int threadIndex, int operation) {
-        VolatileAccess volatileAccess = new VolatileAccess(threadIndex,volatileAccessKey, operation);
+        VolatileAccess volatileAccess = new VolatileAccess(threadIndex(threadIndex),volatileAccessKey, operation);
         actualRun.add(wrap(volatileAccess));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }

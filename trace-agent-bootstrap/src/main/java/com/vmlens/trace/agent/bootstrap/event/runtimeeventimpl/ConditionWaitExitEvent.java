@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActio
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.ConditionWaitExit;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
@@ -22,7 +23,7 @@ public class ConditionWaitExitEvent extends ConditionWaitExitEventGen implements
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new ConditionWaitExit(this.threadIndex, lockKey);
+        return new ConditionWaitExit(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), lockKey);
     }
 
     @Override

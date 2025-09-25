@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.BarrierWaitEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierWaitEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 
@@ -73,7 +74,7 @@ public class BarrierWaitEnterEvent extends BarrierWaitEnterEventGen
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new BarrierWaitEnter(threadIndex,barrierKeyTypeClass.create(objectHashCode));
+        return new BarrierWaitEnter(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex),barrierKeyTypeClass.create(objectHashCode));
     }
 
     @Override

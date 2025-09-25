@@ -1,8 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey;
 
-
-import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
-
 public class VolatileFieldKey implements VolatileKey {
 
     private final int fieldId;
@@ -29,15 +26,10 @@ public class VolatileFieldKey implements VolatileKey {
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, VolatileKey other) {
+    public boolean equalsNormalized(VolatileKey other) {
         if(! (other instanceof VolatileFieldKey)) {
             return false;
         }
-
-        VolatileFieldKey otherAtomicNonBlockingKey = (VolatileFieldKey) other;
-
-        int myCode = normalizeContext.normalizeObjectHashCode(objectHashCode);
-        int otherCode =   normalizeContext.normalizeObjectHashCode(otherAtomicNonBlockingKey.objectHashCode);
-        return myCode == otherCode && fieldId == otherAtomicNonBlockingKey.fieldId;
+        return fieldId == ((VolatileFieldKey) other).fieldId;
     }
 }

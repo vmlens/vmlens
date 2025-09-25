@@ -41,4 +41,47 @@ public class InterleaveActionLoopFactoryTest {
         assertThat(result.get(3).element(),is(action(0,"a")));
     }
 
+    @Test
+    public void givenSingleElementLoop() {
+        // Given
+        TLinkedList<TLinkableWrapper<InterleaveAction>> list =
+                new TLinkedList<>();
+        list.add(wrap(action(0,"g")));
+
+        for(int i = 0; i < 5; i++) {
+            list.add(wrap(action(0,"a")));
+        }
+        list.add(wrap(action(0,"j")));
+
+        // When
+        TLinkedList<TLinkableWrapper<InterleaveAction>> result =
+                new InterleaveActionLoopFactory().create(list);
+
+        // Then
+        assertThat(result.size(),is(4));
+        assertThat(result.get(1).element(),instanceOf(InterleaveActionLoop.class));
+        assertThat(result.get(2).element(),is(action(0,"a")));
+    }
+
+    @Test
+    public void givenMultipleReadWriteRead() {
+        // Given
+        TLinkedList<TLinkableWrapper<InterleaveAction>> list =
+                new TLinkedList<>();
+        for(int i = 0; i < 5; i++) {
+            list.add(wrap(action(0,"read")));
+        }
+        list.add(wrap(action(1,"write")));
+        list.add(wrap(action(0,"read")));
+
+        // When
+        TLinkedList<TLinkableWrapper<InterleaveAction>> result =
+                new InterleaveActionLoopFactory().create(list);
+
+        // Then
+        assertThat(result.size(),is(3));
+        assertThat(result.get(0).element(),instanceOf(InterleaveActionLoop.class));
+        assertThat(result.get(1).element(),is(action(1,"write")));
+    }
+
 }

@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 
 public class InterleaveActionLoop implements InterleaveAction {
 
@@ -14,7 +13,7 @@ public class InterleaveActionLoop implements InterleaveAction {
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+    public boolean equalsNormalized(InterleaveAction other) {
         if( ! (other instanceof InterleaveActionLoop)) {
             return false;
         }

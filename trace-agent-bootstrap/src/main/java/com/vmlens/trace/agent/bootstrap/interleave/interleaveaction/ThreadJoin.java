@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToMaxPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -11,11 +10,11 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ThreadJoin extends InterleaveActionForInDependentBlock {
 
-    private final int threadIndex;
+    private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final int joinedThreadIndex;
 
-    public ThreadJoin(int threadIndex, int joinedThreadIndex) {
-        this.threadIndex = threadIndex;
+    public ThreadJoin(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex, int joinedThreadIndex) {
+        this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
         this.joinedThreadIndex = joinedThreadIndex;
     }
 
@@ -30,24 +29,24 @@ public class ThreadJoin extends InterleaveActionForInDependentBlock {
 
     @Override
     public int threadIndex() {
-        return threadIndex;
+        return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
 
     @Override
     public String toString() {
         return "ThreadJoin{" +
-                "threadIndex=" + threadIndex +
+                "threadIndex=" + methodIdByteCodePositionAndThreadIndex.threadIndex() +
                 ", joinedThreadIndex=" + joinedThreadIndex +
                 '}';
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+    public boolean equalsNormalized(InterleaveAction other) {
         if(! (other instanceof ThreadJoin)) {
             return false;
         }
         ThreadJoin otherLock = (ThreadJoin) other;
-        if(threadIndex != otherLock.threadIndex)  {
+        if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
             return false;
         }
 

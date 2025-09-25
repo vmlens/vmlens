@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActio
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 
 public class AtomicReadWriteLockEnterEvent extends AtomicReadWriteLockEnterEventGen implements
@@ -41,7 +42,7 @@ public class AtomicReadWriteLockEnterEvent extends AtomicReadWriteLockEnterEvent
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new LockEnterImpl(threadIndex, lockTypeClass.create(objectHashCode));
+        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), lockTypeClass.create(objectHashCode));
     }
 
 

@@ -3,24 +3,25 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToMaxPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.loop.NormalizeContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ThreadStart extends InterleaveActionForInDependentBlock {
-    private final int threadIndex;
+
+    private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final int startedThreadIndex;
 
-    public ThreadStart(int threadIndex, int startedThreadIndex) {
-        this.threadIndex = threadIndex;
+    public ThreadStart(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
+                       int startedThreadIndex) {
+        this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
         this.startedThreadIndex = startedThreadIndex;
     }
 
     @Override
     public int threadIndex() {
-        return threadIndex;
+        return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
 
     // Visible for test
@@ -52,18 +53,18 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
     @Override
     public String toString() {
         return "ThreadStart{" +
-                "threadIndex=" + threadIndex +
+                "threadIndex=" + methodIdByteCodePositionAndThreadIndex.threadIndex() +
                 ", startedThreadIndex=" + startedThreadIndex +
                 '}';
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+    public boolean equalsNormalized(InterleaveAction other) {
         if(! (other instanceof ThreadStart)) {
             return false;
         }
         ThreadStart otherLock = (ThreadStart) other;
-        if(threadIndex != otherLock.threadIndex)  {
+        if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
             return false;
         }
 

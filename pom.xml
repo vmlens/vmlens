@@ -128,6 +128,11 @@
                 <version>2.12.0</version>
             </dependency>
             <dependency>
+                <groupId>dev.openfeature</groupId>
+                <artifactId>sdk</artifactId>
+                <version>1.18.1</version>
+            </dependency>
+            <dependency>
                 <groupId>io.github.java-diff-utils</groupId>
                 <artifactId>java-diff-utils</artifactId>
                 <version>4.12</version>
@@ -162,6 +167,11 @@
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>4.3.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>

@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileFieldAccessEventStaticGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileStaticFieldKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
@@ -52,7 +53,7 @@ public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStat
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
         return new VolatileAccess(
-                threadIndex,
+                new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex),
                 new VolatileStaticFieldKey(fieldId),
                 operation);
     }

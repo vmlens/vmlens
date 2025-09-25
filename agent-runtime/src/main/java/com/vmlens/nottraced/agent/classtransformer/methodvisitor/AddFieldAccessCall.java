@@ -58,6 +58,8 @@ public class AddFieldAccessCall extends MethodVisitor {
                 break;
         }
 
+        position++;
+
         super.visitFieldInsn(opcode, owner, name, descriptor);
 
         fieldCallbackFactory.afterFieldAccess();
