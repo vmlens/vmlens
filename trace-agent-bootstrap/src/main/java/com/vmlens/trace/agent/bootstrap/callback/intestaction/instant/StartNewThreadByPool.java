@@ -29,7 +29,7 @@ public class StartNewThreadByPool extends AbstractInTestAction {
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
         // create new thread (would be good to start it through the test factory)
-        Thread thread = new Thread(task, "VMLensThreadPool-"+threadCount);
+        Thread thread = new Thread(task, "ThreadPool-"+threadCount);
         thread.setDaemon(true);
 
         // call threadStartedByPool

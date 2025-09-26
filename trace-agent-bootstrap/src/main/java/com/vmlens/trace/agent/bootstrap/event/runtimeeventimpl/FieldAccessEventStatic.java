@@ -58,4 +58,9 @@ public class FieldAccessEventStatic extends FieldAccessEventStaticGen implements
     public int runId() {
         return runId;
     }
+
+    @Override
+    public boolean isMethodEnterOrExit() {
+        return false;
+    }
 }

@@ -90,6 +90,8 @@ public class RunImpl implements Run {
         lock.lock();
         try {
             threadPoolMap.add(context);
+            context.threadStartEvent().setRunId(runId);
+            context.threadStartEvent().setLoopId(loopId);
             runStateMachine.beforeLockExitWaitOrThreadStart(context.threadStartEvent(),
                     context.threadLocalDataWhenInTest(),
                     new SendEvent(context.queueIn(),this));

@@ -13,4 +13,6 @@ public interface PluginEventOnly extends RuntimeEvent {
     }
 
     int threadIndex();
+
+    boolean isMethodEnterOrExit();
 }

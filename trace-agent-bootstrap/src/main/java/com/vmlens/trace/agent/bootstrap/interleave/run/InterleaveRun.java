@@ -33,11 +33,20 @@ public class InterleaveRun {
                       ThreadIndexAndThreadStateMap context,
                       ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
                       SendEvent sendEvent) {
+        ProcessEventContext processEventContext = new ProcessEventContext(
+                context,threadLocalWhenInTestForParallelize,sendEvent);
         if(singleThreadFilter.take(runtimeEvent)) {
-            ProcessEventContext processEventContext = new ProcessEventContext(
-                    context,threadLocalWhenInTestForParallelize,sendEvent);
             AfterCallback afterCallback = new AfterCallback(this,sendEvent);
             state = state.after(processEventContext,afterCallback,runtimeEvent);
+       /*  this actually not really useful
+           since typically the start is in the main method anyway
+       } else {
+            PluginEventOnly pluginEvent = runtimeEvent.asPluginEventOnly();
+            if( pluginEvent != null) {
+                if(pluginEvent.isMethodEnterOrExit()) {
+                    process(processEventContext,pluginEvent);
+                }
+            }*/
         }
     }
 
