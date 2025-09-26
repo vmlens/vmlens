@@ -34,8 +34,10 @@ public class TransformerStrategyFactory {
         return new TransformerStrategyVmlensApi();
     }
 
-    public TransformerStrategy createNotYetImplemented() {
-        return new TransformerStrategyForClassTransformer(new FactoryCollectionNotYetImplementedFactory(methodRepositoryForAnalyze),
+    public TransformerStrategy createMethodEnterExitOnly(PreAnalyzedStrategyFactory preAnalyzedStrategyFactory) {
+        return new TransformerStrategyForClassTransformer(
+                new FactoryCollectionPreAnalyzedMethodEnterExitOnlyFactory(methodRepositoryForAnalyze,
+                        preAnalyzedStrategyFactory),
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
@@ -50,8 +52,6 @@ public class TransformerStrategyFactory {
         return new TransformerStrategyForClassTransformer(factoryCollectionPreAnalyzedBuilder,
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
-
-
 
     public FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall() {
         return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new SelectMethodEnterStrategy());

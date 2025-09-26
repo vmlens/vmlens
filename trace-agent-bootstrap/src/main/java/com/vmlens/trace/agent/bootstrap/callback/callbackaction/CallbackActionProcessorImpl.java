@@ -103,7 +103,7 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
                 }
                 ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
                 if (dataWhenInTest != null) {
-                    callbackAction.execute(new InTestActionProcessor(eventQueue,dataWhenInTest));
+                    callbackAction.execute(new InTestActionProcessor(eventQueue,dataWhenInTest,threadLocal.stacktraceDepthProvider()));
                     return true;
                 }
             } finally {

@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadState;
 
 import static java.lang.Thread.State.*;
 
-public class ThreadForParallelize {
+public class ThreadForParallelize implements StacktraceDepthProvider {
 
     private final Thread thread;
 

@@ -72,7 +72,6 @@ public class OpenfeatureTest {
         }
     }
 
-
     private void configureMockEvaluations(FeatureProvider mockProvider, ErrorCode errorCode, String errorMessage) {
         // Configure Boolean evaluation
         when(mockProvider.getBooleanEvaluation(anyString(), any(Boolean.class), any()))

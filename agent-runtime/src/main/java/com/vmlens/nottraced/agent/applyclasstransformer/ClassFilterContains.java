@@ -10,7 +10,7 @@ public class ClassFilterContains implements ClassFilter {
 
     @Override
     public boolean take(String name) {
-        return expected.contains(name);
+        return name.contains(expected);
     }
 
 }

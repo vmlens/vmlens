@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.StacktraceDepthProvider;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;
 
 public class ThreadLocalForCallbackAction {
@@ -49,7 +50,6 @@ public class ThreadLocalForCallbackAction {
      * we currently do not need to check the stacktrace depth here, since all
      * do not trace classes do not let the exception escape
      */
-
     boolean canProcess() {
         if(insideVMLens > 0) {
             return false;
@@ -63,6 +63,10 @@ public class ThreadLocalForCallbackAction {
 
     public void decrementInsideVMLens() {
         insideVMLens--;
+    }
+
+    public StacktraceDepthProvider stacktraceDepthProvider() {
+        return threadForParallelize;
     }
 
 }

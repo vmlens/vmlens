@@ -3,22 +3,25 @@ package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryPreAnalyzed;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodEnterStrategyWithoutParam;
+import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.PreAnalyzedStrategyFactory;
 import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.NotYetImplementedStrategy;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 
-public class FactoryCollectionNotYetImplemented implements FactoryCollection {
+public class FactoryCollectionPreAnalyzedMethodEnterExitOnly implements FactoryCollection {
 
     private final FactoryTraceMethodEnterExit factoryForBoth;
+    private final PreAnalyzedStrategyFactory preAnalyzedStrategyFactory;
 
-    public FactoryCollectionNotYetImplemented( MethodRepositoryForTransform methodCallIdMap) {
+    public FactoryCollectionPreAnalyzedMethodEnterExitOnly(MethodRepositoryForTransform methodCallIdMap,
+                                                           PreAnalyzedStrategyFactory preAnalyzedStrategyFactory) {
         this.factoryForBoth = new FactoryTraceMethodEnterExit(
                 new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam()), methodCallIdMap);
+        this.preAnalyzedStrategyFactory = preAnalyzedStrategyFactory;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class FactoryCollectionNotYetImplemented implements FactoryCollection {
             return TLinkableWrapper.emptyList();
         }
         context.methodRepositoryForTransform().setStrategyPreAnalyzed(context.methodId(),
-                new NotYetImplementedStrategy(context.className(), context.nameAndDescriptor().name()));
+                preAnalyzedStrategyFactory.create(context.className(),context.nameAndDescriptor()));
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
         factoryForBoth.addTraceMethodEnterExit(context.nameAndDescriptor(), result);
         return result;

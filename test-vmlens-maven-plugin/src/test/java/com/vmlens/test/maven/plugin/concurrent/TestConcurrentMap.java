@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Supplier;
 
@@ -22,7 +23,7 @@ public class TestConcurrentMap {
 
     @Test
     public void testConcurrentSkipListMap() throws InterruptedException {
-        //runTest(ConcurrentSkipListMap::new,"concurrentSkipListMap");
+        runTest(ConcurrentSkipListMap::new,"concurrentSkipListMap");
     }
 
     private void runTest(Supplier<ConcurrentMap<String,Integer>> createMap, String name) throws InterruptedException {

@@ -19,7 +19,9 @@ public interface ClassTransformerListBuilder {
 
     void addDoNotTraceIn(String name);
 
-    void addDoNotTraceInContainsClassName(String name);
+    void addDoNotTraceInTestContainsClassName(String name);
+
+    void addDoNotTraceInTestStartWithClassName(String name);
 
     void addClassNotYetImplemented(String name);
 

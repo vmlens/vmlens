@@ -20,9 +20,9 @@ import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
 import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}
 
-import java.lang.invoke.MethodType;
-
+import java.lang.invoke.MethodType
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 
@@ -68,7 +68,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 */
       DoNotTraceIn("java/lang/invoke/MethodType"),
       DoNotTraceIn("com/vmlens/test/guineapig/DoNotTraceIn"),
-     // DoNotTraceInContains("org/mockito/"),
+    //  ClassModelWithoutMethodDescription("org/mockito/", DoNotTraceInTestStartsWithClassName.SINGLETON),
+    //  ClassModelWithoutMethodDescription("$MockitoMock$", DoNotTraceInTestContainsClassName.SINGLETON),
 
 
       loadNotYetImplemented(),
