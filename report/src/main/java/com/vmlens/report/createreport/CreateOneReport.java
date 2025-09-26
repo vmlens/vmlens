@@ -22,17 +22,13 @@ public class CreateOneReport {
 
     public void createUITestLoop(List<UITestLoop> uiElements, Writer writer) {
         Map<String, Object> context = new HashMap<>();
-        context.put("reportHelpLink", "https://vmlens.com/docs/report/overview/");
-        context.put("reportName", "Overview Report");
         context.put("loops", uiElements);
         template.execute(writer, context);
     }
 
     public void createUIRun(List<UIRunElement> uiElements, String runName, Writer writer) {
         Map<String, Object> context = new HashMap<>();
-        context.put("reportHelpLink", "https://vmlens.com/docs/report/run/");
         context.put("runName", runName);
-        context.put("reportName", "Run Report");
         context.put("elements", uiElements);
         template.execute(writer, context);
     }

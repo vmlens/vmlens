@@ -22,8 +22,8 @@ public class FieldId implements MemoryAccessKey {
     }
 
     @Override
-    public String objectHashCode() {
-        return "";
+    public Long objectHashCode() {
+        return null;
     }
 
 }

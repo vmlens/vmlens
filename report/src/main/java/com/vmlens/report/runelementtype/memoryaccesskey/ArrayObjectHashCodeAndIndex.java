@@ -24,7 +24,7 @@ public class ArrayObjectHashCodeAndIndex implements MemoryAccessKey  {
     }
 
     @Override
-    public String objectHashCode() {
-        return "" + objectHashCode;
+    public Long objectHashCode() {
+        return objectHashCode;
     }
 }

@@ -6,14 +6,18 @@ public class LoopRunAndThreadIndex {
     private final int runId;
     private final int threadIndex;
 
-    public int runId() {
-        return runId;
-    }
-
     public LoopRunAndThreadIndex(int loopId, int runId, int threadIndex) {
         this.loopId = loopId;
         this.runId = runId;
         this.threadIndex = threadIndex;
+    }
+
+    public int runId() {
+        return runId;
+    }
+
+    public int threadIndex() {
+        return threadIndex;
     }
 
     @Override
