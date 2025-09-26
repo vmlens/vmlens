@@ -46,7 +46,7 @@ public class NonVolatileAccess implements RunElementType  {
         if(memoryAccessKey.objectHashCode() != null) {
             return objectHashCodeMap.asUiString(memoryAccessKey.objectHashCode());
         }
-        return "";
+        return "static";
     }
 
     @Override

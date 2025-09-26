@@ -13,7 +13,7 @@ public class FieldId implements MemoryAccessKey {
 
     @Override
     public String asString(DescriptionContext context) {
-        return "static " + context.fieldName(fieldId);
+        return context.fieldName(fieldId);
     }
 
     @Override
