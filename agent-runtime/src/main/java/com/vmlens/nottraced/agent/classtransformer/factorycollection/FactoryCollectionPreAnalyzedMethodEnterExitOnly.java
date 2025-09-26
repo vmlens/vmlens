@@ -7,8 +7,8 @@ import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.Pre
 import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 

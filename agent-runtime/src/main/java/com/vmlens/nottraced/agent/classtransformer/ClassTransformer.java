@@ -3,7 +3,7 @@ package com.vmlens.nottraced.agent.classtransformer;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.FactoryCollection;
 import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterForAnalyze;
 import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterForTransform;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;

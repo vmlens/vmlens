@@ -1,9 +1,9 @@
 package com.vmlens.nottraced.agent.classtransformer;
 
 
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
-import com.vmlens.trace.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodCallId;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryImpl;
+import com.vmlens.transformed.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
 
 import java.io.IOException;
 

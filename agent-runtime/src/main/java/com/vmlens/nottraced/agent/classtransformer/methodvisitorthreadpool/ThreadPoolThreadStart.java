@@ -1,17 +1,12 @@
 package com.vmlens.nottraced.agent.classtransformer.methodvisitorthreadpool;
 
-import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactory;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.ThreadPoolCallbackFactory;
-import com.vmlens.nottraced.agent.classtransformer.methodvisitor.AddMethodCall;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
 import static com.vmlens.nottraced.agent.classtransformer.ASMConstants.ASM_API_VERSION;
-import static org.objectweb.asm.Opcodes.ALOAD;
-import static org.objectweb.asm.Opcodes.IFEQ;
-import static org.objectweb.asm.Opcodes.RETURN;
+import static org.objectweb.asm.Opcodes.*;
 
 /*
    L0

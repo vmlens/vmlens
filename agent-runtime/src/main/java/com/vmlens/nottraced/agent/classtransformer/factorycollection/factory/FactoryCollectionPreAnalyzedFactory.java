@@ -6,8 +6,8 @@ import com.vmlens.nottraced.agent.classtransformer.factorycollection.FactoryColl
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.MethodNotFoundAction;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
 
 public class FactoryCollectionPreAnalyzedFactory implements FactoryCollectionFactory {
 

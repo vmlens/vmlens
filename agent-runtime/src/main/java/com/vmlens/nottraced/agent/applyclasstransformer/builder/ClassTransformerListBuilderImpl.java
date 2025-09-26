@@ -4,11 +4,11 @@ import com.vmlens.nottraced.agent.applyclasstransformer.*;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.DoNotTraceInTestStrategyFactory;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.NotYetImplementedStrategyFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.ClassTransformerListBuilder;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.builder.ClassTransformerListBuilder;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ClassTransformerListBuilderImpl implements ClassTransformerListBuilder {
 

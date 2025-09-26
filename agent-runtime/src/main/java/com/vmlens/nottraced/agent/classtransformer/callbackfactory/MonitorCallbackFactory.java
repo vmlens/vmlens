@@ -6,7 +6,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 public class MonitorCallbackFactory {
 
-    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/MonitorCallback";
+    private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/MonitorCallback";
     private final String MONITOR_ENTER = "afterMonitorEnter";
     private final String MONITOR_EXIT = "afterMonitorExit";
     private final String METHOD_DESCRIPTOR_OBJECT_INT_INT_ARGUMENT = "(Ljava/lang/Object;II)V";

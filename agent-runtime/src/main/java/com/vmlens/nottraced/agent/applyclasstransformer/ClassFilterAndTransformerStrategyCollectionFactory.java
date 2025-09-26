@@ -1,15 +1,15 @@
 package com.vmlens.nottraced.agent.applyclasstransformer;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.PackageOrClass;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.model.PackageOrClass;
 import com.vmlens.nottraced.agent.applyclasstransformer.builder.ClassTransformerListBuilderImpl;
 import com.vmlens.nottraced.agent.applyclasstransformer.builder.TransformerStrategyFactory;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarning;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositorySingleton;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
 import java.io.IOException;
 

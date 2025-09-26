@@ -7,11 +7,11 @@ import com.vmlens.nottraced.agent.classtransformer.methodvisitor.AddFieldAccessC
 import com.vmlens.nottraced.agent.classtransformer.methodvisitor.AddMonitorCall;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper.wrap;
 import static org.objectweb.asm.Opcodes.ACC_STATIC;
 
 public class FactoryCollectionAll extends FactoryCollectionPreAnalyzedOrAll {

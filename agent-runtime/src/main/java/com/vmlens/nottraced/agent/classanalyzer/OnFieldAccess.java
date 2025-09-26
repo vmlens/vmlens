@@ -1,7 +1,7 @@
 package com.vmlens.nottraced.agent.classanalyzer;
 
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldOwnerAndName;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
 
 public class OnFieldAccess {
 

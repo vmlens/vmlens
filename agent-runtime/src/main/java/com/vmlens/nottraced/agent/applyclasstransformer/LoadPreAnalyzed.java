@@ -1,9 +1,9 @@
 package com.vmlens.nottraced.agent.applyclasstransformer;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.PackageOrClass;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.serialize.DeserializePackageOrClass;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.model.PackageOrClass;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.serialize.DeserializePackageOrClass;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
 import java.io.*;
 

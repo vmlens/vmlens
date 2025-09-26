@@ -1,7 +1,7 @@
 package com.vmlens.nottraced.agent.write;
 
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
+import com.vmlens.transformed.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.transformed.agent.bootstrap.event.stream.StreamRepository;
 
 public class PoisonedEvent implements SerializableEvent {
     @Override

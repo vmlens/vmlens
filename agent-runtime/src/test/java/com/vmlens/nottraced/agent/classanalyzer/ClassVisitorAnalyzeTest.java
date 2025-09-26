@@ -1,13 +1,13 @@
 package com.vmlens.nottraced.agent.classanalyzer;
 
-import com.vmlens.trace.agent.bootstrap.description.ClassDescription;
+import com.vmlens.transformed.agent.bootstrap.description.ClassDescription;
 import com.vmlens.nottraced.agent.LoadClassArray;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarning;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
 

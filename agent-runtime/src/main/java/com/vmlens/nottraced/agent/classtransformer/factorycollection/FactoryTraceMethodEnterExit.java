@@ -9,10 +9,10 @@ import com.vmlens.nottraced.agent.classtransformer.methodvisitormethodenterexit.
 import com.vmlens.nottraced.agent.classtransformer.methodvisitormethodenterexit.TryCatchBlockCounter;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class FactoryTraceMethodEnterExit {
 

@@ -1,15 +1,15 @@
 package com.vmlens.nottraced.agent.write;
 
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.transformed.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.transformed.agent.bootstrap.event.stream.StreamRepository;
+import com.vmlens.transformed.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
 
-import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.incrementInsideVMLens;
+import static com.vmlens.transformed.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
+import static com.vmlens.transformed.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.incrementInsideVMLens;
 
 public class WriteEventToFile implements Runnable {
     private final StreamRepository streamRepository;

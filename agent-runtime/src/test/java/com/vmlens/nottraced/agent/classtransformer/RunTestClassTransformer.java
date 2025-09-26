@@ -1,17 +1,17 @@
 package com.vmlens.nottraced.agent.classtransformer;
 
-import com.vmlens.trace.agent.bootstrap.description.ClassDescription;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.PackageOrClass;
+import com.vmlens.transformed.agent.bootstrap.description.ClassDescription;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.model.PackageOrClass;
 import com.vmlens.nottraced.agent.LoadClassArray;
 import com.vmlens.nottraced.agent.applyclasstransformer.*;
 import com.vmlens.nottraced.agent.classtransformer.logging.ClassVisitorForLogging;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarningDuringStartup;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.test.util.DiffText;
-import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryImpl;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryImpl;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.event.warning.InfoMessageEvent;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryImpl;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryImpl;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassReader;
 
 import java.io.IOException;

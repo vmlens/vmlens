@@ -87,6 +87,10 @@
                                     <pattern>gnu</pattern>
                                     <shadedPattern>com.vmlens.shaded.gnu</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>com.vmlens.trace.agent.bootstrap</pattern>
+                                    <shadedPattern>com.vmlens.transformed.agent.bootstrap</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>

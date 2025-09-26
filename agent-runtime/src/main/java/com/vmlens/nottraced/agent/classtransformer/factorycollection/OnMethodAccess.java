@@ -1,8 +1,8 @@
 package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.strategyall.SynchronizedMethodStrategy;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
+import com.vmlens.transformed.agent.bootstrap.strategy.strategyall.SynchronizedMethodStrategy;
 
 public class OnMethodAccess {
 

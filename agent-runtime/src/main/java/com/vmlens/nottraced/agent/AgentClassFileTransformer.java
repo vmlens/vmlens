@@ -5,7 +5,7 @@ import com.vmlens.nottraced.agent.applyclasstransformer.ClassFilterAndTransforme
 import com.vmlens.nottraced.agent.applyclasstransformer.TransformerContext;
 import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategy;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEventBuilder;
+import com.vmlens.transformed.agent.bootstrap.event.warning.InfoMessageEventBuilder;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -13,7 +13,7 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+import static com.vmlens.transformed.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
 
 
 public class AgentClassFileTransformer implements ClassFileTransformer {

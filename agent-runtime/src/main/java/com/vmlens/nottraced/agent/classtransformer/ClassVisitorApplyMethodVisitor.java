@@ -6,9 +6,9 @@ import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.FactoryC
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methodenterexitstrategy.*;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodCallId;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodCallId;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;

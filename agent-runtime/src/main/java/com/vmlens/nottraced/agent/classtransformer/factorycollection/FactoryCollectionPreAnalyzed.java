@@ -8,9 +8,9 @@ import com.vmlens.nottraced.agent.classtransformer.factorycollection.preanalyzed
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
 public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOrAll {
 

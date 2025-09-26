@@ -1,8 +1,8 @@
 package com.vmlens.nottraced.agent.inttest;
 
-import com.vmlens.trace.agent.bootstrap.callback.MethodCallback;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodExitAction;
+import com.vmlens.transformed.agent.bootstrap.callback.MethodCallback;
+import com.vmlens.transformed.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction;
+import com.vmlens.transformed.agent.bootstrap.callback.callbackaction.impl.MethodExitAction;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;

@@ -1,8 +1,8 @@
 package com.vmlens.nottraced.agent.write;
 
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.transformed.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
-import static com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
+import static com.vmlens.transformed.agent.bootstrap.event.queue.EventQueueSingleton.eventQueue;
 
 public class ShutdownHook extends Thread {
 
