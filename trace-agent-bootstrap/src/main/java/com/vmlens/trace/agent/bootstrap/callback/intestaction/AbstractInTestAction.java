@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.StacktraceDepthPr
 public abstract class AbstractInTestAction implements InTestAction {
 
     @Override
-    public void beforeProcessCheck(ThreadLocalWhenInTest threadLocalDataWhenInTest, StacktraceDepthProvider stacktraceDepthProvider) {
-
+    public boolean checkOrSetDoNotTrace(ThreadLocalWhenInTest threadLocalDataWhenInTest, StacktraceDepthProvider stacktraceDepthProvider) {
+        return threadLocalDataWhenInTest.processAction(stacktraceDepthProvider);
     }
 }

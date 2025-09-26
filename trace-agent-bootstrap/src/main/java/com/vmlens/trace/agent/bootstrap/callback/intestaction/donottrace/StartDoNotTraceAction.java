@@ -6,9 +6,11 @@ import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.StacktraceDepthProvider;
 
 public class StartDoNotTraceAction implements InTestAction {
+
     @Override
-    public void beforeProcessCheck(ThreadLocalWhenInTest threadLocalDataWhenInTest, StacktraceDepthProvider stacktraceDepthProvider) {
-        threadLocalDataWhenInTest.startDoNotTrace(stacktraceDepthProvider);
+    public boolean checkOrSetDoNotTrace(ThreadLocalWhenInTest threadLocalDataWhenInTest, StacktraceDepthProvider stacktraceDepthProvider) {
+         threadLocalDataWhenInTest.startDoNotTrace(stacktraceDepthProvider);
+        return false;
     }
 
     @Override

@@ -68,8 +68,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 */
       DoNotTraceIn("java/lang/invoke/MethodType"),
       DoNotTraceIn("com/vmlens/test/guineapig/DoNotTraceIn"),
-    //  ClassModelWithoutMethodDescription("org/mockito/", DoNotTraceInTestStartsWithClassName.SINGLETON),
-    //  ClassModelWithoutMethodDescription("$MockitoMock$", DoNotTraceInTestContainsClassName.SINGLETON),
+      ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
+      //ClassModelWithoutMethodDescription("$MockitoMock$", DoNotTraceInTestContainsClassName.SINGLETON),
 
 
       loadNotYetImplemented(),

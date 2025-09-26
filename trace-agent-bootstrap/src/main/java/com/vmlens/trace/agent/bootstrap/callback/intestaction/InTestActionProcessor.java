@@ -19,8 +19,7 @@ public class InTestActionProcessor {
     }
 
     public void process(InTestAction inTestAction) {
-        inTestAction.beforeProcessCheck(dataWhenInTest,stacktraceDepthProvider);
-        if(dataWhenInTest.processAction(stacktraceDepthProvider)) {
+        if(inTestAction.checkOrSetDoNotTrace(dataWhenInTest,stacktraceDepthProvider)) {
             if(inTestAction.notInAtomicCallback(dataWhenInTest)) {
                 inTestAction.execute(dataWhenInTest,eventQueueInternal);
             }
