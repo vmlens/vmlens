@@ -20,7 +20,7 @@ public class NotYetImplementedAction extends AbstractInTestAction {
 
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
-        System.err.println("The method " + className+ "." + methodName + " can currently not be tested with vmlens.");
+       // System.err.println("The method " + className+ "." + methodName + " can currently not be tested with vmlens.");
     }
 
 

@@ -86,7 +86,7 @@ public class ThreadForParallelize implements StacktraceDepthProvider {
         }
 
         for(StackTraceElement element : elements) {
-            if(element.getClassName().startsWith("com.vmlens.trace.agent.bootstrap")) {
+            if(element.getClassName().startsWith("com.vmlens.transformed.agent.bootstrap")) {
                 if(inJoin) {
                     return ThreadState.BLOCKED;
                 }
