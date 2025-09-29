@@ -28,8 +28,11 @@ public class VolatileStaticFieldKey implements VolatileKey  {
         }
 
         VolatileStaticFieldKey otherAtomicNonBlockingKey = (VolatileStaticFieldKey) other;
-
-
         return fieldId == otherAtomicNonBlockingKey.fieldId;
+    }
+
+    @Override
+    public String toString() {
+        return "staticVolatile(" + fieldId + ")";
     }
 }

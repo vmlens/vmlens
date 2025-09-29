@@ -59,10 +59,10 @@ public class LockExit implements InterleaveAction  {
 
     @Override
     public String toString() {
-        return "LockExit{" +
-                "threadIndex=" + methodIdByteCodePositionAndThreadIndex.threadIndex() +
-                ", lockOrMonitor=" + lockOrMonitor +
-                '}';
+        return "lockExit(" +
+                methodIdByteCodePositionAndThreadIndex.threadIndex() +
+                ","  + lockOrMonitor +
+                ");";
     }
 
     @Override

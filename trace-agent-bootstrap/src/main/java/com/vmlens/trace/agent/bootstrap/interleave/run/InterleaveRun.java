@@ -35,7 +35,7 @@ public class InterleaveRun {
                       SendEvent sendEvent) {
         ProcessEventContext processEventContext = new ProcessEventContext(
                 context,threadLocalWhenInTestForParallelize,sendEvent);
-        if(singleThreadFilter.take(runtimeEvent)) {
+        if(singleThreadFilter.take(runtimeEvent,context)) {
             AfterCallback afterCallback = new AfterCallback(this,sendEvent);
             state = state.after(processEventContext,afterCallback,runtimeEvent);
        /*  this actually not really useful

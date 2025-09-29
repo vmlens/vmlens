@@ -1,9 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.EitherPluginEventOnlyOrInterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.PluginEventOnly;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.*;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadJoinedEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
@@ -76,7 +73,7 @@ public class ParallelizeActionMultiJoin implements EitherPluginEventOnlyOrInterl
     }
 
     @Override
-    public boolean startsNewThread() {
-        return false;
+    public boolean startOrStopsThread() {
+        return true;
     }
 }

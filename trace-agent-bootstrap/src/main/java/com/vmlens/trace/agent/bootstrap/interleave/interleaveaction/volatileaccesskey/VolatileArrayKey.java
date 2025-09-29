@@ -28,6 +28,10 @@ public class VolatileArrayKey  implements VolatileKey {
     @Override
     public boolean equalsNormalized(VolatileKey other) {
         return other instanceof VolatileArrayKey;
+    }
 
+    @Override
+    public String toString() {
+        return "arrayAccess("  + index +  ","  + objectHashCode + "L)";
     }
 }

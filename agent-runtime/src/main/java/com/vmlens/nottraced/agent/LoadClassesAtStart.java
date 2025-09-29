@@ -48,5 +48,6 @@ public class LoadClassesAtStart {
         this.getClass().getClassLoader().loadClass("com.vmlens.transformed.agent.bootstrap.parallelize.facade.ParallelizeFacade");
         this.getClass().getClassLoader().loadClass("com.vmlens.transformed.agent.bootstrap.event.queue.EventQueueSingleton");
 
+        new StackTraceElement( "declaringClass", "methodName", "fileName", 0);
     }
 }

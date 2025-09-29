@@ -32,4 +32,9 @@ public class VolatileFieldKey implements VolatileKey {
         }
         return fieldId == ((VolatileFieldKey) other).fieldId;
     }
+
+    @Override
+    public String toString() {
+        return "volatileField(" + fieldId + ","+ objectHashCode + "L)";
+    }
 }

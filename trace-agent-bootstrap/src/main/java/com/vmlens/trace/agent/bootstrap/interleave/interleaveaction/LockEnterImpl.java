@@ -46,10 +46,10 @@ public class LockEnterImpl implements InterleaveAction  {
     
     @Override
     public String toString() {
-        return "LockEnterImpl{" +
-                "threadIndex=" + methodIdByteCodePositionAndThreadIndex.threadIndex() +
-                ", lockOrMonitor=" + lockOrMonitor +
-                '}';
+        return "lockEnter(" +
+                 methodIdByteCodePositionAndThreadIndex.threadIndex() +
+                ","  + lockOrMonitor +
+                ");";
     }
 
     @Override

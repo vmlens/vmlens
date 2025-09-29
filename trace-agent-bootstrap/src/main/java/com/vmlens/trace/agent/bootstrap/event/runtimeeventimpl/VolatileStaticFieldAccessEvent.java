@@ -4,10 +4,10 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileFieldAccessEventStaticGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileStaticFieldKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStaticGen  implements
@@ -74,7 +74,7 @@ public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStat
     }
 
     @Override
-    public boolean startsNewThread() {
+    public boolean startOrStopsThread() {
         return false;
     }
 }

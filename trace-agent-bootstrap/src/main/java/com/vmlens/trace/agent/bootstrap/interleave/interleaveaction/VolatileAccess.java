@@ -71,11 +71,11 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
 
     @Override
     public String toString() {
-        return "VolatileAccess{" +
-                "threadIndex=" + methodIdByteCodePositionAndThreadIndex.threadIndex() +
-                ", volatileAccessKey=" + volatileAccessKey +
-                ", interleaveoperation=" + operation +
-                '}';
+        return "volatileAccess(" +
+                 methodIdByteCodePositionAndThreadIndex.threadIndex() +
+                "," + volatileAccessKey +
+                "," + operation +
+                ");";
     }
 
     @Override

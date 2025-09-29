@@ -72,7 +72,7 @@ public class ParallelizeLoop {
                 }
 
                 ActualRun previous = currentRun.end(threadLocalForParallelize);
-                interleaveLoop.addActualRun(previous);
+                interleaveLoop.addActualRun(previous,serializableEvents);
 
                 if (interleaveLoopIterator.hasNext()) {
                     CalculatedRun calculatedRun = interleaveLoopIterator.next();

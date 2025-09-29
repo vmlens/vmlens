@@ -25,4 +25,9 @@ public class AtomicNonBlockingKey  implements VolatileKey  {
     public boolean equalsNormalized(VolatileKey other) {
         return  other instanceof AtomicNonBlockingKey;
     }
+
+    @Override
+    public String toString() {
+        return "atomic(" + objectHashCode + ")";
+    }
 }

@@ -52,10 +52,10 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
 
     @Override
     public String toString() {
-        return "ThreadStart{" +
-                "threadIndex=" + methodIdByteCodePositionAndThreadIndex.threadIndex() +
-                ", startedThreadIndex=" + startedThreadIndex +
-                '}';
+        return "threadStart(" +
+                 methodIdByteCodePositionAndThreadIndex.threadIndex() +
+                "," + startedThreadIndex +  ");";
+
     }
 
     @Override

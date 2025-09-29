@@ -4,5 +4,4 @@ public interface VolatileKey {
 
     boolean equalsNormalized(VolatileKey other);
 
-
 }

@@ -116,4 +116,8 @@ public class ThreadForParallelize implements StacktraceDepthProvider {
         return thread.getStackTrace();
     }
 
+    public boolean notTerminatedAndNotNew() {
+        return  thread.getState() != TERMINATED && thread.getState() !=  NEW;
+    }
+
 }

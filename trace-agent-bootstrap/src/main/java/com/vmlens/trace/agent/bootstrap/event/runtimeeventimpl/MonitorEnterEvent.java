@@ -4,10 +4,10 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.MonitorEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockEnterImpl;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.MonitorKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 
 public class MonitorEnterEvent extends MonitorEnterEventGen implements
         InterleaveActionFactoryAndRuntimeEvent, WithObjectHashCode {
@@ -58,7 +58,7 @@ public class MonitorEnterEvent extends MonitorEnterEventGen implements
     }
 
     @Override
-    public boolean startsNewThread() {
+    public boolean startOrStopsThread() {
         return false;
     }
 }

@@ -7,7 +7,7 @@ public abstract class LockKey implements Comparable<LockKey> {
     public static final int CATEGORY_REENTRANT_LOCK = 2;
     public static final int CATEGORY_READ_WRITE_LOCK = 3;
 
-    private final long objectHashCode;
+    protected final long objectHashCode;
 
     public LockKey(long objectHashCode) {
         this.objectHashCode = objectHashCode;
@@ -46,4 +46,5 @@ public abstract class LockKey implements Comparable<LockKey> {
         result = 31 * result + Long.hashCode(objectHashCode());
         return result;
     }
+
 }
