@@ -1,11 +1,11 @@
 package com.vmlens.nottraced.agent;
 
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
 import java.io.*;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ClassFilterFromFile {
 

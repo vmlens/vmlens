@@ -1,11 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ParallelizeActionAfter;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.*;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadJoinedEvent;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MultiJoin;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveInfo;
-import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
@@ -16,7 +15,7 @@ import gnu.trove.list.linked.TLongLinkedList;
 
 import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD_POOL;
 
-public class ParallelizeActionMultiJoin implements ParallelizeActionAfter {
+public class ParallelizeActionMultiJoin implements EitherPluginEventOnlyOrInterleaveActionFactory, InterleaveActionFactory {
 
     private final TLongLinkedList joinedThreadIds;
     private final int loopId;
@@ -33,34 +32,48 @@ public class ParallelizeActionMultiJoin implements ParallelizeActionAfter {
     }
 
     @Override
-    public void after(InterleaveRun interleaveRun,
-                      CreateInterleaveActionContext context,
-                      ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
-                      SendEvent sendEvent) {
+    public InterleaveActionFactory asInterleaveActionFactory() {
+        return this;
+    }
+
+    @Override
+    public PluginEventOnly asPluginEventOnly() {
+        return null;
+    }
+
+    @Override
+    public InterleaveAction createAndSend(CreateInterleaveActionContext context,
+                                          ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
+                                          SendEvent sendEvent,
+                                          int positionInRun) {
         TIntLinkedList threadIndices = new TIntLinkedList();
         TLongIterator iter = joinedThreadIds.iterator();
-        while(iter.hasNext()) {
+        while (iter.hasNext()) {
             long id = iter.next();
             threadIndices.add(context.threadIndexForThreadId(id));
         }
 
-        InterleaveInfo info = interleaveRun.after(new MultiJoin(threadLocalWhenInTestForParallelize.threadIndex(), threadIndices));
-        if(info != null) {
-            TIntIterator indexIter = threadIndices.iterator();
-            while(indexIter.hasNext()) {
-                int index = indexIter.next();
-                ThreadJoinedEvent threadJoinedEvent = new ThreadJoinedEvent();
-                threadJoinedEvent.setEventType(THREAD_POOL.code());
-                threadJoinedEvent.setThreadIndex(threadLocalWhenInTestForParallelize.threadIndex());
-                threadJoinedEvent.setLoopId(loopId);
-                threadJoinedEvent.setRunId(runId);
-                threadJoinedEvent.setRunPosition(info.runPosition());
-                threadJoinedEvent.setMethodCounter(threadLocalWhenInTestForParallelize);
-                threadJoinedEvent.setBytecodePosition(position);
-                threadJoinedEvent.setMethodId(inMethodId);
-                threadJoinedEvent.setJoinedThreadIndex(index);
-                sendEvent.sendSerializable(threadJoinedEvent);
-            }
+        TIntIterator indexIter = threadIndices.iterator();
+        while (indexIter.hasNext()) {
+            int index = indexIter.next();
+            ThreadJoinedEvent threadJoinedEvent = new ThreadJoinedEvent();
+            threadJoinedEvent.setEventType(THREAD_POOL.code());
+            threadJoinedEvent.setThreadIndex(threadLocalWhenInTestForParallelize.threadIndex());
+            threadJoinedEvent.setLoopId(loopId);
+            threadJoinedEvent.setRunId(runId);
+            threadJoinedEvent.setRunPosition(positionInRun);
+            threadJoinedEvent.setMethodCounter(threadLocalWhenInTestForParallelize);
+            threadJoinedEvent.setBytecodePosition(position);
+            threadJoinedEvent.setMethodId(inMethodId);
+            threadJoinedEvent.setJoinedThreadIndex(index);
+            sendEvent.sendSerializable(threadJoinedEvent);
         }
+        return new MultiJoin(new MethodIdByteCodePositionAndThreadIndex(inMethodId, position, threadLocalWhenInTestForParallelize.threadIndex()),
+                threadIndices);
+    }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
     }
 }

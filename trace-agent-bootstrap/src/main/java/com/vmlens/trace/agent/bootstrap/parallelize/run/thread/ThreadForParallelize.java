@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadState;
 
 import static java.lang.Thread.State.*;
 
-public class ThreadForParallelize {
+public class ThreadForParallelize implements StacktraceDepthProvider {
 
     private final Thread thread;
 
@@ -86,7 +86,7 @@ public class ThreadForParallelize {
         }
 
         for(StackTraceElement element : elements) {
-            if(element.getClassName().startsWith("com.vmlens.trace.agent.bootstrap")) {
+            if(element.getClassName().startsWith("com.vmlens.transformed.agent.bootstrap")) {
                 if(inJoin) {
                     return ThreadState.BLOCKED;
                 }
@@ -114,6 +114,10 @@ public class ThreadForParallelize {
 
     public StackTraceElement[] getStackTrace() {
         return thread.getStackTrace();
+    }
+
+    public boolean notTerminatedAndNotNew() {
+        return  thread.getState() != TERMINATED && thread.getState() !=  NEW;
     }
 
 }

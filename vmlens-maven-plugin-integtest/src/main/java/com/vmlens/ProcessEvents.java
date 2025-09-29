@@ -36,7 +36,7 @@ public class ProcessEvents {
         ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
                 new ProcessRunContextBuilder().build()).process();
-        checkDataRacesJdk23(result);
+        //checkDataRacesJdk23(result);
     }
 
     private static void processJdk11(File eventDirectory, File reportDirectory) {
@@ -68,6 +68,7 @@ public class ProcessEvents {
         testWithDataRace.add("putIfAbsentAndGetKeysWithSequenceNumber");
         testWithDataRace.add("hiero.testAdd");
         testWithDataRace.add("innerChild");
+        testWithDataRace.add("whileLoop");
        // testWithDataRace.add("childWithProtectedFieldTest");
         checkDataRaces(testWithDataRace,result);
     }

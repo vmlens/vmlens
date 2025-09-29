@@ -1,7 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey;
 
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
-
 public class VolatileArrayKey  implements VolatileKey {
 
     private final int index;
@@ -28,15 +26,12 @@ public class VolatileArrayKey  implements VolatileKey {
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, VolatileKey other) {
-        if(! (other instanceof VolatileArrayKey)) {
-            return false;
-        }
+    public boolean equalsNormalized(VolatileKey other) {
+        return other instanceof VolatileArrayKey;
+    }
 
-        VolatileArrayKey otherAtomicNonBlockingKey = (VolatileArrayKey) other;
-
-        int myCode = normalizeContext.normalizeObjectHashCode(objectHashCode);
-        int otherCode =   normalizeContext.normalizeObjectHashCode(otherAtomicNonBlockingKey.objectHashCode);
-        return myCode == otherCode && index == otherAtomicNonBlockingKey.index;
+    @Override
+    public String toString() {
+        return "arrayAccess("  + index +  ","  + objectHashCode + "L)";
     }
 }

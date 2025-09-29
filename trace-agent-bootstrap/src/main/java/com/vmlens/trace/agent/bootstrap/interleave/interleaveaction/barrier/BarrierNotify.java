@@ -1,29 +1,29 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.BarrierOperationVisitor;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
 
 import java.util.Objects;
 
 public class BarrierNotify implements Barrier , BarrierOperationVisitor {
 
-    private final int threadIndex;
+    private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final BarrierKey barrierKey;
 
-    public BarrierNotify(int threadIndex, BarrierKey barrierKey) {
-        this.threadIndex = threadIndex;
+    public BarrierNotify(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
+                         BarrierKey barrierKey) {
+        this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
         this.barrierKey = barrierKey;
     }
-
 
     @Override
     public TreeBuilderNode addToAlternatingOrder(Position myPosition,
@@ -75,19 +75,20 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
 
     @Override
     public int threadIndex() {
-        return threadIndex;
+        return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+    public boolean equalsNormalized(InterleaveAction other) {
         if(! (other instanceof BarrierNotify)) {
             return false;
         }
         BarrierNotify otherLock = (BarrierNotify) other;
-        if(threadIndex != otherLock.threadIndex)  {
+        if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
             return false;
         }
-        return barrierKey.equalsNormalized(normalizeContext,otherLock.barrierKey);
+
+        return barrierKey.equalsNormalized(otherLock.barrierKey);
     }
 
     @Override
@@ -98,8 +99,4 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
 
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

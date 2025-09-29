@@ -4,7 +4,8 @@ public class ReadWriteLockKey extends LockKey {
 
     private final boolean isRead;
 
-    private ReadWriteLockKey(long objectHashCode, boolean isRead) {
+    // visible for test
+    public ReadWriteLockKey(long objectHashCode, boolean isRead) {
         super(objectHashCode);
         this.isRead = isRead;
     }
@@ -25,5 +26,10 @@ public class ReadWriteLockKey extends LockKey {
     @Override
     public boolean isRead() {
         return isRead;
+    }
+
+    @Override
+    public String toString() {
+        return "readWriteLock(" + isRead + "," + objectHashCode +"L)";
     }
 }

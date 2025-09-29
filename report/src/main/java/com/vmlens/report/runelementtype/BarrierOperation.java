@@ -2,12 +2,14 @@ package com.vmlens.report.runelementtype;
 
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
+import com.vmlens.report.runelementtype.objecthashcodemap.ObjectHashCodeMap;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
 
 public class BarrierOperation implements RunElementType  {
 
     private final BarrierOperationType barrierOperationType;
     private final BarrierKey barrierKey;
+    private ObjectHashCodeMap objectHashCodeMap;
 
     public BarrierOperation(BarrierOperationType barrierOperationType, BarrierKey barrierKey) {
         this.barrierOperationType = barrierOperationType;
@@ -33,6 +35,13 @@ public class BarrierOperation implements RunElementType  {
 
     @Override
     public String object(DescriptionContext context) {
-        return "" +  barrierKey.objectHashcode();
+        return objectHashCodeMap.asUiString(barrierKey.objectHashcode());
     }
+
+    @Override
+    public void setObjectHashCodeMap(ObjectHashCodeMap objectHashCodeMap, int threadIndex) {
+        this.objectHashCodeMap = objectHashCodeMap;
+        objectHashCodeMap.add(barrierKey.objectHashcode(),threadIndex);
+    }
+
 }

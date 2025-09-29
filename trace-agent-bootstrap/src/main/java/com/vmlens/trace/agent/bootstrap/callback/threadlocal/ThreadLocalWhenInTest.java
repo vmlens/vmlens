@@ -2,12 +2,9 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteAfterOperation;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.StacktraceDepthProvider;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
 
-/**
- * Data Structure, only state no behaviour
- *
- */
 public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParallelize {
 
     private final RunAdapter runAdapter;
@@ -17,6 +14,7 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
     private int methodCount;
     private InMethodIdAndPosition inMethodIdAndPosition;
     private ExecuteAfterOperation executeAfterOperation;
+    private Integer startDoNotTrace;
 
     public ThreadLocalWhenInTest(RunForCallback run, int threadIndex) {
         this.runAdapter = new RunAdapter(run);
@@ -64,4 +62,27 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
     public void setInAtomicCount(int inAtomicCount) {
         this.inAtomicCount = inAtomicCount;
     }
+
+    public boolean processAction(StacktraceDepthProvider stacktraceDepthProvider) {
+        if(startDoNotTrace == null) {
+            return true;
+        }
+        if(stacktraceDepthProvider.getStacktraceDepth()< startDoNotTrace) {
+            startDoNotTrace = null;
+            return true;
+        }
+        return false;
+    }
+
+    public void startDoNotTrace(StacktraceDepthProvider stacktraceDepthProvider) {
+        if(startDoNotTrace == null) {
+            startDoNotTrace = stacktraceDepthProvider.getStacktraceDepth();
+            return;
+        }
+        int newDepth = stacktraceDepthProvider.getStacktraceDepth();
+        if( newDepth <  startDoNotTrace ) {
+            startDoNotTrace = newDepth;
+        }
+    }
+    
 }

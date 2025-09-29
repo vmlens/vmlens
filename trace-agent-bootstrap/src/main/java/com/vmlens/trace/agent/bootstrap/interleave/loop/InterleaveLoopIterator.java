@@ -19,7 +19,7 @@ public class InterleaveLoopIterator implements Iterator<CalculatedRun> {
     @Override
     public boolean hasNext() {
 
-        if(alreadyExecuted.size() > 500) {
+        if(alreadyExecuted.size() > 3) {
             return false;
         }
 

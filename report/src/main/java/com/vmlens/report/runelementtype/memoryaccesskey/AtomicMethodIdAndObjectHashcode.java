@@ -22,10 +22,10 @@ public class AtomicMethodIdAndObjectHashcode implements MemoryAccessKey  {
     public void addToNeedsDescription(NeedsDescriptionCallback callback) {
         callback.needsMethod(atomicMethodId);
     }
-    
+
     @Override
-    public String objectHashCode() {
-        return "" + objectHashCode;
+    public Long objectHashCode() {
+        return objectHashCode;
     }
     
     

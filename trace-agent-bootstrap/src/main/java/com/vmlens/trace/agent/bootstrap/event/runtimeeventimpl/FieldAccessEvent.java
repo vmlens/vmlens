@@ -12,6 +12,11 @@ public class FieldAccessEvent extends FieldAccessEventGen implements
         this.threadIndex = threadIndex;
     }
 
+    public int threadIndex() {
+        return threadIndex;
+    }
+
+
     @Override
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
@@ -57,6 +62,11 @@ public class FieldAccessEvent extends FieldAccessEventGen implements
     @Override
     public int runId() {
         return runId;
+    }
+
+    @Override
+    public boolean isMethodEnterOrExit() {
+        return false;
     }
 
 }

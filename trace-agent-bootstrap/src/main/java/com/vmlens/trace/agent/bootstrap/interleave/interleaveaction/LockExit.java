@@ -1,21 +1,21 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.LockStartOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer.Block;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer.BlockEnd;
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 
 public class LockExit implements InterleaveAction  {
 
-    private final int threadIndex;
+    private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final LockKey lockOrMonitor;
 
-    public LockExit(int threadIndex, LockKey lockOrMonitor) {
-        this.threadIndex = threadIndex;
+    public LockExit(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
+                    LockKey lockOrMonitor) {
+        this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
         this.lockOrMonitor = lockOrMonitor;
     }
 
@@ -39,7 +39,7 @@ public class LockExit implements InterleaveAction  {
 
     @Override
     public int threadIndex() {
-        return threadIndex;
+        return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
 
     @Override
@@ -59,27 +59,23 @@ public class LockExit implements InterleaveAction  {
 
     @Override
     public String toString() {
-        return "LockExit{" +
-                "threadIndex=" + threadIndex +
-                ", lockOrMonitor=" + lockOrMonitor +
-                '}';
+        return "lockExit(" +
+                methodIdByteCodePositionAndThreadIndex.threadIndex() +
+                ","  + lockOrMonitor +
+                ");";
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+    public boolean equalsNormalized(InterleaveAction other) {
         if(! (other instanceof LockExit)) {
             return false;
         }
         LockExit otherLock = (LockExit) other;
-        if(threadIndex != otherLock.threadIndex)  {
+        if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
             return false;
         }
 
-        return lockOrMonitor.equalsNormalized(normalizeContext,otherLock.lockOrMonitor);
+        return lockOrMonitor.equalsNormalized(lockOrMonitor);
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

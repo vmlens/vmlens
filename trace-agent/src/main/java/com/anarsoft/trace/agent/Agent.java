@@ -68,7 +68,7 @@ public class /**/Agent {
         try {
 
 
-            System.err.println(Agent.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            System.err.println("-javaagent:" + Agent.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
 
             File agentFile = new File(Agent.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
             String libPath = agentFile.toString().substring(0, agentFile.toString().length() - "/agent.jar".length());

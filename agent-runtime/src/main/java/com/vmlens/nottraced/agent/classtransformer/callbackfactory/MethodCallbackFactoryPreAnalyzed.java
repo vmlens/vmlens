@@ -6,7 +6,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 public class MethodCallbackFactoryPreAnalyzed extends MethodCallbackFactory {
 
-    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/PreAnalyzedCallback";
+    private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback";
 
     public MethodCallbackFactoryPreAnalyzed(MethodEnterStrategy methodEnterStrategy,MethodVisitor methodVisitor) {
         super(methodEnterStrategy,methodVisitor);

@@ -3,8 +3,8 @@ package com.vmlens.nottraced.agent.classtransformer.methodvisitor;
 import com.vmlens.nottraced.agent.classtransformer.ASMConstants;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.FieldCallbackFactory;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldOwnerAndName;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 
@@ -57,6 +57,8 @@ public class AddFieldAccessCall extends MethodVisitor {
                 fieldCallbackFactory.beforeStaticFieldRead(fieldId, position);
                 break;
         }
+
+        position++;
 
         super.visitFieldInsn(opcode, owner, name, descriptor);
 

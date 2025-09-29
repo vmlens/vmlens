@@ -24,7 +24,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
         if (name.startsWith("java.util.concurrent.atomic")) {
             return testClassLoader.loadClass(name);
         }
-        if (name.startsWith("com.vmlens.trace.agent")) {
+        if (name.startsWith("com.vmlens.transformed.agent")) {
             return testClassLoader.loadClass(name);
         }
         return super.loadClass(name, resolve);

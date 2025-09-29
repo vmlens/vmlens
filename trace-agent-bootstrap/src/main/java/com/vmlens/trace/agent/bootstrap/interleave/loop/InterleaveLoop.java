@@ -1,12 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
+import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
-import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.InterleaveActionLoopFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
+import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
+import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -17,13 +19,14 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class InterleaveLoop implements IteratorQueue {
 
+    private static final boolean TRACE_INTERLEAVE_ACTIONS = true;
 
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =
          new TLinkedList<>();
-
     private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> stillToBeProcessedAlternatingOrderContainer =
             new TLinkedList<>();
     private final InterleaveLoopIterator iterator;
+    private boolean containsLoop;
 
     public InterleaveLoop() {
         this.iterator = new InterleaveLoopIterator(this);
@@ -41,11 +44,28 @@ public class InterleaveLoop implements IteratorQueue {
         return stillToBeProcessedAlternatingOrderContainer.removeFirst().element().iterator();
     }
 
-    public void addActualRun(ActualRun actualRun) {
-        addActualRun(actualRun.run());
+    public void addActualRun(ActualRun actualRun,TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+        containsLoop = actualRun.containsLoop() | containsLoop;
+        TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = actualRun.run();
+
+        if(containsLoop)  {
+            withLoops = new InterleaveActionLoopFactory().create(actualRun.run());
+        }
+
+        if(TRACE_INTERLEAVE_ACTIONS) {
+            int index = 0;
+            String[] array = new String[withLoops.size()];
+            for(TLinkableWrapper<InterleaveAction> elem : withLoops) {
+                array[index] = elem.element().toString();
+                index++;
+            }
+            serializableEvents.add(wrap(new InfoMessageEvent(array)));
+        }
+
+        addActualRunWithLoops(withLoops);
     }
 
-    void addActualRun(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
+    private void addActualRunWithLoops(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
         ThreadIndexToElementList<InterleaveAction> newRun = create(run);
         if(alreadyProcessed(newRun))  {
             return;
@@ -77,16 +97,15 @@ public class InterleaveLoop implements IteratorQueue {
         if(existing.elementCount() != newRun.elementCount()) {
             return false;
         }
-        NormalizeContext normalizeContext = new NormalizeContext();
         Iterator<InterleaveAction> newIter = newRun.elementIterator();
         Iterator<InterleaveAction> existingIter = existing.elementIterator();
         while(newIter.hasNext()) {
-            // we need to call existingIter.hasNext() since in hasNext is the logi
+            // we need to call existingIter.hasNext() since in hasNext is the logic
             // to move the elements forward
             existingIter.hasNext();
             InterleaveAction existingAction  = existingIter.next();
             InterleaveAction newAction = newIter.next();
-            if(! existingAction.equalsNormalized(normalizeContext,newAction)) {
+            if(! existingAction.equalsNormalized(newAction)) {
                 return false;
             }
         }

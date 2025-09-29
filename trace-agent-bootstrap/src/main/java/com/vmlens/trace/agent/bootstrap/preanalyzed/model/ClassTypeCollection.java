@@ -36,6 +36,12 @@ public class ClassTypeCollection {
         if(classType instanceof ClassTypeFilterInnerIncludeAnonymous) {
             return 8;
         }
+        if(classType instanceof DoNotTraceInTestContainsClassName) {
+            return 9;
+        }
+        if(classType instanceof DoNotTraceInTestStartsWithClassName) {
+            return 10;
+        }
         throw new RuntimeException("unknown " + classType.getClass());
     }
 
@@ -66,6 +72,12 @@ public class ClassTypeCollection {
         }
         if(id == 8) {
             return ClassTypeFilterInnerIncludeAnonymous.SINGLETON;
+        }
+        if(id == 9) {
+            return DoNotTraceInTestContainsClassName.SINGLETON;
+        }
+        if(id == 10) {
+            return DoNotTraceInTestStartsWithClassName.SINGLETON;
         }
         throw new RuntimeException("unknown " + id);
     }

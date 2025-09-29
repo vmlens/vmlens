@@ -86,6 +86,18 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
         return active;
     }
 
+    public int getNotTerminatedThreadCount() {
+        int count = 0;
+        TIntObjectIterator<ThreadForParallelize> iter = threadIndexToThreadState.iterator();
+        while(iter.hasNext()) {
+            iter.advance();
+            if(iter.value().notTerminatedAndNotNew()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     private boolean isActive(ThreadForParallelize threadForParallelize) {
         ThreadState state = threadForParallelize.isBlocked();
         switch (state) {

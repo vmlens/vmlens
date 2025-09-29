@@ -1,18 +1,16 @@
 package com.vmlens.test.maven.plugin.loop;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestStopThread {
 
     private volatile boolean stop = false;
 
-    @Ignore
     @Test
-    public void testUpdate() throws InterruptedException {
-        try(AllInterleavings allInterleavins = new AllInterleavings("testStopThread")) {
-            while (allInterleavins.hasNext()) {
+    public void testLoopInWorkerThread() throws InterruptedException {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testLoopInWorkerThread")) {
+            while (allInterleavings.hasNext()) {
                 stop = false;
                 Thread first = new Thread() {
                     @Override
@@ -24,6 +22,26 @@ public class TestStopThread {
                 };
                 first.start();
                 stop = true;
+                first.join();
+            }
+        }
+    }
+
+    @Test
+    public void testLoopInMainThread() throws InterruptedException {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testLoopInMainThread")) {
+            while (allInterleavings.hasNext()) {
+                stop = false;
+                Thread first = new Thread() {
+                    @Override
+                    public void run() {
+                        stop = true;
+                    }
+                };
+                first.start();
+                while(!stop) {
+                    Thread.yield();
+                }
                 first.join();
             }
         }

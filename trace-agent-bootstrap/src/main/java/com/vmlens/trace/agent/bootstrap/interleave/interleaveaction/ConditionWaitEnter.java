@@ -1,10 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockExit.processLockExit;
 
@@ -16,11 +15,12 @@ import static com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockE
 
 public class ConditionWaitEnter implements InterleaveAction  {
 
-    private final int threadIndex;
+    private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final LockKey lockOrMonitor;
 
-    public ConditionWaitEnter(int threadIndex, LockKey lockOrMonitor) {
-        this.threadIndex = threadIndex;
+    public ConditionWaitEnter(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
+                              LockKey lockOrMonitor) {
+        this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
         this.lockOrMonitor = lockOrMonitor;
     }
 
@@ -35,23 +35,19 @@ public class ConditionWaitEnter implements InterleaveAction  {
 
     @Override
     public int threadIndex() {
-        return threadIndex;
+        return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+    public boolean equalsNormalized(InterleaveAction other) {
         if(! (other instanceof ConditionWaitEnter)) {
             return false;
         }
         ConditionWaitEnter otherLock = (ConditionWaitEnter) other;
-        if(threadIndex != otherLock.threadIndex)  {
+        if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
             return false;
         }
-        return lockOrMonitor.equalsNormalized(normalizeContext,otherLock.lockOrMonitor);
+        return lockOrMonitor.equalsNormalized(otherLock.lockOrMonitor);
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

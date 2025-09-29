@@ -15,4 +15,9 @@ public class ReentrantLockKey extends LockKey {
     public boolean isRead() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "lock(" + objectHashCode + "L)";
+    }
 }

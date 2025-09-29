@@ -1,7 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey;
 
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
-
 public class VolatileStaticFieldKey implements VolatileKey  {
 
     private final int fieldId;
@@ -24,14 +22,17 @@ public class VolatileStaticFieldKey implements VolatileKey  {
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, VolatileKey other) {
+    public boolean equalsNormalized(VolatileKey other) {
         if(! (other instanceof VolatileStaticFieldKey)) {
             return false;
         }
 
         VolatileStaticFieldKey otherAtomicNonBlockingKey = (VolatileStaticFieldKey) other;
-
-
         return fieldId == otherAtomicNonBlockingKey.fieldId;
+    }
+
+    @Override
+    public String toString() {
+        return "staticVolatile(" + fieldId + ")";
     }
 }

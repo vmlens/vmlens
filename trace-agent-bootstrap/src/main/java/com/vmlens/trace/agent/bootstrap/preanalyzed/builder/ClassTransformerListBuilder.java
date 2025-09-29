@@ -19,6 +19,10 @@ public interface ClassTransformerListBuilder {
 
     void addDoNotTraceIn(String name);
 
+    void addDoNotTraceInTestContainsClassName(String name);
+
+    void addDoNotTraceInTestStartWithClassName(String name);
+
     void addClassNotYetImplemented(String name);
 
     void addFilterInnerIncludeAnonymous(String name);

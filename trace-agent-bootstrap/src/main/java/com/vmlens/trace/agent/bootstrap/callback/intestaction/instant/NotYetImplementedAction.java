@@ -1,15 +1,17 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 
-public class NotYetImplementedAction implements InTestAction {
+public class NotYetImplementedAction extends AbstractInTestAction {
 
     private final String className;
     private final String methodName;
+
     private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();
 
     public NotYetImplementedAction(String className,
@@ -20,9 +22,9 @@ public class NotYetImplementedAction implements InTestAction {
 
     @Override
     public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
-        System.err.println("The method " + className+ "." + methodName + " can currently not be tested with vmlens.");
+        InfoMessageEvent event = new InfoMessageEvent(new String[]{ "NotYetImplemented:" + className+ "." + methodName });
+        queueIn.offer(event);
     }
-
 
     @Override
     public boolean notInAtomicCallback(ThreadLocalWhenInTest threadLocalDataWhenInTest) {

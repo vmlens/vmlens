@@ -1,11 +1,11 @@
 package com.vmlens.nottraced.agent.write;
 
-import com.vmlens.trace.agent.bootstrap.description.ClassDescription;
+import com.vmlens.transformed.agent.bootstrap.description.ClassDescription;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.event.warning.InfoMessageEvent;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class WriteClassDescriptionAndWarningDuringStartup implements WriteClassDescriptionAndWarning {
 

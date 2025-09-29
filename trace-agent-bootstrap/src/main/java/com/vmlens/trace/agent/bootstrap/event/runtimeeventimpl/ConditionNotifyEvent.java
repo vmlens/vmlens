@@ -14,6 +14,11 @@ public class ConditionNotifyEvent extends ConditionNotifyEventGen implements Plu
         this.threadIndex = threadIndex;
     }
 
+    public int threadIndex() {
+        return threadIndex;
+    }
+
+
     public void setMethodCounter(int methodCounter) {
         this.methodCounter = methodCounter;
     }
@@ -56,4 +61,10 @@ public class ConditionNotifyEvent extends ConditionNotifyEventGen implements Plu
     public int runId() {
         return runId;
     }
+
+    @Override
+    public boolean isMethodEnterOrExit() {
+        return false;
+    }
+
 }

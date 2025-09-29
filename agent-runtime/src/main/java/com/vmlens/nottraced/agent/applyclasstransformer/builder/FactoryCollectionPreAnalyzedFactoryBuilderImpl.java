@@ -7,10 +7,10 @@ import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.Fac
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.NonBlockingStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
+import com.vmlens.transformed.agent.bootstrap.strategy.strategypreanalyzed.NonBlockingStrategy;
+import com.vmlens.transformed.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
 
 import static com.vmlens.nottraced.agent.classtransformer.factorycollection.MethodNotFoundAction.NO_OP;
 import static com.vmlens.nottraced.agent.classtransformer.factorycollection.MethodNotFoundAction.WARNING_AND_NOT_TRANSFORM;

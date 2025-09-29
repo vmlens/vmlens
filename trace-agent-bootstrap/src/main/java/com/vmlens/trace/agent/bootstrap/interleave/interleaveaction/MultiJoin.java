@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToMaxPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.run.NormalizeContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.list.linked.TIntLinkedList;
@@ -13,11 +12,12 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class MultiJoin extends InterleaveActionForInDependentBlock  {
 
-    private final int threadIndex;
+    private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final TIntLinkedList joinedThreadIndices;
 
-    public MultiJoin(int threadIndex, TIntLinkedList joinedThreadIndices) {
-        this.threadIndex = threadIndex;
+    public MultiJoin(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
+                     TIntLinkedList joinedThreadIndices) {
+        this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
         this.joinedThreadIndices = joinedThreadIndices;
     }
 
@@ -36,21 +36,17 @@ public class MultiJoin extends InterleaveActionForInDependentBlock  {
     }
 
     @Override
-    public boolean equalsNormalized(NormalizeContext normalizeContext, InterleaveAction other) {
+    public boolean equalsNormalized(InterleaveAction other) {
         if(! (other instanceof MultiJoin)) {
             return false;
         }
         MultiJoin otherLock = (MultiJoin) other;
-        return threadIndex == otherLock.threadIndex;
+        return methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex);
     }
 
     @Override
     public int threadIndex() {
-        return threadIndex;
+        return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
 
-    @Override
-    public boolean startsThread() {
-        return false;
-    }
 }

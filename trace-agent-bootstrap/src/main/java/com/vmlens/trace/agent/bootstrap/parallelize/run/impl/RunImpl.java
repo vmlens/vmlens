@@ -46,7 +46,7 @@ public class RunImpl implements Run {
             afterContext.runtimeEvent().setRunId(runId);
             afterContext.runtimeEvent().setLoopId(loopId);
             runStateMachine.after(AfterContextForStateMachine.of(afterContext),SendEvent.create(afterContext,this));
-            if(afterContext.runtimeEvent().isInterleaveActionFactory()) {
+            if(afterContext.runtimeEvent().asInterleaveActionFactory() != null) {
                 waitNotifyStrategy.notifyAndWaitTillActive(afterContext.threadLocalDataWhenInTest(),
                         runStateMachine,
                         threadActiveCondition,
@@ -90,6 +90,8 @@ public class RunImpl implements Run {
         lock.lock();
         try {
             threadPoolMap.add(context);
+            context.threadStartEvent().setRunId(runId);
+            context.threadStartEvent().setLoopId(loopId);
             runStateMachine.beforeLockExitWaitOrThreadStart(context.threadStartEvent(),
                     context.threadLocalDataWhenInTest(),
                     new SendEvent(context.queueIn(),this));

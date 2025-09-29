@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class InfoMessageEvent implements SerializableEvent {
@@ -26,6 +27,22 @@ public class InfoMessageEvent implements SerializableEvent {
         return new InfoMessageEvent(text);
     }
 
+    private static String shortenToUtfLimit(String s) {
+        byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
+        int maxBytes = 65000;
+        if (bytes.length <= maxBytes) {
+            return s;
+        }
+
+        // find safe cut point so we don’t split a multi-byte UTF-8 character
+        int cut = maxBytes;
+        while (cut > 0 && (bytes[cut] & 0xC0) == 0x80) {
+            cut--;
+        }
+
+        return new String(bytes, 0, cut, StandardCharsets.UTF_8);
+    }
+
     @Override
     public void serialize(StreamRepository streamRepository) throws Exception {
         DataOutputStream stream = streamRepository.agentLog.getStream();
@@ -35,7 +52,11 @@ public class InfoMessageEvent implements SerializableEvent {
     public void serialize(DataOutputStream stream) throws IOException {
         stream.writeInt(text.length);
         for (String line : text) {
-            stream.writeUTF(line);
+            try{
+                stream.writeUTF(line);
+            } catch(java.io.UTFDataFormatException exp) {
+                stream.writeUTF("s:" + shortenToUtfLimit(line));
+            }
         }
     }
 

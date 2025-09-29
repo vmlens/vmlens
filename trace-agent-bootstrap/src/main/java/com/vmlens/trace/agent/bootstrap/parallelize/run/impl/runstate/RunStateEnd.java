@@ -21,11 +21,6 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public ActualRun actualRun() {
-        return null;
-    }
-
-    @Override
     public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
         return this;
     }
@@ -38,7 +33,7 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent,int waitingThreadIndex) {
         return new RunStateAndResult<>(this,false);
     }
 
@@ -50,5 +45,10 @@ public class RunStateEnd implements RunState {
     @Override
     public RunState afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return this;
+    }
+
+    @Override
+    public ActualRun actualRun() {
+        return null;
     }
 }

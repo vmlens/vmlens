@@ -5,8 +5,8 @@ import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategy;
 import com.vmlens.nottraced.agent.classanalyzer.ClassVisitorAnalyze;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.FactoryCollectionFactory;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 
 public class TransformerStrategyForClassTransformer implements TransformerStrategy {
 

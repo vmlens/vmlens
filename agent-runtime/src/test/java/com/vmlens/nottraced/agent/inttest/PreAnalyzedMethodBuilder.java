@@ -1,7 +1,7 @@
 package com.vmlens.nottraced.agent.inttest;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodType;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.PreAnalyzedMethod;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.model.MethodType;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.model.PreAnalyzedMethod;
 
 public class PreAnalyzedMethodBuilder {
 

@@ -5,7 +5,7 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeevent;
  *
  */
 
-public interface ExecuteBeforeEvent extends InterleaveActionFactory {
+public interface ExecuteBeforeEvent extends InterleaveActionFactoryAndRuntimeEvent {
 
    void addToBuilder(NextStateBuilder nextStateBuilder);
 

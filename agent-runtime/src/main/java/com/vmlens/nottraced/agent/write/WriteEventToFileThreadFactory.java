@@ -1,7 +1,7 @@
 package com.vmlens.nottraced.agent.write;
 
 
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
+import com.vmlens.transformed.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
 import java.util.concurrent.ThreadFactory;
 

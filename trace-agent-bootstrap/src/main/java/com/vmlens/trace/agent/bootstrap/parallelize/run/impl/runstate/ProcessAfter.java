@@ -9,8 +9,9 @@ public class ProcessAfter {
     public static void process(AfterContextForStateMachine afterContext,
                                SendEvent sendEvent,
                                RunStateContext runStateContext) {
-            afterContext.runtimeEvent().after(runStateContext.interleaveRun(),
-                    runStateContext.runContext(),
-                    afterContext.threadLocalDataWhenInTest(),sendEvent);
+        runStateContext.interleaveRun().after(afterContext.runtimeEvent(),
+                runStateContext.runContext(),
+                afterContext.threadLocalDataWhenInTest(),sendEvent);
+
     }
 }

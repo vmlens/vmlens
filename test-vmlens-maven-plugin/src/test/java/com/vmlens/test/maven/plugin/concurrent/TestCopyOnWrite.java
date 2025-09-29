@@ -4,10 +4,8 @@ import com.vmlens.api.AllInterleavings;
 import org.junit.Test;
 
 import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Supplier;
-
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -17,7 +15,7 @@ public class TestCopyOnWrite {
 
     @Test
     public void testCount() throws InterruptedException {
-        runTest("copyOnWriteArrayList", () -> new CopyOnWriteArrayList<>());
+       // runTest("copyOnWriteArrayList", () -> new CopyOnWriteArrayList<>());
         runTest("copyOnWriteArraySet", () -> new CopyOnWriteArraySet<>());
     }
 

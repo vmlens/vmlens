@@ -1,10 +1,10 @@
 package com.vmlens.preanalyzed.model.classmodel
 
-import com.vmlens.preanalyzed.model.{AtomicArrayNonBlockingMethod, AtomicClassNonBlockingMethod, AtomicNonBlockingMethod, AtomicNonBlockingMethodType, NotYetImplemented, ClassModel}
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod}
+import com.vmlens.preanalyzed.model.{AtomicArrayNonBlockingMethod, AtomicClassNonBlockingMethod, AtomicNonBlockingMethod, AtomicNonBlockingMethodType, ClassModel, NotYetImplemented}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod, methodtypeimpl}
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.PreAnalyzedAllMethods
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.{ArrayNonBlockingMethod, NonBlockingMethod, NotYetImplementedMethod}
-import com.vmlens.preanalyzed.model._
+import com.vmlens.preanalyzed.model.*
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -34,6 +34,7 @@ case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMeth
     }
   }
 
+  // Fixme replace with similar to lock logic
   private def addAtomicArrayMethod(name: String, desc: String, methodType: AtomicNonBlockingMethodType,
                                    buffer: ArrayBuffer[PreAnalyzedMethod]): Unit = {
     methodType match {
@@ -61,15 +62,15 @@ case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMeth
                                    buffer: ArrayBuffer[PreAnalyzedMethod]): Unit = {
     methodType match {
       case Read() => {
-        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_READ))
+        buffer.append(new PreAnalyzedMethod(name, desc,  methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK))
 
       }
       case Write() => {
-        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_WRITE))
+        buffer.append(new PreAnalyzedMethod(name, desc,  methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK))
 
       }
       case ReadWrite() => {
-        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_READ_WRITE))
+        buffer.append(new PreAnalyzedMethod(name, desc, methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK))
       }
 
       case

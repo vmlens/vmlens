@@ -6,7 +6,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 public class MethodCallbackFactoryAll extends MethodCallbackFactory {
 
-    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/MethodCallback";
+    private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/MethodCallback";
 
     public MethodCallbackFactoryAll(MethodVisitor methodVisitor) {
         super(new MethodEnterStrategyWithoutParam(),methodVisitor);

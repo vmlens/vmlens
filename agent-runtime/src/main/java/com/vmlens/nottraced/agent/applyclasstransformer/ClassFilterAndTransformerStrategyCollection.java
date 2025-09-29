@@ -1,7 +1,7 @@
 package com.vmlens.nottraced.agent.applyclasstransformer;
 
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
 public class ClassFilterAndTransformerStrategyCollection {
 
@@ -32,10 +32,10 @@ public class ClassFilterAndTransformerStrategyCollection {
         if (name.startsWith("com/vmlens/shaded")) {
             return null;
         }
-        if (name.startsWith("com/vmlens/trace/agent/bootstrap")) {
+        if (name.startsWith("com/vmlens/transformed/agent/bootstrap")) {
             return null;
         }
-        if (name.startsWith("com/anarsoft/trace/agent")) {
+        if (name.startsWith("com/anarsoft/transformed/agent")) {
             return null;
         }
 

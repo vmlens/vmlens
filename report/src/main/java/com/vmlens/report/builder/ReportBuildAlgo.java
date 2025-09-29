@@ -22,23 +22,16 @@ public class ReportBuildAlgo {
     }
 
     public UILoopsAndStacktraceLeafs build() {
-
-
         Map<List<UIStacktraceElement>, UIStacktraceLeaf> leafNodes = new HashMap<>();
         List<UILoopAndRunElementWithStacktraceLeafs> uiLoopAndRunElementsList = new LinkedList<>();
-
         for (LoopAndRun loopAndRun : loopAndRuns) {
             UITestLoop uiTestLoop = new UITestLoop(descriptionContext.loopName(loopAndRun.loop().loopId()),
                     loopAndRun.loop().count(),
                     loopAndRun.loop().testResult().text());
-
-
             loopAndRun.runElements().sort(new RunElementByRunPositionComparator());
 
             List<UIRunElementWithStacktraceLeaf> uiRunElementWithStacktraceLeafs = new LinkedList<>();
-
             Integer currentRun = null;
-
             for (RunElement runElement : loopAndRun.runElements()) {
                 String firstStacktraceMethodName = null;
 
@@ -56,7 +49,6 @@ public class ReportBuildAlgo {
                     // for example for the main test thread
                     firstStacktraceMethodName = descriptionContext.methodName(runElement.inMethodId());
                 }
-
                 String operation = runElement.operationTextFactory().operation();
                 String element = runElement.operationTextFactory().element(descriptionContext);
                 String object = runElement.operationTextFactory().object(descriptionContext);
@@ -89,12 +81,10 @@ public class ReportBuildAlgo {
                         currentRun = runElement.runId();
                     }
                 }
-
                 UIRunElementWithStacktraceLeaf uiRunElementWithStacktraceLeaf =
                             new UIRunElementWithStacktraceLeaf(uiRunElement, uiStacktraceLeaf);
                 uiRunElementWithStacktraceLeafs.add(uiRunElementWithStacktraceLeaf);
             }
-
             uiLoopAndRunElementsList.add(
                     new UILoopAndRunElementWithStacktraceLeafs(uiTestLoop, uiRunElementWithStacktraceLeafs));
         }

@@ -6,36 +6,20 @@ import gnu.trove.list.linked.TLinkedList;
 
 public class ActualRun {
 
-    private final TLinkedList<TLinkableWrapper<InterleaveAction>> run =
-            new TLinkedList<>();
+    private final TLinkedList<TLinkableWrapper<InterleaveAction>> run;
+    private final boolean containsLoop;
 
-    private int positionInRun;
-    private boolean isSingleThreaded = true;
-
-    public InterleaveInfo after(InterleaveAction interleaveAction) {
-        if(isSingleThreaded && ! interleaveAction.startsThread()) {
-            return null;
-        }
-        isSingleThreaded = false;
-        run.add(new TLinkableWrapper<>(interleaveAction));
-        InterleaveInfo interleaveInfo = new InterleaveInfo(positionInRun);
-        positionInRun++;
-        return interleaveInfo;
-    }
-
-    public InterleaveInfo currentInterleaveInfo() {
-        if(isSingleThreaded) {
-            return null;
-        }
-        return new InterleaveInfo(positionInRun);
-    }
-
-    int positionInRun() {
-        return positionInRun;
+    public ActualRun(TLinkedList<TLinkableWrapper<InterleaveAction>> run,
+                     boolean containsLoop) {
+        this.run = run;
+        this.containsLoop = containsLoop;
     }
 
     public TLinkedList<TLinkableWrapper<InterleaveAction>> run() {
         return run;
     }
 
+    public boolean containsLoop() {
+        return containsLoop;
+    }
 }

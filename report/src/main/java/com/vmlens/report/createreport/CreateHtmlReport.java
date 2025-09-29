@@ -45,7 +45,6 @@ public class CreateHtmlReport implements CreateReport{
 
     private void createRunReport(List<UILoopAndRunElementWithStacktraceLeafs> uiLoopAndRunElementWithStacktraceRoots)
             throws IOException {
-
         CreateOneReport createOneReport = new CreateOneReport("run");
         int index = 0;
         for (UILoopAndRunElementWithStacktraceLeafs loop : uiLoopAndRunElementWithStacktraceRoots) {

@@ -1,12 +1,14 @@
 package com.vmlens.nottraced.agent.applyclasstransformer.builder;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.ClassTransformerListBuilder;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.nottraced.agent.applyclasstransformer.*;
+import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.DoNotTraceInTestStrategyFactory;
+import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.NotYetImplementedStrategyFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.builder.ClassTransformerListBuilder;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
+import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ClassTransformerListBuilderImpl implements ClassTransformerListBuilder {
 
@@ -52,7 +54,7 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     }
 
     public void addClassNotYetImplemented(String name) {
-        add(new ClassFilterEquals(name), transformerStrategyFactory.createNotYetImplemented());
+        add(new ClassFilterEquals(name), transformerStrategyFactory.createMethodEnterExitOnly(new NotYetImplementedStrategyFactory()));
     }
 
     @Override
@@ -65,6 +67,18 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     public void addDoNotTraceIn(String name) {
         add(new ClassFilterEquals(name),
                 transformerStrategyFactory.createDoNotTraceIn());
+    }
+
+    @Override
+    public void addDoNotTraceInTestContainsClassName(String name) {
+        add(new ClassFilterContains(name),
+                transformerStrategyFactory.createMethodEnterExitOnly(new DoNotTraceInTestStrategyFactory()));
+    }
+
+    @Override
+    public void addDoNotTraceInTestStartWithClassName(String name) {
+        add(new ClassFilterStartsWith(name),
+                transformerStrategyFactory.createMethodEnterExitOnly(new DoNotTraceInTestStrategyFactory()));
     }
 
     public ClassFilterAndTransformerStrategyCollection build() {

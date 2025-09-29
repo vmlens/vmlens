@@ -37,8 +37,6 @@ public class UITestLoop {
         return resultText;
     }
 
-  
-
     public int index() {
         return index;
     }

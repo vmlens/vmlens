@@ -8,7 +8,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 public class MethodVisitorReplaceMethodCall extends MethodVisitor {
 
-    private static final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback";
+    private static final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback";
 
     public MethodVisitorReplaceMethodCall(MethodVisitor mv) {
         super(ASM_API_VERSION, mv);

@@ -3,12 +3,13 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.ThreadJoinedEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.ThreadJoin;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.ThreadJoin;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class ThreadJoinedEvent extends ThreadJoinedEventGen implements InterleaveActionFactory,
+public class ThreadJoinedEvent extends ThreadJoinedEventGen implements InterleaveActionFactoryAndRuntimeEvent,
         WithInMethodIdPositionReadWriteLockMap {
 
     private long joinedThreadId;
@@ -57,7 +58,7 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements Interleav
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
         this.joinedThreadIndex = context.threadIndexForThreadId(joinedThreadId);
-        return new ThreadJoin(threadIndex,joinedThreadIndex);
+        return new ThreadJoin(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex),joinedThreadIndex);
     }
 
     @Override
@@ -74,6 +75,11 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements Interleav
     @Override
     public int runId() {
         return runId;
+    }
+
+    @Override
+    public boolean startsNewThread() {
+        return false;
     }
 
 }

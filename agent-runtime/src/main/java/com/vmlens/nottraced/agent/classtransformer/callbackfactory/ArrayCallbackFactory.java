@@ -6,7 +6,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 public class ArrayCallbackFactory {
 
-    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/ArrayCallback";
+    private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/ArrayCallback";
 
     private final static String BEFORE_ARRAY_READ = "beforeArrayRead";
     private final static String BEFORE_ARRAY_WRITE = "beforeArrayWrite";

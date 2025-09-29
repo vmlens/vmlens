@@ -11,7 +11,7 @@ public class ThreadPoolCallbackFactory {
     private final String METHOD_DESCRIPTOR_NO_ARGS = "()V";
 
 
-    private final String CALLBACK_CLASS = "com/vmlens/trace/agent/bootstrap/callback/ThreadPoolCallback";
+    private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/ThreadPoolCallback";
     private final String START = "start";
     private final String JOIN = "join";
     private final String METHOD_EXIT_JOIN = "joinExit";

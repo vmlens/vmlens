@@ -15,4 +15,9 @@ public class MonitorKey extends LockKey {
     public boolean isRead() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "monitor(" + objectHashCode + "L)";
+    }
 }

@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
+import static com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.MethodIdByteCodePositionAndThreadIndexFactory.threadIndex;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -35,8 +36,8 @@ public class KeyToOperationTest {
 
         // Given
         VolatileFieldKey volatileFieldKey = new VolatileFieldKey(1,1L);
-        VolatileAccess read = new VolatileAccess(0, volatileFieldKey, MemoryAccessType.IS_READ);
-        VolatileAccess write = new VolatileAccess(1, volatileFieldKey, MemoryAccessType.IS_WRITE);
+        VolatileAccess read = new VolatileAccess(threadIndex(0), volatileFieldKey, MemoryAccessType.IS_READ);
+        VolatileAccess write = new VolatileAccess(threadIndex(1), volatileFieldKey, MemoryAccessType.IS_WRITE);
 
         KeyToOperation<VolatileKey, DependentOperationAndPosition<VolatileAccess>> keyToOperation = new KeyToOperation<>();
         keyToOperation.put(read.key(),new DependentOperationAndPosition<>(pos(0,0) , read));
@@ -63,8 +64,8 @@ public class KeyToOperationTest {
 
         // Given
         FutureKey futureKey = new FutureKey(1L);
-        BarrierNotify barrierNotify = new BarrierNotify(1, futureKey);
-        BarrierWaitEnter barrierWait = new BarrierWaitEnter(1, futureKey);
+        BarrierNotify barrierNotify = new BarrierNotify(threadIndex(1), futureKey);
+        BarrierWaitEnter barrierWait = new BarrierWaitEnter(threadIndex(1), futureKey);
 
         KeyToOperation<BarrierKey, DependentOperationAndPosition<Barrier>> keyToOperation = new KeyToOperation<>();
         keyToOperation.put(barrierNotify.key(),new DependentOperationAndPosition<>(pos(0,0) , barrierNotify));

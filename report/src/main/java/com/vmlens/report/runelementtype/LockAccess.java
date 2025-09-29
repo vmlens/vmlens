@@ -2,12 +2,14 @@ package com.vmlens.report.runelementtype;
 
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
+import com.vmlens.report.runelementtype.objecthashcodemap.ObjectHashCodeMap;
 
 public class LockAccess implements RunElementType {
 
     private final LockOperation monitorOperation;
     private final ReportLockType lockType;
     private final long objectHashCode;
+    private ObjectHashCodeMap objectHashCodeMap;
 
     public LockAccess(LockOperation monitorOperation, ReportLockType lockType, long objectHashCode) {
         this.monitorOperation = monitorOperation;
@@ -32,6 +34,12 @@ public class LockAccess implements RunElementType {
 
     @Override
     public String object(DescriptionContext context) {
-        return "" + objectHashCode;
+        return objectHashCodeMap.asUiString(objectHashCode);
+    }
+
+    @Override
+    public void setObjectHashCodeMap(ObjectHashCodeMap objectHashCodeMap, int threadIndex) {
+        this.objectHashCodeMap = objectHashCodeMap;
+        objectHashCodeMap.add(objectHashCode,threadIndex);
     }
 }

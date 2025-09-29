@@ -18,12 +18,12 @@ method:<init>(Ljava/lang/String;Z)V
 method:hasNext()Z
   ALOAD
   ALOAD
-  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.hasNext:(Ljava/lang/Object;)Z
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.hasNext:(Ljava/lang/Object;)Z
   IRETURN
 method:close()V
   ALOAD
   ALOAD
-  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/VmlensApiCallback.close:(Ljava/lang/Object;)V
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.close:(Ljava/lang/Object;)V
   RETURN
 method:hasNext(Ljava/lang/Object;)Z
   ALOAD

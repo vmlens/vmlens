@@ -21,13 +21,11 @@ class LoopResultCollection(val useList : Boolean) {
           loopResultList.add(runResult)
           loopIdToResult.put(loopId, loopResultList)
         } else {
-          loopIdToResult.put(loopId, new LoopResultSingle(loopId, runResult, runResult.runId))
+          loopIdToResult.put(loopId,  LoopResultSingle(loopId, runResult, runResult.runId))
         }
-
       }
     }
   }
-
 
   def build(): Seq[LoopResult] = loopIdToResult.values.toSeq;
 

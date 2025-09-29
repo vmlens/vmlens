@@ -1,6 +1,6 @@
 package com.vmlens.nottraced.agent.applyclasstransformer.builder;
 
-import com.vmlens.trace.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
+import com.vmlens.transformed.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategy;
 import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategyNoOp;
 import com.vmlens.nottraced.agent.classtransformer.TransformerStrategyForClassTransformer;
@@ -8,8 +8,8 @@ import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.*;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
 import com.vmlens.nottraced.agent.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarning;
-import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
-import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 
 public class TransformerStrategyFactory {
 
@@ -34,8 +34,10 @@ public class TransformerStrategyFactory {
         return new TransformerStrategyVmlensApi();
     }
 
-    public TransformerStrategy createNotYetImplemented() {
-        return new TransformerStrategyForClassTransformer(new FactoryCollectionNotYetImplementedFactory(methodRepositoryForAnalyze),
+    public TransformerStrategy createMethodEnterExitOnly(PreAnalyzedStrategyFactory preAnalyzedStrategyFactory) {
+        return new TransformerStrategyForClassTransformer(
+                new FactoryCollectionPreAnalyzedMethodEnterExitOnlyFactory(methodRepositoryForAnalyze,
+                        preAnalyzedStrategyFactory),
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
@@ -50,8 +52,6 @@ public class TransformerStrategyFactory {
         return new TransformerStrategyForClassTransformer(factoryCollectionPreAnalyzedBuilder,
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
-
-
 
     public FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall() {
         return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new SelectMethodEnterStrategy());

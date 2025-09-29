@@ -8,6 +8,7 @@ import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.DescriptionContextImpl;
 import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.element.*;
+import com.vmlens.report.runelementtype.objecthashcodemap.ObjectHashCodeMap;
 import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs;
 import com.vmlens.trace.agent.bootstrap.description.*;
 
@@ -36,8 +37,6 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
             }
         }
         for (MethodDescription methodDescription : classDescription.methodArray()) {
-
-
             ContainerForMethod methodContainer = idToMethodContainer.get(methodDescription.id());
             if (methodContainer != null) {
                 methodContainer.setMethodDescription(methodDescription);
@@ -49,7 +48,6 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
     public void addThreadOrLoopDescription(ThreadOrLoopDescription threadOrLoopDescription) {
         threadOrLoopDescription.accept(this);
     }
-
 
     @Override
     public void visit(ThreadDescription threadDescription) {
@@ -66,9 +64,11 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
     }
 
     public void addLoopAndRun(TestLoop testLoop, List<RunElement> run) {
+        ObjectHashCodeMap objectHashCodeMap = new ObjectHashCodeMap();
         for (RunElement element : run) {
             idToMethodContainer.put(element.inMethodId(), new ContainerForMethod());
             element.operationTextFactory().addToNeedsDescription(this);
+            element.operationTextFactory().setObjectHashCodeMap(objectHashCodeMap,element.loopRunAndThreadIndex().threadIndex());
         }
         loopAndRuns.add(new LoopAndRun(testLoop, run));
     }
@@ -87,8 +87,6 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
                         idToMethodContainer,
                         idToFieldContainer,
                         idToTestLoopDescription);
-
-
         return new ReportBuildAlgo(loopAndRuns, operationTextFactoryContext).build();
     }
 

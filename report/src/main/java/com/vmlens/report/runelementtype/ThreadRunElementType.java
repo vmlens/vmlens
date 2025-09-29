@@ -3,6 +3,7 @@ package com.vmlens.report.runelementtype;
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.NeedsDescriptionCallback;
 import com.vmlens.report.element.LoopRunAndThreadIndex;
+import com.vmlens.report.runelementtype.objecthashcodemap.ObjectHashCodeMap;
 import com.vmlens.trace.agent.bootstrap.event.EventTypeThread;
 
 public class ThreadRunElementType implements RunElementType {
@@ -33,6 +34,11 @@ public class ThreadRunElementType implements RunElementType {
 
     @Override
     public void addToNeedsDescription(NeedsDescriptionCallback callback) {
+
+    }
+
+    @Override
+    public void setObjectHashCodeMap(ObjectHashCodeMap objectHashCodeMap, int threadIndex) {
 
     }
 

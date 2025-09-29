@@ -1,7 +1,6 @@
 package com.vmlens.inttest.nonvolatile;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class LoopTest {
@@ -13,7 +12,6 @@ public class LoopTest {
      * shows that we also need to check for loops for non interleave actions.
      *
      */
-    @Ignore
     @Test
     public void whileLoop() throws InterruptedException {
         AllInterleavings testUpdate = new AllInterleavings("whileLoop");

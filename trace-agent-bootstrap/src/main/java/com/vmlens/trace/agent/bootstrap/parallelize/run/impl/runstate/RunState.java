@@ -15,9 +15,6 @@ public interface RunState {
     // reading
     boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent);
 
-    // is null if end state
-    ActualRun actualRun();
-
     // writing
     RunState  after(AfterContextForStateMachine afterContext, SendEvent sendEvent);
 
@@ -25,11 +22,13 @@ public interface RunState {
                                                                 Run run,
                                                                 SendEvent sendEvent);
 
-    RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent);
+    RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent,int waitingThreadIndex);
 
     RunState beforeLockExitWaitOrThreadStart(ExecuteBeforeEvent lockExitOrWaitEvent,
                                              ThreadLocalWhenInTest threadLocalDataWhenInTest,
                                              SendEvent sendEvent);
 
     RunState afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest);
+
+    ActualRun actualRun();
 }

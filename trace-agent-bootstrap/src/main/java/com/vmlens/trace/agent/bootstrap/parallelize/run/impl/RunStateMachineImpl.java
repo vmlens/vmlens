@@ -48,8 +48,8 @@ public class RunStateMachineImpl implements RunStateMachine  {
     }
 
     @Override
-    public boolean checkStopWaiting(SendEvent sendEvent) {
-        RunStateAndResult<Boolean> result = currentState.checkBlocked(sendEvent);
+    public boolean checkStopWaiting(SendEvent sendEvent,int waitingThreadIndex) {
+        RunStateAndResult<Boolean> result = currentState.checkBlocked(sendEvent,waitingThreadIndex);
         currentState = result.runState();
         return result.result();
     }

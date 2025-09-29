@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.15</version>
+    <version>1.2.16</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -88,11 +88,6 @@
             </dependency>
             <dependency>
                 <groupId>com.vmlens</groupId>
-                <artifactId>annotation</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.vmlens</groupId>
                 <artifactId>api</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -133,6 +128,11 @@
                 <version>2.12.0</version>
             </dependency>
             <dependency>
+                <groupId>dev.openfeature</groupId>
+                <artifactId>sdk</artifactId>
+                <version>1.18.1</version>
+            </dependency>
+            <dependency>
                 <groupId>io.github.java-diff-utils</groupId>
                 <artifactId>java-diff-utils</artifactId>
                 <version>4.12</version>
@@ -167,6 +167,11 @@
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>4.3.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
