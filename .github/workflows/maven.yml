@@ -51,4 +51,7 @@ jobs:
           path: |
             test-vmlens-maven-plugin/target/vmlens-report/
             test-vmlens-maven-plugin/target/vmlens-agent/vmlens/
-            vmlens-maven-plugin/target/invoker/
+            test-cases/target/vmlens-report/
+            test-cases/target/vmlens-agent/vmlens/
+            test-cases-jdk23/target/vmlens-report/
+            test-cases-jdk23/target/vmlens-agent/vmlens/
