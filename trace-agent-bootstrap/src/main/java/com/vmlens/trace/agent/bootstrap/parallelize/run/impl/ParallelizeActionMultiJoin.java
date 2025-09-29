@@ -73,7 +73,7 @@ public class ParallelizeActionMultiJoin implements EitherPluginEventOnlyOrInterl
     }
 
     @Override
-    public boolean startOrStopsThread() {
-        return true;
+    public boolean startsNewThread() {
+        return false;
     }
 }

@@ -90,7 +90,7 @@ public class BarrierWaitEnterEvent extends BarrierWaitEnterEventGen
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 }

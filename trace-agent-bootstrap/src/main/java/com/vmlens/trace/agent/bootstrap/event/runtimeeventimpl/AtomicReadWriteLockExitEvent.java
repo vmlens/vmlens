@@ -84,7 +84,7 @@ public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGe
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 

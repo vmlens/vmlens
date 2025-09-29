@@ -103,7 +103,7 @@ public class ConditionWaitEnterEvent extends ConditionWaitEnterEventGen implemen
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 

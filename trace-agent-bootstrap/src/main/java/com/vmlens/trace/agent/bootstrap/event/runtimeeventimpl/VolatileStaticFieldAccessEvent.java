@@ -74,7 +74,7 @@ public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStat
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 }

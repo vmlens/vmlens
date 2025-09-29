@@ -86,7 +86,7 @@ public class AtomicNonBlockingEvent extends AtomicNonBlockingEventGen implements
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 }

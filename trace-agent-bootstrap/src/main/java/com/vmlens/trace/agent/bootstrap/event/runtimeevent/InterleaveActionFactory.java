@@ -10,6 +10,6 @@ public interface InterleaveActionFactory {
                                    ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
                                    SendEvent sendEvent,
                                    int positionInRun);
-    boolean startOrStopsThread();
+    boolean startsNewThread();
 
 }

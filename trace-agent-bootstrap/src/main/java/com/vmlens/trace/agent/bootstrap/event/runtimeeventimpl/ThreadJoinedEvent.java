@@ -78,8 +78,8 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements Interleav
     }
 
     @Override
-    public boolean startOrStopsThread() {
-        return true;
+    public boolean startsNewThread() {
+        return false;
     }
 
 }

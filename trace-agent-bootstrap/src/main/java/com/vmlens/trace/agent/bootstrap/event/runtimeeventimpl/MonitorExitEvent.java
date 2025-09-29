@@ -58,7 +58,7 @@ public class MonitorExitEvent extends MonitorExitEventGen implements
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 

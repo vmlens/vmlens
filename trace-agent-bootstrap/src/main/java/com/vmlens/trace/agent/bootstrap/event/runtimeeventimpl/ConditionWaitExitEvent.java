@@ -103,7 +103,7 @@ public class ConditionWaitExitEvent extends ConditionWaitExitEventGen implements
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 }

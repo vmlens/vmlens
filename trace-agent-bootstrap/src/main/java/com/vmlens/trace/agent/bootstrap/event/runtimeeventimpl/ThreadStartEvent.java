@@ -73,7 +73,7 @@ public class ThreadStartEvent extends ThreadStartEventGen implements ExecuteBefo
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return true;
     }
 }

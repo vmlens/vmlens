@@ -90,7 +90,7 @@ public class BarrierNotifyEvent extends BarrierNotifyEventGen
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 }

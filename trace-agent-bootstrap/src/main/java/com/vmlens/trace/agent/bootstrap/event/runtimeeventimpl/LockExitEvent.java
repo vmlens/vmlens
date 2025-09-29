@@ -75,7 +75,7 @@ public class LockExitEvent extends LockExitEventGen implements ExecuteBeforeEven
     }
 
     @Override
-    public boolean startOrStopsThread() {
+    public boolean startsNewThread() {
         return false;
     }
 }
