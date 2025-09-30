@@ -51,4 +51,9 @@ public class RunStateEnd implements RunState {
     public ActualRun actualRun() {
         return null;
     }
+
+    @Override
+    public boolean isEnded() {
+        return true;
+    }
 }

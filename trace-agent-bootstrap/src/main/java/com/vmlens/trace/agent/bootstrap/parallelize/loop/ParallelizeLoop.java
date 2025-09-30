@@ -59,6 +59,12 @@ public class ParallelizeLoop {
         lock.lock();
         try {
             if (currentRun != null) {
+
+                // Happen s when hasNext called multiple times after false was returned
+                if(currentRun.isEnded()) {
+                    return false;
+                }
+
                 currentRun.checkAllThreadsJoined();
                 RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
                 serializableEvents.add(wrap(endEvent));

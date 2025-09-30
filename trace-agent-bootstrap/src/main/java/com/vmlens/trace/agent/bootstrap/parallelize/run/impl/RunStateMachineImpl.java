@@ -65,4 +65,9 @@ public class RunStateMachineImpl implements RunStateMachine  {
     public void afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         currentState = currentState.afterLockExitWaitOrThreadStart(threadLocalDataWhenInTest);
     }
+
+    @Override
+    public boolean isEnded() {
+        return currentState.isEnded();
+    }
 }

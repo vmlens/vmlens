@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.16</version>
+        <version>1.2.17-SNAPSHOT</version>
     </parent>
 
     <artifactId>test-vmlens-maven-plugin</artifactId>
@@ -59,6 +59,11 @@
         <dependency>
             <groupId>com.vmlens</groupId>
             <artifactId>api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vmlens</groupId>
+            <artifactId>trace-agent-bootstrap</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

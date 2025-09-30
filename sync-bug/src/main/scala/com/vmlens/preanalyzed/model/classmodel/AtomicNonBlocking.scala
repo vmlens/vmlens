@@ -53,7 +53,6 @@ case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMeth
       case
         NotYetImplemented() => {
         buffer.append(new PreAnalyzedMethod(name, desc, NotYetImplementedMethod.SINGLETON))
-
       }
     }
   }

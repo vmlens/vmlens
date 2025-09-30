@@ -35,4 +35,5 @@ public interface RunStateMachine {
 
     void afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest);
 
+    boolean isEnded();
 }

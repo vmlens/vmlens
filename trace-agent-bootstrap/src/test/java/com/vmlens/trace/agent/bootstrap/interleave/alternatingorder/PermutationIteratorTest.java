@@ -43,19 +43,18 @@ public class PermutationIteratorTest {
         PermutationIterator permutationIterator = new PermutationIterator(length);
         Set<String> actual = new HashSet<>();
         while (permutationIterator.hasNext()) {
+            Permutation p = permutationIterator.next();
             String permutation="";
             for(int i = 0 ; i < length; i++) {
-                if(permutationIterator.at(i)) {
+                if(p.at(i)) {
                     permutation += "1";
                 } else {
                     permutation += "0";
                 }
             }
             actual.add(permutation);
-            permutationIterator.advance();
         }
         assertThat(actual,is(expected));
     }
-
 
 }

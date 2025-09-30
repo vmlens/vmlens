@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class PerformanceTest extends AbstractInterleaveActionBuilder {
 
+
     @Ignore
     @Test
     public void performance() {

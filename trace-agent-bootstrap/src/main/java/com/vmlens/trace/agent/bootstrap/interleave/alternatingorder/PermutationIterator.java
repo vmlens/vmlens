@@ -16,12 +16,10 @@ public class PermutationIterator {
         }
     }
 
-    public void advance() {
+    public Permutation next() {
+        long temp = index;
         index++;
-    }
-
-    public boolean at(int position) {
-        return (index & (1L << position)) != 0;
+        return new Permutation(temp);
     }
 
     public boolean hasNext() {

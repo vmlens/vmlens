@@ -14,4 +14,6 @@ public interface Run extends RunForCallback {
 
     void checkAllThreadsJoined();
 
+    boolean isEnded();
+
 }
