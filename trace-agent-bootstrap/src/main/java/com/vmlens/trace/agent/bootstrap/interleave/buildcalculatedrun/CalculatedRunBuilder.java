@@ -37,6 +37,11 @@ public class CalculatedRunBuilder {
     public void addOrder(LeftBeforeRight leftBeforeRight) {
         graph.addEdge(leftBeforeRight.left,leftBeforeRight.right);
     }
+
+    public void removeOrder(LeftBeforeRight leftBeforeRight) {
+        graph.removeEdge(leftBeforeRight.left,leftBeforeRight.right);
+    }
+
     /**
      * calculated run can be null
      * @return

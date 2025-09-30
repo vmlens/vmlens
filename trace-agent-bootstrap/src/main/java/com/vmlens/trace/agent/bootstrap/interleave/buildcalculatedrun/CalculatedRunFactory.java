@@ -14,14 +14,14 @@ import gnu.trove.set.hash.THashSet;
 
 public class CalculatedRunFactory {
 
-    private final ThreadIndexToElementList<Position> actualRun;
+    private final CycleDetectionAdapter cycleDetectionAdapter;
     private final OrderArrayList orderArrayList;
-    private THashSet<Position> startingPoints = new THashSet<>();
+    private final THashSet<Position> startingPoints = new THashSet<>();
 
     public CalculatedRunFactory(LeftBeforeRight[] fixedOrderArray,
                                 ThreadIndexToElementList<Position> actualRun) {
         this.orderArrayList = new OrderArrayList(fixedOrderArray);
-        this.actualRun = actualRun;
+        this.cycleDetectionAdapter =  new CycleDetectionAdapter(new CalculatedRunBuilder(actualRun));;
     }
 
     public CalculatedRun create(OrderTreeIterator orderTreeIterator,
@@ -38,14 +38,12 @@ public class CalculatedRunFactory {
             position++;
         }
 
-        CycleDetectionAdapter cycleDetectionAdapter = new CycleDetectionAdapter(new CalculatedRunBuilder(actualRun));
-        Either<CalculatedRun, THashSet<Position>> runOrCycle = cycleDetectionAdapter.build(orderArrayList,startingPoints);
 
+        Either<CalculatedRun, THashSet<Position>> runOrCycle = cycleDetectionAdapter.build(orderArrayList,startingPoints);
         if(runOrCycle.getLeft() != null) {
             return runOrCycle.getLeft();
         }
-
-         startingPoints = runOrCycle.getRight();
+         startingPoints.addAll(runOrCycle.getRight());
          return null;
     }
 
