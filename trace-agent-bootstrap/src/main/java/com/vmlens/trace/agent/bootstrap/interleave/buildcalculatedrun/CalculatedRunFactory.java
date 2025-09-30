@@ -10,12 +10,13 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.PermutationI
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.CreateOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
+import gnu.trove.set.hash.THashSet;
 
 public class CalculatedRunFactory {
 
     private final ThreadIndexToElementList<Position> actualRun;
     private final OrderArrayList orderArrayList;
-    private Cycle cycle;
+    private THashSet<Position> startingPoints = new THashSet<>();
 
     public CalculatedRunFactory(LeftBeforeRight[] fixedOrderArray,
                                 ThreadIndexToElementList<Position> actualRun) {
@@ -37,16 +38,14 @@ public class CalculatedRunFactory {
             position++;
         }
 
-
-        cycle = null;
         CycleDetectionAdapter cycleDetectionAdapter = new CycleDetectionAdapter(new CalculatedRunBuilder(actualRun));
-        Either<CalculatedRun, Cycle> runOrCycle = cycleDetectionAdapter.build(orderArrayList);
+        Either<CalculatedRun, THashSet<Position>> runOrCycle = cycleDetectionAdapter.build(orderArrayList,startingPoints);
 
         if(runOrCycle.getLeft() != null) {
             return runOrCycle.getLeft();
         }
 
-         cycle = runOrCycle.getRight();
+         startingPoints = runOrCycle.getRight();
          return null;
     }
 

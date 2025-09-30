@@ -4,8 +4,7 @@ import com.vmlens.trace.agent.bootstrap.Either;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayList;
-
-import java.util.List;
+import gnu.trove.set.hash.THashSet;
 
 import static com.vmlens.trace.agent.bootstrap.Either.left;
 import static com.vmlens.trace.agent.bootstrap.Either.right;
@@ -18,19 +17,21 @@ public class CycleDetectionAdapter {
         this.calculatedRunBuilder = calculatedRunBuilder;
     }
 
-    public Either<CalculatedRun,Cycle> build(OrderArrayList orderArrayList) {
+    public Either<CalculatedRun, THashSet<Position>> build(OrderArrayList orderArrayList,
+                                                           THashSet<Position> previousStartingPoints) {
         for(int i = 0 ; i <  orderArrayList.length(); i++ ) {
             calculatedRunBuilder.addOrder(orderArrayList.get(i));
         }
-
-        List<List<Position>> cycleList = calculatedRunBuilder.buildCycles();
-
-        if(cycleList.isEmpty()) {
-            return left(calculatedRunBuilder.build());
+        THashSet<Position> newStartingPoint = calculatedRunBuilder.buildCycles(previousStartingPoints);
+        if(newStartingPoint.isEmpty()) {
+            CalculatedRun run = calculatedRunBuilder.build();
+            if(run != null) {
+                return left(run);
+            }
+            return right(calculatedRunBuilder.buildAllCycles());
         } else {
-            return right(Cycle.create(cycleList,orderArrayList.alternatingOrderIterator()));
+            return right(newStartingPoint);
         }
     }
-
 
 }

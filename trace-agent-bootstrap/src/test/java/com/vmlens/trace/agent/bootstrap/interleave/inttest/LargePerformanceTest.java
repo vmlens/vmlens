@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class PerformanceTest extends AbstractInterleaveActionBuilder {
+public class LargePerformanceTest extends AbstractInterleaveActionBuilder {
 
 
     @Ignore

@@ -53,8 +53,9 @@ public class InterleaveLoop implements IteratorQueue {
         }
 
         if(TRACE_INTERLEAVE_ACTIONS) {
-            int index = 0;
-            String[] array = new String[withLoops.size()];
+            String[] array = new String[withLoops.size() + 1];
+            array[0] = "New Run";
+            int index = 1;
             for(TLinkableWrapper<InterleaveAction> elem : withLoops) {
                 array[index] = elem.element().toString();
                 index++;
