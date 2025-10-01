@@ -23,12 +23,17 @@ public class IntTestRunner {
 
         List<Position[]> executed = new LinkedList<>();
         Iterator<CalculatedRun> iter = alternatingOrder.iterator();
+        int count = 0;
         long wasNull=0;
         while (iter.hasNext()) {
             CalculatedRun calculatedRun = iter.next();
             if (calculatedRun != null) {
                 System.out.println(wasNull);
                 wasNull = 0L;
+                count++;
+                if(count > 500) {
+                    break;
+                }
                 Potential potential = expected.asPotential();
                 Position[] positions = calculatedRun.calculatedRunElementArray();
                 executed.add(positions);

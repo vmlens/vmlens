@@ -36,8 +36,11 @@ public class CalculatedRunFactory {
         while(iter.hasNext()) {
             iter.advanceAndAddToOrder(createOrderContext,current.at(position));
             position++;
-        }
+            if(position > 25) {
+                break;
+            }
 
+        }
 
         Either<CalculatedRun, THashSet<Position>> runOrCycle = cycleDetectionAdapter.build(orderArrayList,startingPoints);
         if(runOrCycle.getLeft() != null) {

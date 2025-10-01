@@ -15,7 +15,9 @@ public class LargePerformanceTest extends AbstractInterleaveActionBuilder {
         ExpectedBuilder expectedBuilder = new ExpectedBuilder();
 
         // Test
+        long start = System.currentTimeMillis();
         new IntTestRunner().runTest(build(),expectedBuilder.buildExpected());
+        System.out.println("took " + (System.currentTimeMillis() - start));
     }
 
 

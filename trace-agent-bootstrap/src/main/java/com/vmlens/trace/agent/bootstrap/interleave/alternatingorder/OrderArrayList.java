@@ -28,6 +28,28 @@ public class OrderArrayList {
         }
     }
 
+    private class AllOrderIterator implements Iterator<LeftBeforeRight> {
+
+        private int index;
+
+        @Override
+        public boolean hasNext() {
+            return index < (length + fixedArray.length);
+        }
+
+        @Override
+        public LeftBeforeRight next() {
+            int temp = index;
+            index++;
+
+            if(temp < fixedArray.length) {
+                return fixedArray[temp];
+            }
+
+            return array[temp - fixedArray.length];
+        }
+    }
+
     public OrderArrayList(LeftBeforeRight[] fixedArray) {
         this(16,fixedArray);
     }
@@ -63,6 +85,10 @@ public class OrderArrayList {
     }
 
     public Iterator<LeftBeforeRight> alternatingOrderIterator() {
+        return new AlternatingOrderIterator();
+    }
+
+    public Iterator<LeftBeforeRight> allOrderIterator() {
         return new AlternatingOrderIterator();
     }
 
