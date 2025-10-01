@@ -69,6 +69,8 @@ public class ProcessEvents {
         testWithDataRace.add("hiero.testAdd");
         testWithDataRace.add("innerChild");
         testWithDataRace.add("whileLoop");
+        testWithDataRace.add("testJacksonWithReader");
+        testWithDataRace.add("testJackson");
        // testWithDataRace.add("childWithProtectedFieldTest");
         checkDataRaces(testWithDataRace,result);
     }

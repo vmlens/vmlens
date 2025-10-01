@@ -16,16 +16,17 @@ public class TestNonBlockingAtomic {
     @Test
     public void testConcurrentSkipListMap() throws Throwable {
         AllInterleavings underTest = new AllInterleavings("underTest");
-        MethodRepositorySingleton.INSTANCE.setStrategyPreAnalyzed(1 ,  ThreadStartStrategy.SINGLETON);
-        MethodRepositorySingleton.INSTANCE.setStrategyPreAnalyzed(2 ,  ThreadJoinStrategy.SINGLETON);
-        MethodRepositorySingleton.INSTANCE.setStrategyAll(3 ,  NormalMethodStrategy.SINGLETON);
+
+        MethodRepositorySingleton.INSTANCE.setStrategyPreAnalyzed(1, ThreadStartStrategy.SINGLETON);
+        MethodRepositorySingleton.INSTANCE.setStrategyPreAnalyzed(2, ThreadJoinStrategy.SINGLETON);
+        MethodRepositorySingleton.INSTANCE.setStrategyAll(3, NormalMethodStrategy.SINGLETON);
 
         CheckIsThreadRun.SINGLETON.isThreadRun();
 
-        try(AllInterleavings allInterleavings = new AllInterleavings("TestNonBlockingAtomic.testConcurrentSkipListMap")) {
+        try (AllInterleavings allInterleavings = new AllInterleavings("TestNonBlockingAtomic.testConcurrentSkipListMap")) {
             while (allInterleavings.hasNext()) {
 
-                while(VmlensApiCallback.hasNext(underTest)) {
+                while (VmlensApiCallback.hasNext(underTest)) {
                     Thread first = new Thread() {
                         @Override
                         public void run() {
@@ -35,24 +36,18 @@ public class TestNonBlockingAtomic {
                         }
                     };
 
-                    MethodCallback.beforeMethodCall(3,1,1);
-                    PreAnalyzedCallback.methodEnter(first,1);
+                    MethodCallback.beforeMethodCall(3, 1, 1);
+                    PreAnalyzedCallback.methodEnter(first, 1);
                     first.start();
-                    PreAnalyzedCallback.methodExit(first,1);
+                    PreAnalyzedCallback.methodExit(first, 1);
 
-                    MethodCallback.afterMethodCall(3,1,1);
+                    MethodCallback.afterMethodCall(3, 1, 1);
 
-
-                    PreAnalyzedCallback.methodEnter(first,2);
+                    PreAnalyzedCallback.methodEnter(first, 2);
                     first.join();
-                    PreAnalyzedCallback.methodExit(first,2);
+                    PreAnalyzedCallback.methodExit(first, 2);
                 }
-
-
-
-                }
-
-
+            }
 
         }
     }

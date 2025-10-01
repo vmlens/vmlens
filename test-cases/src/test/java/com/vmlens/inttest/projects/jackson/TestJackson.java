@@ -1,18 +1,16 @@
-package com.vmlens.test.maven.plugin.json;
+package com.vmlens.inttest.projects.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.vmlens.api.AllInterleavings;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class TestJackson {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    @Disabled
     public void testParseJsonFile() throws InterruptedException {
         try(AllInterleavings allInterleavings = new AllInterleavings("testJackson")) {
             while (allInterleavings.hasNext()) {
@@ -39,7 +37,6 @@ public class TestJackson {
     }
 
     @Test
-    @Disabled
     public void testWithReader() throws InterruptedException {
         ObjectReader reader = mapper.readerFor(Person.class);
         try(AllInterleavings allInterleavings = new AllInterleavings("testJacksonWithReader")) {
