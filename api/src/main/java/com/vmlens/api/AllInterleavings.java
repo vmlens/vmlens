@@ -31,6 +31,11 @@ public class AllInterleavings implements AutoCloseable {
 	private final static String ERROR_MESSAGE_PART_2 = "See https://vmlens.com/docs/ for configuring the vmlens java agent.";
 	private final boolean throwExceptionWhenNoAgent;
 
+	public final int maximumIterations;
+	public final int maximumAlternatingOrders;
+	public final int synchronizationActionsLoopThreshold;
+	public final int unsynchronizedOperationsLoopThreshold;
+
 	/**
      * The name shown in the report.
 	 * 
@@ -47,11 +52,24 @@ public class AllInterleavings implements AutoCloseable {
 		this(name,false);
 	}
 
-
 	public AllInterleavings(String name, boolean throwExceptionWhenNoAgent) {
+		this(name,throwExceptionWhenNoAgent, 20 , 10 , 500 , 5000);
+	}
+
+
+	AllInterleavings(String name,
+					 boolean throwExceptionWhenNoAgent,
+					 int maximumIterations,
+					 int maximumAlternatingOrders,
+					 int synchronizationActionsLoopThreshold,
+					 int unsynchronizedOperationsLoopThreshold) {
         this.name = name;
 		this.throwExceptionWhenNoAgent = throwExceptionWhenNoAgent;
-	}
+        this.maximumIterations = maximumIterations;
+        this.maximumAlternatingOrders = maximumAlternatingOrders;
+        this.synchronizationActionsLoopThreshold = synchronizationActionsLoopThreshold;
+        this.unsynchronizedOperationsLoopThreshold = unsynchronizedOperationsLoopThreshold;
+    }
 
 	/**
 	 * Return true if there are still thread interleaving to be executed and select the next thread interleaving,

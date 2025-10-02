@@ -33,4 +33,14 @@ public class AfterCallback {
     public int process(ProcessEventContext context, InterleaveActionFactory interleaveActionFactory) {
         return interleaveRun.process(context, interleaveActionFactory);
     }
+
+    public int synchronizationActionsLoopThreshold() {
+        return interleaveRun.interleaveLoopContext().synchronizationActionsLoopThreshold();
+    }
+
+    public int unsynchronizedOperationsLoopThreshold() {
+        return interleaveRun.interleaveLoopContext().unsynchronizedOperationsLoopThreshold();
+    }
+
+
 }

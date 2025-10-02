@@ -2,13 +2,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.inttest;
 
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class LargePerformanceTest extends AbstractInterleaveActionBuilder {
 
-
-    @Ignore
     @Test
     public void performance() {
         // Expected
@@ -19,7 +16,6 @@ public class LargePerformanceTest extends AbstractInterleaveActionBuilder {
         new IntTestRunner().runTest(build(),expectedBuilder.buildExpected());
         System.out.println("took " + (System.currentTimeMillis() - start));
     }
-
 
     @Override
     protected void addActions() {
@@ -498,5 +494,6 @@ public class LargePerformanceTest extends AbstractInterleaveActionBuilder {
         lockExit(2,monitor(229919394L));
         lockExit(2,lock(1783033883L));
         lockExit(2,lock(1590323871L));
-        threadJoin(0,2);    }
+        threadJoin(0,2);
+    }
 }

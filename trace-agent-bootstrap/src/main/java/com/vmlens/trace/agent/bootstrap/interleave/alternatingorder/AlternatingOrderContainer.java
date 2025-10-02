@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.CalculatedRunFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 
 import java.util.Iterator;
@@ -18,13 +19,16 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
     private ThreadIndexToElementList<Position> actualRun;
     private LeftBeforeRight[] fixedOrderArray;
     private OrderTree orderTree;
+    private InterleaveLoopContext interleaveLoopContext;
 
     public AlternatingOrderContainer(ThreadIndexToElementList<Position> actualRun,
                                      LeftBeforeRight[] fixedOrderArray,
-                                     OrderTree orderTree) {
+                                     OrderTree orderTree,
+                                     InterleaveLoopContext interleaveLoopContext) {
         this.actualRun = actualRun;
         this.fixedOrderArray = fixedOrderArray;
         this.orderTree = orderTree;
+        this.interleaveLoopContext = interleaveLoopContext;
     }
 
     /**
@@ -34,9 +38,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
     public Iterator<CalculatedRun> iterator() {
         return new AlternatingOrderContainerIterator();
     }
-
-
-
+    
     private class AlternatingOrderContainerIterator implements
             Iterator<CalculatedRun> {
 
@@ -45,7 +47,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
         public AlternatingOrderContainerIterator() {
             this.permutationIterator = new PermutationIterator(orderTree.length());
-            this.calculatedRunFactory = new CalculatedRunFactory(fixedOrderArray,actualRun);
+            this.calculatedRunFactory = new CalculatedRunFactory(fixedOrderArray,actualRun, interleaveLoopContext);
         }
 
         @Override
@@ -61,6 +63,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
                 actualRun = null;
                 fixedOrderArray = null;
                 orderTree = null;
+                interleaveLoopContext = null;
             }
             return temp;
         }

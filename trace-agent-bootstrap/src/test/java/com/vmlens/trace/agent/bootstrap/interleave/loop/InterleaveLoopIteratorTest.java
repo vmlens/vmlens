@@ -2,6 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -17,8 +18,8 @@ public class InterleaveLoopIteratorTest {
     @Test
     public void testEmptyQueue() {
         // Given
-        IteratorQueue iteratorQueue = new IteratorQueueWrapper(new LinkedList<Iterator<CalculatedRun>>());
-        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue);
+        IteratorQueue iteratorQueue = new IteratorQueueWrapper(new LinkedList<>());
+        InterleaveLoopIterator iterator = new InterleaveLoopIterator(new InterleaveLoopContextBuilder().build(),iteratorQueue);
 
         // Then
         assertThat(iterator.hasNext(), is(false));
@@ -35,7 +36,7 @@ public class InterleaveLoopIteratorTest {
 
 
         IteratorQueue iteratorQueue = new IteratorQueueWrapper(queue);
-        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue);
+        InterleaveLoopIterator iterator = new InterleaveLoopIterator(new InterleaveLoopContextBuilder().build(),iteratorQueue);
 
         // Then
         assertThat(iterator.hasNext(), is(true));
@@ -67,7 +68,7 @@ public class InterleaveLoopIteratorTest {
         queue.add(secondList.iterator());
 
         IteratorQueue iteratorQueue = new IteratorQueueWrapper(queue);
-        InterleaveLoopIterator iterator = new InterleaveLoopIterator(iteratorQueue);
+        InterleaveLoopIterator iterator = new InterleaveLoopIterator(new InterleaveLoopContextBuilder().build(),iteratorQueue);
 
         // Then
         assertThat(iterator.hasNext(), is(true));

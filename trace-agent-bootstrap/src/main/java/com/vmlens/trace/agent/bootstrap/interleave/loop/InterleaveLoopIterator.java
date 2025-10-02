@@ -1,25 +1,30 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import gnu.trove.set.hash.THashSet;
 
 import java.util.Iterator;
 
 public class InterleaveLoopIterator implements Iterator<CalculatedRun> {
 
+    private final InterleaveLoopContext interleaveLoopContext;
     private final THashSet<CalculatedRun> alreadyExecuted = new THashSet<CalculatedRun>();
     private final IteratorQueue container;
     private Iterator<CalculatedRun> currentIterator;
     private CalculatedRun next;
 
-    public InterleaveLoopIterator(IteratorQueue container) {
+    public InterleaveLoopIterator(InterleaveLoopContext interleaveLoopContext,
+                                  IteratorQueue container) {
+        this.interleaveLoopContext = interleaveLoopContext;
         this.container = container;
     }
 
     @Override
     public boolean hasNext() {
 
-        if(alreadyExecuted.size() > 3) {
+        if(alreadyExecuted.size() > interleaveLoopContext.maximumIterations()) {
+            interleaveLoopContext.maximumIterationsReached();
             return false;
         }
 

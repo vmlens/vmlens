@@ -59,16 +59,13 @@ public class ParallelizeLoop {
         lock.lock();
         try {
             if (currentRun != null) {
-
                 // Happen s when hasNext called multiple times after false was returned
                 if(currentRun.isEnded()) {
                     return false;
                 }
-
                 currentRun.checkAllThreadsJoined();
                 RunEndEvent endEvent = new RunEndEvent(loopId, currentRun.runId());
                 serializableEvents.add(wrap(endEvent));
-
                 if(currentRun.runId() == 0) {
                     createInitialRun(threadLocalForParallelize, serializableEvents);
                     // we skip the first run to avoid
@@ -76,20 +73,18 @@ public class ParallelizeLoop {
                     // leads to blocked runs
                     return true;
                 }
-
                 ActualRun previous = currentRun.end(threadLocalForParallelize);
                 interleaveLoop.addActualRun(previous,serializableEvents);
-
                 if (interleaveLoopIterator.hasNext()) {
                     CalculatedRun calculatedRun = interleaveLoopIterator.next();
                     ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
-                    currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createRunning(
-                            runContext, calculatedRun), loopId, maxRunId);
+                    currentRun = new RunImpl(lock, waitNotifyStrategy,
+                            runStateMachineFactory.createRunning(interleaveLoop.interleaveLoopContext(), runContext, calculatedRun),
+                            loopId, maxRunId);
                     threadLocalForParallelize.setThreadLocalDataWhenInTest(
                             runContext.createForMainTestThread(currentRun, threadLocalForParallelize, serializableEvents));
                     int tempRunId = maxRunId;
                     maxRunId++;
-
                     serializableEvents.add(wrap(new RunStartEvent(loopId, tempRunId)));
                     return true;
                 }
@@ -106,8 +101,9 @@ public class ParallelizeLoop {
     private void createInitialRun(ThreadLocalForParallelize threadLocalForParallelize,
                                   TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
-        currentRun = new RunImpl(lock, waitNotifyStrategy, runStateMachineFactory.createInitial(
-                runContext), loopId, maxRunId);
+        currentRun = new RunImpl(lock, waitNotifyStrategy,
+                runStateMachineFactory.createInitial(interleaveLoop.interleaveLoopContext(), runContext),
+                loopId, maxRunId);
         threadLocalForParallelize.setThreadLocalDataWhenInTest(
                 runContext.createForMainTestThread(currentRun, threadLocalForParallelize, serializableEvents));
         int tempRunId = maxRunId;

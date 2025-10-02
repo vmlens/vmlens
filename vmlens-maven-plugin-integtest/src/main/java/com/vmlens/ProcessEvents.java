@@ -13,6 +13,10 @@ import com.vmlens.report.assertion.EventForAssertion;
 import java.io.File;
 import java.util.*;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+
 public class ProcessEvents {
 
     public static void main(String[] args) {
@@ -85,6 +89,6 @@ public class ProcessEvents {
             }
             testWithDataRace.remove(loopToDataRaceCount.loopName());
         }
-       // assertThat(testWithDataRace,is(empty()));
+        assertThat(testWithDataRace,is(empty()));
     }
 }

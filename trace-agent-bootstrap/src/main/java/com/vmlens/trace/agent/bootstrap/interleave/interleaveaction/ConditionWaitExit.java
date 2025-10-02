@@ -47,4 +47,12 @@ public class ConditionWaitExit implements InterleaveAction {
         return lockOrMonitor.equalsNormalized(otherLock.lockOrMonitor);
     }
 
+    @Override
+    public String toString() {
+        return "conditionWaitExit(" +
+                methodIdByteCodePositionAndThreadIndex.threadIndex() +
+                ","  + lockOrMonitor +
+                ");";
+    }
+
 }

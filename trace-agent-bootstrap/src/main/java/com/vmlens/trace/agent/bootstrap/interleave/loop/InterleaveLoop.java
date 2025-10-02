@@ -6,6 +6,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingO
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.InterleaveActionLoopFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
@@ -21,6 +22,7 @@ public class InterleaveLoop implements IteratorQueue {
 
     private static final boolean TRACE_INTERLEAVE_ACTIONS = true;
 
+    private final InterleaveLoopContext interleaveLoopContext;
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =
          new TLinkedList<>();
     private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> stillToBeProcessedAlternatingOrderContainer =
@@ -28,8 +30,9 @@ public class InterleaveLoop implements IteratorQueue {
     private final InterleaveLoopIterator iterator;
     private boolean containsLoop;
 
-    public InterleaveLoop() {
-        this.iterator = new InterleaveLoopIterator(this);
+    public InterleaveLoop(InterleaveLoopContext interleaveLoopContext) {
+        this.interleaveLoopContext = interleaveLoopContext;
+        this.iterator = new InterleaveLoopIterator(interleaveLoopContext,this);
     }
 
     // Visible for Test
@@ -44,7 +47,8 @@ public class InterleaveLoop implements IteratorQueue {
         return stillToBeProcessedAlternatingOrderContainer.removeFirst().element().iterator();
     }
 
-    public void addActualRun(ActualRun actualRun,TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+    public void addActualRun(ActualRun actualRun,
+                             TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
         containsLoop = actualRun.containsLoop() | containsLoop;
         TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = actualRun.run();
 
@@ -72,7 +76,7 @@ public class InterleaveLoop implements IteratorQueue {
             return;
         }
         alreadyProcessed.add(wrap(newRun));
-        AlternatingOrderContainer container = new AlternatingOrderContainerFactory().create(run);
+        AlternatingOrderContainer container = new AlternatingOrderContainerFactory().create(run, interleaveLoopContext);
         stillToBeProcessedAlternatingOrderContainer
                     .add(new TLinkableWrapper<>(container));
     }
@@ -94,7 +98,8 @@ public class InterleaveLoop implements IteratorQueue {
         return false;
     }
 
-    private boolean isSame(ThreadIndexToElementList<InterleaveAction> existing, ThreadIndexToElementList<InterleaveAction> newRun) {
+    private boolean isSame(ThreadIndexToElementList<InterleaveAction> existing,
+                           ThreadIndexToElementList<InterleaveAction> newRun) {
         if(existing.elementCount() != newRun.elementCount()) {
             return false;
         }
@@ -113,4 +118,7 @@ public class InterleaveLoop implements IteratorQueue {
         return true;
     }
 
+    public InterleaveLoopContext interleaveLoopContext() {
+        return interleaveLoopContext;
+    }
 }

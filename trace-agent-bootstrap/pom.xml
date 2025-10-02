@@ -49,6 +49,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.vmlens</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.jgrapht</groupId>
             <artifactId>jgrapht-core</artifactId>
         </dependency>

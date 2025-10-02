@@ -19,7 +19,7 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
     private final Position[] calculatedRunElementArray;
     private final ThreadIndexToElementList<Position> calculatedRunPerThread;
     private int arrayIndex;
-    private final LoopCounter loopCounter = new LoopCounterSingleElement();
+    private final LoopCounter loopCounter = new LoopCounter();
 
     public InterleaveRunStateWithCalculated(Position[] calculatedRunElementArray) {
         this.calculatedRunElementArray = calculatedRunElementArray;

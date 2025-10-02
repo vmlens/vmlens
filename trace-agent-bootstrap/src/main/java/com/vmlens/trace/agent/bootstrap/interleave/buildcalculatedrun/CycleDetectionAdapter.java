@@ -49,7 +49,7 @@ public class CycleDetectionAdapter {
             calculatedRunBuilder.addOrder(orderArrayList.get(i));
         }
         previousOrder = new THashMap<>();
-        Iterator<LeftBeforeRight> iter = orderArrayList.alternatingOrderIterator();
+        Iterator<LeftBeforeRight> iter = orderArrayList.iterator();
         while(iter.hasNext()) {
             previousOrder.put(iter.next(), new MutableBoolean());
         }
@@ -57,7 +57,7 @@ public class CycleDetectionAdapter {
 
     private void update(OrderArrayList orderArrayList) {
         THashMap<LeftBeforeRight,MutableBoolean> newlyAdded = new THashMap<>();
-        Iterator<LeftBeforeRight> iter = orderArrayList.alternatingOrderIterator();
+        Iterator<LeftBeforeRight> iter = orderArrayList.iterator();
         while(iter.hasNext()) {
             LeftBeforeRight current = iter.next();
             newlyAdded.put(current,new MutableBoolean());

@@ -1,7 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.run;
 
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.*;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.EitherPluginEventOnlyOrInterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.PluginEventOnly;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
@@ -14,6 +17,7 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class InterleaveRun {
 
+    private final  InterleaveLoopContext interleaveLoopContext;
     private final TLinkedList<TLinkableWrapper<InterleaveAction>> run =
             new TLinkedList<>();
     private final SingleThreadFilter singleThreadFilter = new SingleThreadFilter();
@@ -21,11 +25,14 @@ public class InterleaveRun {
     private InterleaveRunState state;
     private boolean hasLoop;
 
-    public InterleaveRun() {
+    public InterleaveRun(InterleaveLoopContext interleaveLoopContext) {
+        this.interleaveLoopContext = interleaveLoopContext;
         state = new InterleaveRunStateWithoutCalculated(0);
     }
 
-    public InterleaveRun(Position[] calculatedRunElementArray) {
+    public InterleaveRun(InterleaveLoopContext interleaveLoopContext,
+                         Position[] calculatedRunElementArray) {
+        this.interleaveLoopContext = interleaveLoopContext;
         state = new InterleaveRunStateWithCalculated(calculatedRunElementArray);
     }
 
@@ -92,5 +99,9 @@ public class InterleaveRun {
 
     public void setHasLoop() {
         this.hasLoop = true;
+    }
+
+    public InterleaveLoopContext interleaveLoopContext() {
+        return interleaveLoopContext;
     }
 }

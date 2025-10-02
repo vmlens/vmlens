@@ -4,22 +4,29 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 
 public class IntTestRunner {
 
-    public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun, Expected expected) {
+
+
+    public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,
+                                         Expected expected) {
+        return runTest(actualRun,expected,new InterleaveLoopContextBuilder().build());
+    }
+
+    public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,
+                                    Expected expected,
+                                    InterleaveLoopContext interleaveLoopContext) {
         AlternatingOrderContainerFactory factory = new AlternatingOrderContainerFactory();
         Map<ExpectedElement,Integer> fulfilled = new HashMap<>();
-        AlternatingOrderContainer alternatingOrder = factory.create(actualRun);
+        AlternatingOrderContainer alternatingOrder = factory.create(actualRun, interleaveLoopContext);
 
         List<Position[]> executed = new LinkedList<>();
         Iterator<CalculatedRun> iter = alternatingOrder.iterator();
@@ -31,7 +38,7 @@ public class IntTestRunner {
                 System.out.println(wasNull);
                 wasNull = 0L;
                 count++;
-                if(count > 500) {
+                if(count > interleaveLoopContext.maximumIterations()) {
                     break;
                 }
                 Potential potential = expected.asPotential();

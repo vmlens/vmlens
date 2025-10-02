@@ -15,7 +15,7 @@ public class ParallelizeFacadeTest {
     public void removeAfterNewLoop() {
         // Given
         ParallelizeLoopFactory factory = mock(ParallelizeLoopFactory.class);
-        when(factory.create(anyInt())).thenReturn(mock(ParallelizeLoop.class));
+        when(factory.create(anyInt(),any())).thenReturn(mock(ParallelizeLoop.class));
 
         ParallelizeFacade facade = new ParallelizeFacade(new ParallelizeLoopRepository(factory));
 
@@ -28,7 +28,7 @@ public class ParallelizeFacadeTest {
         facade.hasNext(threadLocalWrapperForParallelize, first);
 
         // Then
-        verify(factory,times(3)).create(anyInt());
+        verify(factory,times(3)).create(anyInt(),any());
     }
 
 

@@ -7,6 +7,7 @@ public class PermutationIterator {
 
     private long index;
     private final long maxIndex;
+    private final int length;
 
     public PermutationIterator(int length) {
         if(length == 0) {
@@ -14,6 +15,7 @@ public class PermutationIterator {
         } else {
             this.maxIndex = (long) Math.pow(2, length);
         }
+        this.length = length;
     }
 
     public Permutation next() {
@@ -26,4 +28,7 @@ public class PermutationIterator {
         return index < maxIndex;
     }
 
+    public int length() {
+        return length;
+    }
 }
