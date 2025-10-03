@@ -33,7 +33,7 @@ public class TestConcurrentQueue {
     }
 
     private void runAllTest(Supplier<Queue<String>> createQueue, String name) throws InterruptedException {
-       // runCountTest(createQueue, name + "Count");
+        runCountTest(createQueue, name + "Count");
         runOrderTest(createQueue, name + "Order");
     }
 

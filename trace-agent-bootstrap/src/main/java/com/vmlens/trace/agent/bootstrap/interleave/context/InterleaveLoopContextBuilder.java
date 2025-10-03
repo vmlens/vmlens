@@ -1,9 +1,11 @@
 package com.vmlens.trace.agent.bootstrap.interleave.context;
 
+import com.vmlens.api.AllInterleavingsBuilder;
+
 public class InterleaveLoopContextBuilder {
 
-    private int maximumIterations = 20;
-    private int maximumAlternatingOrders = 10;
+    private int maximumIterations = AllInterleavingsBuilder.MAXIMUM_ITERATIONS;
+    private int maximumAlternatingOrders = AllInterleavingsBuilder.MAXIMUM_ALTERNATING_ORDERS;
 
     public InterleaveLoopContextBuilder withMaximumIterations(int newValue) {
         maximumIterations = newValue;

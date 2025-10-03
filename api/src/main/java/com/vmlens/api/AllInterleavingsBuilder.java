@@ -2,8 +2,8 @@ package com.vmlens.api;
 
 public class AllInterleavingsBuilder {
 
-    public static final int MAXIMUM_ITERATIONS = 20;
-    public static final int MAXIMUM_ALTERNATING_ORDERS = 10;
+    public static final int MAXIMUM_ITERATIONS = 100;
+    public static final int MAXIMUM_ALTERNATING_ORDERS = 25;
 
     private int maximumIterations = MAXIMUM_ITERATIONS;
     private int maximumAlternatingOrders = MAXIMUM_ALTERNATING_ORDERS;

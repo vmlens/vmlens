@@ -50,4 +50,23 @@ public class TestVolatileField {
             assertThat(countSet,is(expectedSet));
         }
     }
+
+    @Test
+    public void testClassWithVolatileField() throws InterruptedException {
+        Set<Integer> expectedSet = new HashSet<>();
+        expectedSet.add(1);
+        expectedSet.add(2);
+        Set<Integer> countSet = new HashSet<>();
+        try(AllInterleavings allInterleavings = new AllInterleavings("testClassWithVolatileField")) {
+            while (allInterleavings.hasNext()) {
+                ClassWithVolatileField classWithVolatileField = new  ClassWithVolatileField();
+                Thread first = new Thread(classWithVolatileField::increment);
+                first.start();
+                classWithVolatileField.increment();
+                first.join();
+                countSet.add(classWithVolatileField.get());
+            }
+            assertThat(countSet,is(expectedSet));
+        }
+    }
 }

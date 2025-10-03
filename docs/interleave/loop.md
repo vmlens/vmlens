@@ -1,4 +1,4 @@
-# Scenario
+# Feature
 
 Extension, that VMLens works with loops.
 

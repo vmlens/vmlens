@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.inttest;
+package com.vmlens.trace.agent.bootstrap.interleave;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.*;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
@@ -22,6 +22,14 @@ public abstract class AbstractInterleaveActionBuilder {
 
     protected void lockExit(int threadIndex, LockKey lockKey) {
         run.add(wrap(new LockExit(threadIndex(threadIndex),lockKey)));
+    }
+
+    protected void conditionWaitEnter(int threadIndex, LockKey lockKey) {
+        run.add(wrap(new ConditionWaitEnter(threadIndex(threadIndex),lockKey)));
+    }
+
+    protected void conditionWaitExit(int threadIndex, LockKey lockKey) {
+        run.add(wrap(new ConditionWaitExit(threadIndex(threadIndex),lockKey)));
     }
 
     protected void volatileAccess(int threadIndex, VolatileKey volatileKey, int operation) {

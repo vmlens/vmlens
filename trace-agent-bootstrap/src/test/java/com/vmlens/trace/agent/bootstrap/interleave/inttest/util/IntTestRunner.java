@@ -14,7 +14,7 @@ import java.util.*;
 
 public class IntTestRunner {
 
-
+    private final boolean TRACE = false;
 
     public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,
                                          Expected expected) {
@@ -35,7 +35,9 @@ public class IntTestRunner {
         while (iter.hasNext()) {
             CalculatedRun calculatedRun = iter.next();
             if (calculatedRun != null) {
-                System.out.println(wasNull);
+                if(TRACE) {
+                    System.out.println(wasNull);
+                }
                 wasNull = 0L;
                 count++;
                 if(count > interleaveLoopContext.maximumIterations()) {

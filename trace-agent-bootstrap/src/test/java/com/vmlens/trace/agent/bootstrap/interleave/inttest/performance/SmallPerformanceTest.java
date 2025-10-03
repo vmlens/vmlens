@@ -1,5 +1,6 @@
-package com.vmlens.trace.agent.bootstrap.interleave.inttest;
+package com.vmlens.trace.agent.bootstrap.interleave.inttest.performance;
 
+import com.vmlens.trace.agent.bootstrap.interleave.AbstractInterleaveActionBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
 import org.junit.Test;
