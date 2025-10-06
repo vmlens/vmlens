@@ -1,8 +1,10 @@
-package com.anarsoft.race.detection.loopResult
+package com.anarsoft.race.detection.loopresult
 
-import com.anarsoft.race.detection.loopAndRunData.RunResult
+import com.anarsoft.race.detection.rundata.RunResult
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
+import com.anarsoft.race.detection.warning.Warning
 
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 class LoopResultList(val loopId : Int) extends LoopResult  {
@@ -31,14 +33,12 @@ class LoopResultList(val loopId : Int) extends LoopResult  {
     maxCount;
   }
 
-  override def warningIdList: Set[Int] = {
-    var warnings: Set[Int] = Set();
+  override def warningIdList: Set[Warning] = {
+    val warnings  = new mutable.HashSet[Warning]();
     for (result <- resultList) {
-      if(warnings.size < result.warningIdList.size) {
-        warnings = result.warningIdList;
-      }
+      warnings.addAll(result.warningIdList);
     }
-    warnings;
+    warnings.toSet;
   }
 
   override def add(runResult: RunResult): Unit = {

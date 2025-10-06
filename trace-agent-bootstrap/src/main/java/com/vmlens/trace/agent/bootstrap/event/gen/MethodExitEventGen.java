@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import java.io.DataOutputStream;
+import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId;
-
-import java.io.DataOutputStream;
 
 public class MethodExitEventGen  {
 

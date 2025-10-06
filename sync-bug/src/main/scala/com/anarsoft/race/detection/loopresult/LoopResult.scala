@@ -1,9 +1,9 @@
-package com.anarsoft.race.detection.loopResult
+package com.anarsoft.race.detection.loopresult
 
-import com.anarsoft.race.detection.loopAndRunData.RunResult
+import com.anarsoft.race.detection.rundata.RunResult
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
+import com.anarsoft.race.detection.warning.Warning
 
-import scala.collection.mutable.ArrayBuffer
 
 trait LoopResult  {
 
@@ -11,7 +11,7 @@ trait LoopResult  {
   def foreach(f: EventForReportElement => Unit) : Unit;
   def isFailure: Boolean;
   def dataRaceCount: Int;
-  def warningIdList: Set[Int];
+  def warningIdList: Set[Warning];
   def add(runResult : RunResult) : Unit;
   def count : Int;
 

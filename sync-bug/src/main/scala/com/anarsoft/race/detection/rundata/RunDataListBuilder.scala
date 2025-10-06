@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.loopAndRunData
+package com.anarsoft.race.detection.rundata
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
 import com.anarsoft.race.detection.event.control.ControlEvent

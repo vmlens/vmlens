@@ -19,12 +19,20 @@
             </tr>
         </thead>
         {{#loops}}
+            {{#isWarning}}
+                <tr>
+                    <td></td>
+                    <td colspan="3">{{{text}}}</td>
+                </tr>
+            {{/isWarning}}
+            {{^isWarning}}
             <tr>
                 <td>{{index}}</td>
                 <td><a href="{{link}}">{{name}}</a></td>
                 <td>{{count}}</td>
                 <td>{{{resultText}}}</td>
             </tr>
+            {{/isWarning}}
         {{/loops}}
         <tfoot>
             <tr>

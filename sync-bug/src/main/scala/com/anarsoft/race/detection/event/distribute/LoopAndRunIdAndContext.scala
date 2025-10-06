@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.distribute
 
-import com.anarsoft.race.detection.loopAndRunData.RunDataListBuilder
+import com.anarsoft.race.detection.rundata.RunDataListBuilder
 
 
 trait LoopAndRunIdAndContext[EVENT <: EventWithLoopAndRunId] {

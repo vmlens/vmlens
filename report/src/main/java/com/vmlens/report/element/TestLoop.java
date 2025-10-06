@@ -1,5 +1,7 @@
 package com.vmlens.report.element;
 
+import com.vmlens.report.description.NeedsDescriptionCallback;
+
 public class TestLoop {
 
 
@@ -26,4 +28,7 @@ public class TestLoop {
         return count;
     }
 
+    public void addToNeedsDescription(NeedsDescriptionCallback callback) {
+        testResult.addToNeedsDescription(callback);
+    }
 }

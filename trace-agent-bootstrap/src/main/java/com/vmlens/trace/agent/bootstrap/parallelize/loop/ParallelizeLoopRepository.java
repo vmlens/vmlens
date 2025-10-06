@@ -3,15 +3,14 @@ package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
 import com.vmlens.api.AllInterleavingsBuilder;
 import com.vmlens.trace.agent.bootstrap.description.TestLoopDescription;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
 
 import java.lang.reflect.Field;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.api.AllInterleavingsBuilder.REPORT_AS_SUMMARY_THRESHOLD;
+import static com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent.fromException;
 
 
 public class ParallelizeLoopRepository {
@@ -24,7 +23,7 @@ public class ParallelizeLoopRepository {
         this.parallelizeLoopFactory = parallelizeLoopFactory;
     }
 
-    public ParallelizeLoop getOrCreate(Object config, TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+    public ParallelizeLoop getOrCreate(Object config, QueueIn queueIn) {
         synchronized (lock) {
             ParallelizeLoop parallelizeLoop = object2ParallelizeLoop.get(config);
             if (parallelizeLoop == null) {
@@ -45,17 +44,20 @@ public class ParallelizeLoopRepository {
                      */
                     Field field = config.getClass().getField("name");
                     String name = field.get(config).toString();
-                    serializableEvents.add(wrap(new TestLoopDescription(maxLoopId, name)));
+                    queueIn.offer(new TestLoopDescription(maxLoopId, name , getValue(config,
+                            "reportAsSummaryThreshold" ,
+                            REPORT_AS_SUMMARY_THRESHOLD ,
+                            queueIn )));
                 } catch (NoSuchFieldException | IllegalAccessException e) {
-                    serializableEvents.add(wrap(new TestLoopDescription(maxLoopId, e.getMessage())));
+                    queueIn.offer(fromException(maxLoopId, e));
                 }
                 InterleaveLoopContextBuilder builder = new InterleaveLoopContextBuilder();
                 builder.withMaximumIterations(getValue(config,"maximumIterations" ,
-                        AllInterleavingsBuilder.MAXIMUM_ITERATIONS,serializableEvents));
+                        AllInterleavingsBuilder.MAXIMUM_ITERATIONS,queueIn));
                 builder.withMaximumAlternatingOrders(getValue(config,"maximumAlternatingOrders" ,
-                        AllInterleavingsBuilder.MAXIMUM_ALTERNATING_ORDERS,serializableEvents));
+                        AllInterleavingsBuilder.MAXIMUM_ALTERNATING_ORDERS,queueIn));
 
-                parallelizeLoop = parallelizeLoopFactory.create(maxLoopId, builder.build());
+                parallelizeLoop = parallelizeLoopFactory.create(maxLoopId, builder.build(queueIn,maxLoopId));
                 maxLoopId++;
                 object2ParallelizeLoop.put(config, parallelizeLoop);
                 return parallelizeLoop;
@@ -74,12 +76,15 @@ public class ParallelizeLoopRepository {
     private int getValue(Object config,
                          String fieldName,
                          int defaultValue,
-                         TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents ) {
+                         QueueIn queueIn) {
         try {
             Field field = config.getClass().getField(fieldName);
             return field.getInt(config);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            serializableEvents.add(wrap(new TestLoopDescription(maxLoopId, e.getMessage())));
+
+
+
+            queueIn.offer(fromException(maxLoopId, e));
         }
         return defaultValue;
     }

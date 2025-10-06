@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementBuilder
-import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunDataListBuilder}
 
 import java.util
 

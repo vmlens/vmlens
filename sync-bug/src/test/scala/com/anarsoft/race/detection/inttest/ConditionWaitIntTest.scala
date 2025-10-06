@@ -9,7 +9,7 @@ import com.anarsoft.race.detection.process.run.{ProcessRunContextBuilder, Proces
 
 import scala.collection.mutable
 
-class ConditionWaitIntTest  extends AnyFlatSpec with Matchers{
+class ConditionWaitIntTest extends AnyFlatSpec with Matchers{
   /**
    * wait enter has the same effect as lock exit
    * so enter to exit should lead to a partial order 

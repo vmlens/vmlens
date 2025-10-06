@@ -2,10 +2,9 @@ package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.PluginEventOnly;
+import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 
-import static com.vmlens.trace.agent.bootstrap.exception.Message.NON_VOLATILE_LOOP_MESSAGE;
-import static com.vmlens.trace.agent.bootstrap.exception.Message.SYNC_ACTION_LOOP_MESSAGE;
 
 public class AfterCallback {
 
@@ -18,12 +17,12 @@ public class AfterCallback {
     }
 
     public void onNonVolatileLoop() {
-        sendEvent.sendMessage(NON_VOLATILE_LOOP_MESSAGE);
+        sendEvent.sendMessage(LoopWarningEvent.nonVolatileLoop());
     }
 
     public void onSynchronizedActionLoop() {
         interleaveRun.setHasLoop();
-        sendEvent.sendMessage(SYNC_ACTION_LOOP_MESSAGE);
+        sendEvent.sendMessage(LoopWarningEvent.syncActionLoop());
     }
 
     public void process(ProcessEventContext context, PluginEventOnly pluginEventOnly) {

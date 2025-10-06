@@ -1,6 +1,6 @@
-package com.anarsoft.race.detection.loopResult
+package com.anarsoft.race.detection.loopresult
 
-import com.anarsoft.race.detection.loopAndRunData.RunResult
+import com.anarsoft.race.detection.rundata.RunResultImpl
 
 import scala.collection.mutable
 
@@ -8,7 +8,7 @@ class LoopResultCollection(val useList : Boolean) {
 
   private val loopIdToResult = new mutable.HashMap[Int, LoopResult]
 
-  def put(runResult: RunResult): Unit = {
+  def put(runResult: RunResultImpl): Unit = {
     val loopId = runResult.loopId
 
     loopIdToResult.get(loopId) match {

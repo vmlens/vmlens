@@ -17,7 +17,7 @@ public class CreateHtmlReportIntegTest {
         Path outputDir = Files.createTempDirectory("testDir");
         System.out.println("writing report to " + outputDir);
 
-        CreateHtmlReport createHtmlReport = new CreateHtmlReport(outputDir);
+        CreateHtmlReport createHtmlReport = new CreateHtmlReport(outputDir, false);
 
         List<UIStacktraceElement> stacktraceElements = new LinkedList<>();
         UIStacktraceElement first = new UIStacktraceElement("org.apache.commons.text.StringEscapeUtils.escapeHtml3");
@@ -38,7 +38,7 @@ public class CreateHtmlReportIntegTest {
         uiRunElementWithStacktraceRoots.add(new UIRunElementWithStacktraceLeaf(uiRunElement, root));
 
         UILoopAndRunElementWithStacktraceLeafs uiLoopAndRunElementWithStacktraceRoots =
-                new UILoopAndRunElementWithStacktraceLeafs(uiLoop, uiRunElementWithStacktraceRoots);
+                new UILoopAndRunElementWithStacktraceLeafs(uiLoop, uiRunElementWithStacktraceRoots, new LinkedList<>());
 
         uiLoopAndRunElementsList.add(uiLoopAndRunElementWithStacktraceRoots);
         createHtmlReport.createReport(new UILoopsAndStacktraceLeafs(rootNodes, uiLoopAndRunElementsList));

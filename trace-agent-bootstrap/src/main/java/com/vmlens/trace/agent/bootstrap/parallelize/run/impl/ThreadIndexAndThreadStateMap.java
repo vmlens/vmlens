@@ -3,21 +3,17 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.description.ThreadDescription;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.list.linked.TIntLinkedList;
-import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TLongIntHashMap;
-
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 
 public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionContext {
@@ -27,7 +23,7 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
     private final TIntObjectHashMap<ThreadForParallelize> threadIndexToThreadState = new TIntObjectHashMap<>();
 
     public ThreadLocalWhenInTest createForMainTestThread(Run run, ThreadLocalForParallelize threadLocalForParallelize,
-                                                         TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+                                                         QueueIn queueIn) {
         ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, maxThreadIndex);
         threadIdToIndex.put(threadLocalForParallelize.threadId(),maxThreadIndex);
         threadIndexToThreadState.put(maxThreadIndex,threadLocalForParallelize.threadForParallelize());
@@ -35,7 +31,7 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
         ThreadDescription threadDescription = new
                 ThreadDescription(run.loopId(), run.runId(), maxThreadIndex, threadLocalForParallelize.threadId(),
                 threadLocalForParallelize.threadName());
-        serializableEvents.add(wrap(threadDescription));
+        queueIn.offer(threadDescription);
 
         maxThreadIndex++;
         return threadLocalDataWhenInTest;

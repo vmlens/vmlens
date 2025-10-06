@@ -3,7 +3,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.inttest.performance;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
+import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import org.junit.Test;
+
+import static com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner.TRACE;
 
 public class LargePerformanceTest {
 
@@ -20,8 +23,11 @@ public class LargePerformanceTest {
          * and 8 2s
          */
         new IntTestRunner().runTest(new InterleaveActionNonBlockingAtomic().build(),expectedBuilder.buildExpected(),
-                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(8).build());
-        System.out.println("took " + (System.currentTimeMillis() - start));
+                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(8).build(new QueueInMock(),0));
+        if(TRACE) {
+            System.out.println("took " + (System.currentTimeMillis() - start)); 
+        }
+          
     }
 
 
@@ -39,8 +45,10 @@ public class LargePerformanceTest {
          */
         new IntTestRunner().runTest(new InterleaveActionH2().build(),
                 expectedBuilder.buildExpected(),
-                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(20).build());
-        System.out.println("took " + (System.currentTimeMillis() - start));
+                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(20).build(new QueueInMock(),0));
+        if(TRACE) {
+            System.out.println("took " + (System.currentTimeMillis() - start));
+        }
     }
 
 

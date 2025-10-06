@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.process.load
 
-import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunData, RunDataListBuilder, RunDataListBuilderImpl}
+import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunData, RunDataListBuilder, RunDataListBuilderImpl}
 import com.anarsoft.race.detection.process.main.LoadRuns
 
 import scala.collection.mutable

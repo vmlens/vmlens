@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.inttest
 
 import com.anarsoft.race.detection.event.interleave.LoadedInterleaveActionContext
-import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunData, RunDataListBuilderImpl}
+import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunData, RunDataListBuilderImpl}
 
 class RunDataTestBuilder(val loopId  : Int,  val runId  : Int) {
 

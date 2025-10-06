@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
@@ -20,7 +20,7 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class InterleaveLoop implements IteratorQueue {
 
-    private static final boolean TRACE_INTERLEAVE_ACTIONS = true;
+    private static final boolean TRACE_INTERLEAVE_ACTIONS = false;
 
     private final InterleaveLoopContext interleaveLoopContext;
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =
@@ -48,7 +48,7 @@ public class InterleaveLoop implements IteratorQueue {
     }
 
     public void addActualRun(ActualRun actualRun,
-                             TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+                             QueueIn queueIn) {
         containsLoop = actualRun.containsLoop() | containsLoop;
         TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = actualRun.run();
 
@@ -64,7 +64,7 @@ public class InterleaveLoop implements IteratorQueue {
                 array[index] = elem.element().toString();
                 index++;
             }
-            serializableEvents.add(wrap(new InfoMessageEvent(array)));
+            queueIn.offer(new InfoMessageEvent(array));
         }
 
         addActualRunWithLoops(withLoops);

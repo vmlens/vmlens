@@ -10,8 +10,8 @@ import com.anarsoft.race.detection.event.interleave._;
 import com.anarsoft.race.detection.event.load._;
 
 class ControlDeSerializer extends DeserializeStrategy[LoadedControlEvent] {
-   val eventArraySize : Int = 13
-   val blockSize : Int =  13 * 10000;
+   val eventArraySize : Int = 17
+   val blockSize : Int =  17 * 10000;
   
 
     def deSerializeJavaEvent(buffer : DataInputStream) : LoadedControlEvent = {

@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
+import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoop;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopFactory;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopRepository;
@@ -23,9 +24,9 @@ public class ParallelizeFacadeTest {
         Object first = new Object();
 
         // When
-        facade.hasNext(threadLocalWrapperForParallelize, first);
-        facade.hasNext(threadLocalWrapperForParallelize, new Object());
-        facade.hasNext(threadLocalWrapperForParallelize, first);
+        facade.hasNext(threadLocalWrapperForParallelize, new QueueInMock(), first);
+        facade.hasNext(threadLocalWrapperForParallelize, new QueueInMock(), new Object());
+        facade.hasNext(threadLocalWrapperForParallelize, new QueueInMock(), first);
 
         // Then
         verify(factory,times(3)).create(anyInt(),any());

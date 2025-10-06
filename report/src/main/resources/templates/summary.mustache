@@ -1,0 +1,44 @@
+{{>header.mustache}}
+
+<!-- run.mustache -->
+
+<div class="container-fluid">
+    <div class="row">
+        <table class="table table-striped text-start">
+            <thead class="sticky-head">
+                <tr>
+                    <th colspan="6">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span><a href="index.html">Overview</a>/{{runName}}</span>
+                            <a href="{{{reportHelpLink}}}" title="Help">Help</a>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Thread</th>
+                    <th>Operation</th>
+                    <th>Element</th>
+                    <th>Object</th>
+                    <th>Count</th>
+                    <th>Method</th>
+                </tr>
+            </thead>
+            {{#elements}}
+                <tr>
+                    <td>{{threadName}}</td>
+                    <td>{{{operation}}}</td>
+                    <td>{{{element}}}</td>
+                    <td>{{{object}}}</td>
+                    <td>{{{count}}}</td>
+                    <td>{{#hasLink}}<a href="{{link}}">{{method}} </a> {{/hasLink}}{{^hasLink}}  {{method}} {{/hasLink}}  </td>
+                </tr>
+            {{/elements}}
+            <tfoot>
+                <tr>
+                    <td colspan="6" style="text-align: right;"><a href="https://vmlens.com/docs/report/run/">Help</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{{>footer.mustache}}

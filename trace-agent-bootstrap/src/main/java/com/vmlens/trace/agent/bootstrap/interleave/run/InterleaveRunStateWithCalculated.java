@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.EitherPluginEventOnly
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.PluginEventOnly;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
@@ -12,7 +13,6 @@ import gnu.trove.list.linked.TIntLinkedList;
 
 import java.util.Arrays;
 
-import static com.vmlens.trace.agent.bootstrap.exception.Message.TEST_BLOCKED_MESSAGE;
 
 public class InterleaveRunStateWithCalculated implements InterleaveRunState {
 
@@ -83,7 +83,7 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
     public InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext,
                                                    SendEvent sendEvent,
                                                    int activeThreadIndex) {
-        sendEvent.sendMessage(TEST_BLOCKED_MESSAGE);
+        sendEvent.sendMessage(LoopWarningEvent.testBlocked());
         logCalculatedRun(sendEvent);
         runContext.logStackTrace(activeThreadIndex,sendEvent);
         return new InterleaveRunStateWithoutCalculated(activeThreadIndex);

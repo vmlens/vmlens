@@ -13,11 +13,15 @@ serializab le class:
     messageId
     firstParam
 
-
-
 # Display
 
 all occoured warnings will be displayed
 some, e.g. blocked influence the selection of a run, boolean flag shouldBeShownBecauseOfWarning
 all other not
+
+# Implementation
+
+Constants only in bootstrap
+converting from constant to scala classes in sync bug
+here we also store the labels
 

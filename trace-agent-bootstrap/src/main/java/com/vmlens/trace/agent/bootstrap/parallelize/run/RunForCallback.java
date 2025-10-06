@@ -22,4 +22,9 @@ public interface RunForCallback {
     void afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest,
                                         QueueIn queueIn);
 
+    int runId();
+
+    int loopId();
+
+
 }

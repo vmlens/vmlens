@@ -1,14 +1,15 @@
-package com.anarsoft.race.detection.loopResult
+package com.anarsoft.race.detection.loopresult
 
-import com.anarsoft.race.detection.loopAndRunData.RunResult
+import com.anarsoft.race.detection.rundata.RunResult
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
+import com.anarsoft.race.detection.warning.Warning
 
 import scala.collection.mutable
 
 class LoopResultSingle(val loopId : Int,
-                       var runResult : RunResult, 
+                       var runResult : RunResult,
                        var count : Int,
-                       val allWarnings :  mutable.HashSet[Int]) extends LoopResult {
+                       val allWarnings :  mutable.HashSet[Warning]) extends LoopResult {
 
   override def foreach(f: EventForReportElement => Unit): Unit = {
     runResult.foreach(f)
@@ -20,7 +21,7 @@ class LoopResultSingle(val loopId : Int,
 
   override def dataRaceCount: Int = runResult.dataRaceCount
 
-  override def warningIdList: Set[Int] = allWarnings.toSet;
+  override def warningIdList: Set[Warning] = allWarnings.toSet;
 
   override def add(newRunResult: RunResult): Unit = {
      count = Math.max(count, newRunResult.runId)
@@ -43,8 +44,8 @@ class LoopResultSingle(val loopId : Int,
 
 object LoopResultSingle {
   
-  def apply( loopId : Int, runResult : RunResult, count : Int): LoopResultSingle = {
-    val allWarnings = new  mutable.HashSet[Int]();
+  def apply(loopId : Int, runResult : RunResult, count : Int): LoopResultSingle = {
+    val allWarnings = new  mutable.HashSet[Warning]();
     allWarnings.addAll(runResult.warningIdList);
     new LoopResultSingle(loopId,runResult,count,allWarnings);
   }

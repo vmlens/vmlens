@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.Alterna
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -14,11 +15,11 @@ import java.util.*;
 
 public class IntTestRunner {
 
-    private final boolean TRACE = false;
+    public static final boolean TRACE = false;
 
     public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,
                                          Expected expected) {
-        return runTest(actualRun,expected,new InterleaveLoopContextBuilder().build());
+        return runTest(actualRun,expected,new InterleaveLoopContextBuilder().build(new QueueInMock(),0));
     }
 
     public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,

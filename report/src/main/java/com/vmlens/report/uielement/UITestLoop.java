@@ -1,12 +1,10 @@
 package com.vmlens.report.uielement;
 
-public class UITestLoop {
+public class UITestLoop implements UITestLoopOrWarning {
 
     private final String name;
     private final int count;
     private final String resultText;
-  
-
     private int index;
     private String link;
 
@@ -43,6 +41,11 @@ public class UITestLoop {
 
     public String link() {
         return link;
+    }
+
+
+    public boolean isWarning() {
+        return false;
     }
 
 }

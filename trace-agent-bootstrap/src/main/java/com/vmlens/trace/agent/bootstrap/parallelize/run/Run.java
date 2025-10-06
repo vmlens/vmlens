@@ -6,9 +6,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForPar
 
 public interface Run extends RunForCallback {
 
-    int runId();
-
-    int loopId();
 
     ActualRun end(ThreadLocalForParallelize threadLocalForParallelize);
 

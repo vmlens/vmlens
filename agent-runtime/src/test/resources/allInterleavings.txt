@@ -13,9 +13,10 @@ method:<init>(Ljava/lang/String;Z)V
   BIPUSH
   SIPUSH
   SIPUSH
-  INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;ZIIII)V
+  SIPUSH
+  INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;ZIIIII)V
   RETURN
-method:<init>(Ljava/lang/String;ZIIII)V
+method:<init>(Ljava/lang/String;ZIIIII)V
   ALOAD
   INVOKESPECIAL  java/lang/Object.<init>:()V
   ALOAD
@@ -36,6 +37,9 @@ method:<init>(Ljava/lang/String;ZIIII)V
   ALOAD
   ILOAD
   PUTFIELD  com/vmlens/api/AllInterleavings.unsynchronizedOperationsLoopThreshold:I
+  ALOAD
+  ILOAD
+  PUTFIELD  com/vmlens/api/AllInterleavings.reportAsSummaryThreshold:I
   RETURN
 method:hasNext()Z
   ALOAD
