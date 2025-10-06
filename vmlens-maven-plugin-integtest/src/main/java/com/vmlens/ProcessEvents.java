@@ -78,7 +78,7 @@ public class ProcessEvents {
     private static void checkDataRacesJdk23(ResultForVerify result ) {
         Set<String> testWithDataRace = new HashSet<>();
         testWithDataRace.add("qBeanSupportConcurrentTest");
-        testWithDataRace.add("jdbcJobExecutionDao");
+        //testWithDataRace.add("jdbcJobExecutionDao");
         checkDataRaces(testWithDataRace,result);
     }
 

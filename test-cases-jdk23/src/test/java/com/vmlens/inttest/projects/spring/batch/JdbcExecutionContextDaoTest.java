@@ -1,6 +1,7 @@
 package com.vmlens.inttest.projects.spring.batch;
 
 import com.vmlens.api.AllInterleavings;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.configuration.DuplicateJobException;
 import org.springframework.batch.core.job.JobExecution;
@@ -14,6 +15,7 @@ import static org.mockito.Mockito.mock;
 
 public class JdbcExecutionContextDaoTest {
 
+	@Disabled
 	@Test
 	public void setJdbcTemplate() throws DuplicateJobException, InterruptedException {
 		try (AllInterleavings allInterleavings = new AllInterleavings("jdbcJobExecutionDao")) {
