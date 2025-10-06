@@ -329,7 +329,7 @@
         <profile>
             <id>jdk17</id>
             <activation>
-                <jdk>[23,)</jdk>
+                <jdk>[22,)</jdk>
             </activation>
             <modules>
                 <module>test-cases-jdk23</module>

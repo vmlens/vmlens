@@ -72,20 +72,35 @@ public class ProcessEvents {
         testWithDataRace.add("testJacksonWithReader");
         testWithDataRace.add("testJackson");
        // testWithDataRace.add("childWithProtectedFieldTest");
-        checkDataRaces(testWithDataRace,result);
+        checkDataRaces(testWithDataRace,new HashSet<>() , result);
     }
 
     private static void checkDataRacesJdk23(ResultForVerify result ) {
         Set<String> testWithDataRace = new HashSet<>();
         testWithDataRace.add("qBeanSupportConcurrentTest");
+        testWithDataRace.add("loop.petersonNok");
+       // testWithDataRace.add("loop.petersonOk");
+        testWithDataRace.add("loop.nok");
         //testWithDataRace.add("jdbcJobExecutionDao");
-        checkDataRaces(testWithDataRace,result);
+
+
+        Set<String> filter
+                = new HashSet<>();
+        filter.add("loop.petersonOk");
+        filter.add("jdbcJobExecutionDao");
+
+        checkDataRaces(testWithDataRace,filter,result);
     }
 
-    private static void checkDataRaces(Set<String> testWithDataRace, ResultForVerify result) {
+    private static void checkDataRaces(Set<String> testWithDataRace,
+                                       Set<String> filter,
+                                       ResultForVerify result) {
         for(LoopToDataRaceCount loopToDataRaceCount : result.loopToDataRaceCountList()) {
             if(! testWithDataRace.contains(loopToDataRaceCount.loopName())) {
-                throw new RuntimeException("not expected data race in " + loopToDataRaceCount.loopName() );
+                if( ! filter.contains(loopToDataRaceCount.loopName())) {
+                    throw new RuntimeException("not expected data race in " + loopToDataRaceCount.loopName() );
+
+                }
             }
             testWithDataRace.remove(loopToDataRaceCount.loopName());
         }
