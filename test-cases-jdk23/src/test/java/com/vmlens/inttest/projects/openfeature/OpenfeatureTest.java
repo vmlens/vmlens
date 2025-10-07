@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 
 import static dev.openfeature.sdk.ProviderState.FATAL;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -64,8 +65,7 @@ public class OpenfeatureTest {
                     });
                 }
             }
-            // Fixme should fail everytime
-            //fail("No ConditionTimeoutException");
+            fail("No ConditionTimeoutException");
         }
         catch(ConditionTimeoutException exp) {
 

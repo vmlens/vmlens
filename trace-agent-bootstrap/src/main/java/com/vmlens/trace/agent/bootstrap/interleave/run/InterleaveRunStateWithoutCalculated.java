@@ -11,7 +11,8 @@ import gnu.trove.list.linked.TIntLinkedList;
 public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  {
 
     private final int currentThreadIndex;
-    private final LoopCounter loopCounter = new LoopCounterSingleElement();
+    private final LoopCounter loopCounter = new LoopCounter();
+
     public InterleaveRunStateWithoutCalculated(int activeThreadIndex) {
         this.currentThreadIndex = activeThreadIndex;
     }

@@ -8,7 +8,6 @@ import com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
-import com.vmlens.trace.agent.bootstrap.parallelize.loop.HasNextResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
@@ -59,9 +58,7 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
         ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
         threadLocal.incrementInsideVMLens();
         try {
-            HasNextResult result = ParallelizeFacade.parallelize().hasNext(callbackStatePerThread.get(), obj);
-            eventQueue.offer(result.serializableEvents());
-            return result.hasNext();
+            return ParallelizeFacade.parallelize().hasNext(callbackStatePerThread.get(),eventQueue, obj);
         } finally {
             threadLocal.decrementInsideVMLens();
         }

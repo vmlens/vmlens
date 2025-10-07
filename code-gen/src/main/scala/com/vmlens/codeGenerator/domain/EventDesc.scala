@@ -91,6 +91,7 @@ object EventDesc extends GenericDesc {
   val runId = new FieldDesc("runId", intTyp)
   private val runPosition = new FieldDesc("runPosition", intTyp)
   val messageId = new FieldDesc("messageId", intTyp)
+  val messageParam = new FieldDesc("messageParam", intTyp)
   val eventType  = new FieldDesc("eventType", intTyp)
 
   

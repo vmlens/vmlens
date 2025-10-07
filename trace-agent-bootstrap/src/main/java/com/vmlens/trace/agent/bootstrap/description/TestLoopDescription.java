@@ -11,18 +11,20 @@ import java.util.Objects;
 public class TestLoopDescription implements SerializableEvent, ThreadOrLoopDescription {
     private final int loopId;
     private final String name;
+    private final int reportAsSummaryThreshold;
 
-    public TestLoopDescription(int loopId, String name) {
+    public TestLoopDescription(int loopId, String name, int reportAsSummaryThreshold) {
         super();
         this.loopId = loopId;
         this.name = name;
+        this.reportAsSummaryThreshold = reportAsSummaryThreshold;
     }
 
     static TestLoopDescription deserialize(DataInputStream inputStream) throws IOException {
         int loopId = inputStream.readInt();
         String name = inputStream.readUTF();
-
-        return new TestLoopDescription(loopId, name);
+        int reportAsSummaryThreshold = inputStream.readInt();
+        return new TestLoopDescription(loopId, name,reportAsSummaryThreshold);
     }
 
     @Override
@@ -36,6 +38,7 @@ public class TestLoopDescription implements SerializableEvent, ThreadOrLoopDescr
         stream.writeInt(Constants.TYPE_WHILE_LOOP_DESCRIPTION);
         stream.writeInt(loopId);
         stream.writeUTF(name);
+        stream.writeInt(reportAsSummaryThreshold);
     }
 
     @Override

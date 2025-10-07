@@ -4,7 +4,8 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.vmlens.report.uielement.UIRunElement;
 import com.vmlens.report.uielement.UIStacktraceElement;
-import com.vmlens.report.uielement.UITestLoop;
+import com.vmlens.report.uielement.UISummaryElement;
+import com.vmlens.report.uielement.UITestLoopOrWarning;
 
 import java.io.Writer;
 import java.util.HashMap;
@@ -20,13 +21,20 @@ public class CreateOneReport {
                 .compile("templates/" + templateName + ".mustache");
     }
 
-    public void createUITestLoop(List<UITestLoop> uiElements, Writer writer) {
+    public void createUITestLoop(List<UITestLoopOrWarning> uiElements, Writer writer) {
         Map<String, Object> context = new HashMap<>();
         context.put("loops", uiElements);
         template.execute(writer, context);
     }
 
     public void createUIRun(List<UIRunElement> uiElements, String runName, Writer writer) {
+        Map<String, Object> context = new HashMap<>();
+        context.put("runName", runName);
+        context.put("elements", uiElements);
+        template.execute(writer, context);
+    }
+
+    public void createUISummary(List<UISummaryElement> uiElements, String runName, Writer writer) {
         Map<String, Object> context = new HashMap<>();
         context.put("runName", runName);
         context.put("elements", uiElements);

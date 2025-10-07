@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.16</version>
+        <version>1.2.17</version>
     </parent>
 
     <artifactId>api</artifactId>

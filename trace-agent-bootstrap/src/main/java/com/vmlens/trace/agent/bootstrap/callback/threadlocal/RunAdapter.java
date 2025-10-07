@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback.threadlocal;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.JoinAction;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunForCallback;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.ThreadStartedByPoolContext;
@@ -39,4 +40,11 @@ public class RunAdapter {
     public void threadJoinedByPool(JoinAction threadJoinedAction) {
         run.threadJoinedByPool(threadJoinedAction);
     }
+
+    public void sendMessage(LoopWarningEvent message, QueueIn queueIn) {
+        message.setLoopId(run.loopId());
+        message.setRunId(run.runId());
+        queueIn.offer(message);
+    }
+
 }

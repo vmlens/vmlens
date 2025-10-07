@@ -31,4 +31,6 @@ public interface RunState {
     RunState afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest);
 
     ActualRun actualRun();
+
+    boolean isEnded();
 }

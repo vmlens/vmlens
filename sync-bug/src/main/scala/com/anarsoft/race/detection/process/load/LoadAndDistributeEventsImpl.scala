@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.process.load
 
 import com.anarsoft.race.detection.event.distribute.{DistributeEvents, EventWithLoopAndRunId}
 import com.anarsoft.race.detection.event.load.DeserializeStrategy
-import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunDataListBuilder}
 
 import java.io.{DataInputStream, EOFException, FileInputStream}
 import java.nio.file.Path

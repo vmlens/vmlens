@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # List of directories
@@ -17,33 +15,20 @@ JDKS=(
 
 
 runTests() {
-
 for jdk in "${JDKS[@]}"; do
     if ! runTest "$jdk"; then
         echo "Aborting due to failure for $jdk"
         exit 1
     fi
 done
-
-
 }
 
 runTest() {
-sdk use java ""$1""
+sdk use java "$1"
 if ! mvn clean install; then
   return 1
 fi
 return 0
 }
 
-# Exit immediately if any command fails
-set -e
-# Change to target directory
-cd test-vmlens-maven-plugin
 runTests
-# Go back to original directory
-cd ..
-cd test-cases
-runTests
-# Go back to original directory
-cd ..

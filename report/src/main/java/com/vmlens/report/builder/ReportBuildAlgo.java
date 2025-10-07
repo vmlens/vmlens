@@ -86,7 +86,8 @@ public class ReportBuildAlgo {
                 uiRunElementWithStacktraceLeafs.add(uiRunElementWithStacktraceLeaf);
             }
             uiLoopAndRunElementsList.add(
-                    new UILoopAndRunElementWithStacktraceLeafs(uiTestLoop, uiRunElementWithStacktraceLeafs));
+                    new UILoopAndRunElementWithStacktraceLeafs(uiTestLoop, uiRunElementWithStacktraceLeafs,
+                            loopAndRun.loop().testResult().toUIWarningList(descriptionContext)));
         }
         return new UILoopsAndStacktraceLeafs(leafNodes.values(), uiLoopAndRunElementsList);
     }

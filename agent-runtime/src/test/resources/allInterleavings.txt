@@ -7,6 +7,17 @@ method:<init>(Ljava/lang/String;)V
   RETURN
 method:<init>(Ljava/lang/String;Z)V
   ALOAD
+  ALOAD
+  ILOAD
+  BIPUSH
+  BIPUSH
+  SIPUSH
+  SIPUSH
+  SIPUSH
+  INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;ZIIIII)V
+  RETURN
+method:<init>(Ljava/lang/String;ZIIIII)V
+  ALOAD
   INVOKESPECIAL  java/lang/Object.<init>:()V
   ALOAD
   ALOAD
@@ -14,6 +25,21 @@ method:<init>(Ljava/lang/String;Z)V
   ALOAD
   ILOAD
   PUTFIELD  com/vmlens/api/AllInterleavings.throwExceptionWhenNoAgent:Z
+  ALOAD
+  ILOAD
+  PUTFIELD  com/vmlens/api/AllInterleavings.maximumIterations:I
+  ALOAD
+  ILOAD
+  PUTFIELD  com/vmlens/api/AllInterleavings.maximumAlternatingOrders:I
+  ALOAD
+  ILOAD
+  PUTFIELD  com/vmlens/api/AllInterleavings.synchronizationActionsLoopThreshold:I
+  ALOAD
+  ILOAD
+  PUTFIELD  com/vmlens/api/AllInterleavings.unsynchronizedOperationsLoopThreshold:I
+  ALOAD
+  ILOAD
+  PUTFIELD  com/vmlens/api/AllInterleavings.reportAsSummaryThreshold:I
   RETURN
 method:hasNext()Z
   ALOAD

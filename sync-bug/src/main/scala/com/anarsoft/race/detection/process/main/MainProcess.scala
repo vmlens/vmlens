@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.process.main
 
-import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult}
-import com.anarsoft.race.detection.loopResult.LoopResultCollection
+import com.anarsoft.race.detection.rundata.{RunData, RunResultImpl}
+import com.anarsoft.race.detection.loopresult.LoopResultCollection
 import com.anarsoft.race.detection.reportbuilder.DescriptionBuilderWrapper
 import com.vmlens.report.assertion.OnDescription
 

@@ -3,6 +3,7 @@ package com.vmlens.report.createreport;
 import com.github.difflib.DiffUtils;
 import com.github.difflib.patch.Patch;
 import com.vmlens.report.uielement.UITestLoop;
+import com.vmlens.report.uielement.UITestLoopOrWarning;
 
 import java.io.*;
 import java.util.Collections;
@@ -20,7 +21,7 @@ public class IndexTest {
         uiLoop.setLink("link");
 
         CreateOneReport createOneReport = new CreateOneReport("index");
-        List<UITestLoop> list = Collections.singletonList(uiLoop);
+        List<UITestLoopOrWarning> list = Collections.singletonList(uiLoop);
 
         // When
         StringWriter writer = new StringWriter();

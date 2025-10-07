@@ -90,4 +90,9 @@ public class RunStateNewThreadStarted implements RunState {
     public ActualRun actualRun() {
         return runStateContext.actualRun();
     }
+
+    @Override
+    public boolean isEnded() {
+        return false;
+    }
 }

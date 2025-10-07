@@ -1,9 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.description;
 
-import com.vmlens.trace.agent.bootstrap.description.DeserializeThreadAndLoopDescription;
-import com.vmlens.trace.agent.bootstrap.description.TestLoopDescription;
-import com.vmlens.trace.agent.bootstrap.description.ThreadDescription;
-import com.vmlens.trace.agent.bootstrap.description.ThreadOrLoopDescription;
 import org.junit.Test;
 
 import java.io.*;
@@ -20,10 +16,10 @@ public class DeserializeThreadAndLoopDescriptionTest {
         // Given
         List<ThreadOrLoopDescription> threadOrLoopDescription = new LinkedList<>();
         threadOrLoopDescription.add(new ThreadDescription(0, 0, 0, 5L, "threadName"));
-        threadOrLoopDescription.add(new TestLoopDescription(2, "name"));
+        threadOrLoopDescription.add(new TestLoopDescription(2, "name" , 100) );
         threadOrLoopDescription.add(new ThreadDescription(3, 3, 0, 5L, "threadName"));
         threadOrLoopDescription.add(new ThreadDescription(2, 2, 0, 5L, "threadName"));
-        threadOrLoopDescription.add(new TestLoopDescription(2, "name"));
+        threadOrLoopDescription.add(new TestLoopDescription(2, "name" , 100));
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);

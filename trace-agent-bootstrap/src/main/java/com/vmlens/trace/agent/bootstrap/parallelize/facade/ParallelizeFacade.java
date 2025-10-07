@@ -1,14 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
-import com.vmlens.trace.agent.bootstrap.parallelize.loop.HasNextResult;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopRepository;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ParallelizeLoopFactoryImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
 
 
 public class ParallelizeFacade {
@@ -35,19 +31,16 @@ public class ParallelizeFacade {
         }
     }
 
-    public HasNextResult hasNext(ThreadLocalForParallelize threadLocalWrapperForParallelize, Object obj) {
-        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents = new TLinkedList<>();
+    public boolean hasNext(ThreadLocalForParallelize threadLocalWrapperForParallelize, QueueIn queueIn, Object obj) {
         if(currentLoop != null) {
             if(currentLoop.object() == obj ) {
-                boolean next = currentLoop.loop().hasNext(threadLocalWrapperForParallelize, serializableEvents);
-                return new HasNextResult(next, serializableEvents);
+                return currentLoop.loop().hasNext(threadLocalWrapperForParallelize, queueIn);
             }
             parallelizeLoopRepository.remove(currentLoop.object());
         }
 
-        currentLoop = new ObjectAndParallelizeLoop(obj, parallelizeLoopRepository.getOrCreate(obj, serializableEvents));
-        boolean next = currentLoop.loop().hasNext(threadLocalWrapperForParallelize, serializableEvents);
-        return new HasNextResult(next, serializableEvents);
+        currentLoop = new ObjectAndParallelizeLoop(obj, parallelizeLoopRepository.getOrCreate(obj, queueIn));
+        return currentLoop.loop().hasNext(threadLocalWrapperForParallelize, queueIn);
     }
 
     public void close(ThreadLocalForParallelize threadLocalWrapperForParallelize, Object obj) {

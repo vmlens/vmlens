@@ -186,4 +186,13 @@ public class RunImpl implements Run {
             lock.unlock();
         }
     }
+
+    public boolean isEnded() {
+        lock.lock();
+        try {
+           return  runStateMachine.isEnded();
+        } finally {
+            lock.unlock();
+        }
+    }
 }

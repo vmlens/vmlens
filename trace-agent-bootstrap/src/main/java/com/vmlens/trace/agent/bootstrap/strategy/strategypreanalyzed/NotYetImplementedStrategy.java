@@ -25,7 +25,7 @@ public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
     }
 
     private void processNotYetImplemented(EnterExitContext context) {
-        context.inTestActionProcessor().process(new NotYetImplementedAction(className,methodName));
+        context.inTestActionProcessor().process(new NotYetImplementedAction(context.methodId()));
 
     }
 }

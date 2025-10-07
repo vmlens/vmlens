@@ -4,7 +4,6 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
-import com.vmlens.trace.agent.bootstrap.exception.Message;
 
 public class SendEvent {
 
@@ -29,8 +28,10 @@ public class SendEvent {
         queueIn.offer(serializableEvent);
     }
 
-    public void sendMessage(Message message) {
-        queueIn.offer(new LoopWarningEvent(run.loopId(), run.runId(), message.id()));
+    public void sendMessage(LoopWarningEvent message) {
+        message.setLoopId(run.loopId());
+        message.setRunId(run.runId());
+        queueIn.offer(message);
     }
 
 }

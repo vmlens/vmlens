@@ -1,6 +1,6 @@
 package com.vmlens.codeGenerator.domain
 
-import com.vmlens.codeGenerator.domain.EventDesc.{loopId, messageId, nextId, runId}
+import com.vmlens.codeGenerator.domain.EventDesc.{loopId, messageId, messageParam, nextId, runId}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -17,6 +17,7 @@ object EventDescControl {
   private def plusMessageFields(fields: ArrayBuffer[FieldDesc]) = {
     val clone = fields.clone();
     clone.append(messageId);
+    clone.append(messageParam);
     clone;
   }
   

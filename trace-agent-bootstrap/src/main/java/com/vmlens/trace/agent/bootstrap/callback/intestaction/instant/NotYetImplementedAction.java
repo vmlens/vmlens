@@ -5,25 +5,24 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallbac
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
 
 public class NotYetImplementedAction extends AbstractInTestAction {
 
-    private final String className;
-    private final String methodName;
+    private final int methodId;
+
 
     private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();
 
-    public NotYetImplementedAction(String className,
-                                   String methodName) {
-        this.className = className;
-        this.methodName = methodName;
+    public NotYetImplementedAction(int methodId) {
+        this.methodId = methodId;
     }
 
     @Override
-    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest, QueueIn queueIn) {
-        InfoMessageEvent event = new InfoMessageEvent(new String[]{ "NotYetImplemented:" + className+ "." + methodName });
-        queueIn.offer(event);
+    public void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                        QueueIn queueIn) {
+        LoopWarningEvent warning = LoopWarningEvent.nonYetImplemented(methodId);
+        threadLocalDataWhenInTest.runAdapter().sendMessage(warning,queueIn);
     }
 
     @Override

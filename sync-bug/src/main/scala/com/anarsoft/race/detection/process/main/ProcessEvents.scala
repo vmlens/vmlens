@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.process.main
 
-import com.anarsoft.race.detection.loopResult.{LoopResult, LoopResultCollection}
+import com.anarsoft.race.detection.loopresult.{LoopResult, LoopResultCollection}
 
 
 class ProcessEvents(private val loadRuns: LoadRuns, private val processRun: ProcessRun) {

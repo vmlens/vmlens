@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.distribute
 
-import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunDataListBuilder}
 
 trait LoadedEventContext[EVENT] {
   def addLoadedEvent(event: EVENT): Unit;

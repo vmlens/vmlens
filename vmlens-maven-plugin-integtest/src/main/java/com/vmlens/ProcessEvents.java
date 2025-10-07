@@ -36,7 +36,7 @@ public class ProcessEvents {
         ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
                 new ProcessRunContextBuilder().build()).process();
-        //checkDataRacesJdk23(result);
+        checkDataRacesJdk23(result);
     }
 
     private static void processJdk11(File eventDirectory, File reportDirectory) {
@@ -69,21 +69,38 @@ public class ProcessEvents {
         testWithDataRace.add("hiero.testAdd");
         testWithDataRace.add("innerChild");
         testWithDataRace.add("whileLoop");
+        testWithDataRace.add("testJacksonWithReader");
+        testWithDataRace.add("testJackson");
        // testWithDataRace.add("childWithProtectedFieldTest");
-        checkDataRaces(testWithDataRace,result);
+        checkDataRaces(testWithDataRace,new HashSet<>() , result);
     }
 
     private static void checkDataRacesJdk23(ResultForVerify result ) {
         Set<String> testWithDataRace = new HashSet<>();
         testWithDataRace.add("qBeanSupportConcurrentTest");
-        testWithDataRace.add("jdbcJobExecutionDao");
-        checkDataRaces(testWithDataRace,result);
+        testWithDataRace.add("loop.petersonNok");
+       // testWithDataRace.add("loop.petersonOk");
+        testWithDataRace.add("loop.nok");
+        //testWithDataRace.add("jdbcJobExecutionDao");
+
+
+        Set<String> filter
+                = new HashSet<>();
+        filter.add("loop.petersonOk");
+        filter.add("jdbcJobExecutionDao");
+
+        checkDataRaces(testWithDataRace,filter,result);
     }
 
-    private static void checkDataRaces(Set<String> testWithDataRace, ResultForVerify result) {
+    private static void checkDataRaces(Set<String> testWithDataRace,
+                                       Set<String> filter,
+                                       ResultForVerify result) {
         for(LoopToDataRaceCount loopToDataRaceCount : result.loopToDataRaceCountList()) {
             if(! testWithDataRace.contains(loopToDataRaceCount.loopName())) {
-                throw new RuntimeException("not expected data race in " + loopToDataRaceCount.loopName() );
+                if( ! filter.contains(loopToDataRaceCount.loopName())) {
+                    throw new RuntimeException("not expected data race in " + loopToDataRaceCount.loopName() );
+
+                }
             }
             testWithDataRace.remove(loopToDataRaceCount.loopName());
         }

@@ -1,11 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.InterleaveActionLoopFactory;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
@@ -19,8 +20,9 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class InterleaveLoop implements IteratorQueue {
 
-    private static final boolean TRACE_INTERLEAVE_ACTIONS = true;
+    private static final boolean TRACE_INTERLEAVE_ACTIONS = false;
 
+    private final InterleaveLoopContext interleaveLoopContext;
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =
          new TLinkedList<>();
     private final TLinkedList<TLinkableWrapper<AlternatingOrderContainer>> stillToBeProcessedAlternatingOrderContainer =
@@ -28,8 +30,9 @@ public class InterleaveLoop implements IteratorQueue {
     private final InterleaveLoopIterator iterator;
     private boolean containsLoop;
 
-    public InterleaveLoop() {
-        this.iterator = new InterleaveLoopIterator(this);
+    public InterleaveLoop(InterleaveLoopContext interleaveLoopContext) {
+        this.interleaveLoopContext = interleaveLoopContext;
+        this.iterator = new InterleaveLoopIterator(interleaveLoopContext,this);
     }
 
     // Visible for Test
@@ -44,7 +47,8 @@ public class InterleaveLoop implements IteratorQueue {
         return stillToBeProcessedAlternatingOrderContainer.removeFirst().element().iterator();
     }
 
-    public void addActualRun(ActualRun actualRun,TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+    public void addActualRun(ActualRun actualRun,
+                             QueueIn queueIn) {
         containsLoop = actualRun.containsLoop() | containsLoop;
         TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = actualRun.run();
 
@@ -53,47 +57,26 @@ public class InterleaveLoop implements IteratorQueue {
         }
 
         if(TRACE_INTERLEAVE_ACTIONS) {
-            int index = 0;
-            String[] array = new String[withLoops.size()];
+            String[] array = new String[withLoops.size() + 1];
+            array[0] = "New Run";
+            int index = 1;
             for(TLinkableWrapper<InterleaveAction> elem : withLoops) {
                 array[index] = elem.element().toString();
                 index++;
             }
-            serializableEvents.add(wrap(new InfoMessageEvent(array)));
+            queueIn.offer(new InfoMessageEvent(array));
         }
 
         addActualRunWithLoops(withLoops);
     }
 
-    private void addActualRunWithLoops(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
-        ThreadIndexToElementList<InterleaveAction> newRun = create(run);
-        if(alreadyProcessed(newRun))  {
-            return;
-        }
-        alreadyProcessed.add(wrap(newRun));
-        AlternatingOrderContainer container = new AlternatingOrderContainerFactory().create(run);
-        stillToBeProcessedAlternatingOrderContainer
-                    .add(new TLinkableWrapper<>(container));
+    public InterleaveLoopContext interleaveLoopContext() {
+        return interleaveLoopContext;
     }
 
-    private  ThreadIndexToElementList<InterleaveAction> create(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
-        ThreadIndexToElementList<InterleaveAction> result = new ThreadIndexToElementList<>();
-        for (TLinkableWrapper<InterleaveAction> syncAction : run) {
-            result.add(syncAction.element());
-        }
-        return result;
-    }
-
-    private boolean alreadyProcessed(ThreadIndexToElementList<InterleaveAction> newRun) {
-        for(TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>> element : alreadyProcessed) {
-          if(isSame(element.element(),newRun)) {
-              return true;
-          }
-        }
-        return false;
-    }
-
-    private boolean isSame(ThreadIndexToElementList<InterleaveAction> existing, ThreadIndexToElementList<InterleaveAction> newRun) {
+    // Visible for test
+    static boolean isSame(ThreadIndexToElementList<InterleaveAction> existing,
+                           ThreadIndexToElementList<InterleaveAction> newRun) {
         if(existing.elementCount() != newRun.elementCount()) {
             return false;
         }
@@ -111,5 +94,37 @@ public class InterleaveLoop implements IteratorQueue {
         }
         return true;
     }
+
+    // Visible for test
+    static ThreadIndexToElementList<InterleaveAction> create(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
+        ThreadIndexToElementList<InterleaveAction> result = new ThreadIndexToElementList<>();
+        for (TLinkableWrapper<InterleaveAction> syncAction : run) {
+            result.add(syncAction.element());
+        }
+        return result;
+    }
+
+    private void addActualRunWithLoops(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
+        ThreadIndexToElementList<InterleaveAction> newRun = create(run);
+        if(alreadyProcessed(newRun))  {
+            return;
+        }
+        alreadyProcessed.add(wrap(newRun));
+        AlternatingOrderContainer container = new AlternatingOrderContainerFactory().create(run, interleaveLoopContext);
+        stillToBeProcessedAlternatingOrderContainer
+                .add(new TLinkableWrapper<>(container));
+    }
+
+
+
+    private boolean alreadyProcessed(ThreadIndexToElementList<InterleaveAction> newRun) {
+        for(TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>> element : alreadyProcessed) {
+            if(isSame(element.element(),newRun)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

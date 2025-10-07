@@ -28,7 +28,7 @@ case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMeth
         addAtomicArrayMethod(name, desc, methodType, buffer)
       }
       case AtomicClassNonBlockingMethod(name, desc, methodType) => {
-        addAtomicClassMethod(name, desc, methodType, buffer)
+        addAtomicClassMethodAlternative(name, desc, methodType, buffer)
       }
 
     }
@@ -53,7 +53,6 @@ case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMeth
       case
         NotYetImplemented() => {
         buffer.append(new PreAnalyzedMethod(name, desc, NotYetImplementedMethod.SINGLETON))
-
       }
     }
   }
@@ -80,4 +79,29 @@ case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMeth
       }
     }
   }
+
+  private def addAtomicClassMethodAlternative(name: String, desc: String, methodType: AtomicNonBlockingMethodType,
+                                   buffer: ArrayBuffer[PreAnalyzedMethod]): Unit = {
+    methodType match {
+      case Read() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_READ))
+
+      }
+      case Write() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_WRITE))
+
+      }
+      case ReadWrite() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NonBlockingMethod.NON_BLOCKING_READ_WRITE))
+      }
+
+      case
+        NotYetImplemented() => {
+        buffer.append(new PreAnalyzedMethod(name, desc, NotYetImplementedMethod.SINGLETON))
+
+      }
+    }
+  }
+  
+  
 }

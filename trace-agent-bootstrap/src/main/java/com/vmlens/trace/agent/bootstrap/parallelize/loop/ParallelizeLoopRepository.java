@@ -1,35 +1,32 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
 
+import com.vmlens.api.AllInterleavingsBuilder;
 import com.vmlens.trace.agent.bootstrap.description.TestLoopDescription;
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import gnu.trove.map.hash.THashMap;
 
 import java.lang.reflect.Field;
 
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.api.AllInterleavingsBuilder.REPORT_AS_SUMMARY_THRESHOLD;
+import static com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent.fromException;
 
 
-/**
- * Adapter for the generic class @see gnu.trove.map.hash.THashMap
- */
 public class ParallelizeLoopRepository {
     private final Object lock = new Object();
     private final ParallelizeLoopFactory parallelizeLoopFactory;
-    private final THashMap<Object, ParallelizeLoop> object2ParallelizeLoop = new THashMap<Object, ParallelizeLoop>();
+    private final THashMap<Object, ParallelizeLoop> object2ParallelizeLoop = new THashMap<>();
     private int maxLoopId = 0;
 
     public ParallelizeLoopRepository(ParallelizeLoopFactory parallelizeLoopFactory) {
         this.parallelizeLoopFactory = parallelizeLoopFactory;
     }
 
-    public ParallelizeLoop getOrCreate(Object config, TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents) {
+    public ParallelizeLoop getOrCreate(Object config, QueueIn queueIn) {
         synchronized (lock) {
             ParallelizeLoop parallelizeLoop = object2ParallelizeLoop.get(config);
             if (parallelizeLoop == null) {
-                parallelizeLoop = parallelizeLoopFactory.create(maxLoopId);
                 try {
                     /*
                     we need to use reflection since AllInterleavings might not be loaded by the bootstrap classloader in gradle
@@ -45,15 +42,22 @@ public class ParallelizeLoopRepository {
 	                    at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 	                    at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
                      */
-
                     Field field = config.getClass().getField("name");
                     String name = field.get(config).toString();
-                    serializableEvents.add(wrap(new TestLoopDescription(maxLoopId, name)));
+                    queueIn.offer(new TestLoopDescription(maxLoopId, name , getValue(config,
+                            "reportAsSummaryThreshold" ,
+                            REPORT_AS_SUMMARY_THRESHOLD ,
+                            queueIn )));
                 } catch (NoSuchFieldException | IllegalAccessException e) {
-                    serializableEvents.add(wrap(new TestLoopDescription(maxLoopId, e.getMessage())));
+                    queueIn.offer(fromException(maxLoopId, e));
                 }
+                InterleaveLoopContextBuilder builder = new InterleaveLoopContextBuilder();
+                builder.withMaximumIterations(getValue(config,"maximumIterations" ,
+                        AllInterleavingsBuilder.MAXIMUM_ITERATIONS,queueIn));
+                builder.withMaximumAlternatingOrders(getValue(config,"maximumAlternatingOrders" ,
+                        AllInterleavingsBuilder.MAXIMUM_ALTERNATING_ORDERS,queueIn));
 
-
+                parallelizeLoop = parallelizeLoopFactory.create(maxLoopId, builder.build(queueIn,maxLoopId));
                 maxLoopId++;
                 object2ParallelizeLoop.put(config, parallelizeLoop);
                 return parallelizeLoop;
@@ -67,5 +71,23 @@ public class ParallelizeLoopRepository {
             object2ParallelizeLoop.remove(obj);
         }
     }
+
+
+    private int getValue(Object config,
+                         String fieldName,
+                         int defaultValue,
+                         QueueIn queueIn) {
+        try {
+            Field field = config.getClass().getField(fieldName);
+            return field.getInt(config);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+
+
+
+            queueIn.offer(fromException(maxLoopId, e));
+        }
+        return defaultValue;
+    }
+
 
 }

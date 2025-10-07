@@ -12,8 +12,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -35,8 +33,7 @@ public class RunStateMachineHelper {
         this.runContext = new ThreadIndexAndThreadStateMap();
         ThreadLocalForParallelize threadLocalForParallelize =
                 createThreadLocalForParallelize(ThreadState.ACTIVE);
-        TLinkedList<TLinkableWrapper<SerializableEvent>> serializableEvents = new TLinkedList<TLinkableWrapper<SerializableEvent>>();
-        mainThread = runContext.createForMainTestThread(run,threadLocalForParallelize,serializableEvents);
+        mainThread = runContext.createForMainTestThread(run,threadLocalForParallelize,new QueueInMock());
 
         this.runStateMachineImpl  = new RunStateMachineImpl(new RunStateContext(this.runContext,interleaveRun));
     }

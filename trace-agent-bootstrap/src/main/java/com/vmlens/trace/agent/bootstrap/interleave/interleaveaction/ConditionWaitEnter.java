@@ -50,4 +50,12 @@ public class ConditionWaitEnter implements InterleaveAction  {
         return lockOrMonitor.equalsNormalized(otherLock.lockOrMonitor);
     }
 
+    @Override
+    public String toString() {
+        return "conditionWaitEnter(" +
+                methodIdByteCodePositionAndThreadIndex.threadIndex() +
+                ","  + lockOrMonitor +
+                ");";
+    }
+
 }

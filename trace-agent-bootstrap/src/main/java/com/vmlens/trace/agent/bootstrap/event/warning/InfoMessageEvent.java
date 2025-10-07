@@ -18,6 +18,20 @@ public class InfoMessageEvent implements SerializableEvent {
         this.text = text;
     }
 
+
+    public static InfoMessageEvent fromException(int loopId, Exception exp) {
+        String[] text = new String[exp.getStackTrace().length + 2];
+        text[0] = "Loop:" + loopId;
+        text[1] = exp.getMessage();
+        int index = 2;
+        for(StackTraceElement element :  exp.getStackTrace()) {
+            text[index] = element.getClassName() + "." + element.getMethodName();
+            index++;
+        }
+        return new InfoMessageEvent(text);
+    }
+
+
     public static InfoMessageEvent deserialize(DataInputStream stream) throws IOException {
         int arrayLength = stream.readInt();
         String[] text = new String[arrayLength];

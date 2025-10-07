@@ -70,6 +70,7 @@ public class ReportBuilder implements NeedsDescriptionCallback, ThreadOrLoopDesc
             element.operationTextFactory().addToNeedsDescription(this);
             element.operationTextFactory().setObjectHashCodeMap(objectHashCodeMap,element.loopRunAndThreadIndex().threadIndex());
         }
+        testLoop.addToNeedsDescription(this);
         loopAndRuns.add(new LoopAndRun(testLoop, run));
     }
 

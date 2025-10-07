@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.control
 
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
-import com.anarsoft.race.detection.loopAndRunData.{LoopAndRunId, RunDataListBuilder}
+import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunDataListBuilder}
 
 import scala.collection.mutable.ArrayBuffer
 

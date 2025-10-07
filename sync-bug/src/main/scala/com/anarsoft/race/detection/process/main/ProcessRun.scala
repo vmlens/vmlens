@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.process.main
 
-import com.anarsoft.race.detection.loopAndRunData.{RunData, RunResult}
+import com.anarsoft.race.detection.rundata.{RunData, RunResultImpl}
 import com.anarsoft.race.detection.process.run.ProcessRunContext
 
 /**
@@ -8,6 +8,6 @@ import com.anarsoft.race.detection.process.run.ProcessRunContext
  */
 
 trait ProcessRun {
-  def process(runData: RunData): RunResult;
+  def process(runData: RunData): RunResultImpl;
   def runContext : ProcessRunContext;
 }

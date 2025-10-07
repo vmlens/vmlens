@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.event.distribute
 
-import com.anarsoft.race.detection.loopAndRunData.LoopAndRunId
+import com.anarsoft.race.detection.rundata.LoopAndRunId
 import org.mockito.Mockito.{mock, verify}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

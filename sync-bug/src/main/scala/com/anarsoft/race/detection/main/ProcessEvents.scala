@@ -52,7 +52,7 @@ class ProcessEvents(val eventDir: Path,
     val createReports = if(processRunContext.txtFormat) {
       new CreateTxtReport(reportDir)
     } else {
-      new CreateHtmlReport(reportDir)
+      new CreateHtmlReport(reportDir, processRunContext.showAllRuns)
     }
     createReports.createReport(reportBuilder.build())
 

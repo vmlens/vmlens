@@ -1,15 +1,15 @@
 package com.anarsoft.race.detection.reportbuilder
 
 
-import com.anarsoft.race.detection.loopAndRunData.RunResult
-import com.anarsoft.race.detection.loopResult.LoopResult
+import com.anarsoft.race.detection.rundata.RunResultImpl
+import com.anarsoft.race.detection.loopresult.LoopResult
 import com.anarsoft.race.detection.process.main.{LoopReportBuilder, UILoopsAndStacktraceLeafsBuilder}
 import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl.toTestResult
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.vmlens.report.ResultForVerify
 import com.vmlens.report.builder.ReportBuilder
 import com.vmlens.report.element.*
-import com.vmlens.trace.agent.bootstrap.exception.Message
+
 
 import java.util
 import scala.collection.mutable
@@ -105,13 +105,13 @@ object LoopReportBuilderImpl {
     } else {
       TestResultLabel.Success
     }
-
-    var text = result.text;
-    for(id <- runResult.warningIdList ) {
-      text = text + ", "  + Message.of(id).text();
+    val testResult = new TestResult(result.text);
+    
+    for(w  <- runResult.warningIdList) {
+      w.addToTestResult(testResult);
     }
     
-    new TestResult(text);
+    testResult;
   }
   
 }

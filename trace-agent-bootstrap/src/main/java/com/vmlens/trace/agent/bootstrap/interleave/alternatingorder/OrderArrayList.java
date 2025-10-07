@@ -2,12 +2,32 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 
+import java.util.Iterator;
+
 public class OrderArrayList {
 
     private final int chunkSize;
     private final LeftBeforeRight[] fixedArray;
     private LeftBeforeRight[] array;
     private int length;
+
+    private class OrderIterator implements Iterator<LeftBeforeRight> {
+
+        private int index;
+
+        @Override
+        public boolean hasNext() {
+            return index < length;
+        }
+
+        @Override
+        public LeftBeforeRight next() {
+            int temp = index;
+            index++;
+            return array[temp];
+        }
+    }
+
 
     public OrderArrayList(LeftBeforeRight[] fixedArray) {
         this(16,fixedArray);
@@ -39,12 +59,16 @@ public class OrderArrayList {
         return length;
     }
 
-    public void setToNull(int index) {
-        array[index] = null;
-    }
-
     public LeftBeforeRight get(int index) {
         return array[index];
+    }
+
+    public Iterator<LeftBeforeRight> iterator() {
+        return new OrderIterator();
+    }
+
+    public void cap() {
+
     }
 
 }
