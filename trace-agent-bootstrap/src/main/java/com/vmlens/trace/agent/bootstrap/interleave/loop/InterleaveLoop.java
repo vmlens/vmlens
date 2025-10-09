@@ -20,7 +20,7 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class InterleaveLoop implements IteratorQueue {
 
-    private static final boolean TRACE_INTERLEAVE_ACTIONS = false;
+    private static final boolean TRACE_INTERLEAVE_ACTIONS = true;
 
     private final InterleaveLoopContext interleaveLoopContext;
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =
@@ -115,8 +115,6 @@ public class InterleaveLoop implements IteratorQueue {
                 .add(new TLinkableWrapper<>(container));
     }
 
-
-
     private boolean alreadyProcessed(ThreadIndexToElementList<InterleaveAction> newRun) {
         for(TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>> element : alreadyProcessed) {
             if(isSame(element.element(),newRun)) {
@@ -125,6 +123,5 @@ public class InterleaveLoop implements IteratorQueue {
         }
         return false;
     }
-
 
 }

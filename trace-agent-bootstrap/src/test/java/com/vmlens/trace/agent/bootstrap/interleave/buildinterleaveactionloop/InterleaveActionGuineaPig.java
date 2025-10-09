@@ -24,11 +24,16 @@ public class InterleaveActionGuineaPig implements InterleaveAction {
 
     @Override
     public boolean equalsNormalized(InterleaveAction other) {
+        if (other == null || getClass() != other.getClass()) return false;
+
         InterleaveActionGuineaPig otherGuineaPig = (InterleaveActionGuineaPig)  other;
         return equals(otherGuineaPig);
     }
 
-
+    @Override
+    public int normalizedHashCode() {
+        return hashCode();
+    }
 
     @Override
     public int threadIndex() {
@@ -52,5 +57,10 @@ public class InterleaveActionGuineaPig implements InterleaveAction {
     @Override
     public int hashCode() {
         return Objects.hash(threadIndex, value);
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 }

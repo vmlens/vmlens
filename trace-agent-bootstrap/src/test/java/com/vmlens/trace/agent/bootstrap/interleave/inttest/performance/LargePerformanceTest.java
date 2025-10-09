@@ -27,7 +27,6 @@ public class LargePerformanceTest {
         if(TRACE) {
             System.out.println("took " + (System.currentTimeMillis() - start)); 
         }
-          
     }
 
 

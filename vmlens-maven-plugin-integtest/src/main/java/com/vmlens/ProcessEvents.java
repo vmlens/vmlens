@@ -71,6 +71,7 @@ public class ProcessEvents {
         testWithDataRace.add("whileLoop");
         testWithDataRace.add("testJacksonWithReader");
         testWithDataRace.add("testJackson");
+        testWithDataRace.add("testNonVolatileField");
        // testWithDataRace.add("childWithProtectedFieldTest");
         checkDataRaces(testWithDataRace,new HashSet<>() , result);
     }

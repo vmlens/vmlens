@@ -6,5 +6,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToKe
 public interface InterleaveAction extends AddToKeyToOperationCollectionWithThreadIndex {
 
     boolean equalsNormalized(InterleaveAction other);
+    default int normalizedHashCode() {
+        return 0;
+    }
 
 }

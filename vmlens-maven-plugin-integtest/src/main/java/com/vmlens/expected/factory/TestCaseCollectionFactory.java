@@ -44,6 +44,7 @@ public class TestCaseCollectionFactory {
         nameToTestCase.put("whileLoop",new EmptyIntTestFactory().create());
         nameToTestCase.put("testJacksonWithReader",new EmptyIntTestFactory().create());
         nameToTestCase.put("testJackson",new EmptyIntTestFactory().create());
+        nameToTestCase.put("testNonVolatileField",new EmptyIntTestFactory().create());
 
         return new TestCaseCollection(nameToTestCase);
     }
