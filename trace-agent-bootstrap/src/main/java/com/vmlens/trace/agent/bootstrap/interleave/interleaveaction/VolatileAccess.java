@@ -47,27 +47,10 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        VolatileAccess that = (VolatileAccess) o;
-        return methodIdByteCodePositionAndThreadIndex.equals(that.methodIdByteCodePositionAndThreadIndex) &&
-                operation == that.operation &&
-                Objects.equals(volatileAccessKey, that.volatileAccessKey);
-    }
-
-    @Override
     public int operation() {
         return operation;
     }
 
-    @Override
-    public int hashCode() {
-        int result = methodIdByteCodePositionAndThreadIndex.hashCode();
-        result = 31 * result + Objects.hashCode(volatileAccessKey);
-        result = 31 * result + operation;
-        return result;
-    }
 
     @Override
     public String toString() {
@@ -95,13 +78,6 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex,
-                operation,
-                volatileAccessKey.normalizedHashCode() );
-    }
-
-    @Override
     public TreeBuilderNode addToAlternatingOrder(Position myPosition,
                                                  Object otherObj,
                                                  BuildAlternatingOrderContext context,
@@ -115,4 +91,15 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
         return treeBuilderNode;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        VolatileAccess that = (VolatileAccess) object;
+        return operation == that.operation && Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(volatileAccessKey, that.volatileAccessKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, volatileAccessKey, operation);
+    }
 }

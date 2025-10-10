@@ -56,7 +56,14 @@ public class ThreadJoin extends InterleaveActionForInDependentBlock {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex);
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        ThreadJoin that = (ThreadJoin) object;
+        return joinedThreadIndex == that.joinedThreadIndex && Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, joinedThreadIndex);
     }
 }

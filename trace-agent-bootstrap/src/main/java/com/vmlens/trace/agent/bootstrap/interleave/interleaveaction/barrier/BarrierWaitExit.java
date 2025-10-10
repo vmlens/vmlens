@@ -66,8 +66,14 @@ public class BarrierWaitExit implements Barrier  {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex, barrierKey.category());
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        BarrierWaitExit that = (BarrierWaitExit) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(barrierKey, that.barrierKey);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, barrierKey);
+    }
 }

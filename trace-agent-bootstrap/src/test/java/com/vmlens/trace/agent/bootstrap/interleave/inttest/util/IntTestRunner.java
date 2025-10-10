@@ -28,6 +28,7 @@ public class IntTestRunner {
                                     Expected expected,
                                     InterleaveLoopContext interleaveLoopContext) {
         Map<ExpectedElement,Integer> fulfilled = new HashMap<>();
+
         AlternatingOrderContainer alternatingOrder = createAlternatingOrderContainer(create(actualRun), interleaveLoopContext);
 
         List<Position[]> executed = new LinkedList<>();

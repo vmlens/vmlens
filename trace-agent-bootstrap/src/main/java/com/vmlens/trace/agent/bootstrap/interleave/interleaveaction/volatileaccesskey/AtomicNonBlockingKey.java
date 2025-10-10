@@ -10,18 +10,7 @@ public class AtomicNonBlockingKey  implements VolatileKey  {
         this.objectHashCode = objectHashCode;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
 
-        AtomicNonBlockingKey that = (AtomicNonBlockingKey) object;
-        return objectHashCode == that.objectHashCode;
-    }
-
-    @Override
-    public int hashCode() {
-        return Long.hashCode(objectHashCode);
-    }
 
     @Override
     public boolean equalsNormalized(VolatileKey other) {
@@ -29,12 +18,19 @@ public class AtomicNonBlockingKey  implements VolatileKey  {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass());
+    public String toString() {
+        return "atomic(" + objectHashCode + ")";
     }
 
     @Override
-    public String toString() {
-        return "atomic(" + objectHashCode + ")";
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        AtomicNonBlockingKey that = (AtomicNonBlockingKey) object;
+        return objectHashCode == that.objectHashCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),objectHashCode);
     }
 }

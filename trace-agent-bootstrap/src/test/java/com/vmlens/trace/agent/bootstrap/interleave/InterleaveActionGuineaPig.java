@@ -30,11 +30,6 @@ public class InterleaveActionGuineaPig implements InterleaveAction {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return hashCode();
-    }
-
-    @Override
     public int threadIndex() {
         return threadIndex;
     }

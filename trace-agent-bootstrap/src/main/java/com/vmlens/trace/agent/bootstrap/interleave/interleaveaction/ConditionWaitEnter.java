@@ -53,11 +53,6 @@ public class ConditionWaitEnter implements InterleaveAction  {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex, lockOrMonitor.category());
-    }
-
-    @Override
     public String toString() {
         return "conditionWaitEnter(" +
                 methodIdByteCodePositionAndThreadIndex.threadIndex() +
@@ -65,4 +60,15 @@ public class ConditionWaitEnter implements InterleaveAction  {
                 ");";
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        ConditionWaitEnter that = (ConditionWaitEnter) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(lockOrMonitor, that.lockOrMonitor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor);
+    }
 }

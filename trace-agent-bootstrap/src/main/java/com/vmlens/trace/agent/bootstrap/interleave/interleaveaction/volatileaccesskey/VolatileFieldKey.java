@@ -13,21 +13,6 @@ public class VolatileFieldKey implements VolatileKey {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        VolatileFieldKey that = (VolatileFieldKey) o;
-        return fieldId == that.fieldId && objectHashCode == that.objectHashCode;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = fieldId;
-        result = 31 * result + Long.hashCode(objectHashCode);
-        return result;
-    }
-
-    @Override
     public boolean equalsNormalized(VolatileKey other) {
         if(! (other instanceof VolatileFieldKey)) {
             return false;
@@ -36,12 +21,19 @@ public class VolatileFieldKey implements VolatileKey {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass(),fieldId);
+    public String toString() {
+        return "volatileField(" + fieldId + ","+ objectHashCode + "L)";
     }
 
     @Override
-    public String toString() {
-        return "volatileField(" + fieldId + ","+ objectHashCode + "L)";
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        VolatileFieldKey that = (VolatileFieldKey) object;
+        return fieldId == that.fieldId && objectHashCode == that.objectHashCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),fieldId, objectHashCode);
     }
 }

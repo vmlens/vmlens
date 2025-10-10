@@ -10,7 +10,7 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class DetectAndReplacePattern {
 
-    public TLinkedList<TLinkableWrapper<InterleaveAction>>  replace(ThreadIndexToElementList<InterleaveAction> orig) {
+    public TLinkedList<TLinkableWrapper<InterleaveAction>> replace(ThreadIndexToElementList<InterleaveAction> orig) {
         TLinkedList<TLinkableWrapper<InterleaveAction>>  result = new TLinkedList<>();
         for(int i = 0 ; i <= orig.maxThreadIndex(); i++) {
             TLinkedList<TLinkableWrapper<InterleaveAction>> origList = orig.listAt(i);

@@ -24,12 +24,6 @@ public class InterleaveActionLoop implements InterleaveAction {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass(), threadIndex);
-    }
-
-
-    @Override
     public int threadIndex() {
         return threadIndex;
     }
@@ -38,5 +32,17 @@ public class InterleaveActionLoop implements InterleaveAction {
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        InterleaveActionLoop that = (InterleaveActionLoop) object;
+        return threadIndex == that.threadIndex;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),threadIndex);
     }
 }

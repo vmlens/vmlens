@@ -47,13 +47,19 @@ public class MultiJoin extends InterleaveActionForInDependentBlock  {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex);
-    }
-
-    @Override
     public int threadIndex() {
         return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        MultiJoin multiJoin = (MultiJoin) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, multiJoin.methodIdByteCodePositionAndThreadIndex) && Objects.equals(joinedThreadIndices, multiJoin.joinedThreadIndices);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, joinedThreadIndices);
+    }
 }

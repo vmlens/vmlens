@@ -13,32 +13,25 @@ public class VolatileArrayKey  implements VolatileKey {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-
-        VolatileArrayKey that = (VolatileArrayKey) object;
-        return index == that.index && objectHashCode == that.objectHashCode;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = index;
-        result = 31 * result + Long.hashCode(objectHashCode);
-        return result;
-    }
-
-    @Override
     public boolean equalsNormalized(VolatileKey other) {
         return other instanceof VolatileArrayKey;
     }
 
-    @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass());
-    }
 
     @Override
     public String toString() {
         return "arrayAccess("  + index +  ","  + objectHashCode + "L)";
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        VolatileArrayKey that = (VolatileArrayKey) object;
+        return  objectHashCode == that.objectHashCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),objectHashCode);
     }
 }

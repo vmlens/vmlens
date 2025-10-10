@@ -50,17 +50,23 @@ public class ConditionWaitExit implements InterleaveAction {
     }
 
     @Override
-    public int normalizedHashCode() {
-        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex, lockOrMonitor.category());
-    }
-
-
-    @Override
     public String toString() {
         return "conditionWaitExit(" +
                 methodIdByteCodePositionAndThreadIndex.threadIndex() +
                 ","  + lockOrMonitor +
                 ");";
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        ConditionWaitExit that = (ConditionWaitExit) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(lockOrMonitor, that.lockOrMonitor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor);
     }
 
 }

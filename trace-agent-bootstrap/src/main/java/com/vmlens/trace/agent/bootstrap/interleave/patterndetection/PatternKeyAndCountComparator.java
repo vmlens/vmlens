@@ -8,7 +8,6 @@ public class PatternKeyAndCountComparator implements Comparator<PatternKeyAndCou
         if(first.length() != second.length()) {
             return Integer.compare(second.length(),first.length());
         }
-
         return  Integer.compare(second.count(),first.count());
     }
 }

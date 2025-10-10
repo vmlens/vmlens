@@ -21,7 +21,7 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class InterleaveLoop implements IteratorQueue {
 
-    private static final boolean TRACE_INTERLEAVE_ACTIONS = true;
+    private static final boolean TRACE_INTERLEAVE_ACTIONS = false;
 
     private final InterleaveLoopContext interleaveLoopContext;
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =

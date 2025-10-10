@@ -30,7 +30,7 @@ public class DetectPattern {
                                   int secondStart,
                                   int length ) {
         for(int i = 0; i < length; i++ ) {
-            if( ! interleaveActions[i+firstStart].equalsNormalized(interleaveActions[i+secondStart])) {
+            if( ! interleaveActions[i+firstStart].equals(interleaveActions[i+secondStart])) {
                 return false;
             }
         }
@@ -59,7 +59,7 @@ public class DetectPattern {
         // Precompute prefix hashes and powers of BASE
         pow[0] = 1;
         for (int i = 0; i < n; i++) {
-            prefixHash[i + 1] = (prefixHash[i] * BASE + interleaveActions[i].normalizedHashCode()) % MOD;
+            prefixHash[i + 1] = (prefixHash[i] * BASE + interleaveActions[i].hashCode()) % MOD;
             pow[i + 1] = (pow[i] * BASE) % MOD;
         }
 
