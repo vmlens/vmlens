@@ -28,7 +28,7 @@ public class TestNonVolatileField {
 ```
 VMLens detects the data race and generates the following report:
 
-<img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/images/dataRaceReportNew.png">
+<img style=" width: 100%; height: auto; margin-right : auto; margin-left : auto; min-width : 300px; border-radius: 10px; border: 2px solid #4198ff;" src="https://vmlens.com/images/dataRaceReport.svg">
 
 See [test-vmlens-maven-plugin](https://github.com/vmlens/vmlens/tree/master/test-vmlens-maven-plugin/src/test/java/com/vmlens/test/maven/plugin) for more examples.
 
@@ -44,7 +44,7 @@ To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens p
 <dependency>
   <groupId>com.vmlens</groupId>
   <artifactId>api</artifactId>
-  <version>1.2.14</version>
+  <version>1.2.18</version>
   <scope>test</scope>
 </dependency>	
 	
@@ -54,7 +54,7 @@ To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens p
     <plugin>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens-maven-plugin</artifactId>
-        <version>1.2.14</version>
+        <version>1.2.18</version>
         <executions>
             <execution>
                 <id>test</id>
@@ -85,7 +85,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    testImplementation("com.vmlens:api:1.2.14")
+    testImplementation("com.vmlens:api:1.2.18")
     ...
 }
 buildscript {
@@ -93,7 +93,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.vmlens:standalone:1.2.14")
+        classpath("com.vmlens:standalone:1.2.18")
     }
 }
 tasks.register("vmlensReport") {
@@ -118,11 +118,11 @@ See [build.gradle.kts](https://github.com/vmlens/vmlens-examples/blob/master/bui
 
 To use VMLens as a standalone tool:
 
-1. Include com.vmlens.api from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/api/1.2.14/) as a test jar in your project.
-1. Download the jar standalone-1.2.14.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.14/) 
-1. Run java -jar standalone-1.2.14.jar install. This creates the agent directory and prints the vm parameter to System.out
+1. Include com.vmlens.api from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/api/1.2.18/) as a test jar in your project.
+1. Download the jar standalone-1.2.18.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.18/) 
+1. Run java -jar standalone-1.2.18.jar install. This creates the agent directory and prints the vm parameter to System.out
 1. Add this vm parameter when you run your test
-2. Run java -jar standalone-1.2.14.jar report. This checks for data races and creates the report
+2. Run java -jar standalone-1.2.18.jar report. This checks for data races and creates the report
 
 
 # Documentation
