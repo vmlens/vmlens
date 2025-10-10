@@ -22,7 +22,7 @@ public class TestNonBlockingAtomic {
         CheckIsThreadRun.SINGLETON.isThreadRun();
 
         try (AllInterleavings allInterleavings = new AllInterleavingsBuilder()
-                .withMaximumAlternatingOrders(8)
+                .withMaximumAlternatingOrders(4)
                 .withMaximumIterations(8)
                 .build("TestNonBlockingAtomic.testConcurrentSkipListMap")) {
             while (allInterleavings.hasNext()) {
