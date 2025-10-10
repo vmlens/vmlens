@@ -3,5 +3,5 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileacc
 public interface VolatileKey {
 
     boolean equalsNormalized(VolatileKey other);
-
+    int normalizedHashCode();
 }

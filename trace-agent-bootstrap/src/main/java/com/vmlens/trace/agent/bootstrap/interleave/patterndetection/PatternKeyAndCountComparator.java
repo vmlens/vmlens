@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop;
+package com.vmlens.trace.agent.bootstrap.interleave.patterndetection;
 
 import java.util.Comparator;
 

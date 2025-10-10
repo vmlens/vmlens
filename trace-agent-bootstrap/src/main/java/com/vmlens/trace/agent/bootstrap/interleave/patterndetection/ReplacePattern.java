@@ -1,9 +1,9 @@
-package com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop;
+package com.vmlens.trace.agent.bootstrap.interleave.patterndetection;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.NoOpInterleaveAction;
 
-import static com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.DetectPattern.MIMiMUM_PATTERN_OCCURRENCE;
+import static com.vmlens.trace.agent.bootstrap.interleave.patterndetection.DetectPattern.MIMiMUM_PATTERN_OCCURRENCE;
 
 public class ReplacePattern {
 
@@ -35,8 +35,7 @@ public class ReplacePattern {
                 /*
                  * we separate the count in 3 parts, the start, the middle and the end
                  * than we keep the start, e.g. start till length of patten and the middle,
-                 * e.g. middle * length till middle * length + length
-                 * and end
+                 * e.g. middle * length till middle * length + length and end
                  *
                  */
                 int middle = count/2;

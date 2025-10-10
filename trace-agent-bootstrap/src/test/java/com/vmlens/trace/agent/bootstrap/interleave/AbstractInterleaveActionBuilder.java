@@ -10,6 +10,7 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.MethodIdByteCodePositionAndThreadIndexFactory.threadIndex;
+import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.toArray;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public abstract class AbstractInterleaveActionBuilder {
@@ -44,6 +45,14 @@ public abstract class AbstractInterleaveActionBuilder {
         run.add(wrap(new ThreadJoin(threadIndex(threadIndex),joinedThreadIndex)));
     }
 
+    public void guineaPig(int index, String value) {
+        run.add(wrap(new InterleaveActionGuineaPig(index,value)));
+    }
+
+    public void noOp(int index) {
+        run.add(wrap(new NoOpInterleaveAction(index)));
+    }
+
     protected VolatileKey atomic(long objectHashCode) {
         return new AtomicNonBlockingKey(objectHashCode);
     }
@@ -74,9 +83,14 @@ public abstract class AbstractInterleaveActionBuilder {
 
     protected abstract void addActions();
 
-    public  TLinkedList<TLinkableWrapper<InterleaveAction>>  build() {
+    public  TLinkedList<TLinkableWrapper<InterleaveAction>> build() {
         addActions();
         return run;
+    }
+
+    public InterleaveAction[]  buildArray() {
+        TLinkedList<TLinkableWrapper<InterleaveAction>> list = build();
+        return toArray(InterleaveAction.class, list);
     }
 
 }

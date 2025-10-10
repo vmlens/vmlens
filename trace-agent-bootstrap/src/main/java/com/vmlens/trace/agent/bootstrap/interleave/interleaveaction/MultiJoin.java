@@ -8,6 +8,8 @@ import gnu.trove.iterator.TIntIterator;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.list.linked.TLinkedList;
 
+import java.util.Objects;
+
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class MultiJoin extends InterleaveActionForInDependentBlock  {
@@ -42,6 +44,11 @@ public class MultiJoin extends InterleaveActionForInDependentBlock  {
         }
         MultiJoin otherLock = (MultiJoin) other;
         return methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex);
+    }
+
+    @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex);
     }
 
     @Override

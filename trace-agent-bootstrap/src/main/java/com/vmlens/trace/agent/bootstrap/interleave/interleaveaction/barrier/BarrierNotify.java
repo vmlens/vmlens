@@ -87,8 +87,12 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
         if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
             return false;
         }
-
         return barrierKey.equalsNormalized(otherLock.barrierKey);
+    }
+
+    @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex, barrierKey.category());
     }
 
     @Override

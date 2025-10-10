@@ -20,5 +20,5 @@ public abstract class BarrierKey implements Comparable<BarrierKey> {
 
     public abstract void accept(BarrierKeyVisitor visitor);
     public abstract long objectHashcode();
-    protected abstract int category();
+    public abstract int category();
 }

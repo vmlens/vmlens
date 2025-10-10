@@ -90,6 +90,11 @@ public class BarrierWaitEnter implements Barrier, BarrierOperationVisitor {
     }
 
     @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex, barrierKey.category());
+    }
+
+    @Override
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {

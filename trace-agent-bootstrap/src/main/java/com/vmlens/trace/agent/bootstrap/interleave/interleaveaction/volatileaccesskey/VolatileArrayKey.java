@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey;
 
+import java.util.Objects;
+
 public class VolatileArrayKey  implements VolatileKey {
 
     private final int index;
@@ -28,6 +30,11 @@ public class VolatileArrayKey  implements VolatileKey {
     @Override
     public boolean equalsNormalized(VolatileKey other) {
         return other instanceof VolatileArrayKey;
+    }
+
+    @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass());
     }
 
     @Override

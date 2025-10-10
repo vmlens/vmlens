@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop;
+package com.vmlens.trace.agent.bootstrap.interleave.patterndetection;
 
 import com.vmlens.trace.agent.bootstrap.Counter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;

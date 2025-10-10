@@ -39,7 +39,17 @@ public class NoOpInterleaveAction implements InterleaveAction {
     }
 
     @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(), threadIndex);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hashCode(threadIndex);
+    }
+
+    @Override
+    public String toString() {
+        return "noOp(" + threadIndex + ");";
     }
 }

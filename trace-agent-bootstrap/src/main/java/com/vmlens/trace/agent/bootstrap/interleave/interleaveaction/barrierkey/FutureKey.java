@@ -26,7 +26,7 @@ public class FutureKey extends BarrierKey {
     }
 
     @Override
-    protected int category() {
+    public int category() {
         return CATEGORY_FUTURE;
     }
 

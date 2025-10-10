@@ -1,8 +1,8 @@
-package com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop;
+package com.vmlens.trace.agent.bootstrap.interleave.patterndetection;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 
-import static com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.DetectPattern.matches;
+import static com.vmlens.trace.agent.bootstrap.interleave.patterndetection.DetectPattern.matches;
 
 public class PatternKey {
 

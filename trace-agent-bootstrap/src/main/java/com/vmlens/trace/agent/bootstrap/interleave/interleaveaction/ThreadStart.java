@@ -6,6 +6,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadI
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
+import java.util.Objects;
+
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ThreadStart extends InterleaveActionForInDependentBlock {
@@ -69,6 +71,11 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
         }
 
         return startedThreadIndex == otherLock.startedThreadIndex;
+    }
+
+    @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex);
     }
 
 }

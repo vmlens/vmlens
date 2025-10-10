@@ -20,7 +20,6 @@ public class PetersonLockVmLensTest {
     @Test
     public void shouldNotDetectProblemWithWorkingLock() throws InterruptedException {
         try (AllInterleavings allInterleavings = new AllInterleavingsBuilder()
-                .withMaximumAlternatingOrders(10)
                 .build("loop.petersonOk")) {
             PetersonLock lock = new PetersonLock(MemoryOrdering.VOLATILE);
             MutableInt x = new MutableInt();

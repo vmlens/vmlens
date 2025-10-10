@@ -95,6 +95,13 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
     }
 
     @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex,
+                operation,
+                volatileAccessKey.normalizedHashCode() );
+    }
+
+    @Override
     public TreeBuilderNode addToAlternatingOrder(Position myPosition,
                                                  Object otherObj,
                                                  BuildAlternatingOrderContext context,

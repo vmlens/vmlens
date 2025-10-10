@@ -11,6 +11,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAc
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
 
+import java.util.Objects;
+
 public class BarrierWaitExit implements Barrier  {
 
     private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
@@ -61,6 +63,11 @@ public class BarrierWaitExit implements Barrier  {
             return false;
         }
         return barrierKey.equalsNormalized(otherLock.barrierKey);
+    }
+
+    @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex, barrierKey.category());
     }
 
 }

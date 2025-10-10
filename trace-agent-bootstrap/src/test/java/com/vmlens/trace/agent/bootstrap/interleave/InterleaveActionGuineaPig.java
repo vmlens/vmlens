@@ -1,6 +1,5 @@
-package com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop;
+package com.vmlens.trace.agent.bootstrap.interleave;
 
-import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
@@ -62,5 +61,9 @@ public class InterleaveActionGuineaPig implements InterleaveAction {
     @Override
     public String toString() {
         return value;
+    }
+
+    public String asCommand() {
+        return "guineaPig(" + threadIndex + ",\"" + value + "\");";
     }
 }

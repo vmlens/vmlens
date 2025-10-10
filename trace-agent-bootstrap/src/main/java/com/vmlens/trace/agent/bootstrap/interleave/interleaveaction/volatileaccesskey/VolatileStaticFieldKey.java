@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey;
 
+import java.util.Objects;
+
 public class VolatileStaticFieldKey implements VolatileKey  {
 
     private final int fieldId;
@@ -29,6 +31,11 @@ public class VolatileStaticFieldKey implements VolatileKey  {
 
         VolatileStaticFieldKey otherAtomicNonBlockingKey = (VolatileStaticFieldKey) other;
         return fieldId == otherAtomicNonBlockingKey.fieldId;
+    }
+
+    @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(),fieldId);
     }
 
     @Override

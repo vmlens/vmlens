@@ -6,6 +6,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.ac
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.LockEnterOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 
+import java.util.Objects;
+
 public class LockEnterImpl implements InterleaveAction  {
 
     private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
@@ -64,5 +66,11 @@ public class LockEnterImpl implements InterleaveAction  {
 
         return lockOrMonitor.equalsNormalized(lockOrMonitor);
     }
+
+    @Override
+    public int normalizedHashCode() {
+        return Objects.hash(getClass(), methodIdByteCodePositionAndThreadIndex, lockOrMonitor.category());
+    }
+
 
 }

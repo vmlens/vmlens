@@ -27,7 +27,7 @@ public class PhaserKey extends BarrierKey {
     }
 
     @Override
-    protected int category() {
+    public int category() {
         return CATEGORY_PHASER;
     }
 

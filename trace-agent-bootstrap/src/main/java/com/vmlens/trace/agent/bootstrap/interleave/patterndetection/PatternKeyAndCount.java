@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop;
+package com.vmlens.trace.agent.bootstrap.interleave.patterndetection;
 
 public class PatternKeyAndCount {
 
@@ -28,5 +28,10 @@ public class PatternKeyAndCount {
                 "patternKey=" + patternKey +
                 ", count=" + count +
                 '}';
+    }
+
+    // For Tests
+    PatternKey patternKey() {
+        return patternKey;
     }
 }
