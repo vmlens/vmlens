@@ -6,6 +6,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadI
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
+import java.util.Objects;
+
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ThreadStart extends InterleaveActionForInDependentBlock {
@@ -37,20 +39,6 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ThreadStart that = (ThreadStart) o;
-
-        return startedThreadIndex == that.startedThreadIndex;
-    }
-    @Override
-    public int hashCode() {
-        return startedThreadIndex;
-    }
-
-    @Override
     public String toString() {
         return "threadStart(" +
                  methodIdByteCodePositionAndThreadIndex.threadIndex() +
@@ -71,4 +59,15 @@ public class ThreadStart extends InterleaveActionForInDependentBlock {
         return startedThreadIndex == otherLock.startedThreadIndex;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        ThreadStart that = (ThreadStart) object;
+        return startedThreadIndex == that.startedThreadIndex && Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, startedThreadIndex);
+    }
 }

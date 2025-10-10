@@ -61,19 +61,6 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-
-        BarrierNotify that = (BarrierNotify) object;
-        return Objects.equals(barrierKey, that.barrierKey);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(barrierKey);
-    }
-
-    @Override
     public int threadIndex() {
         return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
@@ -87,7 +74,6 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
         if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
             return false;
         }
-
         return barrierKey.equalsNormalized(otherLock.barrierKey);
     }
 
@@ -96,7 +82,18 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
         result.addBarrier(barrierKey,new DependentOperationAndPosition<>(myPosition,this));
-
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        BarrierNotify that = (BarrierNotify) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex,
+                that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(barrierKey, that.barrierKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, barrierKey);
+    }
 }

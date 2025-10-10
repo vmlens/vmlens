@@ -67,6 +67,15 @@ at java.lang.invoke.MethodType.makeImpl(MethodType.java:358)
 at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives.java:399)
 */
       DoNotTraceIn("java/lang/invoke/MethodType"),
+
+      /*
+       to avoid
+       * java.lang.NoClassDefFoundError: Could not initialize class java.lang.StackTraceElement$HashedModules
+       */
+      DoNotTraceIn("java/lang/StackTraceElement"),
+
+
+
       DoNotTraceIn("com/vmlens/test/guineapig/DoNotTraceIn"),
       ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
       //ClassModelWithoutMethodDescription("$MockitoMock$", DoNotTraceInTestContainsClassName.SINGLETON),

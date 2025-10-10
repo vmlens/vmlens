@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey;
 
+import java.util.Objects;
+
 public class PhaserKey extends BarrierKey {
 
     private final long objecthashcode;
@@ -23,11 +25,11 @@ public class PhaserKey extends BarrierKey {
 
     @Override
     public int hashCode() {
-        return Long.hashCode(objecthashcode);
+        return Objects.hash(getClass(),objecthashcode);
     }
 
     @Override
-    protected int category() {
+    public int category() {
         return CATEGORY_PHASER;
     }
 

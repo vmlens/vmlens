@@ -3,7 +3,6 @@ package com.vmlens.trace.agent.bootstrap.interleave.inttest.util;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
@@ -12,6 +11,9 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
 import java.util.*;
+
+import static com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop.create;
+import static com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop.createAlternatingOrderContainer;
 
 public class IntTestRunner {
 
@@ -25,9 +27,9 @@ public class IntTestRunner {
     public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,
                                     Expected expected,
                                     InterleaveLoopContext interleaveLoopContext) {
-        AlternatingOrderContainerFactory factory = new AlternatingOrderContainerFactory();
         Map<ExpectedElement,Integer> fulfilled = new HashMap<>();
-        AlternatingOrderContainer alternatingOrder = factory.create(actualRun, interleaveLoopContext);
+
+        AlternatingOrderContainer alternatingOrder = createAlternatingOrderContainer(create(actualRun), interleaveLoopContext);
 
         List<Position[]> executed = new LinkedList<>();
         Iterator<CalculatedRun> iter = alternatingOrder.iterator();

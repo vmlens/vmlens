@@ -8,6 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.Alterna
 import com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.InterleaveActionLoopFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.patterndetection.DetectAndReplacePattern;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -33,6 +34,12 @@ public class InterleaveLoop implements IteratorQueue {
     public InterleaveLoop(InterleaveLoopContext interleaveLoopContext) {
         this.interleaveLoopContext = interleaveLoopContext;
         this.iterator = new InterleaveLoopIterator(interleaveLoopContext,this);
+    }
+
+    public static AlternatingOrderContainer createAlternatingOrderContainer(ThreadIndexToElementList<InterleaveAction> orig,
+                                                                            InterleaveLoopContext interleaveLoopContext) {
+        TLinkedList<TLinkableWrapper<InterleaveAction>> replaced = new DetectAndReplacePattern().replace(orig);
+         return new AlternatingOrderContainerFactory().create(replaced, interleaveLoopContext);
     }
 
     // Visible for Test
@@ -96,7 +103,7 @@ public class InterleaveLoop implements IteratorQueue {
     }
 
     // Visible for test
-    static ThreadIndexToElementList<InterleaveAction> create(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
+    public static ThreadIndexToElementList<InterleaveAction> create(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
         ThreadIndexToElementList<InterleaveAction> result = new ThreadIndexToElementList<>();
         for (TLinkableWrapper<InterleaveAction> syncAction : run) {
             result.add(syncAction.element());
@@ -105,17 +112,15 @@ public class InterleaveLoop implements IteratorQueue {
     }
 
     private void addActualRunWithLoops(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
-        ThreadIndexToElementList<InterleaveAction> newRun = create(run);
-        if(alreadyProcessed(newRun))  {
+        ThreadIndexToElementList<InterleaveAction> orig = create(run);
+
+        if(alreadyProcessed(orig))  {
             return;
         }
-        alreadyProcessed.add(wrap(newRun));
-        AlternatingOrderContainer container = new AlternatingOrderContainerFactory().create(run, interleaveLoopContext);
+        alreadyProcessed.add(wrap(orig));
         stillToBeProcessedAlternatingOrderContainer
-                .add(new TLinkableWrapper<>(container));
+                .add(new TLinkableWrapper<>(createAlternatingOrderContainer(orig,interleaveLoopContext)));
     }
-
-
 
     private boolean alreadyProcessed(ThreadIndexToElementList<InterleaveAction> newRun) {
         for(TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>> element : alreadyProcessed) {
@@ -125,6 +130,5 @@ public class InterleaveLoop implements IteratorQueue {
         }
         return false;
     }
-
 
 }

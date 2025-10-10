@@ -7,6 +7,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.ac
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.WaitExitOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 
+import java.util.Objects;
+
 /**
  * similar as monitor enter only that it does not take part in deadlocks
  */
@@ -53,6 +55,18 @@ public class ConditionWaitExit implements InterleaveAction {
                 methodIdByteCodePositionAndThreadIndex.threadIndex() +
                 ","  + lockOrMonitor +
                 ");";
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        ConditionWaitExit that = (ConditionWaitExit) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(lockOrMonitor, that.lockOrMonitor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor);
     }
 
 }

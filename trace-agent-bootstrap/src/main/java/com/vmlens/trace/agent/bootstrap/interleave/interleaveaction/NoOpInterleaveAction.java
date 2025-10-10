@@ -1,34 +1,23 @@
-package com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 
 import java.util.Objects;
 
-public class InterleaveActionGuineaPig implements InterleaveAction {
+public class NoOpInterleaveAction implements InterleaveAction {
 
     private final int threadIndex;
-    private final String value;
 
-    public InterleaveActionGuineaPig(int threadIndex,
-                                     String value) {
+    public NoOpInterleaveAction(int threadIndex) {
         this.threadIndex = threadIndex;
-        this.value = value;
-    }
-
-    public static InterleaveActionGuineaPig action(int threadIndex, String value) {
-        return new InterleaveActionGuineaPig(threadIndex,value);
     }
 
     @Override
     public boolean equalsNormalized(InterleaveAction other) {
-        InterleaveActionGuineaPig otherGuineaPig = (InterleaveActionGuineaPig)  other;
-        return equals(otherGuineaPig);
+        return equals(other);
     }
-
-
 
     @Override
     public int threadIndex() {
@@ -45,12 +34,17 @@ public class InterleaveActionGuineaPig implements InterleaveAction {
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
-        InterleaveActionGuineaPig that = (InterleaveActionGuineaPig) object;
-        return threadIndex == that.threadIndex && Objects.equals(value, that.value);
+        NoOpInterleaveAction that = (NoOpInterleaveAction) object;
+        return threadIndex == that.threadIndex;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(threadIndex, value);
+        return Objects.hash(getClass(),threadIndex);
+    }
+
+    @Override
+    public String toString() {
+        return "noOp(" + threadIndex + ");";
     }
 }

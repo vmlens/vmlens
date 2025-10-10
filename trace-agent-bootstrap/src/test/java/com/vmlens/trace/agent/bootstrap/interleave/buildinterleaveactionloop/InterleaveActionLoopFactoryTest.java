@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import org.junit.Test;
 
-import static com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.InterleaveActionGuineaPig.action;
+import static com.vmlens.trace.agent.bootstrap.interleave.InterleaveActionGuineaPig.action;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;

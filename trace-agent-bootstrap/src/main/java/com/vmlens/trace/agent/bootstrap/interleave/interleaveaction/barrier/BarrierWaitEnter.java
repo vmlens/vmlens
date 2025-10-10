@@ -60,19 +60,6 @@ public class BarrierWaitEnter implements Barrier, BarrierOperationVisitor {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-
-        BarrierWaitEnter that = (BarrierWaitEnter) object;
-        return Objects.equals(barrierKey, that.barrierKey);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(barrierKey);
-    }
-
-    @Override
     public int threadIndex() {
         return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
@@ -96,4 +83,15 @@ public class BarrierWaitEnter implements Barrier, BarrierOperationVisitor {
         result.addBarrier(barrierKey,new DependentOperationAndPosition<>(myPosition,this));
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        BarrierWaitEnter that = (BarrierWaitEnter) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(barrierKey, that.barrierKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, barrierKey);
+    }
 }

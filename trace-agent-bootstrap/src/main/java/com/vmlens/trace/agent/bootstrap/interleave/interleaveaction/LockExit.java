@@ -8,6 +8,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lo
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer.BlockEnd;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 
+import java.util.Objects;
+
 public class LockExit implements InterleaveAction  {
 
     private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
@@ -43,21 +45,6 @@ public class LockExit implements InterleaveAction  {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        LockExit that = (LockExit) o;
-
-        return lockOrMonitor.equals(that.lockOrMonitor);
-    }
-
-    @Override
-    public int hashCode() {
-        return lockOrMonitor.hashCode();
-    }
-
-    @Override
     public String toString() {
         return "lockExit(" +
                 methodIdByteCodePositionAndThreadIndex.threadIndex() +
@@ -78,4 +65,15 @@ public class LockExit implements InterleaveAction  {
         return lockOrMonitor.equalsNormalized(lockOrMonitor);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        LockExit lockExit = (LockExit) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, lockExit.methodIdByteCodePositionAndThreadIndex) && Objects.equals(lockOrMonitor, lockExit.lockOrMonitor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor);
+    }
 }

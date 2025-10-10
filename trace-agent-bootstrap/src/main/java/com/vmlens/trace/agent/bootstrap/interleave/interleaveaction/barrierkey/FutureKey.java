@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey;
 
+import java.util.Objects;
+
 public class FutureKey extends BarrierKey {
 
     private final long objecthashcode;
@@ -18,7 +20,7 @@ public class FutureKey extends BarrierKey {
 
     @Override
     public int hashCode() {
-        return Long.hashCode(objecthashcode);
+        return Objects.hash(getClass(),objecthashcode);
     }
 
     public long objectHashcode() {
@@ -26,7 +28,7 @@ public class FutureKey extends BarrierKey {
     }
 
     @Override
-    protected int category() {
+    public int category() {
         return CATEGORY_FUTURE;
     }
 

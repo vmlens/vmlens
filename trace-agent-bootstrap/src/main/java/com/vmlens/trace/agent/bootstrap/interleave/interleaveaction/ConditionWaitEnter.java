@@ -5,6 +5,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOp
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 
+import java.util.Objects;
+
 import static com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockExit.processLockExit;
 
 /**
@@ -58,4 +60,15 @@ public class ConditionWaitEnter implements InterleaveAction  {
                 ");";
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        ConditionWaitEnter that = (ConditionWaitEnter) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(lockOrMonitor, that.lockOrMonitor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor);
+    }
 }
