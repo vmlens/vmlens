@@ -9,4 +9,6 @@ public interface WaitNotifyStrategy {
                                  RunStateMachine runStateMachine,
                                  Condition threadActiveCondition,
                                  SendEvent sendEvent);
+
+    void wakeUpAllThreads(Condition threadActiveCondition);
 }

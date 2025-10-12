@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
+package com.vmlens.trace.agent.bootstrap.event.specialevents;
 
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.*;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ThreadJoinedEvent;

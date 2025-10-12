@@ -1,6 +1,7 @@
 package com.vmlens.inttest.nonvolatile;
 
 import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.AllInterleavingsBuilder;
 import org.junit.Test;
 
 public class LoopTest {
@@ -14,7 +15,9 @@ public class LoopTest {
      */
     @Test
     public void whileLoop() throws InterruptedException {
-        AllInterleavings testUpdate = new AllInterleavings("whileLoop");
+        AllInterleavings testUpdate = new  AllInterleavingsBuilder()
+                .withMaximumIterations(3)
+                .build("whileLoop");
         while (testUpdate.hasNext()) {
             stop = false;
             Thread first = new Thread() {

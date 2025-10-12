@@ -13,6 +13,12 @@ import gnu.trove.list.linked.TLinkedList;
 
 public class AlternatingOrderContainerFactory {
 
+    private final InterleaveLoopContext interleaveLoopContext;
+
+    public AlternatingOrderContainerFactory(InterleaveLoopContext interleaveLoopContext) {
+        this.interleaveLoopContext = interleaveLoopContext;
+    }
+
     public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,
                                             InterleaveLoopContext interleaveLoopContext) {
         Pair<TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>>, ThreadIndexToElementList<Position>>
@@ -34,7 +40,7 @@ public class AlternatingOrderContainerFactory {
         for (TLinkableWrapper<ElementAndPosition<InterleaveAction>> blockBuilder : actualRun) {
             threadIndexToElementList.add(blockBuilder.element());
         }
-        KeyToOperationCollection result = new KeyToOperationCollection();
+        KeyToOperationCollection result = new KeyToOperationCollection(interleaveLoopContext);
         ActiveLockCollection mapContainingStack = new ActiveLockCollection();
         for (TLinkableWrapper<TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>>> thread : threadIndexToElementList) {
             for (TLinkableWrapper<ElementAndPosition<InterleaveAction>> current : thread.element()) {

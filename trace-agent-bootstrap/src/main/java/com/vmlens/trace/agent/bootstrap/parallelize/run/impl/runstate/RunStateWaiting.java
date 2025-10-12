@@ -12,7 +12,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenIn
 import gnu.trove.set.hash.TIntHashSet;
 
 import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.ProcessAfter.process;
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.RunStateActive.calculateIsActive;
 
 public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements RunState {
 
@@ -28,21 +27,18 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
 
     @Override
     public boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest, SendEvent sendEvent) {
-        notYetWaitingThreadIndices = runStateContext.removeNotActive(notYetWaitingThreadIndices);
-        if(! notYetWaitingThreadIndices.isEmpty()) {
-            return false;
-        }
-        return calculateIsActive(runStateContext,threadLocalDataWhenInTest,sendEvent);
+        return false;
     }
 
     @Override
-    public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
+    public RunStateAndChangeFlag after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
         process(afterContext, sendEvent, runStateContext);
         notYetWaitingThreadIndices = runStateContext.removeNotActive(notYetWaitingThreadIndices);
         if(! notYetWaitingThreadIndices.isEmpty()) {
-            return this;
+            return new RunStateAndChangeFlag(this, false);
         }
-        return new RunStateActive(runStateContext);
+        return new RunStateAndChangeFlag( new RunStateActive(runStateContext), true);
+
     }
 
     @Override
@@ -51,12 +47,12 @@ public class RunStateWaiting extends ProcessLockExitOrWaitTemplate implements Ru
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent,int waitingThreadIndex) {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
         notYetWaitingThreadIndices = runStateContext.removeNotActive(notYetWaitingThreadIndices);
         if(! notYetWaitingThreadIndices.isEmpty()) {
-            return new RunStateAndResult<>(this,false);
+            return new RunStateAndResult<>(this,true);
         }
-        return  new RunStateAndResult<>(new RunStateActive(runStateContext),false);
+        return  new RunStateAndResult<>(new RunStateActive(runStateContext),true);
     }
 
     @Override

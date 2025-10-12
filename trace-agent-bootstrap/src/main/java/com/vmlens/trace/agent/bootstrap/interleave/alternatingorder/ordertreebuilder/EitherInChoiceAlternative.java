@@ -24,12 +24,13 @@ public class EitherInChoiceAlternative implements ChoiceElement , EitherInChoice
     }
 
     @Override
-    public OrderTreeNode build() {
+    public OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext) {
+        orderTreeBuilderContext.incrementEitherBlockCount();
         OrderTreeNode nextNode = null;
         if(getNext() != null) {
-            nextNode = getNext().build();
+            nextNode = getNext().build(orderTreeBuilderContext);
         } else if(last != null){
-            nextNode = last.build();
+            nextNode = last.build(orderTreeBuilderContext);
         }
         return new SingleChildNode(nextNode,orderAlternativeA,orderAlternativeB);
     }

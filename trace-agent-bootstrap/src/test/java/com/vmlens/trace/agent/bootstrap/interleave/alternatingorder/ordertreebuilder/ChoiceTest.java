@@ -3,6 +3,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebu
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeNoOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeNode;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.TwoChildrenNode;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
+import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,7 +19,7 @@ public class ChoiceTest {
         choice.alternativeA().either(new AlternativeNoOrder(true),new AlternativeNoOrder(true));
 
         // When
-        OrderTreeNode order = choice.build();
+        OrderTreeNode order = choice.build(new OrderTreeBuilderContext(new InterleaveLoopContextBuilder().build(new QueueInMock(),0)));
 
         // Then
         assertThat(order,instanceOf(TwoChildrenNode.class));

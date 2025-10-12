@@ -18,7 +18,7 @@ public class PetersonLock extends IndexedLock {
         var oIdx = 1 - myIdx;
 
         memoryOrdering.set(interested, myIdx, 1);
-        memoryOrdering.set(turn, oIdx);
+        memoryOrdering.set(turn, myIdx);
 
         while (memoryOrdering.get(interested, oIdx) == 1 && memoryOrdering.get(turn) != myIdx) {
             Thread.onSpinWait();

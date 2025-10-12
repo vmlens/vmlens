@@ -5,9 +5,9 @@ import java.util.Comparator;
 public class PatternKeyAndCountComparator implements Comparator<PatternKeyAndCount> {
     @Override
     public int compare(PatternKeyAndCount first, PatternKeyAndCount second) {
-        if(first.length() != second.length()) {
-            return Integer.compare(second.length(),first.length());
+        if(first.count() != second.count()) {
+            return Integer.compare(second.count(),first.count());
         }
-        return  Integer.compare(second.count(),first.count());
+        return  Integer.compare(second.length(),first.length());
     }
 }

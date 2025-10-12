@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.buildinterleaveactionloop.InterleaveActionLoopFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.patterndetection.DetectAndReplacePattern;
@@ -16,12 +15,12 @@ import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
 
+import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_INTERLEAVE_ACTIONS;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 
 public class InterleaveLoop implements IteratorQueue {
 
-    private static final boolean TRACE_INTERLEAVE_ACTIONS = false;
 
     private final InterleaveLoopContext interleaveLoopContext;
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =
@@ -39,7 +38,7 @@ public class InterleaveLoop implements IteratorQueue {
     public static AlternatingOrderContainer createAlternatingOrderContainer(ThreadIndexToElementList<InterleaveAction> orig,
                                                                             InterleaveLoopContext interleaveLoopContext) {
         TLinkedList<TLinkableWrapper<InterleaveAction>> replaced = new DetectAndReplacePattern().replace(orig);
-         return new AlternatingOrderContainerFactory().create(replaced, interleaveLoopContext);
+         return new AlternatingOrderContainerFactory(interleaveLoopContext).create(replaced, interleaveLoopContext);
     }
 
     // Visible for Test
@@ -59,9 +58,9 @@ public class InterleaveLoop implements IteratorQueue {
         containsLoop = actualRun.containsLoop() | containsLoop;
         TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = actualRun.run();
 
-        if(containsLoop)  {
+       /* if(containsLoop)  {
             withLoops = new InterleaveActionLoopFactory().create(actualRun.run());
-        }
+        }*/
 
         if(TRACE_INTERLEAVE_ACTIONS) {
             String[] array = new String[withLoops.size() + 1];

@@ -5,9 +5,9 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Or
 public class StartOrNext extends StartOrEither {
 
     @Override
-    public OrderTreeNode build() {
+    public OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext) {
         if(getNext() != null)  {
-            return getNext().build();
+            return getNext().build(orderTreeBuilderContext);
         }
         return null;
     }

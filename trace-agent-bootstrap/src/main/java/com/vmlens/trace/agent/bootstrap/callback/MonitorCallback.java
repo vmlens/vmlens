@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.AfterMonitorEnterAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.AfterMonitorExitAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.AfterMonitorEnterAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.AfterMonitorExitAction;
 
 public class MonitorCallback {
 

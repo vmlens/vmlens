@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.patterndetection;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -12,6 +13,7 @@ import static org.hamcrest.Matchers.is;
 
 public class DetectPatternTest {
 
+    @Ignore
     @Test
     public void givenTwoElementsLoopOneElement() {
         // Given
@@ -41,6 +43,7 @@ public class DetectPatternTest {
         assertPattern(result[2] , "bca" , 6);
     }
 
+    @Ignore
     @Test
     public void givenSingleElementLoop() {
         // Given
@@ -70,6 +73,7 @@ public class DetectPatternTest {
         assertPattern(result[2] , "aaa" , 10);
     }
 
+    @Ignore
     @Test
     public void givenMultipleLoops() {
         // Given

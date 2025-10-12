@@ -15,10 +15,13 @@ public class Either extends StartOrEither {
     }
 
     @Override
-    public OrderTreeNode build() {
+    public OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext) {
         OrderTreeNode nextNode = null;
-        if(getNext() != null) {
-            nextNode = getNext().build();
+        orderTreeBuilderContext.incrementEitherBlockCount();
+        if( ! orderTreeBuilderContext.thresholdReached()) {
+            if(getNext() != null) {
+                nextNode = getNext().build(orderTreeBuilderContext);
+            }
         }
         return new SingleChildNode(nextNode,orderAlternativeA,orderAlternativeB);
     }

@@ -2,19 +2,19 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.AfterMethodCallAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.BeforeMethodCallAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodExitAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.AfterMethodCallAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.BeforeMethodCallAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodEnterAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodExitAction;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapter;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapterPreAnalyzed;
 
-import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction.methodEnterAction;
-import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodEnterAction.methodEnterActionWithIntParameter;
-import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodExitAction.methodExitAction;
-import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.MethodExitAction.methodExitActionWithReturnValue;
+import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodEnterAction.methodEnterAction;
+import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodEnterAction.methodEnterActionWithIntParameter;
+import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodExitAction.methodExitAction;
+import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodExitAction.methodExitActionWithReturnValue;
 
 
 public class PreAnalyzedCallback {
@@ -37,7 +37,7 @@ public class PreAnalyzedCallback {
     public static void methodEnter(Object object, int methodId) {
         MethodEnterAction methodEnterAction = methodEnterAction(object,
                 methodId,methodStrategyAdapter);
-        callbackActionProcessor.processWithCheckNewThread(methodEnterAction);
+        callbackActionProcessor.process(methodEnterAction);
     }
 
     public static void methodEnterWithIntParam(Object object,

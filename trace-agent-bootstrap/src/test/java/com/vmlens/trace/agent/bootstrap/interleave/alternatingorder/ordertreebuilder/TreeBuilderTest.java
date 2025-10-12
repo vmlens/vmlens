@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebu
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.*;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
+import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
@@ -30,7 +32,7 @@ public class TreeBuilderTest {
                 .either(new AlternativeOneOrder(either1B),new AlternativeNoOrder(true));
         choice.next().either(nextEither,new AlternativeOneOrder(nextOrder));
 
-        OrderTree tree = builder.build();
+        OrderTree tree = builder.build(new InterleaveLoopContextBuilder().build(new QueueInMock(),0));
 
         // Then
         assertThat(tree.start(),instanceOf(TwoChildrenNode.class));

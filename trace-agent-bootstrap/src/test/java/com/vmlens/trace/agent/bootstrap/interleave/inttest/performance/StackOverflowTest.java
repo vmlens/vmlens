@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import org.junit.Test;
 
-import static com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner.TRACE;
+import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_INTERLEAVE_INT_TEST_PERFORMANCE;
 
 
 /*
@@ -47,7 +47,7 @@ public class StackOverflowTest extends AbstractInterleaveActionBuilder {
          */
         new IntTestRunner().runTest(new InterleaveActionNonBlockingAtomic().build(),expectedBuilder.buildExpected(),
                 new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(8).build(new QueueInMock(),0));
-        if(TRACE) {
+        if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
             System.out.println("took " + (System.currentTimeMillis() - start));
         }
     }

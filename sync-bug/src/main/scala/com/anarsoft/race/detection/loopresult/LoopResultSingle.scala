@@ -32,7 +32,6 @@ class LoopResultSingle(val loopId : Int,
     } else if (newRunResult.dataRaceCount > runResult.dataRaceCount) {
       runResult = newRunResult;
     } else if (runResult.dataRaceCount > newRunResult.dataRaceCount) {
-   
     } else if (newRunResult.warningIdList.size > runResult.warningIdList.size) {
       runResult = newRunResult;
     } else if ( runResult.warningIdList.size > newRunResult.warningIdList.size ) {

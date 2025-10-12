@@ -11,32 +11,28 @@ import static com.vmlens.trace.agent.bootstrap.interleave.InterleaveActionGuinea
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 
-public class ReplacePatternTest extends AbstractInterleaveActionBuilder {
+public class ReplacePatternTwoLoopsTest extends AbstractInterleaveActionBuilder {
 
     @Test
-    public void givenTwoElementsLoopOneElement() {
+    public void oneElementTwoLoops() {
         // Given
         List<InterleaveAction> list =
                 new LinkedList<>();
         list.add(action(0,"g"));
-        list.add(action(0,"h"));
-
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 7; i++) {
             list.add(action(0,"a"));
-            list.add(action(0,"b"));
-            list.add(action(0,"c"));
+        }
+        list.add(action(0,"i"));
+        for(int i = 0; i < 7; i++) {
+            list.add(action(0,"a"));
         }
 
-        list.add(action(0,"i"));
-        list.add(action(0,"j"));
-
         InterleaveAction[] array = list.toArray(new InterleaveAction[]{});
-
-        PatternKeyAndCount[] patternKeys = new PatternKeyAndCount[2];
+        PatternKeyAndCount[] patternKeys = new PatternKeyAndCount[1];
         // PatternKeyAndCount{patternKey=abc, count=7}
-        patternKeys[0] =  new PatternKeyAndCount(new PatternKey(array, 0, 2 , 3) , 7);
+        patternKeys[0] =  new PatternKeyAndCount(new PatternKey(array, 0, 1 , 1) , 12);
         // PatternKeyAndCount{patternKey=cab, count=6}
-        patternKeys[1] = new PatternKeyAndCount(new PatternKey(array, 0, 4 , 3) , 6);
+
 
         // When
         InterleaveAction[] result = new ReplacePattern(array,patternKeys).replace();
@@ -50,32 +46,21 @@ public class ReplacePatternTest extends AbstractInterleaveActionBuilder {
     @Override
     protected void addActions() {
         guineaPig(0,"g");
-        guineaPig(0,"h");
         guineaPig(0,"a");
-        guineaPig(0,"b");
-        guineaPig(0,"c");
-        noOp(0);
         noOp(0);
         noOp(0);
         noOp(0);
         noOp(0);
         noOp(0);
         guineaPig(0,"a");
-        guineaPig(0,"b");
-        guineaPig(0,"c");
-        noOp(0);
-        noOp(0);
-        noOp(0);
-        noOp(0);
-        noOp(0);
-        noOp(0);
-        noOp(0);
-        noOp(0);
-        noOp(0);
-        guineaPig(0,"a");
-        guineaPig(0,"b");
-        guineaPig(0,"c");
         guineaPig(0,"i");
-        guineaPig(0,"j");
+        guineaPig(0,"a");
+        noOp(0);
+        noOp(0);
+        noOp(0);
+        noOp(0);
+        noOp(0);
+        guineaPig(0,"a");
     }
+
 }

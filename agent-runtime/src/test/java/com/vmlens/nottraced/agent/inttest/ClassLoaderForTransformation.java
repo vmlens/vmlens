@@ -9,9 +9,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import static com.vmlens.transformed.agent.bootstrap.TraceFlags.TRACE_CLASSES_INT_TEST;
+
 public class ClassLoaderForTransformation extends ClassLoader {
 
-    private static final boolean TRACE_CLASSES = false;
     private final ClassLoader testClassLoader;
 
     public ClassLoaderForTransformation(ClassLoader testClassLoader) {
@@ -48,7 +49,7 @@ public class ClassLoaderForTransformation extends ClassLoader {
                 return defineClass(name, targetArray, 0, targetArray.length);
             }
 
-            if (TRACE_CLASSES) {
+            if (TRACE_CLASSES_INT_TEST) {
                 String fileName = name.substring(name.lastIndexOf("/") + 1);
                 OutputStream outTransformed = new FileOutputStream(fileName + "_trans.class");
                 outTransformed.write(transformed);

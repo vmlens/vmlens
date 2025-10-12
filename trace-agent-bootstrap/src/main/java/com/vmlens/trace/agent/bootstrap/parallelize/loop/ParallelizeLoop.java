@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
-import com.vmlens.trace.agent.bootstrap.event.SerializableEvent;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.FirstMethodInThread;
+import com.vmlens.trace.agent.bootstrap.event.queue.EventQueue;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunEndEvent;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunStartEvent;
@@ -11,17 +12,13 @@ import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.NewTaskContext;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachineFactory;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.WaitNotifyStrategy;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunImpl;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
-import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.linked.TLinkedList;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
 import java.util.Iterator;
 import java.util.concurrent.locks.ReentrantLock;
-
-import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class ParallelizeLoop {
 
@@ -45,10 +42,11 @@ public class ParallelizeLoop {
 
     public void newTask(QueueIn queueIn,
                         ThreadLocalForParallelize threadLocalForParallelize,
-                        ThreadWrapper beganTask) {
+                        ThreadWrapper beganTask,
+                        FirstMethodInThread firstMethodInThread) {
         lock.lock();
         try {
-              currentRun.newTask(new NewTaskContext(queueIn, beganTask, threadLocalForParallelize));
+              currentRun.newTask(new NewTaskContext(queueIn, beganTask, threadLocalForParallelize,firstMethodInThread));
         } finally {
             lock.unlock();
         }
@@ -123,4 +121,16 @@ public class ParallelizeLoop {
     public int loopId() {
         return loopId;
     }
+
+    public void checkBlocked(EventQueue eventQueue) {
+        lock.lock();
+        try {
+            if(currentRun != null) {
+                currentRun.checkBlocked(eventQueue);
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
 }

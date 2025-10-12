@@ -13,7 +13,7 @@ public class TestDoNotTraceInTest {
     @Test
     public void doNotTrace() {
         // Given
-        ThreadLocalWhenInTest threadLocalWhenInTest = new ThreadLocalWhenInTest(null,0);
+        ThreadLocalWhenInTest threadLocalWhenInTest = new ThreadLocalWhenInTest(null,0, null);
         StacktraceDepthProvider before = new StacktraceDepthProviderMock(3);
         StacktraceDepthProvider at = new StacktraceDepthProviderMock(7);
         StacktraceDepthProvider after = new StacktraceDepthProviderMock(9);

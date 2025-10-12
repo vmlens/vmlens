@@ -9,6 +9,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.RunStateMachine;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.RunState;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.RunStateActive;
+import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.RunStateAndChangeFlag;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.runstate.RunStateEnd;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalWhenInTestForParallelize;
@@ -22,8 +23,10 @@ public class RunStateMachineImpl implements RunStateMachine  {
     }
 
     @Override
-    public void after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
-        currentState = currentState.after(afterContext,sendEvent);
+    public boolean after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
+        RunStateAndChangeFlag result = currentState.after(afterContext, sendEvent);
+        currentState = result.nextState();
+        return result.change();
     }
 
     @Override
@@ -48,8 +51,8 @@ public class RunStateMachineImpl implements RunStateMachine  {
     }
 
     @Override
-    public boolean checkStopWaiting(SendEvent sendEvent,int waitingThreadIndex) {
-        RunStateAndResult<Boolean> result = currentState.checkBlocked(sendEvent,waitingThreadIndex);
+    public boolean activeThreadWasBlocked(SendEvent sendEvent) {
+        RunStateAndResult<Boolean> result = currentState.checkBlocked(sendEvent);
         currentState = result.runState();
         return result.result();
     }
@@ -70,4 +73,5 @@ public class RunStateMachineImpl implements RunStateMachine  {
     public boolean isEnded() {
         return currentState.isEnded();
     }
+
 }

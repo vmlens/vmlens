@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.facade;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.FirstMethodInThread;
+import com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.loop.ParallelizeLoopRepository;
@@ -25,9 +27,10 @@ public class ParallelizeFacade {
 
     public void newTask(QueueIn queueIn,
                         ThreadLocalForParallelize threadLocalWrapperForParallelize,
-                        ThreadWrapper beganTask) {
+                        ThreadWrapper beganTask,
+                        FirstMethodInThread firstMethodInThread) {
         if (currentLoop != null) {
-            currentLoop.loop().newTask(queueIn, threadLocalWrapperForParallelize, beganTask);
+            currentLoop.loop().newTask(queueIn, threadLocalWrapperForParallelize, beganTask,firstMethodInThread);
         }
     }
 
@@ -47,5 +50,13 @@ public class ParallelizeFacade {
         currentLoop.loop().close(threadLocalWrapperForParallelize);
         parallelizeLoopRepository.remove(currentLoop.object());
         currentLoop = null;
+    }
+
+    public void checkBlocked() {
+        ObjectAndParallelizeLoop temp = currentLoop;
+        if(temp != null) {
+            temp.loop().checkBlocked(EventQueueSingleton.eventQueue);
+        }
+
     }
 }

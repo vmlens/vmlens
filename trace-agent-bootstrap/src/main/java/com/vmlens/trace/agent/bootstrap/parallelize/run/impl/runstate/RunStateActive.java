@@ -36,9 +36,9 @@ public class RunStateActive extends ProcessLockExitOrWaitTemplate implements Run
 
 
     @Override
-    public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
-        process(afterContext, sendEvent, runStateContext);
-        return this;
+    public RunStateAndChangeFlag after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
+        boolean change = process(afterContext, sendEvent, runStateContext);
+        return new RunStateAndChangeFlag(this, change);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class RunStateActive extends ProcessLockExitOrWaitTemplate implements Run
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent, int waitingThreadIndex) {
-        if(runStateContext.isBlocked(sendEvent,waitingThreadIndex)) {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
+        if(runStateContext.isBlocked(sendEvent)) {
             return new RunStateAndResult<>(new RunStateActive(runStateContext),true);
         }
         return new RunStateAndResult<>(this,false);

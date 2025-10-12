@@ -21,8 +21,8 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public RunState after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
-        return this;
+    public RunStateAndChangeFlag after(AfterContextForStateMachine afterContext, SendEvent sendEvent) {
+        return new RunStateAndChangeFlag(this, false);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class RunStateEnd implements RunState {
     }
 
     @Override
-    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent,int waitingThreadIndex) {
+    public RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent) {
         return new RunStateAndResult<>(this,false);
     }
 

@@ -2,6 +2,7 @@ package com.vmlens.nottraced.agent.write;
 
 import com.vmlens.transformed.agent.bootstrap.event.SerializableEvent;
 import com.vmlens.transformed.agent.bootstrap.event.stream.StreamRepository;
+import com.vmlens.transformed.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.transformed.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
 import java.lang.management.ManagementFactory;
@@ -53,20 +54,22 @@ public class WriteEventToFile implements Runnable {
         boolean deadlockLogged = false;
 
         testAndAddShutdownHook();
-        boolean process = true;
-        while (process) {
+        long nothingReceivedFor = System.currentTimeMillis();
+        boolean pleaseStop = false;
+        while (true) {
             try {
                 SerializableEvent in = eventQueue.take();
                 if (in != null) {
+                    nothingReceivedFor = System.currentTimeMillis();
                     if (in instanceof PoisonedEvent) {
-                        close();
-                        process = false;
-                        setPoisonedEventReceived();
+                        pleaseStop = true;
                     } else {
                         in.serialize(streamRepository);
                     }
                 } else {
-                    Thread.yield();
+
+                    ParallelizeFacade.parallelize().checkBlocked();
+                    Thread.sleep(1);
                     if ((timerForDemonThreadDetection + 500) < System.currentTimeMillis()) {
                         timerForDemonThreadDetection = System.currentTimeMillis();
                         long[] threadIds = bean.getAllThreadIds();
@@ -86,9 +89,14 @@ public class WriteEventToFile implements Runnable {
                             }
                         }
                         if(! nonDemonThreadActive) {
+                            pleaseStop = true;
+                        }
+                    }
+                    if(pleaseStop) {
+                        if(nothingReceivedFor > (System.currentTimeMillis() - 1000)) {
                             close();
-                            process = false;
                             setPoisonedEventReceived();
+                            return;
                         }
                     }
                 }

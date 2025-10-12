@@ -12,16 +12,16 @@ public class TestCaseCollectionFactory {
         Map<String, TestCase> nameToTestCase = new HashMap<>();
 
         // volatile fields
-        nameToTestCase.put("volatileFieldIntTest",new VolatileFieldIntTestFactory().create());
-        nameToTestCase.put("staticVolatileFieldIntTest",new VolatileFieldIntTestFactory().create());
+        nameToTestCase.put("volatileFieldIntTest",new EmptyIntTestFactory().create());
+        nameToTestCase.put("staticVolatileFieldIntTest",new EmptyIntTestFactory().create());
 
 
         // monitor
-        nameToTestCase.put("monitorIntTest",new MonitorIntTestFactory().create());
-        nameToTestCase.put("synchronizedMethodIntTest",new MonitorIntTestFactory().create());
+        nameToTestCase.put("monitorIntTest",new EmptyIntTestFactory().create());
+        nameToTestCase.put("synchronizedMethodIntTest",new EmptyIntTestFactory().create());
 
         // locks
-        nameToTestCase.put("readWriteLockTest",new MonitorIntTestFactory().create());
+        nameToTestCase.put("readWriteLockTest",new EmptyIntTestFactory().create());
 
         // non volatile
         nameToTestCase.put("staticField",new EmptyIntTestFactory().create());

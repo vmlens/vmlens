@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.18</version>
+    <version>1.2.19-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
