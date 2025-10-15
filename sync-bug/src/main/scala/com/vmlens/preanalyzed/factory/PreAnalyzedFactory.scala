@@ -193,6 +193,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       
       Filter("java"),
       Filter("sun"),
+      Filter("com/sun/"),
       Filter("jdk"),
 
       Filter("net/bytebuddy"),

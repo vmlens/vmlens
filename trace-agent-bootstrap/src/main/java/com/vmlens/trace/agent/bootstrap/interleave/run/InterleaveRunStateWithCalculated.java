@@ -10,6 +10,7 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThreadStateMap;
 import gnu.trove.list.linked.TIntLinkedList;
 
+import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_BLOCKED;
 import static com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRunStateWithoutCalculated.createNewStateAfterBlocked;
 
 
@@ -78,7 +79,9 @@ public class InterleaveRunStateWithCalculated implements InterleaveRunState {
     public InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext,
                                                    SendEvent sendEvent,
                                                    int blockedThreadIndex) {
-        sendEvent.sendMessage(LoopWarningEvent.testBlocked());
+        if(TRACE_BLOCKED) {
+            sendEvent.sendMessage(LoopWarningEvent.testBlocked());
+        }
         return createNewStateAfterBlocked( runContext, sendEvent, blockedThreadIndex);
     }
 

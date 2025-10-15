@@ -82,11 +82,6 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
     public void startDoNotTrace(StacktraceDepthProvider stacktraceDepthProvider) {
         if(startDoNotTrace == null) {
             startDoNotTrace = stacktraceDepthProvider.getStacktraceDepth();
-            return;
-        }
-        int newDepth = stacktraceDepthProvider.getStacktraceDepth();
-        if( newDepth <  startDoNotTrace ) {
-            startDoNotTrace = newDepth;
         }
     }
 

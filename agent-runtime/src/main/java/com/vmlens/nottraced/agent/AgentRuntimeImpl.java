@@ -17,6 +17,7 @@ import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
 
+import static com.vmlens.transformed.agent.bootstrap.TraceFlags.TRACE_CLASSES_LOADED_DURING_STARTUP;
 import static com.vmlens.transformed.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.decrementInsideVMLens;
 import static com.vmlens.transformed.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.incrementInsideVMLens;
 
@@ -90,6 +91,13 @@ public class AgentRuntimeImpl implements AgentRuntime {
 
             WriteEventToFile.startWriteEventToFileThread(outputFileName);
 
+            /*
+             * we need at least one message in the agent log
+             * since the data race check checks if the file exists to check if there
+             * are test runs
+             */
+            EventQueueSingleton.eventQueue.offer(new InfoMessageEvent(new String[] {"agent started"}));
+
             for (TLinkableWrapper<InfoMessageEvent> infoMessageEvent : infoMessageEventList) {
                 EventQueueSingleton.eventQueue.offer(infoMessageEvent.element());
             }
@@ -121,10 +129,11 @@ public class AgentRuntimeImpl implements AgentRuntime {
         Class[] toBeRetransformed = new Class[transformableClasses.size()];
         int i = 0;
         for (TLinkableWrapper<Class> cl : transformableClasses) {
-            InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
-            builder.add(cl.element().getName());
-            writeClassDescriptionAndWarning.write(builder.build());
-
+            if(TRACE_CLASSES_LOADED_DURING_STARTUP) {
+                InfoMessageEventBuilder builder = new InfoMessageEventBuilder();
+                builder.add(cl.element().getName());
+                writeClassDescriptionAndWarning.write(builder.build());
+            }
             toBeRetransformed[i] = cl.element();
             i++;
         }

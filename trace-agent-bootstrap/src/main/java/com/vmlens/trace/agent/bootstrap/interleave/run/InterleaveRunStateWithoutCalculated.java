@@ -8,6 +8,8 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThrea
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.list.linked.TIntLinkedList;
 
+import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_BLOCKED;
+
 public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  {
 
     private final int currentThreadIndex;
@@ -20,7 +22,9 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
     static InterleaveRunStateWithoutCalculated createNewStateAfterBlocked(ThreadIndexAndThreadStateMap runContext,
                                                                           SendEvent sendEvent,
                                                                           int blockedThreadIndex) {
-        runContext.logStackTrace(sendEvent,blockedThreadIndex);
+        if(TRACE_BLOCKED) {
+            runContext.logStackTrace(sendEvent,blockedThreadIndex);
+        }
         int activeThreadIndex = 0;
         TIntIterator iterator = runContext.getActiveThreadIndices().iterator();
         while(iterator.hasNext()) {

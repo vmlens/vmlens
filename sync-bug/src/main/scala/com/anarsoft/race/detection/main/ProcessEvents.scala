@@ -20,13 +20,14 @@ class ProcessEvents(val eventDir: Path,
 
 
   def hasThreadAndLoopDescription() : Boolean =
-    new LoadDescriptionImpl(eventDir).hasThreadAndLoopDescription();
+    new LoadDescriptionImpl(eventDir).hasThreadAndLoopDescription;
 
   def process(): ResultForVerify = {
     val agentLog = new LoadAgentLog(eventDir);
 
     if( ! agentLog.hasAgentLog()) {
       val result = new ResultForVerify();
+      result.setNoAgentRun(true);
       result.setNoTestsRun(true);
       return result;
     }
@@ -41,6 +42,13 @@ class ProcessEvents(val eventDir: Path,
 
 
     val loadDescription = new LoadDescriptionImpl(eventDir)
+
+    if (!loadDescription.hasThreadAndLoopDescription) {
+      val result = new ResultForVerify();
+      result.setNoTestsRun(true);
+      return result;
+    }
+
     val loadRuns = new LoadRunsFactory().create(eventDir)
     val processRun = new ProcessRunImpl(processRunContext);
     val loopReportBuilder = new LoopReportBuilderImpl(new ReportBuilder());
