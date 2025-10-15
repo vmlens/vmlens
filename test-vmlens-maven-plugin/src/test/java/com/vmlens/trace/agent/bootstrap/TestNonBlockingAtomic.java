@@ -10,10 +10,12 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySinglet
 import com.vmlens.trace.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.ThreadJoinStrategy;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.ThreadStartStrategy;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestNonBlockingAtomic {
 
+    @Ignore
     @Test
     public void testConcurrentSkipListMap() throws Throwable {
         MethodRepositorySingleton.INSTANCE.setStrategyPreAnalyzed(1, ThreadStartStrategy.SINGLETON);

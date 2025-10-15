@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Or
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.SingleChildNode;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.Barrier;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify;
@@ -15,6 +16,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.B
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.FutureKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileFieldKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
@@ -48,7 +50,7 @@ public class KeyToOperationTest {
 
         // When
         keyToOperation.process(context, orderTreeBuilder.start());
-        OrderTree orderTree = orderTreeBuilder.build();
+        OrderTree orderTree = orderTreeBuilder.build(new InterleaveLoopContextBuilder().build(new QueueInMock(),0));
 
         // Then
         assertThat(orderTree.start().hasSameOrder(expectedNode),is(true));
@@ -77,7 +79,7 @@ public class KeyToOperationTest {
 
         // When
         keyToOperation.process(context, orderTreeBuilder.start());
-        OrderTree orderTree = orderTreeBuilder.build();
+        OrderTree orderTree = orderTreeBuilder.build(new InterleaveLoopContextBuilder().build(new QueueInMock(),0));
 
         // Then
         assertThat(orderTree.start().hasSameOrder(expectedNode),is(true));

@@ -10,18 +10,17 @@ public class LoopCounter {
 
     public InterleaveRunState onPluginEvent(int threadIndex,
                                             ThreadIndexAndThreadStateMap context,
-                                            AfterCallback afterCallback,
-                                            InterleaveRunState previous) {
+                                            AfterCallback afterCallback) {
         if(forThreadIndex != threadIndex) {
             forThreadIndex = threadIndex;
             pluginEventOnly = 0;
             interleaveAction = 0;
-            return previous;
+            return null;
         }
         pluginEventOnly++;
 
         if(pluginEventOnly < afterCallback.unsynchronizedOperationsLoopThreshold()) {
-            return previous;
+            return null;
         }
 
         afterCallback.onNonVolatileLoop();
@@ -31,19 +30,18 @@ public class LoopCounter {
 
     public InterleaveRunState onInterleaveActionFactory(int threadIndex,
                                                         ThreadIndexAndThreadStateMap context,
-                                                        AfterCallback afterCallback,
-                                                        InterleaveRunState previous) {
+                                                        AfterCallback afterCallback) {
         if(forThreadIndex != threadIndex) {
             forThreadIndex = threadIndex;
             pluginEventOnly = 0;
             interleaveAction = 0;
-            return previous;
+            return null;
         }
         interleaveAction++;
         pluginEventOnly = 0;
 
         if(interleaveAction < afterCallback.synchronizationActionsLoopThreshold()) {
-            return previous;
+            return null;
         }
 
         afterCallback.onSynchronizedActionLoop();

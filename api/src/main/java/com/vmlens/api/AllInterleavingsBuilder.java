@@ -29,8 +29,8 @@ public class AllInterleavingsBuilder {
         return new AllInterleavings(name , false,
                 maximumIterations,
                 maximumAlternatingOrders,
+                100,
                 500,
-                5000,
                 reportAsSummaryThreshold);
     }
 

@@ -1,10 +1,9 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.ThreadJoinByThreadPool;
 
-public class ThreadPoolJoinAction implements CallbackAction  {
+public class ThreadPoolJoinAction  extends NoMethodAction {
 
     private final Object taskOrPool;
 

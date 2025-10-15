@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.callback;
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.ArrayAccessAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.ArrayAccessAction;
 
 public class ArrayCallback {
 

@@ -25,7 +25,11 @@ public class ReportBuildAlgo {
         Map<List<UIStacktraceElement>, UIStacktraceLeaf> leafNodes = new HashMap<>();
         List<UILoopAndRunElementWithStacktraceLeafs> uiLoopAndRunElementsList = new LinkedList<>();
         for (LoopAndRun loopAndRun : loopAndRuns) {
-            UITestLoop uiTestLoop = new UITestLoop(descriptionContext.loopName(loopAndRun.loop().loopId()),
+            String loopName = descriptionContext.loopName(loopAndRun.loop().loopId());
+            if(loopName.equals("loop.petersonOk")) {
+                System.out.println(loopName + " " + loopAndRun.loop().loopId());
+            }
+            UITestLoop uiTestLoop = new UITestLoop(loopName,
                     loopAndRun.loop().count(),
                     loopAndRun.loop().testResult().text());
             loopAndRun.runElements().sort(new RunElementByRunPositionComparator());

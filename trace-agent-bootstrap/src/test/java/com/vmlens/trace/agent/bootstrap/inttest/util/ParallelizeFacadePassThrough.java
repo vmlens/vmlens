@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.inttest.util;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.FirstMethodInThread;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
@@ -19,7 +20,7 @@ public class ParallelizeFacadePassThrough extends ParallelizeFacade {
 
     @Override
     public void newTask(QueueIn queueIn, ThreadLocalForParallelize threadLocalForParallelize,
-                        ThreadWrapper beganTask) {
-         run.newTask(new NewTaskContext(queueIn, beganTask, threadLocalForParallelize));
+                        ThreadWrapper beganTask, FirstMethodInThread firstMethodInThread) {
+         run.newTask(new NewTaskContext(queueIn, beganTask, threadLocalForParallelize,firstMethodInThread));
     }
 }

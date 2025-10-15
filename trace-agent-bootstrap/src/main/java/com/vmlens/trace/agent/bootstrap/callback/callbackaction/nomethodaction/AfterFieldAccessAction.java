@@ -1,11 +1,10 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.OnAfterMethodCall;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class AfterFieldAccessAction implements CallbackAction  {
+public class AfterFieldAccessAction extends NoMethodAction {
 
     private final ReadWriteLockMap readWriteLockMap;
 

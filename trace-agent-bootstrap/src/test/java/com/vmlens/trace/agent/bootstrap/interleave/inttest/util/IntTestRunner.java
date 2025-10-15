@@ -12,12 +12,11 @@ import gnu.trove.list.linked.TLinkedList;
 
 import java.util.*;
 
+import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_INTERLEAVE_INT_TEST_PERFORMANCE;
 import static com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop.create;
 import static com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop.createAlternatingOrderContainer;
 
 public class IntTestRunner {
-
-    public static final boolean TRACE = false;
 
     public List<Position[]> runTest(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,
                                          Expected expected) {
@@ -38,7 +37,7 @@ public class IntTestRunner {
         while (iter.hasNext()) {
             CalculatedRun calculatedRun = iter.next();
             if (calculatedRun != null) {
-                if(TRACE) {
+                if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
                     System.out.println(wasNull);
                 }
                 wasNull = 0L;

@@ -19,11 +19,12 @@ public class ChoiceAlternative  implements EitherInChoice {
         return next;
     }
 
-    public OrderTreeNode build() {
+    public OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext) {
+        orderTreeBuilderContext.incrementEitherBlockCount();
         if(next == null) {
-            return last.build();
+            return last.build(orderTreeBuilderContext);
         }
-        return next.build();
+        return next.build(orderTreeBuilderContext);
     }
 
     public int getLength() {

@@ -18,6 +18,7 @@ import java.io.File;
 
 import static com.vmlens.setup.SetupAgent.AGENT_DIRECTORY;
 import static com.vmlens.setup.SetupAgent.REPORT_DIRECTORY;
+import static org.apache.maven.surefire.shared.utils.StringUtils.isNotBlank;
 
 @Mojo(  name = "test",
         defaultPhase = LifecyclePhase.TEST,
@@ -38,6 +39,10 @@ public class VMLensMojo extends SurefireMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if (isSkipExecution()) {
+            return;
+        }
+
         prepareAgent();
         MojoFailureException mojoFailureException = null;
         try{
@@ -59,9 +64,8 @@ public class VMLensMojo extends SurefireMojo {
         ResultForVerify result = new ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
                 new ProcessRunContextBuilder().build()).process();
-
-        if(result.noTestsRun()) {
-            this.getLog().info("No VMLens tests run.");
+        if(result.noTestsRun() && getEffectiveFailIfNoTests()) {
+            throw new MojoFailureException("No VMLens Tests run");
         } else {
             handleResult(result,reportDirectory,mojoFailureException,this.getLog());
         }
@@ -81,6 +85,18 @@ public class VMLensMojo extends SurefireMojo {
                     result.dataRaceCount(),reportDirectory.toString()));
         }
         log.info(String.format("See %s for the vmlens report.", reportDirectory.toString()));
+    }
+
+    private boolean isSpecificTestSpecified() {
+        return isNotBlank(getTest());
+    }
+
+    private boolean getEffectiveFailIfNoTests() {
+        if (isSpecificTestSpecified()) {
+            return getFailIfNoSpecifiedTests();
+        } else {
+            return getFailIfNoTests();
+        }
     }
 
 }

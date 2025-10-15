@@ -15,4 +15,9 @@ public class WaitNotifyStrategyMock implements WaitNotifyStrategy {
                                         SendEvent sendEvent) {
 
     }
+
+    @Override
+    public void wakeUpAllThreads(Condition threadActiveCondition) {
+
+    }
 }

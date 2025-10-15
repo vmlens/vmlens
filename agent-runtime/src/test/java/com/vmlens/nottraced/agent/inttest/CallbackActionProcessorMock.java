@@ -26,19 +26,13 @@ public class CallbackActionProcessorMock implements CallbackActionProcessor {
         return true;
     }
 
-    @Override
-    public void processWithCheckNewThread(CallbackAction callbackAction) {
-        add(callbackAction.getClass());
-    }
 
     @Override
     public void startDoNotTrace() {
-
     }
 
     @Override
     public void endDoNotTrace() {
-
     }
 
     public void add(Class cl) {

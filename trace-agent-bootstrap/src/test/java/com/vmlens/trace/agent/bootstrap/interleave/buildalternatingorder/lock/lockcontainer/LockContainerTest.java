@@ -5,8 +5,10 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Or
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.SingleChildNode;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.MonitorKey;
+import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
@@ -37,7 +39,7 @@ public class LockContainerTest {
 
         // When
         firstBlock.addToAlternatingOrder(secondBlock,context,treeBuilder.start());
-        OrderTree orderTree = treeBuilder.build();
+        OrderTree orderTree = treeBuilder.build(new InterleaveLoopContextBuilder().build(new QueueInMock(),0));
 
         // Then
         assertThat(orderTree.start().hasSameOrder(expectedNode),is(true));

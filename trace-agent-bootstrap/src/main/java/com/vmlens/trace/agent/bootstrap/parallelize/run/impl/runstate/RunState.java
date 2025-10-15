@@ -16,13 +16,13 @@ public interface RunState {
     boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent);
 
     // writing
-    RunState  after(AfterContextForStateMachine afterContext, SendEvent sendEvent);
+    RunStateAndChangeFlag  after(AfterContextForStateMachine afterContext, SendEvent sendEvent);
 
     RunStateAndResult<ThreadLocalWhenInTest> processNewTestTask(NewTaskContext newTaskContext,
                                                                 Run run,
                                                                 SendEvent sendEvent);
 
-    RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent,int waitingThreadIndex);
+    RunStateAndResult<Boolean> checkBlocked(SendEvent sendEvent);
 
     RunState beforeLockExitWaitOrThreadStart(ExecuteBeforeEvent lockExitOrWaitEvent,
                                              ThreadLocalWhenInTest threadLocalDataWhenInTest,

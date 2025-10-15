@@ -16,7 +16,7 @@ class LoadDescriptionImpl(dir: Path) extends LoadDescription {
     loadThreadAndLoopDescription(descriptionBuilder);
   }
   
-  def hasThreadAndLoopDescription() : Boolean = 
+  def hasThreadAndLoopDescription: Boolean = 
     dir.resolve(THREAD_AND_LOOP_DESCRIPTION + EVENT_FILE_POSTFIX).toFile.exists()
   
 

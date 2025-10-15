@@ -6,15 +6,16 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPo
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
-import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.DeadlockOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.LockContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.VolatileAccess;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.Barrier;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileKey;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.DeadlockOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.LockContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileaccesskey.VolatileKey;
+import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToMaxPosition;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
@@ -34,12 +35,17 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
  */
 public class KeyToOperationCollection {
 
+    private final InterleaveLoopContext interleaveLoopContext;
     private final KeyToOperation<VolatileKey, DependentOperationAndPosition<VolatileAccess>> volatileAccess = new KeyToOperation<>();
     private final KeyToOperation<LockKey, LockContainer> lockAndConditions = new KeyToOperation<>();
     private final KeyToOperation<BarrierKey, DependentOperationAndPosition<Barrier>> barrier = new KeyToOperation<>();
     private final TLinkedList<TLinkableWrapper<ElementAndPosition<IndependentBlock>>> independentActions = new TLinkedList<>();
 
     private TLinkedList<TLinkableWrapper<DeadlockOperation>> deadlocks;
+
+    public KeyToOperationCollection(InterleaveLoopContext interleaveLoopContext) {
+        this.interleaveLoopContext = interleaveLoopContext;
+    }
 
     public void addVolatile(VolatileKey key, DependentOperationAndPosition<VolatileAccess> operation) {
         volatileAccess.put(key,operation);
@@ -87,6 +93,6 @@ public class KeyToOperationCollection {
             node = op.element().addToAlternatingOrder(node);
         }
 
-        return treeBuilder.build();
+        return treeBuilder.build(interleaveLoopContext);
     }
 }

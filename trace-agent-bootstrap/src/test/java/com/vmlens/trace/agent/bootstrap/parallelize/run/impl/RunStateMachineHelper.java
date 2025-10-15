@@ -77,7 +77,7 @@ public class RunStateMachineHelper {
         ThreadStartEvent event = new ThreadStartEvent(threadWrapper,THREAD.code());
         runStateMachineImpl().beforeLockExitWaitOrThreadStart(event,mainThread,sendEvent());
         ThreadLocalForParallelize threadLocalForParallelize = createThreadLocalForParallelize(threadState);
-        NewTaskContext newTaskContext = new NewTaskContext(queueInMock(),threadWrapper,threadLocalForParallelize);
+        NewTaskContext newTaskContext = new NewTaskContext(queueInMock(),threadWrapper,threadLocalForParallelize,null);
         return runStateMachineImpl().processNewTestTask(newTaskContext, run(),sendEvent());
     }
 

@@ -80,16 +80,14 @@ public class ProcessEvents {
         Set<String> testWithDataRace = new HashSet<>();
         testWithDataRace.add("qBeanSupportConcurrentTest");
         testWithDataRace.add("loop.petersonNok");
-       // testWithDataRace.add("loop.petersonOk");
         testWithDataRace.add("loop.nok");
-        //testWithDataRace.add("jdbcJobExecutionDao");
+       // testWithDataRace.add("jdbcJobExecutionDao");
 
 
         Set<String> filter
                 = new HashSet<>();
-        filter.add("loop.petersonOk");
+        // not sure why this is happening
         filter.add("jdbcJobExecutionDao");
-
         checkDataRaces(testWithDataRace,filter,result);
     }
 

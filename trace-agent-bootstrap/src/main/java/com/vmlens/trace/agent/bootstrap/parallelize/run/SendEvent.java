@@ -34,4 +34,7 @@ public class SendEvent {
         queueIn.offer(message);
     }
 
+    public int runId() {
+        return run.runId();
+    }
 }

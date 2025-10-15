@@ -2,8 +2,11 @@ package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.AfterContext;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.queue.EventQueue;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.specialevents.ParallelizeActionMultiJoin;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
@@ -45,7 +48,10 @@ public class RunImpl implements Run {
         try {
             afterContext.runtimeEvent().setRunId(runId);
             afterContext.runtimeEvent().setLoopId(loopId);
-            runStateMachine.after(AfterContextForStateMachine.of(afterContext),SendEvent.create(afterContext,this));
+            boolean change = runStateMachine.after(AfterContextForStateMachine.of(afterContext),SendEvent.create(afterContext,this));
+            if(change) {
+                waitNotifyStrategy.wakeUpAllThreads(threadActiveCondition);
+            }
             if(afterContext.runtimeEvent().asInterleaveActionFactory() != null) {
                 waitNotifyStrategy.notifyAndWaitTillActive(afterContext.threadLocalDataWhenInTest(),
                         runStateMachine,
@@ -53,6 +59,21 @@ public class RunImpl implements Run {
                         SendEvent.create(afterContext,this));
             }
         } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void afterLastThreadAction(ThreadLocalWhenInTest threadLocalDataWhenInTest,
+                                      QueueIn queueIn,
+                                      RuntimeEvent runtimeEvent) {
+        lock.lock();
+        try {
+            AfterContext afterContext = new AfterContext(threadLocalDataWhenInTest,runtimeEvent,queueIn);
+            runStateMachine.after(AfterContextForStateMachine.of(afterContext),SendEvent.create(afterContext,this));
+            waitNotifyStrategy.wakeUpAllThreads(threadActiveCondition);
+        }
+        finally {
             lock.unlock();
         }
     }
@@ -185,6 +206,16 @@ public class RunImpl implements Run {
         } finally {
             lock.unlock();
         }
+    }
+
+    @Override
+    public void checkBlocked(EventQueue eventQueue) {
+        // already locked by loop
+        if(runStateMachine.activeThreadWasBlocked(new SendEvent(eventQueue,this))) {
+            waitNotifyStrategy.wakeUpAllThreads(threadActiveCondition);
+        }
+      //  runStateMachine.activeThreadWasBlocked(new SendEvent(eventQueue,this));
+      //  waitNotifyStrategy.wakeUpAllThreads(threadActiveCondition);
     }
 
     public boolean isEnded() {

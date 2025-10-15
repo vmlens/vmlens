@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: [11, 17, 23, 24]
+        java-version: [11, 17, 23, 24, 25]
 
     steps:
       - uses: actions/checkout@v4
@@ -55,3 +55,39 @@ jobs:
             test-cases/target/vmlens-agent/vmlens/
             test-cases-jdk23/target/vmlens-report/
             test-cases-jdk23/target/vmlens-agent/vmlens/
+
+  failIfNoTests-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Check failIfNoTests
+        id: maven
+        run: mvn clean install -DenableFailIfNoTests=true
+        continue-on-error: true
+
+      - name: Fail if Maven succeeded
+        run: |
+          if [ "${{ steps.maven.outcome }}" = "success" ]; then
+            echo "Build unexpectedly succeeded. Failing workflow..."
+            exit 1
+          else
+            echo "Maven failed as expected when no tests are run and failIfNoTests=true."
+          fi
+
+  skip-tests-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Check failIfNoTests
+        id: maven
+        run: mvn clean install -DenableFailIfNoTests=true -DskipTests
+
+

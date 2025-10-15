@@ -1,11 +1,10 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.SetInMethodIdAndPositionAtThreadLocal;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.InMethodIdAndPosition;
 
-public class BeforeMethodCallAction implements CallbackAction  {
+public class BeforeMethodCallAction extends NoMethodAction {
 
     private final int inMethodId;
     private final int position;

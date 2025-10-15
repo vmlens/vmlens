@@ -29,7 +29,7 @@ public class Choice implements NodeBuilder {
      */
 
     @Override
-    public OrderTreeNode build() {
+    public OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext) {
         // First fill both alternatives so that they have the same size
         int length = max(alternativeA.getLength(),alternativeB.getLength());
         alternativeA.fill(length);
@@ -39,7 +39,7 @@ public class Choice implements NodeBuilder {
         alternativeA.setLast(next);
         alternativeB.setLast(next);
 
-        return new TwoChildrenNode(alternativeA.build(),alternativeB.build());
+        return new TwoChildrenNode(alternativeA.build(orderTreeBuilderContext),alternativeB.build(orderTreeBuilderContext));
     }
 
     @Override

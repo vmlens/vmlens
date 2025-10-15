@@ -1,7 +1,10 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CheckIsThreadRun;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodContext;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapter;
 
@@ -41,5 +44,23 @@ public class MethodEnterAction implements CallbackAction {
     public void execute(InTestActionProcessor inTestActionProcessor) {
         MethodContext context = methodEnterContext(object,methodId,intParameter,inTestActionProcessor);
         methodStrategyAdapter.methodEnter(context);
+    }
+
+    @Override
+    public Integer isFirstMethodInThread(CheckIsThreadRun checkIsThreadRun) {
+        if(checkIsThreadRun.isThreadRun()) {
+            return methodId;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean couldBeLastMethodInThread(ThreadLocalWhenInTest dataWhenInTest) {
+        return false;
+    }
+
+    @Override
+    public RuntimeEvent isLastMethodInThread(ThreadLocalWhenInTest dataWhenInTest, int stackTraceDepth) {
+        return null;
     }
 }

@@ -84,7 +84,7 @@ public class ThreadForParallelize implements StacktraceDepthProvider {
                 inJoin = true;
             }
         }
-
+        
         for(StackTraceElement element : elements) {
             if(element.getClassName().startsWith("com.vmlens.transformed.agent.bootstrap")) {
                 if(inJoin) {

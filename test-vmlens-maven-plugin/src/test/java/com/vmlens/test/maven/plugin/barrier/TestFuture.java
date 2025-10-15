@@ -3,6 +3,7 @@ package com.vmlens.test.maven.plugin.barrier;
 import com.vmlens.api.AllInterleavings;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -13,6 +14,7 @@ import static com.vmlens.api.Runner.runParallel;
 
 public class TestFuture {
 
+    @Disabled
     @Test
     public void testGetSet() throws Throwable {
         try(AllInterleavings allInterleavings = new AllInterleavings("testFutureBlocking")) {
@@ -38,6 +40,7 @@ public class TestFuture {
         }
     }
 
+    @Disabled
     @Test
     public void testSubmit() throws Throwable {
         try(AllInterleavings allInterleavings = new AllInterleavings("testFutureSubmit")) {

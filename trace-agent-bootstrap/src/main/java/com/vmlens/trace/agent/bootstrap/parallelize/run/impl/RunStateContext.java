@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.FirstMethodInThread;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.interleave.run.InterleaveRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.Run;
@@ -21,7 +22,7 @@ public class RunStateContext {
     }
 
     public boolean isActive(int threadIndex,SendEvent sendEvent) {
-        return interleaveRun.isActive(threadIndex,runContext.getActiveThreadIndices());
+        return interleaveRun.isActive(threadIndex);
     }
 
     public ThreadIndexAndThreadStateMap runContext() {
@@ -31,27 +32,27 @@ public class RunStateContext {
     public ThreadLocalWhenInTest createForStartedThread(Run run,
                                                         ThreadLocalForParallelize threadLocalForParallelize,
                                                         int newThreadIndex,
-                                                        SendEvent sendEvent) {
-        return runContext.createForStartedThread(run, threadLocalForParallelize, newThreadIndex, sendEvent);
+                                                        SendEvent sendEvent,
+                                                        FirstMethodInThread firstMethodInThread) {
+        return runContext.createForStartedThread(run, threadLocalForParallelize, newThreadIndex, sendEvent,firstMethodInThread);
     }
 
-    public boolean isBlocked(SendEvent sendEvent, int waitingThreadIndex) {
-        Integer activeThreadIndex = interleaveRun.activeThreadIndex(runContext.getActiveThreadIndices());
+    public boolean isBlocked(SendEvent sendEvent) {
+        Integer activeThreadIndex = interleaveRun.shouldCheckActiveThreadIndex(runContext.getActiveThreadIndices());
         if(activeThreadIndex != null) {
             ThreadState state = runContext.isBlocked(activeThreadIndex);
             switch (state) {
                 case TERMINATED : {
-                    interleaveRun.onBlockedWithoutLogging(waitingThreadIndex);
+                    interleaveRun.onBlockedWithLogging(runContext, sendEvent,activeThreadIndex);
                     return true;
                 }
                 case BLOCKED : {
-                    interleaveRun.onBlockedWithLogging(runContext, sendEvent, waitingThreadIndex);
+                    interleaveRun.onBlockedWithLogging(runContext, sendEvent,activeThreadIndex);
                     return true;
                 }
                 case ACTIVE : {
                     return false;
                 }
-
             }
         }
         return false;

@@ -13,10 +13,8 @@ public interface RunStateMachine {
     // Reading
     boolean isActive(ThreadLocalWhenInTestForParallelize threadLocalDataWhenInTest,SendEvent sendEvent);
 
-    boolean checkStopWaiting(SendEvent sendEvent,int waitingThreadIndex);
-
     // Writing
-    void after(AfterContextForStateMachine afterContext,
+    boolean after(AfterContextForStateMachine afterContext,
                SendEvent sendEvent);
 
 
@@ -36,4 +34,6 @@ public interface RunStateMachine {
     void afterLockExitWaitOrThreadStart(ThreadLocalWhenInTest threadLocalDataWhenInTest);
 
     boolean isEnded();
+
+    boolean activeThreadWasBlocked(SendEvent sendEvent);
 }

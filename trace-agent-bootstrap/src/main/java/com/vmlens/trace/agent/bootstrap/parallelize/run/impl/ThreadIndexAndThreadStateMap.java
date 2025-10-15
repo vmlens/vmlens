@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.parallelize.run.impl;
 
 
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.FirstMethodInThread;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.description.ThreadDescription;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
@@ -22,9 +23,10 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
     final TLongIntHashMap threadIdToIndex = new TLongIntHashMap();
     private final TIntObjectHashMap<ThreadForParallelize> threadIndexToThreadState = new TIntObjectHashMap<>();
 
-    public ThreadLocalWhenInTest createForMainTestThread(Run run, ThreadLocalForParallelize threadLocalForParallelize,
+    public ThreadLocalWhenInTest createForMainTestThread(Run run,
+                                                         ThreadLocalForParallelize threadLocalForParallelize,
                                                          QueueIn queueIn) {
-        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, maxThreadIndex);
+        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, maxThreadIndex,null);
         threadIdToIndex.put(threadLocalForParallelize.threadId(),maxThreadIndex);
         threadIndexToThreadState.put(maxThreadIndex,threadLocalForParallelize.threadForParallelize());
 
@@ -39,8 +41,9 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
 
     public ThreadLocalWhenInTest createForStartedThread(Run run, ThreadLocalForParallelize threadLocalForParallelize,
                                                         int newThreadIndex,
-                                                        SendEvent sendEvent) {
-        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, newThreadIndex);
+                                                        SendEvent sendEvent,
+                                                        FirstMethodInThread firstMethodInThread) {
+        ThreadLocalWhenInTest threadLocalDataWhenInTest = new ThreadLocalWhenInTest(run, newThreadIndex,firstMethodInThread);
         threadIdToIndex.put(threadLocalForParallelize.threadId(), newThreadIndex);
         threadIndexToThreadState.put(newThreadIndex,threadLocalForParallelize.threadForParallelize());
 
@@ -82,18 +85,6 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
         return active;
     }
 
-    public int getNotTerminatedThreadCount() {
-        int count = 0;
-        TIntObjectIterator<ThreadForParallelize> iter = threadIndexToThreadState.iterator();
-        while(iter.hasNext()) {
-            iter.advance();
-            if(iter.value().notTerminatedAndNotNew()) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     private boolean isActive(ThreadForParallelize threadForParallelize) {
         ThreadState state = threadForParallelize.isBlocked();
         switch (state) {
@@ -104,23 +95,25 @@ public class ThreadIndexAndThreadStateMap implements CreateInterleaveActionConte
         return false;
     }
 
-    public void logStackTrace(Integer activeThreadIndex, SendEvent sendEvent) {
-        StackTraceElement[] activeStackTrace = threadIndexToThreadState.get(activeThreadIndex).getStackTrace();
-        StackTraceElement[]  myStacktrace = Thread.currentThread().getStackTrace();
-        String[] message = new String[activeStackTrace.length + myStacktrace.length + 2];
-        int i = 0;
-        message[i] = "Blocked:";
-        i++;
-        for(StackTraceElement element :  activeStackTrace ) {
-            message[i] = element.getClassName() + "." + element.getMethodName();
-            i++;
+    public void logStackTrace(SendEvent sendEvent, int blockedThreadIndex) {
+        sendEvent.sendSerializable(new InfoMessageEvent(new String[]{ "RunId:" + sendEvent.runId() }));
+        sendEvent.sendSerializable(new InfoMessageEvent(new String[]{ "BlockedIndex:" + blockedThreadIndex }));
+
+        TIntObjectIterator<ThreadForParallelize> iterator = threadIndexToThreadState.iterator();
+        while(iterator.hasNext()) {
+            iterator.advance();
+            int index = iterator.key();
+            ThreadForParallelize threadForParallelize = iterator.value();
+            StackTraceElement[]  myStacktrace = threadForParallelize.getStackTrace();
+            String[] message = new String[myStacktrace.length + 1];
+            message[0] = "ThreadIndex:" + index;
+            int i = 1;
+            for(StackTraceElement element :  myStacktrace ) {
+                message[i] = element.getClassName() + "." + element.getMethodName();
+                i++;
+            }
+            sendEvent.sendSerializable(new InfoMessageEvent(message));
         }
-        message[i] = "Waiting:";
-        i++;
-        for(StackTraceElement element :  myStacktrace) {
-            message[i] = element.getClassName() + "." + element.getMethodName();
-            i++;
-        }
-        sendEvent.sendSerializable(new InfoMessageEvent(message));
+
     }
 }

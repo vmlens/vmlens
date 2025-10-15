@@ -8,6 +8,8 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.ThreadIndexAndThrea
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.list.linked.TIntLinkedList;
 
+import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_BLOCKED;
+
 public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  {
 
     private final int currentThreadIndex;
@@ -17,33 +19,32 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
         this.currentThreadIndex = activeThreadIndex;
     }
 
-    @Override
-    public StateAndThreadIndex activeThreadIndex(TIntLinkedList activeThreadIndices) {
-        TIntIterator iter = activeThreadIndices.iterator();
-        while(iter.hasNext()) {
-            int index = iter.next();
-            if(index == currentThreadIndex) {
-                return new StateAndThreadIndex(this,currentThreadIndex);
+    static InterleaveRunStateWithoutCalculated createNewStateAfterBlocked(ThreadIndexAndThreadStateMap runContext,
+                                                                          SendEvent sendEvent,
+                                                                          int blockedThreadIndex) {
+        if(TRACE_BLOCKED) {
+            runContext.logStackTrace(sendEvent,blockedThreadIndex);
+        }
+        int activeThreadIndex = 0;
+        TIntIterator iterator = runContext.getActiveThreadIndices().iterator();
+        while(iterator.hasNext()) {
+            int current = iterator.next();
+            if(blockedThreadIndex != current) {
+                activeThreadIndex = current;
+                break;
             }
         }
-        int position = activeThreadIndices.size() - 1;
-        int index = activeThreadIndices.get(position);
-        return new StateAndThreadIndex(new InterleaveRunStateWithoutCalculated(index), index);
+        return new InterleaveRunStateWithoutCalculated(activeThreadIndex);
     }
 
     @Override
-    public StateAndIsActive isActive(int threadIndex,
-                                     TIntLinkedList activeThreadIndices) {
-        TIntIterator iter = activeThreadIndices.iterator();
-        while(iter.hasNext()) {
-            int index = iter.next();
-            if(index == currentThreadIndex) {
-                return new StateAndIsActive(this,currentThreadIndex == threadIndex);
-            }
-        }
-        int position = activeThreadIndices.size() - 1;
-        int index = activeThreadIndices.get(position);
-        return new StateAndIsActive(new InterleaveRunStateWithoutCalculated(index), index == threadIndex);
+    public int activeThreadIndex(TIntLinkedList activeThreadIndices) {
+      return currentThreadIndex;
+    }
+
+    @Override
+    public StateAndIsActive isActive(int threadIndex) {
+        return new StateAndIsActive(this, currentThreadIndex == threadIndex);
     }
 
     @Override
@@ -53,25 +54,23 @@ public class InterleaveRunStateWithoutCalculated implements InterleaveRunState  
         PluginEventOnly pluginEvent = runtimeEvent.asPluginEventOnly();
         if(pluginEvent != null) {
             afterCallback.process(context,pluginEvent);
-            return loopCounter.onPluginEvent(pluginEvent.threadIndex(),context.context(),afterCallback,this);
+            return loopCounter.onPluginEvent(pluginEvent.threadIndex(),context.context(),afterCallback);
 
         }
         InterleaveActionFactory interleaveActionFactory = runtimeEvent.asInterleaveActionFactory();
         if(interleaveActionFactory != null) {
             int index = afterCallback.process(context,interleaveActionFactory);
-            return loopCounter.onInterleaveActionFactory(index,context.context(),afterCallback,this);
+            return loopCounter.onInterleaveActionFactory(index,context.context(),afterCallback);
         }
         throw new RuntimeException("should not be called");
     }
 
     @Override
-    public InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext, SendEvent sendEvent, int activeThreadIndex) {
-        return new InterleaveRunStateWithoutCalculated(activeThreadIndex);
+    public InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext,
+                                                   SendEvent sendEvent,
+                                                   int blockedThreadIndex) {
+        return createNewStateAfterBlocked( runContext, sendEvent, blockedThreadIndex);
     }
 
-    @Override
-    public InterleaveRunState onBlockedWithoutLogging(int activeThreadIndex) {
-        return new InterleaveRunStateWithoutCalculated(activeThreadIndex);
-    }
 
 }

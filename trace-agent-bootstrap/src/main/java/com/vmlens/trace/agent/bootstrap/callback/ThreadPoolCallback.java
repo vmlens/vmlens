@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.ThreadPoolJoinAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl.ThreadPoolStartAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.ThreadPoolJoinAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.ThreadPoolStartAction;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

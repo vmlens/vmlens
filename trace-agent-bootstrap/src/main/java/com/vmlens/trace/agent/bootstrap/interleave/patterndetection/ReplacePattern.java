@@ -32,17 +32,11 @@ public class ReplacePattern {
                 count++;
             }
             if (count > MIMiMUM_PATTERN_OCCURRENCE) {
-                /*
-                 * we separate the count in 3 parts, the start, the middle and the end
-                 * than we keep the start, e.g. start till length of patten and the middle,
-                 * e.g. middle * length till middle * length + length and end
-                 *
+                /**
+                 * we replace everything except the first and the last pattern
                  */
-                int middle = count/2;
-                int end = count * pattern.length();
-                int middleStart = middle *  pattern.length();
-                replaceWithNoop(i+ pattern.length()  , middleStart - 1);
-                replaceWithNoop(middleStart + pattern.length() -1 , end - 1);
+                int end = i + (count - 1) * pattern.length();
+                replaceWithNoop(i + pattern.length()  ,end);
                 i += pattern.length() * count;
             } else {
                 i++;

@@ -36,7 +36,7 @@ public class InterleaveRun {
         state = new InterleaveRunStateWithCalculated(calculatedRunElementArray);
     }
 
-    public void after(EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent,
+    public boolean after(EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent,
                       ThreadIndexAndThreadStateMap context,
                       ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,
                       SendEvent sendEvent) {
@@ -44,7 +44,11 @@ public class InterleaveRun {
                 context,threadLocalWhenInTestForParallelize,sendEvent);
         if(singleThreadFilter.take(runtimeEvent)) {
             AfterCallback afterCallback = new AfterCallback(this,sendEvent);
-            state = state.after(processEventContext,afterCallback,runtimeEvent);
+            InterleaveRunState result = state.after(processEventContext, afterCallback, runtimeEvent);
+            if(result != null) {
+                state = result;
+                return true;
+            }
        /*  this actually not really useful
            since typically the start is in the main method anyway
        } else {
@@ -55,27 +59,29 @@ public class InterleaveRun {
                 }
             }*/
         }
+        return false;
     }
 
-    public boolean isActive(int threadIndex, TIntLinkedList activeThreadIndices) {
-        StateAndIsActive stateAndIsActive = state.isActive(threadIndex,activeThreadIndices);
+    public boolean isActive(int threadIndex) {
+        StateAndIsActive stateAndIsActive = state.isActive(threadIndex);
         state = stateAndIsActive.state();
         return stateAndIsActive.isActive();
     }
 
-    public int activeThreadIndex(TIntLinkedList activeThreadIndices) {
-        StateAndThreadIndex stateAndThreadIndex =  state.activeThreadIndex(activeThreadIndices);
-        state = stateAndThreadIndex.state();
-        return stateAndThreadIndex.threadIndex();
+    public Integer shouldCheckActiveThreadIndex(TIntLinkedList activeThreadIndices) {
+       /* if( System.currentTimeMillis() < (lastActiveThreadActivityAt  + 1000)) {
+            return null;
+        }
+        */
+        return state.activeThreadIndex(activeThreadIndices);
     }
 
-    public void onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext, SendEvent sendEvent, int activeThreadIndex) {
-        state = state.onBlockedWithLogging(runContext,sendEvent,activeThreadIndex);
+    public void onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext,
+                                     SendEvent sendEvent,
+                                     int blockedThreadIndex) {
+        state = state.onBlockedWithLogging(runContext,sendEvent,blockedThreadIndex);
     }
 
-    public void onBlockedWithoutLogging(int activeThreadIndex) {
-        state = state.onBlockedWithoutLogging(activeThreadIndex);
-    }
 
     public ActualRun run() {
         return new ActualRun(run,hasLoop);

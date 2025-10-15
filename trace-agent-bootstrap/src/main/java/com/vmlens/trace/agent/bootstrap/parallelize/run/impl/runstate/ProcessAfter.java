@@ -6,10 +6,10 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.impl.RunStateContext;
 
 public class ProcessAfter {
 
-    public static void process(AfterContextForStateMachine afterContext,
+    public static boolean process(AfterContextForStateMachine afterContext,
                                SendEvent sendEvent,
                                RunStateContext runStateContext) {
-        runStateContext.interleaveRun().after(afterContext.runtimeEvent(),
+        return runStateContext.interleaveRun().after(afterContext.runtimeEvent(),
                 runStateContext.runContext(),
                 afterContext.threadLocalDataWhenInTest(),sendEvent);
 

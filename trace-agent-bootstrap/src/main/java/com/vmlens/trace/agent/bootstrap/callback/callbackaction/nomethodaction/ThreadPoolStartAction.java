@@ -1,12 +1,11 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.StartNewThreadByPool;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ThreadPoolStartAction implements CallbackAction {
+public class ThreadPoolStartAction extends NoMethodAction {
 
     private final Object pool;
     private final Runnable task;

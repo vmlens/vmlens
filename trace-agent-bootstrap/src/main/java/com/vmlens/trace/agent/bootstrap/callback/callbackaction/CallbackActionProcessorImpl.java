@@ -1,16 +1,19 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.FirstMethodInThread;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProviderImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
 
-import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.*;
+import static com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelizeSingleton.callbackStatePerThread;
 
 public class CallbackActionProcessorImpl implements CallbackActionProcessor {
 
@@ -65,11 +68,47 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
     }
 
     public boolean process(CallbackAction callbackAction) {
-       return process(callbackAction,false);
-    }
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
+        if(canProcess(threadLocal)) {
+            try{
+                threadLocal.incrementInsideVMLens();
+                Integer methodId = callbackAction.isFirstMethodInThread(checkIsThreadRun);
+                if(methodId != null) {
+                    FirstMethodInThread firstMethodInThread = new FirstMethodInThread(methodId,threadLocalForParallelizeProvider
+                            .threadLocalForParallelize()
+                            .stacktraceDepthProvider()
+                            .getStacktraceDepth());
+                    parallelizeFacade.newTask(
+                            eventQueue,
+                            threadLocal,
+                            new ThreadWrapper(Thread.currentThread()),
+                            firstMethodInThread);
+                }
+                ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
+                if (dataWhenInTest != null) {
+                    callbackAction.execute(new InTestActionProcessor(eventQueue,dataWhenInTest,threadLocal.stacktraceDepthProvider()));
 
-    public void processWithCheckNewThread(CallbackAction callbackAction) {
-        process(callbackAction,true);
+                    if(callbackAction.couldBeLastMethodInThread(dataWhenInTest)) {
+                        int stackTraceDepth = threadLocalForParallelizeProvider
+                                .threadLocalForParallelize()
+                                .stacktraceDepthProvider()
+                                .getStacktraceDepth();
+                        RuntimeEvent lastAction = callbackAction.isLastMethodInThread(dataWhenInTest, stackTraceDepth);
+                        if(lastAction != null) {
+                            dataWhenInTest.runAdapter().afterLastThreadAction(dataWhenInTest,eventQueue,lastAction);
+                        }
+                    }
+
+
+
+
+                    return true;
+                }
+            } finally {
+                threadLocal.decrementInsideVMLens();
+            }
+        }
+        return false;
     }
 
     // visible for test
@@ -85,29 +124,6 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
         return threadLocalForCallbackAction.canProcess();
     }
 
-    private boolean process(CallbackAction callbackAction, boolean checkNewThread) {
-        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
-        if(canProcess(threadLocal)) {
-            try{
-                threadLocal.incrementInsideVMLens();
-                if(checkNewThread) {
-                    if(checkIsThreadRun.isThreadRun()) {
-                        parallelizeFacade.newTask(
-                                eventQueue,
-                                threadLocal,
-                                new ThreadWrapper(Thread.currentThread()));
-                    }
-                }
-                ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
-                if (dataWhenInTest != null) {
-                    callbackAction.execute(new InTestActionProcessor(eventQueue,dataWhenInTest,threadLocal.stacktraceDepthProvider()));
-                    return true;
-                }
-            } finally {
-                threadLocal.decrementInsideVMLens();
-            }
-        }
-        return false;
-    }
+
 
 }

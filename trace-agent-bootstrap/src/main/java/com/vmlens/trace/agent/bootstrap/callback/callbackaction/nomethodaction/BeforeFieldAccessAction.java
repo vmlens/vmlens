@@ -1,23 +1,25 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForCallback;
 
-public class BeforeStaticFieldAccessAction implements CallbackAction {
+public class BeforeFieldAccessAction extends NoMethodAction {
 
     private final FieldRepositoryForCallback fieldIdToStrategy;
+    private final Object fromObject;
     private final int fieldId;
     private final int position;
     private final int inMethodId;
     private final int operation;
 
-    public BeforeStaticFieldAccessAction(FieldRepositoryForCallback fieldIdToStrategy,
+    public BeforeFieldAccessAction(FieldRepositoryForCallback fieldIdToStrategy,
+                                   Object fromObject,
                                    int fieldId,
                                    int position,
                                    int inMethodId,
                                    int operation) {
         this.fieldIdToStrategy = fieldIdToStrategy;
+        this.fromObject = fromObject;
         this.fieldId = fieldId;
         this.position = position;
         this.inMethodId = inMethodId;
@@ -26,7 +28,7 @@ public class BeforeStaticFieldAccessAction implements CallbackAction {
 
     @Override
     public void execute(InTestActionProcessor inTestActionProcessor) {
-        fieldIdToStrategy.get(fieldId).onStaticAccess( fieldId, position, inMethodId,
+        fieldIdToStrategy.get(fieldId).onAccess(fromObject, fieldId, position, inMethodId,
                 operation, inTestActionProcessor);
     }
 }

@@ -1,13 +1,12 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction;
 
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ArrayAccessEvent;
 
-public class ArrayAccessAction implements CallbackAction {
+public class ArrayAccessAction extends NoMethodAction {
 
     private final Object array;
     private final int index;

@@ -40,7 +40,7 @@ public class TestStopThread {
                 };
                 first.start();
                 while(!stop) {
-                    Thread.yield();
+
                 }
                 first.join();
             }

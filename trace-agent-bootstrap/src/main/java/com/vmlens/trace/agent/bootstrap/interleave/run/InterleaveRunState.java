@@ -7,7 +7,7 @@ import gnu.trove.list.linked.TIntLinkedList;
 
 public interface InterleaveRunState {
 
-    StateAndThreadIndex activeThreadIndex(TIntLinkedList activeThreadIndices);
+    int activeThreadIndex(TIntLinkedList activeThreadIndices);
 
 
     InterleaveRunState after(ProcessEventContext context,
@@ -16,9 +16,8 @@ public interface InterleaveRunState {
 
     InterleaveRunState onBlockedWithLogging(ThreadIndexAndThreadStateMap runContext,
                                             SendEvent sendEvent,
-                                            int activeThreadIndex);
+                                            int blockedThreadIndex);
 
-    StateAndIsActive isActive(int threadIndex, TIntLinkedList activeThreadIndices);
+    StateAndIsActive isActive(int threadIndex);
 
-    InterleaveRunState onBlockedWithoutLogging(int activeThreadIndex);
 }

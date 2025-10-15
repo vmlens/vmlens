@@ -9,6 +9,8 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
 
     private final RunAdapter runAdapter;
     private final int threadIndex;
+    // is null for the main thread (thread index == 0)
+    private final FirstMethodInThread firstMethodInThread;
 
     private int inAtomicCount = 0;
     private int methodCount;
@@ -16,9 +18,12 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
     private ExecuteAfterOperation executeAfterOperation;
     private Integer startDoNotTrace;
 
-    public ThreadLocalWhenInTest(RunForCallback run, int threadIndex) {
+    public ThreadLocalWhenInTest(RunForCallback run,
+                                 int threadIndex,
+                                 FirstMethodInThread firstMethodInThread) {
         this.runAdapter = new RunAdapter(run);
         this.threadIndex = threadIndex;
+        this.firstMethodInThread = firstMethodInThread;
     }
 
     @Override
@@ -67,7 +72,7 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
         if(startDoNotTrace == null) {
             return true;
         }
-        if(stacktraceDepthProvider.getStacktraceDepth()< startDoNotTrace) {
+        if(stacktraceDepthProvider.getStacktraceDepth() <= startDoNotTrace) {
             startDoNotTrace = null;
             return true;
         }
@@ -77,12 +82,10 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
     public void startDoNotTrace(StacktraceDepthProvider stacktraceDepthProvider) {
         if(startDoNotTrace == null) {
             startDoNotTrace = stacktraceDepthProvider.getStacktraceDepth();
-            return;
-        }
-        int newDepth = stacktraceDepthProvider.getStacktraceDepth();
-        if( newDepth <  startDoNotTrace ) {
-            startDoNotTrace = newDepth;
         }
     }
-    
+
+    public FirstMethodInThread firstMethodInThread() {
+        return firstMethodInThread;
+    }
 }

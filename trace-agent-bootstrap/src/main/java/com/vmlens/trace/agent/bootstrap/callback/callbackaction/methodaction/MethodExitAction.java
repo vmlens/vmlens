@@ -1,7 +1,11 @@
-package com.vmlens.trace.agent.bootstrap.callback.callbackaction.impl;
+package com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CheckIsThreadRun;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.specialevents.LastActionInThreadRuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodContext;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapter;
 
@@ -42,6 +46,30 @@ public class MethodExitAction implements CallbackAction  {
     public void execute(InTestActionProcessor inTestActionProcessor) {
         MethodContext context = methodExitContext(object,methodId,returnValue,inTestActionProcessor);
         methodStrategyAdapter.methodExit(context);
+    }
+
+    @Override
+    public Integer isFirstMethodInThread(CheckIsThreadRun checkIsThreadRun) {
+        return null;
+    }
+
+    @Override
+    public boolean couldBeLastMethodInThread(ThreadLocalWhenInTest dataWhenInTest) {
+        // firstMethodInThread is null for main thread (thread index == 0)
+        if(dataWhenInTest.firstMethodInThread() == null) {
+            return false;
+        }
+        return dataWhenInTest.firstMethodInThread().methodId() == methodId;
+    }
+
+    @Override
+    public RuntimeEvent isLastMethodInThread(ThreadLocalWhenInTest dataWhenInTest, int stackTraceDepth) {
+        if(dataWhenInTest.firstMethodInThread().stacktraceDepth() ==
+                    stackTraceDepth) {
+                return new LastActionInThreadRuntimeEvent(methodId,dataWhenInTest.threadIndex());
+        }
+
+        return null;
     }
 
 }

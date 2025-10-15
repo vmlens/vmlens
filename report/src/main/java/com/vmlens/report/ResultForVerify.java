@@ -13,6 +13,7 @@ public class ResultForVerify {
     private int failureCount;
     private int dataRaceCount;
     private boolean noTestsRun;
+    private boolean noAgentRun;
     
     public void setDataRaces(int loopId, int count) {
         loopIdToDataRaceCount.put(loopId,count);
@@ -44,6 +45,14 @@ public class ResultForVerify {
 
     public void setNoTestsRun(boolean noTestsRun) {
         this.noTestsRun = noTestsRun;
+    }
+
+    public boolean noAgentRun() {
+        return noAgentRun;
+    }
+
+    public void setNoAgentRun(boolean noAgentRun) {
+        this.noAgentRun = noAgentRun;
     }
 
     // for test
