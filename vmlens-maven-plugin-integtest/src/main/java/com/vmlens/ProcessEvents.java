@@ -81,6 +81,7 @@ public class ProcessEvents {
         testWithDataRace.add("qBeanSupportConcurrentTest");
         testWithDataRace.add("loop.petersonNok");
         testWithDataRace.add("loop.nok");
+        testWithDataRace.add("testCacheLongKeyLIRSVMLens.testConcurrent");
        // testWithDataRace.add("jdbcJobExecutionDao");
 
 

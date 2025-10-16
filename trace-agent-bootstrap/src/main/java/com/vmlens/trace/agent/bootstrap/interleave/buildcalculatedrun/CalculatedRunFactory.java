@@ -1,6 +1,5 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun;
 
-import com.vmlens.trace.agent.bootstrap.Either;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
@@ -11,13 +10,11 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.Cr
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
-import gnu.trove.set.hash.THashSet;
 
 public class CalculatedRunFactory {
 
     private final CycleDetectionAdapter cycleDetectionAdapter;
     private final OrderArrayList orderArrayList;
-    private final THashSet<Position> startingPoints = new THashSet<>();
     private final InterleaveLoopContext interleaveLoopContext;
 
     public CalculatedRunFactory(LeftBeforeRight[] fixedOrderArray,
@@ -54,12 +51,7 @@ public class CalculatedRunFactory {
             }
         }
 
-        Either<CalculatedRun, THashSet<Position>> runOrCycle = cycleDetectionAdapter.build(orderArrayList,startingPoints);
-        if(runOrCycle.getLeft() != null) {
-            return runOrCycle.getLeft();
-        }
-         startingPoints.addAll(runOrCycle.getRight());
-         return null;
+        return cycleDetectionAdapter.build(orderArrayList);
     }
 
 }

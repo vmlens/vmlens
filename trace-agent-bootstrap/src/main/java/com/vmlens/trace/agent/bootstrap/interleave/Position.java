@@ -20,10 +20,10 @@ public class Position implements Comparable<Position>, WithThreadIndex {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "threadIndex=" + threadIndex +
-                ", positionInThread=" + positionInThread +
-                '}';
+        return "(" +
+                 threadIndex +
+                "," + positionInThread +
+                ')';
     }
 
     @Override

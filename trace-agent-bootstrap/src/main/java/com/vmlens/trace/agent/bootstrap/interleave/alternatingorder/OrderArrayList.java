@@ -67,8 +67,4 @@ public class OrderArrayList {
         return new OrderIterator();
     }
 
-    public void cap() {
-
-    }
-
 }

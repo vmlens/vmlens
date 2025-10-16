@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.19</version>
+    <version>1.2.20-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -42,7 +42,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
 
     <dependencyManagement>
         <dependencies>
@@ -161,6 +160,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>4.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>2.4.240</version>
             </dependency>
             <!-- to test classes with bytecode smaller than 1.5 -->
             <dependency>

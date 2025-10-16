@@ -4,9 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
-import gnu.trove.set.hash.THashSet;
 import org.jgrapht.Graph;
-import org.jgrapht.alg.cycle.CycleDetector;
 import org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -63,26 +61,8 @@ public class CalculatedRunBuilder {
 
     }
 
-    public THashSet<Position> buildCycles(THashSet<Position> previousStartingPoints) {
-        if(previousStartingPoints.isEmpty()) {
-           return buildAllCycles();
-        }
-
-        for(Position pos: previousStartingPoints) {
-            if(new CycleDetector<>(graph).detectCyclesContainingVertex(pos)) {
-                return previousStartingPoints;
-            }
-        }
-      return new THashSet<>();
-    }
-
-    public THashSet<Position> buildAllCycles() {
-        THashSet<Position> startingPoints = new THashSet<>();
-        List<List<Position>> cycleList = new SzwarcfiterLauerSimpleCycles<>(graph).findSimpleCycles();
-        for(List<Position>  list : cycleList ) {
-            startingPoints.addAll(list);
-        }
-        return startingPoints;
+    public List<List<Position>> buildCycles() {
+        return new SzwarcfiterLauerSimpleCycles<>(graph).findSimpleCycles();
     }
 
 }
