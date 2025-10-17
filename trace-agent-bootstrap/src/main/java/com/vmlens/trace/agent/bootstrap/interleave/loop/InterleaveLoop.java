@@ -73,7 +73,7 @@ public class InterleaveLoop implements IteratorQueue {
             queueIn.offer(new InfoMessageEvent(array));
         }
 
-        addActualRunWithLoops(withLoops);
+        addActualRunWithLoops(withLoops,queueIn);
     }
 
     public InterleaveLoopContext interleaveLoopContext() {
@@ -110,11 +110,15 @@ public class InterleaveLoop implements IteratorQueue {
         return result;
     }
 
-    private void addActualRunWithLoops(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
+    private void addActualRunWithLoops(TLinkedList<TLinkableWrapper<InterleaveAction>> run,
+                                       QueueIn queueIn) {
         ThreadIndexToElementList<InterleaveAction> orig = create(run);
 
         if(alreadyProcessed(orig))  {
             return;
+        }
+        if(TRACE_INTERLEAVE_ACTIONS) {
+            queueIn.offer(new InfoMessageEvent(new String[]{"not alreadyProcessed"}));
         }
         alreadyProcessed.add(wrap(orig));
         stillToBeProcessedAlternatingOrderContainer

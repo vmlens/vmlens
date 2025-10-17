@@ -15,6 +15,10 @@ import org.junit.Test;
 
 public class TestNonBlockingAtomic {
 
+    /*
+     * add check for non blocking from writer thread
+     */
+
     @Ignore
     @Test
     public void testConcurrentSkipListMap() throws Throwable {
@@ -26,7 +30,7 @@ public class TestNonBlockingAtomic {
         try (AllInterleavings allInterleavings = new AllInterleavingsBuilder()
                 .withMaximumAlternatingOrders(4)
                 .withMaximumIterations(8)
-                .build("TestNonBlockingAtomic.testConcurrentSkipListMap")) {
+                .build("testNonBlockingAtomic.testConcurrentSkipListMap")) {
             while (allInterleavings.hasNext()) {
                 AllInterleavings underTest = new AllInterleavings("underTest");
                 while (VmlensApiCallback.hasNext(underTest)) {

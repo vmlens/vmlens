@@ -32,7 +32,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
         this.classFilterFromFile = classFilterFromFile;
     }
 
-    private static void logTransformedClass(String className, byte[] transformedArray) {
+    private static void logClass(String className, byte[] transformedArray) {
         if (transformedArray == null) {
             return;
         }
@@ -40,7 +40,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             String logDir = "";
             String fileName = className.substring(className.lastIndexOf("/") + 1);
             fileName = fileName.replace('$', 'I');
-            OutputStream outTransformed = new FileOutputStream(logDir + fileName + "_trans.class");
+            OutputStream outTransformed = new FileOutputStream(logDir + fileName + ".class");
             outTransformed.write(transformedArray);
             outTransformed.close();
         } catch (Exception exp) {
@@ -63,12 +63,20 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
                 return null;
             }
 
+            /*
+             * for junit6 and jdk 25 we have problems transforming proxies
+             */
+            if(name.contains("$Proxy")) {
+                return null;
+            }
+
             TransformerContext context = new TransformerContext(classfileBuffer, name, isInReTransform);
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
-          /*     if(name.contains("java/util/concurrent/ConcurrentHashMap")) {
-                    logTransformedClass(name, transformed);
+          /*   if(name.startsWith("org/junit/platform/launcher/jfr/$Pr")) {
+                    logClass(name + "_trans", transformed);
+                 logClass(name , classfileBuffer);
                 }
             */
                 return transformed;
