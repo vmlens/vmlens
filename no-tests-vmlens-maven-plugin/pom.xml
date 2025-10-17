@@ -6,10 +6,25 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.19</version>
+        <version>1.2.20</version>
     </parent>
 
     <artifactId>no-tests-vmlens-maven-plugin</artifactId>
+    <name>no-tests-vmlens-maven-plugin</name>
+    <url>https://github.com/vmlens/vlmens</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>vmlens</name>
+        <url>https://www.vmlens.com</url>
+    </organization>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

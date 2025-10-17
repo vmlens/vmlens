@@ -54,7 +54,6 @@ public class PetersonLockVmLensTest {
         try (AllInterleavings allInterleavings = new AllInterleavings("loop.petersonNok")) {
             PetersonLock lock = new PetersonLock(MemoryOrdering.ACQUIRE_RELEASE);
             MutableInt x = new MutableInt();
-
             while (allInterleavings.hasNext()) {
                 Thread first = new Thread(ThreadIndex.toName(0)) {
                     @Override

@@ -1,45 +1,42 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun;
 
-import com.vmlens.trace.agent.bootstrap.Either;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayList;
 import gnu.trove.map.hash.THashMap;
-import gnu.trove.set.hash.THashSet;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-
-import static com.vmlens.trace.agent.bootstrap.Either.left;
-import static com.vmlens.trace.agent.bootstrap.Either.right;
 
 public class CycleDetectionAdapter {
 
     private final CalculatedRunBuilder calculatedRunBuilder;
+    private final CycleFilterImpl cycleFilter = new CycleFilterImpl();
     private THashMap<LeftBeforeRight,MutableBoolean> previousOrder = null;
 
     public CycleDetectionAdapter(CalculatedRunBuilder calculatedRunBuilder) {
         this.calculatedRunBuilder = calculatedRunBuilder;
     }
 
-    public Either<CalculatedRun, THashSet<Position>> build(OrderArrayList orderArrayList,
-                                                           THashSet<Position> previousStartingPoints) {
+    public CalculatedRun build(OrderArrayList orderArrayList) {
         if(previousOrder == null) {
             initial(orderArrayList);
         } else {
+            // first check if we have an already known cycle
+            if(cycleFilter.hasKnownCycle(orderArrayList)) {
+                return null;
+            }
             update(orderArrayList);
         }
 
-        THashSet<Position> newStartingPoint = calculatedRunBuilder.buildCycles(previousStartingPoints);
-        if(newStartingPoint.isEmpty()) {
-            CalculatedRun run = calculatedRunBuilder.build();
-            if(run != null) {
-                return left(run);
-            }
-            return right(calculatedRunBuilder.buildAllCycles());
+        List<List<Position>> cycles = calculatedRunBuilder.buildCycles();
+        if(cycles.isEmpty()) {
+            return calculatedRunBuilder.build();
         } else {
-            return right(newStartingPoint);
+            new CycleFilterBuildAlgorithm(cycleFilter).addCycles(cycles);
+            return null;
         }
     }
 
