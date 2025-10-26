@@ -17,7 +17,6 @@ class UILoopsAndStacktraceLeafsBuilderImpl(reportBuilder: ReportBuilder, resultF
   override def addThreadOrLoopDescription(threadOrLoopDescription: ThreadOrLoopDescription): Unit = {
     reportBuilder.addThreadOrLoopDescription(threadOrLoopDescription);
     threadOrLoopDescription.accept(visitor);
-    
   }
 
   def build(): UILoopsAndStacktraceLeafs = {
