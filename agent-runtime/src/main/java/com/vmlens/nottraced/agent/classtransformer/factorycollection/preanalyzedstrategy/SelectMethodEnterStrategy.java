@@ -16,6 +16,4 @@ public class SelectMethodEnterStrategy {
         return useWithInParam.contains(nameAndDescriptor);
     }
 
-
-
 }

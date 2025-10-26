@@ -30,5 +30,7 @@ trait NonVolatileFieldAccessEvent extends LoadedNonVolatileEvent
   override def addToContext(context: LoadedNonVolatileEventContext): Unit = {
     context.nonVolatileFieldAccessEvents.add(this)
   }
+
+  override def take(filteredFieldIds: Set[Int]): Boolean = ! filteredFieldIds.contains(fieldId);
   
 }

@@ -30,8 +30,8 @@ public class ClassDescription implements SerializableEvent {
 
     @Override
     public void serialize(StreamRepository streamRepository) throws Exception {
-        (new SerializeAndDeserializeClassDescription()).serialize(this,
-                streamRepository.description.getStream());
+        new SerializeAndDeserializeClassDescription()
+                .serialize(this, streamRepository.description.getStream());
     }
 
     public String name() {

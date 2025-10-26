@@ -14,11 +14,13 @@ public class StreamRepository {
     public static final String NON_VOLATILE = "nonvolatile";
     public static final String DIRECT_MEMORY = "directmemory";
     public static final String CONTROL = "control";
+    public static final String LOOP_CONTROL = "loopcontrol";
 
 
     public final StreamWrapperWithoutLoopIdAndRunId threadName;
     public final StreamWrapperWithoutLoopIdAndRunId description;
     public final StreamWrapperWithoutLoopIdAndRunId agentLog;
+    public final StreamWrapperWithoutLoopIdAndRunId loopControl;
     public final StreamWrapperWithLoopIdAndRunId method;
 
     public final StreamWrapperWithLoopIdAndRunId interleave;
@@ -32,6 +34,7 @@ public class StreamRepository {
         this.threadName = create(eventDir, THREAD_AND_LOOP_DESCRIPTION, streamList);
         this.description = create(eventDir, DESCRIPTION, streamList);
         this.agentLog = create(eventDir, AGENTLOG, streamList);
+        this.loopControl = create(eventDir, LOOP_CONTROL, streamList);
 
         this.method = createWithLoopIdAndRunId(eventDir, METHOD_EVENTS, streamList);
         this.interleave = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);

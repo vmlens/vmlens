@@ -1,7 +1,8 @@
 package com.anarsoft.race.detection.main
 
 import com.anarsoft.race.detection.debug.{DescriptionBuilderForDebug, RunDataListBuilderForDebug}
-import com.anarsoft.race.detection.process.load.LoadRunsImpl
+import com.anarsoft.race.detection.event.nonvolatile.LoadedNonVolatileEvent
+import com.anarsoft.race.detection.process.load.{EventFilterNoOp, LoadRunsImpl}
 import com.anarsoft.race.detection.process.loadAgentLog.LoadAgentLog
 import com.anarsoft.race.detection.process.loadDescription.LoadDescriptionImpl
 
@@ -15,7 +16,7 @@ class DebugEvents(val dir : Path) {
     val stream = new PrintStream("debug.text");
     new LoadAgentLog(dir).load(stream);
     new LoadDescriptionImpl(dir).load(new DescriptionBuilderForDebug(stream));
-    val loadEvents = new LoadRunsFactory().create(dir).asInstanceOf[LoadRunsImpl]
+    val loadEvents = new LoadRunsFactory().create(dir,new EventFilterNoOp[LoadedNonVolatileEvent]).asInstanceOf[LoadRunsImpl]
     val runDataListBuilderForDebug = new RunDataListBuilderForDebug(stream);
     loadEvents.load(runDataListBuilderForDebug)
    

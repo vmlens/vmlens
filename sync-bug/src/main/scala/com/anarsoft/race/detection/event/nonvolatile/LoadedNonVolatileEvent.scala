@@ -7,4 +7,6 @@ trait LoadedNonVolatileEvent extends EventWithLoopAndRunId {
 
   def addToContext(context: LoadedNonVolatileEventContext): Unit;
   
+  def take(filteredFieldIds : Set[Int]) : Boolean;
+  
 }

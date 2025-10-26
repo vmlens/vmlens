@@ -49,10 +49,10 @@ class ProcessEvents(val eventDir: Path,
       return result;
     }
 
-    val loadRuns = new LoadRunsFactory().create(eventDir)
+    val loadRuns = new LoadRunsFactory().create(eventDir, loadDescription.loadDataRaceFilter());
     val processRun = new ProcessRunImpl(processRunContext);
     val loopReportBuilder = new LoopReportBuilderImpl(new ReportBuilder());
-
+    
     val mainProcess = new MainProcess(loadDescription, loadRuns, processRun, loopReportBuilder,
       processRunContext.onTestLoopAndLeftBeforeRight);
     val reportBuilder = mainProcess.process();

@@ -25,4 +25,7 @@ trait NonVolatileFieldAccessEventStatic extends LoadedNonVolatileEvent with
   override def addToContext(context: LoadedNonVolatileEventContext): Unit = {
     context.nonVolatileStaticFieldAccessEvents.add(this)
   }
+
+  override def take(filteredFieldIds: Set[Int]): Boolean = !filteredFieldIds.contains(fieldId);
+
 }

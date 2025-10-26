@@ -2,12 +2,18 @@ package com.vmlens.trace.agent.bootstrap.parallelize.loop;
 
 
 import com.vmlens.api.AllInterleavingsBuilder;
+import com.vmlens.trace.agent.bootstrap.description.LoopControl;
 import com.vmlens.trace.agent.bootstrap.description.TestLoopDescription;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import gnu.trove.map.hash.THashMap;
 
 import java.lang.reflect.Field;
+import java.util.AbstractMap;
+import java.util.List;
 
 import static com.vmlens.api.AllInterleavingsBuilder.REPORT_AS_SUMMARY_THRESHOLD;
 import static com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent.fromException;
@@ -47,7 +53,11 @@ public class ParallelizeLoopRepository {
                     queueIn.offer(new TestLoopDescription(maxLoopId, name , getValue(config,
                             "reportAsSummaryThreshold" ,
                             REPORT_AS_SUMMARY_THRESHOLD ,
-                            queueIn )));
+                            queueIn)));
+
+                    intentionalDataRaces(maxLoopId,config,queueIn);
+
+
                 } catch (NoSuchFieldException | IllegalAccessException e) {
                     queueIn.offer(fromException(maxLoopId, e));
                 }
@@ -66,6 +76,23 @@ public class ParallelizeLoopRepository {
         }
     }
 
+    private void intentionalDataRaces(int loopId, Object config, QueueIn queueIn) throws NoSuchFieldException, IllegalAccessException {
+        Field field = config.getClass().getField("intentionalDataRaces");
+        List<AbstractMap.SimpleImmutableEntry<String,String>> list =
+                (List<AbstractMap.SimpleImmutableEntry<String,String>>) field.get(config);
+        if(list.isEmpty()) {
+            return;
+        }
+        int[] array = new int[list.size()];
+        FieldRepositoryForTransform fieldRepositoryForTransform = FieldRepositorySingleton.INSTANCE;
+        int index = 0;
+        for(AbstractMap.SimpleImmutableEntry<String,String> elem : list) {
+            array[index] =   fieldRepositoryForTransform.asInt(new FieldOwnerAndName(elem.getKey(), elem.getValue()));
+            index++;
+        }
+        queueIn.offer(new LoopControl(loopId,array));
+    }
+
     public void remove(Object obj) {
         synchronized (lock) {
             object2ParallelizeLoop.remove(obj);
@@ -81,13 +108,9 @@ public class ParallelizeLoopRepository {
             Field field = config.getClass().getField(fieldName);
             return field.getInt(config);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-
-
-
             queueIn.offer(fromException(maxLoopId, e));
         }
         return defaultValue;
     }
-
-
+    
 }

@@ -28,6 +28,7 @@ public class TestCaseCollectionFactory {
         nameToTestCase.put("arrayTest",new EmptyIntTestFactory().create());
         nameToTestCase.put("hashSetTest",new EmptyIntTestFactory().create());
         nameToTestCase.put("hashMapTest",new EmptyIntTestFactory().create());
+        nameToTestCase.put("intentionalDataRace",new EmptyIntTestFactory().create());
 
         // Not Checked
         nameToTestCase.put("threadPoolInsideTest",new EmptyIntTestFactory().create());

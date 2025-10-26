@@ -1,5 +1,9 @@
 package com.vmlens.api;
 
+import java.util.AbstractMap;
+import java.util.LinkedList;
+import java.util.List;
+
 import static com.vmlens.api.AllInterleavingsBuilder.*;
 
 /**
@@ -39,6 +43,8 @@ public class AllInterleavings implements AutoCloseable {
 	public final int unsynchronizedOperationsLoopThreshold;
 	public final int reportAsSummaryThreshold;
 
+	public final List<AbstractMap.SimpleImmutableEntry<String,String>> intentionalDataRaces;
+
 	/**
      * The name shown in the report.
 	 * 
@@ -57,11 +63,14 @@ public class AllInterleavings implements AutoCloseable {
 
 
 	public AllInterleavings(String name, boolean throwExceptionWhenNoAgent) {
-		this(name,throwExceptionWhenNoAgent, MAXIMUM_ITERATIONS ,
+		this(name,
+				throwExceptionWhenNoAgent,
+				MAXIMUM_ITERATIONS ,
 				MAXIMUM_ALTERNATING_ORDERS ,
 				500 ,
 				5000,
-				REPORT_AS_SUMMARY_THRESHOLD);
+				REPORT_AS_SUMMARY_THRESHOLD,
+				new LinkedList<>());
 	}
 
 
@@ -70,7 +79,9 @@ public class AllInterleavings implements AutoCloseable {
                      int maximumIterations,
                      int maximumAlternatingOrders,
                      int synchronizationActionsLoopThreshold,
-                     int unsynchronizedOperationsLoopThreshold, int reportAsSummaryThreshold) {
+                     int unsynchronizedOperationsLoopThreshold,
+                     int reportAsSummaryThreshold,
+					 List<AbstractMap.SimpleImmutableEntry<String, String>> intentionalDataRaces) {
         this.name = name;
 		this.throwExceptionWhenNoAgent = throwExceptionWhenNoAgent;
         this.maximumIterations = maximumIterations;
@@ -78,6 +89,7 @@ public class AllInterleavings implements AutoCloseable {
         this.synchronizationActionsLoopThreshold = synchronizationActionsLoopThreshold;
         this.unsynchronizedOperationsLoopThreshold = unsynchronizedOperationsLoopThreshold;
         this.reportAsSummaryThreshold = reportAsSummaryThreshold;
+        this.intentionalDataRaces = intentionalDataRaces;
     }
 
 	/**

@@ -31,5 +31,5 @@ with WithSetStacktraceNode {
     context.arrayAccessEvents.add(this)
   }
 
-
+  override def take(filteredFieldIds: Set[Int]): Boolean = true;
 }

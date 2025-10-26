@@ -11,8 +11,11 @@ public class MethodDescription {
 	private final int access;
 	private final int lineNumber;
 
-    public MethodDescription(String name, int id,
-							 String desc, int access, int lineNumber) {
+    public MethodDescription(String name,
+							 int id,
+							 String desc,
+							 int access,
+							 int lineNumber) {
 		super();
 		this.name = name;
 		this.desc = desc;

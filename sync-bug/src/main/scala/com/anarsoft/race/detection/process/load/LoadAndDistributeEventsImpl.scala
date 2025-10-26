@@ -12,7 +12,8 @@ import scala.collection.mutable.ArrayBuffer
 
 class LoadAndDistributeEventsImpl[EVENT <: EventWithLoopAndRunId](val filePath : Path,
                                                                   val deserializeStrategy : DeserializeStrategy[EVENT],
-                                                                  val distribute : DistributeEvents[EVENT])
+                                                                  val distribute : DistributeEvents[EVENT],
+                                                                  val eventFilter : EventFilter[EVENT])
       extends LoadAndDistributeEvents {
   
   def load(builder: RunDataListBuilder): Unit = {
@@ -25,7 +26,9 @@ class LoadAndDistributeEventsImpl[EVENT <: EventWithLoopAndRunId](val filePath :
     try {
       while (true) {
         val event = deserializeStrategy.deSerializeJavaEvent(dataInputStream);
-        eventList.add(event);
+        if(eventFilter.take(event)) {
+          eventList.add(event);
+        }
       }
     } catch {
       case _: EOFException =>

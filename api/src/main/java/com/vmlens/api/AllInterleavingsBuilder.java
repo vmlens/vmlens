@@ -1,5 +1,9 @@
 package com.vmlens.api;
 
+import java.util.AbstractMap;
+import java.util.LinkedList;
+import java.util.List;
+
 public class AllInterleavingsBuilder {
 
     public static final int MAXIMUM_ITERATIONS = 100;
@@ -9,6 +13,8 @@ public class AllInterleavingsBuilder {
     private int maximumIterations = MAXIMUM_ITERATIONS;
     private int maximumAlternatingOrders = MAXIMUM_ALTERNATING_ORDERS;
     private int reportAsSummaryThreshold = REPORT_AS_SUMMARY_THRESHOLD;
+    private final List<AbstractMap.SimpleImmutableEntry<String,String>> intentionalDataRaces =
+            new LinkedList<>();
 
     public AllInterleavingsBuilder withMaximumIterations(int newValue) {
         maximumIterations = newValue;
@@ -25,13 +31,19 @@ public class AllInterleavingsBuilder {
         return this;
     }
 
+    public AllInterleavingsBuilder withIntentionalDataRace(String className, String fieldName) {
+        intentionalDataRaces.add(new AbstractMap.SimpleImmutableEntry<>(className.replace('.', '/'),fieldName));
+        return this;
+    }
+
     public AllInterleavings build(String name) {
         return new AllInterleavings(name , false,
                 maximumIterations,
                 maximumAlternatingOrders,
                 100,
                 500,
-                reportAsSummaryThreshold);
+                reportAsSummaryThreshold,
+                intentionalDataRaces);
     }
 
 }
