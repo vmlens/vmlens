@@ -9,6 +9,8 @@ import com.vmlens.setup.SetupAgent;
 import java.io.File;
 import java.nio.file.Path;
 
+import static com.vmlens.setup.Messages.dataRaces;
+
 public class VMLens {
 
     private final ProcessRunContextBuilder processRunContextBuilder = new ProcessRunContextBuilder();
@@ -49,7 +51,7 @@ public class VMLens {
         ResultForVerify result = processEvents.process();
 
         if (result.dataRaceCount() > 0) {
-            throw new RuntimeException("There are " + result.dataRaceCount() + " data races.");
+            throw new RuntimeException(dataRaces(result.dataRaceCount(),reportDirectory));
         }
     }
 

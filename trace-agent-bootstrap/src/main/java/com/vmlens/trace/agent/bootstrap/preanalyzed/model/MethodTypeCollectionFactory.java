@@ -60,6 +60,11 @@ public class MethodTypeCollectionFactory {
         add(METHOD_ENTER_EXIT);
 
 
+        add(ENTER_STAMPED_READ_LOCK);
+        add(ENTER_STAMPED_WRITE_LOCK);
+        add(EXIT_STAMPED_LOCK);
+        add(GET_LOCK_STATE);
+
         return new MethodTypeCollection(methodTypeToId,idToMethodType);
     }
 

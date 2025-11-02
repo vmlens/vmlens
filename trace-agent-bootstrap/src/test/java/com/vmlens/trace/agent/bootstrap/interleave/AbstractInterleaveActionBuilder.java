@@ -18,7 +18,7 @@ public abstract class AbstractInterleaveActionBuilder {
     private final TLinkedList<TLinkableWrapper<InterleaveAction>> run = new TLinkedList<>();
 
     protected void lockEnter(int threadIndex, LockKey lockKey) {
-        run.add(wrap(new LockEnterImpl(threadIndex(threadIndex),lockKey)));
+        run.add(wrap(new LockEnterImpl(threadIndex(threadIndex),lockKey,false)));
     }
 
     protected void lockExit(int threadIndex, LockKey lockKey) {
@@ -77,8 +77,8 @@ public abstract class AbstractInterleaveActionBuilder {
         return new ReentrantLockKey(objectHashCode);
     }
 
-    protected LockKey readWriteLock(boolean isRead, long objectHashCode) {
-        return new ReadWriteLockKey(objectHashCode,isRead);
+    protected LockKey readWriteLock(long objectHashCode) {
+        return new ReadWriteLockKey(objectHashCode);
     }
 
     protected abstract void addActions();

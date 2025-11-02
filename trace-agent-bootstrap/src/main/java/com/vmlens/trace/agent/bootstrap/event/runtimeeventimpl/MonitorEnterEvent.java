@@ -39,7 +39,9 @@ public class MonitorEnterEvent extends MonitorEnterEventGen implements
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), new MonitorKey(objectHashCode));
+        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex),
+                new MonitorKey(objectHashCode),
+                false);
     }
 
     @Override

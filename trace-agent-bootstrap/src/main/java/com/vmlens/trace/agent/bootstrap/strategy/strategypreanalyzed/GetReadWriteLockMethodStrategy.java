@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
-public class GetReadWriteLockMethodStrategy implements StrategyPreAnalyzed {
+public class GetReadWriteLockMethodStrategy extends StrategyWithoutParamAndObjectReturn {
 
     public GetReadWriteLockMethodStrategy() {
     }

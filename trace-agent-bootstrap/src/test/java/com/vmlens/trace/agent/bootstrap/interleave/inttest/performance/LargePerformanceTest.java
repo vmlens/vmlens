@@ -29,27 +29,6 @@ public class LargePerformanceTest {
         }
     }
 
-
-    @Test
-    public void h2() {
-        // Expected
-        ExpectedBuilder expectedBuilder = new ExpectedBuilder();
-
-        // Test
-        long start = System.currentTimeMillis();
-
-        /*
-         * currently MaximumAlternatingOrders 25 take 30s
-         * and 20 1s
-         */
-        new IntTestRunner().runTest(new InterleaveActionH2().build(),
-                expectedBuilder.buildExpected(),
-                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(20).build(new QueueInMock(),0));
-        if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
-            System.out.println("took " + (System.currentTimeMillis() - start));
-        }
-    }
-
     @Test
     public void petersonLockVolatile() {
         // Expected

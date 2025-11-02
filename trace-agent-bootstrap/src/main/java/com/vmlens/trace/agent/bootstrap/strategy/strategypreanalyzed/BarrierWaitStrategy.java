@@ -17,7 +17,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
  *
  */
 
-public class BarrierWaitStrategy implements StrategyPreAnalyzed {
+public class BarrierWaitStrategy extends StrategyWithoutParam {
     
 
     private final BarrierKeyType barrierKeyType;

@@ -45,7 +45,8 @@ public class LockExitEvent extends LockExitEventGen implements ExecuteBeforeEven
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new LockExit(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), lockTypeClass.create(objectHashCode));
+        return new LockExit(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex),
+                lockTypeClass.create(objectHashCode));
     }
 
     public void setObjectHashCode(long objectHashCode) {

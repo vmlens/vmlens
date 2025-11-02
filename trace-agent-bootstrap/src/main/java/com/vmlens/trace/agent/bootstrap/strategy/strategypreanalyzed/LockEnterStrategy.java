@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.lock.LockEnterOperation;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
-public class LockEnterStrategy implements StrategyPreAnalyzed  {
+public class LockEnterStrategy extends StrategyWithoutParam  {
 
     private final LockEnterOperation lockOperation;
     private final LockType lockType;

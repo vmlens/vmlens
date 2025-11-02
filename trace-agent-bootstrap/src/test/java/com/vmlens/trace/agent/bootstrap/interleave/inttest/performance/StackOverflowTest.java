@@ -5037,8 +5037,6 @@ public class StackOverflowTest extends AbstractInterleaveActionBuilder {
         volatileAccess(0,volatileField(4120,1644864746L),1);
         volatileAccess(0,volatileField(4120,1644864746L),2);
         volatileAccess(0,volatileField(4120,1644864746L),1);
-        lockEnter(0,readWriteLock(true,2100771791L));
-        lockExit(0,readWriteLock(true,2100771791L));
         volatileAccess(0,atomic(748975217),1);
         volatileAccess(0,volatileField(4284,564526486L),1);
         volatileAccess(0,atomic(748975217),3);
@@ -5581,13 +5579,7 @@ public class StackOverflowTest extends AbstractInterleaveActionBuilder {
         volatileAccess(0,volatileField(4107,1644864746L),1);
         volatileAccess(0,volatileField(4107,1644864746L),2);
         volatileAccess(0,volatileField(4284,1296109622L),2);
-        lockEnter(0,readWriteLock(true,2100771791L));
-        lockExit(0,readWriteLock(true,2100771791L));
-        lockEnter(0,readWriteLock(true,2100771791L));
-        lockExit(0,readWriteLock(true,2100771791L));
         volatileAccess(0,volatileField(4284,564526486L),2);
-        lockEnter(0,readWriteLock(false,2100771791L));
-        lockExit(0,readWriteLock(false,2100771791L));
         volatileAccess(0,volatileField(4107,1644864746L),2);
         lockExit(0,lock(694329275L));
         volatileAccess(0,volatileField(4107,1644864746L),1);

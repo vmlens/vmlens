@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.event.gen;
 
+import java.io.DataOutputStream;
+import com.vmlens.trace.agent.bootstrap.event.LoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId;
-
-import java.io.DataOutputStream;
 
 public class LoopWarningEventGen  {
 
@@ -12,9 +12,7 @@ public class LoopWarningEventGen  {
     protected int     messageId;
     protected int     messageParam;
 
-
-
-    @Override
+@Override
 public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -44,7 +42,7 @@ public String toString() {
  }
 
 public void serialize(DataOutputStream buffer) throws Exception {
-buffer.write( (byte)  25 );
+buffer.write( (byte)  26 );
      buffer.writeInt( loopId ); 
      buffer.writeInt( runId ); 
      buffer.writeInt( messageId ); 

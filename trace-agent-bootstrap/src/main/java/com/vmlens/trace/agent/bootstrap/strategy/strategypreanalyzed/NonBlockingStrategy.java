@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteRunAf
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.AtomicNonBlockingEvent;
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
-public class NonBlockingStrategy implements StrategyPreAnalyzed {
+public class NonBlockingStrategy extends StrategyWithoutParam {
 
     private final int operation;
 

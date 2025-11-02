@@ -1,8 +1,6 @@
 package com.vmlens.nottraced.agent.classtransformer;
 
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.FactoryCollection;
-import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterForAnalyze;
-import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterForTransform;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -13,7 +11,6 @@ public class ClassTransformer {
     private final FactoryCollection factoryCollection;
     private final MethodRepositoryForTransform methodCallIdMap;
     private final ClassVisitor previousClassVisitor;
-
 
     // Visible for Tests
     public ClassTransformer(FactoryCollection factoryCollection,
@@ -27,12 +24,13 @@ public class ClassTransformer {
     public  byte[] transform(byte[] classfileBuffer,
                              String name,
                              boolean isInRetransform) {
+        // Fixme check if we can integrate into transform
+        // here the fields are analyzed and the description
+        // is generated
+        ClassReader readerForAnalyze = new ClassReader(classfileBuffer);
+        readerForAnalyze.accept(previousClassVisitor,0);
 
         String normalizedName = name.replace('.', '/');
-        ClassVisitor classVisitorAnalyze = createAnalyze(normalizedName,isInRetransform);
-        ClassReader readerForAnalyze = new ClassReader(classfileBuffer);
-        readerForAnalyze.accept(classVisitorAnalyze, 0);
-
         ClassReader readerForTransform = new ClassReader(classfileBuffer);
 
         ClassWriter classWriter;
@@ -47,20 +45,12 @@ public class ClassTransformer {
         return classWriter.toByteArray();
     }
 
-    private ClassVisitor createAnalyze(String className,
-                                       boolean isInRetransform) {
-        return new ClassVisitorApplyMethodVisitor(previousClassVisitor,
-                className,
-                methodCallIdMap,
-                new FactoryCollectionAdapterForAnalyze(factoryCollection),isInRetransform);
-    }
-
     private ClassVisitor createTransform(ClassVisitor classWriter,
                                          String className,
                                          boolean isInRetransform) {
         return new ClassVisitorApplyMethodVisitor(classWriter,
                 className,
                 methodCallIdMap,
-                new FactoryCollectionAdapterForTransform(factoryCollection),isInRetransform);
+                factoryCollection,isInRetransform);
     }
 }

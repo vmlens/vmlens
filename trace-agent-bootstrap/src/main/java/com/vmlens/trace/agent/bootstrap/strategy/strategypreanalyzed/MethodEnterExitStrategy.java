@@ -10,7 +10,7 @@ import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.*;
  *
  */
 
-public class MethodEnterExitStrategy implements StrategyPreAnalyzed {
+public class MethodEnterExitStrategy extends StrategyWithoutParam {
 
     @Override
     public void methodEnter(EnterExitContext context) {

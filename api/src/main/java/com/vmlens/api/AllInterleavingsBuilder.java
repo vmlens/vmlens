@@ -40,8 +40,8 @@ public class AllInterleavingsBuilder {
         return new AllInterleavings(name , false,
                 maximumIterations,
                 maximumAlternatingOrders,
+                50,
                 100,
-                500,
                 reportAsSummaryThreshold,
                 intentionalDataRaces);
     }

@@ -6,6 +6,7 @@ public abstract class LockKey implements Comparable<LockKey> {
     public static final int CATEGORY_MONITOR = 1;
     public static final int CATEGORY_REENTRANT_LOCK = 2;
     public static final int CATEGORY_READ_WRITE_LOCK = 3;
+    public static final int STAMPED_LOCK = 4;
 
     protected final long objectHashCode;
 
@@ -14,7 +15,6 @@ public abstract class LockKey implements Comparable<LockKey> {
     }
 
     public abstract int category();
-    public abstract boolean isRead();
 
     public long objectHashCode() {
         return objectHashCode;

@@ -36,8 +36,7 @@ public class TransformerStrategyFactory {
 
     public TransformerStrategy createMethodEnterExitOnly(PreAnalyzedStrategyFactory preAnalyzedStrategyFactory) {
         return new TransformerStrategyForClassTransformer(
-                new FactoryCollectionPreAnalyzedMethodEnterExitOnlyFactory(methodRepositoryForAnalyze,
-                        preAnalyzedStrategyFactory),
+                new FactoryCollectionPreAnalyzedMethodEnterExitOnlyFactory(preAnalyzedStrategyFactory),
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 
@@ -58,7 +57,7 @@ public class TransformerStrategyFactory {
     }
 
     public TransformerStrategy createDoNotTraceIn() {
-        return new TransformerStrategyForClassTransformer(new FactoryCollectionDoNotTraceFactory(methodRepositoryForAnalyze),
+        return new TransformerStrategyForClassTransformer(new FactoryCollectionDoNotTraceFactory(),
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 

@@ -8,6 +8,7 @@ public class FieldRepositoryImpl implements FieldRepositoryForCallback, FieldRep
     static final FieldStrategy VOLATILE_FIELD_STRATEGY = new VolatileFieldStrategy();
     static final FieldStrategy NORMAL_FIELD_STRATEGY = new NormalFieldStrategy();
     static final FieldStrategy FINAL_FIELD_STRATEGY = new FinalFieldStrategy();
+    static final FieldStrategy NO_OP_FIELD_STRATEGY = new FieldStrategyNoOp();
 
     private final THashMap<FieldOwnerAndName, Integer> fieldIdIdToInt = new THashMap<>();
     private final THashMap<Integer, FieldStrategy> idToStrategy = new THashMap<>();
@@ -31,7 +32,7 @@ public class FieldRepositoryImpl implements FieldRepositoryForCallback, FieldRep
         // I think the reason is that a static field is accessed and
         // the corresponding classes was not loaded yet
         if (strategy == null) {
-            return new FieldStrategyNoOp();
+            return  NO_OP_FIELD_STRATEGY;
         }
         return strategy;
     }

@@ -1,8 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.lock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
-
-import static com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.ReadWriteLockKey.writeKey;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.ReadWriteLockKey;
 
 public class WriteLock extends ReadOrWriteLock {
 
@@ -12,13 +11,15 @@ public class WriteLock extends ReadOrWriteLock {
         this.id = id;
     }
 
-    @Override
-    public LockKey create(long objectHashCode) {
-        return writeKey(objectHashCode);
-    }
+
 
     @Override
     public int id() {
         return id;
+    }
+
+    @Override
+    public boolean isRead() {
+        return false;
     }
 }

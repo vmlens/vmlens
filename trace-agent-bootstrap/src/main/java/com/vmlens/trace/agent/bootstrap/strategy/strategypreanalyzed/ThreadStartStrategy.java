@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
 import static com.vmlens.trace.agent.bootstrap.event.EventTypeThread.THREAD;
 
-public class ThreadStartStrategy implements StrategyPreAnalyzed {
+public class ThreadStartStrategy extends StrategyWithoutParam {
 
     public static final StrategyPreAnalyzed SINGLETON = new ThreadStartStrategy();
 

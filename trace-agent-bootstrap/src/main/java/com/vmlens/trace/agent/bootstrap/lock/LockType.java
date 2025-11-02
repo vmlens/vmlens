@@ -7,5 +7,6 @@ public interface LockType {
     int id();
     LockKey create(long objectHashCode);
     long getObjectHashCode(ReadWriteLockMap readWriteLockMap, long objectHashCode);
+    boolean isRead();
 
 }

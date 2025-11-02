@@ -2,35 +2,21 @@ package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryDoNotTrace;
-import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
+import com.vmlens.nottraced.agent.classtransformer.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 
+import static com.vmlens.nottraced.agent.classtransformer.methodvisitormethodenterexit.MethodEnterExitTransformFactory.addEnterExitTransform;
+
 public abstract class FactoryCollectionPreAnalyzedOrAll  implements FactoryCollection {
-
-    private final FactoryTraceMethodEnterExit factoryForDoNotTrace;
-
-    public FactoryCollectionPreAnalyzedOrAll(MethodRepositoryForTransform methodCallIdMap) {
-        this.factoryForDoNotTrace = new FactoryTraceMethodEnterExit(new MethodCallbackFactoryFactoryDoNotTrace(),
-                methodCallIdMap);
-    }
-
-    @Override
-    public final TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor,
-                                                                          int access) {
-        if(doNotTraceIn(nameAndDescriptor)) {
-            return factoryForDoNotTrace.addCountTryCatchBlocks(nameAndDescriptor);
-        }
-        return getAnalyzeAfterFilter(nameAndDescriptor,access);
-    }
 
     @Override
     public final TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context) {
         if(doNotTraceIn(context.nameAndDescriptor())) {
             TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-            factoryForDoNotTrace.addTraceMethodEnterExit(context.nameAndDescriptor(), result);
+            addEnterExitTransform(new MethodCallbackFactoryFactoryDoNotTrace(),result);
             return result;
         }
         return getTransformAndSetStrategyAfterFilter(context.nameAndDescriptor(),
@@ -38,9 +24,6 @@ public abstract class FactoryCollectionPreAnalyzedOrAll  implements FactoryColle
                 context.methodId(),
                 context.methodRepositoryForTransform());
     }
-
-    protected abstract TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyzeAfterFilter
-            (NameAndDescriptor nameAndDescriptor, int access);
 
     protected abstract  TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategyAfterFilter
             (NameAndDescriptor nameAndDescriptor, int access, int methodId,

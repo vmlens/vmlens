@@ -9,7 +9,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.AtomicReadWriteLo
 import com.vmlens.trace.agent.bootstrap.lock.ReadOrWriteLock;
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
-public class MethodWithLockStrategy implements StrategyPreAnalyzed {
+public class MethodWithLockStrategy extends StrategyWithoutParam {
 
     private final ReadOrWriteLock lockType;
 

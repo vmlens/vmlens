@@ -7,6 +7,6 @@ import com.vmlens.transformed.agent.bootstrap.strategy.strategypreanalyzed.Strat
 public class NotYetImplementedStrategyFactory implements PreAnalyzedStrategyFactory {
     @Override
     public StrategyPreAnalyzed create(String className, NameAndDescriptor nameAndDescriptor) {
-        return new NotYetImplementedStrategy(className, nameAndDescriptor.name());
+        return new NotYetImplementedStrategy();
     }
 }

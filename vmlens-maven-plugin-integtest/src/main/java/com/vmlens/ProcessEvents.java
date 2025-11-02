@@ -52,7 +52,7 @@ public class ProcessEvents {
                         buildEventListMap,false,false,false)).process();
         checkDataRacesJdk11(result);
 
-        int loopId = loopNameToId.get("readWriteLockTest");
+        int loopId = loopNameToId.get("testNoDataRace");
         Map<Integer, List<EventForAssertion>> loopIdToEventForAssertionList = buildEventListMap.build();
         List<EventForAssertion> list = loopIdToEventForAssertionList.get(loopId);
         new CheckLockEnterExit().check(list);
@@ -72,6 +72,8 @@ public class ProcessEvents {
         testWithDataRace.add("testJacksonWithReader");
         testWithDataRace.add("testJackson");
         testWithDataRace.add("testNonVolatileField");
+        testWithDataRace.add("testDataRace");
+
        // testWithDataRace.add("childWithProtectedFieldTest");
         checkDataRaces(testWithDataRace,new HashSet<>() , result);
     }
@@ -82,6 +84,7 @@ public class ProcessEvents {
         testWithDataRace.add("loop.petersonNok");
         testWithDataRace.add("loop.nok");
         testWithDataRace.add("testCacheLongKeyLIRSVMLens.testConcurrent");
+        testWithDataRace.add("youtrackdbTest");
        // testWithDataRace.add("jdbcJobExecutionDao");
 
 

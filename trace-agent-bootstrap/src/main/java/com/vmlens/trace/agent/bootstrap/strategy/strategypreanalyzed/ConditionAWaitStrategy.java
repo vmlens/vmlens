@@ -18,7 +18,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
  *
  */
 
-public class ConditionAWaitStrategy implements StrategyPreAnalyzed  {
+public class ConditionAWaitStrategy extends StrategyWithoutParam  {
 
     @Override
     public void methodEnter(EnterExitContext context) {

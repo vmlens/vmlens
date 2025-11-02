@@ -11,17 +11,15 @@ public class FactoryCollectionThreadPoolFactory implements FactoryCollectionFact
 
     private final NameAndDescriptor startThreadMethod;
     private final THashSet<NameAndDescriptor> shutdownMethodToStrategy;
-    private final MethodRepositoryForTransform methodCallIdMap;
 
     public FactoryCollectionThreadPoolFactory(NameAndDescriptor startThreadMethod,
                                               THashSet<NameAndDescriptor> shutdownMethodToStrategy, MethodRepositoryForTransform methodCallIdMap) {
         this.startThreadMethod = startThreadMethod;
         this.shutdownMethodToStrategy = shutdownMethodToStrategy;
-        this.methodCallIdMap = methodCallIdMap;
     }
 
     @Override
     public FactoryCollection create() {
-        return new FactoryCollectionThreadPool(startThreadMethod,shutdownMethodToStrategy,methodCallIdMap);
+        return new FactoryCollectionThreadPool(startThreadMethod,shutdownMethodToStrategy);
     }
 }

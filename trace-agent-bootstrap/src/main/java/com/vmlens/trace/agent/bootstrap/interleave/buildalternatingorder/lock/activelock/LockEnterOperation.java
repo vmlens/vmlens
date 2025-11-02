@@ -7,10 +7,12 @@ public class LockEnterOperation implements LockStartOperation {
 
     private final Position position;
     private final LockKey key;
+    private final boolean isRead;
 
-    public LockEnterOperation(Position position, LockKey key) {
+    public LockEnterOperation(Position position, LockKey key, boolean isRead) {
         this.position = position;
         this.key = key;
+        this.isRead = isRead;
     }
 
     @Override
@@ -23,14 +25,13 @@ public class LockEnterOperation implements LockStartOperation {
         return key;
     }
 
-    @Override
-    public int threadIndex() {
-        return position.threadIndex();
+    public boolean isRead() {
+        return isRead;
     }
 
     @Override
-    public boolean isReadLock() {
-        return key.isRead();
+    public int threadIndex() {
+        return position.threadIndex();
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
  * methodExit after barrier notify event
  */
 
-public class BarrierNotifyStrategy implements StrategyPreAnalyzed {
+public class BarrierNotifyStrategy extends StrategyWithoutParam {
 
     private final BarrierKeyType barrierKeyType;
 

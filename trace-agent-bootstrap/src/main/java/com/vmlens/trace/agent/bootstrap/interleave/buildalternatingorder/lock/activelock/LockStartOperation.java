@@ -10,7 +10,7 @@ public interface LockStartOperation extends WithThreadIndex {
 
     LockKey key();
     Position position();
-    boolean isReadLock();
+    boolean isRead();
     boolean canBeDeadlockParent();
     boolean canBeDeadlockChild();
 

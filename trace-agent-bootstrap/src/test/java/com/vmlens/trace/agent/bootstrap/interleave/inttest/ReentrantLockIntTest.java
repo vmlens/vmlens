@@ -18,10 +18,10 @@ public class ReentrantLockIntTest {
 
         IntTestBuilder builder = new IntTestBuilder();
 
-        IntTestOperation enter0 = builder.enter(A,0);
+        IntTestOperation enter0 = builder.enterWrite(A,0);
         IntTestOperation exit0 = builder.exit(A,0);
 
-        IntTestOperation enter1 = builder.enter(A,1);
+        IntTestOperation enter1 = builder.enterWrite(A,1);
         IntTestOperation exit1 = builder.exit(A,1);
 
         // Expected
@@ -41,13 +41,13 @@ public class ReentrantLockIntTest {
 
         IntTestBuilder builder = new IntTestBuilder();
 
-        IntTestOperation enterA0 = builder.enter(A,0);
-        builder.enter(B,0);
+        IntTestOperation enterA0 = builder.enterWrite(A,0);
+        builder.enterWrite(B,0);
         builder.exit(A,0);
         IntTestOperation exitB0 = builder.exit(B,0);
 
-        IntTestOperation enterA1 = builder.enter(A,1);
-        builder.enter(B,1);
+        IntTestOperation enterA1 = builder.enterWrite(A,1);
+        builder.enterWrite(B,1);
         builder.exit(A,1);
         IntTestOperation exitB1 = builder.exit(B,1);
 
