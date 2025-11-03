@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.22-SNAPSHOT</version>
+        <version>1.2.22</version>
     </parent>
 
     <name>test-cases-jdk23</name>
