@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionsInsideMethodStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent;
@@ -12,7 +12,7 @@ public class NotYetImplementedAction extends AbstractInTestAction {
     private final int methodId;
 
 
-    private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();
+    private final FilterActionsInsideMethodStrategy filterActionsInsideMethodStrategy = new WithoutFilterActions();
 
     public NotYetImplementedAction(int methodId) {
         this.methodId = methodId;
@@ -26,7 +26,7 @@ public class NotYetImplementedAction extends AbstractInTestAction {
     }
 
     @Override
-    public boolean notInAtomicCallback(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        return notInAtomicCallbackStrategy.notInAtomicCallback(threadLocalDataWhenInTest);
+    public boolean takeAction(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        return filterActionsInsideMethodStrategy.takeAction(threadLocalDataWhenInTest);
     }
 }

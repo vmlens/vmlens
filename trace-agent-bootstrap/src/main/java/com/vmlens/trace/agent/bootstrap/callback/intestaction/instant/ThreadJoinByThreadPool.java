@@ -1,15 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionsInsideMethodStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.JoinAction;
 
 public class ThreadJoinByThreadPool extends AbstractInTestAction {
 
-    private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();
+    private final FilterActionsInsideMethodStrategy filterActionsInsideMethodStrategy = new WithoutFilterActions();
     private final Object taskOrPool;
 
     public ThreadJoinByThreadPool(Object taskOrPool) {
@@ -23,7 +23,7 @@ public class ThreadJoinByThreadPool extends AbstractInTestAction {
     }
 
     @Override
-    public boolean notInAtomicCallback(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        return notInAtomicCallbackStrategy.notInAtomicCallback(threadLocalDataWhenInTest);
+    public boolean takeAction(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        return filterActionsInsideMethodStrategy.takeAction(threadLocalDataWhenInTest);
     }
 }

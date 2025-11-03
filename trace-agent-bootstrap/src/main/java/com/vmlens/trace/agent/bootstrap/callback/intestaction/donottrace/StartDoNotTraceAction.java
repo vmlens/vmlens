@@ -19,7 +19,7 @@ public class StartDoNotTraceAction implements InTestAction {
     }
 
     @Override
-    public boolean notInAtomicCallback(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public boolean takeAction(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return false;
     }
 }

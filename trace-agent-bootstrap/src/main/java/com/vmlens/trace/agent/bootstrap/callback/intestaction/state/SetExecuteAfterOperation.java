@@ -1,19 +1,25 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.state;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionsInsideMethodStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 
 public class SetExecuteAfterOperation extends AbstractInTestAction {
 
     private final ExecuteAfterOperation runtimeEventAndSetInMethodIdAndPosition;
-    private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy = new WithoutAtomic();
+    private final FilterActionsInsideMethodStrategy filterActionsInsideMethodStrategy;
 
-    public SetExecuteAfterOperation(ExecuteAfterOperation
-                                                    runtimeEventAndSetInMethodIdAndPosition) {
+    public SetExecuteAfterOperation(ExecuteAfterOperation runtimeEventAndSetInMethodIdAndPosition,
+                                    FilterActionsInsideMethodStrategy filterActionsInsideMethodStrategy) {
         this.runtimeEventAndSetInMethodIdAndPosition = runtimeEventAndSetInMethodIdAndPosition;
+        this.filterActionsInsideMethodStrategy = filterActionsInsideMethodStrategy;
+    }
+
+    public SetExecuteAfterOperation(ExecuteAfterOperation runtimeEventAndSetInMethodIdAndPosition) {
+        this(runtimeEventAndSetInMethodIdAndPosition,new WithoutFilterActions());
+
     }
 
     @Override
@@ -23,7 +29,7 @@ public class SetExecuteAfterOperation extends AbstractInTestAction {
     }
 
     @Override
-    public boolean notInAtomicCallback(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        return notInAtomicCallbackStrategy.notInAtomicCallback(threadLocalDataWhenInTest);
+    public boolean takeAction(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        return filterActionsInsideMethodStrategy.takeAction(threadLocalDataWhenInTest);
     }
 }

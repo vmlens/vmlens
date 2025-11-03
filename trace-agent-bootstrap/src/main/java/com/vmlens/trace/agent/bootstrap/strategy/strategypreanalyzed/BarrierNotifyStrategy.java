@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyType;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfterLockExitWaitOrThreadStart;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunBeforeLockExitOrWait;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.WithoutAtomic;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierNotifyEvent;
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
@@ -30,7 +30,7 @@ public class BarrierNotifyStrategy extends StrategyWithoutParam {
         BarrierNotifyEvent event = new BarrierNotifyEvent(barrierKeyType);
         RunBeforeLockExitOrWait<BarrierNotifyEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdPositionObjectHashCode<>(context.object()), new WithoutAtomic());
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new WithoutFilterActions());
 
         context.inTestActionProcessor().process(action);
     }
