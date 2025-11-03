@@ -3,8 +3,8 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyType;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfterLockExitWaitOrThreadStart;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunBeforeLockExitOrWait;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.AtomicBegin;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.AtomicEnd;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionBegin;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionEnd;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierWaitEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.BarrierWaitExitEvent;
@@ -17,7 +17,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
  *
  */
 
-public class BarrierWaitStrategy implements StrategyPreAnalyzed {
+public class BarrierWaitStrategy extends StrategyWithoutParam {
     
 
     private final BarrierKeyType barrierKeyType;
@@ -31,7 +31,7 @@ public class BarrierWaitStrategy implements StrategyPreAnalyzed {
         BarrierWaitEnterEvent event = new BarrierWaitEnterEvent(barrierKeyType);
         RunBeforeLockExitOrWait<BarrierWaitEnterEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicBegin());
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new FilterActionBegin());
         context.inTestActionProcessor().process(action);
     }
 
@@ -40,7 +40,7 @@ public class BarrierWaitStrategy implements StrategyPreAnalyzed {
         BarrierWaitExitEvent event = new BarrierWaitExitEvent(barrierKeyType);
         RunBeforeLockExitOrWait<BarrierWaitExitEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicEnd());
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new FilterActionEnd());
         context.inTestActionProcessor().process(action);
         context.inTestActionProcessor().process(new RunAfterLockExitWaitOrThreadStart());
     }

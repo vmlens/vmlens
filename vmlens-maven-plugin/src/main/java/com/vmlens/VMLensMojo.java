@@ -16,6 +16,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
 
+import static com.vmlens.setup.Messages.dataRaces;
 import static com.vmlens.setup.SetupAgent.AGENT_DIRECTORY;
 import static com.vmlens.setup.SetupAgent.REPORT_DIRECTORY;
 import static org.apache.maven.surefire.shared.utils.StringUtils.isNotBlank;
@@ -81,8 +82,7 @@ public class VMLensMojo extends SurefireMojo {
             throw mojoFailureException;
         }
         if(result.dataRaceCount() > 0 ) {
-            throw new MojoFailureException(String.format("There are %s data races, see %s for the report.",
-                    result.dataRaceCount(),reportDirectory.toString()));
+            throw new MojoFailureException(dataRaces(result.dataRaceCount(),reportDirectory));
         }
         log.info(String.format("See %s for the vmlens report.", reportDirectory.toString()));
     }

@@ -8,6 +8,7 @@ public class WaitExitOperation implements LockStartOperation {
     private final Position position;
     private final LockKey key;
 
+
     public WaitExitOperation(Position position, LockKey key) {
         this.position = position;
         this.key = key;
@@ -28,9 +29,17 @@ public class WaitExitOperation implements LockStartOperation {
         return position.threadIndex();
     }
 
+
+    /*
+     * Read locks do not have conditions see
+     * https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.ReadLock.html
+     * newCondition() Throws UnsupportedOperationException because ReadLocks do not support conditions.
+     * so we can be sure that we are in a write lock
+     *
+     */
     @Override
-    public boolean isReadLock() {
-        return key.isRead();
+    public boolean isRead() {
+        return false;
     }
 
     @Override

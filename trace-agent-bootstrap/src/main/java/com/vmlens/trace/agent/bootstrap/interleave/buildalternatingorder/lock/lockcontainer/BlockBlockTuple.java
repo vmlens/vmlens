@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAl
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 
-public class BlockBlockTuple implements AddToAlternatingOrder  {
+public class BlockBlockTuple implements AddToAlternatingOrder {
 
     private final Block first;
     private final Block second;
@@ -24,7 +24,7 @@ public class BlockBlockTuple implements AddToAlternatingOrder  {
          * so it is only necessary to check the enter of the lock
          * should also work for lock conversion
          */
-        if(! first.start().isReadLock() || !  second.start().isReadLock()) {
+        if(! first.start().isRead() || !  second.start().isRead()) {
             if(!context.isInDeadlock(this)) {
                 return treeBuilderNode.either(new AlternativeOneOrder(lbr(first.end().position(),second.start().position())),
                         new AlternativeOneOrder(lbr(second.end().position(),first.start().position())) );

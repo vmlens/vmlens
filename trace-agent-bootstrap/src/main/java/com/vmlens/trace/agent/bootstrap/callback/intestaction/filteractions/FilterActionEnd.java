@@ -1,10 +1,10 @@
-package com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback;
+package com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions;
 
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 
-public class AtomicEnd implements NotInAtomicCallbackStrategy {
+public class FilterActionEnd implements FilterActionsInsideMethodStrategy {
     @Override
-    public boolean notInAtomicCallback(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+    public boolean takeAction(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         int i = threadLocalDataWhenInTest.inAtomicCount();
         i--;
         threadLocalDataWhenInTest.setInAtomicCount(i);

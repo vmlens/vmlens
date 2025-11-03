@@ -21,7 +21,8 @@ public class TestCaseCollectionFactory {
         nameToTestCase.put("synchronizedMethodIntTest",new EmptyIntTestFactory().create());
 
         // locks
-        nameToTestCase.put("readWriteLockTest",new EmptyIntTestFactory().create());
+        nameToTestCase.put("testDataRace",new EmptyIntTestFactory().create());
+        nameToTestCase.put("testNoDataRace",new EmptyIntTestFactory().create());
 
         // non volatile
         nameToTestCase.put("staticField",new EmptyIntTestFactory().create());

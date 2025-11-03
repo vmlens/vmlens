@@ -21,6 +21,7 @@ import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.LockMethod.{ENTER_STAMPED_WRITE_LOCK,ENTER_STAMPED_READ_LOCK,EXIT_STAMPED_LOCK,GET_LOCK_STATE }
 
 import java.lang.invoke.MethodType
 import scala.collection.mutable.ArrayBuffer
@@ -98,6 +99,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$WriteLock", WriteLock(), lockMethods()),
       Lock("java/util/concurrent/locks/ReentrantLock", ReentrantLock(), lockMethods()),
 
+      ClassWithMethodToMethodType("java/util/concurrent/locks/StampedLock", stampedLockMethods()),
+      Filter("java/util/concurrent/locks/StampedLock$"),
+        
       condition(),
 
       Include("java/util/concurrent/PriorityBlockingQueue"),
@@ -219,5 +223,35 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       LockMethod("tryLock", "(JLjava/util/concurrent/TimeUnit;)Z ", LockEnter()),
       LockMethod("unlock", "()V", LockExit()),
       LockMethod("newCondition", "()Ljava/util/concurrent/locks/Condition;", NewCondition()));
+  
+  private def stampedLockMethods(): List[MethodToMethodType] =
+    List[MethodToMethodType](
+      MethodToMethodType("writeLock", "()J",ENTER_STAMPED_WRITE_LOCK),
+      MethodToMethodType("tryWriteLock", "()J",ENTER_STAMPED_WRITE_LOCK),
+      MethodToMethodType("tryWriteLock", "(JLjava/util/concurrent/TimeUnit;)J", ENTER_STAMPED_WRITE_LOCK),
+      MethodToMethodType("writeLockInterruptibly", "()J", ENTER_STAMPED_WRITE_LOCK),
+      
+      MethodToMethodType("readLock", "()J", ENTER_STAMPED_READ_LOCK),
+      MethodToMethodType("tryReadLock", "()J", ENTER_STAMPED_READ_LOCK),
+      MethodToMethodType("tryReadLock", "(JLjava/util/concurrent/TimeUnit;)J",ENTER_STAMPED_READ_LOCK),
+      MethodToMethodType("readLockInterruptibly", "()J", ENTER_STAMPED_READ_LOCK),
+      
+      MethodToMethodType("tryOptimisticRead", "()J",GET_LOCK_STATE),
+      MethodToMethodType("validate", "(J)Z", GET_LOCK_STATE),
+      MethodToMethodType("unlockWrite", "(J)Z", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unlockRead", "(J)Z", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unlock", "(J)Z", EXIT_STAMPED_LOCK),
+    //  MethodToMethodType("tryConvertToWriteLock", "(J)J", LockEnter()),
+    //  MethodToMethodType("tryConvertToReadLock", "(J)J", LockEnter()),
+    //  MethodToMethodType("tryConvertToOptimisticRead", "(J)J", LockEnter()),
+      MethodToMethodType("tryUnlockWrite", "()Z", EXIT_STAMPED_LOCK),
+      MethodToMethodType("tryUnlockRead", "()Z", EXIT_STAMPED_LOCK),
+      MethodToMethodType("isWriteLocked", "()Z", GET_LOCK_STATE),
+      MethodToMethodType("isReadLocked", "()Z", GET_LOCK_STATE),
+      MethodToMethodType("getReadLockCount", "()I", GET_LOCK_STATE),
+      MethodToMethodType("unstampedUnlockWrite", "()V", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unstampedUnlockRead", "()V", EXIT_STAMPED_LOCK));
+
+
 
 }

@@ -32,7 +32,7 @@ public class ReadWriteLockMap {
     public synchronized LockKey lockKeyForCondition(long conditionHashCode) {
         long lockHashCode = conditionToLockHashCode.get(conditionHashCode);
         if(dependentToUnderlying.containsKey(lockHashCode)) {
-            return ReadWriteLockKey.writeKey(dependentToUnderlying.get(lockHashCode));
+            return new ReadWriteLockKey(dependentToUnderlying.get(lockHashCode));
         }
         return new ReentrantLockKey(lockHashCode);
     }

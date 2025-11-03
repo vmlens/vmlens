@@ -13,6 +13,6 @@ public class NotYetImplementedMethod  extends AbstractMethodType {
     @Override
     public void add(MethodTypeContext context) {
         context.methodBuilder().addPreAnalyzedMethod(context.name(),context.desc(),
-                new NotYetImplementedStrategy(context.className(),context.name()));
+                new NotYetImplementedStrategy());
     }
 }

@@ -43,7 +43,9 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), lockTypeClass.create(objectHashCode));
+        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex),
+                lockTypeClass.create(objectHashCode),
+                lockTypeClass.isRead());
     }
 
     @Override

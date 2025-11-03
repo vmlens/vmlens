@@ -19,7 +19,7 @@ public class BlockAndOperationBuilder {
 
     public BlockEndBuilder enter() {
         return new BlockEndBuilder(this,
-        new LockEnterOperation(pos(threadIndex,getAndIncrementPosition()),lockKey));
+        new LockEnterOperation(pos(threadIndex,getAndIncrementPosition()),lockKey,false));
     }
 
     public int getAndIncrementPosition() {

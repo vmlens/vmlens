@@ -8,7 +8,6 @@ public interface InterleaveActionFactoryAndRuntimeEvent extends RuntimeEvent , I
 
     InterleaveAction create(CreateInterleaveActionContext context);
 
-
     @Override
     default InterleaveAction createAndSend(CreateInterleaveActionContext context,
                                            ThreadLocalWhenInTestForParallelize threadLocalWhenInTestForParallelize,

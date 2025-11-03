@@ -15,6 +15,8 @@ public class MethodToStrategy extends AbstractMethodType  {
     public static final AbstractMethodType METHOD_ENTER_EXIT = new MethodToStrategy(new MethodEnterExitStrategy());
     
     
+    
+    
     private final StrategyPreAnalyzed strategyPreAnalyzed;
 
     private MethodToStrategy(StrategyPreAnalyzed strategyPreAnalyzed) {

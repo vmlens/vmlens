@@ -4,7 +4,6 @@ import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.MethodNotFoundAction;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.FactoryCollectionPreAnalyzedFactory;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.FactoryCollectionThreadPoolFactory;
-import com.vmlens.nottraced.agent.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
@@ -22,20 +21,16 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
     private final THashSet<NameAndDescriptor> methodToStrategyForThreadPool = new
             THashSet<>();
     private final MethodRepositoryForTransform methodCallIdMap;
-    private final SelectMethodEnterStrategy preAnalyzedStrategy;
     private MethodNotFoundAction methodNotFoundAction = WARNING_AND_NOT_TRANSFORM;
     private NameAndDescriptor startThreadMethod;
 
-    public FactoryCollectionPreAnalyzedFactoryBuilderImpl(MethodRepositoryForTransform methodCallIdMap,
-                                                          SelectMethodEnterStrategy preAnalyzedStrategy) {
+    public FactoryCollectionPreAnalyzedFactoryBuilderImpl(MethodRepositoryForTransform methodCallIdMap) {
         this.methodCallIdMap = methodCallIdMap;
-        this.preAnalyzedStrategy = preAnalyzedStrategy;
     }
 
     @Override
     public void addNonBlockingArrayMethod(String name, String desc, int operation) {
         NameAndDescriptor nameAndDescriptor = new NameAndDescriptor(name, desc);
-        preAnalyzedStrategy.addToUseWithInParam(nameAndDescriptor);
         methodToStrategy.put(nameAndDescriptor, new NonBlockingStrategy(operation));
     }
 
@@ -61,7 +56,7 @@ public class FactoryCollectionPreAnalyzedFactoryBuilderImpl implements FactoryCo
     }
 
     public FactoryCollectionPreAnalyzedFactory build() {
-        return new FactoryCollectionPreAnalyzedFactory(methodToStrategy, methodNotFoundAction, methodCallIdMap,preAnalyzedStrategy);
+        return new FactoryCollectionPreAnalyzedFactory(methodToStrategy, methodNotFoundAction, methodCallIdMap);
     }
 
     public FactoryCollectionThreadPoolFactory buildForThreadPool() {

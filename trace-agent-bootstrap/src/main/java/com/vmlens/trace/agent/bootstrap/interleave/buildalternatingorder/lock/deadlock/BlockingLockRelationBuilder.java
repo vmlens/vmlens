@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.deadlock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.LockStartOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 import gnu.trove.map.hash.THashMap;
@@ -32,11 +31,10 @@ public class BlockingLockRelationBuilder {
     }
 
     private void add(LockStartOperation parent, LockStartOperation child ) {
-        LockKey parentKey = parent.key();
-        LockKey childKey = child.key();
+
 
         // if both keys are read they can not create a deadlock
-        if(parentKey.isRead() && childKey.isRead()) {
+        if(parent.isRead() && child.isRead()) {
             return;
         }
         if(! parent.canBeDeadlockParent()) {

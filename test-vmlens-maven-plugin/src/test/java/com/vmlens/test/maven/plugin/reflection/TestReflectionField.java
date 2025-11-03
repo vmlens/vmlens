@@ -29,11 +29,11 @@ public class TestReflectionField {
                 Thread first = new Thread() {
                     @Override
                     public void run() {
-                        incrementWitchReflection();
+                        incrementWithReflection();
                     }
                 };
                 first.start();
-                incrementWitchReflection();
+                incrementWithReflection();
                 first.join();
                 countSet.add(j);
             }
@@ -41,7 +41,7 @@ public class TestReflectionField {
         }
     }
 
-    private void incrementWitchReflection() {
+    private void incrementWithReflection() {
         try {
             Field field = this.getClass().getField("j");
             Integer value = (Integer) field.get(this);

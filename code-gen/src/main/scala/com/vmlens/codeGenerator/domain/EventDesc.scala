@@ -125,6 +125,7 @@ object EventDesc extends GenericDesc {
       
       eventList.append(lock("LockEnterEventGen", " extends LockEnterEvent", typSyncActions));
       eventList.append(lock("LockExitEventGen", " extends LockExitEvent", typSyncActions));
+      eventList.append(lock("GetLockStateEventGen", " extends GetLockStateEvent", typSyncActions));
 
       eventList.append(methodWithLock("AtomicReadWriteLockExitEventGen", " extends AtomicReadWriteLockExitEvent", typSyncActions));
       eventList.append(methodWithLock("AtomicReadWriteLockEnterEventGen", " extends AtomicReadWriteLockEnterEvent", typSyncActions));

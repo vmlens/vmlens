@@ -1,6 +1,5 @@
-package com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter;
+package com.vmlens.nottraced.agent.classtransformer;
 
-import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 
 public class FactoryCollectionAdapterContext {

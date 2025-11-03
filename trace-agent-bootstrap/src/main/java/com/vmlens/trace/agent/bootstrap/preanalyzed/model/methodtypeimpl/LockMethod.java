@@ -3,10 +3,7 @@ package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 import com.vmlens.trace.agent.bootstrap.lock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.lock.LockTypes;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodTypeContext;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.LockEnterStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.LockExitStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.NewConditionStrategy;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.*;
 
 public class LockMethod  extends AbstractMethodType  {
 
@@ -20,6 +17,13 @@ public class LockMethod  extends AbstractMethodType  {
     public static final LockMethod EXIT_WRITE_LOCK = new LockMethod(new LockExitStrategy(LockTypes.WRITE_LOCK));
 
     public static final LockMethod NEW_CONDITION = new LockMethod(new NewConditionStrategy());
+
+
+    public static final LockMethod ENTER_STAMPED_READ_LOCK = new LockMethod(new LockEnterStrategy(new LockEnter(), LockTypes.STAMPED_READ_LOCK));
+    public static final LockMethod ENTER_STAMPED_WRITE_LOCK = new LockMethod(new LockEnterStrategy(new LockEnter(), LockTypes.STAMPED_WRITE_LOCK));
+
+    public static final LockMethod EXIT_STAMPED_LOCK = new LockMethod(new UnlockStampedLockStrategy());
+    public static final LockMethod GET_LOCK_STATE = new LockMethod(new GetLockStateStrategy());
 
     private final StrategyPreAnalyzed strategyPreAnalyzed;
 

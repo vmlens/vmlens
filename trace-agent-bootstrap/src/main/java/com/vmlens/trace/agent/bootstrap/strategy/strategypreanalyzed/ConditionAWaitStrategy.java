@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfterLockExitWaitOrThreadStart;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunBeforeLockExitOrWait;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.AtomicBegin;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.AtomicEnd;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionBegin;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionEnd;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ConditionWaitEnterEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.ConditionWaitExitEvent;
@@ -18,14 +18,14 @@ import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
  *
  */
 
-public class ConditionAWaitStrategy implements StrategyPreAnalyzed  {
+public class ConditionAWaitStrategy extends StrategyWithoutParam  {
 
     @Override
     public void methodEnter(EnterExitContext context) {
         ConditionWaitEnterEvent event = new ConditionWaitEnterEvent(context.readWriteLockMap());
         RunBeforeLockExitOrWait<ConditionWaitEnterEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicBegin());
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new FilterActionBegin());
         context.inTestActionProcessor().process(action);
     }
 
@@ -34,7 +34,7 @@ public class ConditionAWaitStrategy implements StrategyPreAnalyzed  {
         ConditionWaitExitEvent event = new ConditionWaitExitEvent(context.readWriteLockMap());
         RunBeforeLockExitOrWait<ConditionWaitExitEvent> action = new
                 RunBeforeLockExitOrWait<>(event,
-                new SetInMethodIdPositionObjectHashCode<>(context.object()), new AtomicEnd());
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new FilterActionEnd());
         context.inTestActionProcessor().process(action);
         context.inTestActionProcessor().process(new RunAfterLockExitWaitOrThreadStart());
     }

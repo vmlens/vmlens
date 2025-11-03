@@ -1,7 +1,6 @@
 package com.vmlens.nottraced.agent.classtransformer;
 
-import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapter;
-import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
+import com.vmlens.nottraced.agent.classtransformer.factorycollection.FactoryCollection;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.FactoryContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methodenterexitstrategy.*;
@@ -10,9 +9,9 @@ import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
 import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Label;
 
 import static org.objectweb.asm.Opcodes.*;
 
@@ -21,7 +20,7 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
 
     private final String className;
     private final MethodRepositoryForTransform methodCallIdMap;
-    private final FactoryCollectionAdapter factoryCollectionAdapter;
+    private final FactoryCollection factoryCollection;
     private final boolean isInRetransform;
 
     private int classVersion;
@@ -30,12 +29,12 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
     public ClassVisitorApplyMethodVisitor(ClassVisitor classVisitor,
                                           String className,
                                           MethodRepositoryForTransform methodCallIdMap,
-                                          FactoryCollectionAdapter factoryCollectionAdapter,
+                                          FactoryCollection factoryCollection,
                                           boolean isInRetransform) {
         super(ASMConstants.ASM_API_VERSION, classVisitor);
         this.className = className;
         this.methodCallIdMap = methodCallIdMap;
-        this.factoryCollectionAdapter = factoryCollectionAdapter;
+        this.factoryCollection = factoryCollection;
         this.isInRetransform = isInRetransform;
     }
 
@@ -69,7 +68,7 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
                 methodCallIdMap);
 
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> factoryList =
-                factoryCollectionAdapter.get(adapterContext);
+                factoryCollection.getTransformAndSetStrategy(adapterContext);
 
         FactoryContext context = new FactoryContext();
         context.setMethodId(inMethodId);

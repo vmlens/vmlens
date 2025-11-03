@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.donottrace.StartDo
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.donottrace.StopDoNotTraceAction;
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
-public class DoNotTraceInTestStrategy implements StrategyPreAnalyzed {
+public class DoNotTraceInTestStrategy extends StrategyWithoutParam {
 
     @Override
     public void methodEnter(EnterExitContext context) {

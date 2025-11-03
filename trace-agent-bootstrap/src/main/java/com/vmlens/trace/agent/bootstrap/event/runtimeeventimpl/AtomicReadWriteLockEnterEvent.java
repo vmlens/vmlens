@@ -42,7 +42,9 @@ public class AtomicReadWriteLockEnterEvent extends AtomicReadWriteLockEnterEvent
 
     @Override
     public InterleaveAction create(CreateInterleaveActionContext context) {
-        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), lockTypeClass.create(objectHashCode));
+        return new LockEnterImpl(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex),
+                lockTypeClass.create(objectHashCode),
+                lockTypeClass.isRead());
     }
 
 

@@ -19,8 +19,8 @@ public class ActiveLockCollectionTest {
         int threadIndex = 5;
 
         // When
-        mapContainingStack.push(new LockEnterOperation( p(threadIndex, 1), firstMonitor));
-        mapContainingStack.push(new LockEnterOperation( p(threadIndex, 5),  secondMonitor));
+        mapContainingStack.push(new LockEnterOperation( p(threadIndex, 1), firstMonitor, false));
+        mapContainingStack.push(new LockEnterOperation( p(threadIndex, 5),  secondMonitor,false));
 
         // Then
         assertThat(mapContainingStack.pop(threadIndex,firstMonitor).position(), is(p(threadIndex, 1)));
@@ -36,8 +36,8 @@ public class ActiveLockCollectionTest {
         int secondIndex = 9;
 
         // When
-        mapContainingStack.push(new LockEnterOperation(p(threadIndex, 1),  firstMonitor));
-        mapContainingStack.push(new LockEnterOperation( p(secondIndex, 5),  firstMonitor));
+        mapContainingStack.push(new LockEnterOperation(p(threadIndex, 1),  firstMonitor,false));
+        mapContainingStack.push(new LockEnterOperation( p(secondIndex, 5),  firstMonitor,false));
 
         // Then
         assertThat(mapContainingStack.pop(secondIndex,firstMonitor).position(), is(p(secondIndex, 5)));

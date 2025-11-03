@@ -11,15 +11,14 @@ AlternatingOrderContainerFactory -> creates: KeyToOperationCollection
 
 # Structure
 
-KeyToOperationCollection ->  {  volatileAccess,
-                                lockAndConditions,
-                                barrier,
-                                independentActions }
+KeyToOperationCollection ->  {  independentActions , KeyToOperation   } 
+   -KeyToOperation->  { volatileAccess , lockAndConditions, barrier  }
 
 # Groups
 
  * independent
  * dependent
-   * volatila
+   * volatile
    * barriers
- * locks
+   * locks
+

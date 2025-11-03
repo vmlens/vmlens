@@ -3,15 +3,9 @@ package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.NotYetImplementedAction;
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 
-public class NotYetImplementedStrategy implements StrategyPreAnalyzed {
+public class NotYetImplementedStrategy extends StrategyWithoutParam {
 
-    private final String className;
-    private final String methodName;
-
-    public NotYetImplementedStrategy(String className,
-                                     String methodName) {
-        this.className = className;
-        this.methodName = methodName;
+    public NotYetImplementedStrategy() {
     }
 
     @Override

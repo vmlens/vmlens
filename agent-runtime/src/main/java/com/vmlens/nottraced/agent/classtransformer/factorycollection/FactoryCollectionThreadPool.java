@@ -2,37 +2,26 @@ package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryDoNotTrace;
-import com.vmlens.nottraced.agent.classtransformer.factorycollectionadapter.FactoryCollectionAdapterContext;
+import com.vmlens.nottraced.agent.classtransformer.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorthreadpool.ThreadPoolJoin;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorthreadpool.ThreadPoolThreadStart;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.set.hash.THashSet;
-import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
 import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
+
+import static com.vmlens.nottraced.agent.classtransformer.methodvisitormethodenterexit.MethodEnterExitTransformFactory.addEnterExitTransform;
 
 
 public class FactoryCollectionThreadPool implements FactoryCollection {
 
-
-
-    private final FactoryTraceMethodEnterExit factoryForBoth;
     private final NameAndDescriptor startThreadMethod;
     private final THashSet<NameAndDescriptor> shutdownMethod;
 
     public FactoryCollectionThreadPool(NameAndDescriptor startThreadMethod,
-                                       THashSet<NameAndDescriptor> shutdownMethod,
-                                       MethodRepositoryForTransform methodCallIdMap) {
+                                       THashSet<NameAndDescriptor> shutdownMethod) {
         this.startThreadMethod = startThreadMethod;
         this.shutdownMethod = shutdownMethod;
-        this.factoryForBoth = new FactoryTraceMethodEnterExit(new MethodCallbackFactoryFactoryDoNotTrace(),
-                methodCallIdMap);
-    }
-
-    @Override
-    public TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getAnalyze(NameAndDescriptor nameAndDescriptor,
-                                                                          int access) {
-        return  factoryForBoth.addCountTryCatchBlocks(nameAndDescriptor);
     }
 
     @Override
@@ -45,7 +34,7 @@ public class FactoryCollectionThreadPool implements FactoryCollection {
            return TLinkableWrapper.singleton(ThreadPoolJoin.factory());
        }
        TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-       factoryForBoth.addTraceMethodEnterExit(context.nameAndDescriptor(), result);
+       addEnterExitTransform(new MethodCallbackFactoryFactoryDoNotTrace(),result);
        return result;
     }
 

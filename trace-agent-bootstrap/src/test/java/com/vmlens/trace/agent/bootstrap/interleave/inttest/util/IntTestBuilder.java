@@ -19,9 +19,17 @@ public class IntTestBuilder {
     ThreadIndexToPosition threadIndexToPosition = new ThreadIndexToPosition();
     private final  TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun = new TLinkedList<>();
 
-    public IntTestOperation enter(LockKey lockKey, int threadIndex) {
+    public IntTestOperation enterRead(LockKey lockKey, int threadIndex) {
+        return enter(lockKey,threadIndex,true);
+    }
+
+    public IntTestOperation enterWrite(LockKey lockKey, int threadIndex) {
+        return enter(lockKey,threadIndex,false);
+    }
+
+    private IntTestOperation enter(LockKey lockKey, int threadIndex, boolean isRead) {
         LockEnterImpl lockEnterImpl = new LockEnterImpl(threadIndex(threadIndex),
-                lockKey);
+                lockKey,isRead);
         actualRun.add(wrap(lockEnterImpl));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
@@ -31,6 +39,13 @@ public class IntTestBuilder {
         actualRun.add(wrap(lockExit));
         return new IntTestOperation(threadIndexToPosition.next(threadIndex));
     }
+
+    public IntTestOperation getLockState(LockKey lockKey, int threadIndex) {
+        GetLockState lockExit = new GetLockState(threadIndex(threadIndex),lockKey);
+        actualRun.add(wrap(lockExit));
+        return new IntTestOperation(threadIndexToPosition.next(threadIndex));
+    }
+
 
     public IntTestOperation read(VolatileKey volatileAccessKey, int threadIndex) {
         return volatileAccess(volatileAccessKey,threadIndex,MemoryAccessType.IS_READ);

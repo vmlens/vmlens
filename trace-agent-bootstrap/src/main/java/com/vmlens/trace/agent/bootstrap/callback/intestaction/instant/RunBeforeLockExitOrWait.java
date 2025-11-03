@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.notInatomiccallback.NotInAtomicCallbackStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionsInsideMethodStrategy;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetFields;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
@@ -11,13 +11,13 @@ public class RunBeforeLockExitOrWait<EVENT extends ExecuteBeforeEvent> extends A
 
     private final EVENT runtimeEvent;
     private final SetFields<EVENT> setFieldsStrategy;
-    private final NotInAtomicCallbackStrategy notInAtomicCallbackStrategy;
+    private final FilterActionsInsideMethodStrategy filterActionsInsideMethodStrategy;
 
     public RunBeforeLockExitOrWait(EVENT runtimeEvent, SetFields<EVENT> setFieldsStrategy,
-                                   NotInAtomicCallbackStrategy notInAtomicCallbackStrategy) {
+                                   FilterActionsInsideMethodStrategy filterActionsInsideMethodStrategy) {
         this.runtimeEvent = runtimeEvent;
         this.setFieldsStrategy = setFieldsStrategy;
-        this.notInAtomicCallbackStrategy = notInAtomicCallbackStrategy;
+        this.filterActionsInsideMethodStrategy = filterActionsInsideMethodStrategy;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class RunBeforeLockExitOrWait<EVENT extends ExecuteBeforeEvent> extends A
     }
 
     @Override
-    public boolean notInAtomicCallback(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
-        return notInAtomicCallbackStrategy.notInAtomicCallback(threadLocalDataWhenInTest);
+    public boolean takeAction(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
+        return filterActionsInsideMethodStrategy.takeAction(threadLocalDataWhenInTest);
     }
 }

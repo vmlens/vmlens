@@ -28,12 +28,12 @@ public class ConditionIntTest {
 
         IntTestBuilder builder = new IntTestBuilder();
 
-        IntTestOperation enter0 = builder.enter(A,0);
+        IntTestOperation enter0 = builder.enterWrite(A,0);
         IntTestOperation waitEnter0 = builder.conditionWaitEnter(A,0);
         IntTestOperation waitExit0 = builder.conditionWaitExit(A,0);
         IntTestOperation exit0 = builder.exit(A,0);
 
-        IntTestOperation enter1 = builder.enter(A,1);
+        IntTestOperation enter1 = builder.enterWrite(A,1);
         IntTestOperation exit1 = builder.exit(A,1);
 
         // Expected

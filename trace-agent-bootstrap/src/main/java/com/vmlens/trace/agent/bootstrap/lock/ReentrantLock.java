@@ -24,4 +24,9 @@ public class ReentrantLock implements LockType {
     public int id() {
         return id;
     }
+
+    @Override
+    public boolean isRead() {
+        return false;
+    }
 }

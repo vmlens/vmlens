@@ -12,18 +12,21 @@ public class LockEnterImpl implements InterleaveAction  {
 
     private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final LockKey lockOrMonitor;
+    private final boolean isRead;
 
     public LockEnterImpl(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
-                         LockKey lockOrMonitor) {
+                         LockKey lockOrMonitor,
+                         boolean isRead) {
         this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
         this.lockOrMonitor = lockOrMonitor;
+        this.isRead = isRead;
     }
 
     @Override
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
-        mapContainingStack.push(new LockEnterOperation(myPosition, lockOrMonitor));
+        mapContainingStack.push(new LockEnterOperation(myPosition, lockOrMonitor,isRead));
     }
     
     @Override
@@ -49,6 +52,10 @@ public class LockEnterImpl implements InterleaveAction  {
             return false;
         }
 
+        if(isRead != otherLock.isRead) {
+            return false;
+        }
+
         return lockOrMonitor.equalsNormalized(lockOrMonitor);
     }
 
@@ -56,11 +63,13 @@ public class LockEnterImpl implements InterleaveAction  {
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
         LockEnterImpl lockEnter = (LockEnterImpl) object;
-        return Objects.equals(methodIdByteCodePositionAndThreadIndex, lockEnter.methodIdByteCodePositionAndThreadIndex) && Objects.equals(lockOrMonitor, lockEnter.lockOrMonitor);
+        return isRead  == lockEnter.isRead
+                && Objects.equals(methodIdByteCodePositionAndThreadIndex, lockEnter.methodIdByteCodePositionAndThreadIndex)
+                && Objects.equals(lockOrMonitor, lockEnter.lockOrMonitor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor);
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor,isRead);
     }
 }
