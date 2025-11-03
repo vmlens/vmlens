@@ -6,7 +6,7 @@ public abstract class StrategyWithoutParamAndObjectReturn implements StrategyPre
 
     @Override
     public void addToBuilder(MethodTransformerBuilder methodTransformerBuilder) {
-        methodTransformerBuilder.withoutParamAndObjectReturn();
+        methodTransformerBuilder.withoutParamAndWithObjectReturn();
     }
 
 }

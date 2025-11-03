@@ -1,10 +1,9 @@
 package com.vmlens.nottraced.agent.classtransformer.callbackfactory;
 
 import static com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactory.METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT;
+import static com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactory.METHOD_ENTER;
 
 public class MethodEnterStrategyWithoutParam implements MethodEnterStrategy {
-
-    private final String METHOD_ENTER = "methodEnter";
 
     @Override
     public void methodEnter(MethodCallbackFactory parent, int inMethodId) {

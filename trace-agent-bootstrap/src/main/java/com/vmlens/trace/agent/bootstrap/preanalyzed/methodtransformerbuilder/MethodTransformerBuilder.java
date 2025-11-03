@@ -4,6 +4,6 @@ public interface MethodTransformerBuilder {
 
     void withoutParam();
     void withIntParam();
-    void withoutParamAndObjectReturn();
+    void withoutParamAndWithObjectReturn();
 
 }

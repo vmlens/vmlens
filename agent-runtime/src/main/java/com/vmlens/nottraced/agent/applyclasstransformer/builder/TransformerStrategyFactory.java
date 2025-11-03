@@ -5,7 +5,6 @@ import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategy;
 import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategyNoOp;
 import com.vmlens.nottraced.agent.classtransformer.TransformerStrategyForClassTransformer;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.*;
-import com.vmlens.nottraced.agent.classtransformer.factorycollection.preanalyzedstrategy.SelectMethodEnterStrategy;
 import com.vmlens.nottraced.agent.classtransformervmlensapi.TransformerStrategyVmlensApi;
 import com.vmlens.nottraced.agent.write.WriteClassDescriptionAndWarning;
 import com.vmlens.transformed.agent.bootstrap.fieldrepository.FieldRepositoryForTransform;
@@ -53,7 +52,7 @@ public class TransformerStrategyFactory {
     }
 
     public FactoryCollectionPreAnalyzedFactoryBuilder createTraceNoMethodCall() {
-        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze, new SelectMethodEnterStrategy());
+        return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze);
     }
 
     public TransformerStrategy createDoNotTraceIn() {

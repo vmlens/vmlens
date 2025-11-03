@@ -43,12 +43,7 @@ public class MethodEnterExitTransform extends MethodVisitor {
                 createMethodExitCall();
                 break;
             case ARETURN:
-                // Fixme can be solved through overriding
-                if(methodCallbackFactory.supportsObjectReturn()) {
-                    createMethodExitWithObjectReturnCall();
-                } else {
-                    createMethodExitCall();
-                }
+                createMethodExitWithObjectReturnCall();
                 break;
             default:
                 break;
