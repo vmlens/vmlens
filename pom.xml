@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
 
     <name>vmlens</name>
-    <url>https://github.com/vmlens/vlmens</url>
+    <url>https://github.com/vmlens/vmlens</url>
     <description>parent pom</description>
 
     <licenses>
