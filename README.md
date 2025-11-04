@@ -124,6 +124,10 @@ To use VMLens as a standalone tool:
 1. Add this vm parameter when you run your test
 2. Run java -jar standalone-1.2.22.jar report. This checks for data races and creates the report
 
+# Supported Java Versions
+
+VMLens runs with JDK 9 to 25
+
 
 # Documentation
 
