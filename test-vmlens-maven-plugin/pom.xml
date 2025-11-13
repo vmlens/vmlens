@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.22</version>
+        <version>1.2.23-SNAPSHOT</version>
     </parent>
 
     <artifactId>test-vmlens-maven-plugin</artifactId>
@@ -34,9 +34,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
-        <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
-        <url>git@github.com:vmlens/vlmens.git</url>
+        <connection>scm:git:git@github.com:vmlens/vmlens.git</connection>
+        <developerConnection>scm:git:git@github.com:vmlens/vmlens.git</developerConnection>
+        <url>git@github.com:vmlens/vmlens.git</url>
     </scm>
 
     <properties>
@@ -46,6 +46,13 @@
     </properties>
 
     <dependencies>
+        <!-- seems to solve the problem with mockito tests -->
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.17.8</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -104,6 +111,11 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -39,7 +39,7 @@ public class RunStateMachineImpl implements RunStateMachine  {
 
     @Override
     public ActualRun end(ThreadLocalForParallelize threadLocalForParallelize) {
-        threadLocalForParallelize.setParallelizedThreadLocalToNull();
+        threadLocalForParallelize.reset();
         ActualRun actualRun = currentState.actualRun();
         currentState = new RunStateEnd();
         return actualRun;

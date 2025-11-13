@@ -75,11 +75,12 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
        */
       DoNotTraceIn("java/lang/StackTraceElement"),
 
-
-
+      
       DoNotTraceIn("com/vmlens/test/guineapig/DoNotTraceIn"),
-      ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
-      //ClassModelWithoutMethodDescription("$MockitoMock$", DoNotTraceInTestContainsClassName.SINGLETON),
+      
+      //ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/access/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
+      //ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
+      ClassModelWithoutMethodDescription("MockitoMock", DoNotTraceInTestContainsClassName.SINGLETON),
 
 
       loadNotYetImplemented(),
@@ -199,7 +200,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Filter("sun"),
      // Filter("com/sun/"),
       Filter("jdk"),
-
+      
       Filter("net/bytebuddy"),
       Filter("org/objenesis"),
 

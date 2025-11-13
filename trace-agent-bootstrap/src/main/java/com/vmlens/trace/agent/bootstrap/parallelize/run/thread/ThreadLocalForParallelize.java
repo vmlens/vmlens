@@ -26,8 +26,10 @@ public class ThreadLocalForParallelize extends ThreadLocalForCallbackAction {
         return parallelizedThreadLocal;
     }
 
-    public void setParallelizedThreadLocalToNull() {
+    public void reset() {
         this.parallelizedThreadLocal = null;
+        resetDoNotTrace();
+
     }
 
     public long threadId() {

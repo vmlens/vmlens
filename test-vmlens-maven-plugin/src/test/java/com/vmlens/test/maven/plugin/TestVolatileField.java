@@ -17,7 +17,7 @@ public class TestVolatileField {
     private volatile int j = 0;
 
     @Test
-    public void testReadWrite() throws InterruptedException {
+    public void testReadWrite() {
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(1);
         expectedSet.add(2);

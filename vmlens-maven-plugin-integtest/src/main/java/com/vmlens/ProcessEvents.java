@@ -84,14 +84,12 @@ public class ProcessEvents {
         testWithDataRace.add("loop.petersonNok");
         testWithDataRace.add("loop.nok");
         testWithDataRace.add("testCacheLongKeyLIRSVMLens.testConcurrent");
-        testWithDataRace.add("youtrackdbTest");
-       // testWithDataRace.add("jdbcJobExecutionDao");
-
+        testWithDataRace.add("jdbcJobExecutionDao");
 
         Set<String> filter
                 = new HashSet<>();
         // not sure why this is happening
-        filter.add("jdbcJobExecutionDao");
+       // filter.add("jdbcJobExecutionDao");
         checkDataRaces(testWithDataRace,filter,result);
     }
 

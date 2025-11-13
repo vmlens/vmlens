@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.queue.EventQueue;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunEndEvent;
 import com.vmlens.trace.agent.bootstrap.event.serializableeventimpl.RunStartEvent;
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.loop.InterleaveLoop;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
@@ -19,6 +20,8 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForPar
 
 import java.util.Iterator;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_CALCULATED_ORDER;
 
 public class ParallelizeLoop {
 
@@ -75,6 +78,11 @@ public class ParallelizeLoop {
                 interleaveLoop.addActualRun(previous,queueIn);
                 if (interleaveLoopIterator.hasNext()) {
                     CalculatedRun calculatedRun = interleaveLoopIterator.next();
+                    if(TRACE_CALCULATED_ORDER) {
+                        String[] array = new String[1];
+                        array[0] = calculatedRun.toString();
+                        queueIn.offer(new InfoMessageEvent(array));
+                    }
                     ThreadIndexAndThreadStateMap runContext = new ThreadIndexAndThreadStateMap();
                     currentRun = new RunImpl(lock, waitNotifyStrategy,
                             runStateMachineFactory.createRunning(interleaveLoop.interleaveLoopContext(), runContext, calculatedRun),
@@ -112,7 +120,7 @@ public class ParallelizeLoop {
     public void close(ThreadLocalForParallelize threadLocalForParallelize) {
         lock.lock();
         try {
-            threadLocalForParallelize.setParallelizedThreadLocalToNull();
+            threadLocalForParallelize.reset();
         } finally {
             lock.unlock();
         }

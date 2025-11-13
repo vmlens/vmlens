@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.22</version>
+        <version>1.2.23-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sync-bug</artifactId>
 
     <name>${project.artifactId}</name>
-    <url>https://github.com/vmlens/vlmens</url>
+    <url>https://github.com/vmlens/vmlens</url>
 
     <licenses>
         <license>
@@ -37,9 +37,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:vmlens/vlmens.git</connection>
-        <developerConnection>scm:git:git@github.com:vmlens/vlmens.git</developerConnection>
-        <url>git@github.com:vmlens/vlmens.git</url>
+        <connection>scm:git:git@github.com:vmlens/vmlens.git</connection>
+        <developerConnection>scm:git:git@github.com:vmlens/vmlens.git</developerConnection>
+        <url>git@github.com:vmlens/vmlens.git</url>
     </scm>
 
     <dependencies>
