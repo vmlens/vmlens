@@ -11,22 +11,17 @@ public class MultipleVolatileSmall extends AbstractInterleaveActionBuilder {
     @Override
     protected void addActions() {
         threadStart(0,1);
-        threadStart(0,2);
-        volatileAccess(2,volatileField(2283,2067180044L),1);
-        IntTestOperation firstWrite_2 = volatileAccess(2, volatileField(2283, 2067180044L), 2);
-        volatileAccess(2,volatileField(2283,2067180044L),1);
-        IntTestOperation lastWrite_2 =  volatileAccess(2,volatileField(2283,2067180044L),2);
-        lastActionInThread(2);
-        volatileAccess(1,volatileField(2283,2067180044L),1);
-        IntTestOperation firstWrite_1 =  volatileAccess(1,volatileField(2283,2067180044L),2);
-        volatileAccess(1,volatileField(2283,2067180044L),1);
-        IntTestOperation lastWrite_1 = volatileAccess(1,volatileField(2283,2067180044L),2);
+        volatileAccess(0,volatileField(2283,1250442005L),1);
+        IntTestOperation firstWrite_1 = volatileAccess(0, volatileField(2283, 1250442005L), 2);
+        volatileAccess(0,volatileField(2283,1250442005L),1);
+        IntTestOperation lastWrite_1 = volatileAccess(0,volatileField(2283,1250442005L),2);
+        volatileAccess(1,volatileField(2283,1250442005L),1);
+        IntTestOperation firstWrite_2 = volatileAccess(1,volatileField(2283,1250442005L),2);
+        volatileAccess(1,volatileField(2283,1250442005L),1);
+        IntTestOperation lastWrite_2 =  volatileAccess(1,volatileField(2283,1250442005L),2);
         lastActionInThread(1);
         threadJoin(0,1);
-        threadJoin(0,2);
-        volatileAccess(0,volatileField(3011,1807648168L),1);
-        volatileAccess(0,volatileField(2283,2067180044L),1);
-
+        volatileAccess(0,volatileField(2283,1250442005L),1);
         expectedBuilder.group(firstWrite_2,firstWrite_1);
         expectedBuilder.group(firstWrite_1,firstWrite_2);
 

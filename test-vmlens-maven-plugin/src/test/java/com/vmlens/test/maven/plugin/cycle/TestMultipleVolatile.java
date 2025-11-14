@@ -28,10 +28,36 @@ public class TestMultipleVolatile {
         try(AllInterleavings allInterleavings = new AllInterleavings("testMultipleVolatile")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
-                runParallel(  () -> { j++; j++; } , () -> { j++;  j++;}  );
+                runParallel(  () -> { j++; j++;  j++;} , () -> { j++;  j++;  j++;}  );
                 countSet.add(j);
             }
-            assertThat(expectedSet,is(countSet));
+            assertThat(countSet,is(expectedSet));
+        }
+    }
+
+    @Test
+    public void testMultipleVolatileTwoThreads() throws InterruptedException {
+        Set<Integer> expectedSet = new HashSet<>();
+        // Fixme why 2?
+        expectedSet.add(2);
+        expectedSet.add(3);
+        expectedSet.add(4);
+        expectedSet.add(5);
+        expectedSet.add(6);
+
+        Set<Integer> countSet = new HashSet<>();
+        try(AllInterleavings allInterleavings = new AllInterleavings("testMultipleVolatileTwoThreads")) {
+            while (allInterleavings.hasNext()) {
+                j = 0;
+                Thread first = new Thread( () -> { j++;  j++; j++;});
+                first.start();
+                j++;
+                j++;
+                j++;
+                first.join();
+                countSet.add(j);
+            }
+            assertThat(countSet,is(expectedSet));
         }
     }
 
