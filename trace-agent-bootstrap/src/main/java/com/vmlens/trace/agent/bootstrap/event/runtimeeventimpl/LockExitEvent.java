@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.LockExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ThreadCount;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
@@ -76,7 +77,7 @@ public class LockExitEvent extends LockExitEventGen implements ExecuteBeforeEven
     }
 
     @Override
-    public boolean startsNewThread() {
-        return false;
+    public void update(ThreadCount threadCount) {
+
     }
 }

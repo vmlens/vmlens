@@ -40,7 +40,6 @@ public class TestFuture {
         }
     }
 
-    @Disabled
     @Test
     public void testSubmit() throws Throwable {
         try(AllInterleavings allInterleavings = new AllInterleavings("testFutureSubmit")) {

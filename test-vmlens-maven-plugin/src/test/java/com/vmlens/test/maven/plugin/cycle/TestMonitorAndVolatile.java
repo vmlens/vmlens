@@ -1,21 +1,17 @@
 package com.vmlens.test.maven.plugin.cycle;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-
-
+import static com.vmlens.api.Runner.runParallel;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static com.vmlens.api.Runner.runParallel;
 
 public class TestMonitorAndVolatile {
 
     private final Object LOCK = new Object();
     private volatile int j = 0;
 
-    @Disabled
     @Test
     public void testMonitorAndVolatile() {
         try (AllInterleavings allInterleavings = new AllInterleavings("testMonitorAndVolatile")) {

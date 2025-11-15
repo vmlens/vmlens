@@ -73,7 +73,7 @@ public class ParallelizeActionMultiJoin implements EitherPluginEventOnlyOrInterl
     }
 
     @Override
-    public boolean startsNewThread() {
-        return false;
+    public void update(ThreadCount threadCount) {
+        threadCount.decrement(joinedThreadIds.size());
     }
 }

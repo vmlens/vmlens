@@ -43,8 +43,4 @@ public class MethodExitEvent extends MethodExitEventGen implements PluginEventOn
         return runId;
     }
 
-    @Override
-    public boolean isMethodEnterOrExit() {
-        return true;
-    }
 }

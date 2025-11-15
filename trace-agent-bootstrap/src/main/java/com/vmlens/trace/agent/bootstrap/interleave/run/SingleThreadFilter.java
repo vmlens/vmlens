@@ -2,30 +2,44 @@ package com.vmlens.trace.agent.bootstrap.interleave.run;
 
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.EitherPluginEventOnlyOrInterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ThreadCount;
 
-public class SingleThreadFilter {
+public class SingleThreadFilter implements ThreadCount  {
 
-    private boolean isSingleThreaded = true;
+    private int threadCount;
+
 
     /*
-     * checking for thread stops is not easy since even if
-     * a test is terminated we need to wait for the jpin
-     * since the main thread might execute statements which lead to
-     * a data race
+     * thread start increments thread count and we need to take thread count
+     * thread join decrements thread count and we need to take thread join
+     *
      */
-
     public boolean take(EitherPluginEventOnlyOrInterleaveActionFactory runtimeEvent) {
-        if(! isSingleThreaded) {
-            return true;
-        }
+        int previousThreadCount = threadCount;
         InterleaveActionFactory factory = runtimeEvent.asInterleaveActionFactory();
-        if(factory == null) {
-            return false;
+        if(factory != null) {
+            factory.update(this);
         }
-        if(factory.startsNewThread()) {
-            isSingleThreaded = false;
+
+        // This will take thread join
+        if(previousThreadCount > 0) {
             return true;
         }
+        // this will take thread start
+        if(threadCount > 0) {
+            return true;
+        }
+
         return false;
+    }
+
+    @Override
+    public void decrement(int delta) {
+        threadCount -= delta;
+    }
+
+    @Override
+    public void increment() {
+        threadCount++;
     }
 }

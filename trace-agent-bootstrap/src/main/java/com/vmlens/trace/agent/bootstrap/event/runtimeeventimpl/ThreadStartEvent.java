@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.ThreadStartEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ThreadCount;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.ThreadStart;
@@ -73,7 +74,7 @@ public class ThreadStartEvent extends ThreadStartEventGen implements ExecuteBefo
     }
 
     @Override
-    public boolean startsNewThread() {
-        return true;
+    public void update(ThreadCount threadCount) {
+        threadCount.increment();
     }
 }

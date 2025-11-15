@@ -62,9 +62,4 @@ public class ConditionNotifyEvent extends ConditionNotifyEventGen implements Plu
         return runId;
     }
 
-    @Override
-    public boolean isMethodEnterOrExit() {
-        return false;
-    }
-
 }

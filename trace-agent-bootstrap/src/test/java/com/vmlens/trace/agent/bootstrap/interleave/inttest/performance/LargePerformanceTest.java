@@ -4,7 +4,6 @@ import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
 import com.vmlens.trace.agent.bootstrap.mocks.QueueInMock;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_INTERLEAVE_INT_TEST_PERFORMANCE;
@@ -13,7 +12,6 @@ import static org.hamcrest.Matchers.lessThan;
 
 public class LargePerformanceTest {
 
-   @Ignore
     @Test
     public void testH2() {
         // Expected
@@ -22,22 +20,15 @@ public class LargePerformanceTest {
         // Test
         long start = System.currentTimeMillis();
 
-        /*
-            java.lang.StackOverflowError
-	at java.base/java.util.HashMap.put(HashMap.java:619)
-	at java.base/java.util.HashSet.add(HashSet.java:230)
-	at org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles.cycle(SzwarcfiterLauerSimpleCycles.java:137)
-	at org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles.cycle(SzwarcfiterLauerSimpleCycles.java:153)
-	at org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles.cycle(SzwarcfiterLauerSimpleCycles.java:153)
-	at org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles.cycle(SzwarcfiterLauerSimpleCycles.java:153)
-	at org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles.cycle(SzwarcfiterLauerSimpleCycles.java:153)
-	at org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles.cycle(SzwarcfiterLauerSimpleCycles.java:153)
+        /**
+         * currently takes for 25 alternating order 2 min
          */
         new IntTestRunner().runTest(new InterleaveActionH2().build(),expectedBuilder.buildExpected(),
-                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(2).build(new QueueInNoOp(),0));
+                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(15).build(new QueueInNoOp(),0));
         if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
             System.out.println("took " + (System.currentTimeMillis() - start));
         }
+        assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
 
 
@@ -49,15 +40,16 @@ public class LargePerformanceTest {
         // Test
         long start = System.currentTimeMillis();
 
-        /*
-         * currently MaximumAlternatingOrders 14 take 60s
-         * and 8 2s
+        /**
+         * currently takes for 25 alternating order 40s
          */
+
         new IntTestRunner().runTest(new InterleaveActionNonBlockingAtomic().build(),expectedBuilder.buildExpected(),
                 new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(20).build(new QueueInNoOp(),0));
         if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
             System.out.println("took " + (System.currentTimeMillis() - start)); 
         }
+        assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
 
     @Test
@@ -74,8 +66,7 @@ public class LargePerformanceTest {
 
         // Using pattern matching this test is now fast enough
         // Typically should be lower than 200ms
-        assertThat(System.currentTimeMillis() - start, lessThan(10 * 1000L));
+        assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
-
 
 }

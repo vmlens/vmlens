@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.ConditionWaitEnterEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ThreadCount;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.ConditionWaitEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
@@ -103,8 +104,7 @@ public class ConditionWaitEnterEvent extends ConditionWaitEnterEventGen implemen
     }
 
     @Override
-    public boolean startsNewThread() {
-        return false;
-    }
+    public void update(ThreadCount threadCount) {
 
+    }
 }

@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.ThreadJoinedEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ThreadCount;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.ThreadJoin;
@@ -17,7 +18,6 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements Interleav
     public ThreadJoinedEvent(long joinedThreadId) {
         this.joinedThreadId = joinedThreadId;
     }
-
 
     public ThreadJoinedEvent() {
     }
@@ -78,8 +78,7 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements Interleav
     }
 
     @Override
-    public boolean startsNewThread() {
-        return false;
+    public void update(ThreadCount threadCount) {
+        threadCount.decrement(1);
     }
-
 }

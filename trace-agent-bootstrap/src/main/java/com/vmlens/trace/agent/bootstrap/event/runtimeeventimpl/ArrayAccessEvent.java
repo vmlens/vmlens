@@ -65,9 +65,4 @@ public class ArrayAccessEvent extends ArrayAccessEventGen implements
         return runId;
     }
 
-    @Override
-    public boolean isMethodEnterOrExit() {
-        return false;
-    }
-
 }
