@@ -4,9 +4,11 @@ import com.vmlens.api.AllInterleavings;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static com.vmlens.api.Runner.runParallel;
+
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static com.vmlens.api.Runner.runParallel;
 
 public class TestMonitorAndVolatile {
 

@@ -1,8 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
+import com.vmlens.trace.agent.bootstrap.Pair;
+
 public interface PositionOrder {
 
-    boolean checkHasCycleOrSetMinimum(CheckMinimumPositon checkMinimumPositon);
+    Pair<LeftBeforeRight,LeftBeforeRight> checkHasCycleOrSetMinimum(CheckMinimumPositon checkMinimumPositon);
     Position left();
     boolean isAfter();
 

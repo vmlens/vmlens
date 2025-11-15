@@ -14,6 +14,7 @@ public class CycleDetectionAdapter {
 
     private final CalculatedRunBuilder calculatedRunBuilder;
     private final CycleFilterImpl cycleFilter = new CycleFilterImpl();
+    private final TwoEdgesCycleFilter twoEdgesCycleFilter = new TwoEdgesCycleFilter();
     private THashMap<LeftBeforeRight,MutableBoolean> previousOrder = null;
 
     public CycleDetectionAdapter(CalculatedRunBuilder calculatedRunBuilder) {
@@ -21,7 +22,7 @@ public class CycleDetectionAdapter {
     }
 
     public CalculatedRun build(OrderArrayList orderArrayList) {
-        if(new TwoEdgesCycleFilter().hasCycle(orderArrayList)) {
+        if(twoEdgesCycleFilter.hasCycle(orderArrayList)) {
             return null;
         }
 
@@ -30,8 +31,6 @@ public class CycleDetectionAdapter {
         } else {
             // first check if we have an already known cycle
             if(cycleFilter.hasKnownCycle(orderArrayList)) {
-                //System.out.println("cycle");
-                //System.out.println(orderArrayList);
                 return null;
             }
             update(orderArrayList);
@@ -39,12 +38,8 @@ public class CycleDetectionAdapter {
 
         List<List<Position>> cycles = calculatedRunBuilder.buildCycles();
         if(cycles.isEmpty()) {
-            //System.out.println("without cycle");
-            //System.out.println(orderArrayList);
             return calculatedRunBuilder.build();
         } else {
-            //System.out.println("cycle");
-            //System.out.println(orderArrayList);
             new CycleFilterBuildAlgorithm(cycleFilter).addCycles(cycles);
             return null;
         }

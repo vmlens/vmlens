@@ -28,7 +28,7 @@ public class TestMultipleVolatile {
         try(AllInterleavings allInterleavings = new AllInterleavings("testMultipleVolatile")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
-                runParallel(  () -> { j++; j++;  j++;} , () -> { j++;  j++;  j++;}  );
+                runParallel(  () -> { j++; j++;  j++; ;  j++; } , () -> { j++;  j++;  j++;  j++;}  );
                 countSet.add(j);
             }
             assertThat(countSet,is(expectedSet));

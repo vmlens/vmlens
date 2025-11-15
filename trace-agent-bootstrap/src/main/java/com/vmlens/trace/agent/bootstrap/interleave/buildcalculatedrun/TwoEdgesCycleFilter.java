@@ -1,7 +1,17 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun;
 
+import com.vmlens.trace.agent.bootstrap.Pair;
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.PositionOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayList;
+import gnu.trove.iterator.TIntIterator;
+import gnu.trove.map.hash.THashMap;
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.THashSet;
+import gnu.trove.set.hash.TIntHashSet;
+
+import java.util.Iterator;
+
 
 /*
  *   (0,3) < (1,7)
@@ -21,7 +31,35 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayLi
  */
 public class TwoEdgesCycleFilter {
 
+    private final THashMap<LeftBeforeRight, TIntSet> leftBeforeRightToCycles = new THashMap<>();
+    private int maxCycleId = 0;
+
     public boolean hasCycle(OrderArrayList orderArrayList) {
+        TIntSet foundCycles = new TIntHashSet();
+        THashSet<LeftBeforeRight> alreadyProcessed = new THashSet<>();
+
+        if(! leftBeforeRightToCycles.isEmpty()) {
+            Iterator<LeftBeforeRight> iter = orderArrayList.iterator();
+            while(iter.hasNext()) {
+                LeftBeforeRight current = iter.next();
+                if(! alreadyProcessed.contains(current)) {
+                    alreadyProcessed.add(current);
+                    TIntSet cycles = leftBeforeRightToCycles.get(current);
+                    if(cycles != null) {
+                        TIntIterator cycleIter = cycles.iterator();
+                        while(cycleIter.hasNext()) {
+                            int id = cycleIter.next();
+                            if(foundCycles.contains(id)) {
+                                return true;
+                            }
+                            foundCycles.add(id);
+                        }
+                    }
+                }
+            }
+
+        }
+
         PositionOrder[] array = orderArrayList.withInverse();
         int maxThreadIndex = array[array.length - 1].left().threadIndex;
         int currentThreadIndex = array[0].left().threadIndex;
@@ -32,7 +70,22 @@ public class TwoEdgesCycleFilter {
                 twoEdgesCycleFilterState = new TwoEdgesCycleFilterState(maxThreadIndex);
             }
 
-            if(positionOrder.checkHasCycleOrSetMinimum(twoEdgesCycleFilterState)) {
+            Pair<LeftBeforeRight, LeftBeforeRight> cycle = positionOrder.checkHasCycleOrSetMinimum(twoEdgesCycleFilterState);
+            if(cycle != null) {
+                TIntSet firstSet = leftBeforeRightToCycles.get(cycle.getLeft());
+                if(firstSet == null) {
+                    firstSet = new TIntHashSet();
+                    leftBeforeRightToCycles.put(cycle.getLeft(), firstSet);
+                }
+                firstSet.add(maxCycleId);
+
+                TIntSet secondSet = leftBeforeRightToCycles.get(cycle.getRight());
+                if(secondSet == null) {
+                    secondSet = new TIntHashSet();
+                    leftBeforeRightToCycles.put(cycle.getRight(), secondSet);
+                }
+                secondSet.add(maxCycleId);
+                maxCycleId++;
                 return true;
             }
         }

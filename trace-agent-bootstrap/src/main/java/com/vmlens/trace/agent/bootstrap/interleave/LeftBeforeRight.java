@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
+import com.vmlens.trace.agent.bootstrap.Pair;
+
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
 
 public class LeftBeforeRight implements Comparable<LeftBeforeRight> , PositionOrder {
@@ -30,10 +32,8 @@ public class LeftBeforeRight implements Comparable<LeftBeforeRight> , PositionOr
     }
 
     @Override
-    public boolean checkHasCycleOrSetMinimum(CheckMinimumPositon checkMinimumPositon) {
-        // if left before right check that value is greater than current minimum value
-        int minimum = checkMinimumPositon.get(right.threadIndex);
-        return minimum > right.positionInThread ;
+    public Pair<LeftBeforeRight,LeftBeforeRight> checkHasCycleOrSetMinimum(CheckMinimumPositon checkMinimumPositon) {
+        return checkMinimumPositon.checkLeftBeforeRight(this);
     }
 
     @Override
