@@ -14,11 +14,11 @@ public class ExecuteRunAfter <EVENT extends RuntimeEvent & WithInMethodIdPositio
 
     public ExecuteRunAfter(EVENT event) {
         this.event = event;
-
     }
 
     @Override
-    public void execute(int inMethodId, int position,
+    public void execute(int inMethodId,
+                        int position,
                         ThreadLocalWhenInTest threadLocalDataWhenInTest,
                         QueueIn queueIn,
                         ReadWriteLockMap readWriteLockMap) {

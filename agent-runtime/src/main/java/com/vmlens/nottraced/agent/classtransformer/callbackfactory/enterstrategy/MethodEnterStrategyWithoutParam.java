@@ -1,4 +1,6 @@
-package com.vmlens.nottraced.agent.classtransformer.callbackfactory;
+package com.vmlens.nottraced.agent.classtransformer.callbackfactory.enterstrategy;
+
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactory;
 
 import static com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactory.METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT;
 import static com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactory.METHOD_ENTER;

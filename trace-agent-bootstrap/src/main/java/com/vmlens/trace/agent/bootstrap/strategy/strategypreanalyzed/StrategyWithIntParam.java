@@ -6,6 +6,6 @@ public abstract class StrategyWithIntParam implements StrategyPreAnalyzed {
 
     @Override
     public void addToBuilder(MethodTransformerBuilder methodTransformerBuilder) {
-        methodTransformerBuilder.withIntParam();
+        methodTransformerBuilder.setWithIntParam();
     }
 }

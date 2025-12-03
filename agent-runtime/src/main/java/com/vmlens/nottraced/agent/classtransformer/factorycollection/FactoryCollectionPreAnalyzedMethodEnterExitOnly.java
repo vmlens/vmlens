@@ -1,9 +1,10 @@
 package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
-import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryPreAnalyzed;
-import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodEnterStrategyWithoutParam;
-import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.PreAnalyzedStrategyFactory;
 import com.vmlens.nottraced.agent.classtransformer.FactoryCollectionAdapterContext;
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryPreAnalyzed;
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.enterstrategy.MethodEnterStrategyWithoutParam;
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.exitstrategy.DefaultMethodExitStrategy;
+import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.PreAnalyzedStrategyFactory;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
@@ -29,7 +30,8 @@ public class FactoryCollectionPreAnalyzedMethodEnterExitOnly implements FactoryC
         context.methodRepositoryForTransform().setStrategyPreAnalyzed(context.methodId(),
                 preAnalyzedStrategyFactory.create(context.className(),context.nameAndDescriptor()));
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-        addEnterExitTransform(new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam()),result);
+        addEnterExitTransform(new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam(),
+                new DefaultMethodExitStrategy()),result);
         return result;
     }
 

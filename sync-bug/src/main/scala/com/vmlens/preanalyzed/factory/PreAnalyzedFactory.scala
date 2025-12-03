@@ -3,6 +3,8 @@ package com.vmlens.preanalyzed.factory
 import com.vmlens.preanalyzed.factory.AccumulatorFactory.{doubleAccumulator, longAccumulator}
 import com.vmlens.preanalyzed.factory.AdderFactory.{doubleAdder, longAdder}
 import com.vmlens.preanalyzed.factory.AtomicBooleanFactory.atomicBoolean
+import com.vmlens.preanalyzed.factory.AtomicIntegerFieldUpdater.atomicIntegerFieldUpdater
+import com.vmlens.preanalyzed.factory.AtomicIntegerFieldUpdaterImpl.atomicIntegerFieldUpdaterImpl
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongArrayFactory.{atomicIntegerArray, atomicLongArray}
 import com.vmlens.preanalyzed.model.*
 import com.vmlens.preanalyzed.model.classmodel.*
@@ -18,10 +20,11 @@ import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLin
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
 import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
+import com.vmlens.preanalyzed.factory.ReflectField.reflectField
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.LockMethod.{ENTER_STAMPED_WRITE_LOCK,ENTER_STAMPED_READ_LOCK,EXIT_STAMPED_LOCK,GET_LOCK_STATE }
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.LockMethod.{ENTER_STAMPED_READ_LOCK, ENTER_STAMPED_WRITE_LOCK, EXIT_STAMPED_LOCK, GET_LOCK_STATE}
 
 import java.lang.invoke.MethodType
 import scala.collection.mutable.ArrayBuffer
@@ -148,8 +151,11 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       FilterInnerIncludeAnonymousClass("java/lang/Thread$"),
 
       VMLensApi("com/vmlens/api/AllInterleavings"),
-      
+      DoNotTraceIn("com/vmlens/api/TestResultMap"),
+
       futureTask(),
+      atomicIntegerFieldUpdater(),
+      atomicIntegerFieldUpdaterImpl(),
       
       Include("java/util/concurrent/FutureTask"),
 
@@ -192,7 +198,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Include("java/io/"),
 
       // Best is to use pre analyzed for field access
-      //Include("java/lang/reflect"),
+      reflectField(),
+
 
 
       

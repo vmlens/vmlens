@@ -1,7 +1,6 @@
 package com.vmlens.test.maven.plugin.reflection;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -15,7 +14,6 @@ public class TestAtomicIntegerFieldUpdater {
 
     public volatile int j = 0;
 
-    @Ignore
     @Test
     public void testReadWrite() throws InterruptedException {
         AtomicIntegerFieldUpdater<TestAtomicIntegerFieldUpdater> fieldUpdater =

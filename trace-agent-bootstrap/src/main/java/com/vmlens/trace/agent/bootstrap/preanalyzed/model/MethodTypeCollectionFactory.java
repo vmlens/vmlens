@@ -60,10 +60,21 @@ public class MethodTypeCollectionFactory {
         add(METHOD_ENTER_EXIT);
 
 
+        add(REFLECT_FIELD_SET);
+        add(REFLECT_FIELD_GET);
+
+        
         add(ENTER_STAMPED_READ_LOCK);
         add(ENTER_STAMPED_WRITE_LOCK);
         add(EXIT_STAMPED_LOCK);
         add(GET_LOCK_STATE);
+
+        add(NEW_UPDATER);
+
+        add(ATOMIC_FIELD_READ);
+        add(ATOMIC_FIELD_WRITE);
+        add(ATOMIC_FIELD_READ_WRITE);
+
 
         return new MethodTypeCollection(methodTypeToId,idToMethodType);
     }

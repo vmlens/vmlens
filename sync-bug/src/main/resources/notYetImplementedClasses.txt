@@ -52,9 +52,6 @@ java/util/concurrent/CountedCompleter
 java/util/concurrent/Exchanger
 java/util/concurrent/Exchanger$Node
 java/util/concurrent/Exchanger$Participant
-java/util/concurrent/atomic/AtomicIntegerFieldUpdater
-java/util/concurrent/atomic/AtomicIntegerFieldUpdater$AtomicIntegerFieldUpdaterImpl
-java/util/concurrent/atomic/AtomicIntegerFieldUpdater$AtomicIntegerFieldUpdaterImpl$1
 java/util/concurrent/atomic/AtomicLongFieldUpdater
 java/util/concurrent/atomic/AtomicLongFieldUpdater$CASUpdater
 java/util/concurrent/atomic/AtomicLongFieldUpdater$CASUpdater$1

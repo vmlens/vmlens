@@ -15,14 +15,27 @@ public class FieldRepositoryImpl implements FieldRepositoryForCallback, FieldRep
 
     private int maxIndex = 0;
 
-    public synchronized int asInt(FieldOwnerAndName fieldId) {
-        if (fieldIdIdToInt.contains(fieldId)) {
-            return fieldIdIdToInt.get(fieldId);
+    public synchronized int asInt(FieldOwnerAndName fieldOwnerAndName) {
+        if (fieldIdIdToInt.contains(fieldOwnerAndName)) {
+            return fieldIdIdToInt.get(fieldOwnerAndName);
         }
         int temp = maxIndex;
         maxIndex++;
-        fieldIdIdToInt.put(fieldId, temp);
+        fieldIdIdToInt.put(fieldOwnerAndName, temp);
         return temp;
+    }
+
+    @Override
+    public synchronized FieldStrategy get(FieldOwnerAndName fieldOwnerAndName) {
+        if (! fieldIdIdToInt.contains(fieldOwnerAndName)) {
+            return NO_OP_FIELD_STRATEGY;
+        }
+        int fieldId = fieldIdIdToInt.get(fieldOwnerAndName);
+        FieldStrategy strategy = idToStrategy.get(fieldId);
+        if (strategy == null) {
+            return  NO_OP_FIELD_STRATEGY;
+        }
+        return strategy;
     }
 
     @Override

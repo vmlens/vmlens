@@ -1,9 +1,7 @@
 package com.vmlens.test.maven.plugin.reflection;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.Ignore;
 import org.junit.Test;
-
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -12,18 +10,17 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TestReflectionField {
+public class TestReflectField {
 
     public volatile int j = 0;
 
     @Test
-    @Ignore
     public void testReadWrite() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(1);
         expectedSet.add(2);
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleavings allInterleavings = new AllInterleavings("testReflectionField")) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testReflectField")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
                 Thread first = new Thread() {

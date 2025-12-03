@@ -1,0 +1,26 @@
+class:com/vmlens/test/guineapig/NewUpdater
+method:<init>()V
+  ALOAD_0
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  RETURN
+method:newUpdater(Ljava/lang/Class;Ljava/lang/String;)Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;
+  load:Lcom/vmlens/test/guineapig/NewUpdater;
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD_0
+  ALOAD_1
+  load:1
+  load:0
+  load:2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.beforeMethodCall:(III)V
+  INVOKESTATIC  java/util/concurrent/atomic/AtomicIntegerFieldUpdater.newUpdater:(Ljava/lang/Class;Ljava/lang/String;)Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;
+  load:1
+  load:0
+  load:2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
+  DUP
+  ALOAD_1
+  ALOAD_2
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.methodObjectStringParamObjectReturn:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;I)V
+  ARETURN

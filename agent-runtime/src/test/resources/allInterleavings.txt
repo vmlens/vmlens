@@ -1,14 +1,14 @@
 class:com/vmlens/api/AllInterleavings
 method:<init>(Ljava/lang/String;)V
-  ALOAD
-  ALOAD
+  ALOAD_0
+  ALOAD_1
   ICONST_0
   INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;Z)V
   RETURN
 method:<init>(Ljava/lang/String;Z)V
-  ALOAD
-  ALOAD
-  ILOAD
+  ALOAD_0
+  ALOAD_1
+  ILOAD_2
   BIPUSH
   BIPUSH
   SIPUSH
@@ -20,45 +20,45 @@ method:<init>(Ljava/lang/String;Z)V
   INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;ZIIIIILjava/util/List;)V
   RETURN
 method:<init>(Ljava/lang/String;ZIIIIILjava/util/List;)V
-  ALOAD
+  ALOAD_0
   INVOKESPECIAL  java/lang/Object.<init>:()V
-  ALOAD
-  ALOAD
+  ALOAD_0
+  ALOAD_1
   PUTFIELD  com/vmlens/api/AllInterleavings.name:Ljava/lang/String;
-  ALOAD
-  ILOAD
+  ALOAD_0
+  ILOAD_2
   PUTFIELD  com/vmlens/api/AllInterleavings.throwExceptionWhenNoAgent:Z
-  ALOAD
-  ILOAD
+  ALOAD_0
+  ILOAD_3
   PUTFIELD  com/vmlens/api/AllInterleavings.maximumIterations:I
-  ALOAD
-  ILOAD
+  ALOAD_0
+  ILOAD_4
   PUTFIELD  com/vmlens/api/AllInterleavings.maximumAlternatingOrders:I
-  ALOAD
-  ILOAD
+  ALOAD_0
+  ILOAD_5
   PUTFIELD  com/vmlens/api/AllInterleavings.synchronizationActionsLoopThreshold:I
-  ALOAD
-  ILOAD
+  ALOAD_0
+  ILOAD_6
   PUTFIELD  com/vmlens/api/AllInterleavings.unsynchronizedOperationsLoopThreshold:I
-  ALOAD
-  ILOAD
+  ALOAD_0
+  ILOAD_7
   PUTFIELD  com/vmlens/api/AllInterleavings.reportAsSummaryThreshold:I
-  ALOAD
-  ALOAD
+  ALOAD_0
+  ALOAD_8
   PUTFIELD  com/vmlens/api/AllInterleavings.intentionalDataRaces:Ljava/util/List;
   RETURN
 method:hasNext()Z
-  ALOAD
-  ALOAD
+  ALOAD_0
+  ALOAD_0
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.hasNext:(Ljava/lang/Object;)Z
   IRETURN
 method:close()V
-  ALOAD
-  ALOAD
+  ALOAD_0
+  ALOAD_0
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.close:(Ljava/lang/Object;)V
   RETURN
 method:hasNext(Ljava/lang/Object;)Z
-  ALOAD
+  ALOAD_0
   GETFIELD  com/vmlens/api/AllInterleavings.throwExceptionWhenNoAgent:Z
   IFEQ
   NEW  java/lang/RuntimeException

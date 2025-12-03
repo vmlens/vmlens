@@ -4,13 +4,18 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProces
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteAfterOperation;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteRunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.SetExecuteAfterOperation;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.EitherVolatileOrNormalFieldAccessEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileFieldAccessEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.VolatileStaticFieldAccessEvent;
 
 
 public class VolatileFieldStrategy implements FieldStrategy {
     @Override
-    public void onAccess(Object fromObject, int fieldId, int position, int inMethodId, int memoryAccessType,
+    public void onAccess(Object fromObject,
+                         int fieldId,
+                         int position,
+                         int inMethodId,
+                         int memoryAccessType,
                          InTestActionProcessor inTestActionProcessor) {
         VolatileFieldAccessEvent volatileAccessEvent = new VolatileFieldAccessEvent(fromObject);
         volatileAccessEvent.setBytecodePosition(position);
@@ -19,13 +24,14 @@ public class VolatileFieldStrategy implements FieldStrategy {
         volatileAccessEvent.setOperation(memoryAccessType);
 
         ExecuteAfterOperation executeAfterOperation = new ExecuteRunAfter<>(volatileAccessEvent);
-
-
         inTestActionProcessor.process(new SetExecuteAfterOperation(executeAfterOperation));
     }
 
     @Override
-    public void onStaticAccess(int fieldId, int position, int inMethodId, int memoryAccessType,
+    public void onStaticAccess(int fieldId,
+                               int position,
+                               int inMethodId,
+                               int memoryAccessType,
                                InTestActionProcessor inTestActionProcessor) {
         VolatileStaticFieldAccessEvent volatileAccessEvent = new VolatileStaticFieldAccessEvent();
         volatileAccessEvent.setBytecodePosition(position);
@@ -35,5 +41,10 @@ public class VolatileFieldStrategy implements FieldStrategy {
 
         ExecuteAfterOperation executeAfterOperation = new ExecuteRunAfter<>(volatileAccessEvent);
         inTestActionProcessor.process(new SetExecuteAfterOperation(executeAfterOperation));
+    }
+
+    @Override
+    public EitherVolatileOrNormalFieldAccessEvent create(Object forObject) {
+        return new VolatileFieldAccessEvent(forObject);
     }
 }

@@ -38,7 +38,7 @@ public class TestMultipleVolatile {
     @Test
     public void testMultipleVolatileTwoThreads() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();
-        // Fixme why 2?
+        
         expectedSet.add(2);
         expectedSet.add(3);
         expectedSet.add(4);

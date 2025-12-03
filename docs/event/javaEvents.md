@@ -15,3 +15,6 @@ NotThreadOperationFactory ->    InterleaveActionFactoryAndRuntimeEvent
 ExecuteBeforeEvent -> InterleaveActionFactoryAndRuntimeEvent
 ThreadStart -> ExecuteBeforeEvent
 ThreadJoin -> InterleaveActionFactoryAndRuntimeEvent
+
+
+EitherVolatileOrNormalFieldAccessEvent <- { FieldAccessEvent , VolatileFieldAccessEvent }

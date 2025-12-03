@@ -12,4 +12,5 @@ public interface CallbackAction {
 
 
     RuntimeEvent isLastMethodInThread(ThreadLocalWhenInTest dataWhenInTest, int stackTraceDepth);
+
 }

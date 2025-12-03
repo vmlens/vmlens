@@ -1,9 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.preanalyzed.methodtransformerbuilder;
 
+/**
+ * note that only one call is allowed, e.g. mixture is currently not supported
+ */
+
 public interface MethodTransformerBuilder {
 
-    void withoutParam();
-    void withIntParam();
-    void withoutParamAndWithObjectReturn();
+    void setWithoutParam();
+    void setWithIntParam();
+    void setWithoutParamAndWithObjectReturn();
+    void setWithObjectParamAtReturn();
+    void setWithObjectStringParamAtReturn();
+    void setWithObjectPlaceHolderStringParamAtReturn();
 
 }

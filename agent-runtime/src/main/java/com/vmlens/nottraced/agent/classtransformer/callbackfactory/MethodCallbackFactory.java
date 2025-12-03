@@ -10,7 +10,7 @@ public abstract class MethodCallbackFactory {
 
     private final String BEFORE_METHOD_CALL = "beforeMethodCall";
     private final String AFTER_METHOD_CALL = "afterMethodCall";
-    private final String METHOD_EXIT = "methodExit";
+    public static  final String METHOD_EXIT = "methodExit";
     private final String METHOD_DESCRIPTOR_INT_INT_INT_ARGUMENT = "(III)V";
 
     protected final MethodVisitor methodVisitor;
@@ -35,15 +35,11 @@ public abstract class MethodCallbackFactory {
         methodCall(calledMethodId, AFTER_METHOD_CALL, METHOD_DESCRIPTOR_INT_INT_INT_ARGUMENT);
     }
 
-    public void methodExit(int inMethodId, CalleeFactory calleeFactory) {
-        calleeFactory.createCallee();
-        methodCall(inMethodId, METHOD_EXIT, METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT);
-    }
-
+    public abstract void methodExit(int inMethodId, CalleeFactory calleeFactory);
     public abstract void methodExitWithObjectReturn(int inMethodId, CalleeFactory calleeFactory);
     public abstract void methodEnter(int inMethodId, CalleeFactory calleeFactory);
 
-    protected abstract void methodCall(int calledMethodId,
+    public abstract void methodCall(int calledMethodId,
                                        String beforeMethodCall,
                                        String methodDescriptorIntIntIntArgument);
 

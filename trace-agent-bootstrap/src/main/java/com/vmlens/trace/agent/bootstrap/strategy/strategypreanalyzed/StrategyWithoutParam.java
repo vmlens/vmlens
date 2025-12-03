@@ -6,6 +6,6 @@ public abstract class StrategyWithoutParam implements StrategyPreAnalyzed {
 
     @Override
     public void addToBuilder(MethodTransformerBuilder methodTransformerBuilder) {
-        methodTransformerBuilder.withoutParam();
+        methodTransformerBuilder.setWithoutParam();
     }
 }

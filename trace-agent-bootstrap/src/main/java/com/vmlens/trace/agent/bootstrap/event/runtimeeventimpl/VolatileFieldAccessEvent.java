@@ -12,7 +12,7 @@ import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 
 public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implements
-        NoThreadOperationFactory, WithInMethodIdPositionReadWriteLockMap {
+        NoThreadOperationFactory, WithInMethodIdPositionReadWriteLockMap, EitherVolatileOrNormalFieldAccessEvent {
 
     private Object object;
 
@@ -69,8 +69,14 @@ public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implem
                 operation);
     }
 
+    /*
+     * reuse of the set logic
+     * used for reflection and atomic field updater
+     * method id gets set in the strategy
+     */
     @Override
     public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
+        this.bytecodePosition = position;
         objectHashCode = System.identityHashCode(object);
         object = null;
     }
@@ -84,6 +90,5 @@ public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implem
     public int runId() {
         return runId;
     }
-
 
 }

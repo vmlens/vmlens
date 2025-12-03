@@ -2,10 +2,13 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.AfterMethodCallAction;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.BeforeMethodCallAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.InitializationAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodEnterAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodExitAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.AfterMethodCallAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.BeforeMethodCallAction;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldUpdaterRepository;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldUpdaterRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapter;
@@ -13,8 +16,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapterPreAnalyze
 
 import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodEnterAction.methodEnterAction;
 import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodEnterAction.methodEnterActionWithIntParameter;
-import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodExitAction.methodExitAction;
-import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodExitAction.methodExitActionWithReturnValue;
+import static com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodExitAction.*;
 
 
 public class PreAnalyzedCallback {
@@ -23,6 +25,7 @@ public class PreAnalyzedCallback {
     private static final ReadWriteLockMap readWriteLockMap = ReadWriteLockMap.INSTANCE;
     private static final MethodStrategyAdapter methodStrategyAdapter = new MethodStrategyAdapterPreAnalyzed(readWriteLockMap,
             MethodRepositorySingleton.INSTANCE);
+    private static final FieldUpdaterRepository fieldUpdaterRepository =  FieldUpdaterRepositorySingleton.INSTANCE;
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
         BeforeMethodCallAction beforeMethodCallAction = new BeforeMethodCallAction(inMethodId,position);
@@ -56,7 +59,29 @@ public class PreAnalyzedCallback {
 
     public static void methodExitObjectReturn(Object returnValue, Object object, int methodId) {
         MethodExitAction methodEnterAction = methodExitActionWithReturnValue(object,
-                methodId,returnValue,methodStrategyAdapter);
+                methodId,returnValue,methodStrategyAdapter,fieldUpdaterRepository);
+        callbackActionProcessor.process(methodEnterAction);
+    }
+
+
+    /*
+     * only used for AtomicIntegerFieldUpdater.newUpdater and AtomicReferenceFieldUpdater
+     * newUpdater are static factory methods so we do not need the callee (object)
+     */
+    public static void methodObjectStringParamObjectReturn(Object returnValue,
+                                                           Object param,
+                                                           Object stringParam,
+                                                           int methodId) {
+        InitializationAction initializationAction = new InitializationAction(returnValue,param ,(String) stringParam,fieldUpdaterRepository);
+        callbackActionProcessor.initialize(initializationAction);
+
+
+    }
+
+
+    public static void methodExitObjectParam(Object object, Object param, int methodId) {
+        MethodExitAction methodEnterAction = methodExitActionWithObjectParam(object,
+                methodId,param,methodStrategyAdapter,fieldUpdaterRepository);
         callbackActionProcessor.process(methodEnterAction);
     }
 
