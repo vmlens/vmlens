@@ -7,7 +7,7 @@ import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodT
 object ConditionFactory {
 
   def condition(): ClassWithMethodToMethodType = {
-    new ClassWithMethodToMethodType("java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionObject", methods())
+    new ClassWithMethodToMethodType("java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionObject", methods(),List())
   }
 
   private def methods() : List[MethodToMethodType] = List(

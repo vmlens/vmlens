@@ -6,8 +6,7 @@ import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.GetRead
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod}
 
 case class GetReadWriteLock(name : String) extends ClassModel {
-  def take(className: String) : Boolean = className.equals(name);
-
+  
   override def create(): PackageOrClass = new PackageOrClass(name,
     PreAnalyzedAllMethods.SINGLETON,
     Array(new PreAnalyzedMethod("readLock", "()Ljava/util/concurrent/locks/Lock;", GetReadWriteLockMethod.GET_READ_WRITE_LOCK),

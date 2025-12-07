@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.fieldrepository;
 
 import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.Runner;
 import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.FieldStrategy;
 import org.junit.jupiter.api.Test;
 
@@ -25,16 +26,19 @@ public class FieldRepositoryImplTest {
             while (allInterleavings.hasNext()) {
                 FieldRepositoryImpl fieldRepositoryImpl = new FieldRepositoryImpl();
                 int previousId = fieldRepositoryImpl.asInt(PREVIOUS_FIELD_OWNER_AND_NAME);
-                Thread first = new Thread(() ->{
-                    int id = fieldRepositoryImpl
-                            .getIdAndSetFieldIsNormal(FIELD_OWNER_AND_NAME);
-                    assertThat(id,is(previousId+1));
-                });
-                first.start();
+                Runner.runParallel(
+                        () -> {
+                            int id = fieldRepositoryImpl
+                                    .getIdAndSetFieldIsNormal(FIELD_OWNER_AND_NAME);
+                            assertThat(id,is(previousId+1));
+                        },
+                        () -> {
+                            int id = fieldRepositoryImpl.asInt(FIELD_OWNER_AND_NAME);
+                            assertThat(id,is(previousId+1));
+                        });
                 int id = fieldRepositoryImpl.asInt(FIELD_OWNER_AND_NAME);
-                assertThat(id,is(previousId+1));
-                first.join();
-
+                FieldStrategy strategy = fieldRepositoryImpl.get(id);
+                assertThat(strategy, is(NORMAL_FIELD_STRATEGY));
             }
         }
     }

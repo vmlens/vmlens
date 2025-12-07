@@ -9,8 +9,6 @@ import scala.collection.mutable.ArrayBuffer
 
 
 case class ThreadPool(name : String, methods : List[ThreadPoolMethod]) extends ClassModel {
-  def take(className: String) : Boolean = className.equals(name);
-
   override def create(): PackageOrClass = new PackageOrClass(name, ClassTypeThreadPool.SINGLETON, threadPoolMethod(methods))
 
   private def threadPoolMethod(methods: List[ThreadPoolMethod]): Array[PreAnalyzedMethod] = {

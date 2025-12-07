@@ -5,7 +5,6 @@ import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.DoNotTra
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod}
 
 case class DoNotTraceIn(name : String) extends ClassModel {
-  def take(className: String) : Boolean = className.equals(name);
-
+  
   override def create(): PackageOrClass = new PackageOrClass(name, DoNotTraceInClass.SINGLETON, Array.ofDim[PreAnalyzedMethod](0))
 }

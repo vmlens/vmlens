@@ -8,7 +8,7 @@ import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodT
 object FutureFactory {
 
   def futureTask(): ClassWithMethodToMethodType = {
-    new ClassWithMethodToMethodType("java/util/concurrent/FutureTask", methods())
+    new ClassWithMethodToMethodType("java/util/concurrent/FutureTask", methods(),List())
   }
 
   private def methods(): List[MethodToMethodType] = List(

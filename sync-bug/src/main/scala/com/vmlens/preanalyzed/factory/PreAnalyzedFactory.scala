@@ -4,7 +4,7 @@ import com.vmlens.preanalyzed.factory.AccumulatorFactory.{doubleAccumulator, lon
 import com.vmlens.preanalyzed.factory.AdderFactory.{doubleAdder, longAdder}
 import com.vmlens.preanalyzed.factory.AtomicBooleanFactory.atomicBoolean
 import com.vmlens.preanalyzed.factory.AtomicIntegerFieldUpdater.atomicIntegerFieldUpdater
-import com.vmlens.preanalyzed.factory.AtomicIntegerFieldUpdaterImpl.atomicIntegerFieldUpdaterImpl
+import com.vmlens.preanalyzed.factory.standard.AtomicIntegerFieldUpdaterImpl.atomicIntegerFieldUpdaterImpl
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongArrayFactory.{atomicIntegerArray, atomicLongArray}
 import com.vmlens.preanalyzed.model.*
 import com.vmlens.preanalyzed.model.classmodel.*
@@ -20,7 +20,8 @@ import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLin
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
 import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
-import com.vmlens.preanalyzed.factory.ReflectField.reflectField
+import com.vmlens.preanalyzed.factory.standard.ReflectField.reflectField
+import com.vmlens.preanalyzed.factory.standard.StandardPreAnalyzedClassesFactory.standardClasses
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}
@@ -88,6 +89,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       loadNotYetImplemented(),
 
+      standardClasses(),
+
       forGuineaPig(),
 
       ThreadPool("com/vmlens/test/guineapig/ThreadPoolExecutorGuineaPig",List(
@@ -103,7 +106,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$WriteLock", WriteLock(), lockMethods()),
       Lock("java/util/concurrent/locks/ReentrantLock", ReentrantLock(), lockMethods()),
 
-      ClassWithMethodToMethodType("java/util/concurrent/locks/StampedLock", stampedLockMethods()),
+      ClassWithMethodToMethodType("java/util/concurrent/locks/StampedLock", stampedLockMethods(),List()),
       Filter("java/util/concurrent/locks/StampedLock$"),
         
       condition(),
@@ -155,7 +158,6 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       futureTask(),
       atomicIntegerFieldUpdater(),
-      atomicIntegerFieldUpdaterImpl(),
       
       Include("java/util/concurrent/FutureTask"),
 
@@ -197,8 +199,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       Include("java/io/"),
 
-      // Best is to use pre analyzed for field access
-      reflectField(),
+    
+      
 
 
 
