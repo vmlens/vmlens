@@ -1,17 +1,13 @@
 class:com/vmlens/test/guineapig/MethodCall
 method:<init>()V
-  ALOAD
+  ALOAD_0
   INVOKESPECIAL  java/lang/Object.<init>:()V
   RETURN
 method:update()V
-  ALOAD
+  ALOAD_0
   load:1
-  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodEnter:(Ljava/lang/Object;I)V
-  ALOAD
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD_0
   load:1
-  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
   RETURN
-  ALOAD
-  load:1
-  INVOKESTATIC  com/vmlens/trace/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
-  ATHROW

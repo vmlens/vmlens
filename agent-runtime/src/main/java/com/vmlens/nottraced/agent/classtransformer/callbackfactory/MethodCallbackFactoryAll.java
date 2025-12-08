@@ -5,7 +5,7 @@ import org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
-public class MethodCallbackFactoryAll extends MethodCallbackFactory {
+public class MethodCallbackFactoryAll extends DefaultMethodCallbackFactory {
 
     private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/MethodCallback";
 
@@ -13,17 +13,12 @@ public class MethodCallbackFactoryAll extends MethodCallbackFactory {
         super(methodVisitor);
     }
 
-    @Override
-    public void methodExitWithObjectReturn(int inMethodId, CalleeFactory calleeFactory) {
-        methodExit(inMethodId,calleeFactory);
-    }
-
     public void methodEnter(int inMethodId, CalleeFactory calleeFactory) {
         calleeFactory.createCallee();
         methodCall(inMethodId, METHOD_ENTER, METHOD_DESCRIPTOR_OBJECT_INT_ARGUMENT);
     }
 
-    protected void methodCall(int id, String methodName, String methodDescriptor) {
+    public void methodCall(int id, String methodName, String methodDescriptor) {
         methodVisitor.visitLdcInsn(id);
         methodVisitor.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS,
                 methodName, methodDescriptor, false);

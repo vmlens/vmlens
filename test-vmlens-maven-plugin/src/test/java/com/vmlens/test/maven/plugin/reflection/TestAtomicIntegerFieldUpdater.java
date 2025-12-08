@@ -1,7 +1,6 @@
 package com.vmlens.test.maven.plugin.reflection;
 
 import com.vmlens.api.AllInterleavings;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -15,7 +14,6 @@ public class TestAtomicIntegerFieldUpdater {
 
     public volatile int j = 0;
 
-    @Ignore
     @Test
     public void testReadWrite() throws InterruptedException {
         AtomicIntegerFieldUpdater<TestAtomicIntegerFieldUpdater> fieldUpdater =
@@ -26,7 +24,7 @@ public class TestAtomicIntegerFieldUpdater {
         expectedSet.add(2);
 
         Set<Integer> actual = new HashSet<>();
-        try(AllInterleavings allInterleavings = new AllInterleavings("testReflectionField")) {
+        try(AllInterleavings allInterleavings = new AllInterleavings("testAtomicIntegerFieldUpdater")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
                 Thread first = new Thread() {

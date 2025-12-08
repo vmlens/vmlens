@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.BarrierWaitExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ThreadCount;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierWaitExit;
@@ -86,7 +87,7 @@ public class BarrierWaitExitEvent extends BarrierWaitExitEventGen
     }
 
     @Override
-    public boolean startsNewThread() {
-        return false;
+    public void update(ThreadCount threadCount) {
+
     }
 }

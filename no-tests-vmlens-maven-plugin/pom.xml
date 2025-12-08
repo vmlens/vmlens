@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.22</version>
+        <version>1.2.23</version>
     </parent>
 
     <artifactId>no-tests-vmlens-maven-plugin</artifactId>
     <name>no-tests-vmlens-maven-plugin</name>
-    <url>https://github.com/vmlens/vlmens</url>
+    <url>https://github.com/vmlens/vmlens</url>
 
     <licenses>
         <license>

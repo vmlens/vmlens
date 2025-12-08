@@ -3,14 +3,14 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.GetLockStateEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NoThreadOperationFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.GetLockState;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.StampedLockKey;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class GetLockStateEvent extends GetLockStateEventGen implements InterleaveActionFactoryAndRuntimeEvent,
+public class GetLockStateEvent extends GetLockStateEventGen implements NoThreadOperationFactory,
         WithInMethodIdPositionReadWriteLockMap {
     
     private Object object;
@@ -35,11 +35,6 @@ public class GetLockStateEvent extends GetLockStateEventGen implements Interleav
     @Override
     public int runId() {
         return runId;
-    }
-    
-    @Override
-    public boolean startsNewThread() {
-        return false;
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.AtomicNonBlockingEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NoThreadOperationFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.VolatileAccess;
@@ -11,7 +11,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.volatileacce
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class AtomicNonBlockingEvent extends AtomicNonBlockingEventGen implements
-        InterleaveActionFactoryAndRuntimeEvent, WithInMethodIdPositionReadWriteLockMap {
+        NoThreadOperationFactory, WithInMethodIdPositionReadWriteLockMap {
 
     private Object object;
 
@@ -85,8 +85,4 @@ public class AtomicNonBlockingEvent extends AtomicNonBlockingEventGen implements
         return runId;
     }
 
-    @Override
-    public boolean startsNewThread() {
-        return false;
-    }
 }

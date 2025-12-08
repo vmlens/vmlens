@@ -74,7 +74,7 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
-          /*   if(name.startsWith("org/junit/platform/launcher/jfr/$Pr")) {
+        /*    if(name.contains("AtomicIntegerFieldUpdater")) {
                     logClass(name + "_trans", transformed);
                  logClass(name , classfileBuffer);
                 }

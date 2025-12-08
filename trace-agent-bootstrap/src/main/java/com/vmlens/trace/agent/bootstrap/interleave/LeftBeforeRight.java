@@ -1,8 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
+import com.vmlens.trace.agent.bootstrap.Pair;
+
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
 
-public class LeftBeforeRight implements Comparable<LeftBeforeRight> {
+public class LeftBeforeRight implements Comparable<LeftBeforeRight> , PositionOrder {
     public final Position left;
     public final Position right;
 
@@ -18,7 +20,25 @@ public class LeftBeforeRight implements Comparable<LeftBeforeRight> {
 
     public static LeftBeforeRight lbr(Position left,
                                       Position right) {
-        return new LeftBeforeRight(left, right);
+        return new LeftBeforeRight(left,right);
+    }
+
+    public LeftAfterRight inverse() {
+        return new LeftAfterRight(right,left);
+    }
+
+    public Position left() {
+        return left;
+    }
+
+    @Override
+    public Pair<LeftBeforeRight,LeftBeforeRight> checkHasCycleOrSetMinimum(CheckMinimumPositon checkMinimumPositon) {
+        return checkMinimumPositon.checkLeftBeforeRight(this);
+    }
+
+    @Override
+    public boolean isAfter() {
+        return false;
     }
 
     @Override
@@ -41,8 +61,8 @@ public class LeftBeforeRight implements Comparable<LeftBeforeRight> {
 
     @Override
     public String toString() {
-        return "(" + left +
-                "<" + right + ")";
+        return "lbr(" + left.threadIndex  + "," + left.positionInThread +
+                "," + right.threadIndex +  "," + right.positionInThread  + ");";
     }
 
     @Override

@@ -40,4 +40,9 @@ public class LastInterleaveActionInThread implements InterleaveAction {
     public int hashCode() {
         return Objects.hash(getClass() , threadIndex);
     }
+
+    @Override
+    public String toString() {
+        return "lastActionInThread(" + threadIndex + ");";
+    }
 }

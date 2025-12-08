@@ -34,4 +34,9 @@ public class TransformerStrategyForClassTransformer implements TransformerStrate
                 methodRepositoryForAnalyze, classVisitorAnalyze);
         return classTransformer.transform(context.classfileBuffer(), context.name(), context.isInReTransform());
     }
+
+    // visible for test
+    public FactoryCollectionFactory factoryCollectionFactory() {
+        return factoryCollectionFactory;
+    }
 }

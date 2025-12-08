@@ -14,6 +14,7 @@ public class CycleDetectionAdapter {
 
     private final CalculatedRunBuilder calculatedRunBuilder;
     private final CycleFilterImpl cycleFilter = new CycleFilterImpl();
+    private final TwoEdgesCycleFilter twoEdgesCycleFilter = new TwoEdgesCycleFilter();
     private THashMap<LeftBeforeRight,MutableBoolean> previousOrder = null;
 
     public CycleDetectionAdapter(CalculatedRunBuilder calculatedRunBuilder) {
@@ -21,6 +22,10 @@ public class CycleDetectionAdapter {
     }
 
     public CalculatedRun build(OrderArrayList orderArrayList) {
+        if(twoEdgesCycleFilter.hasCycle(orderArrayList)) {
+            return null;
+        }
+
         if(previousOrder == null) {
             initial(orderArrayList);
         } else {

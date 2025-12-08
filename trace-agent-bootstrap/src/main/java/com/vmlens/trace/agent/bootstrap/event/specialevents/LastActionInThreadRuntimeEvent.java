@@ -1,10 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.event.specialevents;
 
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.PluginEventOnly;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.*;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository;
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
@@ -16,7 +13,7 @@ import java.io.DataOutputStream;
 /*
 * Fixme probably makes sense to change the inheritance relation
 *  see InterleaveRun process
-* see
+*
 *
  */
 
@@ -38,10 +35,6 @@ public class LastActionInThreadRuntimeEvent implements RuntimeEvent, InterleaveA
         return new LastInterleaveActionInThread(threadIndex);
     }
 
-    @Override
-    public boolean startsNewThread() {
-        return false;
-    }
 
     @Override
     public InterleaveActionFactory asInterleaveActionFactory() {
@@ -96,5 +89,10 @@ public class LastActionInThreadRuntimeEvent implements RuntimeEvent, InterleaveA
     @Override
     public StreamWrapperWithLoopIdAndRunId getStream(StreamRepository streamRepository) {
         return null;
+    }
+
+    @Override
+    public void update(ThreadCount threadCount) {
+
     }
 }

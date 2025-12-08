@@ -5,17 +5,12 @@ import org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
-public class MethodCallbackFactoryDoNotTrace extends MethodCallbackFactory {
+public class MethodCallbackFactoryDoNotTrace extends DefaultMethodCallbackFactory {
 
     private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/DoNotTraceCallback";
 
     public MethodCallbackFactoryDoNotTrace(MethodVisitor methodVisitor) {
         super(methodVisitor);
-    }
-
-    @Override
-    public void methodExitWithObjectReturn(int inMethodId, CalleeFactory calleeFactory) {
-        methodExit(inMethodId,calleeFactory);
     }
 
     @Override
@@ -25,7 +20,7 @@ public class MethodCallbackFactoryDoNotTrace extends MethodCallbackFactory {
     }
 
     @Override
-    protected void methodCall(int id, String methodName, String methodDescriptor) {
+    public void methodCall(int id, String methodName, String methodDescriptor) {
         methodVisitor.visitLdcInsn(id);
         methodVisitor.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS,
                 methodName, methodDescriptor, false);

@@ -1,0 +1,14 @@
+class:com/vmlens/test/guineapig/ReflectField
+method:<init>()V
+  ALOAD_0
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  RETURN
+method:set(Ljava/lang/Object;Ljava/lang/Object;)V
+  ALOAD_0
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD_0
+  ALOAD_1
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.methodExitObjectParam:(Ljava/lang/Object;Ljava/lang/Object;I)V
+  RETURN

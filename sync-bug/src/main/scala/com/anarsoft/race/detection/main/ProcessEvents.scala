@@ -73,7 +73,8 @@ object ProcessEvents {
     val dir = Paths.get(args(0));
     val reportDir = Paths.get(args(1));
     new ProcessEvents(dir, reportDir, new ProcessRunContextBuilder()
-      .withShowAllRuns()
+   //   .withShowAllRuns()
+   //   .withShowAllMemoryAccess()
       .build()).
       process();
 

@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.VolatileFieldAccessEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NoThreadOperationFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.VolatileAccess;
@@ -12,7 +12,7 @@ import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 
 public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implements
-        InterleaveActionFactoryAndRuntimeEvent, WithInMethodIdPositionReadWriteLockMap {
+        NoThreadOperationFactory, WithInMethodIdPositionReadWriteLockMap, EitherVolatileOrNormalFieldAccessEvent {
 
     private Object object;
 
@@ -69,8 +69,14 @@ public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implem
                 operation);
     }
 
+    /*
+     * reuse of the set logic
+     * used for reflection and atomic field updater
+     * method id gets set in the strategy
+     */
     @Override
     public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
+        this.bytecodePosition = position;
         objectHashCode = System.identityHashCode(object);
         object = null;
     }
@@ -85,8 +91,4 @@ public class VolatileFieldAccessEvent extends VolatileFieldAccessEventGen implem
         return runId;
     }
 
-    @Override
-    public boolean startsNewThread() {
-        return false;
-    }
 }

@@ -29,7 +29,7 @@ public class MethodVisitorForLogging extends MethodVisitor {
 
     @Override
     public void visitVarInsn(int opcode, int var) {
-        print(opcode);
+        print(opcode, "_"+var);
     }
 
     @Override

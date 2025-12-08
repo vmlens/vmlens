@@ -12,8 +12,7 @@ special return with fieldname and class and object
 
 for reflect.field we cast during usage to get the field name
 
-for varhandle we need a proxy call
-or before after?
+for varhandle we use before and after
 INVOKEVIRTUAL java/lang/invoke/VarHandle.get (Lcom/vmlens/test/maven/plugin/reflection/TestVarHandle;)Ljava/lang/Integer;
 
 # Usage

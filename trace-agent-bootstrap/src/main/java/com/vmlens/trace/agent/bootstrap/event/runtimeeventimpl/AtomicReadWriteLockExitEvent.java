@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.AtomicReadWriteLockExitEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactoryAndRuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NoThreadOperationFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
@@ -11,7 +11,7 @@ import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGen implements
-        InterleaveActionFactoryAndRuntimeEvent, WithInMethodIdPositionReadWriteLockMap {
+        NoThreadOperationFactory, WithInMethodIdPositionReadWriteLockMap {
 
     private final LockType lockTypeClass;
     private Object object;
@@ -83,9 +83,5 @@ public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGe
         return runId;
     }
 
-    @Override
-    public boolean startsNewThread() {
-        return false;
-    }
 
 }

@@ -34,4 +34,8 @@ public class RunAfter<EVENT extends RuntimeEvent> extends AbstractInTestAction  
     public boolean takeAction(ThreadLocalWhenInTest threadLocalDataWhenInTest) {
         return filterActionsInsideMethodStrategy.takeAction(threadLocalDataWhenInTest);
     }
+
+    public EVENT runtimeEvent() {
+        return runtimeEvent;
+    }
 }

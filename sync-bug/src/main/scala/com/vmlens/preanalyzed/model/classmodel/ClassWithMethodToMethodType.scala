@@ -6,9 +6,10 @@ import com.vmlens.preanalyzed.model.MethodToMethodType.toArray
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.PackageOrClass
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.PreAnalyzedAllMethods
 
-class ClassWithMethodToMethodType(name : String, methods : List[MethodToMethodType]) extends ClassModel {
-  def take(className: String): Boolean = className.equals(name);
-
+class ClassWithMethodToMethodType(val name : String,
+                                  val methods : List[MethodToMethodType],
+                                  val notTracedMethods : List[String]) extends ClassModel {
+  
   override def create(): PackageOrClass = {
     new PackageOrClass(name, PreAnalyzedAllMethods.SINGLETON, toArray(methods))
   }

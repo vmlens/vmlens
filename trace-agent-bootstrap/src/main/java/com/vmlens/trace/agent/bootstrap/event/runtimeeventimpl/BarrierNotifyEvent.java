@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.BarrierNotifyEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ThreadCount;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify;
@@ -90,7 +91,7 @@ public class BarrierNotifyEvent extends BarrierNotifyEventGen
     }
 
     @Override
-    public boolean startsNewThread() {
-        return false;
+    public void update(ThreadCount threadCount) {
+
     }
 }

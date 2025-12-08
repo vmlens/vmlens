@@ -3,6 +3,8 @@ package com.vmlens.preanalyzed.factory
 import com.vmlens.preanalyzed.factory.AccumulatorFactory.{doubleAccumulator, longAccumulator}
 import com.vmlens.preanalyzed.factory.AdderFactory.{doubleAdder, longAdder}
 import com.vmlens.preanalyzed.factory.AtomicBooleanFactory.atomicBoolean
+import com.vmlens.preanalyzed.factory.AtomicIntegerFieldUpdater.atomicIntegerFieldUpdater
+import com.vmlens.preanalyzed.factory.standard.AtomicIntegerFieldUpdaterImpl.atomicIntegerFieldUpdaterImpl
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongArrayFactory.{atomicIntegerArray, atomicLongArray}
 import com.vmlens.preanalyzed.model.*
 import com.vmlens.preanalyzed.model.classmodel.*
@@ -18,10 +20,12 @@ import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLin
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
 import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
+import com.vmlens.preanalyzed.factory.standard.ReflectField.reflectField
+import com.vmlens.preanalyzed.factory.standard.StandardPreAnalyzedClassesFactory.standardClasses
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.LockMethod.{ENTER_STAMPED_WRITE_LOCK,ENTER_STAMPED_READ_LOCK,EXIT_STAMPED_LOCK,GET_LOCK_STATE }
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.LockMethod.{ENTER_STAMPED_READ_LOCK, ENTER_STAMPED_WRITE_LOCK, EXIT_STAMPED_LOCK, GET_LOCK_STATE}
 
 import java.lang.invoke.MethodType
 import scala.collection.mutable.ArrayBuffer
@@ -75,14 +79,17 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
        */
       DoNotTraceIn("java/lang/StackTraceElement"),
 
-
-
+      
       DoNotTraceIn("com/vmlens/test/guineapig/DoNotTraceIn"),
-      ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
-      //ClassModelWithoutMethodDescription("$MockitoMock$", DoNotTraceInTestContainsClassName.SINGLETON),
+      
+      //ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/access/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
+      //ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
+      ClassModelWithoutMethodDescription("MockitoMock", DoNotTraceInTestContainsClassName.SINGLETON),
 
 
       loadNotYetImplemented(),
+
+      standardClasses(),
 
       forGuineaPig(),
 
@@ -99,7 +106,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Lock("java/util/concurrent/locks/ReentrantReadWriteLock$WriteLock", WriteLock(), lockMethods()),
       Lock("java/util/concurrent/locks/ReentrantLock", ReentrantLock(), lockMethods()),
 
-      ClassWithMethodToMethodType("java/util/concurrent/locks/StampedLock", stampedLockMethods()),
+      ClassWithMethodToMethodType("java/util/concurrent/locks/StampedLock", stampedLockMethods(),List()),
       Filter("java/util/concurrent/locks/StampedLock$"),
         
       condition(),
@@ -147,8 +154,10 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       FilterInnerIncludeAnonymousClass("java/lang/Thread$"),
 
       VMLensApi("com/vmlens/api/AllInterleavings"),
-      
+      DoNotTraceIn("com/vmlens/api/TestResultMap"),
+
       futureTask(),
+      atomicIntegerFieldUpdater(),
       
       Include("java/util/concurrent/FutureTask"),
 
@@ -190,8 +199,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       Include("java/io/"),
 
-      // Best is to use pre analyzed for field access
-      //Include("java/lang/reflect"),
+    
+      
+
 
 
       
@@ -199,7 +209,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       Filter("sun"),
      // Filter("com/sun/"),
       Filter("jdk"),
-
+      
       Filter("net/bytebuddy"),
       Filter("org/objenesis"),
 

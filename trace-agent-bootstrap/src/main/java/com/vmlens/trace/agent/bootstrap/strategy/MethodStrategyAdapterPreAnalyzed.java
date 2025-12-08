@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForCall
 public class MethodStrategyAdapterPreAnalyzed implements MethodStrategyAdapter {
 
     private final ReadWriteLockMap readWriteLockMap;
-    private final  MethodRepositoryForCallback methodRepositoryForCallback;
+    private final MethodRepositoryForCallback methodRepositoryForCallback;
 
     public MethodStrategyAdapterPreAnalyzed(ReadWriteLockMap readWriteLockMap,
                                             MethodRepositoryForCallback methodRepositoryForCallback) {

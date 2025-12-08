@@ -14,8 +14,7 @@ class LoopResultSingle(val loopId : Int,
   override def foreach(f: EventForReportElement => Unit): Unit = {
     runResult.foreach(f)
   }
-  
-  ;
+
 
   override def isFailure: Boolean = runResult.isFailure;
 

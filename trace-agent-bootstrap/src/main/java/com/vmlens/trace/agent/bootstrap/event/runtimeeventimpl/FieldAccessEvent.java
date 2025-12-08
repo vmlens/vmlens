@@ -3,9 +3,10 @@ package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.FieldAccessEventGen;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.PluginEventOnly;
+import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
 public class FieldAccessEvent extends FieldAccessEventGen implements
-        PluginEventOnly, WithObjectHashCode {
+        PluginEventOnly, WithObjectHashCode , EitherVolatileOrNormalFieldAccessEvent {
 
     @Override
     public void setThreadIndex(int threadIndex) {
@@ -15,7 +16,6 @@ public class FieldAccessEvent extends FieldAccessEventGen implements
     public int threadIndex() {
         return threadIndex;
     }
-
 
     @Override
     public void setMethodCounter(PerThreadCounter perThreadCounter) {
@@ -64,9 +64,14 @@ public class FieldAccessEvent extends FieldAccessEventGen implements
         return runId;
     }
 
-    @Override
-    public boolean isMethodEnterOrExit() {
-        return false;
-    }
 
+    @Override
+    public void setInMethodIdAndPosition(int inMethodId, int position, ReadWriteLockMap readWriteLockMap) {
+        /*
+         * nothing to do
+         * reuse of the set logic
+         * used for reflection and atomic field updater
+         * method id and object hash code gets set in the strategy
+         */
+    }
 }

@@ -7,7 +7,6 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParal
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.InterleaveActionFactory;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
@@ -64,6 +63,20 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
             return ParallelizeFacade.parallelize().hasNext(callbackStatePerThread.get(),eventQueue, obj);
         } finally {
             threadLocal.decrementInsideVMLens();
+        }
+    }
+
+    @Override
+    public void initialize(InitializationAction initializationAction) {
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
+        if(canProcess(threadLocal)) {
+            try{
+                threadLocal.incrementInsideVMLens();
+                initializationAction.initialize();
+            }
+            finally {
+                threadLocal.decrementInsideVMLens();
+            }
         }
     }
 

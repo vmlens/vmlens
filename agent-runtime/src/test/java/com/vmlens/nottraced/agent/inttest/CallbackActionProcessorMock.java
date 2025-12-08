@@ -2,6 +2,7 @@ package com.vmlens.nottraced.agent.inttest;
 
 import com.vmlens.transformed.agent.bootstrap.callback.callbackaction.CallbackAction;
 import com.vmlens.transformed.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
+import com.vmlens.transformed.agent.bootstrap.callback.callbackaction.InitializationAction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,11 @@ public class CallbackActionProcessorMock implements CallbackActionProcessor {
 
     @Override
     public void vmlensApiClose(Object o) {
+
+    }
+
+    @Override
+    public void initialize(InitializationAction initializationAction) {
 
     }
 

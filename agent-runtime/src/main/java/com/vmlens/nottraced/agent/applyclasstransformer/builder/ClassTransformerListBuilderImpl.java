@@ -72,7 +72,7 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     @Override
     public void addDoNotTraceInTestContainsClassName(String name) {
         add(new ClassFilterContains(name),
-                transformerStrategyFactory.createMethodEnterExitOnly(new DoNotTraceInTestStrategyFactory()));
+                transformerStrategyFactory.createDoNotTraceIn());
     }
 
     @Override

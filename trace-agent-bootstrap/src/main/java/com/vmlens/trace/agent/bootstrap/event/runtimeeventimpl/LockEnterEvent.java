@@ -79,9 +79,6 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
         this.bytecodePosition = bytecodePosition;
     }
 
-    @Override
-    public boolean startsNewThread() {
-        return false;
-    }
+
 
 }

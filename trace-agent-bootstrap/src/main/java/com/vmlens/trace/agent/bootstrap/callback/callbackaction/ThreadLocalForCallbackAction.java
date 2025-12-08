@@ -46,6 +46,18 @@ public class ThreadLocalForCallbackAction {
         }
     }
 
+    public void incrementInsideVMLens() {
+        insideVMLens++;
+    }
+
+    public void decrementInsideVMLens() {
+        insideVMLens--;
+    }
+
+    public StacktraceDepthProvider stacktraceDepthProvider() {
+        return threadForParallelize;
+    }
+
     /**
      * we currently do not need to check the stacktrace depth here, since all
      * do not trace classes do not let the exception escape
@@ -57,16 +69,8 @@ public class ThreadLocalForCallbackAction {
         return doNotTraceSetAtStackTraceCount == null;
     }
 
-    public void incrementInsideVMLens() {
-        insideVMLens++;
-    }
-
-    public void decrementInsideVMLens() {
-        insideVMLens--;
-    }
-
-    public StacktraceDepthProvider stacktraceDepthProvider() {
-        return threadForParallelize;
+    protected void resetDoNotTrace() {
+        doNotTraceSetAtStackTraceCount = null;
     }
 
 }

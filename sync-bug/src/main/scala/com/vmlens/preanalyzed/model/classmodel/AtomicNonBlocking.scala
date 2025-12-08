@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
 
 
 case class AtomicNonBlocking(name : String, methods : List[AtomicNonBlockingMethod]) extends ClassModel {
-  def take(className: String) : Boolean = className.equals(name);
+  
 
   override def create(): PackageOrClass = new PackageOrClass(name, PreAnalyzedAllMethods.SINGLETON, atomicNonBlockingMethodArray(methods))
 

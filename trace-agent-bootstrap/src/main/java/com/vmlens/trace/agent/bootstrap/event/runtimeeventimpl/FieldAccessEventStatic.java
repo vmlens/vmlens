@@ -59,8 +59,4 @@ public class FieldAccessEventStatic extends FieldAccessEventStaticGen implements
         return runId;
     }
 
-    @Override
-    public boolean isMethodEnterOrExit() {
-        return false;
-    }
 }

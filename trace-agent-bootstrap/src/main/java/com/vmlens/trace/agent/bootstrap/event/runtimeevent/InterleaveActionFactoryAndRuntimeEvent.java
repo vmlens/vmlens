@@ -21,7 +21,6 @@ public interface InterleaveActionFactoryAndRuntimeEvent extends RuntimeEvent , I
          * so sendSerializable must come after create
          */
         sendEvent.sendSerializable(this);
-
         return interleaveAction;
     }
 

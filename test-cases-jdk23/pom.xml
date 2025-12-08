@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.22</version>
+        <version>1.2.23</version>
     </parent>
 
     <name>test-cases-jdk23</name>
@@ -21,6 +21,13 @@
     </properties>
 
     <dependencies>
+        <!-- seems to solve the problem with mockito tests -->
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.17.8</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -71,11 +78,6 @@
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.youtrackdb</groupId>
-            <artifactId>youtrackdb-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
