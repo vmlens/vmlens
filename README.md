@@ -1,8 +1,8 @@
-# Deterministic Unit Tests for Multi-Threaded Java
+# Deterministic Unit Tests for Multithreaded Java
 
 # Example
 
-The following example shows how to test multi-threaded, concurrent Java with vmlens:
+The following example shows how to test multithreaded, concurrent Java with vmlens:
 
 ```Java
 import com.vmlens.api.AllInterleavings;
