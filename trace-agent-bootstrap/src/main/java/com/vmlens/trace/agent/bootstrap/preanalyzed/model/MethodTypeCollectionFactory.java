@@ -76,6 +76,8 @@ public class MethodTypeCollectionFactory {
         add(ATOMIC_FIELD_READ_WRITE);
 
 
+        add(NEW_REFERENCE_UPDATER);
+
         return new MethodTypeCollection(methodTypeToId,idToMethodType);
     }
 

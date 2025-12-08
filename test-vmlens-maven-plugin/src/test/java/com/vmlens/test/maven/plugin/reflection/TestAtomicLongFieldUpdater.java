@@ -5,36 +5,36 @@ import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
+import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TestAtomicIntegerFieldUpdater {
+public class TestAtomicLongFieldUpdater {
 
-    public volatile int j = 0;
+    public volatile long j = 0;
 
     @Test
     public void testReadWrite() throws InterruptedException {
-        AtomicIntegerFieldUpdater<TestAtomicIntegerFieldUpdater> fieldUpdater =
-                AtomicIntegerFieldUpdater.newUpdater(TestAtomicIntegerFieldUpdater.class, "j");
+        AtomicLongFieldUpdater<TestAtomicLongFieldUpdater> fieldUpdater =
+                AtomicLongFieldUpdater.newUpdater(TestAtomicLongFieldUpdater.class, "j");
 
-        Set<Integer> expectedSet = new HashSet<>();
-        expectedSet.add(0);
-        expectedSet.add(2);
+        Set<Long> expectedSet = new HashSet<>();
+        expectedSet.add(0L);
+        expectedSet.add(2L);
 
-        Set<Integer> actual = new HashSet<>();
-        try(AllInterleavings allInterleavings = new AllInterleavings("testAtomicIntegerFieldUpdater")) {
+        Set<Long> actual = new HashSet<>();
+        try(AllInterleavings allInterleavings = new AllInterleavings("testAtomicLongFieldUpdater")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
                 Thread first = new Thread() {
                     @Override
                     public void run() {
-                        fieldUpdater.set(TestAtomicIntegerFieldUpdater.this,2);
+                        fieldUpdater.set(TestAtomicLongFieldUpdater.this,2);
                     }
                 };
                 first.start();
-                int i = fieldUpdater.get(this);
+                long i = fieldUpdater.get(this);
                 first.join();
                 actual.add(i);
             }

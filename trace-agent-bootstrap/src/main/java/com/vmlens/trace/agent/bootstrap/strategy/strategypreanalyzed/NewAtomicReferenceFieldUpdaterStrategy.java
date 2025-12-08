@@ -8,6 +8,8 @@ import com.vmlens.trace.agent.bootstrap.preanalyzed.methodtransformerbuilder.Met
  */
 public class NewAtomicReferenceFieldUpdaterStrategy  extends AbstractNewFieldUpdaterStrategy  {
 
+    public static final StrategyPreAnalyzed SINGLETON = new NewAtomicReferenceFieldUpdaterStrategy();
+    
     @Override
     public void addToBuilder(MethodTransformerBuilder methodTransformerBuilder) {
         methodTransformerBuilder.setWithObjectPlaceHolderStringParamAtReturn();

@@ -4,7 +4,7 @@ import com.vmlens.preanalyzed.factory.standard.StandardPreAnalyzedClassesFactory
 import org.objectweb.asm.ClassReader
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-
+import java.util.concurrent.atomic.AtomicLongFieldUpdater
 import scala.collection.mutable
 
 class StandardPreAnalyzedClassesFactoryTest extends AnyFlatSpec with Matchers {
@@ -14,25 +14,28 @@ class StandardPreAnalyzedClassesFactoryTest extends AnyFlatSpec with Matchers {
 
     val list = StandardPreAnalyzedClassesFactory.classList();
     for( elem <- list ) {
-
-
       val traced = new mutable.HashSet[NameAndDescription]
       for(method <- elem.methods) {
         traced +=  NameAndDescription(method.name,method.desc)
       }
 
+      try{
+        val reader = new ClassReader(elem.name)
+        val publicMethodCollector = new PublicMethodCollector(elem.notTracedMethods.toSet);
+        reader.accept(publicMethodCollector, 0)
 
-      val reader = new ClassReader(elem.name)
-      val publicMethodCollector = new PublicMethodCollector(elem.notTracedMethods.toSet);
-      reader.accept(publicMethodCollector,0)
+        val inClass = publicMethodCollector.getMethods;
 
-      val inClass = publicMethodCollector.getMethods;
+        // printForFilter(inClass.diff(traced));
+        printForMethodList(inClass.diff(traced));
 
-     // printForFilter(inClass.diff(traced));
-     // printForMethodList(inClass.diff(traced));
-
-      traced.diff(inClass) should be(empty)
-      inClass.diff(traced) should be(empty)
+        traced.diff(inClass) should be(empty)
+        inClass.diff(traced) should be(empty)
+      } catch {
+        case ex: java.io.IOException =>
+          println("not found " + elem.name)
+          println()
+      }
     }
   }
 

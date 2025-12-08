@@ -21,6 +21,8 @@ public class MethodToStrategy extends AbstractMethodType  {
     public static final AbstractMethodType REFLECT_FIELD_SET = new MethodToStrategy(ReflectionFieldStrategy.REFLECT_FIELD_WRITE);
 
     public static final AbstractMethodType NEW_UPDATER = new MethodToStrategy(NewAtomicIntegerFieldUpdaterStrategy.SINGLETON);
+    public static final AbstractMethodType NEW_REFERENCE_UPDATER = new MethodToStrategy(NewAtomicReferenceFieldUpdaterStrategy.SINGLETON);
+
 
 
     public static final AbstractMethodType ATOMIC_FIELD_READ = new MethodToStrategy(AtomicFieldUpdaterStrategy.ATOMIC_FIELD_READ);
