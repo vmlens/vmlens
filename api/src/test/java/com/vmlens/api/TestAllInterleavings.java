@@ -5,40 +5,40 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class TestAllInterleavings {
+class TestAllInterleavings {
 
     @Test
-    public void whenFlagTrue_thenException() {
+    void whenFlagTrue_thenException() {
         // Given
         AllInterleavings allInterleavings = new AllInterleavings("test", true);
 
         // When
         RuntimeException actual = null;
-        try{
+        try {
             allInterleavings.hasNext();
-        } catch(RuntimeException exp) {
+        } catch (RuntimeException exp) {
             actual = exp;
         }
 
         // Then
-        assertThat(actual,is(notNullValue()));
+        assertThat(actual, is(notNullValue()));
     }
 
     @Test
-    public void whenDefaultConstructor_thenNoException() {
+    void whenDefaultConstructor_thenNoException() {
         // Given
         AllInterleavings allInterleavings = new AllInterleavings("test");
 
         // When
         RuntimeException actual = null;
-        try{
+        try {
             allInterleavings.hasNext();
-        } catch(RuntimeException exp) {
+        } catch (RuntimeException exp) {
             actual = exp;
         }
 
         // Then
-        assertThat(actual,is(nullValue()));
+        assertThat(actual, is(nullValue()));
     }
 
 }
