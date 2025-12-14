@@ -2,8 +2,8 @@ package com.vmlens.report.createreport;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.patch.Patch;
-import com.vmlens.report.uielement.UITestLoop;
-import com.vmlens.report.uielement.UITestLoopOrWarning;
+import com.vmlens.report.output.UITestLoop;
+import com.vmlens.report.output.UITestLoopOrWarning;
 
 import java.io.*;
 import java.util.Collections;

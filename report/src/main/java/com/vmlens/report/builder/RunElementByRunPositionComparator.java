@@ -1,6 +1,6 @@
 package com.vmlens.report.builder;
 
-import com.vmlens.report.element.RunElement;
+import com.vmlens.report.input.RunElement;
 
 import java.util.Comparator;
 

@@ -1,6 +1,6 @@
 package com.vmlens.report.createreport;
 
-import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs;
+import com.vmlens.report.output.UILoopsAndStacktraceLeafs;
 
 import java.io.IOException;
 

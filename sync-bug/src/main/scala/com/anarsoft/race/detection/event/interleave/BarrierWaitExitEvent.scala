@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.sortutil.{BarrierContainer, EventContainer}
-import com.vmlens.report.runelementtype.{BarrierOperation, BarrierOperationType, RunElementType}
+import com.vmlens.report.input.run.{BarrierOperation, BarrierOperationType, RunElementType}
 
 
 trait BarrierWaitExitEvent extends BarrierEvent {

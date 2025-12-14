@@ -1,6 +1,6 @@
 package com.vmlens.report.description;
 
-import com.vmlens.report.element.LoopRunAndThreadIndex;
+import com.vmlens.report.input.LoopRunAndThreadIndex;
 
 public interface DescriptionContext {
 

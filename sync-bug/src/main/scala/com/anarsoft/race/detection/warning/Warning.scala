@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.warning
 
 import com.anarsoft.race.detection.event.control.LoopWarningEvent
-import com.vmlens.report.element.TestResult
+import com.vmlens.report.input.TestResult
 import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent.*
 
 trait Warning {

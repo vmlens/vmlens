@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.reportbuilder
 
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.WithPosition
-import com.vmlens.report.runelementtype.RunElementType
+import com.vmlens.report.input.run.RunElementType
 
 trait EventForReportElement extends WithPosition {
 

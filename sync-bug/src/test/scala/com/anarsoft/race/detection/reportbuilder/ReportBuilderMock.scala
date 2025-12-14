@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.reportbuilder
 
 import com.vmlens.report.builder.{LoopAndRun, ReportBuilder}
-import com.vmlens.report.element.{RunElement, StacktraceLeaf, TestLoop}
+import com.vmlens.report.input.{RunElement, StacktraceLeaf, TestLoop}
 
 import java.util
 import scala.collection.mutable.ArrayBuffer

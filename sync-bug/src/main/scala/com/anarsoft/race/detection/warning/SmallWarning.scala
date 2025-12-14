@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.warning
 
-import com.vmlens.report.element.TestResult
+import com.vmlens.report.input.TestResult
 
 class SmallWarning(val text : String) extends Warning {
 

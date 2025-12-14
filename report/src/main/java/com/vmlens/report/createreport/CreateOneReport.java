@@ -2,10 +2,10 @@ package com.vmlens.report.createreport;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
-import com.vmlens.report.uielement.UIRunElement;
-import com.vmlens.report.uielement.UIStacktraceElement;
-import com.vmlens.report.uielement.UISummaryElement;
-import com.vmlens.report.uielement.UITestLoopOrWarning;
+import com.vmlens.report.output.UIRunElement;
+import com.vmlens.report.output.UIStacktraceElement;
+import com.vmlens.report.output.UISummaryElement;
+import com.vmlens.report.output.UITestLoopOrWarning;
 
 import java.io.Writer;
 import java.util.HashMap;

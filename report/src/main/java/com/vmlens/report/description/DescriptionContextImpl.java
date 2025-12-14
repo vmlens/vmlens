@@ -5,7 +5,7 @@ import com.vmlens.report.container.ContainerForField;
 import com.vmlens.report.container.ContainerForMethod;
 import com.vmlens.report.container.ContainerForTestLoop;
 import com.vmlens.report.container.ContainerForThread;
-import com.vmlens.report.element.LoopRunAndThreadIndex;
+import com.vmlens.report.input.LoopRunAndThreadIndex;
 
 import java.util.Map;
 

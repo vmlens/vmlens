@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.sortutil.MonitorContainer
-import com.vmlens.report.runelementtype.{LockAccess, LockOperation, ReportLockType, RunElementType}
+import com.vmlens.report.input.run.{LockAccess, LockOperation, ReportLockType, RunElementType}
 
 
 trait MonitorEnterEvent extends MonitorEvent {

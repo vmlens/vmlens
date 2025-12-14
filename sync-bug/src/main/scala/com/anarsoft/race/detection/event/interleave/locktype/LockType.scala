@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.event.interleave.locktype
 
 import com.anarsoft.race.detection.event.interleave.{WithLockEvent, WithLockEventGeneric}
 import com.anarsoft.race.detection.sortutil.lockcontainer.{LockContainerElement, ReadOnly, WriteOnly}
-import com.vmlens.report.runelementtype.ReportLockType
+import com.vmlens.report.input.run.ReportLockType
 
 sealed trait LockType[EVENT <:  WithLockEventGeneric[EVENT]] {
 

@@ -14,9 +14,7 @@ Different Types of Report
 
 Input -> Transform -> Output
 
-
 Input: List of Loops containing one or N Runs containing RunElement
-
 
 ReportFactory : ReportBuilder -> { Transform + Output } : create
 
@@ -37,7 +35,6 @@ LoopToUILoop
 HTMLOutput
 TextOutput
 potential: CSVOutput
-
 
 TextOutput is command like without template
 especially for testing the usabilty of a format

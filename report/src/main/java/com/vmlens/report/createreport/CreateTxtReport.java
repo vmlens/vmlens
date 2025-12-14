@@ -1,9 +1,9 @@
 package com.vmlens.report.createreport;
 
-import com.vmlens.report.uielement.UILoopAndRunElementWithStacktraceLeafs;
-import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs;
-import com.vmlens.report.uielement.UIRunElement;
-import com.vmlens.report.uielement.UIRunElementWithStacktraceLeaf;
+import com.vmlens.report.output.UILoopAndRunElementWithStacktraceLeafs;
+import com.vmlens.report.output.UILoopsAndStacktraceLeafs;
+import com.vmlens.report.output.UIRunElement;
+import com.vmlens.report.output.UIRunElementWithStacktraceLeaf;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

@@ -1,6 +1,6 @@
 package com.vmlens.report.createreport;
 
-import com.vmlens.report.uielement.*;
+import com.vmlens.report.output.*;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.reportbuilder
 
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.report.runelementtype.RunElementType
+import com.vmlens.report.input.run.RunElementType
 
 
 class EventForReportElementGuineaPig(val threadIndex: Int, val loopId: Int, val runId: Int, val runPosition: Int,

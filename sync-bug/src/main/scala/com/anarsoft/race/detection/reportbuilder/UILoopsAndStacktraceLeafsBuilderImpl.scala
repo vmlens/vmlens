@@ -3,7 +3,7 @@ package com.anarsoft.race.detection.reportbuilder
 import com.anarsoft.race.detection.process.main.UILoopsAndStacktraceLeafsBuilder
 import com.vmlens.report.ResultForVerify
 import com.vmlens.report.builder.ReportBuilder
-import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs
+import com.vmlens.report.output.UILoopsAndStacktraceLeafs
 import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, ThreadOrLoopDescription}
 
 class UILoopsAndStacktraceLeafsBuilderImpl(reportBuilder: ReportBuilder, resultForVerify : ResultForVerify) extends UILoopsAndStacktraceLeafsBuilder {

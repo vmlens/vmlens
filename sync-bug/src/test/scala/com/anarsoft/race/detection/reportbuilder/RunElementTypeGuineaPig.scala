@@ -1,8 +1,8 @@
 package com.anarsoft.race.detection.reportbuilder
 
 import com.vmlens.report.description.{DescriptionContext, NeedsDescriptionCallback}
-import com.vmlens.report.runelementtype.RunElementType
-import com.vmlens.report.runelementtype.objecthashcodemap.ObjectHashCodeMap
+import com.vmlens.report.input.run.objecthashcodemap.ObjectHashCodeMap
+import com.vmlens.report.input.run.RunElementType
 
 class RunElementTypeGuineaPig extends RunElementType {
 

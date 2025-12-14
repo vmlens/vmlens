@@ -4,7 +4,7 @@ import com.vmlens.preanalyzed.factory.AccumulatorFactory.{doubleAccumulator, lon
 import com.vmlens.preanalyzed.factory.AdderFactory.{doubleAdder, longAdder}
 import com.vmlens.preanalyzed.factory.AtomicBooleanFactory.atomicBoolean
 import com.vmlens.preanalyzed.factory.AtomicIntegerFieldUpdater.atomicIntegerFieldUpdater
-import com.vmlens.preanalyzed.factory.standard.AtomicIntegerFieldUpdaterImpl.atomicIntegerFieldUpdaterImpl
+import com.vmlens.preanalyzed.factory.publicmethods.AtomicIntegerFieldUpdaterImpl.atomicIntegerFieldUpdaterImpl
 import com.vmlens.preanalyzed.factory.AtomicIntegerOrLongArrayFactory.{atomicIntegerArray, atomicLongArray}
 import com.vmlens.preanalyzed.model.*
 import com.vmlens.preanalyzed.model.classmodel.*
@@ -20,8 +20,8 @@ import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLin
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
 import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
-import com.vmlens.preanalyzed.factory.standard.ReflectField.reflectField
-import com.vmlens.preanalyzed.factory.standard.StandardPreAnalyzedClassesFactory.standardClasses
+import com.vmlens.preanalyzed.factory.publicmethods.ReflectField.reflectField
+import com.vmlens.preanalyzed.factory.publicmethods.PreAnalyzedPublicMethodClassesFactory.standardClasses
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}

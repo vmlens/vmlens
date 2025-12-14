@@ -3,8 +3,8 @@ package com.anarsoft.race.detection.event.nonvolatile
 import com.anarsoft.race.detection.reportbuilder.FieldId
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
-import com.vmlens.report.runelementtype.memoryaccesskey.FieldIdAndObjectHashcode
-import com.vmlens.report.runelementtype.{NonVolatileAccess, RunElementType}
+import com.vmlens.report.input.run.memoryaccesskey.FieldIdAndObjectHashcode
+import com.vmlens.report.input.run.{NonVolatileAccess, RunElementType}
 
 trait NonVolatileFieldAccessEvent extends LoadedNonVolatileEvent
   with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEvent]

@@ -1,7 +1,7 @@
 package com.vmlens.report.builder;
 
-import com.vmlens.report.element.RunElement;
-import com.vmlens.report.element.TestLoop;
+import com.vmlens.report.input.RunElement;
+import com.vmlens.report.input.TestLoop;
 
 import java.util.List;
 

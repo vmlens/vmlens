@@ -8,8 +8,7 @@ import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl.toTestRes
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.vmlens.report.ResultForVerify
 import com.vmlens.report.builder.ReportBuilder
-import com.vmlens.report.element.*
-
+import com.vmlens.report.input.{LoopRunAndThreadIndex, RunElement, StacktraceElement, StacktraceLeaf, TestLoop, TestResult}
 
 import java.util
 import scala.collection.mutable

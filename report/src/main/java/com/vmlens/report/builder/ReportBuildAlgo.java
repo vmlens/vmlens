@@ -1,9 +1,9 @@
 package com.vmlens.report.builder;
 
 import com.vmlens.report.description.DescriptionContext;
-import com.vmlens.report.element.RunElement;
-import com.vmlens.report.element.StacktraceElement;
-import com.vmlens.report.uielement.*;
+import com.vmlens.report.input.RunElement;
+import com.vmlens.report.input.StacktraceElement;
+import com.vmlens.report.output.*;
 
 import java.util.*;
 

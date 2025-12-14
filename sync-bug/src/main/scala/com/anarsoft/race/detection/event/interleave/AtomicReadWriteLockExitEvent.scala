@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.event.interleave
 
 
 import com.anarsoft.race.detection.event.impl.LockTypeClassFromId
-import com.vmlens.report.runelementtype.{LockAccess, LockOperation, MethodWithLockAccess, ReportLockType, RunElementType}
+import com.vmlens.report.input.run.{LockAccess, LockOperation, MethodWithLockAccess, ReportLockType, RunElementType}
 
 
 trait AtomicReadWriteLockExitEvent  extends AtomicReadWriteLockEvent with WithLockExitEvent with LockTypeClassFromId[WithLockExitEvent] {

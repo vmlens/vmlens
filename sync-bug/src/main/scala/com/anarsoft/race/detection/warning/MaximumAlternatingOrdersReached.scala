@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.warning
 
-import com.vmlens.report.element.TestResult
+import com.vmlens.report.input.TestResult
 
 class MaximumAlternatingOrdersReached(val alternatingOrderCount : Int) extends Warning{
 

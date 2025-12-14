@@ -1,6 +1,6 @@
 package com.vmlens.report.createreport;
 
-import com.vmlens.report.uielement.*;
+import com.vmlens.report.output.*;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

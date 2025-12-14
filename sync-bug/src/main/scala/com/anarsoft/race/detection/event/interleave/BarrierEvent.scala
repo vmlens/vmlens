@@ -4,7 +4,7 @@ import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventW
 import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.{BarrierContainer, EventContainer, MonitorContainer}
-import com.vmlens.report.runelementtype.{BarrierOperation, RunElementType}
+import com.vmlens.report.input.run.{BarrierOperation, RunElementType}
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeCollection
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey

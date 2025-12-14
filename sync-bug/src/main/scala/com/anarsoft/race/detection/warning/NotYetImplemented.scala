@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.warning
 
-import com.vmlens.report.element.{LargeWarning, TestResult}
+import com.vmlens.report.input.{LargeWarning, TestResult}
 
 class NotYetImplemented(val methodId : Int) extends Warning {
 

@@ -7,9 +7,9 @@ import com.vmlens.report.container.ContainerForThread;
 import com.vmlens.report.description.DescriptionContext;
 import com.vmlens.report.description.DescriptionContextImpl;
 import com.vmlens.report.description.NeedsDescriptionCallback;
-import com.vmlens.report.element.*;
-import com.vmlens.report.runelementtype.objecthashcodemap.ObjectHashCodeMap;
-import com.vmlens.report.uielement.UILoopsAndStacktraceLeafs;
+import com.vmlens.report.input.*;
+import com.vmlens.report.input.run.objecthashcodemap.ObjectHashCodeMap;
+import com.vmlens.report.output.UILoopsAndStacktraceLeafs;
 import com.vmlens.trace.agent.bootstrap.description.*;
 
 import java.util.HashMap;

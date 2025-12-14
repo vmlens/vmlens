@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.createpartialordersyncaction
 
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.report.runelementtype.RunElementType
+import com.vmlens.report.input.run.RunElementType
 
 class SyncActionEventMonitorGuineaPig(val isEnter: Boolean, val runPosition: Int,
                                       val threadIndex: Int) extends SyncActionEventWithCompareType[SyncActionEventMonitorGuineaPig] {

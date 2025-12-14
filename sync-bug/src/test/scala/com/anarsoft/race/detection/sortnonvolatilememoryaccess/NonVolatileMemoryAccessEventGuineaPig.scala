@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
 import com.anarsoft.race.detection.reportbuilder.{FieldId, StaticMemoryAccessId}
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.report.runelementtype.RunElementType
+import com.vmlens.report.input.run.RunElementType
 
 class NonVolatileMemoryAccessEventGuineaPig(val typeId: Int, val operation: Int,
                                             val runPosition: Int, val threadIndex: Int)
