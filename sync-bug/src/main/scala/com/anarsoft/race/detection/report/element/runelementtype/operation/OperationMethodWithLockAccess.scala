@@ -1,10 +1,11 @@
-package com.anarsoft.race.detection.report.element.runelementtype
+package com.anarsoft.race.detection.report.element.runelementtype.operation
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
 import com.anarsoft.race.detection.report.element.runelementtype.objecthashcodemap.ObjectHashCodeMap
+import com.anarsoft.race.detection.report.element.runelementtype.{LockOperation, ReportLockType, ReportOperation}
 
 
-class MethodWithLockAccess(val atomicMethodId: Int,val objectHashCode: Long, val lockOperation: LockOperation,val lockType: ReportLockType) extends ReportOperation {
+class OperationMethodWithLockAccess(val atomicMethodId: Int, val objectHashCode: Long, val lockOperation: LockOperation, val lockType: ReportLockType) extends ReportOperation {
   private var objectHashCodeMap: ObjectHashCodeMap = null
 
   override def operation: String = lockType.textForMethodWithLock + " " + lockOperation.text

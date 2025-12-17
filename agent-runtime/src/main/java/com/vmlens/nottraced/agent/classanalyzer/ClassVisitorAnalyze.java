@@ -71,10 +71,10 @@ public class ClassVisitorAnalyze extends ClassVisitor {
         MethodCallId methodCallId = new MethodCallId(className, name, descriptor);
 
         MethodDescription methodDescription = new MethodDescription(name, methodRepositoryForTransform.asInt(methodCallId),
-                descriptor, access, 0);
+                descriptor, access, -1);
         methodDescriptionList.add(wrap(methodDescription));
-
-        return super.visitMethod(access, name, descriptor, signature, exceptions);
+        return new MethodVisitorAnalyze(super.visitMethod(access, name, descriptor, signature, exceptions),
+                methodDescription);
     }
 
     @Override

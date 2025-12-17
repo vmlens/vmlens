@@ -9,7 +9,7 @@ public class MethodDescription {
 	private final String desc;
 	private final int id;
 	private final int access;
-	private final int lineNumber;
+	private int lineNumber;
 
     public MethodDescription(String name,
 							 int id,
@@ -24,6 +24,10 @@ public class MethodDescription {
 		this.lineNumber = lineNumber;
 	}
 
+	public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+
 	public int lineNumber() {
 		return lineNumber;
 	}
@@ -35,8 +39,6 @@ public class MethodDescription {
 	public int id() {
 		return id;
 	}
-
-
 
 	public String desc() {
 		return desc;

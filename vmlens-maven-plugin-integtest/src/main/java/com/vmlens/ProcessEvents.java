@@ -40,8 +40,6 @@ public class ProcessEvents {
                 reportDirectory.toPath(),
                 new ProcessRunContext(false,false,false)).process();
         checkDataRacesJdk11(result);
-
-
     }
 
     private static void checkDataRacesJdk11(ResultForVerify result ) {
