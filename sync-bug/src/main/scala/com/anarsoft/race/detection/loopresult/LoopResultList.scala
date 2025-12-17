@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.loopresult
 
+import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.rundata.RunResult
-import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.warning.Warning
 
 import scala.collection.mutable

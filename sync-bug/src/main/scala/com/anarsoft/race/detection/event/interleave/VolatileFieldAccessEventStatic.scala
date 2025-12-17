@@ -3,8 +3,9 @@ package com.anarsoft.race.detection.event.interleave
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.EventWithReadWrite
-import com.vmlens.report.input.run.memoryaccesskey.FieldId
-import com.vmlens.report.input.run.{RunElementType, VolatileAccess}
+import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.FieldId
+import com.anarsoft.race.detection.report.element.runelementtype.ReportOperation
+import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationVolatileAccess
 
 trait VolatileFieldAccessEventStatic extends EventWithReadWrite[VolatileFieldAccessEventStatic]
   with SyncActionEventWithCompareType[VolatileFieldAccessEventStatic]
@@ -21,7 +22,7 @@ trait VolatileFieldAccessEventStatic extends EventWithReadWrite[VolatileFieldAcc
     fieldId.compareTo(other.fieldId)
   }
 
-  override def runElementType: RunElementType = {
-    new VolatileAccess(new FieldId(fieldId),operation);
+  override def runElementType: ReportOperation = {
+    new OperationVolatileAccess(new FieldId(fieldId),operation);
   }
 }

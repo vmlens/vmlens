@@ -1,10 +1,10 @@
 package com.anarsoft.race.detection.process.main
 
-import com.anarsoft.race.detection.reportbuilder.DescriptionBuilder
+import com.anarsoft.race.detection.report.description.DescriptionCallback
 
 
 trait LoadDescription {
 
-  def load(descriptionBuilder: DescriptionBuilder): Unit;
+  def load(descriptionBuilder: DescriptionCallback): Unit;
   
 }

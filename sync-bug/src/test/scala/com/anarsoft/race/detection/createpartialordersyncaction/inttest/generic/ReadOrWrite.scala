@@ -5,7 +5,6 @@ import com.anarsoft.race.detection.createpartialordersyncaction.{AddToPartialOrd
 import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContextImpl, PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.sortutil.EventContainer
 import com.anarsoft.race.detection.util.EventArray
-import com.vmlens.report.assertion.OnDescriptionAndLeftBeforeRightNoOp
 import org.scalatest.matchers.should.Matchers
 
 import scala.reflect.ClassTag
@@ -22,7 +21,7 @@ class ReadOrWrite[EVENT  <: SyncActionEventWithCompareType[EVENT]](val builder :
     
     val array = new EventArray(Array(read_1, read_2,write_3));
     val lastThreadPositionMap = new LastThreadPositionMap();
-    val partialOrderContainer = new PartialOrderContainer(new OnDescriptionAndLeftBeforeRightNoOp());
+    val partialOrderContainer = new PartialOrderContainer();
     val buildPartialOrderContext = new BuildPartialOrderContextImpl(partialOrderContainer, lastThreadPositionMap);
     
     // When

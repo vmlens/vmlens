@@ -1,8 +1,8 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.sortutil.MonitorContainer
-import com.vmlens.report.input.run.{LockAccess, LockOperation, ReportLockType, RunElementType}
-
+import com.anarsoft.race.detection.report.element.runelementtype.{LockOperation, ReportLockType, ReportOperation}
+import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationLockAccess
 
 trait MonitorEnterEvent extends MonitorEvent {
   
@@ -18,8 +18,8 @@ trait MonitorEnterEvent extends MonitorEvent {
     monitorContainer.monitorExit.foreach(f);
   }
 
-  override def runElementType: RunElementType = {
-    new LockAccess(LockOperation.LOCK_ENTER, ReportLockType.MONITOR ,  objectHashCode);
+  override def runElementType: ReportOperation = {
+    new OperationLockAccess(LockOperation.LOCK_ENTER, ReportLockType.MONITOR ,  objectHashCode);
   }
   
 }

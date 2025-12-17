@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.groupnonvolatile
 
-import com.anarsoft.race.detection.reportbuilder.StaticMemoryAccessId
+import com.anarsoft.race.detection.report.StaticMemoryAccessId
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.SortedMemoryAccessList
 
 import scala.collection.mutable

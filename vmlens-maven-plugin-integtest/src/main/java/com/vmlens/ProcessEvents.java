@@ -2,16 +2,12 @@ package com.vmlens;
 
 import com.anarsoft.race.detection.process.run.ProcessRunContext;
 import com.anarsoft.race.detection.process.run.ProcessRunContextBuilder;
-import com.vmlens.expected.check.BuildEventListMap;
-import com.vmlens.expected.check.CheckLeftBeforeRight;
-import com.vmlens.expected.check.CheckLockEnterExit;
-import com.vmlens.expected.factory.TestCaseCollectionFactory;
 import com.vmlens.report.LoopToDataRaceCount;
 import com.vmlens.report.ResultForVerify;
-import com.vmlens.report.assertion.EventForAssertion;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -40,22 +36,12 @@ public class ProcessEvents {
     }
 
     private static void processJdk11(File eventDirectory, File reportDirectory) {
-        Map<String,Integer> loopNameToId = new HashMap<>();
-        CheckLeftBeforeRight check = new CheckLeftBeforeRight(new TestCaseCollectionFactory().create(),
-                loopNameToId);
-
-        BuildEventListMap buildEventListMap = new BuildEventListMap();
-
         ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
                 reportDirectory.toPath(),
-                new ProcessRunContext(check,
-                        buildEventListMap,false,false,false)).process();
+                new ProcessRunContext(false,false,false)).process();
         checkDataRacesJdk11(result);
 
-        int loopId = loopNameToId.get("testNoDataRace");
-        Map<Integer, List<EventForAssertion>> loopIdToEventForAssertionList = buildEventListMap.build();
-        List<EventForAssertion> list = loopIdToEventForAssertionList.get(loopId);
-        new CheckLockEnterExit().check(list);
+
     }
 
     private static void checkDataRacesJdk11(ResultForVerify result ) {
@@ -88,8 +74,6 @@ public class ProcessEvents {
 
         Set<String> filter
                 = new HashSet<>();
-        // not sure why this is happening
-       // filter.add("jdbcJobExecutionDao");
         checkDataRaces(testWithDataRace,filter,result);
     }
 

@@ -1,13 +1,13 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.event.impl.LockTypeClassFromId
-import com.vmlens.report.input.run.{LockAccess, LockOperation, MethodWithLockAccess, ReportLockType, RunElementType}
+import com.anarsoft.race.detection.report.element.runelementtype.{MethodWithLockAccess, ReportLockType, ReportOperation, LockOperation}
 
 trait AtomicReadWriteLockEnterEvent extends AtomicReadWriteLockEvent with WithLockEnterEvent with LockTypeClassFromId[WithLockEnterEvent] {
 
   def  atomicMethodId  : Int;
 
-  override def runElementType: RunElementType =
+  override def runElementType: ReportOperation =
     new MethodWithLockAccess(atomicMethodId,objectHashCode,LockOperation.LOCK_ENTER, lockTypeClass().reportLockType());
 
 

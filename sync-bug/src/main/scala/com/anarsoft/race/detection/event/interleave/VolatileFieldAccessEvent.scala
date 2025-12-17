@@ -3,9 +3,9 @@ package com.anarsoft.race.detection.event.interleave
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.EventWithReadWrite
-import com.vmlens.report.input.run.memoryaccesskey.FieldIdAndObjectHashcode
-import com.vmlens.report.input.run.{RunElementType, VolatileAccess}
-
+import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.FieldIdAndObjectHashcode
+import com.anarsoft.race.detection.report.element.runelementtype.ReportOperation
+import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationVolatileAccess
 
 trait VolatileFieldAccessEvent extends EventWithReadWrite[VolatileFieldAccessEvent]
   with SyncActionEventWithCompareType[VolatileFieldAccessEvent]
@@ -27,8 +27,8 @@ trait VolatileFieldAccessEvent extends EventWithReadWrite[VolatileFieldAccessEve
     }
   }
 
-  override def runElementType: RunElementType = {
-    new VolatileAccess(new FieldIdAndObjectHashcode(fieldId, objectHashCode),operation);
+  override def runElementType: ReportOperation = {
+    new OperationVolatileAccess(new FieldIdAndObjectHashcode(fieldId, objectHashCode),operation);
   }
 
 }

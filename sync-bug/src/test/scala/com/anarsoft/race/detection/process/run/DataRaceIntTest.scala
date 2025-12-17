@@ -6,7 +6,6 @@ import com.anarsoft.race.detection.event.nonvolatile.NonVolatileFieldAccessEvent
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementBuilder
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileElementBuilder
 import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunData}
-import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRightNoOp, OnEventNoOp}
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
-import com.anarsoft.race.detection.reportbuilder.EventForReportElement
+import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.MonitorContainer
 

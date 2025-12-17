@@ -1,9 +1,9 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.sortutil.{BarrierContainer, EventContainer}
-import com.vmlens.report.input.run.{BarrierOperation, BarrierOperationType, RunElementType}
+import com.anarsoft.race.detection.report.element.runelementtype.{BarrierOperationType, ReportOperation}
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify
-
+import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationBarrier
 
 trait BarrierNotifyEvent extends BarrierEvent  {
 
@@ -15,7 +15,7 @@ trait BarrierNotifyEvent extends BarrierEvent  {
 
   def create(): EventContainer[BarrierEvent] = new BarrierContainer(Some(this));
 
-  override def runElementType: RunElementType =
-    new BarrierOperation(BarrierOperationType.NOTIFY, getBarrierKey);
+  override def runElementType: ReportOperation =
+    new OperationBarrier(BarrierOperationType.NOTIFY, getBarrierKey);
 
 }

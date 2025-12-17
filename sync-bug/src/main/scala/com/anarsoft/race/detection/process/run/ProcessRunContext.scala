@@ -1,10 +1,7 @@
 package com.anarsoft.race.detection.process.run
 
-import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnEvent}
 
-class ProcessRunContext(val onTestLoopAndLeftBeforeRight : OnDescriptionAndLeftBeforeRight,
-                        val onEvent : OnEvent,
-                        val showAllMemoryAccess : Boolean,
+class ProcessRunContext(val showAllMemoryAccess : Boolean,
                         val showAllRuns : Boolean,
                         val txtFormat : Boolean) {
 

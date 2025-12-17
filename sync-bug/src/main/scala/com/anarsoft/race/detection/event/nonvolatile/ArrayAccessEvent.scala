@@ -1,10 +1,11 @@
 package com.anarsoft.race.detection.event.nonvolatile
 
-import com.anarsoft.race.detection.reportbuilder.ArrayObjectHashCode
+import com.anarsoft.race.detection.report.ArrayObjectHashCode
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemoryAccessEvent
-import com.vmlens.report.input.run.memoryaccesskey.ArrayObjectHashCodeAndIndex
-import com.vmlens.report.input.run.{NonVolatileAccess, RunElementType}
+import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.ArrayObjectHashCodeAndIndex
+import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationNonVolatileAccess
+import com.anarsoft.race.detection.report.element.runelementtype.ReportOperation
 
 trait ArrayAccessEvent  extends LoadedNonVolatileEvent
 with NonVolatileMemoryAccessEvent[ArrayAccessEvent]
@@ -23,8 +24,8 @@ with WithSetStacktraceNode {
 
   def staticMemoryAccessId() = new ArrayObjectHashCode(objectHashCode);
 
-  override def runElementType(isDataRace : Boolean): RunElementType = {
-    new NonVolatileAccess(new ArrayObjectHashCodeAndIndex(objectHashCode,arrayIndex), operation, isDataRace);
+  override def runElementType(isDataRace : Boolean): ReportOperation = {
+    new OperationNonVolatileAccess(new ArrayObjectHashCodeAndIndex(objectHashCode,arrayIndex), operation, isDataRace);
   }
 
   override def addToContext(context: LoadedNonVolatileEventContext): Unit = {

@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.rundata
 
-import com.anarsoft.race.detection.reportbuilder.EventForReportElement
+import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.warning.Warning
 
 trait RunResult {

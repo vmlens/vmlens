@@ -7,19 +7,12 @@ import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileMemoryAccess
 import com.anarsoft.race.detection.rundata.{RunData, RunResultImpl}
 import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContextImpl, PartialOrderContainer, PartialOrderImpl}
 import com.anarsoft.race.detection.process.main.ProcessRun
-import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnEvent}
 
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 class ProcessRunImpl(val runContext : ProcessRunContext) extends ProcessRun {
 
   def process(runData: RunData): RunResultImpl = {
-    runContext.onTestLoopAndLeftBeforeRight.startRun(runData.loopAndRunId.loopId,runData.loopAndRunId.runId);
-
-    for(elem <-  runData.interLeaveElements) {
-      elem.addToOnEvent(runContext.onEvent);
-    }
-
     // calculate the stacktrace map
     val stackTraceIdToStacktrace = new ServiceCalculateMethodCountToStacktraceNode().process(runData.methodEventArray);
     val stackTraceMap = stackTraceIdToStacktrace.toMap;
@@ -42,7 +35,7 @@ class ProcessRunImpl(val runContext : ProcessRunContext) extends ProcessRun {
     }
     
     // calculate the partial order
-    val partialOrderContainer = new PartialOrderContainer(runContext.onTestLoopAndLeftBeforeRight);
+    val partialOrderContainer = new PartialOrderContainer();
     val buildPartialOrderContext = new BuildPartialOrderContextImpl(partialOrderContainer,lastThreadPositionMap);
     for (syncActionElement <- runData.interLeaveElements) {
       syncActionElement.addToPartialOrderBuilder(buildPartialOrderContext);
