@@ -42,7 +42,7 @@ public String toString() {
  }
 
 public void serialize(DataOutputStream buffer) throws Exception {
-buffer.write( (byte)  26 );
+buffer.write( (byte)  27 );
      buffer.writeInt( loopId ); 
      buffer.writeInt( runId ); 
      buffer.writeInt( messageId ); 

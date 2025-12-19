@@ -136,6 +136,7 @@ object EventDesc extends GenericDesc {
       // For Phaser we also need here WaitEnterAndNotify Event
       eventList.append(barrier("BarrierWaitEnterEventGen", " extends BarrierWaitEnterEvent", typSyncActions));
       eventList.append(barrier("BarrierWaitExitEventGen", " extends BarrierWaitExitEvent  ", typSyncActions));
+      eventList.append(barrier("BarrierGetStateEventGen", " extends BarrierGetStateEvent  ", typSyncActions));
       // Notify works on all related barriers, e.g. similar to notify all
       // probably makes sense to integrate the count for phaser an so on?
       eventList.append(barrier("BarrierNotifyEventGen", " extends BarrierNotifyEvent", typSyncActions));

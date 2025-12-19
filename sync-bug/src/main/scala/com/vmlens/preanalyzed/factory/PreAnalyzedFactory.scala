@@ -19,9 +19,10 @@ import com.vmlens.preanalyzed.factory.ConcurrentLinkedDequeFactory.concurrentLin
 import com.vmlens.preanalyzed.factory.ConcurrentLinkedQueueFactory.concurrentLinkedQueue
 import com.vmlens.preanalyzed.factory.ConcurrentSkipListMapFactory.concurrentSkipListMap
 import com.vmlens.preanalyzed.factory.ForGuineaPig.forGuineaPig
-import com.vmlens.preanalyzed.factory.FutureFactory.futureTask
+import com.vmlens.preanalyzed.factory.protectedmethods.FutureFactory.futureTask
+import com.vmlens.preanalyzed.factory.protectedmethods.PreAnalyzedProtectedMethodClassesFactory.classesWithProtectedMethods
 import com.vmlens.preanalyzed.factory.publicmethods.ReflectField.reflectField
-import com.vmlens.preanalyzed.factory.publicmethods.PreAnalyzedPublicMethodClassesFactory.standardClasses
+import com.vmlens.preanalyzed.factory.publicmethods.PreAnalyzedPublicMethodClassesFactory.classesWithPublicMethods
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}
@@ -89,7 +90,8 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       loadNotYetImplemented(),
 
-      standardClasses(),
+      classesWithPublicMethods(),
+      classesWithProtectedMethods(),
 
       forGuineaPig(),
 
@@ -155,8 +157,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
 
       VMLensApi("com/vmlens/api/AllInterleavings"),
       DoNotTraceIn("com/vmlens/api/TestResultMap"),
-
-      futureTask(),
+      
       atomicIntegerFieldUpdater(),
       
       Include("java/util/concurrent/FutureTask"),

@@ -12,7 +12,7 @@ import com.vmlens.preanalyzed.model.classmodel.ClassWithMethodToMethodType
 
 object PreAnalyzedPublicMethodClassesFactory {
 
-  def standardClasses(): PreAnalyzedList =  PreAnalyzedList(classList());
+  def classesWithPublicMethods(): PreAnalyzedList =  PreAnalyzedList(classList());
   
   def classList() : List[ClassWithMethodToMethodType] = {
     List[ClassWithMethodToMethodType](reflectField(),

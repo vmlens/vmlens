@@ -5,7 +5,7 @@ import org.objectweb.asm.Opcodes._
 
 import scala.collection.mutable
 
-class PublicMethodCollector(notTraced : Set[String]) extends ClassVisitor(ASM9) {
+class MethodCollector(notTraced : Set[String], take : (Int,String) => Boolean) extends ClassVisitor(ASM9) {
   
   private val methods = mutable.HashSet.empty[NameAndDescription]
 
@@ -18,10 +18,9 @@ class PublicMethodCollector(notTraced : Set[String]) extends ClassVisitor(ASM9) 
                             signature: String,
                             exceptions: Array[String]
                           ): MethodVisitor = {
-    val isPublic = (access & ACC_PUBLIC) != 0
-    val isAbstract = (access & ACC_ABSTRACT) != 0
+   
     
-    if (isPublic && ! isAbstract) {
+    if (take(access, name)) {
       val nameAndDescription = NameAndDescription(name, descriptor);
       if(! notTraced.contains(nameAndDescription.name)) {
         methods += nameAndDescription

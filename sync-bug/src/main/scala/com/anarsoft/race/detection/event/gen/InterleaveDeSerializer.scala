@@ -54,21 +54,24 @@ class InterleaveDeSerializer extends DeserializeStrategy[LoadedInterleaveActionE
           return BarrierWaitExitEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 16 ) {
-          return BarrierNotifyEventGen.applyFromJavaEvent( buffer   );
+          return BarrierGetStateEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 17 ) {
-          return ConditionWaitEnterEventGen.applyFromJavaEvent( buffer   );
+          return BarrierNotifyEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 18 ) {
-          return ConditionWaitExitEventGen.applyFromJavaEvent( buffer   );
+          return ConditionWaitEnterEventGen.applyFromJavaEvent( buffer   );
        }
        if( id == 19 ) {
+          return ConditionWaitExitEventGen.applyFromJavaEvent( buffer   );
+       }
+       if( id == 20 ) {
           return ConditionNotifyEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 22 ) {
+       if( id == 23 ) {
           return ThreadStartEventGen.applyFromJavaEvent( buffer   );
        }
-       if( id == 23 ) {
+       if( id == 24 ) {
           return ThreadJoinedEventGen.applyFromJavaEvent( buffer   );
        }
          throw new RuntimeException("id " + id + " could not be deserialized");
