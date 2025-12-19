@@ -1,9 +1,11 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer.SingleOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 
 import java.util.Objects;

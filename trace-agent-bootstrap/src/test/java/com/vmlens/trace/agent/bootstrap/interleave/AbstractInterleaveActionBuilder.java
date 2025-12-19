@@ -1,6 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave;
 
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.*;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock.ConditionWaitEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock.ConditionWaitExit;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock.LockEnterImpl;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.MonitorKey;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.ReadWriteLockKey;

@@ -6,6 +6,8 @@ trait DescriptionContext {
   
   def threadName(key: LoopRunAndThreadIndex): String
   def methodName(key: Integer): String
+
+  def methodNameWithoutSource(key: Integer): String
   def fieldName(key: Integer): String
   def loopName(key: Integer): String
   

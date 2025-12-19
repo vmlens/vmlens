@@ -10,7 +10,7 @@ class OperationMethodWithLockAccess(val atomicMethodId: Int, val objectHashCode:
 
   override def operation: String = lockType.textForMethodWithLock + " " + lockOperation.text
 
-  override def element(context: DescriptionContext): String = context.methodName(atomicMethodId)
+  override def element(context: DescriptionContext): String = context.methodNameWithoutSource(atomicMethodId)
 
   override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {
     callback.needsMethod(atomicMethodId)

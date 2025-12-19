@@ -25,6 +25,16 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
+  override def methodNameWithoutSource(key: Integer): String = {
+    containerMapCollection.methodNames.get(key).flatMap(  x => x.description )
+      .map( x =>  x._1.name().replace('/', '.') + "." + x._2.name() ) match {
+      case None => {
+        notFound(key);
+      }
+      case Some(x) => x
+    }
+  }
+
   override def fieldName(key: Integer): String = {
     containerMapCollection.fieldNames.get(key).flatMap(  x => x.description )
       .map( x => x._1.name().replace('/','.') + "." + x._2.name() ) match {

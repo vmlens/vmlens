@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
@@ -6,11 +6,13 @@ import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.ac
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.LockStartOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer.Block;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer.BlockEnd;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 
 import java.util.Objects;
 
-public class LockExit implements InterleaveAction  {
+public class LockExit implements InterleaveAction {
 
     private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final LockKey lockOrMonitor;

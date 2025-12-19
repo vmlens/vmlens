@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.BarrierOperationVisitor;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
@@ -13,34 +11,28 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.B
 
 import java.util.Objects;
 
-public class BarrierWaitExit implements Barrier  {
+public class BarrierWaitExit extends Barrier implements BarrierOperationVisitor {
 
-    private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
-    private final BarrierKey barrierKey;
 
     public BarrierWaitExit(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
                            BarrierKey barrierKey) {
-        this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
-        this.barrierKey = barrierKey;
+        super(methodIdByteCodePositionAndThreadIndex, barrierKey);
+    }
+
+
+    @Override
+    public AddToAlternatingOrder visit(Position myPosition, BarrierNotify other, Position otherPosition) {
+        return null;
     }
 
     @Override
-    public BarrierKey key() {
-        return barrierKey;
+    public AddToAlternatingOrder visit(Position myPosition, BarrierWaitEnter other, Position otherPosition) {
+        return null;
     }
 
     @Override
-    public TreeBuilderNode addToAlternatingOrder(Position myPosition,
-                                                 Object otherObj,
-                                                 BuildAlternatingOrderContext context,
-                                                 TreeBuilderNode treeBuilderNode) {
-        // Barrier exit does not generate order relations
-        return treeBuilderNode;
-    }
-
-    @Override
-    public int threadIndex() {
-        return methodIdByteCodePositionAndThreadIndex.threadIndex();
+    public AddToAlternatingOrder visit(Position myPosition, BarrierReadState barrierReadState, Position acceptingPosition) {
+        return new ReadStateChangeStateTuple(new BarrierOperationAndPosition<>(acceptingPosition,barrierReadState), myPosition);
     }
 
     @Override

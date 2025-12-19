@@ -1,75 +1,74 @@
-package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
+package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock;
+
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.ActiveLockCollection;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.LockEnterOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.WaitExitOperation;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
 
 import java.util.Objects;
 
-public class LockEnterImpl implements InterleaveAction  {
+/**
+ * similar as monitor enter only that it does not take part in deadlocks
+ */
+
+public class ConditionWaitExit implements InterleaveAction {
 
     private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
     private final LockKey lockOrMonitor;
-    private final boolean isRead;
 
-    public LockEnterImpl(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
-                         LockKey lockOrMonitor,
-                         boolean isRead) {
+    public ConditionWaitExit(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
+                             LockKey lockOrMonitor) {
         this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
         this.lockOrMonitor = lockOrMonitor;
-        this.isRead = isRead;
     }
 
     @Override
     public void addToKeyToOperationCollection(Position myPosition,
                                               ActiveLockCollection mapContainingStack,
                                               KeyToOperationCollection result) {
-        mapContainingStack.push(new LockEnterOperation(myPosition, lockOrMonitor,isRead));
+        mapContainingStack.push(new WaitExitOperation(myPosition, lockOrMonitor));
     }
-    
+
     @Override
     public int threadIndex() {
         return methodIdByteCodePositionAndThreadIndex.threadIndex();
     }
 
     @Override
+    public boolean equalsNormalized(InterleaveAction other) {
+        if(! (other instanceof ConditionWaitExit)) {
+            return false;
+        }
+        ConditionWaitExit otherLock = (ConditionWaitExit) other;
+        if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
+            return false;
+        }
+
+        return lockOrMonitor.equalsNormalized(otherLock.lockOrMonitor);
+    }
+
+    @Override
     public String toString() {
-        return "lockEnter(" +
-                 methodIdByteCodePositionAndThreadIndex.threadIndex() +
+        return "conditionWaitExit(" +
+                methodIdByteCodePositionAndThreadIndex.threadIndex() +
                 ","  + lockOrMonitor +
                 ");";
     }
 
     @Override
-    public boolean equalsNormalized(InterleaveAction other) {
-        if(! (other instanceof LockEnterImpl)) {
-            return false;
-        }
-        LockEnterImpl otherLock = (LockEnterImpl) other;
-        if(! methodIdByteCodePositionAndThreadIndex.equals(otherLock.methodIdByteCodePositionAndThreadIndex))  {
-            return false;
-        }
-
-        if(isRead != otherLock.isRead) {
-            return false;
-        }
-
-        return lockOrMonitor.equalsNormalized(lockOrMonitor);
-    }
-
-    @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
-        LockEnterImpl lockEnter = (LockEnterImpl) object;
-        return isRead  == lockEnter.isRead
-                && Objects.equals(methodIdByteCodePositionAndThreadIndex, lockEnter.methodIdByteCodePositionAndThreadIndex)
-                && Objects.equals(lockOrMonitor, lockEnter.lockOrMonitor);
+        ConditionWaitExit that = (ConditionWaitExit) object;
+        return Objects.equals(methodIdByteCodePositionAndThreadIndex, that.methodIdByteCodePositionAndThreadIndex) && Objects.equals(lockOrMonitor, that.lockOrMonitor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor,isRead);
+        return Objects.hash(getClass(),methodIdByteCodePositionAndThreadIndex, lockOrMonitor);
     }
+
 }

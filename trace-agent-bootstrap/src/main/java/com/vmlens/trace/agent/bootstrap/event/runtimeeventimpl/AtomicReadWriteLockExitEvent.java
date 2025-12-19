@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.AtomicReadWriteLockExitEventGe
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NoThreadOperationFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockExit;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;

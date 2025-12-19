@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.BarrierOperationVisitor;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
@@ -14,33 +12,11 @@ import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.B
 
 import java.util.Objects;
 
-public class BarrierNotify implements Barrier , BarrierOperationVisitor {
-
-    private final MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex;
-    private final BarrierKey barrierKey;
+public class BarrierNotify extends Barrier implements BarrierOperationVisitor {
 
     public BarrierNotify(MethodIdByteCodePositionAndThreadIndex methodIdByteCodePositionAndThreadIndex,
                          BarrierKey barrierKey) {
-        this.methodIdByteCodePositionAndThreadIndex = methodIdByteCodePositionAndThreadIndex;
-        this.barrierKey = barrierKey;
-    }
-
-    @Override
-    public TreeBuilderNode addToAlternatingOrder(Position myPosition,
-                                                     Object otherObj,
-                                                     BuildAlternatingOrderContext context,
-                                                     TreeBuilderNode treeBuilderNode) {
-        DependentOperationAndPosition<Barrier> other = (DependentOperationAndPosition<Barrier> ) otherObj;
-        AddToAlternatingOrder tuple = other.element().accept(this, myPosition, other.position());
-        if(tuple != null) {
-            return tuple.addToAlternatingOrder(context,treeBuilderNode);
-        }
-        return treeBuilderNode;
-    }
-
-    @Override
-    public BarrierKey key() {
-        return barrierKey;
+        super(methodIdByteCodePositionAndThreadIndex, barrierKey);
     }
 
     @Override
@@ -55,14 +31,14 @@ public class BarrierNotify implements Barrier , BarrierOperationVisitor {
     }
 
     @Override
-    public AddToAlternatingOrder visit(Position myPosition, BarrierWaitEnter other, Position otherPosition) {
-        return new NotifyWaitTuple(new BarrierOperationAndPosition<>(myPosition,this),
-                new BarrierOperationAndPosition<>(otherPosition,other));
+    public AddToAlternatingOrder visit(Position myPosition, BarrierReadState barrierReadState, Position acceptingPosition) {
+        return new ReadStateChangeStateTuple(new BarrierOperationAndPosition<>(acceptingPosition,barrierReadState), myPosition);
     }
 
     @Override
-    public int threadIndex() {
-        return methodIdByteCodePositionAndThreadIndex.threadIndex();
+    public AddToAlternatingOrder visit(Position myPosition, BarrierWaitEnter other, Position otherPosition) {
+        return new NotifyWaitTuple(new BarrierOperationAndPosition<>(myPosition,this),
+                new BarrierOperationAndPosition<>(otherPosition,other));
     }
 
     @Override

@@ -77,16 +77,22 @@ class CreateRunReport {
       stacktraceToLink.get(runElement.stacktraceLeaf) match {
         case None => {
           val methodName = descriptionContext.methodName(runElement.stacktraceLeaf.stacktraceElements.head.methodId)
-          val stacktraceElementList = new util.LinkedList[UIStacktraceElement]
-          for(stacktraceElement <-  runElement.stacktraceLeaf.stacktraceElements ) {
-            stacktraceElementList.add(new UIStacktraceElement(descriptionContext.methodName(stacktraceElement.methodId)))
+          if(runElement.stacktraceLeaf.stacktraceElements.size > 1) {
+            val stacktraceElementList = new util.LinkedList[UIStacktraceElement]
+            for (stacktraceElement <- runElement.stacktraceLeaf.stacktraceElements) {
+              stacktraceElementList.add(new UIStacktraceElement(descriptionContext.methodName(stacktraceElement.methodId)))
+            }
+            val link = createHtmlReport.createStacktraceReport(stacktraceElementList);
+            val newLink = new LinkAndFirstMethodName(link, methodName);
+            stacktraceToLink.put(runElement.stacktraceLeaf, newLink)
+            newLink
+          } else {
+            val methodName = descriptionContext.methodName(runElement.stacktraceLeaf.stacktraceElements.head.methodId)
+            val newLink = new LinkAndFirstMethodName(null, methodName);
+            stacktraceToLink.put(runElement.stacktraceLeaf, newLink)
+            newLink
           }
-          val link = createHtmlReport.createStacktraceReport(stacktraceElementList);
-          val newLink = new LinkAndFirstMethodName(link,methodName);
-          stacktraceToLink.put(runElement.stacktraceLeaf,newLink)
-          newLink
         }
-
         case Some(x) => x;
       }
     }
