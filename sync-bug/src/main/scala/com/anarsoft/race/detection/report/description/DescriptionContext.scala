@@ -10,5 +10,6 @@ trait DescriptionContext {
   def methodNameWithoutSource(key: Integer): String
   def fieldName(key: Integer): String
   def loopName(key: Integer): String
+  def reportAsSummaryThreshold(loopId: Integer): Int
   
 }

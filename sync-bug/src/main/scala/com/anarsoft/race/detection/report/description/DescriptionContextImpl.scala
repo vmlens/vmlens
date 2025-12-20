@@ -1,6 +1,7 @@
 package com.anarsoft.race.detection.report.description
 
 import com.anarsoft.race.detection.report.element.LoopRunAndThreadIndex
+import com.vmlens.api.AllInterleavingsBuilder
 import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, MethodDescription}
 
 class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection) extends  DescriptionContext  {
@@ -55,9 +56,19 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
+  override def reportAsSummaryThreshold(loopId: Integer): Int = {
+    containerMapCollection.loopNames.get(loopId) match {
+      case None => {
+        AllInterleavingsBuilder.REPORT_AS_SUMMARY_THRESHOLD;
+      }
+      case Some(x) => x.reportAsSummaryThreshold();
+
+    }
+  }
+
   /*
-   * see java.lang.StackTraceElement
-   */
+     * see java.lang.StackTraceElement
+     */
   private def createMethodString(tuple : Tuple2[ClassDescription, MethodDescription]): String = {
     tuple._1.name().replace('/', '.') + "." + tuple._2.name() + "("  + classSource(tuple._1.source())
        + lineNumber(tuple._2.lineNumber()) + ")"

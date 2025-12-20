@@ -14,5 +14,10 @@ trait ReportOperation {
   def setObjectHashCodeMap(objectHashCodeMap: ObjectHashCodeMap, threadIndex: Int): Unit
 
   def objectString(context: DescriptionContext): String
+  
+  def take() : Boolean;
+  
+  def isDataRace: Boolean;
+  
 }
 

@@ -22,12 +22,10 @@ class OperationVolatileAccess(val memoryAccessKey: MemoryAccessKey, val memoryAc
       case Some(x) => {
         objectHashCodeMap.asUiString(x)
       }
-
       case None => {
         "static"
       }
     }
-
   }
 
   override def setObjectHashCodeMap(objectHashCodeMap: ObjectHashCodeMap, threadIndex: Int): Unit = {
@@ -42,5 +40,32 @@ class OperationVolatileAccess(val memoryAccessKey: MemoryAccessKey, val memoryAc
       }
     }
 
+  }
+
+  override def take(): Boolean = memoryAccessKey.objectHashCodeOption match {
+    case Some(x) => {
+      !objectHashCodeMap.isSingleThreaded(x)
+    }
+
+    case None => {
+      true;
+    }
+  }
+
+  override def isDataRace: Boolean = false;
+
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[OperationVolatileAccess]
+  
+  override def equals(other: Any): Boolean = other match {
+    case that: OperationVolatileAccess =>
+      that.canEqual(this) &&
+        memoryAccessKey == that.memoryAccessKey &&
+        memoryAccess == that.memoryAccess
+    case _ => false
+  }
+  
+  override def hashCode(): Int = {
+    val state = Seq(memoryAccessKey, memoryAccess)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 }

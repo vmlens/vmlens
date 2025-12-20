@@ -49,4 +49,30 @@ class OperationNonVolatileAccess(val memoryAccessKey: MemoryAccessKey, val memor
     }
     
   }
+
+  override def take(): Boolean =   memoryAccessKey.objectHashCodeOption match {
+    case Some(x) => {
+      ! objectHashCodeMap.isSingleThreaded(x)
+    }
+    case None => {
+      true;
+    }
+  }
+
+
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[OperationNonVolatileAccess]
+  
+  override def equals(other: Any): Boolean = other match {
+    case that: OperationNonVolatileAccess =>
+      that.canEqual(this) &&
+        memoryAccessKey == that.memoryAccessKey &&
+        memoryAccess == that.memoryAccess &&
+        isDataRace == that.isDataRace
+    case _ => false
+  }
+  
+  override def hashCode(): Int = {
+    val state = Seq(memoryAccessKey, memoryAccess, isDataRace)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }

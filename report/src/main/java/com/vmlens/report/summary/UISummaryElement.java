@@ -17,7 +17,6 @@ public class UISummaryElement {
                             String method,
                             String threadName,
                             int count,
-                            boolean hasLink,
                             String link) {
         this.operation = operation;
         this.element = element;
@@ -25,8 +24,14 @@ public class UISummaryElement {
         this.method = method;
         this.threadName = threadName;
         this.count = count;
-        this.hasLink = hasLink;
+     
         this.link = link;
+        if(link == null) {
+            this.hasLink = false;
+        } else {
+            this.hasLink = true;
+        }
+            
     }
 
     public String operation() {

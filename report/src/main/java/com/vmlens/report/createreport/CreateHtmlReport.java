@@ -4,6 +4,7 @@ import com.vmlens.report.overview.UITestLoopAndWarning;
 import com.vmlens.report.overview.UITestLoopAndWarningComparator;
 import com.vmlens.report.overview.UITestLoopOrWarning;
 import com.vmlens.report.stacktrace.UIStacktraceElement;
+import com.vmlens.report.summary.UISummaryElement;
 import com.vmlens.report.trace.UIRunElement;
 
 import java.io.IOException;
@@ -52,6 +53,14 @@ public class CreateHtmlReport {
         CreateOneReport completeReport = new CreateOneReport("run");
         OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
         completeReport.createUIRun(uiRunElements,name, writer);
+        writer.close();
+    }
+
+    public void createSummaryReport(List<UISummaryElement> uiRunElements, String name, String fileName)
+            throws IOException {
+        CreateOneReport summaryReport = new CreateOneReport("summary");
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
+        summaryReport.createUISummary(uiRunElements,name, writer);
         writer.close();
     }
 

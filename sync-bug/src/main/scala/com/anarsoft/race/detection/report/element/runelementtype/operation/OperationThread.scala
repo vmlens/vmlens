@@ -19,4 +19,24 @@ class OperationThread(val eventTypeThread: EventTypeThread, val threadOperation:
   }
 
   override def objectString(context: DescriptionContext): String = context.threadName(onThreadIndex)
+
+  def take(): Boolean = true;
+
+  override def isDataRace: Boolean = false;
+
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[OperationThread]
+  
+  override def equals(other: Any): Boolean = other match {
+    case that: OperationThread =>
+      that.canEqual(this) &&
+        eventTypeThread == that.eventTypeThread &&
+        threadOperation == that.threadOperation &&
+        onThreadIndex == that.onThreadIndex
+    case _ => false
+  }
+  
+  override def hashCode(): Int = {
+    val state = Seq(eventTypeThread, threadOperation, onThreadIndex)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }

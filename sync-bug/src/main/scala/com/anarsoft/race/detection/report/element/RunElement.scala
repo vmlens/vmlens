@@ -16,8 +16,23 @@ class RunElement(val loopRunAndThreadIndex: LoopRunAndThreadIndex,
     } else {
       runPosition.compare(that.runPosition)
     }
-      
-    
-    
+  }
+
+
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[RunElement]
+  
+  override def equals(other: Any): Boolean = other match {
+    case that: RunElement =>
+      that.canEqual(this) &&
+        loopRunAndThreadIndex == that.loopRunAndThreadIndex &&
+        stacktraceLeaf == that.stacktraceLeaf &&
+        operationTextFactory == that.operationTextFactory &&
+        inMethodId == that.inMethodId
+    case _ => false
+  }
+  
+  override def hashCode(): Int = {
+    val state = Seq(loopRunAndThreadIndex, stacktraceLeaf, operationTextFactory, inMethodId)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 }

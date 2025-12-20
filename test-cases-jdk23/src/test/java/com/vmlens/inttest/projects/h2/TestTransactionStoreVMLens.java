@@ -13,6 +13,7 @@ public class TestTransactionStoreVMLens  {
     public void testConcurrentPutAndGet() throws InterruptedException {
         try (AllInterleavings allInterleavings = new AllInterleavingsBuilder()
                 .withMaximumAlternatingOrders(20)
+                .withReportAsSummaryThreshold(5)
                 .build("testCacheLongKeyLIRSVMLens.testConcurrent")) {
             while (allInterleavings.hasNext()) {
                 final MVStore s = new MVStore.Builder().open();

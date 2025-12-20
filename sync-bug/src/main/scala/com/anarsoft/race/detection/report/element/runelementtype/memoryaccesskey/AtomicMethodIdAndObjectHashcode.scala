@@ -13,4 +13,18 @@ class AtomicMethodIdAndObjectHashcode(val atomicMethodId: Int, val objectHashCod
   override def objectHashCodeOption: Option[Long] = Some(objectHashCode);
 
 
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[AtomicMethodIdAndObjectHashcode]
+  
+  override def equals(other: Any): Boolean = other match {
+    case that: AtomicMethodIdAndObjectHashcode =>
+      that.canEqual(this) &&
+        atomicMethodId == that.atomicMethodId &&
+        objectHashCode == that.objectHashCode
+    case _ => false
+  }
+  
+  override def hashCode(): Int = {
+    val state = Seq(atomicMethodId, objectHashCode)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }

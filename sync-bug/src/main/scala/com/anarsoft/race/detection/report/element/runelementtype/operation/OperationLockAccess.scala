@@ -21,4 +21,24 @@ class OperationLockAccess(val monitorOperation: LockOperation, val lockType: Rep
     this.objectHashCodeMap = objectHashCodeMap
     objectHashCodeMap.add(objectHashCode, threadIndex)
   }
+
+  override def take(): Boolean = true;
+
+  override def isDataRace: Boolean = false;
+  
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[OperationLockAccess]
+  
+  override def equals(other: Any): Boolean = other match {
+    case that: OperationLockAccess =>
+      that.canEqual(this) &&
+        monitorOperation == that.monitorOperation &&
+        lockType == that.lockType &&
+        objectHashCode == that.objectHashCode
+    case _ => false
+  }
+  
+  override def hashCode(): Int = {
+    val state = Seq(monitorOperation, lockType, objectHashCode)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }

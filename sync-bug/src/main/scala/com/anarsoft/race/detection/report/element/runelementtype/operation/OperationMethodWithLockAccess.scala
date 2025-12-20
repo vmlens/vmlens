@@ -22,4 +22,25 @@ class OperationMethodWithLockAccess(val atomicMethodId: Int, val objectHashCode:
     this.objectHashCodeMap = objectHashCodeMap
     objectHashCodeMap.add(objectHashCode, threadIndex)
   }
+
+  override def take(): Boolean = ! objectHashCodeMap.isSingleThreaded(objectHashCode)
+
+  override def isDataRace: Boolean = false;
+  
+  private def canEqual(other: Any): Boolean = other.isInstanceOf[OperationMethodWithLockAccess]
+  
+  override def equals(other: Any): Boolean = other match {
+    case that: OperationMethodWithLockAccess =>
+      that.canEqual(this) &&
+        atomicMethodId == that.atomicMethodId &&
+        objectHashCode == that.objectHashCode &&
+        lockOperation == that.lockOperation &&
+        lockType == that.lockType
+    case _ => false
+  }
+  
+  override def hashCode(): Int = {
+    val state = Seq(atomicMethodId, objectHashCode, lockOperation, lockType)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }

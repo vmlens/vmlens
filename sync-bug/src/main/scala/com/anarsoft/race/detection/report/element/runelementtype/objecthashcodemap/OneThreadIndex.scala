@@ -7,4 +7,6 @@ class OneThreadIndex(private val threadIndex: Int) extends ThreadIndices {
   }
 
   override def asUiString = ""
+
+  def isSingleThreaded: Boolean = true;
 }
