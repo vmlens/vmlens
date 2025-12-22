@@ -23,7 +23,7 @@ public class ParallelizeLoopFactoryImpl implements ParallelizeLoopFactory {
     public ParallelizeLoop create(int loopId, InterleaveLoopContext interleaveLoopContext) {
         return new ParallelizeLoop(loopId, new RunStateMachineFactoryImpl(),
                 waitNotifyStrategy,
-                new InterleaveLoop(interleaveLoopContext));
+                new InterleaveLoop(loopId,interleaveLoopContext));
     }
 
 }

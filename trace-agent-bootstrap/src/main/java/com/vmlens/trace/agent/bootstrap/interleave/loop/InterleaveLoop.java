@@ -21,7 +21,7 @@ import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 public class InterleaveLoop implements IteratorQueue {
 
-
+    private final  int loopId;
     private final InterleaveLoopContext interleaveLoopContext;
     private final TLinkedList<TLinkableWrapper<ThreadIndexToElementList<InterleaveAction>>> alreadyProcessed =
          new TLinkedList<>();
@@ -30,7 +30,8 @@ public class InterleaveLoop implements IteratorQueue {
     private final InterleaveLoopIterator iterator;
     private boolean containsLoop;
 
-    public InterleaveLoop(InterleaveLoopContext interleaveLoopContext) {
+    public InterleaveLoop(int loopId, InterleaveLoopContext interleaveLoopContext) {
+        this.loopId = loopId;
         this.interleaveLoopContext = interleaveLoopContext;
         this.iterator = new InterleaveLoopIterator(interleaveLoopContext,this);
     }
@@ -57,14 +58,9 @@ public class InterleaveLoop implements IteratorQueue {
                              QueueIn queueIn) {
         containsLoop = actualRun.containsLoop() | containsLoop;
         TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = actualRun.run();
-
-       /* if(containsLoop)  {
-            withLoops = new InterleaveActionLoopFactory().create(actualRun.run());
-        }*/
-
         if(TRACE_INTERLEAVE_ACTIONS) {
             String[] array = new String[withLoops.size() + 1];
-            array[0] = "New Run";
+            array[0] = "New Run " + loopId;
             int index = 1;
             for(TLinkableWrapper<InterleaveAction> elem : withLoops) {
                 array[index] = elem.element().toString();

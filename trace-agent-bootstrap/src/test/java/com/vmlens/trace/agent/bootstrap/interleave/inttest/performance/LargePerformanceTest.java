@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.inttest.performance;
 
+import com.vmlens.trace.agent.bootstrap.interleave.AbstractInterleaveActionBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
@@ -36,6 +37,42 @@ public class LargePerformanceTest {
             System.out.println("took " + (System.currentTimeMillis() - start));
         }
         assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
+    }
+
+    /*
+    1
+0
+4095
+2047
+63487
+2047
+30719
+2047
+16383
+8191
+
+
+     */
+
+    @Ignore
+    @Test
+    public void testH2PerformanceProblem() {
+            System.out.println("1");
+           // runOneH2(new InterleaveActionH2_1());
+            System.out.println("2");
+           // runOneH2(new InterleaveActionH2_2());
+            System.out.println("3");
+           // runOneH2(new InterleaveActionH2_3());
+            System.out.println("4");
+            runOneH2(new InterleaveActionH2_4());
+    }
+
+    private void runOneH2(AbstractInterleaveActionBuilder abstractInterleaveActionBuilder) {
+        ExpectedBuilder expectedBuilder = new ExpectedBuilder();
+
+        new IntTestRunner().runTest(abstractInterleaveActionBuilder.build(),expectedBuilder.buildExpected(),
+                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(50).build(new QueueInNoOp(),0));
+
     }
 
 
