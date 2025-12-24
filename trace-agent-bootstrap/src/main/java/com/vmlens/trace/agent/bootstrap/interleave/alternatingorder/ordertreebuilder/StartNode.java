@@ -1,8 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder;
 
-public interface NodeBuilder {
+public class StartNode extends StartOrEither {
 
-    NodeBuilder getNext();
-    ListElement build();
 
 }

@@ -1,16 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeNoOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeNode;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.SingleChildNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.*;
 
 public class EitherInChoiceAlternative implements ChoiceElement , EitherInChoice {
 
     private final OrderAlternative orderAlternativeA;
     private final OrderAlternative orderAlternativeB;
     private EitherInChoiceAlternative next;
-    private NodeBuilder last;
+
 
     public EitherInChoiceAlternative(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
         this.orderAlternativeA = orderAlternativeA;
@@ -24,19 +21,7 @@ public class EitherInChoiceAlternative implements ChoiceElement , EitherInChoice
     }
 
     @Override
-    public OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext) {
-        orderTreeBuilderContext.incrementEitherBlockCount();
-        OrderTreeNode nextNode = null;
-        if(getNext() != null) {
-            nextNode = getNext().build(orderTreeBuilderContext);
-        } else if(last != null){
-            nextNode = last.build(orderTreeBuilderContext);
-        }
-        return new SingleChildNode(nextNode,orderAlternativeA,orderAlternativeB);
-    }
-
-    @Override
-    public ChoiceElement getNext() {
+    public EitherInChoiceAlternative getNext() {
         return next;
     }
 
@@ -49,10 +34,8 @@ public class EitherInChoiceAlternative implements ChoiceElement , EitherInChoice
     }
 
     @Override
-    public void setLast(NodeBuilder last) {
-        if(next != null) {
-            throw new RuntimeException("next != null");
-        }
-        this.last = last;
+    public ListElementChoiceAlternative build() {
+        return new ListElementChoiceAlternative(orderAlternativeA,orderAlternativeB);
     }
+
 }

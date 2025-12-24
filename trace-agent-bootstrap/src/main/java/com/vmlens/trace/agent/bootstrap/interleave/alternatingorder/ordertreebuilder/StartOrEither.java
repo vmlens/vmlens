@@ -3,7 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebu
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
 
 
-public abstract class StartOrEither implements NodeBuilder, TreeBuilderNode {
+public abstract class StartOrEither implements TreeBuilderNode {
 
     private NodeBuilder next;
 

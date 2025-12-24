@@ -1,9 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder;
 
-public interface ChoiceElement extends NodeBuilder {
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElementChoiceAlternative;
 
-    ChoiceElement getNext();
+public interface ChoiceElement {
+
+    EitherInChoiceAlternative getNext();
     void fill();
-    void setLast(NodeBuilder last);
+    ListElementChoiceAlternative build();
+
 
 }

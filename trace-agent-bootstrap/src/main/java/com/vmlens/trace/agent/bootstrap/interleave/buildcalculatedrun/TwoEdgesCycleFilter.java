@@ -35,29 +35,8 @@ public class TwoEdgesCycleFilter {
     private int maxCycleId = 0;
 
     public boolean hasCycle(OrderArrayList orderArrayList) {
-        TIntSet foundCycles = new TIntHashSet();
-        THashSet<LeftBeforeRight> alreadyProcessed = new THashSet<>();
-
-        if(! leftBeforeRightToCycles.isEmpty()) {
-            Iterator<LeftBeforeRight> iter = orderArrayList.iterator();
-            while(iter.hasNext()) {
-                LeftBeforeRight current = iter.next();
-                if(! alreadyProcessed.contains(current)) {
-                    alreadyProcessed.add(current);
-                    TIntSet cycles = leftBeforeRightToCycles.get(current);
-                    if(cycles != null) {
-                        TIntIterator cycleIter = cycles.iterator();
-                        while(cycleIter.hasNext()) {
-                            int id = cycleIter.next();
-                            if(foundCycles.contains(id)) {
-                                return true;
-                            }
-                            foundCycles.add(id);
-                        }
-                    }
-                }
-            }
-
+        if(hasExistingCycles(orderArrayList)) {
+            return true;
         }
 
         PositionOrder[] array = orderArrayList.withInverse();
@@ -87,6 +66,33 @@ public class TwoEdgesCycleFilter {
                 secondSet.add(maxCycleId);
                 maxCycleId++;
                 return true;
+            }
+        }
+        return false;
+    }
+
+
+    private boolean hasExistingCycles(OrderArrayList orderArrayList) {
+        if(! leftBeforeRightToCycles.isEmpty()) {
+            TIntSet foundCycles = new TIntHashSet();
+            THashSet<LeftBeforeRight> alreadyProcessed = new THashSet<>();
+            Iterator<LeftBeforeRight> iter = orderArrayList.iterator();
+            while(iter.hasNext()) {
+                LeftBeforeRight current = iter.next();
+                if(! alreadyProcessed.contains(current)) {
+                    alreadyProcessed.add(current);
+                    TIntSet cycles = leftBeforeRightToCycles.get(current);
+                    if(cycles != null) {
+                        TIntIterator cycleIter = cycles.iterator();
+                        while(cycleIter.hasNext()) {
+                            int id = cycleIter.next();
+                            if(foundCycles.contains(id)) {
+                                return true;
+                            }
+                            foundCycles.add(id);
+                        }
+                    }
+                }
             }
         }
         return false;

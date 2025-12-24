@@ -1,16 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
-public class SingleChildNode implements OrderTreeNode {
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.ListElement;
 
-    // next can be null
-    private final OrderTreeNode next;
+public class ListElementEither implements ListElement {
+
     private final OrderAlternative firstAlternative;
     private final OrderAlternative secondAlternative;
+    // next can be null
+    private OrderTreeNode next;
 
-    public SingleChildNode(OrderTreeNode next,
-                           OrderAlternative firstAlternative,
-                           OrderAlternative secondAlternative) {
-        this.next = next;
+    public ListElementEither(OrderAlternative firstAlternative,
+                             OrderAlternative secondAlternative) {
         this.firstAlternative = firstAlternative;
         this.secondAlternative = secondAlternative;
     }
@@ -31,6 +31,10 @@ public class SingleChildNode implements OrderTreeNode {
         return next;
     }
 
+    public void setNext(ListElement next) {
+        this.next = next;
+    }
+
     // to test the builder
     public OrderTreeNode next() {
         return next;
@@ -48,11 +52,11 @@ public class SingleChildNode implements OrderTreeNode {
 
 
     public boolean hasSameOrder(OrderTreeNode otherNode) {
-        if(! (otherNode instanceof SingleChildNode)) {
+        if(! (otherNode instanceof ListElementEither)) {
             return false;
         }
 
-        SingleChildNode other = (SingleChildNode) otherNode;
+        ListElementEither other = (ListElementEither) otherNode;
 
         if(firstAlternative.equals(other.firstAlternative) && secondAlternative.equals(other.secondAlternative)) {
             return true;

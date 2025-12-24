@@ -39,21 +39,6 @@ public class LargePerformanceTest {
         assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
 
-    /*
-    1
-0
-4095
-2047
-63487
-2047
-30719
-2047
-16383
-8191
-
-
-     */
-
     @Ignore
     @Test
     public void testH2PerformanceProblem() {
