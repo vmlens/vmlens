@@ -15,13 +15,13 @@ public class InterleaveLoopMessageFactoryImpl implements InterleaveLoopMessageFa
     }
 
     @Override
-    public void maximumAlternatingOrdersCapped(int actual) {
-        sendMessage(LoopWarningEvent.maximumAlternatingOrdersReached(actual));
+    public void cyclesRemoved(int actual) {
+        sendMessage(LoopWarningEvent.cyclesRemoved(actual));
     }
 
     @Override
-    public void maximumIterationsReached() {
-        sendMessage(LoopWarningEvent.maximumIterationsReached());
+    public void maximumIterationsReached(int orderTreeLength) {
+        sendMessage(LoopWarningEvent.maximumIterationsReached(orderTreeLength));
 
     }
 

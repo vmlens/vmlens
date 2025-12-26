@@ -38,7 +38,7 @@ public class AllInterleavings implements AutoCloseable {
 	private final boolean throwExceptionWhenNoAgent;
 
 	public final int maximumIterations;
-	public final int maximumAlternatingOrders;
+	public final int removeCycleThreshold;
 	public final int synchronizationActionsLoopThreshold;
 	public final int unsynchronizedOperationsLoopThreshold;
 	public final int reportAsSummaryThreshold;
@@ -66,7 +66,7 @@ public class AllInterleavings implements AutoCloseable {
 		this(name,
 				throwExceptionWhenNoAgent,
 				MAXIMUM_ITERATIONS ,
-				MAXIMUM_ALTERNATING_ORDERS ,
+				REMOVE_CYCLE_THRESHOLD,
 				500 ,
 				5000,
 				REPORT_AS_SUMMARY_THRESHOLD,
@@ -77,7 +77,7 @@ public class AllInterleavings implements AutoCloseable {
 	AllInterleavings(String name,
                      boolean throwExceptionWhenNoAgent,
                      int maximumIterations,
-                     int maximumAlternatingOrders,
+                     int removeCycleThreshold,
                      int synchronizationActionsLoopThreshold,
                      int unsynchronizedOperationsLoopThreshold,
                      int reportAsSummaryThreshold,
@@ -85,7 +85,7 @@ public class AllInterleavings implements AutoCloseable {
         this.name = name;
 		this.throwExceptionWhenNoAgent = throwExceptionWhenNoAgent;
         this.maximumIterations = maximumIterations;
-        this.maximumAlternatingOrders = maximumAlternatingOrders;
+        this.removeCycleThreshold = removeCycleThreshold;
         this.synchronizationActionsLoopThreshold = synchronizationActionsLoopThreshold;
         this.unsynchronizedOperationsLoopThreshold = unsynchronizedOperationsLoopThreshold;
         this.reportAsSummaryThreshold = reportAsSummaryThreshold;

@@ -28,7 +28,8 @@ public class AlternatingOrderContainerFactory {
         return new AlternatingOrderContainer(
                 interleaveActionWitPositionAndRun.getRight(),
                 collection.buildFixedOrders(interleaveActionWitPositionAndRun.getRight()),
-                collection.buildOrderTree(context));
+                collection.buildOrderTree(context),
+                interleaveLoopContext);
     }
 
     public KeyToOperationCollection createCollection(

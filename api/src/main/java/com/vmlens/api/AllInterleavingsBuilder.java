@@ -7,11 +7,11 @@ import java.util.List;
 public class AllInterleavingsBuilder {
 
     public static final int MAXIMUM_ITERATIONS = 100;
-    public static final int MAXIMUM_ALTERNATING_ORDERS = 25;
+    public static final int REMOVE_CYCLE_THRESHOLD = 10;
     public static final int REPORT_AS_SUMMARY_THRESHOLD = 200;
 
     private int maximumIterations = MAXIMUM_ITERATIONS;
-    private int maximumAlternatingOrders = MAXIMUM_ALTERNATING_ORDERS;
+    private int removeCycleThreshold = REMOVE_CYCLE_THRESHOLD;
     private int reportAsSummaryThreshold = REPORT_AS_SUMMARY_THRESHOLD;
     private final List<AbstractMap.SimpleImmutableEntry<String,String>> intentionalDataRaces =
             new LinkedList<>();
@@ -21,8 +21,8 @@ public class AllInterleavingsBuilder {
         return this;
     }
 
-    public AllInterleavingsBuilder withMaximumAlternatingOrders(int newValue) {
-        maximumAlternatingOrders = newValue;
+    public AllInterleavingsBuilder withRemoveCycleThreshold(int newValue) {
+        removeCycleThreshold = newValue;
         return this;
     }
 
@@ -39,7 +39,7 @@ public class AllInterleavingsBuilder {
     public AllInterleavings build(String name) {
         return new AllInterleavings(name , false,
                 maximumIterations,
-                maximumAlternatingOrders,
+                removeCycleThreshold,
                 50,
                 100,
                 reportAsSummaryThreshold,

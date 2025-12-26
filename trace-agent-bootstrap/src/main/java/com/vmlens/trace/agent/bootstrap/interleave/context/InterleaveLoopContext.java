@@ -7,18 +7,18 @@ package com.vmlens.trace.agent.bootstrap.interleave.context;
 public class InterleaveLoopContext {
 
     private final int maximumIterations;
-    private final int maximumAlternatingOrders;
+    private final int removeCycleThreshold;
     private final int synchronizationActionsLoopThreshold;
     private final int unsynchronizedOperationsLoopThreshold;
     private final InterleaveLoopMessageFactory loopMessageFactory;
 
     public InterleaveLoopContext(int maximumIterations,
-                                 int maximumAlternatingOrders,
+                                 int removeCycleThreshold,
                                  int synchronizationActionsLoopThreshold,
                                  int unsynchronizedOperationsLoopThreshold,
                                  InterleaveLoopMessageFactory loopMessageFactory) {
         this.maximumIterations = maximumIterations;
-        this.maximumAlternatingOrders = maximumAlternatingOrders;
+        this.removeCycleThreshold = removeCycleThreshold;
         this.synchronizationActionsLoopThreshold = synchronizationActionsLoopThreshold;
         this.unsynchronizedOperationsLoopThreshold = unsynchronizedOperationsLoopThreshold;
         this.loopMessageFactory = loopMessageFactory;
@@ -28,8 +28,8 @@ public class InterleaveLoopContext {
         return maximumIterations;
     }
 
-    public int maximumAlternatingOrders() {
-        return maximumAlternatingOrders;
+    public int removeCycleThreshold() {
+        return removeCycleThreshold;
     }
 
     public int synchronizationActionsLoopThreshold() {
@@ -40,11 +40,11 @@ public class InterleaveLoopContext {
         return unsynchronizedOperationsLoopThreshold;
     }
 
-    public void maximumAlternatingOrdersCapped(int actual) {
-        loopMessageFactory.maximumAlternatingOrdersCapped(actual);
+    public void cyclesRemoved(int orderTreeLength) {
+        loopMessageFactory.cyclesRemoved(orderTreeLength);
     }
 
-    public void maximumIterationsReached() {
-        loopMessageFactory.maximumIterationsReached();
+    public void maximumIterationsReached(int orderTreeLength) {
+        loopMessageFactory.maximumIterationsReached(orderTreeLength);
     }
 }

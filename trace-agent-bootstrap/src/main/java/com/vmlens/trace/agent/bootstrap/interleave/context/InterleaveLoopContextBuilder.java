@@ -6,21 +6,21 @@ import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 public class InterleaveLoopContextBuilder {
 
     private int maximumIterations = AllInterleavingsBuilder.MAXIMUM_ITERATIONS;
-    private int maximumAlternatingOrders = AllInterleavingsBuilder.MAXIMUM_ALTERNATING_ORDERS;
+    private int removeCycleThreshold = AllInterleavingsBuilder.REMOVE_CYCLE_THRESHOLD;
 
     public InterleaveLoopContextBuilder withMaximumIterations(int newValue) {
         maximumIterations = newValue;
         return this;
     }
 
-    public InterleaveLoopContextBuilder withMaximumAlternatingOrders(int newValue) {
-        maximumAlternatingOrders = newValue;
+    public InterleaveLoopContextBuilder withRemoveCycleThreshold(int newValue) {
+        removeCycleThreshold = newValue;
         return this;
     }
 
     public InterleaveLoopContext build(QueueIn queueIn,
                                        int loopId) {
-        return new InterleaveLoopContext(maximumIterations, maximumAlternatingOrders, 500,
+        return new InterleaveLoopContext(maximumIterations, removeCycleThreshold, 500,
                 5000 , new InterleaveLoopMessageFactoryImpl(queueIn,loopId));
     }
 

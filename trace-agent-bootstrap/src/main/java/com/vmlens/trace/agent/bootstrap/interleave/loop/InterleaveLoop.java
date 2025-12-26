@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.loop;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainer;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainerIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AlternatingOrderContainerFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
@@ -47,7 +48,7 @@ public class InterleaveLoop implements IteratorQueue {
         return iterator;
     }
 
-    public Iterator<CalculatedRun> poll() {
+    public AlternatingOrderContainerIterator poll() {
         if (stillToBeProcessedAlternatingOrderContainer.isEmpty()) {
             return null;
         }

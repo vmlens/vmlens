@@ -16,13 +16,7 @@ public class TreeBuilder {
         NodeBuilder current = start.getNext();
         ListElement previous = null;
         ListElement startElement =  null;
-        int alternatingOrders = 0;
         while(current != null ) {
-            if(alternatingOrders >= interleaveLoopContext.maximumAlternatingOrders() ) {
-                // ToDo calculate the complete length
-                interleaveLoopContext.maximumAlternatingOrdersCapped(alternatingOrders);
-                break;
-            }
             ListElement currentListElement = current.build();
             if(startElement == null) {
                 startElement = currentListElement;
@@ -32,7 +26,6 @@ public class TreeBuilder {
             }
             previous = currentListElement;
             current = current.getNext();
-            alternatingOrders++;
         }
         return new OrderTree(startElement);
     }

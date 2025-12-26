@@ -33,7 +33,7 @@ method:<init>(Ljava/lang/String;ZIIIIILjava/util/List;)V
   PUTFIELD  com/vmlens/api/AllInterleavings.maximumIterations:I
   ALOAD_0
   ILOAD_4
-  PUTFIELD  com/vmlens/api/AllInterleavings.maximumAlternatingOrders:I
+  PUTFIELD  com/vmlens/api/AllInterleavings.removeCycleThreshold:I
   ALOAD_0
   ILOAD_5
   PUTFIELD  com/vmlens/api/AllInterleavings.synchronizationActionsLoopThreshold:I

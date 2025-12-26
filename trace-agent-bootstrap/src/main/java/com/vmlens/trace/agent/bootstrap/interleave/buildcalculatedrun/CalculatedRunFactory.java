@@ -8,6 +8,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayLi
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.PermutationIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.cycle.OrderCycle;
+import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
@@ -19,13 +20,16 @@ public class CalculatedRunFactory {
     private final CycleDetectionAdapter cycleDetectionAdapter;
     private final TwoEdgesCycleFilter twoEdgesCycleFilter = new TwoEdgesCycleFilter();
     private final THashSet<Pair<LeftBeforeRight, LeftBeforeRight>> alreadyProcessed = new THashSet<>();
+    private final InterleaveLoopContext interleaveLoopContext;
     private OrderTree orderTree;
+    private boolean messageSend = false;
 
     public CalculatedRunFactory(OrderArrayListFactory orderArrayListFactory,
-                                ThreadIndexToElementList<Position> actualRun,
+                                ThreadIndexToElementList<Position> actualRun, InterleaveLoopContext interleaveLoopContext,
                                 OrderTree orderTree) {
         this.orderArrayListFactory = orderArrayListFactory;
         this.cycleDetectionAdapter =  new CycleDetectionAdapter(new CalculatedRunBuilder(actualRun));
+        this.interleaveLoopContext = interleaveLoopContext;
         this.orderTree = orderTree;
     }
 
@@ -54,15 +58,24 @@ public class CalculatedRunFactory {
                 }
                 orderTree.avoidCycles(array);
             }
-            if(orderTree.length() >= 10) {
+            if(orderTree.length() >= interleaveLoopContext.removeCycleThreshold()) {
+                if(! messageSend) {
+                    interleaveLoopContext.cyclesRemoved(orderTree.length());
+                    messageSend = true;
+                }
                 orderTree = orderTree.removeCycles();
                 permutationIterator.setNewLength(orderTree.length());
+
             }
 
             return null;
         }
 
         return cycleDetectionAdapter.build(orderArrayList);
+    }
+
+    public int length() {
+        return orderTree.length();
     }
 
 }
