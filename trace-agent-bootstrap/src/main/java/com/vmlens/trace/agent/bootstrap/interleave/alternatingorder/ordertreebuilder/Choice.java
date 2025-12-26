@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElementChoice;
 
 import static java.lang.Math.max;

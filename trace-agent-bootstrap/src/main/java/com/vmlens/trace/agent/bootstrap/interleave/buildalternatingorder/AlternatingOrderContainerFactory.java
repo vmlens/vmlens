@@ -19,8 +19,7 @@ public class AlternatingOrderContainerFactory {
         this.interleaveLoopContext = interleaveLoopContext;
     }
 
-    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun,
-                                            InterleaveLoopContext interleaveLoopContext) {
+    public AlternatingOrderContainer create(TLinkedList<TLinkableWrapper<InterleaveAction>> actualRun) {
         Pair<TLinkedList<TLinkableWrapper<ElementAndPosition<InterleaveAction>>>, ThreadIndexToElementList<Position>>
                 interleaveActionWitPositionAndRun = new InterleaveActionWithPositionFactory().create(actualRun);
         KeyToOperationCollection collection = createCollection(interleaveActionWitPositionAndRun.getLeft());
@@ -29,8 +28,7 @@ public class AlternatingOrderContainerFactory {
         return new AlternatingOrderContainer(
                 interleaveActionWitPositionAndRun.getRight(),
                 collection.buildFixedOrders(interleaveActionWitPositionAndRun.getRight()),
-                collection.buildOrderTree(context),
-                interleaveLoopContext);
+                collection.buildOrderTree(context));
     }
 
     public KeyToOperationCollection createCollection(

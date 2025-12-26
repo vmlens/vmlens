@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 
@@ -16,7 +17,12 @@ public class TreeBuilder {
         ListElement previous = null;
         ListElement startElement =  null;
         int alternatingOrders = 0;
-        while(current != null && alternatingOrders < interleaveLoopContext.maximumAlternatingOrders()) {
+        while(current != null ) {
+            if(alternatingOrders >= interleaveLoopContext.maximumAlternatingOrders() ) {
+                // ToDo calculate the complete length
+                interleaveLoopContext.maximumAlternatingOrdersCapped(alternatingOrders);
+                break;
+            }
             ListElement currentListElement = current.build();
             if(startElement == null) {
                 startElement = currentListElement;
@@ -30,4 +36,8 @@ public class TreeBuilder {
         }
         return new OrderTree(startElement);
     }
+
+
+
+
 }

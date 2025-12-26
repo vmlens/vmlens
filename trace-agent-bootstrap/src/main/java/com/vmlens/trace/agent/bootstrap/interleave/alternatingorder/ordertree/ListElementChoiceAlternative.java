@@ -1,10 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
-public class ListElementChoiceAlternative  implements OrderTreeNode {
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.cycle.ForEachApply;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.cycle.NodeWithCycles;
 
-    private final OrderAlternative firstAlternative;
-    private final OrderAlternative secondAlternative;
-
+public class ListElementChoiceAlternative extends NodeWithCycles   {
 
     // only one is filled, the other is null
     private ListElementChoiceAlternative next;
@@ -12,8 +11,7 @@ public class ListElementChoiceAlternative  implements OrderTreeNode {
 
     public ListElementChoiceAlternative(OrderAlternative firstAlternative,
                                         OrderAlternative secondAlternative) {
-        this.firstAlternative = firstAlternative;
-        this.secondAlternative = secondAlternative;
+        super(firstAlternative, secondAlternative);
     }
 
     public void setNext(ListElementChoiceAlternative next) {
@@ -24,19 +22,6 @@ public class ListElementChoiceAlternative  implements OrderTreeNode {
         this.choice = choice;
     }
 
-    @Override
-    public NextNodeAndProcessFlag nextAndAddToOrder(CreateOrderContext context, boolean takeFirstAlternative) {
-        boolean processFlag;
-        if(takeFirstAlternative) {
-            processFlag = firstAlternative.process(context);
-        } else {
-            processFlag = secondAlternative.process(context);
-        }
-        if(next != null) {
-            return new NextNodeAndProcessFlag(next,processFlag);
-        }
-        return new NextNodeAndProcessFlag(choice.getNextForAlternative(),processFlag);
-    }
 
     @Override
     public OrderTreeNode nextLeft() {
@@ -57,4 +42,17 @@ public class ListElementChoiceAlternative  implements OrderTreeNode {
         return firstAlternative.equals(other.secondAlternative) && secondAlternative.equals(other.firstAlternative);
     }
 
+    @Override
+    protected ForEachApply nextForEach() {
+        return next;
+    }
+
+    @Override
+    protected OrderTreeNode nextForAddOrder() {
+        if(next != null) {
+            return next;
+        }
+        return choice.getNextForAlternative();
+
+    }
 }

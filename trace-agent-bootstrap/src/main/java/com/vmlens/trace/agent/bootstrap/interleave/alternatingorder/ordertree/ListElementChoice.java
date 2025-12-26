@@ -1,15 +1,15 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.cycle.ForEachCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.ChoiceAlternative;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.EitherInChoiceAlternative;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.ListElement;
 
 public class ListElementChoice implements ListElement {
 
     private final ListElementChoiceAlternative firstAlternative;
     private final ListElementChoiceAlternative secondAlternative;
     // next can be null
-    private OrderTreeNode next;
+    private ListElement next;
 
     public ListElementChoice(ListElementChoiceAlternative firstAlternative, ListElementChoiceAlternative secondAlternative) {
         this.firstAlternative = firstAlternative;
@@ -93,5 +93,12 @@ public class ListElementChoice implements ListElement {
         return next;
     }
 
-
+    @Override
+    public void foreach(ForEachCallback callback) {
+        firstAlternative.foreach(callback);
+        secondAlternative.foreach(callback);
+        if(next != null) {
+            next.foreach(callback);
+        }
+    }
 }

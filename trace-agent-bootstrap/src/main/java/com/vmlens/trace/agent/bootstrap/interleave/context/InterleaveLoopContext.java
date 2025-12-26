@@ -15,7 +15,8 @@ public class InterleaveLoopContext {
     public InterleaveLoopContext(int maximumIterations,
                                  int maximumAlternatingOrders,
                                  int synchronizationActionsLoopThreshold,
-                                 int unsynchronizedOperationsLoopThreshold, InterleaveLoopMessageFactory loopMessageFactory) {
+                                 int unsynchronizedOperationsLoopThreshold,
+                                 InterleaveLoopMessageFactory loopMessageFactory) {
         this.maximumIterations = maximumIterations;
         this.maximumAlternatingOrders = maximumAlternatingOrders;
         this.synchronizationActionsLoopThreshold = synchronizationActionsLoopThreshold;

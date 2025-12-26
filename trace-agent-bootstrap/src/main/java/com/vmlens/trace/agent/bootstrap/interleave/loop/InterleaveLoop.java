@@ -39,7 +39,7 @@ public class InterleaveLoop implements IteratorQueue {
     public static AlternatingOrderContainer createAlternatingOrderContainer(ThreadIndexToElementList<InterleaveAction> orig,
                                                                             InterleaveLoopContext interleaveLoopContext) {
         TLinkedList<TLinkableWrapper<InterleaveAction>> replaced = new DetectAndReplacePattern().replace(orig);
-         return new AlternatingOrderContainerFactory(interleaveLoopContext).create(replaced, interleaveLoopContext);
+         return new AlternatingOrderContainerFactory(interleaveLoopContext).create(replaced);
     }
 
     // Visible for Test

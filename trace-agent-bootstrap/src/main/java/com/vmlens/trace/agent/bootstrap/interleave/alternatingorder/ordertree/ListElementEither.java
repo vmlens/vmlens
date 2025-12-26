@@ -1,29 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.ListElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.cycle.ForEachApply;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.cycle.NodeWithCycles;
 
-public class ListElementEither implements ListElement {
+public class ListElementEither extends NodeWithCycles implements ListElement {
 
-    private final OrderAlternative firstAlternative;
-    private final OrderAlternative secondAlternative;
     // next can be null
-    private OrderTreeNode next;
+    private ListElement next;
 
     public ListElementEither(OrderAlternative firstAlternative,
                              OrderAlternative secondAlternative) {
-        this.firstAlternative = firstAlternative;
-        this.secondAlternative = secondAlternative;
-    }
-
-    @Override
-    public NextNodeAndProcessFlag nextAndAddToOrder(CreateOrderContext context, boolean takeFirstAlternative) {
-        boolean processFlag;
-        if(takeFirstAlternative) {
-            processFlag = firstAlternative.process(context);
-        } else {
-            processFlag = secondAlternative.process(context);
-        }
-        return new NextNodeAndProcessFlag(next,processFlag);
+        super(firstAlternative, secondAlternative);
     }
 
     @Override
@@ -50,7 +37,6 @@ public class ListElementEither implements ListElement {
         return secondAlternative;
     }
 
-
     public boolean hasSameOrder(OrderTreeNode otherNode) {
         if(! (otherNode instanceof ListElementEither)) {
             return false;
@@ -64,5 +50,13 @@ public class ListElementEither implements ListElement {
         return firstAlternative.equals(other.secondAlternative) && secondAlternative.equals(other.firstAlternative);
     }
 
+    @Override
+    protected ForEachApply nextForEach() {
+        return next;
+    }
 
+    @Override
+    protected OrderTreeNode nextForAddOrder() {
+        return next;
+    }
 }
