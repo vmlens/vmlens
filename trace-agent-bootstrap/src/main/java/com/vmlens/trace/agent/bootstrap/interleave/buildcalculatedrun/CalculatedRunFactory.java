@@ -19,18 +19,20 @@ public class CalculatedRunFactory {
     private final CycleDetectionAdapter cycleDetectionAdapter;
     private final TwoEdgesCycleFilter twoEdgesCycleFilter = new TwoEdgesCycleFilter();
     private final THashSet<Pair<LeftBeforeRight, LeftBeforeRight>> alreadyProcessed = new THashSet<>();
+    private OrderTree orderTree;
 
     public CalculatedRunFactory(OrderArrayListFactory orderArrayListFactory,
-                                ThreadIndexToElementList<Position> actualRun) {
+                                ThreadIndexToElementList<Position> actualRun,
+                                OrderTree orderTree) {
         this.orderArrayListFactory = orderArrayListFactory;
         this.cycleDetectionAdapter =  new CycleDetectionAdapter(new CalculatedRunBuilder(actualRun));
+        this.orderTree = orderTree;
     }
 
     /**
      * can return null
      */
-    public CalculatedRun create(OrderTree orderTree,
-                                PermutationIterator permutationIterator) {
+    public CalculatedRun create(PermutationIterator permutationIterator) {
         OrderArrayList orderArrayList = orderArrayListFactory.create(orderTree.createIteratorAndResetOrderCycles(), permutationIterator);
         if(orderArrayList == null) {
            return null;
@@ -51,6 +53,10 @@ public class CalculatedRunFactory {
                     index++;
                 }
                 orderTree.avoidCycles(array);
+            }
+            if(orderTree.length() >= 10) {
+                orderTree = orderTree.removeCycles();
+                permutationIterator.setNewLength(orderTree.length());
             }
 
             return null;

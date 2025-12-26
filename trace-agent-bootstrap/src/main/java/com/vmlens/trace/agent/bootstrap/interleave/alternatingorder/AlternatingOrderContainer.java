@@ -44,7 +44,8 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
 
         public AlternatingOrderContainerIterator() {
             this.permutationIterator = new PermutationIterator(orderTree.length());
-            this.calculatedRunFactory = new CalculatedRunFactory(new OrderArrayListFactory(fixedOrderArray),actualRun);
+            this.calculatedRunFactory = new CalculatedRunFactory(new OrderArrayListFactory(fixedOrderArray),
+                    actualRun,orderTree);
         }
 
         @Override
@@ -68,7 +69,7 @@ public class AlternatingOrderContainer implements Iterable<CalculatedRun> {
          */
         @Override
         public CalculatedRun next() {
-            return calculatedRunFactory.create(orderTree,permutationIterator);
+            return calculatedRunFactory.create(permutationIterator);
         }
 
     }

@@ -101,4 +101,14 @@ public class ListElementChoice implements ListElement {
             next.foreach(callback);
         }
     }
+
+    @Override
+    public boolean removeBecauseOfCycle() {
+        return false;
+    }
+
+    @Override
+    public ListElement getNextListElement() {
+        return next;
+    }
 }

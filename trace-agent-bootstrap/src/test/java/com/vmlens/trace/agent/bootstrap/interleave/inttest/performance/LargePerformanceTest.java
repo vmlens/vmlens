@@ -39,17 +39,16 @@ public class LargePerformanceTest {
         assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
 
-    @Ignore
+
+
     @Test
     public void testH2PerformanceProblem() {
-            System.out.println("1");
-            runOneH2(new InterleaveActionH2_1());
-            System.out.println("2");
-           // runOneH2(new InterleaveActionH2_2());
-            System.out.println("3");
-           // runOneH2(new InterleaveActionH2_3());
-            System.out.println("4");
-            runOneH2(new InterleaveActionH2_4());
+        long start = System.currentTimeMillis();
+        runOneH2(new InterleaveActionH2_1());
+        runOneH2(new InterleaveActionH2_2());
+        runOneH2(new InterleaveActionH2_3());
+        runOneH2(new InterleaveActionH2_4());
+        assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
 
     private void runOneH2(AbstractInterleaveActionBuilder abstractInterleaveActionBuilder) {
@@ -78,7 +77,7 @@ public class LargePerformanceTest {
         if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
             System.out.println("took " + (System.currentTimeMillis() - start)); 
         }
-        //assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
+        assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
 
     @Test

@@ -5,5 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.cy
 public interface ListElement extends OrderTreeNode , ForEachApply {
 
     void setNext(ListElement next);
+    ListElement getNextListElement();
+    boolean removeBecauseOfCycle();
 
 }

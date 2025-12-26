@@ -22,6 +22,8 @@ public class ListElementEither extends NodeWithCycles implements ListElement {
         this.next = next;
     }
 
+
+
     // to test the builder
     public OrderTreeNode next() {
         return next;
@@ -59,4 +61,10 @@ public class ListElementEither extends NodeWithCycles implements ListElement {
     protected OrderTreeNode nextForAddOrder() {
         return next;
     }
+
+    @Override
+    public ListElement getNextListElement() {
+        return next;
+    }
+
 }

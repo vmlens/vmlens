@@ -68,4 +68,24 @@ public class OrderTree {
         start.foreach(new ForEachCallback(array));
     }
 
+    public OrderTree removeCycles() {
+        ListElement newStart = null;
+        ListElement previous = null;
+        ListElement current = start;
+        while(current != null) {
+            if( ! current.removeBecauseOfCycle()) {
+                if(newStart == null) {
+                    newStart = current;
+                }
+                if(previous!= null) {
+                    previous.setNext(current);
+                }
+                previous = current;
+            }
+            current = current.getNextListElement();
+        }
+        previous.setNext(null);
+        return new OrderTree(newStart);
+    }
+
 }

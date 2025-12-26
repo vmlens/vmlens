@@ -72,12 +72,8 @@ public abstract class NodeWithCycles implements ForEachApply , OrderTreeNode {
             nextForEach().foreach(callback);
         }
     }
-
-
-
     protected abstract ForEachApply nextForEach();
     protected abstract OrderTreeNode nextForAddOrder();
-
 
     private void addToList(CycleAdapter cycleAdapter) {
         if(cycleAdapterList == null) {
@@ -87,5 +83,8 @@ public abstract class NodeWithCycles implements ForEachApply , OrderTreeNode {
         }
     }
 
+    public boolean removeBecauseOfCycle() {
+        return cycleAdapterList != null;
+    }
 
 }
