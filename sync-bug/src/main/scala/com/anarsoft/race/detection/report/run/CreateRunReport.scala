@@ -17,7 +17,7 @@ import scala.collection.mutable.ArrayBuffer
 
 class CreateRunReport {
 
-  /*
+  /**
    *  consists of the following steps:
    * 1) setObjectHashCodeMap
    * 2) filter

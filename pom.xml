@@ -76,6 +76,11 @@
                 <version>1.5.2</version>
             </dependency>
             <dependency>
+                <groupId>org.jgrapht</groupId>
+                <artifactId>jgrapht-io</artifactId>
+                <version>1.5.2</version>
+            </dependency>
+            <dependency>
                 <groupId>com.samskivert</groupId>
                 <artifactId>jmustache</artifactId>
                 <version>1.16</version>

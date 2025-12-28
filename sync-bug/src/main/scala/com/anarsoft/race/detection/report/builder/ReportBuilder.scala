@@ -1,10 +1,9 @@
 package com.anarsoft.race.detection.report.builder
 
-import com.anarsoft.race.detection.loopresult.LoopResult
 import com.anarsoft.race.detection.report.ReportLoopData
 import com.anarsoft.race.detection.report.description.DescriptionContext
 import com.anarsoft.race.detection.report.element.{StacktraceLeaf, TestResult}
-import com.anarsoft.race.detection.report.run.CreateRunReport
+import com.anarsoft.race.detection.report.run.{CreateDominatorTreeReport, CreateRunReport}
 import com.vmlens.report.ResultForVerify
 import com.vmlens.report.createreport.CreateHtmlReport
 import com.vmlens.report.overview.{UITestLoop, UITestLoopAndWarning}
@@ -18,7 +17,7 @@ class ReportBuilder(val reportLoopDataList : List[ReportLoopData],
                     val descriptionContext : DescriptionContext,
                     val reportDir : Path)  {
 
-  /*
+  /**
    * create the overview report
    * delegates the processing of the run to CreateRunReport
    */
@@ -46,15 +45,14 @@ class ReportBuilder(val reportLoopDataList : List[ReportLoopData],
         resultForVerify.setDataRaces(loop.loopId,loop.dataRaceCount);
       }
     }
-
-
+    
     createHtmlReport.createOverview(uiTestLoopAndWarnings);
 
     for (loop <- reportLoopDataList) {
       new CreateRunReport().createReport(loop,descriptionContext,stacktraceToLink,createHtmlReport)
+      new CreateDominatorTreeReport().createReport(loop, descriptionContext, reportDir)
     }
     
-
     resultForVerify;
   }
 

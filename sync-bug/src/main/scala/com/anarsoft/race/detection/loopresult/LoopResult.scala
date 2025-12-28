@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.loopresult
 
+import com.anarsoft.race.detection.dominatortree.DominatorTree
 import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.rundata.RunResult
 import com.anarsoft.race.detection.warning.Warning
@@ -14,6 +15,9 @@ trait LoopResult  {
   def warningIdList: Set[Warning];
   def add(runResult : RunResult) : Unit;
   def count : Int;
+  
+  def setDominatorTree(tree : DominatorTree) : Unit;
+  def dominatorTree : Option[DominatorTree];
 
 }
 

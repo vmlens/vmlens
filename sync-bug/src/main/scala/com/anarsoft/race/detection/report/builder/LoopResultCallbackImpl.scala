@@ -37,9 +37,22 @@ class LoopResultCallbackImpl extends LoopResultCallback {
       for(warning <-  runResult.warningIdList) {
         warning.addToNeedsDescription(descriptionBuilder)
       }
-      
+
+      runResult.dominatorTree.foreach( dom => {
+        val iter =  dom.graph.vertexSet.iterator();
+        while(iter.hasNext){
+          iter.next().addToNeedsDescription(descriptionBuilder)
+        }
+      } )
+
+
       reportLoopDataList.append(new ReportLoopData(runResult.loopId, 
-        runResult.isFailure, runResult.dataRaceCount, runResult.warningIdList, runResult.count + 1, run.toList));
+        runResult.isFailure, 
+        runResult.dataRaceCount, 
+        runResult.warningIdList, 
+        runResult.count + 1, 
+        run.toList,
+        runResult.dominatorTree));
       
     }
     
@@ -79,10 +92,4 @@ class LoopResultCallbackImpl extends LoopResultCallback {
     }
   }
 
-}
-
-object LoopResultCallbackImpl {
-
-  
-  
 }

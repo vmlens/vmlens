@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.loopresult
 
+import com.anarsoft.race.detection.dominatortree.DominatorTree
 import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.rundata.RunResult
 import com.anarsoft.race.detection.warning.Warning
@@ -11,6 +12,8 @@ class LoopResultSingle(val loopId : Int,
                        var count : Int,
                        val allWarnings :  mutable.HashSet[Warning]) extends LoopResult {
 
+  var dominatorTree : Option[DominatorTree] = None;
+  
   override def foreach(f: EventForReportElement => Unit): Unit = {
     runResult.foreach(f)
   }
@@ -38,6 +41,12 @@ class LoopResultSingle(val loopId : Int,
     }
     allWarnings.addAll(newRunResult.warningIdList);
   }
+
+  override def setDominatorTree(tree: DominatorTree): Unit = {
+    dominatorTree = Some(tree)
+  }
+
+
 }
 
 object LoopResultSingle {

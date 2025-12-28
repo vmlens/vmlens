@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.process.main
 
+import com.anarsoft.race.detection.createdominatortree.CreateDominatorTreeFromRunData
 import com.anarsoft.race.detection.rundata.{RunData, RunResultImpl}
 import com.anarsoft.race.detection.loopresult.LoopResultCollection
 import com.vmlens.report.ResultForVerify
@@ -13,9 +14,10 @@ class MainProcess(val loadDescription: LoadDescription,
                   val reportDir : Path) {
   def process() : ResultForVerify = {
 
-    val loopResultCallback = new LoopResultCallbackImpl(); 
+    val loopResultCallback = new LoopResultCallbackImpl();
+    val createDominatorTree = new CreateDominatorTreeFromRunData();
     
-   val loopIdToResult = new ProcessEvents(loadRuns, processRun).process();
+   val loopIdToResult = new ProcessEvents(loadRuns, processRun,createDominatorTree).process();
     for (elem <- loopIdToResult) {
       loopResultCallback.addRunResult(elem)
     }
