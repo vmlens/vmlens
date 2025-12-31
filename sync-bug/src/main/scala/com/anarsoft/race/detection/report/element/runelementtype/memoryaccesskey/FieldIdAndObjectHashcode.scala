@@ -3,7 +3,8 @@ package com.anarsoft.race.detection.report.element.runelementtype.memoryaccesske
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
 
 
-class FieldIdAndObjectHashcode(val fieldId: Int,val objectHashCode: Long) extends MemoryAccessKey {
+class FieldIdAndObjectHashcode(val fieldId: Int,val objectHashCode: Long) 
+  extends GenericMemoryAccessKey[FieldIdAndObjectHashcode] {
   override def asString(context: DescriptionContext): String = context.fieldName(fieldId)
 
   override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {
@@ -26,5 +27,13 @@ class FieldIdAndObjectHashcode(val fieldId: Int,val objectHashCode: Long) extend
   override def hashCode(): Int = {
     val state = Seq(fieldId, objectHashCode)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
+  override def compare(that: FieldIdAndObjectHashcode): Int = {
+    if (objectHashCode != that.objectHashCode) {
+      objectHashCode.compare(that.objectHashCode)
+    } else {
+      fieldId.compare(that.fieldId)
+    }
   }
 }

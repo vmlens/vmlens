@@ -30,8 +30,9 @@ public class VolatileStaticFieldAccessEvent extends VolatileFieldAccessEventStat
         this.operation = operation;
     }
 
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.dominatorTreeCount();
     }
 
     public void setLoopId(int loopId) {

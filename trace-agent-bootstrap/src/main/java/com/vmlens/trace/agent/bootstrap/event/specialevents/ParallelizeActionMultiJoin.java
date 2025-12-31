@@ -62,7 +62,7 @@ public class ParallelizeActionMultiJoin implements EitherPluginEventOnlyOrInterl
             threadJoinedEvent.setLoopId(loopId);
             threadJoinedEvent.setRunId(runId);
             threadJoinedEvent.setRunPosition(positionInRun);
-            threadJoinedEvent.setMethodCounter(threadLocalWhenInTestForParallelize);
+            threadJoinedEvent.setCounter(threadLocalWhenInTestForParallelize);
             threadJoinedEvent.setBytecodePosition(position);
             threadJoinedEvent.setMethodId(inMethodId);
             threadJoinedEvent.setJoinedThreadIndex(index);

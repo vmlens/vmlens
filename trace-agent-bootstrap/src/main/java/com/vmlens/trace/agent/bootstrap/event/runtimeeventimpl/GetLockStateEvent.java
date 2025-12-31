@@ -43,9 +43,11 @@ public class GetLockStateEvent extends GetLockStateEventGen implements NoThreadO
     }
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.dominatorTreeCount();
     }
+
 
     @Override
     public void setLoopId(int loopId) {

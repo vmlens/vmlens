@@ -10,8 +10,8 @@ import com.anarsoft.race.detection.event.interleave._;
 import com.anarsoft.race.detection.event.load._;
 
 class MethodDeSerializer extends DeserializeStrategy[LoadedMethodEvent] {
-   val eventArraySize : Int = 21
-   val blockSize : Int =  21 * 10000;
+   val eventArraySize : Int = 25
+   val blockSize : Int =  25 * 10000;
   
 
     def deSerializeJavaEvent(buffer : DataInputStream) : LoadedMethodEvent = {

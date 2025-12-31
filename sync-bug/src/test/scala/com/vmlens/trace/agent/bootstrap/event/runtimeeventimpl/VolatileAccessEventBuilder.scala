@@ -66,7 +66,8 @@ class VolatileAccessEventBuilder {
       volatileAccessEvent.objectHashCode(),
       volatileAccessEvent.loopId(),
       volatileAccessEvent.runId(),
-      volatileAccessEvent.runPosition()
+      volatileAccessEvent.runPosition(),
+      0
     );
   }
 

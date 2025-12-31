@@ -8,8 +8,11 @@ import org.jgrapht.graph.DefaultEdge
 
 import scala.collection.mutable
 
-trait CreateDominatorTreeEvent extends WithMethodCounter {
-  
+trait CreateDominatorTreeEvent {
+
+  def threadIndex: Int;
+  def dominatorTreeCounter  : Int;
+
   def add(stack : CreateGraphStack, 
           alreadyAdded : mutable.HashSet[DominatorTreeVertex],
           graph : Graph[DominatorTreeVertex,DefaultEdge]) : Unit;

@@ -61,8 +61,9 @@ public class ConditionWaitEnterEvent extends ConditionWaitEnterEventGen implemen
     }
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.incrementDominatorTreeAndGetMiddle();
     }
 
     /**

@@ -25,8 +25,9 @@ public class LockEnterEvent extends LockEnterEventGen implements LockEvent {
         this.threadIndex = threadIndex;
     }
 
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.incrementDominatorTreeAndGetMiddle();
     }
 
     public void setLoopId(int loopId) {

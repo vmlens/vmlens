@@ -40,9 +40,9 @@ class DataRaceIntTest extends AnyFlatSpec with Matchers {
     val objectHashCode = 0L;
 
     val read = new FieldAccessEventGen(0, fieldId, methodCounter,
-      MemoryAccessType.IS_READ, methodId, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 0);
+      MemoryAccessType.IS_READ, methodId, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 0, 0);
     val write = new FieldAccessEventGen(1, fieldId, methodCounter,
-      MemoryAccessType.IS_WRITE, methodId, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 3);
+      MemoryAccessType.IS_WRITE, methodId, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 3 , 0);
 
     val list = new util.LinkedList[NonVolatileFieldAccessEvent]();
     list.add(read)

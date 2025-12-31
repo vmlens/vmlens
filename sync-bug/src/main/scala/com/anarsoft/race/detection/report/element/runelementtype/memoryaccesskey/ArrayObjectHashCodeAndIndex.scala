@@ -2,7 +2,8 @@ package com.anarsoft.race.detection.report.element.runelementtype.memoryaccesske
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback};
 
-class ArrayObjectHashCodeAndIndex( val objectHashCode: Long, val arrayIndex: Int) extends MemoryAccessKey {
+class ArrayObjectHashCodeAndIndex(val objectHashCode: Long, val arrayIndex: Int) 
+  extends GenericMemoryAccessKey[ArrayObjectHashCodeAndIndex] {
   
   override def asString(context: DescriptionContext): String = " array[" + arrayIndex + "]"
 
@@ -10,8 +11,7 @@ class ArrayObjectHashCodeAndIndex( val objectHashCode: Long, val arrayIndex: Int
   }
 
   override def objectHashCodeOption: Option[Long] = Some(objectHashCode);
-
-
+  
   private def canEqual(other: Any): Boolean = other.isInstanceOf[ArrayObjectHashCodeAndIndex]
   
   override def equals(other: Any): Boolean = other match {
@@ -26,4 +26,13 @@ class ArrayObjectHashCodeAndIndex( val objectHashCode: Long, val arrayIndex: Int
     val state = Seq(objectHashCode, arrayIndex)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
+  
+  override def compare(that: ArrayObjectHashCodeAndIndex): Int = {
+    if(objectHashCode != that.objectHashCode) {
+      objectHashCode.compare(that.objectHashCode)
+    } else {
+      arrayIndex.compare(that.arrayIndex)
+    }
+  }
+  
 }

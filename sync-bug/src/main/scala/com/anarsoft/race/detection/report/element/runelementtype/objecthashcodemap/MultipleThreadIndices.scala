@@ -6,4 +6,6 @@ class MultipleThreadIndices(val code: Int) extends ThreadIndices {
   override def asUiString: String = "" + code
 
   def isSingleThreaded: Boolean = false;
+
+  def id : Option[Int] = Some(code);
 }

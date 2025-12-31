@@ -24,7 +24,8 @@ class VolatileFieldAccessTestBuilder(val fieldId  : Int, val objectHashCode  : L
       objectHashCode,
       loopId,
        runId,
-      pos.runPosition
+      pos.runPosition,
+      0
     )
   }
 

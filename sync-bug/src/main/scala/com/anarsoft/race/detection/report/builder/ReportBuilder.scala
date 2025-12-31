@@ -50,7 +50,7 @@ class ReportBuilder(val reportLoopDataList : List[ReportLoopData],
 
     for (loop <- reportLoopDataList) {
       new CreateRunReport().createReport(loop,descriptionContext,stacktraceToLink,createHtmlReport)
-      new CreateDominatorTreeReport().createReport(loop, descriptionContext, reportDir)
+      new CreateDominatorTreeReport().createReport(loop, descriptionContext, createHtmlReport)
     }
     
     resultForVerify;

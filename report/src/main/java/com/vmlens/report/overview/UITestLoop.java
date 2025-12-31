@@ -7,16 +7,17 @@ public class UITestLoop implements UITestLoopOrWarning  {
     private final String resultText;
     private int index;
     private String link;
+    private String dominatorTreeLink;
 
     public UITestLoop(String name, int count, String resultText) {
         this.name = name;
         this.count = count;
         this.resultText = resultText;
-   
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setLinks(String runLink, String dominatorTreeLink) {
+        this.link = runLink;
+        this.dominatorTreeLink = dominatorTreeLink;
     }
 
     public void setIndex(int index) {
@@ -43,9 +44,11 @@ public class UITestLoop implements UITestLoopOrWarning  {
         return link;
     }
 
-
     public boolean isWarning() {
         return false;
     }
 
+    public String dominatorTreeLink() {
+        return dominatorTreeLink;
+    }
 }

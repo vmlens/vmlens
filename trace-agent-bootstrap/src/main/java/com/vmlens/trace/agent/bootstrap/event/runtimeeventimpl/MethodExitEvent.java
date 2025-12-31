@@ -18,8 +18,9 @@ public class MethodExitEvent extends MethodExitEventGen implements PluginEventOn
         return threadIndex;
     }
 
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.incrementAndGetMethodCount();
+        this.dominatorTreeCounter = perThreadCounter.incrementDominatorTreeAndGetMiddle();
     }
 
     public void setLoopId(int loopId) {

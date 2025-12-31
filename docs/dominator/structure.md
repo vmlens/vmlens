@@ -31,3 +31,11 @@ def process() : Seq[LoopResult] = {
 loopResultCollection.put(dominator tree)
 
 first step based on stacktrace tree
+
+# Vertex Types
+
+method enter/exit
+monitor or atomiclock enter/exit
+Lock
+Volatile or atomic non blocking
+root

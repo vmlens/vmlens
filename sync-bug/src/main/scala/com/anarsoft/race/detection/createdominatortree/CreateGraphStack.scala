@@ -1,7 +1,9 @@
 package com.anarsoft.race.detection.createdominatortree
 
-import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, InternalNode, VertexMethod, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, InternalNode, LeafNode, VertexAtomicNonBlockingOrVolatile, VertexMethod, VertexRoot}
+import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.MemoryAccessKey
 import com.anarsoft.race.detection.util.Stack
+import com.vmlens.report.dominatortree.UIStateElementSortKey
 import org.jgrapht.Graph
 import org.jgrapht.graph.DefaultEdge
 
@@ -30,7 +32,8 @@ class CreateGraphStack(val root :  VertexRoot, val threadIndex : Int) {
     }
   }
   
-  def addToGraph(graph : Graph[DominatorTreeVertex,DefaultEdge], alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
+  def addToGraph(graph : Graph[DominatorTreeVertex,DefaultEdge], 
+                 alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
     var previous : InternalNode = root;
     for(elem <- stack){
       if(! alreadyAdded.contains(elem)) {
@@ -42,6 +45,20 @@ class CreateGraphStack(val root :  VertexRoot, val threadIndex : Int) {
     } 
   }
   
+  def addLeaf(memoryAccessKey: MemoryAccessKey,
+               operationSet : Set[Int],
+              sortKey : UIStateElementSortKey,
+              graph : Graph[DominatorTreeVertex,DefaultEdge]) : Unit = {
+    if (stack.isEmpty) {
+      val leaf = new VertexAtomicNonBlockingOrVolatile(memoryAccessKey, operationSet,sortKey);
+      graph.addVertex(leaf)
+      graph.addEdge(root, leaf);
+    } else {
+      val leaf = new VertexAtomicNonBlockingOrVolatile(memoryAccessKey, operationSet,  sortKey);
+      graph.addVertex(leaf)
+      graph.addEdge(stack.top , leaf);
+    }
+  }
   
 
 }

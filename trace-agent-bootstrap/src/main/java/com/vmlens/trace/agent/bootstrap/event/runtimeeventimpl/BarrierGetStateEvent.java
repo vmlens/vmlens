@@ -48,8 +48,9 @@ public class BarrierGetStateEvent extends BarrierGetStateEventGen implements NoT
     }
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.dominatorTreeCount();
     }
 
     @Override

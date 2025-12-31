@@ -1,0 +1,44 @@
+{{>header.mustache}}
+
+<!-- run.mustache -->
+
+<div class="container-fluid">
+    <div class="row">
+        <table class="table table-striped text-start">
+            <thead class="sticky-head">
+                <tr>
+                    <th colspan="2">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span><a href="index.html">Overview</a>/{{runName}}</span>
+                            <span>State &amp; Locks</span>
+                            <a href="https://vmlens.com/docs/report/executiontrace/" title="Help">Help</a>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Method or Lock</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            {{#elements}}
+                <tr>
+                    <td {{{css}}}>{{label}}</td>
+                    <td>
+                        <ul>
+                        {{#state}}
+                         <li>{{label}}{{idLabel}}</li>
+                        {{/state}}
+                        </ul>
+
+                    </td>
+                </tr>
+            {{/elements}}
+            <tfoot>
+                <tr>
+                    <td colspan="5" style="text-align: right;"><a href="https://vmlens.com/docs/report/executiontrace/">Help</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{{>footer.mustache}}

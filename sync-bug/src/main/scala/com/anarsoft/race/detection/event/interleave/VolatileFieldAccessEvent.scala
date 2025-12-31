@@ -1,20 +1,26 @@
 package com.anarsoft.race.detection.event.interleave
 
+import com.anarsoft.race.detection.createdominatortreeevent.EventForSummary
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.EventWithReadWrite
-import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.FieldIdAndObjectHashcode
+import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.{FieldId, FieldIdAndObjectHashcode}
 import com.anarsoft.race.detection.report.element.runelementtype.ReportOperation
+import com.anarsoft.race.detection.report.element.runelementtype.objecthashcodemap.ObjectHashCodeMap
 import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationVolatileAccess
+import com.vmlens.report.dominatortree.{SortKeyObjectField, UIStateElementSortKey}
 
 trait VolatileFieldAccessEvent extends EventWithReadWrite[VolatileFieldAccessEvent]
   with SyncActionEventWithCompareType[VolatileFieldAccessEvent]
   with WithSetStacktraceNode
-  with LoadedInterleaveActionEvent {
+  with LoadedInterleaveActionEvent
+  with EventForSummary[FieldIdAndObjectHashcode] {
 
+  var objectHashCodeMap : ObjectHashCodeMap = null;
+  
   def fieldId: Int
   def objectHashCode: Long
-
+  
   override def addToContext(context: LoadedInterleaveActionContext): Unit = {
     context.volatileAccessEvents.add(this);
   }
@@ -31,4 +37,16 @@ trait VolatileFieldAccessEvent extends EventWithReadWrite[VolatileFieldAccessEve
     new OperationVolatileAccess(new FieldIdAndObjectHashcode(fieldId, objectHashCode),operation);
   }
 
+  override def memoryAccessKey: FieldIdAndObjectHashcode = {
+    new FieldIdAndObjectHashcode(fieldId, objectHashCode);
+  }
+
+  override def setObjectHashCodeMap(objectHashCodeMap: ObjectHashCodeMap): Unit = {
+    this.objectHashCodeMap = objectHashCodeMap;
+    objectHashCodeMap.add(objectHashCode, threadIndex);
+  }
+
+  override def createUIStateElementSortKey(): Option[UIStateElementSortKey] = {
+    objectHashCodeMap.id(objectHashCode).map(  id => new SortKeyObjectField(id,fieldId)  )
+  }
 }

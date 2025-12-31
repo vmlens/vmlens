@@ -10,7 +10,7 @@ import com.anarsoft.race.detection.sortutil.EventContainer
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
 import com.anarsoft.race.detection.util.EventArray
 
-class GroupInterleaveElementSyncActionImpl[EVENT <: SyncActionEventWithCompareType[EVENT]
+abstract class GroupInterleaveElementSyncActionImpl[EVENT <: SyncActionEventWithCompareType[EVENT]
   with WithSetStacktraceNode]
     (val eventArray: EventArray[EVENT], val createContainer: (EVENT) => EventContainer[EVENT])
   extends GroupInterleaveElement {
@@ -26,9 +26,7 @@ class GroupInterleaveElementSyncActionImpl[EVENT <: SyncActionEventWithCompareTy
   override def addToPartialOrderBuilder(partialOrderBuilder: BuildPartialOrderContext): Unit = {
     new AddToPartialOrderBuilder(createContainer).process(eventArray, partialOrderBuilder);
   }
-
-
-
+  
   override def foreach(f: EventForReportElement => Unit): Unit = {
     eventArray.foreach(f);
   }

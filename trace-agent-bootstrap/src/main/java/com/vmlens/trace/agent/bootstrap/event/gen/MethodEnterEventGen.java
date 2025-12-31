@@ -12,6 +12,7 @@ public class MethodEnterEventGen  {
     protected int     methodCounter;
     protected int     loopId;
     protected int     runId;
+    protected int     dominatorTreeCounter;
 
 @Override
 public boolean equals(Object o) {
@@ -24,6 +25,7 @@ public boolean equals(Object o) {
     if ( methodCounter != that.methodCounter) return false;
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
+    if ( dominatorTreeCounter != that.dominatorTreeCounter) return false;
     return true;
 }
 
@@ -35,6 +37,7 @@ public String toString() {
     "methodCounter=" + methodCounter +
     "loopId=" + loopId +
     "runId=" + runId +
+    "dominatorTreeCounter=" + dominatorTreeCounter +
     '}';
 }
 
@@ -51,6 +54,7 @@ buffer.write( (byte)  21 );
      buffer.writeInt( methodCounter ); 
      buffer.writeInt( loopId ); 
      buffer.writeInt( runId ); 
+     buffer.writeInt( dominatorTreeCounter ); 
 }
 
 

@@ -19,6 +19,7 @@ class LockExitEventGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
+ ,  val dominatorTreeCounter  : Int  
 )    extends LockExitEvent
 {
 override def toString : String = {
@@ -32,6 +33,7 @@ override def toString : String = {
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
+  text = text + ", dominatorTreeCounter:" +  dominatorTreeCounter 
  text;
 }
 
@@ -84,6 +86,11 @@ override def equals(other: Any) : Boolean = {
                false;
              }
              else
+             if( dominatorTreeCounter != that.dominatorTreeCounter )
+             {
+               false;
+             }
+             else
              true;
         }
       case _ => false
@@ -103,6 +110,8 @@ object  LockExitEventGen
             data.readInt()
           ,
             data.readLong()
+          ,
+            data.readInt()
           ,
             data.readInt()
           ,

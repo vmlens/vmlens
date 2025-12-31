@@ -16,6 +16,7 @@ public class AtomicReadWriteLockExitEventGen  {
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
+    protected int     dominatorTreeCounter;
     protected int     atomicMethodId;
 
 @Override
@@ -33,6 +34,7 @@ public boolean equals(Object o) {
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
+    if ( dominatorTreeCounter != that.dominatorTreeCounter) return false;
     if ( atomicMethodId != that.atomicMethodId) return false;
     return true;
 }
@@ -49,6 +51,7 @@ public String toString() {
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
+    "dominatorTreeCounter=" + dominatorTreeCounter +
     "atomicMethodId=" + atomicMethodId +
     '}';
 }
@@ -70,6 +73,7 @@ buffer.write( (byte)  10 );
      buffer.writeInt( loopId ); 
      buffer.writeInt( runId ); 
      buffer.writeInt( runPosition ); 
+     buffer.writeInt( dominatorTreeCounter ); 
      buffer.writeInt( atomicMethodId ); 
 }
 

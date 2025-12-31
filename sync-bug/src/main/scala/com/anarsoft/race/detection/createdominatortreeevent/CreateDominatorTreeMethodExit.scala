@@ -12,7 +12,6 @@ trait CreateDominatorTreeMethodExit  extends CreateDominatorTreeEvent {
   override def add(stack: CreateGraphStack,
                    alreadyAdded: mutable.HashSet[DominatorTreeVertex],
                    graph: Graph[DominatorTreeVertex, DefaultEdge]): Unit = {
-    stack.addToGraph(graph, alreadyAdded);
     stack.methodExit()
   }
   

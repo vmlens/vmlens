@@ -24,6 +24,7 @@ class AtomicNonBlockingTestBuilder(val objectHashCode  : Long)
       loopId,
       runId,
       pos.runPosition,
+      0,
       atomicMethodId
     )
   }

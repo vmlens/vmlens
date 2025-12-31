@@ -6,4 +6,6 @@ trait ThreadIndices {
   def asUiString: String
   
   def isSingleThreaded : Boolean
+
+  def id: Option[Int];
 }

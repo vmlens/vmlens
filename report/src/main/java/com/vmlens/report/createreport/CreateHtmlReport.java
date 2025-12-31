@@ -1,5 +1,6 @@
 package com.vmlens.report.createreport;
 
+import com.vmlens.report.dominatortree.UIDominatorTreeElement;
 import com.vmlens.report.overview.UITestLoopAndWarning;
 import com.vmlens.report.overview.UITestLoopAndWarningComparator;
 import com.vmlens.report.overview.UITestLoopOrWarning;
@@ -37,7 +38,8 @@ public class CreateHtmlReport {
             loop.uiTestLoop().setIndex(index);
             index++;
             String fileName = "run" + loop.uiTestLoop().index() + HTML_FILE;
-            loop.setLink(fileName);
+            String fileNameDominatorTree = "state" + loop.uiTestLoop().index() + HTML_FILE;
+            loop.setLinks(fileName,fileNameDominatorTree);
             uiTestLoops.add(loop.uiTestLoop());
             uiTestLoops.addAll(loop.uiWarnings());
         }
@@ -63,7 +65,7 @@ public class CreateHtmlReport {
         summaryReport.createUISummary(uiRunElements,name, writer);
         writer.close();
     }
-
+    
     public String createStacktraceReport(List<UIStacktraceElement> stacktraceElements) throws IOException {
         CreateOneReport createOneReport = new CreateOneReport("stacktrace");
         String fileName = "stack" + stacktraceIndex + HTML_FILE;
@@ -73,4 +75,14 @@ public class CreateHtmlReport {
         stacktraceIndex++;
         return  fileName;
     }
+
+    public void createDominatorTreeReport(List<UIDominatorTreeElement> uiRunElements, String name, String fileName)
+            throws IOException {
+        CreateOneReport summaryReport = new CreateOneReport("dominatorTree");
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
+        summaryReport.createDominatorTree(uiRunElements,name, writer);
+        writer.close();
+    }
+    
+    
 }

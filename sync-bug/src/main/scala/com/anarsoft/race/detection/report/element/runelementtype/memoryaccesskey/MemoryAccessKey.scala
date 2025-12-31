@@ -4,7 +4,9 @@ import com.anarsoft.race.detection.report.description.{DescriptionContext, Needs
 
 
 trait MemoryAccessKey {
+  
   def asString(context: DescriptionContext): String
   def objectHashCodeOption : Option[Long]
   def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit
+  
 }

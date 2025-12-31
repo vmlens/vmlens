@@ -19,6 +19,7 @@ class ThreadStartEventGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
+ ,  val dominatorTreeCounter  : Int  
 )    extends ThreadStartEvent  
 {
 override def toString : String = {
@@ -32,6 +33,7 @@ override def toString : String = {
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
+  text = text + ", dominatorTreeCounter:" +  dominatorTreeCounter 
  text;
 }
 
@@ -84,6 +86,11 @@ override def equals(other: Any) : Boolean = {
                false;
              }
              else
+             if( dominatorTreeCounter != that.dominatorTreeCounter )
+             {
+               false;
+             }
+             else
              true;
         }
       case _ => false
@@ -98,6 +105,8 @@ object  ThreadStartEventGen
    {
      val result = new ThreadStartEventGen (
           
+            data.readInt()
+          ,
             data.readInt()
           ,
             data.readInt()

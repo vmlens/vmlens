@@ -93,6 +93,7 @@ object EventDesc extends GenericDesc {
   val messageId = new FieldDesc("messageId", intTyp)
   val messageParam = new FieldDesc("messageParam", intTyp)
   val eventType  = new FieldDesc("eventType", intTyp)
+  val dominatorTreeCounter = new FieldDesc("dominatorTreeCounter", intTyp)
 
   
   def plusInterleaveFields(fields: ArrayBuffer[FieldDesc]): ArrayBuffer[FieldDesc] = {
@@ -100,6 +101,7 @@ object EventDesc extends GenericDesc {
       clone.append(loopId);
       clone.append(runId);
       clone.append(runPosition);
+      clone.append(dominatorTreeCounter);
       clone;
     }
 

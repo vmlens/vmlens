@@ -14,9 +14,11 @@ class ReportLoopData(val loopId: Int,
                      val dominatorTree: Option[DominatorTree]) extends NeedsRunLink {
   
   var runLink : String = null;
+  var dominatorTreeLink : String = null;
 
-  override def setRunLink(link: String): Unit = {
-    runLink = link;
+  override def setLinks( linkRun: String, linkDominatorTree: String): Unit = {
+    runLink = linkRun;
+    dominatorTreeLink = linkDominatorTree;
   }
   
 }

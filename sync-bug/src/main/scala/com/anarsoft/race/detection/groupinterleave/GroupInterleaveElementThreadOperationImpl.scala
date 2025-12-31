@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.groupinterleave
 
+import com.anarsoft.race.detection.createdominatortreeevent.BuildDominatorTreeContext
 import com.anarsoft.race.detection.createlastthreadposition.{CreateLastThreadPosition, LastThreadPositionMap}
 import com.anarsoft.race.detection.createpartialorderthreadoperation.{AddToPartialOrderBuilder, ThreadOperation}
 import com.anarsoft.race.detection.event.interleave.{LockEnterEvent, LockEvent, LockExitEvent}
@@ -28,6 +29,10 @@ class GroupInterleaveElementThreadOperationImpl[EVENT <: ThreadOperation with Wi
 
   override def foreach(f: EventForReportElement => Unit): Unit = {
     eventArray.foreach(f);
+  }
+
+  override def addToBuildDominatorTreeContext(context: BuildDominatorTreeContext): Unit = {
+
   }
   
 }

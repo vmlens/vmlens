@@ -17,6 +17,10 @@ class ObjectHashCodeMap {
   
   
   def isSingleThreaded(objectHashCode: Long) : Boolean =  hashCodeToThreadIndices.get(objectHashCode).isSingleThreaded
+  
+  def id(objectHashCode: Long): Option[Int] = {
+    hashCodeToThreadIndices.get(objectHashCode).id;
+  }
 
   def newCode: Int = {
     maxCode += 1

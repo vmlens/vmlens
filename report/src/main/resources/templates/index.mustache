@@ -10,6 +10,7 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Count</th>
+                <th>State &amp; Locks</th>
                 <th>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span>Result</span>
@@ -22,7 +23,7 @@
             {{#isWarning}}
                 <tr>
                     <td></td>
-                    <td colspan="3">{{{text}}}</td>
+                    <td colspan="5">{{{text}}}</td>
                 </tr>
             {{/isWarning}}
             {{^isWarning}}
@@ -30,6 +31,7 @@
                 <td>{{index}}</td>
                 <td><a href="{{link}}">{{name}}</a></td>
                 <td>{{count}}</td>
+                <td><a href="{{dominatorTreeLink}}">State &amp; Locks</a></td>
                 <td>{{{resultText}}}</td>
             </tr>
             {{/isWarning}}

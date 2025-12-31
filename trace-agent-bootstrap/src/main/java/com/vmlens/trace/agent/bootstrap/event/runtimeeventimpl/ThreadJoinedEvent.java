@@ -26,8 +26,9 @@ public class ThreadJoinedEvent extends ThreadJoinedEventGen implements Interleav
         this.threadIndex = threadIndex;
     }
 
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.dominatorTreeCount();
     }
     public void setLoopId(int loopId) {
         this.loopId = loopId;

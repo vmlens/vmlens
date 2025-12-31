@@ -17,7 +17,8 @@ class LockEventTestBuilder(val objectHashCode  : Long) extends AbstractTestBuild
       methodId,
       loopId,
       runId,
-      pos.runPosition)
+      pos.runPosition,
+      0)
   }
 
 
@@ -32,7 +33,8 @@ class LockEventTestBuilder(val objectHashCode  : Long) extends AbstractTestBuild
       methodId,
       loopId,
       runId,
-      pos.runPosition)
+      pos.runPosition,
+      0)
   }
 
 
