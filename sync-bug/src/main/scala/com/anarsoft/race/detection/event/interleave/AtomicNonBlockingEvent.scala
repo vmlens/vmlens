@@ -6,6 +6,7 @@ import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.EventWithReadWrite
 import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.{AtomicMethodIdAndObjectHashcode, FieldIdAndObjectHashcode}
 import com.anarsoft.race.detection.report.element.runelementtype.ReportOperation
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.AtomicNonBlockingKey
 import com.anarsoft.race.detection.report.element.runelementtype.objecthashcodemap.ObjectHashCodeMap
 import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationVolatileAccess
 import com.vmlens.report.dominatortree.{SortKeyAtomicObject, SortKeyObjectField, UIStateElementSortKey}
@@ -15,7 +16,7 @@ trait AtomicNonBlockingEvent  extends EventWithReadWrite[AtomicNonBlockingEvent]
   with SyncActionEventWithCompareType[AtomicNonBlockingEvent]
   with WithSetStacktraceNode
   with LoadedInterleaveActionEvent
-  with EventForSummary[AtomicMethodIdAndObjectHashcode] {
+  with EventForSummary[AtomicNonBlockingKey] {
 
   var objectHashCodeMap: ObjectHashCodeMap = null;
   
@@ -34,8 +35,8 @@ trait AtomicNonBlockingEvent  extends EventWithReadWrite[AtomicNonBlockingEvent]
     new OperationVolatileAccess(new AtomicMethodIdAndObjectHashcode(atomicMethodId, objectHashCode),operation);
   }
 
-  override def memoryAccessKey: AtomicMethodIdAndObjectHashcode =
-    new AtomicMethodIdAndObjectHashcode(atomicMethodId, objectHashCode)
+  override def memoryAccessKey: AtomicNonBlockingKey =
+    new AtomicNonBlockingKey(atomicMethodId, objectHashCode)
 
   override def setObjectHashCodeMap(objectHashCodeMap: ObjectHashCodeMap): Unit = {
     this.objectHashCodeMap = objectHashCodeMap;

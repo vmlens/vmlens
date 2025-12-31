@@ -16,7 +16,7 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
-  override def methodName(key: Integer): String = {
+  override def methodName(key: Int): String = {
     containerMapCollection.methodNames.get(key).flatMap(  x => x.description )
       .map( x => createMethodString(x)) match {
       case None => {
@@ -26,7 +26,17 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
-  override def methodNameWithoutSource(key: Integer): String = {
+  override def classNameForMethodId(key: Int): String =  {
+    containerMapCollection.methodNames.get(key).flatMap(  x => x.description )
+      .map( x => createClassName(x)) match {
+      case None => {
+        notFound(key);
+      }
+      case Some(x) => x
+    }
+  }
+
+  override def methodNameWithoutSource(key: Int): String = {
     containerMapCollection.methodNames.get(key).flatMap(  x => x.description )
       .map( x =>  x._1.name().replace('/', '.') + "." + x._2.name() ) match {
       case None => {
@@ -36,7 +46,7 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
-  override def fieldName(key: Integer): String = {
+  override def fieldName(key: Int): String = {
     containerMapCollection.fieldNames.get(key).flatMap(  x => x.description )
       .map( x => x._1.name().replace('/','.') + "." + x._2.name() ) match {
       case None => {
@@ -46,7 +56,7 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
-  override def loopName(key: Integer): String =  {
+  override def loopName(key: Int): String =  {
     containerMapCollection.loopNames.get(key) match {
       case None => {
         notFound(key);
@@ -56,7 +66,7 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
-  override def reportAsSummaryThreshold(loopId: Integer): Int = {
+  override def reportAsSummaryThreshold(loopId: Int): Int = {
     containerMapCollection.loopNames.get(loopId) match {
       case None => {
         AllInterleavingsBuilder.REPORT_AS_SUMMARY_THRESHOLD;
@@ -66,6 +76,11 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
+  private def createClassName(tuple: Tuple2[ClassDescription, MethodDescription]): String = {
+    tuple._1.name().replace('/', '.') 
+  }
+  
+  
   /*
      * see java.lang.StackTraceElement
      */

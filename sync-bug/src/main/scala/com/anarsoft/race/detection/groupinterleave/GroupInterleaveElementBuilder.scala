@@ -5,6 +5,7 @@ import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey
 import com.anarsoft.race.detection.sortutil.lockcontainer.LockContainer
 import com.anarsoft.race.detection.sortutil.{EventContainer, EventWithReadWriteContainer, MonitorContainer}
 import com.anarsoft.race.detection.util.EventArray
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.AtomicNonBlockingKey
 
 import java.util
 import scala.collection.mutable.ArrayBuffer
@@ -16,7 +17,7 @@ class GroupInterleaveElementBuilder {
 
   def addAtomicNonBlockingEvents(list: util.LinkedList[AtomicNonBlockingEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionWithSummary[AtomicMethodIdAndObjectHashcode,AtomicNonBlockingEvent](
+      new GroupInterleaveElementSyncActionWithSummary[AtomicNonBlockingKey,AtomicNonBlockingEvent](
         EventArray[AtomicNonBlockingEvent](list),
         GroupInterleaveElementBuilder.create_container_atomic_non_blocking));
   }

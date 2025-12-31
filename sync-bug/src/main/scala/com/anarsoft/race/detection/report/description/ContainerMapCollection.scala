@@ -9,9 +9,9 @@ import scala.collection.mutable
 class ContainerMapCollection {
 
   val threadNames = new mutable.HashMap[LoopRunAndThreadIndex, ThreadDescription]();
-  val methodNames = new mutable.HashMap[Integer,ContainerForMethod]();
-  val fieldNames = new mutable.HashMap[Integer,ContainerForField]();
-  val loopNames = new mutable.HashMap[Integer,TestLoopDescription]();
+  val methodNames = new mutable.HashMap[Int,ContainerForMethod]();
+  val fieldNames = new mutable.HashMap[Int,ContainerForField]();
+  val loopNames = new mutable.HashMap[Int,TestLoopDescription]();
   
 
 }

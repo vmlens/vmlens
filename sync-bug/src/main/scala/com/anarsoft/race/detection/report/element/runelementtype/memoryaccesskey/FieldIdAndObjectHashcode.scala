@@ -1,10 +1,11 @@
 package com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.GenericDominatorMemoryAccessKey
 
 
 class FieldIdAndObjectHashcode(val fieldId: Int,val objectHashCode: Long) 
-  extends GenericMemoryAccessKey[FieldIdAndObjectHashcode] {
+  extends GenericDominatorMemoryAccessKey[FieldIdAndObjectHashcode] with MemoryAccessKey  {
   override def asString(context: DescriptionContext): String = context.fieldName(fieldId)
 
   override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {

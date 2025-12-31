@@ -1,11 +1,11 @@
 package com.anarsoft.race.detection.createdominatortree
 
 import com.anarsoft.race.detection.createdominatortreeevent.{BuildDominatorTreeContext, EventForSummary, EventForSummaryOrdering, SummaryEvent}
-import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.GenericMemoryAccessKey
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.GenericDominatorMemoryAccessKey
 import com.anarsoft.race.detection.report.element.runelementtype.objecthashcodemap.ObjectHashCodeMap
 import com.anarsoft.race.detection.util.EventArray
 
-class CreateSummaryEvent[MEMORY_ACCESS_KEY <: GenericMemoryAccessKey[MEMORY_ACCESS_KEY]] {
+class CreateSummaryEvent[MEMORY_ACCESS_KEY <: GenericDominatorMemoryAccessKey[MEMORY_ACCESS_KEY]] {
 
   /**
    * sort by threadIndex, dominatorTreeCounter, memoryAccessKey
@@ -23,7 +23,7 @@ class CreateSummaryEvent[MEMORY_ACCESS_KEY <: GenericMemoryAccessKey[MEMORY_ACCE
     }
     
     eventArray.sort(new EventForSummaryOrdering[MEMORY_ACCESS_KEY]);
-    var current: Option[SummaryEvent] = None;
+    var current: Option[SummaryEvent[MEMORY_ACCESS_KEY]] = None;
     for (event <- eventArray) {
       event.createUIStateElementSortKey() match {
         case None => {

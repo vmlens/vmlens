@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.dominatortree
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
 
-case class VertexMethod(methodId : Int, parent : InternalNode) extends InternalNode {
+case class VertexMethod(methodId : Int) extends InternalNode {
 
   override def getLabel(descriptionContext: DescriptionContext): String = descriptionContext.methodName(methodId)
 

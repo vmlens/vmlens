@@ -1,10 +1,12 @@
 package com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.GenericDominatorMemoryAccessKey
 
 
 class AtomicMethodIdAndObjectHashcode(val atomicMethodId: Int, val objectHashCode: Long)  
-  extends GenericMemoryAccessKey[AtomicMethodIdAndObjectHashcode] {
+  extends  MemoryAccessKey  {
+ 
   override def asString(context: DescriptionContext): String = context.methodNameWithoutSource(atomicMethodId)
 
   override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {
@@ -29,11 +31,5 @@ class AtomicMethodIdAndObjectHashcode(val atomicMethodId: Int, val objectHashCod
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 
-  override def compare(that: AtomicMethodIdAndObjectHashcode): Int = {
-    if(objectHashCode != that.objectHashCode) {
-      objectHashCode.compare(that.objectHashCode)
-    } else {
-      atomicMethodId.compare(that.atomicMethodId)
-    }
-  }
+ 
 }

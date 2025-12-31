@@ -1,7 +1,8 @@
 package com.anarsoft.race.detection.createdominatortree
 
 import com.anarsoft.race.detection.createdominatortreeevent.{BuildDominatorTreeContext, CreateDominatorTreeEvent, CreateDominatorTreeEventOrdering}
-import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexAtomicNonBlockingOrVolatile, VertexRoot}
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
 import com.anarsoft.race.detection.rundata.RunData
 import org.jgrapht.Graph
 import org.jgrapht.graph.{DefaultDirectedGraph, DefaultEdge}
@@ -13,8 +14,8 @@ import scala.collection.mutable.ArrayBuffer
 class CreateGraphFromEvents(val root: VertexRoot) {
 
   val alreadyAdded = new mutable.HashSet[DominatorTreeVertex]()
-
   val graph = new DefaultDirectedGraph[DominatorTreeVertex, DefaultEdge](classOf[DefaultEdge]);
+  val memoryKeyToVertex =  new mutable.HashMap[DominatorMemoryAccessKey,VertexAtomicNonBlockingOrVolatile]()
 
   /**
    * adds elements from methodEventArray and interleave actions to CreateDominatorTreeEventList
@@ -63,7 +64,7 @@ class CreateGraphFromEvents(val root: VertexRoot) {
   }
 
   private def addEvent(stack: CreateGraphStack, event: CreateDominatorTreeEvent): Unit = {
-    event.add(stack, alreadyAdded, graph)
+    event.add(stack, alreadyAdded, memoryKeyToVertex ,  graph)
   }
 
 }

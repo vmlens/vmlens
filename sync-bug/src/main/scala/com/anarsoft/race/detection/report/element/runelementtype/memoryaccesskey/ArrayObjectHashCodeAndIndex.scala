@@ -1,9 +1,10 @@
 package com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey
 
-import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback};
+import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.GenericDominatorMemoryAccessKey;
 
 class ArrayObjectHashCodeAndIndex(val objectHashCode: Long, val arrayIndex: Int) 
-  extends GenericMemoryAccessKey[ArrayObjectHashCodeAndIndex] {
+  extends GenericDominatorMemoryAccessKey[ArrayObjectHashCodeAndIndex] with MemoryAccessKey  {
   
   override def asString(context: DescriptionContext): String = " array[" + arrayIndex + "]"
 

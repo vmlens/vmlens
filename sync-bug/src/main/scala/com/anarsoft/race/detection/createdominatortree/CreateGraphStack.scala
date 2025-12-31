@@ -6,6 +6,7 @@ import com.anarsoft.race.detection.util.Stack
 import com.vmlens.report.dominatortree.UIStateElementSortKey
 import org.jgrapht.Graph
 import org.jgrapht.graph.DefaultEdge
+import  com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
 
 import scala.collection.mutable
 
@@ -16,13 +17,7 @@ class CreateGraphStack(val root :  VertexRoot, val threadIndex : Int) {
   private val stack = Stack[InternalNode]();
 
   def methodEnter(methodId: Int): Unit = {
-    val newElement =
-      if (stack.isEmpty) {
-        VertexMethod(methodId,root);
-      } else {
-        VertexMethod(methodId, stack.top);
-      }
-    stack.push(newElement)
+    stack.push( VertexMethod(methodId))
   }
 
   def methodExit(): Unit = {
@@ -45,16 +40,29 @@ class CreateGraphStack(val root :  VertexRoot, val threadIndex : Int) {
     } 
   }
   
-  def addLeaf(memoryAccessKey: MemoryAccessKey,
+  def addLeaf(memoryAccessKey: DominatorMemoryAccessKey,
                operationSet : Set[Int],
               sortKey : UIStateElementSortKey,
+              memoryKeyToVertex : mutable.HashMap[DominatorMemoryAccessKey,VertexAtomicNonBlockingOrVolatile],
               graph : Graph[DominatorTreeVertex,DefaultEdge]) : Unit = {
+
+    val leaf = 
+    memoryKeyToVertex.get(memoryAccessKey) match {
+      case Some(x) => {
+        x.operationSet.addAll(operationSet)
+        x;
+      }
+      case None => {
+        val newLeaf =  new VertexAtomicNonBlockingOrVolatile(memoryAccessKey, sortKey);
+        newLeaf.operationSet.addAll(operationSet)
+        newLeaf;
+      }
+    }
+    
     if (stack.isEmpty) {
-      val leaf = new VertexAtomicNonBlockingOrVolatile(memoryAccessKey, operationSet,sortKey);
       graph.addVertex(leaf)
       graph.addEdge(root, leaf);
     } else {
-      val leaf = new VertexAtomicNonBlockingOrVolatile(memoryAccessKey, operationSet,  sortKey);
       graph.addVertex(leaf)
       graph.addEdge(stack.top , leaf);
     }
