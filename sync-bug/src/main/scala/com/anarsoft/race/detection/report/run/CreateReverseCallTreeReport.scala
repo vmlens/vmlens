@@ -18,7 +18,8 @@ class CreateReverseCallTreeReport {
     traversal.traverse(node);
 
     dominatorTreeTraversalContext.createHtmlReport.createReverseCallTree(traversal.result,
-      node.getLabel(dominatorTreeTraversalContext.descriptionContext) ,fileName );
+      node.getLabel(dominatorTreeTraversalContext.descriptionContext) ,fileName, 
+      dominatorTreeTraversalContext.runName ,dominatorTreeTraversalContext.runFileName );
     
   }
   

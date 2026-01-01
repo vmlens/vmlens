@@ -37,7 +37,7 @@ class CreateDominatorTreeReport {
           createHtmlReport,
           new util.LinkedList[UIDominatorTreeElement],
           new LevelToCSS(),
-          runData.dominatorTreePrefix);
+          runData.dominatorTreePrefix ,  descriptionContext.loopName(runData.loopId) ,runData.dominatorTreeLink );
         
         
         new DominatorTreeTraversal().traverse(context);

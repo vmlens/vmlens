@@ -14,7 +14,9 @@ class DominatorTreeTraversalContext(val dominatorTree : DominatorTree,
                                     val createHtmlReport : CreateHtmlReport,
                                     val result : util.LinkedList[UIDominatorTreeElement],
                                     val levelToCSS : LevelToCSS,
-                                    val dominatorTreePrefix : String) {
+                                    val dominatorTreePrefix : String,
+                                    val runName : String,
+                                    val runFileName : String) {
 
   var index : Int = 0;
   

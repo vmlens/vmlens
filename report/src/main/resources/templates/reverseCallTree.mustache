@@ -9,14 +9,14 @@
                 <tr>
                     <th colspan="1">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span><a href="index.html">Overview</a>/{{runName}}</span>
-                            <span>State &amp; Locks</span>
+                            <span><a href="index.html">Overview</a>/<a href="{{runFile}}">{{runName}}</a>/{{stateName}}</span>
+                            <span>Reverse Call Tree</span>
                             <a href="https://vmlens.com/docs/report/executiontrace/" title="Help">Help</a>
                         </div>
                     </th>
                 </tr>
                 <tr>
-                    <th>Method or Lock</th>
+                    <th>Method</th>
                 </tr>
             </thead>
             {{#elements}}

@@ -13,8 +13,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class CreateHtmlReport {
 
@@ -85,12 +87,21 @@ public class CreateHtmlReport {
         writer.close();
     }
 
-    public void createReverseCallTree(List<UIReverseCallTree> uiRunElements, String name, String fileName)
+    public void createReverseCallTree(List<UIReverseCallTree> uiRunElements,
+                                      String name,
+                                      String fileName,
+                                      String runName,
+                                      String runFile)
             throws IOException {
         CreateOneReport summaryReport = new CreateOneReport("reverseCallTree");
-        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
-        summaryReport.createReverseCallTree(uiRunElements,name, writer);
-        writer.close();
+        Map<String, Object> context = new HashMap<>();
+        context.put("stateName", name);
+        context.put("elements", uiRunElements);
+        context.put("runName", runName);
+        context.put("runFile", runFile);
+
+        summaryReport.create(context, reportDir.resolve(fileName));
+
     }
     
 }

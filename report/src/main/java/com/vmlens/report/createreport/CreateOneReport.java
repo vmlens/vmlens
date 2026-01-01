@@ -4,12 +4,16 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.vmlens.report.dominatortree.UIDominatorTreeElement;
 import com.vmlens.report.dominatortree.UIReverseCallTree;
-import com.vmlens.report.trace.UIRunElement;
+import com.vmlens.report.overview.UITestLoopOrWarning;
 import com.vmlens.report.stacktrace.UIStacktraceElement;
 import com.vmlens.report.summary.UISummaryElement;
-import com.vmlens.report.overview.UITestLoopOrWarning;
+import com.vmlens.report.trace.UIRunElement;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +65,12 @@ public class CreateOneReport {
         context.put("runName", runName);
         context.put("elements", uiElements);
         template.execute(writer, context);
+    }
+
+    public void create( Map<String, Object> context, Path file) throws IOException {
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file));
+        template.execute(writer, context);
+        writer.close();
     }
 
     
