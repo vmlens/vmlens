@@ -1,6 +1,7 @@
 package com.vmlens.report.createreport;
 
 import com.vmlens.report.dominatortree.UIDominatorTreeElement;
+import com.vmlens.report.dominatortree.UIReverseCallTree;
 import com.vmlens.report.overview.UITestLoopAndWarning;
 import com.vmlens.report.overview.UITestLoopAndWarningComparator;
 import com.vmlens.report.overview.UITestLoopOrWarning;
@@ -39,7 +40,7 @@ public class CreateHtmlReport {
             index++;
             String fileName = "run" + loop.uiTestLoop().index() + HTML_FILE;
             String fileNameDominatorTree = "state" + loop.uiTestLoop().index() + HTML_FILE;
-            loop.setLinks(fileName,fileNameDominatorTree);
+            loop.setLinks(fileName,fileNameDominatorTree, "state" + loop.uiTestLoop().index() );
             uiTestLoops.add(loop.uiTestLoop());
             uiTestLoops.addAll(loop.uiWarnings());
         }
@@ -83,6 +84,13 @@ public class CreateHtmlReport {
         summaryReport.createDominatorTree(uiRunElements,name, writer);
         writer.close();
     }
-    
+
+    public void createReverseCallTree(List<UIReverseCallTree> uiRunElements, String name, String fileName)
+            throws IOException {
+        CreateOneReport summaryReport = new CreateOneReport("reverseCallTree");
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(reportDir.resolve(fileName)));
+        summaryReport.createReverseCallTree(uiRunElements,name, writer);
+        writer.close();
+    }
     
 }

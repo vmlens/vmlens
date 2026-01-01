@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.dominatortree
 
 import com.anarsoft.race.detection.report.description.DescriptionContext
-import com.anarsoft.race.detection.report.run.LevelToCSS
+import com.anarsoft.race.detection.report.run.{CreateReverseCallTreeReport, DominatorTreeTraversalContext}
 import com.vmlens.report.dominatortree.UIDominatorTreeElement
 import com.vmlens.report.dominatortree.UIStateElement
 import com.vmlens.report.dominatortree.UIStateElementSortKey
@@ -12,11 +12,15 @@ trait LeafNode extends DominatorTreeVertex {
 
   override def addToReport(parent: Option[UIDominatorTreeElement],
                            level: Int,
-                           descriptionContext: DescriptionContext,
-                           levelToCSS: LevelToCSS,
-                           result: util.LinkedList[UIDominatorTreeElement]): UIDominatorTreeElement = {
+                           context : DominatorTreeTraversalContext): UIDominatorTreeElement = {
     val current = parent.get;
-    current.add(new UIStateElement(getLabel(descriptionContext),getUIStateElementSortKey))
+    val uiStateElement = new UIStateElement(getLabel(context.descriptionContext),getUIStateElementSortKey)
+    val link = context.nextFileName();
+    uiStateElement.setLink(link)
+    current.add(uiStateElement)
+    
+    new CreateReverseCallTreeReport().createReport(this,context,link)
+    
     current;
   }
 

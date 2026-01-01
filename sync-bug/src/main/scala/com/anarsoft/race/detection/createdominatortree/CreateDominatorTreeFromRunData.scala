@@ -28,7 +28,7 @@ class CreateDominatorTreeFromRunData {
       val root = new VertexRoot()
       val graph = new CreateGraphFromEvents(root).process(runData);
       val dominatorTree = Dominators[DominatorTreeVertex,DefaultEdge](graph,root).getDominatorTree
-      Some(new DominatorTree(dominatorTree,root));
+      Some(new DominatorTree(dominatorTree,root,graph));
     }
     
   }

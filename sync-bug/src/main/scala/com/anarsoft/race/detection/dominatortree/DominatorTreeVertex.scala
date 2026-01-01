@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.dominatortree
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
-import com.anarsoft.race.detection.report.run.LevelToCSS
+import com.anarsoft.race.detection.report.run.DominatorTreeTraversalContext
 import com.vmlens.report.dominatortree.UIDominatorTreeElement
 
 import java.util
@@ -22,10 +22,10 @@ trait DominatorTreeVertex {
   
   def addToReport(parent: Option[UIDominatorTreeElement] , 
                   level : Int,
-                  descriptionContext: DescriptionContext,
-                  levelToCSS : LevelToCSS,
-                  result : util.LinkedList[UIDominatorTreeElement]): UIDominatorTreeElement
+                  context : DominatorTreeTraversalContext): UIDominatorTreeElement
   def addToNeedsDescription(needsDescriptionCallback : NeedsDescriptionCallback) : Unit;
+  
+  def getLabel(descriptionContext: DescriptionContext): String
   
   
 

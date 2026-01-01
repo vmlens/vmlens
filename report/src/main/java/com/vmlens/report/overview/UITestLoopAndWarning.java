@@ -20,8 +20,8 @@ public class UITestLoopAndWarning {
         return uiTestLoop;
     }
     
-    public void setLinks(String runLink, String dominatorTreeLink) {
-        needsRunLink.setLinks(runLink,dominatorTreeLink);
+    public void setLinks(String runLink, String dominatorTreeLink,  String dominatorTreePrefix) {
+        needsRunLink.setLinks(runLink,dominatorTreeLink,dominatorTreePrefix);
         uiTestLoop.setLinks(runLink,dominatorTreeLink);
     }
 

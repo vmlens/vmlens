@@ -4,7 +4,8 @@ public class UIStateElement {
 
     private final String label;
     private final UIStateElementSortKey uiStateElementSortKey;
-
+    private String link;
+    
     public UIStateElement(String label, 
                           UIStateElementSortKey uiStateElementSortKey) {
         this.label = label;
@@ -19,4 +20,11 @@ public class UIStateElement {
         return uiStateElementSortKey.idLabel();
     }
 
+    public String link() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 }

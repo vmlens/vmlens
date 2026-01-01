@@ -15,10 +15,12 @@ class ReportLoopData(val loopId: Int,
   
   var runLink : String = null;
   var dominatorTreeLink : String = null;
+  var dominatorTreePrefix : String = null;
 
-  override def setLinks( linkRun: String, linkDominatorTree: String): Unit = {
+  override def setLinks( linkRun: String, linkDominatorTree: String, dominatorTreePrefix : String): Unit = {
     runLink = linkRun;
     dominatorTreeLink = linkDominatorTree;
+    this.dominatorTreePrefix = dominatorTreePrefix;
   }
   
 }

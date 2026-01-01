@@ -4,6 +4,7 @@ import com.anarsoft.race.detection.dominatortree.DominatorTreeVertex
 import com.anarsoft.race.detection.report.ReportLoopData
 import com.anarsoft.race.detection.report.description.DescriptionContext
 import com.vmlens.report.createreport.CreateHtmlReport
+import com.vmlens.report.dominatortree.UIDominatorTreeElement
 import org.jgrapht.Graph
 import org.jgrapht.graph.DefaultEdge
 
@@ -30,8 +31,20 @@ class CreateDominatorTreeReport {
       }
 
       case Some(graph) => {
-        val list = new DominatorTreeTraversal().traverse(graph.graph,graph.root,descriptionContext);
-        createHtmlReport.createDominatorTreeReport(list, descriptionContext.loopName(runData.loopId) , runData.dominatorTreeLink)
+        val context = new DominatorTreeTraversalContext(
+          graph,
+          descriptionContext,
+          createHtmlReport,
+          new util.LinkedList[UIDominatorTreeElement],
+          new LevelToCSS(),
+          runData.dominatorTreePrefix);
+        
+        
+        new DominatorTreeTraversal().traverse(context);
+        
+        createHtmlReport.createDominatorTreeReport(context.result, 
+          descriptionContext.loopName(runData.loopId) , 
+          runData.dominatorTreeLink)
       }
 
     }

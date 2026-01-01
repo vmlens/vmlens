@@ -3,6 +3,7 @@ package com.vmlens.report.createreport;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.vmlens.report.dominatortree.UIDominatorTreeElement;
+import com.vmlens.report.dominatortree.UIReverseCallTree;
 import com.vmlens.report.trace.UIRunElement;
 import com.vmlens.report.stacktrace.UIStacktraceElement;
 import com.vmlens.report.summary.UISummaryElement;
@@ -54,4 +55,13 @@ public class CreateOneReport {
         context.put("elements", uiElements);
         template.execute(writer, context);
     }
+
+    public void createReverseCallTree(List<UIReverseCallTree> uiElements, String runName, Writer writer) {
+        Map<String, Object> context = new HashMap<>();
+        context.put("runName", runName);
+        context.put("elements", uiElements);
+        template.execute(writer, context);
+    }
+
+    
 }
