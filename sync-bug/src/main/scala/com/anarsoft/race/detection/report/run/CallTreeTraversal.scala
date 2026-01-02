@@ -26,7 +26,9 @@ class CallTreeTraversal(val graph: Graph[DominatorTreeVertex,DefaultEdge],
      
    while(stack.nonEmpty) {
      val current = stack.pop()
-     addToReport(current);
+     if(current.level != 0) {
+       addToReport(current);
+     }
 
      // Skip already visited nodes
      if (!visited.contains(current.node)) {
