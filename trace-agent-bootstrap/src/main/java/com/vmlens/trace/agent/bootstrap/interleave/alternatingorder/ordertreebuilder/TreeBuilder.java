@@ -1,18 +1,36 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
-import com.vmlens.trace.agent.bootstrap.parallelize.run.SendEvent;
 
 public class TreeBuilder {
 
-    private final StartOrNext start = new StartOrNext();
+    private final StartNode start = new StartNode();
 
-    public StartOrNext start() {
+    public StartNode start() {
         return start;
     }
 
     public OrderTree build(InterleaveLoopContext interleaveLoopContext) {
-        return new OrderTree(start.build(new OrderTreeBuilderContext(interleaveLoopContext)));
+        NodeBuilder current = start.getNext();
+        ListElement previous = null;
+        ListElement startElement =  null;
+        while(current != null ) {
+            ListElement currentListElement = current.build();
+            if(startElement == null) {
+                startElement = currentListElement;
+            }
+            if(previous != null) {
+                previous.setNext(currentListElement);
+            }
+            previous = currentListElement;
+            current = current.getNext();
+        }
+        return new OrderTree(startElement);
     }
+
+
+
+
 }

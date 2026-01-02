@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.inttest.performance;
 
+import com.vmlens.trace.agent.bootstrap.interleave.AbstractInterleaveActionBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.ExpectedBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
@@ -14,9 +15,8 @@ import static org.hamcrest.Matchers.lessThan;
 public class LargePerformanceTest {
 
     /*
-     * currently fails on github:
-     * Error:  Errors:
-     * Error:    LargePerformanceTest.testH2 » StackOverflow
+     * high memory consumption
+     * and not realistic since it was before the removal of join
      */
     @Ignore
     @Test
@@ -27,17 +27,31 @@ public class LargePerformanceTest {
         // Test
         long start = System.currentTimeMillis();
 
-        /**
-         * currently takes for 25 alternating order 2 min
-         */
         new IntTestRunner().runTest(new InterleaveActionH2().build(),expectedBuilder.buildExpected(),
-                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(15).build(new QueueInNoOp(),0));
+                new InterleaveLoopContextBuilder().build(new QueueInNoOp(),0));
         if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
             System.out.println("took " + (System.currentTimeMillis() - start));
         }
         assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
 
+    @Test
+    public void testH2PerformanceProblem() {
+        long start = System.currentTimeMillis();
+        runOneH2(new InterleaveActionH2_1());
+        runOneH2(new InterleaveActionH2_2());
+        runOneH2(new InterleaveActionH2_3());
+        runOneH2(new InterleaveActionH2_4());
+        assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
+    }
+
+    private void runOneH2(AbstractInterleaveActionBuilder abstractInterleaveActionBuilder) {
+        ExpectedBuilder expectedBuilder = new ExpectedBuilder();
+
+        new IntTestRunner().runTest(abstractInterleaveActionBuilder.build(),expectedBuilder.buildExpected(),
+                new InterleaveLoopContextBuilder().build(new QueueInNoOp(),0));
+
+    }
 
     @Test
     public void testNonBlockingAtomic() {
@@ -52,7 +66,7 @@ public class LargePerformanceTest {
          */
 
         new IntTestRunner().runTest(new InterleaveActionNonBlockingAtomic().build(),expectedBuilder.buildExpected(),
-                new InterleaveLoopContextBuilder().withMaximumAlternatingOrders(20).build(new QueueInNoOp(),0));
+                new InterleaveLoopContextBuilder().build(new QueueInNoOp(),0));
         if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
             System.out.println("took " + (System.currentTimeMillis() - start)); 
         }

@@ -14,6 +14,7 @@ class MethodExitEventGen (
  ,  val methodCounter  : Int  
  ,  val loopId  : Int  
  ,  val runId  : Int  
+ ,  val dominatorTreeCounter  : Int  
 )    extends MethodExitEvent  
 {
 override def toString : String = {
@@ -22,6 +23,7 @@ override def toString : String = {
   text = text + ", methodCounter:" +  methodCounter 
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
+  text = text + ", dominatorTreeCounter:" +  dominatorTreeCounter 
  text;
 }
 
@@ -49,6 +51,11 @@ override def equals(other: Any) : Boolean = {
                false;
              }
              else
+             if( dominatorTreeCounter != that.dominatorTreeCounter )
+             {
+               false;
+             }
+             else
              true;
         }
       case _ => false
@@ -63,6 +70,8 @@ object  MethodExitEventGen
    {
      val result = new MethodExitEventGen (
           
+            data.readInt()
+          ,
             data.readInt()
           ,
             data.readInt()

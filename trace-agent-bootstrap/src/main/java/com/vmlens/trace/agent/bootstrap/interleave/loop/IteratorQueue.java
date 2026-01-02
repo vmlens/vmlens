@@ -1,9 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.loop;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
-
-import java.util.Iterator;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.AlternatingOrderContainerIterator;
 
 public interface IteratorQueue {
-    Iterator<CalculatedRun> poll();
+    AlternatingOrderContainerIterator poll();
 }

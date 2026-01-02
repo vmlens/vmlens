@@ -1,8 +1,9 @@
 package com.anarsoft.race.detection.createstacktrace
 
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
+import com.anarsoft.race.detection.util.Stack
 
-import scala.collection.mutable.Stack
+
 
 class StacktraceNodeStack(val threadIndex: Int) {
 

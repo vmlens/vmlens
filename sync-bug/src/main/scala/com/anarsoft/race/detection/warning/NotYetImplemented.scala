@@ -1,13 +1,20 @@
 package com.anarsoft.race.detection.warning
 
-import com.vmlens.report.element.{LargeWarning, TestResult}
+import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
+import com.anarsoft.race.detection.report.element.TestResult
+import com.vmlens.report.overview.UIWarning
+
 
 class NotYetImplemented(val methodId : Int) extends Warning {
 
   override def forRun(): Boolean = false;
 
-  override def addToTestResult(testResult: TestResult): Unit = {
-    testResult.addLargeWarning(new LargeWarning(methodId))
+  override def addToTestResult(descriptionContext : DescriptionContext, testResult: TestResult): Unit = {
+    testResult.addLargeWarning(new UIWarning(descriptionContext.methodName(methodId ) + " is not yet testable "));
+  }
+
+  override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {
+    callback.needsMethod(methodId)
   }
  
   override def equals(other: Any): Boolean = other match {

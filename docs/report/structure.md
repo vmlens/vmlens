@@ -6,42 +6,29 @@ Different Types of Report
 * Summary
 * Non Commutative per Object per Thread
 * Report Around Data Race
-* Futures/Thread Start Join/Wait
+* only Futures/Thread Start Join/Wait 
 * deadlock warning, potential deadlocks
+* Filter only once accessed elements
 
 
 # Solution
 
-Input -> Transform -> Output
+1. collect run data
+2. add description delegates to DescriptionCallbackImpl
+3. create report overview
+4. delegate to RunReportFactory for each run
+   5. additional report for field access on stacktrace (txt based on graph)
+
+if we want to combine multiple test runs we can combine 3 and 4
 
 
-Input: List of Loops containing one or N Runs containing RunElement
+Chaining of three builder:
+LoopResultCallbackImpl -> Tuple { DescriptionCallback , ReportBuilder }  
 
 
-ReportFactory : ReportBuilder -> { Transform + Output } : create
-
-TransformAndOutput belong together e.g. specific transforms require specific outputs
-
-# Output
-
-Html
-Text
-
-for Non Commutative per Object per Thread first text
-
-# Transform
-
-LoopToUILoop
-  -> ElementToUIElement
-
-HTMLOutput
-TextOutput
-potential: CSVOutput
+LoopResultCallbackImpl:
 
 
-TextOutput is command like without template
-especially for testing the usabilty of a format
-probably as input for other tools
 
 
 

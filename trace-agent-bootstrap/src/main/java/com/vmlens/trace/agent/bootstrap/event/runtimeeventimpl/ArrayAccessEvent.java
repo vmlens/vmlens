@@ -23,8 +23,9 @@ public class ArrayAccessEvent extends ArrayAccessEventGen implements
     }
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.dominatorTreeCount();
     }
 
     public void setOperation(int operation) {

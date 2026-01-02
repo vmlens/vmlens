@@ -1,0 +1,26 @@
+package com.anarsoft.race.detection.report
+
+import com.anarsoft.race.detection.dominatortree.DominatorTree
+import com.anarsoft.race.detection.report.element.RunElement
+import com.anarsoft.race.detection.warning.Warning
+import com.vmlens.report.overview.NeedsRunLink
+
+class ReportLoopData(val loopId: Int,
+                     val isFailure: Boolean,
+                     val dataRaceCount: Int,
+                     val warningIdList: Set[Warning],
+                     val count: Int,
+                     val runElements : List[RunElement],
+                     val dominatorTree: Option[DominatorTree]) extends NeedsRunLink {
+  
+  var runLink : String = null;
+  var dominatorTreeLink : String = null;
+  var dominatorTreePrefix : String = null;
+
+  override def setLinks( linkRun: String, linkDominatorTree: String, dominatorTreePrefix : String): Unit = {
+    runLink = linkRun;
+    dominatorTreeLink = linkDominatorTree;
+    this.dominatorTreePrefix = dominatorTreePrefix;
+  }
+  
+}

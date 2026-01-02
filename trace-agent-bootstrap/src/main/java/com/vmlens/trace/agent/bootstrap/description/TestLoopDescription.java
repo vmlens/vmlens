@@ -54,6 +54,10 @@ public class TestLoopDescription implements SerializableEvent, ThreadOrLoopDescr
         return name;
     }
 
+    public int reportAsSummaryThreshold() {
+        return reportAsSummaryThreshold;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

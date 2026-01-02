@@ -6,7 +6,7 @@ import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActio
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NextStateBuilder;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ThreadCount;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.ConditionWaitEnter;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock.ConditionWaitEnter;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.LockKey;
@@ -61,8 +61,9 @@ public class ConditionWaitEnterEvent extends ConditionWaitEnterEventGen implemen
     }
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.incrementDominatorTreeAndGetMiddle();
     }
 
     /**

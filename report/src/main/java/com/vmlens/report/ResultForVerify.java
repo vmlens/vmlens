@@ -6,9 +6,11 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class ResultForVerify {
-    
+
+    // For Test
     private final Map<Integer,Integer>  loopIdToDataRaceCount = new HashMap<>();
-    private final List<LoopToDataRaceCount> loopToDataRaceCountList = new LinkedList<>();
+    // For Test
+    private final Map<Integer,String>   idToLoopName = new HashMap<>();
 
     private int failureCount;
     private int dataRaceCount;
@@ -20,11 +22,9 @@ public class ResultForVerify {
         dataRaceCount += count;
     }
 
+    // For Test
     public void setLoopName(int loopId, String loopName) {
-        if(loopIdToDataRaceCount.containsKey(loopId)) {
-           int count =  loopIdToDataRaceCount.get(loopId);
-            loopToDataRaceCountList.add(new LoopToDataRaceCount(loopName,count));
-        }
+        idToLoopName.put(loopId,loopName);
     }
 
     public void setFailure(int loopId) {
@@ -57,6 +57,10 @@ public class ResultForVerify {
 
     // for test
     public List<LoopToDataRaceCount> loopToDataRaceCountList() {
-        return loopToDataRaceCountList;
+        List<LoopToDataRaceCount> result = new LinkedList<>();
+        for(Map.Entry<Integer,Integer>  entry :  loopIdToDataRaceCount.entrySet()) {
+            result.add(new LoopToDataRaceCount(idToLoopName.get(entry.getKey()) , entry.getValue()));
+        }
+        return result;
     }
 }

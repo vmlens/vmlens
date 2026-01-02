@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElementEither;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.SingleChildNode;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
@@ -22,7 +22,7 @@ public class LockContainerTest {
     @Test
     public void monitorEnterExit() {
         // Expected
-        SingleChildNode expectedNode = new SingleChildNode(null,
+        ListElementEither expectedNode = new ListElementEither(
                 new AlternativeOneOrder(lbr(pos(0,1),pos(1,0))) ,
                 new AlternativeOneOrder(lbr(pos(1,1),pos(0,0))));
 

@@ -28,6 +28,7 @@ public class BarrierNotifyEvent extends BarrierNotifyEventGen
 
     public void setMethodCounter(int methodCounter) {
         this.methodCounter = methodCounter;
+
     }
 
     public void setObjectHashCode(long objectHashCode) {
@@ -69,8 +70,9 @@ public class BarrierNotifyEvent extends BarrierNotifyEventGen
     }
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.dominatorTreeCount();
     }
 
     @Override

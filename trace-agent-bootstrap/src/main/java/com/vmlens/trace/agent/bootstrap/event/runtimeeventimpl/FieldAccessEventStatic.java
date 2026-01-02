@@ -18,8 +18,10 @@ public class FieldAccessEventStatic extends FieldAccessEventStaticGen implements
 
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.dominatorTreeCount();
+
     }
 
     public void setFieldId(int fieldId) {

@@ -1,9 +1,11 @@
 package com.anarsoft.race.detection.groupinterleave
 
 import com.anarsoft.race.detection.event.interleave.{AtomicNonBlockingEvent, BarrierEvent, LockEvent, MonitorEvent, ThreadJoinedEvent, ThreadStartEvent, VolatileFieldAccessEvent, VolatileFieldAccessEventStatic, WithLockEvent}
+import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.{AtomicMethodIdAndObjectHashcode, FieldId, FieldIdAndObjectHashcode}
 import com.anarsoft.race.detection.sortutil.lockcontainer.LockContainer
 import com.anarsoft.race.detection.sortutil.{EventContainer, EventWithReadWriteContainer, MonitorContainer}
 import com.anarsoft.race.detection.util.EventArray
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.AtomicNonBlockingKey
 
 import java.util
 import scala.collection.mutable.ArrayBuffer
@@ -15,27 +17,27 @@ class GroupInterleaveElementBuilder {
 
   def addAtomicNonBlockingEvents(list: util.LinkedList[AtomicNonBlockingEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionImpl[AtomicNonBlockingEvent](
+      new GroupInterleaveElementSyncActionWithSummary[AtomicNonBlockingKey,AtomicNonBlockingEvent](
         EventArray[AtomicNonBlockingEvent](list),
         GroupInterleaveElementBuilder.create_container_atomic_non_blocking));
   }
 
   def addAtomicReadWriteLockEvents(list: util.LinkedList[WithLockEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionImpl[WithLockEvent](
+      new GroupInterleaveElementSyncActionWithoutSummary[WithLockEvent](
         EventArray[WithLockEvent](list), GroupInterleaveElementBuilder.create_container_lock));
   }
   
   def addVolatileAccessEvents(list: util.LinkedList[VolatileFieldAccessEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionImpl[VolatileFieldAccessEvent](
+      new GroupInterleaveElementSyncActionWithSummary[FieldIdAndObjectHashcode,VolatileFieldAccessEvent](
         EventArray[VolatileFieldAccessEvent](list),
         GroupInterleaveElementBuilder.create_container_volatile_field));
   }
 
   def addStaticVolatileAccessEvents(list: util.LinkedList[VolatileFieldAccessEventStatic]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionImpl[VolatileFieldAccessEventStatic](
+      new GroupInterleaveElementSyncActionWithSummary[FieldId,VolatileFieldAccessEventStatic](
         EventArray[VolatileFieldAccessEventStatic](list),
         (event: VolatileFieldAccessEventStatic) => EventWithReadWriteContainer[VolatileFieldAccessEventStatic](event)));
   }
@@ -54,20 +56,20 @@ class GroupInterleaveElementBuilder {
 
   def addLockEvents(list: util.LinkedList[WithLockEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionImpl[WithLockEvent](
+      new GroupInterleaveElementSyncActionWithoutSummary[WithLockEvent](
         EventArray[WithLockEvent](list),GroupInterleaveElementBuilder.create_container_lock));
   }
   
   def addMonitorEvents(list: util.LinkedList[MonitorEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionImpl[MonitorEvent](
+      new GroupInterleaveElementSyncActionWithoutSummary[MonitorEvent](
         EventArray[MonitorEvent](list),
         (event: MonitorEvent) => MonitorContainer(event)));
   }
 
   def addBarrierEvents(list: util.LinkedList[BarrierEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionImpl[BarrierEvent](
+      new GroupInterleaveElementSyncActionWithoutSummary[BarrierEvent](
         EventArray[BarrierEvent](list),
         (event: BarrierEvent) => event.create()));
   }

@@ -1,6 +1,6 @@
 package com.vmlens.codeGenerator.domain
 
-import com.vmlens.codeGenerator.domain.EventDesc.{loopId, methodCounter, methodId, nextId, plusInterleaveFields, runId, threadIndex}
+import com.vmlens.codeGenerator.domain.EventDesc.{loopId, methodCounter, methodId, nextId, plusInterleaveFields, runId, threadIndex, dominatorTreeCounter}
 import com.vmlens.codeGenerator.domain.EventDescLockOrMonitor.fieldListMonitor
 
 import scala.collection.mutable.ArrayBuffer
@@ -15,6 +15,7 @@ object EventDescMethod {
     fields.append(methodCounter);
     fields.append(loopId);
     fields.append(runId);
+    fields.append(dominatorTreeCounter);
     fields;
   }
 
@@ -24,6 +25,7 @@ object EventDescMethod {
     fields.append(methodCounter);
     fields.append(loopId);
     fields.append(runId);
+    fields.append(dominatorTreeCounter);
     fields;
   }
 

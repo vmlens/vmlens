@@ -4,11 +4,8 @@ import com.anarsoft.race.detection.process.loadAgentLog.LoadAgentLog
 import com.anarsoft.race.detection.process.loadDescription.LoadDescriptionImpl
 import com.anarsoft.race.detection.process.main.MainProcess
 import com.anarsoft.race.detection.process.run.{ProcessRunContext, ProcessRunContextBuilder, ProcessRunImpl}
-import com.anarsoft.race.detection.reportbuilder.LoopReportBuilderImpl
+import com.anarsoft.race.detection.report.builder.LoopResultCallbackImpl
 import com.vmlens.report.ResultForVerify
-import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRight, OnDescriptionAndLeftBeforeRightNoOp, OnEvent, OnEventNoOp}
-import com.vmlens.report.builder.ReportBuilder
-import com.vmlens.report.createreport.{CreateHtmlReport, CreateTxtReport}
 import com.vmlens.setup.SetupAgent.reCreate
 
 import java.io.PrintStream
@@ -51,20 +48,9 @@ class ProcessEvents(val eventDir: Path,
 
     val loadRuns = new LoadRunsFactory().create(eventDir, loadDescription.loadDataRaceFilter());
     val processRun = new ProcessRunImpl(processRunContext);
-    val loopReportBuilder = new LoopReportBuilderImpl(new ReportBuilder());
     
-    val mainProcess = new MainProcess(loadDescription, loadRuns, processRun, loopReportBuilder,
-      processRunContext.onTestLoopAndLeftBeforeRight);
-    val reportBuilder = mainProcess.process();
-
-    val createReports = if(processRunContext.txtFormat) {
-      new CreateTxtReport(reportDir)
-    } else {
-      new CreateHtmlReport(reportDir, processRunContext.showAllRuns)
-    }
-    createReports.createReport(reportBuilder.build())
-
-    reportBuilder.buildResultForVerify();
+    val mainProcess = new MainProcess(loadDescription, loadRuns, processRun,reportDir);
+   mainProcess.process();
   }
 }
 

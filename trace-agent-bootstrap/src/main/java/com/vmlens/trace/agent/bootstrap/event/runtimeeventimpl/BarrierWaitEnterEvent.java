@@ -69,8 +69,9 @@ public class BarrierWaitEnterEvent extends BarrierWaitEnterEventGen
     }
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.dominatorTreeCount();
     }
 
     @Override

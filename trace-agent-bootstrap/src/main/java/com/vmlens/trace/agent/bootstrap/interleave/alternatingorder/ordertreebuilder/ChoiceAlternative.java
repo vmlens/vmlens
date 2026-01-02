@@ -2,12 +2,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebu
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeNoOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeNode;
 
-public class ChoiceAlternative  implements EitherInChoice {
+public class ChoiceAlternative implements EitherInChoice {
 
     private EitherInChoiceAlternative next;
-    private NodeBuilder last;
 
     public EitherInChoice either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
         EitherInChoiceAlternative temp = new EitherInChoiceAlternative(orderAlternativeA,orderAlternativeB);
@@ -19,13 +17,7 @@ public class ChoiceAlternative  implements EitherInChoice {
         return next;
     }
 
-    public OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext) {
-        orderTreeBuilderContext.incrementEitherBlockCount();
-        if(next == null) {
-            return last.build(orderTreeBuilderContext);
-        }
-        return next.build(orderTreeBuilderContext);
-    }
+
 
     public int getLength() {
         ChoiceElement firstLast = next();
@@ -62,19 +54,5 @@ public class ChoiceAlternative  implements EitherInChoice {
         }
     }
 
-    public void setLast(StartOrNext next) {
-        ChoiceElement secondLast = next();
-        ChoiceElement second = next();
-        while(second != null)  {
-            secondLast = second;
-            second = second.getNext();
-        }
-        if(secondLast == null) {
-            this.last = next;
-        } else {
-            secondLast.setLast(next);
-        }
-
-    }
 
 }

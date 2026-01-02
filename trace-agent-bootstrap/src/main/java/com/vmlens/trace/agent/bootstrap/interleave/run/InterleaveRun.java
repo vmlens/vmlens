@@ -89,7 +89,7 @@ public class InterleaveRun {
 
     void process(ProcessEventContext context, PluginEventOnly pluginEventOnly) {
         pluginEventOnly.setRunPosition(positionInRun);
-        pluginEventOnly.setMethodCounter(context.threadLocalWhenInTestForParallelize());
+        pluginEventOnly.setCounter(context.threadLocalWhenInTestForParallelize());
         context.sendEvent().sendSerializable(pluginEventOnly);
     }
 

@@ -32,7 +32,7 @@ class EventArray[+EVENT](private[this] val array: Array[EVENT]) {
       f(elem);
     }
   }
-
+  
   override def equals(other: Any): Boolean = other match {
     case that: EventArray[_] =>
       (that canEqual this) && (that sameArray this)

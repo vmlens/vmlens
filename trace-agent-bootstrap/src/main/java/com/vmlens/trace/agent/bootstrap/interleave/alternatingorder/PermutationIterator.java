@@ -6,15 +6,11 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 public class PermutationIterator {
 
     private long index;
-    private final long maxIndex;
-    private final int length;
+    private long maxIndex;
+    private int length;
 
     public PermutationIterator(int length) {
-        if(length == 0) {
-            this.maxIndex = 0;
-        } else {
-            this.maxIndex = (long) Math.pow(2, length);
-        }
+        this.maxIndex = calculateMaxIndex(length);
         this.length = length;
     }
 
@@ -31,4 +27,18 @@ public class PermutationIterator {
     public int length() {
         return length;
     }
+
+    public void setNewLength(int newLength) {
+        length = newLength;
+        maxIndex = calculateMaxIndex(newLength);;
+    }
+
+    private static long calculateMaxIndex(int length) {
+        if(length == 0) {
+           return  0;
+        } else {
+            return  (long) Math.pow(2, length);
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.vmlens.test.maven.plugin.cycle;
 
 import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.AllInterleavingsBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -38,15 +39,16 @@ public class TestMultipleVolatile {
     @Test
     public void testMultipleVolatileTwoThreads() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();
-        
-        expectedSet.add(2);
+
         expectedSet.add(3);
         expectedSet.add(4);
         expectedSet.add(5);
         expectedSet.add(6);
 
         Set<Integer> countSet = new HashSet<>();
-        try(AllInterleavings allInterleavings = new AllInterleavings("testMultipleVolatileTwoThreads")) {
+        try(AllInterleavings allInterleavings = new AllInterleavingsBuilder()
+                .withRemoveCycleThreshold(30)
+                .build("testMultipleVolatileTwoThreads")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
                 Thread first = new Thread( () -> { j++;  j++; j++;});

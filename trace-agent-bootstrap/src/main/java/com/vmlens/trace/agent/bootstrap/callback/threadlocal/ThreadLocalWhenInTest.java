@@ -14,6 +14,7 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
 
     private int inAtomicCount = 0;
     private int methodCount;
+    private int dominatorTreeCount;
     private InMethodIdAndPosition inMethodIdAndPosition;
     private ExecuteAfterOperation executeAfterOperation;
     private Integer startDoNotTrace;
@@ -87,5 +88,18 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
 
     public FirstMethodInThread firstMethodInThread() {
         return firstMethodInThread;
+    }
+
+    @Override
+    public int dominatorTreeCount() {
+        return dominatorTreeCount;
+    }
+
+    @Override
+    public int incrementDominatorTreeAndGetMiddle() {
+        dominatorTreeCount++;
+        int temp = dominatorTreeCount;
+        dominatorTreeCount++;
+        return temp;
     }
 }

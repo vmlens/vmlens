@@ -1,13 +1,16 @@
 package com.anarsoft.race.detection.loopresult
 
+import com.anarsoft.race.detection.dominatortree.DominatorTree
+import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.rundata.RunResult
-import com.anarsoft.race.detection.reportbuilder.EventForReportElement
 import com.anarsoft.race.detection.warning.Warning
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 class LoopResultList(val loopId : Int) extends LoopResult  {
+
+  var dominatorTree: Option[DominatorTree] = None;
   
   private val resultList = new ArrayBuffer[RunResult];
   
@@ -46,4 +49,8 @@ class LoopResultList(val loopId : Int) extends LoopResult  {
   }
 
   override def count: Int = resultList.size - 1;
+
+  override def setDominatorTree(tree: DominatorTree): Unit = {
+    dominatorTree = Some(tree)
+  }
 }

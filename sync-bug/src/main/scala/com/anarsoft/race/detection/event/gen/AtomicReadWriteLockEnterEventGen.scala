@@ -19,6 +19,7 @@ class AtomicReadWriteLockEnterEventGen (
  ,  val loopId  : Int  
  ,  val runId  : Int  
  ,  val runPosition  : Int  
+ ,  val dominatorTreeCounter  : Int  
  ,  val atomicMethodId  : Int  
 )    extends AtomicReadWriteLockEnterEvent
 {
@@ -33,6 +34,7 @@ override def toString : String = {
   text = text + ", loopId:" +  loopId 
   text = text + ", runId:" +  runId 
   text = text + ", runPosition:" +  runPosition 
+  text = text + ", dominatorTreeCounter:" +  dominatorTreeCounter 
   text = text + ", atomicMethodId:" +  atomicMethodId 
  text;
 }
@@ -86,6 +88,11 @@ override def equals(other: Any) : Boolean = {
                false;
              }
              else
+             if( dominatorTreeCounter != that.dominatorTreeCounter )
+             {
+               false;
+             }
+             else
              if( atomicMethodId != that.atomicMethodId )
              {
                false;
@@ -110,6 +117,8 @@ object  AtomicReadWriteLockEnterEventGen
             data.readInt()
           ,
             data.readLong()
+          ,
+            data.readInt()
           ,
             data.readInt()
           ,

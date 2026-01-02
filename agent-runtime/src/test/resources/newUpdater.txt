@@ -19,8 +19,8 @@ method:newUpdater(Ljava/lang/Class;Ljava/lang/String;)Ljava/util/concurrent/atom
   load:2
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.afterMethodCall:(III)V
   DUP
+  ALOAD_0
   ALOAD_1
-  ALOAD_2
   load:1
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.methodObjectStringParamObjectReturn:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;I)V
   ARETURN

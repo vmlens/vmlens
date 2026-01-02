@@ -3,7 +3,7 @@ package com.anarsoft.race.detection.process.loadDescription
 import com.anarsoft.race.detection.event.nonvolatile.LoadedNonVolatileEvent
 import com.anarsoft.race.detection.process.load.{DataRaceFilter, EventFilter}
 import com.anarsoft.race.detection.process.main.LoadDescription
-import com.anarsoft.race.detection.reportbuilder.DescriptionBuilder
+import com.anarsoft.race.detection.report.description.DescriptionCallback
 import com.vmlens.trace.agent.bootstrap.description.{DeserializeClassDescriptions, DeserializeThreadAndLoopDescription, LoopControl}
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.{DESCRIPTION, LOOP_CONTROL, THREAD_AND_LOOP_DESCRIPTION}
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
@@ -14,7 +14,7 @@ import scala.collection.mutable
 
 class LoadDescriptionImpl(dir: Path) extends LoadDescription {
 
-  override def load(descriptionBuilder: DescriptionBuilder): Unit = {
+  override def load(descriptionBuilder: DescriptionCallback): Unit = {
     loadClassDescription(descriptionBuilder);
     loadThreadAndLoopDescription(descriptionBuilder);
   }
@@ -48,7 +48,7 @@ class LoadDescriptionImpl(dir: Path) extends LoadDescription {
     }
   }
 
-  private def loadClassDescription(descriptionBuilder: DescriptionBuilder): Unit = {
+  private def loadClassDescription(descriptionBuilder: DescriptionCallback): Unit = {
     val stream = new DataInputStream(Files.newInputStream(dir.resolve(DESCRIPTION + EVENT_FILE_POSTFIX)))
     val deserializeClassDescriptions = new DeserializeClassDescriptions();
     val classDescriptionIter = deserializeClassDescriptions.deserialize(stream).iterator();
@@ -59,7 +59,7 @@ class LoadDescriptionImpl(dir: Path) extends LoadDescription {
     stream.close();
   }
 
-  private def loadThreadAndLoopDescription(descriptionBuilder: DescriptionBuilder): Unit = {
+  private def loadThreadAndLoopDescription(descriptionBuilder: DescriptionCallback): Unit = {
     val stream = new DataInputStream(Files.newInputStream(dir.resolve(THREAD_AND_LOOP_DESCRIPTION + EVENT_FILE_POSTFIX)))
     val deserializeThreadAndLoopDescription = new DeserializeThreadAndLoopDescription();
     val threadAndLoopDescriptionIter = deserializeThreadAndLoopDescription.deserialize(stream).iterator();

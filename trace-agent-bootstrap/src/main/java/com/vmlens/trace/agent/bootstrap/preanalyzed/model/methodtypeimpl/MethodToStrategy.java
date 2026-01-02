@@ -12,6 +12,8 @@ public class MethodToStrategy extends AbstractMethodType  {
     public static final AbstractMethodType FUTURE_GET = new MethodToStrategy(new BarrierWaitStrategy(BarrierKeyTypeFuture.SINGLETON));
     public static final AbstractMethodType FUTURE_SET = new MethodToStrategy(new BarrierNotifyStrategy(
             BarrierKeyTypeFuture.SINGLETON));
+    public static final AbstractMethodType FUTURE_GET_STATE = new MethodToStrategy(new BarrierGetStateStrategy(BarrierKeyTypeFuture.SINGLETON));
+
     public static final AbstractMethodType METHOD_ENTER_EXIT = new MethodToStrategy(new MethodEnterExitStrategy());
 
 

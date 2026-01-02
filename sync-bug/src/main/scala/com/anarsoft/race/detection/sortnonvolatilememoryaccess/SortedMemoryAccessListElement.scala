@@ -1,8 +1,8 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
-import com.anarsoft.race.detection.reportbuilder.{EventForReportElement, NonVolatileEventForReport}
+import com.anarsoft.race.detection.report.{EventForReportElement, NonVolatileEventForReport}
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.report.runelementtype.{VolatileAccess, RunElementType}
+import com.anarsoft.race.detection.report.element.runelementtype.ReportOperation
 
 private class SortedMemoryAccessListElement(var isDataRace: Boolean,
                                             val event: NonVolatileEventForReport) extends EventForReportElement {
@@ -19,7 +19,7 @@ private class SortedMemoryAccessListElement(var isDataRace: Boolean,
 
   def stacktraceNode: Option[StacktraceNode] = event.stacktraceNode;
 
-  def runElementType: RunElementType = event.runElementType(isDataRace);
+  def runElementType: ReportOperation = event.runElementType(isDataRace);
   
 
 }

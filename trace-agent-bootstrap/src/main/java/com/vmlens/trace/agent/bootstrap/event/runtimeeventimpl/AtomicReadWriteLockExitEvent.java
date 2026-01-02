@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.event.gen.AtomicReadWriteLockExitEventGe
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NoThreadOperationFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.LockExit;
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.lock.LockType;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
@@ -26,8 +26,9 @@ public class AtomicReadWriteLockExitEvent extends AtomicReadWriteLockExitEventGe
         this.threadIndex = threadIndex;
     }
 
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
         this.methodCounter = perThreadCounter.methodCount();
+        this.dominatorTreeCounter = perThreadCounter.incrementDominatorTreeAndGetMiddle();
     }
 
     public void setLoopId(int loopId) {

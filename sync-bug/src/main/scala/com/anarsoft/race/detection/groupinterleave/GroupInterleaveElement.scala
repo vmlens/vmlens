@@ -1,9 +1,9 @@
 package com.anarsoft.race.detection.groupinterleave
 
+import com.anarsoft.race.detection.createdominatortreeevent.BuildDominatorTreeContext
 import com.anarsoft.race.detection.createlastthreadposition.LastThreadPositionMap
 import com.anarsoft.race.detection.partialorder.BuildPartialOrderContext
 import com.anarsoft.race.detection.stacktrace.StacktraceNode
-import com.vmlens.report.assertion.OnEvent
 
 trait GroupInterleaveElement extends GroupInterleaveElementForResult {
   
@@ -13,6 +13,5 @@ trait GroupInterleaveElement extends GroupInterleaveElementForResult {
 
   def addToPartialOrderBuilder(partialOrderBuilder: BuildPartialOrderContext): Unit;
   
-  def addToOnEvent(onEvent : OnEvent) : Unit;
-  
+  def addToBuildDominatorTreeContext(buildDominatorTreeContext : BuildDominatorTreeContext) : Unit;
 }

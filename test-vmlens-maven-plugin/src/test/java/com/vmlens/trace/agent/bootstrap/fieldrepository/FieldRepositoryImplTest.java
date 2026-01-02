@@ -20,7 +20,7 @@ public class FieldRepositoryImplTest {
             new FieldOwnerAndName("com.vmlens.test.Test",  "normalField");
 
     @Test
-    public void testAsIntAndGetIdAndSetFieldIsNormal() throws InterruptedException {
+    public void testAsIntAndGetIdAndSetFieldIsNormal() {
         try(AllInterleavings allInterleavings =
                     new AllInterleavings("testAsIntAndGetIdAndSetFieldIsNormal")) {
             while (allInterleavings.hasNext()) {

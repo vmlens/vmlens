@@ -14,7 +14,11 @@ public interface RuntimeEvent extends SerializableEvent, EitherPluginEventOnlyOr
        serialize(getStream(streamRepository).getStream());
     }
 
-    void setMethodCounter(PerThreadCounter perThreadCounter);
+    /**
+     * sets the method and dominator tree counter
+     * @param perThreadCounter
+     */
+    void setCounter(PerThreadCounter perThreadCounter);
     void setThreadIndex(int threadIndex);
 
     int loopId();

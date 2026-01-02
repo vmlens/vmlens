@@ -5,4 +5,6 @@ public interface  PerThreadCounter {
     int incrementAndGetMethodCount();
     int methodCount();
 
+    int dominatorTreeCount();
+    int incrementDominatorTreeAndGetMiddle();
 }

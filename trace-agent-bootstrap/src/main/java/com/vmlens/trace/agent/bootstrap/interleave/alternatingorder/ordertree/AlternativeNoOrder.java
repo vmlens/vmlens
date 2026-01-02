@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree;
 
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+
 public class AlternativeNoOrder implements OrderAlternative {
 
     private final boolean processFlag;
@@ -24,5 +26,10 @@ public class AlternativeNoOrder implements OrderAlternative {
     @Override
     public int hashCode() {
         return Boolean.hashCode(processFlag);
+    }
+
+    @Override
+    public boolean createOrder(LeftBeforeRight leftBeforeRight) {
+        return false;
     }
 }

@@ -47,7 +47,7 @@ public class LastActionInThreadRuntimeEvent implements RuntimeEvent, InterleaveA
     }
 
     @Override
-    public void setMethodCounter(PerThreadCounter perThreadCounter) {
+    public void setCounter(PerThreadCounter perThreadCounter) {
 
     }
 

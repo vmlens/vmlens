@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.23</version>
+    <version>1.2.24</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -73,6 +73,11 @@
             <dependency>
                 <groupId>org.jgrapht</groupId>
                 <artifactId>jgrapht-core</artifactId>
+                <version>1.5.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jgrapht</groupId>
+                <artifactId>jgrapht-io</artifactId>
                 <version>1.5.2</version>
             </dependency>
             <dependency>

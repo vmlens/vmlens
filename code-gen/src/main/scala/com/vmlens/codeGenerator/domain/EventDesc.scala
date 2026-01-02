@@ -93,6 +93,7 @@ object EventDesc extends GenericDesc {
   val messageId = new FieldDesc("messageId", intTyp)
   val messageParam = new FieldDesc("messageParam", intTyp)
   val eventType  = new FieldDesc("eventType", intTyp)
+  val dominatorTreeCounter = new FieldDesc("dominatorTreeCounter", intTyp)
 
   
   def plusInterleaveFields(fields: ArrayBuffer[FieldDesc]): ArrayBuffer[FieldDesc] = {
@@ -100,6 +101,7 @@ object EventDesc extends GenericDesc {
       clone.append(loopId);
       clone.append(runId);
       clone.append(runPosition);
+      clone.append(dominatorTreeCounter);
       clone;
     }
 
@@ -136,6 +138,7 @@ object EventDesc extends GenericDesc {
       // For Phaser we also need here WaitEnterAndNotify Event
       eventList.append(barrier("BarrierWaitEnterEventGen", " extends BarrierWaitEnterEvent", typSyncActions));
       eventList.append(barrier("BarrierWaitExitEventGen", " extends BarrierWaitExitEvent  ", typSyncActions));
+      eventList.append(barrier("BarrierGetStateEventGen", " extends BarrierGetStateEvent  ", typSyncActions));
       // Notify works on all related barriers, e.g. similar to notify all
       // probably makes sense to integrate the count for phaser an so on?
       eventList.append(barrier("BarrierNotifyEventGen", " extends BarrierNotifyEvent", typSyncActions));

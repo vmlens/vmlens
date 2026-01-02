@@ -64,8 +64,8 @@ public class ParallelizeLoopRepository {
                 InterleaveLoopContextBuilder builder = new InterleaveLoopContextBuilder();
                 builder.withMaximumIterations(getValue(config,"maximumIterations" ,
                         AllInterleavingsBuilder.MAXIMUM_ITERATIONS,queueIn));
-                builder.withMaximumAlternatingOrders(getValue(config,"maximumAlternatingOrders" ,
-                        AllInterleavingsBuilder.MAXIMUM_ALTERNATING_ORDERS,queueIn));
+                builder.withRemoveCycleThreshold(getValue(config,"removeCycleThreshold" ,
+                        AllInterleavingsBuilder.REMOVE_CYCLE_THRESHOLD,queueIn));
 
                 parallelizeLoop = parallelizeLoopFactory.create(maxLoopId, builder.build(queueIn,maxLoopId));
                 maxLoopId++;

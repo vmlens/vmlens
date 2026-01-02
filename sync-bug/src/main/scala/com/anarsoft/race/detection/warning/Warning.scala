@@ -1,12 +1,16 @@
 package com.anarsoft.race.detection.warning
 
 import com.anarsoft.race.detection.event.control.LoopWarningEvent
-import com.vmlens.report.element.TestResult
+import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
 import com.vmlens.trace.agent.bootstrap.event.warning.LoopWarningEvent.*
+import com.anarsoft.race.detection.report.element.TestResult
+
 
 trait Warning {
       def forRun() : Boolean;
-      def addToTestResult(testResult : TestResult) : Unit; 
+      def addToTestResult(descriptionContext : DescriptionContext, testResult : TestResult) : Unit;
+      def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit;
+    
 }
 
 object Warning {
@@ -22,7 +26,7 @@ object Warning {
      new NotYetImplemented(loopWarningEvent.messageParam);
    } else if(loopWarningEvent.messageId == MAXIMUM_ITERATIONS_REACHED) {
      new SmallWarning("Maximum Iterations Reached");
-   } else if(loopWarningEvent.messageId == MAXIMUM_ALTERNATING_ORDERS_REACHED ) {
+   } else if(loopWarningEvent.messageId == CYCLES_REMOVED ) {
      new MaximumAlternatingOrdersReached(loopWarningEvent.messageParam)
    } else {
      throw new RuntimeException("unknown messageId:" + loopWarningEvent.messageId)

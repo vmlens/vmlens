@@ -36,7 +36,8 @@ class MethodEnterEventBuilder {
       methodEnterEvent.methodId(),
       methodEnterEvent.methodCounter(),
       methodEnterEvent.loopId(),
-      methodEnterEvent.runId()
+      methodEnterEvent.runId(),
+      0
     );
   }
 

@@ -1,12 +1,17 @@
 package com.anarsoft.race.detection.warning
 
-import com.vmlens.report.element.TestResult
+import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
+import com.anarsoft.race.detection.report.element.TestResult
+
 
 class SmallWarningForRun(val text : String) extends Warning {
 
+  override def addToNeedsDescription(callback: NeedsDescriptionCallback): Unit = {
+  }
+
   override def forRun(): Boolean = true;
 
-  override def addToTestResult(testResult: TestResult): Unit = {
+  override def addToTestResult(descriptionContext : DescriptionContext, testResult: TestResult): Unit = {
     testResult.addSmallWarningText(text)
   }
   

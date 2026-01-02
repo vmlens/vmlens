@@ -29,7 +29,7 @@ public class ClassTransformerPreAnalyzedTest {
        runTestClassTransformer.runTest("com.vmlens.test.guineapig.ReflectField", "/reflectField.txt");
    }
 
-    //@Test
+    @Test
     public void newUpdater() throws IOException {
         // Given
         PreAnalyzedMethod[] methods = new PreAnalyzedMethod[]{

@@ -1,10 +1,9 @@
 package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
-import com.anarsoft.race.detection.reportbuilder.EventForReportElement
+import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
 import com.anarsoft.race.detection.sortutil.{BarrierContainer, EventContainer, MonitorContainer}
-import com.vmlens.report.runelementtype.{BarrierOperation, RunElementType}
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeCollection
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKey

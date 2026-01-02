@@ -30,4 +30,9 @@ public class AlternativeOneOrder implements OrderAlternative {
     public int hashCode() {
         return Objects.hashCode(leftBeforeRight);
     }
+
+    @Override
+    public boolean createOrder(LeftBeforeRight orderInCycle) {
+        return orderInCycle.equals(leftBeforeRight);
+    }
 }

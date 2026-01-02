@@ -6,7 +6,6 @@ import com.anarsoft.race.detection.event.nonvolatile.NonVolatileFieldAccessEvent
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElementBuilder
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileElementBuilder
 import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunData}
-import com.vmlens.report.assertion.{OnDescriptionAndLeftBeforeRightNoOp, OnEventNoOp}
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -41,9 +40,9 @@ class DataRaceIntTest extends AnyFlatSpec with Matchers {
     val objectHashCode = 0L;
 
     val read = new FieldAccessEventGen(0, fieldId, methodCounter,
-      MemoryAccessType.IS_READ, methodId, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 0);
+      MemoryAccessType.IS_READ, methodId, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 0, 0);
     val write = new FieldAccessEventGen(1, fieldId, methodCounter,
-      MemoryAccessType.IS_WRITE, methodId, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 3);
+      MemoryAccessType.IS_WRITE, methodId, objectHashCode, loopIdAndRunId.loopId, loopIdAndRunId.runId, 3 , 0);
 
     val list = new util.LinkedList[NonVolatileFieldAccessEvent]();
     list.add(read)

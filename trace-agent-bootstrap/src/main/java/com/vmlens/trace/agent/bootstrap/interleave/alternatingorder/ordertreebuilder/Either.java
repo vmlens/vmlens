@@ -1,10 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElement;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElementEither;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeNode;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.SingleChildNode;
 
-public class Either extends StartOrEither {
+public class Either extends StartOrEither implements NodeBuilder {
 
     private final OrderAlternative orderAlternativeA;
     private final OrderAlternative orderAlternativeB;
@@ -15,14 +15,7 @@ public class Either extends StartOrEither {
     }
 
     @Override
-    public OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext) {
-        OrderTreeNode nextNode = null;
-        orderTreeBuilderContext.incrementEitherBlockCount();
-        if( ! orderTreeBuilderContext.thresholdReached()) {
-            if(getNext() != null) {
-                nextNode = getNext().build(orderTreeBuilderContext);
-            }
-        }
-        return new SingleChildNode(nextNode,orderAlternativeA,orderAlternativeB);
+    public ListElement build() {
+        return new ListElementEither(orderAlternativeA,orderAlternativeB);
     }
 }

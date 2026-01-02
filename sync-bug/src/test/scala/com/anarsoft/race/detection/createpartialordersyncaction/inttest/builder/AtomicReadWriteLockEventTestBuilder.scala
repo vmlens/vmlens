@@ -18,6 +18,7 @@ class AtomicReadWriteLockEventTestBuilder(val objectHashCode  : Long) extends Ab
       loopId,
       runId,
       pos.runPosition,
+      0,
       atomicMethodId
     )
   }
@@ -34,6 +35,7 @@ class AtomicReadWriteLockEventTestBuilder(val objectHashCode  : Long) extends Ab
       loopId,
       runId,
       pos.runPosition,
+      0,
       atomicMethodId)
   }
 

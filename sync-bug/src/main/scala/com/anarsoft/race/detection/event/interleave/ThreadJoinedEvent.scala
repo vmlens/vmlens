@@ -2,11 +2,13 @@ package com.anarsoft.race.detection.event.interleave
 
 import com.anarsoft.race.detection.createpartialorderthreadoperation.ThreadOperation
 import com.anarsoft.race.detection.partialorder.{BuildPartialOrderContext, WithPositionImpl}
-import com.anarsoft.race.detection.reportbuilder.EventForReportElement
+import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
-import com.vmlens.report.element.LoopRunAndThreadIndex
-import com.vmlens.report.runelementtype.{RunElementType, UIThreadOperation, ThreadRunElementType}
+import com.anarsoft.race.detection.report.element.runelementtype.{ReportOperation, ReportThreadOperation}
 import com.vmlens.trace.agent.bootstrap.event.EventTypeThread
+import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationThread
+import com.anarsoft.race.detection.report.element.LoopRunAndThreadIndex
+
 
 trait ThreadJoinedEvent extends LoadedInterleaveActionEvent  with ThreadOperation
   with EventForReportElement
@@ -24,9 +26,9 @@ trait ThreadJoinedEvent extends LoadedInterleaveActionEvent  with ThreadOperatio
       joinedThreadIndex),this)
   }
 
-  override def runElementType: RunElementType = {
+  override def runElementType: ReportOperation = {
     val threadType = EventTypeThread.fromCode(eventType);
-    new ThreadRunElementType( threadType, UIThreadOperation.JOIN , new LoopRunAndThreadIndex(loopId, runId, joinedThreadIndex));
+    new OperationThread( threadType, ReportThreadOperation.JOIN , new LoopRunAndThreadIndex(loopId, runId, joinedThreadIndex));
   }
   
 }

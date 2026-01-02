@@ -1,7 +1,6 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
-
-import com.anarsoft.race.detection.reportbuilder.{EventForReportElement, NonVolatileEventForReport, StaticMemoryAccessId}
+import com.anarsoft.race.detection.report.{EventForReportElement, NonVolatileEventForReport, StaticMemoryAccessId}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer

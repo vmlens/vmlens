@@ -35,4 +35,9 @@ public class AlternativeTwoOrders implements OrderAlternative {
         result = 31 * result + Objects.hashCode(secondOrder);
         return result;
     }
+
+    @Override
+    public boolean createOrder(LeftBeforeRight leftBeforeRight) {
+        return leftBeforeRight.equals(firstOrder) || leftBeforeRight.equals(secondOrder);
+    }
 }

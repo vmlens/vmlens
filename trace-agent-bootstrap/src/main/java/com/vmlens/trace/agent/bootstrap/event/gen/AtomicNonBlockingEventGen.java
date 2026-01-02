@@ -17,6 +17,7 @@ public class AtomicNonBlockingEventGen  {
     protected int     loopId;
     protected int     runId;
     protected int     runPosition;
+    protected int     dominatorTreeCounter;
 
 @Override
 public boolean equals(Object o) {
@@ -34,6 +35,7 @@ public boolean equals(Object o) {
     if ( loopId != that.loopId) return false;
     if ( runId != that.runId) return false;
     if ( runPosition != that.runPosition) return false;
+    if ( dominatorTreeCounter != that.dominatorTreeCounter) return false;
     return true;
 }
 
@@ -50,6 +52,7 @@ public String toString() {
     "loopId=" + loopId +
     "runId=" + runId +
     "runPosition=" + runPosition +
+    "dominatorTreeCounter=" + dominatorTreeCounter +
     '}';
 }
 
@@ -71,6 +74,7 @@ buffer.write( (byte)  6 );
      buffer.writeInt( loopId ); 
      buffer.writeInt( runId ); 
      buffer.writeInt( runPosition ); 
+     buffer.writeInt( dominatorTreeCounter ); 
 }
 
 

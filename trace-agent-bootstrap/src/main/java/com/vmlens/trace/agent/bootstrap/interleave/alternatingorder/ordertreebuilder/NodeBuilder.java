@@ -1,10 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.ListElement;
 
 public interface NodeBuilder {
 
-    OrderTreeNode build(OrderTreeBuilderContext orderTreeBuilderContext);
     NodeBuilder getNext();
+    ListElement build();
 
 }
