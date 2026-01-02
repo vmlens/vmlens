@@ -52,6 +52,21 @@ method:hasNext()Z
   ALOAD_0
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.hasNext:(Ljava/lang/Object;)Z
   IRETURN
+method:next()Lcom/vmlens/api/Interleaving;
+  NEW  com/vmlens/api/Interleaving
+  DUP
+  ALOAD_0
+  GETFIELD  com/vmlens/api/AllInterleavings.index:I
+  INVOKESPECIAL  com/vmlens/api/Interleaving.<init>:(I)V
+  ASTORE_1
+  ALOAD_0
+  DUP
+  GETFIELD  com/vmlens/api/AllInterleavings.index:I
+  ICONST_1
+  IADD
+  PUTFIELD  com/vmlens/api/AllInterleavings.index:I
+  ALOAD_1
+  ARETURN
 method:close()V
   ALOAD_0
   ALOAD_0
@@ -76,3 +91,10 @@ method:hasNext(Ljava/lang/Object;)Z
   IRETURN
 method:close(Ljava/lang/Object;)V
   RETURN
+method:iterator()Ljava/util/Iterator;
+  ALOAD_0
+  ARETURN
+method:next()Ljava/lang/Object;
+  ALOAD_0
+  INVOKEVIRTUAL  com/vmlens/api/AllInterleavings.next:()Lcom/vmlens/api/Interleaving;
+  ARETURN

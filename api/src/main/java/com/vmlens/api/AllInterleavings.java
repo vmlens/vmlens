@@ -1,8 +1,10 @@
 package com.vmlens.api;
 
 import java.util.AbstractMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.vmlens.api.AllInterleavingsBuilder.*;
 
@@ -31,7 +33,7 @@ import static com.vmlens.api.AllInterleavingsBuilder.*;
  * }</pre>
  *
  */
-public class AllInterleavings implements AutoCloseable {
+public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, Iterator<Interleaving> {
 
 	private final static String ERROR_MESSAGE_PART_1 = "The vmlens java agent is not configured.";
 	private final static String ERROR_MESSAGE_PART_2 = "See https://vmlens.com/docs/ for configuring the vmlens java agent.";
@@ -42,6 +44,7 @@ public class AllInterleavings implements AutoCloseable {
 	public final int synchronizationActionsLoopThreshold;
 	public final int unsynchronizedOperationsLoopThreshold;
 	public final int reportAsSummaryThreshold;
+	private int index;
 
 	public final List<AbstractMap.SimpleImmutableEntry<String,String>> intentionalDataRaces;
 
@@ -102,7 +105,13 @@ public class AllInterleavings implements AutoCloseable {
 		return hasNext(this);
 	}
 
-	
+	@Override
+	public Interleaving next() {
+		Interleaving interleaving =  new Interleaving(index);
+		index++;
+		return interleaving;
+	}
+
 	/**
 	 * closes this instance
 	 */
@@ -123,4 +132,8 @@ public class AllInterleavings implements AutoCloseable {
 		
 	}
 
+	@Override
+	public Iterator<Interleaving> iterator() {
+		return this;
+	}
 }
