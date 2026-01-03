@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Class Concurrency Specification",
+  "type": "object",
+  "required": ["version", "classes"],
+  "properties": {
+    "version": { "type": "string" },
+    "classes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/classDefinition" }
+    }
+  },
+  "$defs": {
+    "classDefinition": {
+      "type": "object",
+      "required": ["name", "methods"],
+      "properties": {
+        "name": { "type": "string" },
+        "methods": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/methodDefinition" }
+        }
+      }
+    },
+    "methodDefinition": {
+      "type": "object",
+      "required": ["name", "threadSafety"],
+      "properties": {
+        "name": { "type": "string" },
+        "threadSafety": { "enum": ["atomic", "thread-safe", "non-thread-safe", "immutable"] },
+        "argumentTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "asmDescriptor": {
+          "type": "string"
+        }
+      },
+      "not": {
+        "required": ["argumentTypes", "asmDescriptor"],
+        "description": "Prevents both fields from being present at the same time."
+      }
+    }
+  }
+}

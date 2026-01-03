@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.24</version>
+        <version>1.2.25-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>

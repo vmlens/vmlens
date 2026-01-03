@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.24</version>
+    <version>1.2.25-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -296,6 +296,7 @@
  </dependencyManagement>
 
  <modules>
+     <module>specification</module>
      <module>code-gen</module>
      <module>test-util</module>
      <module>api</module>
