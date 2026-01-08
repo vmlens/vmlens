@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.event.interleave
 
+import com.anarsoft.race.detection.createdominatortreeevent.CreateDominatorTreeContext
 import com.anarsoft.race.detection.sortutil.lockcontainer.{LockContainer, NoLock}
 
 trait WithLockExitEvent extends WithLockEventGeneric[WithLockExitEvent] {
@@ -16,5 +17,11 @@ trait WithLockExitEvent extends WithLockEventGeneric[WithLockExitEvent] {
     // enter followed by an exit n an different thread can not happen
   }
 
+  override def add(context: CreateDominatorTreeContext): Unit = {
+    context.stack.lockExit(lockTypeClass().reportLockType(),
+      context.objectHashCodeToInt.get(objectHashCode),
+      context.graph,
+      context.alreadyAdded);
+  }
 
 }

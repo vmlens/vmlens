@@ -1,12 +1,13 @@
 package com.anarsoft.race.detection.createdominatortree
 
-import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, InternalNode, LeafNode, VertexAtomicNonBlockingOrVolatile, VertexMethod, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, InternalNode, LeafNode, VertexAtomicNonBlockingOrVolatile, VertexLock, VertexMethod, VertexMonitor, VertexRoot}
+import com.anarsoft.race.detection.report.element.runelementtype.ReportLockType
 import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.MemoryAccessKey
 import com.anarsoft.race.detection.util.Stack
 import com.vmlens.report.dominatortree.UIStateElementSortKey
 import org.jgrapht.Graph
 import org.jgrapht.graph.DefaultEdge
-import  com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
 
 import scala.collection.mutable
 
@@ -27,8 +28,32 @@ class CreateGraphStack(val root :  VertexRoot, val threadIndex : Int) {
     }
   }
   
-  def addToGraph(graph : Graph[DominatorTreeVertex,DefaultEdge], 
-                 alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
+  def monitorEnter(monitorId : Int): Unit = {
+    stack.push(VertexMonitor(monitorId))
+  }
+
+  def monitorExit(graph : Graph[DominatorTreeVertex,DefaultEdge],
+                  alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
+    addAllElementsOfStackToGraph(graph,alreadyAdded);
+    if (stack.nonEmpty) {
+      stack.pop();
+    }
+  }
+  
+  def lockEnter(lockType : ReportLockType, id : Int) : Unit = {
+    stack.push(VertexLock(lockType, id))
+  }
+
+  def lockExit(lockType : ReportLockType, 
+               id : Int,
+               graph : Graph[DominatorTreeVertex,DefaultEdge],
+               alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
+    addAllElementsOfStackToGraph(graph, alreadyAdded);
+    stack.removeFirst(VertexLock(lockType,id))
+  }
+  
+  def addAllElementsOfStackToGraph(graph : Graph[DominatorTreeVertex,DefaultEdge],
+                                   alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
     var previous : InternalNode = root;
     for(elem <- stack){
       if(! alreadyAdded.contains(elem)) {

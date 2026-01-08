@@ -24,7 +24,7 @@ class GroupInterleaveElementBuilder {
 
   def addAtomicReadWriteLockEvents(list: util.LinkedList[WithLockEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionWithoutSummary[WithLockEvent](
+      new GroupInterleaveElementSyncActionNoOp[WithLockEvent](
         EventArray[WithLockEvent](list), GroupInterleaveElementBuilder.create_container_lock));
   }
   
@@ -69,7 +69,7 @@ class GroupInterleaveElementBuilder {
 
   def addBarrierEvents(list: util.LinkedList[BarrierEvent]): Unit = {
     arrayBuffer.append(
-      new GroupInterleaveElementSyncActionWithoutSummary[BarrierEvent](
+      new GroupInterleaveElementSyncActionNoOp[BarrierEvent](
         EventArray[BarrierEvent](list),
         (event: BarrierEvent) => event.create()));
   }

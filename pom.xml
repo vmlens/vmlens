@@ -296,7 +296,6 @@
  </dependencyManagement>
 
  <modules>
-     <module>specification</module>
      <module>code-gen</module>
      <module>test-util</module>
      <module>api</module>

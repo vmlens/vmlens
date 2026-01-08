@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.event.interleave
 
+import com.anarsoft.race.detection.createdominatortreeevent.CreateDominatorTreeEvent
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.report.EventForReportElement
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
@@ -8,7 +9,8 @@ import com.anarsoft.race.detection.sortutil.MonitorContainer
 trait MonitorEvent extends LoadedInterleaveActionEvent 
   with EventForReportElement
   with WithSetStacktraceNode
-  with SyncActionEventWithCompareType[MonitorEvent] {
+  with SyncActionEventWithCompareType[MonitorEvent]
+  with CreateDominatorTreeEvent  {
 
   def create(): MonitorContainer;
 

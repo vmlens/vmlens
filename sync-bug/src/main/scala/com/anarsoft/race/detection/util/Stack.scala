@@ -9,6 +9,18 @@ class Stack[A] {
   def push(elem: A): Unit =
     buffer += elem
 
+  def removeFirst(elem: A): Boolean = {
+    // Start from the top (end of the buffer) and go backwards
+    val index = buffer.lastIndexWhere(_ == elem)
+    if (index >= 0) {
+      buffer.remove(index)
+      true
+    } else {
+      false
+    }
+  }
+  
+  
   def pop(): A = {
     if (buffer.isEmpty)
       throw new NoSuchElementException("pop on empty stack")

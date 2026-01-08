@@ -150,7 +150,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       FilterInnerIncludeAnonymousClass("java/lang/Thread$"),
 
       VMLensApi("com/vmlens/api/AllInterleavings"),
-      DoNotTraceIn("com/vmlens/api/TestResultMap"),
+
       
       atomicIntegerFieldUpdater(),
       
