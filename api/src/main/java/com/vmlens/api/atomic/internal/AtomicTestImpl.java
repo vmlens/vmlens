@@ -1,6 +1,5 @@
 package com.vmlens.api.atomic.internal;
 
-import com.vmlens.api.atomic.AtomicTest;
 import com.vmlens.api.atomic.internal.concurrent.CheckAfterJoin;
 import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
 import com.vmlens.api.atomic.internal.concurrent.ConcurrentTestCase;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 
-public class AtomicTestImpl<CLASS_UNDER_TEST> implements AtomicTest {
+public class AtomicTestImpl<CLASS_UNDER_TEST>  {
 
     private final Supplier<CLASS_UNDER_TEST> createClassUnderTest;
     private final List<RecordUpdateFactory<CLASS_UNDER_TEST>> writeList;

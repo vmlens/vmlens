@@ -47,7 +47,6 @@ public class ConcurrentTestCase<CLASS_UNDER_TEST> {
                 }
             }
 
-
             for (CheckAfterJoin<CLASS_UNDER_TEST> check : checkAfterJoinList) {
                 if( ! check.readAndCheck(classUnderTest)) {
                     throw new RuntimeException("");

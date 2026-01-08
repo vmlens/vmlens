@@ -42,6 +42,6 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
 
     @Override
     public String getLabel() {
-        return "";
+        return functionAndCompare.getLabel();
     }
 }

@@ -18,9 +18,9 @@ public class AtomicTestBuilder<CLASS_UNDER_TEST> {
     private final Supplier<CLASS_UNDER_TEST> createClassUnderTest;
     private final List<RecordUpdateFactory<CLASS_UNDER_TEST>> writeList = new LinkedList<>();
     private final List<RecordReadOnlyFactory<CLASS_UNDER_TEST>> readOnlyList = new LinkedList<>();
-    private int addWritePosition = 1;
-    private int addUpdatePosition = 1;
-    private int addReadOnlyPosition = 1;
+    private int addWritePosition = 0;
+    private int addUpdatePosition = 0;
+    private int addReadOnlyPosition = 0;
 
     public AtomicTestBuilder(Supplier<CLASS_UNDER_TEST> createClassUnderTest) {
         this.createClassUnderTest = createClassUnderTest;
@@ -44,8 +44,8 @@ public class AtomicTestBuilder<CLASS_UNDER_TEST> {
         return this;
     }
 
-    public AtomicTest build() {
-        return new AtomicTestImpl<>(createClassUnderTest,writeList,readOnlyList);
+    public void runTests() {
+        new AtomicTestImpl<>(createClassUnderTest,writeList,readOnlyList).runTests();
     }
 
 }

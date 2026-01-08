@@ -6,6 +6,8 @@ import com.vmlens.api.atomic.internal.recording.RecordUpdateFactory;
 
 import java.util.function.Consumer;
 
+import static com.vmlens.api.atomic.internal.wrapper.CreateLabel.createLabel;
+
 public class ConsumerWrapper<CLASS_UNDER_TEST> implements RecordUpdateFactory<CLASS_UNDER_TEST> ,
         RecordUpdate<CLASS_UNDER_TEST> ,
         ConcurrentCall<CLASS_UNDER_TEST>   {
@@ -31,7 +33,7 @@ public class ConsumerWrapper<CLASS_UNDER_TEST> implements RecordUpdateFactory<CL
 
     @Override
     public String getLabel() {
-        return "method call added by " + addPosition + " addWrite";
+        return createLabel(" addWrite", addPosition );
     }
 
     @Override

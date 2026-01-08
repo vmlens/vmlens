@@ -7,6 +7,8 @@ import com.vmlens.api.atomic.internal.recording.RecordReadOnlyFactory;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
+import static com.vmlens.api.atomic.internal.wrapper.CreateLabel.createLabel;
+
 public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordReadOnlyFactory<CLASS_UNDER_TEST> {
 
     private final Function<CLASS_UNDER_TEST,READ_VALUE> function;
@@ -39,9 +41,9 @@ public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordRe
 
     public String getLabel() {
         if(isReadOnly) {
-            return "";
+            return createLabel(" addReadOnly", addPosition );
         }
-        return "method call added by " + addPosition + " addUpdate";
+        return createLabel(" addUpdate", addPosition );
     }
 
 
