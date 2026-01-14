@@ -1,11 +1,12 @@
 package com.vmlens.codeGenerator.domain
 
 import com.vmlens.codeGenerator.domain.EventDescAtomicNonBlocking.{atomicArray, atomicNonBlocking}
+import com.vmlens.codeGenerator.domain.EventDescAutomaticTest.{automaticTestMethod, automaticTestSuccess}
 import com.vmlens.codeGenerator.domain.EventDescBarrier.barrier
 import com.vmlens.codeGenerator.domain.EventDescCondition.{conditionNotify, conditionWait}
 import com.vmlens.codeGenerator.domain.EventDescControl.{runStartAndEnd, warning}
 import com.vmlens.codeGenerator.domain.EventDescLockOrMonitor.{lock, methodWithLock, monitor}
-import com.vmlens.codeGenerator.domain.EventDescMethod.{methodEnter,methodExit}
+import com.vmlens.codeGenerator.domain.EventDescMethod.{methodEnter, methodExit}
 import com.vmlens.codeGenerator.domain.EventDescNonVolatileField.{arrayAccess, normalField, staticField}
 import com.vmlens.codeGenerator.domain.EventDescThread.{threadJoin, threadStart}
 import com.vmlens.codeGenerator.domain.EventDescVolatileField.{volatileField, volatileStaticField}
@@ -94,7 +95,9 @@ object EventDesc extends GenericDesc {
   val messageParam = new FieldDesc("messageParam", intTyp)
   val eventType  = new FieldDesc("eventType", intTyp)
   val dominatorTreeCounter = new FieldDesc("dominatorTreeCounter", intTyp)
-
+  val automaticTestType = new FieldDesc("automaticTestType", intTyp)
+  val automaticTestId = new FieldDesc("automaticTestId", intTyp)
+  val automaticTestMethodId = new FieldDesc("automaticTestMethodId", intTyp)
   
   def plusInterleaveFields(fields: ArrayBuffer[FieldDesc]): ArrayBuffer[FieldDesc] = {
       val clone = fields.clone();
@@ -114,6 +117,8 @@ object EventDesc extends GenericDesc {
       val typSyncActions = new EventTyp("Interleave", eventTypList, true, "LoadedInterleaveActionEvent");
       val typMethod = new EventTyp("Method", eventTypList, true, "LoadedMethodEvent");
       val typControl = new EventTyp("Control", eventTypList, true, "LoadedControlEvent");
+      val typAutomaticTest = new EventTyp("AutomaticTest", eventTypList, true, "LoadedAutomaticTestEvent");
+
 
       
       eventList.append(normalField("FieldAccessEventGen"," extends NonVolatileFieldAccessEvent", typField));
@@ -159,6 +164,10 @@ object EventDesc extends GenericDesc {
       eventList.append(runStartAndEnd("RunStartEventGen", " extends RunStartEvent  ",  typControl));
       eventList.append(runStartAndEnd("RunEndEventGen", " extends RunEndEvent  "  , typControl));
       eventList.append(warning("LoopWarningEventGen", " extends LoopWarningEvent  ", typControl));
+
+
+      eventList.append(automaticTestMethod("AutomaticTestMethodEventGen", " extends AutomaticTestEvent  ", typAutomaticTest));
+      eventList.append(automaticTestSuccess("AutomaticTestSuccessEventGen", " extends AutomaticTestSuccessEvent  ", typAutomaticTest));
 
       eventList;
     }

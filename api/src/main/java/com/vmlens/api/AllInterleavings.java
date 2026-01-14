@@ -4,7 +4,6 @@ import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.vmlens.api.AllInterleavingsBuilder.*;
 
@@ -119,6 +118,19 @@ public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, 
 		close(this);
 	}
 
+	@Override
+	public Iterator<Interleaving> iterator() {
+		return this;
+	}
+	
+	public void automaticTestSuccess(int id, String className) {
+		automaticTestSuccess(this,id,className);
+	}
+
+	public void automaticTestMethod(int id, int automaticTestMethodId, int automaticTestType) {
+		automaticTestMethod(this,id,automaticTestMethodId, automaticTestType);
+	}
+
 	private boolean hasNext(Object object) {
 		if(throwExceptionWhenNoAgent) {
 			throw new RuntimeException(ERROR_MESSAGE_PART_1 + " " + ERROR_MESSAGE_PART_2);
@@ -132,8 +144,17 @@ public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, 
 		
 	}
 
-	@Override
-	public Iterator<Interleaving> iterator() {
-		return this;
+	private void automaticTestSuccess(Object obj, int id, String className) {
+
 	}
+
+
+	private void automaticTestMethod(Object obj, int id,  int automaticTestMethodId , int automaticTestType) {
+
+	}
+
+	
+	
+	
+	
 }

@@ -1,5 +1,6 @@
 package com.vmlens.api.atomic.internal;
 
+import com.vmlens.api.AllInterleavings;
 import com.vmlens.api.atomic.internal.concurrent.CheckAfterJoin;
 import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
 import com.vmlens.api.atomic.internal.concurrent.ConcurrentTestCase;
@@ -18,13 +19,16 @@ public class AtomicTestImpl<CLASS_UNDER_TEST>  {
     private final Supplier<CLASS_UNDER_TEST> createClassUnderTest;
     private final List<RecordUpdateFactory<CLASS_UNDER_TEST>> writeList;
     private final List<RecordReadOnlyFactory<CLASS_UNDER_TEST>> readOnlyList;
+    private final int atomicTestId;
 
     public AtomicTestImpl(Supplier<CLASS_UNDER_TEST> createClassUnderTest,
                           List<RecordUpdateFactory<CLASS_UNDER_TEST>> writeList,
-                          List<RecordReadOnlyFactory<CLASS_UNDER_TEST>> readOnlyList) {
+                          List<RecordReadOnlyFactory<CLASS_UNDER_TEST>> readOnlyList,
+                          int atomicTestId) {
         this.createClassUnderTest = createClassUnderTest;
         this.writeList = writeList;
         this.readOnlyList = readOnlyList;
+        this.atomicTestId = atomicTestId;
     }
 
     public void runTests() {
@@ -33,6 +37,7 @@ public class AtomicTestImpl<CLASS_UNDER_TEST>  {
         for(ConcurrentTestCase<CLASS_UNDER_TEST> testCase : testCaseList) {
             testCase.run(name);
         }
+        new AllInterleavings("not used").automaticTestSuccess(atomicTestId, name);
     }
 
 
@@ -52,6 +57,21 @@ public class AtomicTestImpl<CLASS_UNDER_TEST>  {
                 result.add(new ConcurrentTestCase<>(createClassUnderTest,concurrentCallList,toCheckAfterJoin(recordAfterJoin)));
             }
         }
+        for(RecordUpdateFactory<CLASS_UNDER_TEST> firstFactory : writeList) {
+            for(RecordUpdateFactory<CLASS_UNDER_TEST> secondFactory : readOnlyList) {
+                RecordUpdate<CLASS_UNDER_TEST> first = firstFactory.create();
+                RecordUpdate<CLASS_UNDER_TEST> second = secondFactory.create();
+                List<RecordReadOnly<CLASS_UNDER_TEST>> recordAfterJoin =  new LinkedList<>();
+                recordTest(first,second,recordAfterJoin);
+                recordTest(second,first,recordAfterJoin);
+                List<ConcurrentCall<CLASS_UNDER_TEST>> concurrentCallList = new LinkedList<>();
+                concurrentCallList.add(first.build());
+                concurrentCallList.add(second.build());
+                result.add(new ConcurrentTestCase<>(createClassUnderTest,concurrentCallList,toCheckAfterJoin(recordAfterJoin)));
+            }
+        }
+
+
         return result;
     }
 

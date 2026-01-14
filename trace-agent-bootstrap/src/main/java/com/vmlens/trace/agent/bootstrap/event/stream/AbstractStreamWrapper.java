@@ -6,10 +6,9 @@ public abstract class AbstractStreamWrapper implements TLinkable<AbstractStreamW
 
 	private AbstractStreamWrapper previous;
 	private AbstractStreamWrapper next;
-
-	public abstract void flush() throws Exception;
+	
 	public abstract void close() throws Exception;
-
+	
 	public AbstractStreamWrapper getPrevious() {
 		return previous;
 	}

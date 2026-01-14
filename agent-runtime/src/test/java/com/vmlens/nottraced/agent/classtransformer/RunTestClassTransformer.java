@@ -50,12 +50,13 @@ public class RunTestClassTransformer {
 
         ClassFilterAndTransformerStrategyCollection collection = factory.create();
         return new RunTestClassTransformer(collection,methodRepositoryForAnalyze);
-
     }
 
 
     public static RunTestClassTransformer createFromLoaded() throws IOException {
-       return create(new LoadPreAnalyzed().loadFromClasspath());
+        TLinkedList<TLinkableWrapper<PackageOrClass>> result = new TLinkedList<>();
+        new LoadPreAnalyzed().loadFromClasspath(result);
+        return create(result);
     }
 
 

@@ -4,7 +4,9 @@ import java.io.*
 import scala.collection.mutable.ArrayBuffer;
 
 
-class EventTyp(val name : String, eventTypList : ArrayBuffer[EventTyp], val doProzessInScala : Boolean, val deserializerExtends : String) {
+class EventTyp(val name : String, eventTypList : ArrayBuffer[EventTyp], 
+               val doProzessInScala : 
+               Boolean, val deserializerExtends : String) {
   
   eventTypList.append(this);
   

@@ -72,6 +72,24 @@ method:close()V
   ALOAD_0
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.close:(Ljava/lang/Object;)V
   RETURN
+method:iterator()Ljava/util/Iterator;
+  ALOAD_0
+  ARETURN
+method:automaticTestSuccess(ILjava/lang/String;)V
+  ALOAD_0
+  ALOAD_0
+  ILOAD_1
+  ALOAD_2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.automaticTestSuccess:(Ljava/lang/Object;ILjava/lang/String;)V
+  RETURN
+method:automaticTestMethod(III)V
+  ALOAD_0
+  ALOAD_0
+  ILOAD_1
+  ILOAD_2
+  ILOAD_3
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.automaticTestMethod:(Ljava/lang/Object;III)V
+  RETURN
 method:hasNext(Ljava/lang/Object;)Z
   ALOAD_0
   GETFIELD  com/vmlens/api/AllInterleavings.throwExceptionWhenNoAgent:Z
@@ -91,9 +109,10 @@ method:hasNext(Ljava/lang/Object;)Z
   IRETURN
 method:close(Ljava/lang/Object;)V
   RETURN
-method:iterator()Ljava/util/Iterator;
-  ALOAD_0
-  ARETURN
+method:automaticTestSuccess(Ljava/lang/Object;ILjava/lang/String;)V
+  RETURN
+method:automaticTestMethod(Ljava/lang/Object;III)V
+  RETURN
 method:next()Ljava/lang/Object;
   ALOAD_0
   INVOKEVIRTUAL  com/vmlens/api/AllInterleavings.next:()Lcom/vmlens/api/Interleaving;

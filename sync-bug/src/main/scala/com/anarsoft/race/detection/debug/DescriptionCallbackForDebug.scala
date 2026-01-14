@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.debug
 
 import com.anarsoft.race.detection.report.description.DescriptionCallback
-import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, ThreadOrLoopDescription}
+import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, ThreadLoopOrAutomaticTestDescription}
 
 import java.io.PrintStream
 
@@ -10,7 +10,7 @@ class DescriptionCallbackForDebug(stream : PrintStream) extends DescriptionCallb
     stream.println(classDescription.toString)
   }
 
-  override def addThreadOrLoopDescription(threadOrLoopDescription: ThreadOrLoopDescription): Unit = {
+  override def addThreadOrLoopDescription(threadOrLoopDescription: ThreadLoopOrAutomaticTestDescription): Unit = {
     stream.println(threadOrLoopDescription.toString)
   }
 }

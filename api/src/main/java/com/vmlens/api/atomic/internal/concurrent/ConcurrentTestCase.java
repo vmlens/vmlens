@@ -27,7 +27,7 @@ public class ConcurrentTestCase<CLASS_UNDER_TEST> {
             List<CallConcurrentCall<CLASS_UNDER_TEST>> callConcurrentCallList = new LinkedList<>();
             List<Thread> threads = new LinkedList<>();
             for (ConcurrentCall<CLASS_UNDER_TEST> task : concurrentCallList) {
-                CallConcurrentCall<CLASS_UNDER_TEST> call = new CallConcurrentCall<>(classUnderTest, task);
+                CallConcurrentCall<CLASS_UNDER_TEST> call = new CallConcurrentCall<>(classUnderTest, task,all);
                 callConcurrentCallList.add(call);
                 Thread t = new Thread(call);
                 threads.add(t);

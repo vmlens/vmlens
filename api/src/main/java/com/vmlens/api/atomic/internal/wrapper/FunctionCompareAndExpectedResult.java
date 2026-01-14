@@ -1,5 +1,6 @@
 package com.vmlens.api.atomic.internal.wrapper;
 
+import com.vmlens.api.AllInterleavings;
 import com.vmlens.api.atomic.internal.concurrent.CheckAfterJoin;
 import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
 
@@ -10,7 +11,6 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
 
     private final FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> functionAndCompare;
     private final List<READ_VALUE> expectedResult;
-
 
     public FunctionCompareAndExpectedResult(FunctionAndCompare<CLASS_UNDER_TEST, READ_VALUE> functionAndCompare,
                                             List<READ_VALUE> expectedResult) {
@@ -30,7 +30,10 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
     }
 
     @Override
-    public boolean execute(CLASS_UNDER_TEST classUnderTest) {
+    public boolean execute(CLASS_UNDER_TEST classUnderTest, AllInterleavings allInterleavings) {
+        allInterleavings.automaticTestMethod(functionAndCompare.automaticTestId(),
+                functionAndCompare.automaticTestMethodId(),
+                functionAndCompare.automaticTestType());
         READ_VALUE value = functionAndCompare.apply(classUnderTest);
         for(READ_VALUE expected : expectedResult) {
             if(functionAndCompare.test(value,expected)) {
@@ -44,4 +47,6 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
     public String getLabel() {
         return functionAndCompare.getLabel();
     }
+
+
 }

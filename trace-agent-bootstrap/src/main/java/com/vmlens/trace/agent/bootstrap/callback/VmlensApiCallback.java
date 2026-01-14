@@ -15,6 +15,14 @@ public class VmlensApiCallback {
         return callbackActionProcessor.vmlensApiHasNext(obj);
     }
 
+    public static void automaticTestSuccess(Object obj, int id, String className) {
+        callbackActionProcessor.automaticTestSuccess(id, className);
+    }
+
+    public static void automaticTestMethod(Object obj, int id,  int automaticTestMethodId, int automaticTestType) {
+        callbackActionProcessor.automaticTestMethod(id,automaticTestMethodId, automaticTestType);
+    }
+
     // Visible for Test
 
     public static void setCallbackActionProcessor(CallbackActionProcessor callbackActionProcessor) {

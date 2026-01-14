@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.report.builder
 
+import com.anarsoft.race.detection.automatictest.IdToAutomaticTest
 import com.anarsoft.race.detection.loopresult.LoopResult
 import com.anarsoft.race.detection.report.ReportLoopData
 import com.anarsoft.race.detection.report.description.{DescriptionCallbackImpl, NeedsDescriptionCallback}
@@ -12,12 +13,13 @@ import scala.collection.mutable.ArrayBuffer
 class LoopResultCallbackImpl extends LoopResultCallback {
 
   private val runCountAndResultList = new ArrayBuffer[LoopResult]();
+  private var idToAutomaticTest: IdToAutomaticTest = null;
 
   override def addRunResult(runResult: LoopResult): Unit = {
     runCountAndResultList.append(runResult)
   }
 
-  def build(): Tuple2[DescriptionCallbackImpl,List[ReportLoopData]] = {
+  def build(): Tuple3[DescriptionCallbackImpl,List[ReportLoopData],IdToAutomaticTest] = {
     val stacktraceLeafsMap = new mutable.HashMap[StacktraceNode, StacktraceLeaf]();
     val reportLoopDataList = new ArrayBuffer[ReportLoopData]();
     val descriptionBuilder = new DescriptionCallbackImpl();
@@ -45,6 +47,8 @@ class LoopResultCallbackImpl extends LoopResultCallback {
         }
       } )
 
+      idToAutomaticTest.addToNeedsDescription(descriptionBuilder)
+
 
       reportLoopDataList.append(new ReportLoopData(runResult.loopId, 
         runResult.isFailure, 
@@ -56,7 +60,7 @@ class LoopResultCallbackImpl extends LoopResultCallback {
       
     }
     
-   Tuple2(descriptionBuilder, reportLoopDataList.toList);
+   Tuple3(descriptionBuilder, reportLoopDataList.toList,idToAutomaticTest);
   }
 
   private def stacktraceLeaf(stacktraceNode: Option[StacktraceNode],
@@ -92,4 +96,7 @@ class LoopResultCallbackImpl extends LoopResultCallback {
     }
   }
 
+  override def setAutomaticTestResult(idToAutomaticTest: IdToAutomaticTest): Unit = {
+    this.idToAutomaticTest = idToAutomaticTest;
+  }
 }

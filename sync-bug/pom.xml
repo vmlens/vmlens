@@ -76,6 +76,10 @@
         <!-- vmlens versions -->
         <dependency>
             <groupId>com.vmlens</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vmlens</groupId>
             <artifactId>report</artifactId>
         </dependency>
 

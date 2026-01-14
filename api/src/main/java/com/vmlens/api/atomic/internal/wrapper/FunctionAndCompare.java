@@ -15,15 +15,24 @@ public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordRe
     private final BiPredicate<READ_VALUE,READ_VALUE> compare;
     private final int addPosition;
     private final boolean isReadOnly;
+    private final int automaticTestId;
+    private final int automaticTestMethodId;
+    private final int automaticTestType;
 
     public FunctionAndCompare(Function<CLASS_UNDER_TEST, READ_VALUE> function,
                               BiPredicate<READ_VALUE, READ_VALUE> compare,
                               int addPosition,
-                              boolean isReadOnly) {
+                              boolean isReadOnly,
+                              int automaticTestId,
+                              int automaticTestMethodId,
+                              int automaticTestType) {
         this.function = function;
         this.compare = compare;
         this.addPosition = addPosition;
         this.isReadOnly = isReadOnly;
+        this.automaticTestId = automaticTestId;
+        this.automaticTestMethodId = automaticTestMethodId;
+        this.automaticTestType = automaticTestType;
     }
 
     @Override
@@ -46,9 +55,20 @@ public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordRe
         return createLabel(" addUpdate", addPosition );
     }
 
-
     @Override
     public RecordReadOnly<CLASS_UNDER_TEST> createForAfterJoin() {
         return new RecordUpdateForFunctionWrapper<>(this);
+    }
+
+    public int automaticTestId() {
+        return automaticTestId;
+    }
+
+    public int automaticTestMethodId() {
+        return automaticTestMethodId;
+    }
+
+    public int automaticTestType() {
+        return automaticTestType;
     }
 }

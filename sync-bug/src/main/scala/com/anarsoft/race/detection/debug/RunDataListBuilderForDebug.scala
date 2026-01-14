@@ -1,6 +1,7 @@
 package com.anarsoft.race.detection.debug
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
+import com.anarsoft.race.detection.event.automatictest.LoadedAutomaticTestEvent
 import com.anarsoft.race.detection.event.control.ControlEvent
 import com.anarsoft.race.detection.groupinterleave.{GroupInterleaveElement, GroupInterleaveElementSyncActionImpl, GroupInterleaveElementThreadOperationImpl}
 import com.anarsoft.race.detection.groupnonvolatile.{GroupNonVolatileElement, GroupNonVolatileElementImpl}
@@ -46,5 +47,9 @@ class RunDataListBuilderForDebug(stream : PrintStream) extends RunDataListBuilde
         }
       }
     }
+  }
+
+  override def addAutomaticTestElements(loopAndRunId: LoopAndRunId, automaticTestList: util.List[LoadedAutomaticTestEvent]): Unit =  {
+    
   }
 }

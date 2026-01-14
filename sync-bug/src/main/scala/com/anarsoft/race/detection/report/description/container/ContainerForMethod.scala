@@ -4,6 +4,6 @@ import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, MethodDes
 
 class ContainerForMethod {
 
-  var description: Option[Tuple2[ClassDescription, MethodDescription]] = None
+  var classAndMethod: Option[Tuple2[ClassDescription, MethodDescription]] = None
   
 }

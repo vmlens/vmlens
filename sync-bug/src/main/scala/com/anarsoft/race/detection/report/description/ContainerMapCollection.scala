@@ -12,6 +12,7 @@ class ContainerMapCollection {
   val methodNames = new mutable.HashMap[Int,ContainerForMethod]();
   val fieldNames = new mutable.HashMap[Int,ContainerForField]();
   val loopNames = new mutable.HashMap[Int,TestLoopDescription]();
+  val idToAutomaticTestClassName = new mutable.HashMap[Int,String]();
   
 
 }

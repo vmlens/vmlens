@@ -4,6 +4,6 @@ import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, FieldInCl
 
 class ContainerForField {
 
-  var description: Option[Tuple2[ClassDescription,FieldInClassDescription]] = None
+  var fieldDescription: Option[Tuple2[ClassDescription,FieldInClassDescription]] = None
   
 }

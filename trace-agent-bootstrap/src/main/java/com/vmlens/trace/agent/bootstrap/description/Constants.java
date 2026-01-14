@@ -10,6 +10,7 @@ public class Constants {
 
     public static final int TYPE_THREAD_DESCRIPTION = 0;
     public static final int TYPE_WHILE_LOOP_DESCRIPTION = 1;
+    public static final int TYPE_AUTOMATIC_TEST_DESCRIPTION = 2;
 
     public static final int STAMPED_READ_LOCK = 0;
     public static final int STAMPED_WRITE_LOCK = 1;

@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.report.builder
 
+import com.anarsoft.race.detection.automatictest.IdToAutomaticTest
 import com.anarsoft.race.detection.report.ReportLoopData
 import com.anarsoft.race.detection.report.description.DescriptionContext
 import com.anarsoft.race.detection.report.element.{StacktraceLeaf, TestResult}
@@ -15,6 +16,7 @@ import scala.collection.mutable
 
 class ReportBuilder(val reportLoopDataList : List[ReportLoopData],
                     val descriptionContext : DescriptionContext,
+                    val idToAutomaticTest: IdToAutomaticTest,
                     val reportDir : Path)  {
 
   /**
@@ -52,6 +54,8 @@ class ReportBuilder(val reportLoopDataList : List[ReportLoopData],
       new CreateRunReport().createReport(loop,descriptionContext,stacktraceToLink,createHtmlReport)
       new CreateDominatorTreeReport().createReport(loop, descriptionContext, createHtmlReport)
     }
+
+    idToAutomaticTest.buildPreAnalyzedClasses(descriptionContext.idToAutomaticTestClassName.toMap,descriptionContext,reportDir)
     
     resultForVerify;
   }

@@ -50,7 +50,7 @@ class ProcessEvents(val eventDir: Path,
     val processRun = new ProcessRunImpl(processRunContext);
     
     val mainProcess = new MainProcess(loadDescription, loadRuns, processRun,reportDir);
-   mainProcess.process();
+    mainProcess.process();
   }
 }
 

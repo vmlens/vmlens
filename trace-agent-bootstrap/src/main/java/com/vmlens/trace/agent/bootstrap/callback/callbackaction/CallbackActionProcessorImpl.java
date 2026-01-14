@@ -5,9 +5,11 @@ import com.vmlens.trace.agent.bootstrap.callback.threadlocal.FirstMethodInThread
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProviderImpl;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
+import com.vmlens.trace.agent.bootstrap.description.AutomaticTestDescription;
 import com.vmlens.trace.agent.bootstrap.event.queue.EventQueueSingleton;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
+import com.vmlens.trace.agent.bootstrap.event.specialevents.AutomaticTestSuccessEvent;
 import com.vmlens.trace.agent.bootstrap.parallelize.ThreadWrapper;
 import com.vmlens.trace.agent.bootstrap.parallelize.facade.ParallelizeFacade;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
@@ -64,6 +66,31 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
         } finally {
             threadLocal.decrementInsideVMLens();
         }
+    }
+
+    @Override
+    public void automaticTestSuccess(int id, String className) {
+        AutomaticTestSuccessEvent event =  new AutomaticTestSuccessEvent();
+        event.setAutomaticTestId(id);
+        eventQueue.offer(event);
+        AutomaticTestDescription description = new AutomaticTestDescription(id,className);
+        eventQueue.offer(description);
+    }
+
+    @Override
+    public void automaticTestMethod(int id, int automaticTestMethodId, int automaticTestType) {
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
+        if(canProcess(threadLocal)) {
+            try{
+                threadLocal.incrementInsideVMLens();
+                threadLocal.getThreadLocalDataWhenInTest().runAdapter().automaticTestMethod(threadLocal.getThreadLocalDataWhenInTest(),
+                        eventQueue, id , automaticTestMethodId, automaticTestType);
+            }
+            finally {
+                threadLocal.decrementInsideVMLens();
+            }
+        }
+
     }
 
     @Override

@@ -2,9 +2,8 @@ package com.vmlens.codeGenerator.domain
 
 trait GenericDesc {
   
-  val intTyp =  new FieldTyp("int" , 4 , " buffer.writeInt( %s ); " , "data.readInt()",  "data.putInt(%s)" , "java.lang.Integer.compare( o1.%s , o2.%s  )" , "stream.writeInt( %s )" );
-  val longTyp =  new FieldTyp("long" , 8 , "  buffer.writeLong( %s );  " , "data.readLong()" , "data.putLong(%s)"  ,  "java.lang.Long.compare( o1.%s , o2.%s  )" ,
-        "stream.writeLong( %s )" );
+  val intTyp =  new FieldTyp("int" , 4 , " buffer.writeInt( %s ); " , "data.readInt()" );
+  val longTyp =  new FieldTyp("long" , 8 , "  buffer.writeLong( %s );  " , "data.readLong()"  );
 
   var id = 0;
   
