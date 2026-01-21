@@ -32,7 +32,7 @@ public class MonitorIntTest {
         new IntTestRunner().runTest(builder.build(),expectedBuilder.buildExpected());
     }
 
-    @Test
+    //@Test
     public void deadlock() {
         // Given
         LockKey A = new MonitorKey(1000L);

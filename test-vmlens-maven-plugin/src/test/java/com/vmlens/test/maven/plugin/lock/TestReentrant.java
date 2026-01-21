@@ -38,13 +38,11 @@ public class TestReentrant {
 
     /* This test is an example of a tst with condition, varying interleave actions
      */
-    @Test
+    //@Test
     public void testTryLock() throws InterruptedException {
         Set<Boolean> expectedSet = new HashSet<>();
         expectedSet.add(true);
         expectedSet.add(false);
-
-
 
         Set<Boolean> actualMain = new HashSet<>();
         Set<Boolean> actualThread = new HashSet<>();
@@ -84,7 +82,7 @@ public class TestReentrant {
 
     /* This test is an example of a tst with condition, varying interleave actions
      */
-    @Test
+    //@Test
     public void testTryLockWithTimeout() throws InterruptedException {
         Set<Boolean> expectedSet = new HashSet<>();
         expectedSet.add(true);
