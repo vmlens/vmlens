@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.testFixture
+package com.anarsoft.race.detection.testfixture
 
 import com.anarsoft.race.detection.event.gen.VolatileFieldAccessEventGen
 import com.anarsoft.race.detection.event.method.LoadedMethodEvent

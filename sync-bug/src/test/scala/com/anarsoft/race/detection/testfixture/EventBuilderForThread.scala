@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.testFixture
+package com.anarsoft.race.detection.testfixture
 
 import com.vmlens.trace.agent.bootstrap.MemoryAccessType
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.{MethodEnterEventBuilder, VolatileAccessEventBuilder}
