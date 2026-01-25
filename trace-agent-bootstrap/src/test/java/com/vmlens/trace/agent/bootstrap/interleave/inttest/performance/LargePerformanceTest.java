@@ -90,4 +90,20 @@ public class LargePerformanceTest {
         assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
     }
 
+    @Test
+    public void testLucene() {
+        // Expected
+        ExpectedBuilder expectedBuilder = new ExpectedBuilder();
+
+        // Test
+        long start = System.currentTimeMillis();
+
+        new IntTestRunner().runTest(new InterleaveActionLuceneRead().build(),expectedBuilder.buildExpected(),
+                new InterleaveLoopContextBuilder().build(new QueueInNoOp(),0));
+        if(TRACE_INTERLEAVE_INT_TEST_PERFORMANCE) {
+            System.out.println("took " + (System.currentTimeMillis() - start));
+        }
+        assertThat(System.currentTimeMillis() - start, lessThan(5*1000L));
+    }
+
 }

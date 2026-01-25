@@ -159,7 +159,14 @@ class CreateRunReport {
     }
 
     uiRunElements.sort(new UISummaryElementComparator());
-    createHtmlReport.createSummaryReport(uiRunElements, descriptionContext.loopName(runData.loopId), runData.runLink)
+
+    val shortened = new util.LinkedList[UISummaryElement]();
+    val iter = uiRunElements.iterator()
+    while(iter.hasNext && shortened.size() < 100 ) {
+      shortened.add(iter.next())
+    }
+
+    createHtmlReport.createSummaryReport(shortened, descriptionContext.loopName(runData.loopId), runData.runLink)
 
   }
 

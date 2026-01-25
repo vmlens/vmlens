@@ -55,8 +55,12 @@ class ReportBuilder(val reportLoopDataList : List[ReportLoopData],
       new CreateDominatorTreeReport().createReport(loop, descriptionContext, createHtmlReport)
     }
 
-    idToAutomaticTest.buildPreAnalyzedClasses(descriptionContext.idToAutomaticTestClassName.toMap,descriptionContext,reportDir)
-    
+    if(! descriptionContext.idToAutomaticTestClassName.isEmpty) {
+      idToAutomaticTest.buildPreAnalyzedClasses(descriptionContext.idToAutomaticTestClassName.toMap,
+        descriptionContext,
+        reportDir)
+    }
+
     resultForVerify;
   }
 
