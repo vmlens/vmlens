@@ -2,7 +2,7 @@
 
 # Example
 
-The following example shows how to test multithreaded, concurrent Java with vmlens:
+The following example shows how to test multithreaded, concurrent Java with VMLens:
 
 ```Java
 import com.vmlens.api.AllInterleavings;
