@@ -21,11 +21,20 @@ public class ProcessEvents {
     }
 
     static void process(File eventDirectory, File reportDirectory) {
-        if(reportDirectory.getAbsolutePath().contains("jdk23")) {
+        if(reportDirectory.getAbsolutePath().contains("jdk22")) {
             processJdk23(eventDirectory,reportDirectory);
-        } else {
+        } else if(reportDirectory.getAbsolutePath().contains("jdk25")) {
+            processJdk25(eventDirectory,reportDirectory);
+        } else  {
             processJdk11(eventDirectory,reportDirectory);
         }
+    }
+
+    private static void processJdk25(File eventDirectory, File reportDirectory) {
+        ResultForVerify result = new com.anarsoft.race.detection.main.ProcessEvents(eventDirectory.toPath(),
+                reportDirectory.toPath(),
+                new ProcessRunContextBuilder().build()).process();
+
     }
 
     private static void processJdk23(File eventDirectory, File reportDirectory) {

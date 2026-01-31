@@ -346,7 +346,16 @@
              <jdk>[22,)</jdk>
          </activation>
          <modules>
-             <module>test-cases-jdk23</module>
+             <module>test-cases-jdk22</module>
+         </modules>
+     </profile>
+     <profile>
+         <id>jdk25</id>
+         <activation>
+             <jdk>[25,)</jdk>
+         </activation>
+         <modules>
+             <module>test-cases-jdk25</module>
          </modules>
      </profile>
  </profiles>
