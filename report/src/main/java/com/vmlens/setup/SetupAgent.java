@@ -25,16 +25,9 @@ public class SetupAgent {
         this.argLine = argLine;
     }
 
-    public static boolean reCreate(File directory) {
-        if(directory.exists())  {
-            if(new File(directory,"filter.txt").exists()) {
-                return false;
-            }
-        }
-
+    public static void deleteDirectory(File directory) {
         FileUtils.deleteQuietly(directory);
         directory.mkdirs();
-        return true;
     }
 
     public static String eventDir(File agentDirectory) {
@@ -44,24 +37,31 @@ public class SetupAgent {
 
     public EventDirectoryAndArgLine setup() {
         try {
+            agentDirectory.mkdirs();
 
-            if(reCreate(agentDirectory)) {
-                for (String jar : jars) {
-                    FileOutputStream target = null;
-                    target = new FileOutputStream(agentDirectory.getAbsolutePath() + "/" + jar);
-                    InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("agent_lib/" + jar);
-                    IOUtils.copy(input, target);
-                    input.close();
-                    target.close();
+            for (File file : agentDirectory.listFiles()) {
+                if (file.getName().endsWith(".jar")) {
+                    FileUtils.deleteQuietly(file);
+                }
+                if (file.isDirectory() && file.getName().equals(EVENT_DIRECTORY)) {
+                    FileUtils.deleteQuietly(file);
                 }
             }
 
+            for (String jar : jars) {
+                FileOutputStream target = null;
+                target = new FileOutputStream(agentDirectory.getAbsolutePath() + "/" + jar);
+                InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("agent_lib/" + jar);
+                IOUtils.copy(input, target);
+                input.close();
+                target.close();
+            }
 
             String dir = eventDir(agentDirectory);
             File eventDir = new File(dir);
             FileUtils.deleteQuietly(eventDir);
             eventDir.mkdirs();
-            return new EventDirectoryAndArgLine(eventDir,vmArg());
+            return new EventDirectoryAndArgLine(eventDir, vmArg());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -73,8 +73,8 @@ public class SetupAgent {
             additionalArgs = "";
         }
 
-        String arg =  "-javaagent:" +
-              new File( agentDirectory.getAbsolutePath() , "agent.jar").getAbsolutePath() + " " + additionalArgs;
+        String arg = "-javaagent:" +
+                new File(agentDirectory.getAbsolutePath(), "agent.jar").getAbsolutePath() + " " + additionalArgs;
         return arg.trim();
     }
 

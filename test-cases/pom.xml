@@ -29,6 +29,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>com.vmlens</groupId>
+            <artifactId>test-vmlens-maven-plugin</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
             <scope>test</scope>
@@ -81,6 +86,26 @@
                         <id>test</id>
                         <goals>
                             <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-test-resources</phase>
+                        <configuration>
+                                    <target>
+                                        <mkdir dir="${basedir}/target/vmlens-agent" />
+                                        <copy todir="${basedir}/target/vmlens-agent">
+                                            <fileset dir="${basedir}../../test-vmlens-maven-plugin/target/vmlens-report" includes="additional.vmlens" />
+                                        </copy>
+                                    </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>

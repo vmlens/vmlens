@@ -2,12 +2,11 @@ package com.anarsoft.race.detection.automatictest
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
 import com.vmlens.api.atomic.internal.AutomaticTestTypes
-import com.vmlens.preanalyzed.model.{ClassModel, MethodToMethodType}
+import com.vmlens.preanalyzed.model.MethodToMethodType
 import org.jgrapht.graph.{DefaultDirectedGraph, DefaultEdge}
 import org.jgrapht.traverse.BreadthFirstIterator
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodToStrategy.{ATOMIC_FIELD_WRITE, ATOMIC_FIELD_READ}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodToStrategy.{NON_BLOCKING_WITH_FILTER_WRITE, NON_BLOCKING_WITH_FILTER_READ}
 
-import java.io.PrintWriter
 import scala.collection.mutable.ArrayBuffer
 
 class AutomaticTestMethod(private val automaticTestType : Int,
@@ -24,7 +23,6 @@ class AutomaticTestMethod(private val automaticTestType : Int,
 
   def buildPreAnalyzedClasses(className: String,
                               context: DescriptionContext,
-                              writer: PrintWriter,
                               methodResult : ArrayBuffer[MethodToMethodType]): Unit = {
     var found = false;
     val iter = rootSet.iterator
@@ -33,7 +31,6 @@ class AutomaticTestMethod(private val automaticTestType : Int,
       while(graphIter.hasNext) {
         val vertex = graphIter.next();
         if( context.methodName(vertex.methodId).startsWith(className) ) {
-          writer.print( context.methodName(vertex.methodId) + " "  +automaticTestType )
           context.methodDescription(vertex.methodId) match {
 
             case None =>{
@@ -42,16 +39,14 @@ class AutomaticTestMethod(private val automaticTestType : Int,
 
             case Some(x) => {
               val strategy = if(automaticTestType == AutomaticTestTypes.READ) {
-                ATOMIC_FIELD_READ
+                NON_BLOCKING_WITH_FILTER_READ
               } else {
-                ATOMIC_FIELD_WRITE
+                NON_BLOCKING_WITH_FILTER_WRITE
               }
               methodResult.append(new MethodToMethodType(x._2.name(),x._2.desc(),strategy));
             }
-            
-            
+
           }
-       
           found = true;
         }
       }

@@ -70,7 +70,7 @@ public class InterleaveLoop implements IteratorQueue {
             queueIn.offer(new InfoMessageEvent(array));
         }
 
-        addActualRunWithLoops(withLoops,queueIn);
+        addActualRunWithLoops(limitInterleaveActions(withLoops),queueIn);
     }
 
     public InterleaveLoopContext interleaveLoopContext() {
@@ -129,6 +129,20 @@ public class InterleaveLoop implements IteratorQueue {
             }
         }
         return false;
+    }
+
+    private TLinkedList<TLinkableWrapper<InterleaveAction>> limitInterleaveActions(TLinkedList<TLinkableWrapper<InterleaveAction>> run) {
+        if (run.size() < 400) {
+            return run;
+        }
+        TLinkedList<TLinkableWrapper<InterleaveAction>> limitedRun = new TLinkedList<TLinkableWrapper<InterleaveAction>>();
+        for (TLinkableWrapper<InterleaveAction> element : run) {
+            if (limitedRun.size() > 400) {
+                break;
+            }
+            limitedRun.add(wrap(element.element()));
+        }
+        return limitedRun;
     }
 
 }

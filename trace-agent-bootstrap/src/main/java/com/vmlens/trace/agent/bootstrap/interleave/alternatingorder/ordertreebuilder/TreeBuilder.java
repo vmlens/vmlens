@@ -13,7 +13,6 @@ public class TreeBuilder {
     }
 
     public OrderTree build(InterleaveLoopContext interleaveLoopContext) {
-        int count = 0;
         NodeBuilder current = start.getNext();
         ListElement previous = null;
         ListElement startElement =  null;

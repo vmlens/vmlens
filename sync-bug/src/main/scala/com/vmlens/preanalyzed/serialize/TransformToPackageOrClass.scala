@@ -5,7 +5,7 @@ import com.vmlens.preanalyzed.model.lockoperation.LockOperation
 import com.vmlens.preanalyzed.model.classmodel.{AtomicReadWriteLock, GetReadWriteLock, Include, ThreadModel, VMLensApi}
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{ClassNotYetImplemented, ClassTypeAllStartWith, ClassTypeFilter, ClassTypeThreadPool, ClassTypeVmlensApi, DoNotTraceInClass, PreAnalyzedAllMethods, PreAnalyzedSpecificMethods}
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.{PackageOrClass, PreAnalyzedMethod, methodtypeimpl}
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.{ArrayNonBlockingMethod, GetReadWriteLockMethod, NonBlockingMethod, NotYetImplementedMethod, ThreadJoin, ThreadPoolJoin, ThreadPoolStart, ThreadStart}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.{ArrayNonBlockingMethod, GetReadWriteLockMethod, NotYetImplementedMethod, ThreadJoin, ThreadPoolJoin, ThreadPoolStart, ThreadStart}
 
 import scala.collection.mutable.ArrayBuffer
 

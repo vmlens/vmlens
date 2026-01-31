@@ -74,11 +74,11 @@ public class AgentClassFileTransformer implements ClassFileTransformer {
             TransformerStrategy transformer = classArrayTransformerCollection.get(name);
             if (transformer != null) {
                 byte[] transformed = transformer.transform(context);
-        /*    if(name.contains("AtomicIntegerFieldUpdater")) {
+           if(name.contains("CompareAndSwap")) {
                     logClass(name + "_trans", transformed);
                  logClass(name , classfileBuffer);
                 }
-            */
+
                 return transformed;
             }
         } catch (Throwable e) {

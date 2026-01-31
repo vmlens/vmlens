@@ -37,4 +37,6 @@ class VertexAtomicNonBlockingOrVolatile(val memoryAccessKey: DominatorMemoryAcce
     val state = Seq(memoryAccessKey)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
+
+  override def isDominatorTreeLeaf: Boolean = true
 }

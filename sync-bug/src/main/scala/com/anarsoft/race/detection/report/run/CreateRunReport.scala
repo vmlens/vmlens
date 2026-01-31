@@ -82,6 +82,7 @@ class CreateRunReport {
       }
 
     var startPosition : Option[Int] = Some(startPositionList.dequeue());
+    var found = false;
     position = 0;
     val uiRunElements = new util.LinkedList[UIRunElement]();
     for (runElement <- filtered) {
@@ -101,13 +102,15 @@ class CreateRunReport {
               linkAndFirstMethodName.firstMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex),
               linkAndFirstMethodName.link, false)
             uiRunElements.add(uiRunElement);
-          } else {
-            if(! startPositionList.isEmpty) {
-              startPosition   = Some(startPositionList.dequeue());
-            } else {
-              startPosition = None;
+            found = true;
+          } else if(found){
+            startPosition = None;
+            while(! startPositionList.isEmpty) {
+              val newPosition = startPositionList.dequeue()
+              if(newPosition > position)
+              startPosition = Some(newPosition);
             }
-
+            found = false
           }
         }
         case None => {

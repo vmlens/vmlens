@@ -27,6 +27,6 @@ trait DominatorTreeVertex {
   
   def getLabel(descriptionContext: DescriptionContext): String
   
-  
+  def isDominatorTreeLeaf : Boolean;
 
 }

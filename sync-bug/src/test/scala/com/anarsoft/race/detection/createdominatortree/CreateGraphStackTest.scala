@@ -2,6 +2,7 @@ package com.anarsoft.race.detection.createdominatortree
 
 import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexRoot}
 import com.anarsoft.race.detection.report.element.runelementtype.ReportLockType.REENTRANT_LOCK
+import com.anarsoft.race.detection.testfixture.dominatortree.DominatorTreeObjectMother
 import org.jgrapht.graph.{DefaultDirectedGraph, DefaultEdge}
 import org.jgrapht.traverse.DepthFirstIterator
 import org.scalatest.flatspec.AnyFlatSpec
@@ -22,19 +23,15 @@ class CreateGraphStackTest extends AnyFlatSpec with Matchers {
     createGraphStack.methodEnter(5)
     createGraphStack.methodEnter(7)
     createGraphStack.methodEnter(7)
+    createGraphStack.methodExit()
     createGraphStack.methodEnter(5)
 
 
     createGraphStack.lockEnter(REENTRANT_LOCK, 1);
     createGraphStack.lockExit(REENTRANT_LOCK,1,graph,alreadyAdded)
 
-    val result = new mutable.ArrayBuffer[DominatorTreeVertex]
-    val iter = new DepthFirstIterator[DominatorTreeVertex, DefaultEdge](graph,root);
-    while(iter.hasNext) {
-      result.append(iter.next())
-    }
-    println(result);
-    println(graph);
+
+    CompareGraph.shouldBe(graph,DominatorTreeObjectMother.oneLockCallGraph())
 
   }
 

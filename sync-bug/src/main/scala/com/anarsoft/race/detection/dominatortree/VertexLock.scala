@@ -9,5 +9,6 @@ case class VertexLock(lockType : ReportLockType, id : Int) extends InternalNode 
 
   override def addToNeedsDescription(needsDescriptionCallback: NeedsDescriptionCallback): Unit = {
   }
-  
+
+  override def isDominatorTreeLeaf: Boolean = true
 }

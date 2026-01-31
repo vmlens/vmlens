@@ -6,7 +6,7 @@ import com.anarsoft.race.detection.process.main.MainProcess
 import com.anarsoft.race.detection.process.run.{ProcessRunContext, ProcessRunContextBuilder, ProcessRunImpl}
 import com.anarsoft.race.detection.report.builder.LoopResultCallbackImpl
 import com.vmlens.report.ResultForVerify
-import com.vmlens.setup.SetupAgent.reCreate
+import com.vmlens.setup.SetupAgent.deleteDirectory
 
 import java.io.PrintStream
 import java.nio.file.{Path, Paths}
@@ -30,7 +30,7 @@ class ProcessEvents(val eventDir: Path,
     }
 
     val dir = reportDir.toFile
-    reCreate(dir);
+    deleteDirectory(dir);
 
 
     val printStream = new PrintStream(reportDir.resolve("agentlog.txt").toFile)

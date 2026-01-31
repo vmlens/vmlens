@@ -30,7 +30,17 @@ public class MethodToStrategy extends AbstractMethodType  {
     public static final AbstractMethodType ATOMIC_FIELD_READ = new MethodToStrategy(AtomicFieldUpdaterStrategy.ATOMIC_FIELD_READ);
     public static final AbstractMethodType ATOMIC_FIELD_WRITE = new MethodToStrategy(AtomicFieldUpdaterStrategy.ATOMIC_FIELD_WRITE);
     public static final AbstractMethodType ATOMIC_FIELD_READ_WRITE = new MethodToStrategy(AtomicFieldUpdaterStrategy.ATOMIC_FIELD_READ_WRITE);
-    
+
+    public static final AbstractMethodType NON_BLOCKING_READ = new MethodToStrategy(NonBlockingStrategy.NON_BLOCKING_READ);
+    public static final AbstractMethodType NON_BLOCKING_WRITE = new MethodToStrategy(NonBlockingStrategy.NON_BLOCKING_WRITE);
+    public static final AbstractMethodType NON_BLOCKING_READ_WRITE = new MethodToStrategy(NonBlockingStrategy.NON_BLOCKING_READ_WRITE);
+
+    public static final AbstractMethodType NON_BLOCKING_WITH_FILTER_READ = new MethodToStrategy(NonBlockingWithFilterStrategy.NON_BLOCKING_WITH_FILTER_READ);
+    public static final AbstractMethodType NON_BLOCKING_WITH_FILTER_WRITE = new MethodToStrategy(NonBlockingWithFilterStrategy.NON_BLOCKING_WITH_FILTER_WRITE);
+    public static final AbstractMethodType NON_BLOCKING_WITH_FILTER_READ_WRITE = new MethodToStrategy(NonBlockingWithFilterStrategy.NON_BLOCKING_WITH_FILTER_READ_WRITE);
+
+
+
     private final StrategyPreAnalyzed strategyPreAnalyzed;
 
     private MethodToStrategy(StrategyPreAnalyzed strategyPreAnalyzed) {

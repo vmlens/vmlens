@@ -36,10 +36,12 @@ class AutomaticTest {
   
     val methodResult = new ArrayBuffer[MethodToMethodType]();
     for (elem <- idToMethod) {
-      elem._2.buildPreAnalyzedClasses(className,context,writer,methodResult);
+      elem._2.buildPreAnalyzedClasses(className,context,methodResult);
     }
     val internalClassName = className.replace('.', '/');
-    result.append(new ClassWithMethodToMethodType(internalClassName,methodResult.toList, List()));
+    val atomic = new ClassWithMethodToMethodType(internalClassName,methodResult.toList, List());
+    result.append(atomic);
+    writer.println(atomic.create().toString);
   }
   
 }

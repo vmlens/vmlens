@@ -3,15 +3,13 @@ package com.vmlens.test.maven.plugin.automatictest;
 import com.vmlens.api.atomic.AtomicTestBuilder;
 import org.junit.Test;
 
-public class TestAtomicCounter {
+public class TestCompareAndSwap {
 
     @Test
     public void testAutomatic() {
-        new AtomicTestBuilder<>(AtomicCounter::new)
-                .addWrite(AtomicCounter::increment)
-                .addReadOnly(AtomicCounter::get)
+        new AtomicTestBuilder<>(CompareAndSwap::new)
+                .addWrite((obj) -> obj.multiply(5) )
+                .addReadOnly(CompareAndSwap::intValue)
                 .runTests();
     }
-
-
 }

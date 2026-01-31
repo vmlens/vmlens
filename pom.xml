@@ -109,7 +109,11 @@
                 <groupId>com.vmlens</groupId>
                 <artifactId>test-util</artifactId>
                 <version>${project.version}</version>
-                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.vmlens</groupId>
+                <artifactId>test-vmlens-maven-plugin</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.vmlens</groupId>

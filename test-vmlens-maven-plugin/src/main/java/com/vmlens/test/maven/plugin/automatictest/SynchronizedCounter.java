@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin.automatictest;
 
-public class AtomicCounter {
+public class SynchronizedCounter {
 
     private int count;
 
