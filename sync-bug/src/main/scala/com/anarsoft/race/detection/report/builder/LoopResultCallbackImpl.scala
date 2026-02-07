@@ -30,7 +30,7 @@ class LoopResultCallbackImpl extends LoopResultCallback {
       for (eventForReport <- runResult) {
         val element =  new RunElement(new LoopRunAndThreadIndex(eventForReport.loopId, eventForReport.runId, eventForReport.threadIndex),
           eventForReport.runPosition, stacktraceLeaf(eventForReport.stacktraceNode, stacktraceLeafsMap,descriptionBuilder), eventForReport.runElementType,
-          eventForReport.methodId);
+          eventForReport.methodId,eventForReport.isNewRun);
         element.operationTextFactory.addToNeedsDescription(descriptionBuilder);
         descriptionBuilder.needsMethod(element.inMethodId)
         run.append(element)

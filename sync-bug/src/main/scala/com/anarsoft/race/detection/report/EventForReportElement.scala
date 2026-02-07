@@ -11,5 +11,6 @@ trait EventForReportElement extends WithPosition {
   def runId: Int
   def stacktraceNode: Option[StacktraceNode];
   def runElementType: ReportOperation;
+  def isNewRun : Boolean = false;
 
 }

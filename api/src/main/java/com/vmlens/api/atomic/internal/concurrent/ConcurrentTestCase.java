@@ -1,6 +1,7 @@
 package com.vmlens.api.atomic.internal.concurrent;
 
 import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.AllInterleavingsBuilder;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class ConcurrentTestCase<CLASS_UNDER_TEST> {
     }
 
     public void run(String name) {
-        AllInterleavings all = new AllInterleavings(name +  getLabel());
+        AllInterleavings all = new AllInterleavingsBuilder().withMaximumIterations(2000).build(name +  getLabel());
         while (all.hasNext()) {
             CLASS_UNDER_TEST classUnderTest = createClassUnderTest.get();
             List<CallConcurrentCall<CLASS_UNDER_TEST>> callConcurrentCallList = new LinkedList<>();

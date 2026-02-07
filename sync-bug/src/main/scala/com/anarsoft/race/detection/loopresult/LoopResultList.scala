@@ -16,6 +16,7 @@ class LoopResultList(val loopId : Int) extends LoopResult  {
   
   override def foreach(f: EventForReportElement => Unit): Unit = {
     for(result <- resultList) {
+      f(new NewRunEventEvent(result.runId));
       result.foreach(f);
     }
   }

@@ -181,17 +181,24 @@ class CreateRunReport {
     val uiRunElements = new util.LinkedList[UIRunElement]();
 
     for (runElement <- filtered) {
-      val linkAndFirstMethodName = createLinkAndFirstMethodName(runElement,
-        stacktraceToLink,
-        createHtmlReport,
-        descriptionContext);
-      val operation = runElement.operationTextFactory.operation
-      val element = runElement.operationTextFactory.element(descriptionContext)
-      val objectString = runElement.operationTextFactory.objectString(descriptionContext)
-      val uiRunElement = new UIRunElement(runElement.runPosition, operation, element, objectString,
-        linkAndFirstMethodName.firstMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex),
-        linkAndFirstMethodName.link, false)
-      uiRunElements.add(uiRunElement);
+      if(runElement.isNewRun) {
+        uiRunElements.add(UIRunElement.createNewRun(runElement.loopRunAndThreadIndex.runId));
+      } else {
+        val linkAndFirstMethodName = createLinkAndFirstMethodName(runElement,
+          stacktraceToLink,
+          createHtmlReport,
+          descriptionContext);
+        val operation = runElement.operationTextFactory.operation
+        val element = runElement.operationTextFactory.element(descriptionContext)
+        val objectString = runElement.operationTextFactory.objectString(descriptionContext)
+        val uiRunElement = new UIRunElement(runElement.runPosition, operation, element, objectString,
+          linkAndFirstMethodName.firstMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex),
+          linkAndFirstMethodName.link, false)
+        uiRunElements.add(uiRunElement);
+      }
+      
+      
+     
     }
 
       createHtmlReport.createRunReport(uiRunElements, descriptionContext.loopName(runData.loopId), runData.runLink)

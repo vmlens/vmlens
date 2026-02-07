@@ -7,7 +7,8 @@ class RunElement(val loopRunAndThreadIndex: LoopRunAndThreadIndex,
                  val runPosition: Int, 
                  val stacktraceLeaf: StacktraceLeaf,
                  val operationTextFactory: ReportOperation,
-                 val inMethodId: Int) extends  Ordered[RunElement] {
+                 val inMethodId: Int,
+                 val isNewRun : Boolean) extends  Ordered[RunElement] {
 
 
   override def compare(that: RunElement): Int = {
