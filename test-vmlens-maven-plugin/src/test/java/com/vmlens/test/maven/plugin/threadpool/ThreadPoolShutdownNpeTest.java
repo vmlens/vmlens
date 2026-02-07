@@ -1,4 +1,4 @@
-package com.vmlens.inttest.interleave.threadpool;
+package com.vmlens.test.maven.plugin.threadpool;
 
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.api.Runner;
