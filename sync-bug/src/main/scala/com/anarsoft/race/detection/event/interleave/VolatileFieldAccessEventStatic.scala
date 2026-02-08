@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.event.interleave
 
+import com.anarsoft.race.detection.createdominatortree.DominatorMemoryAccessKeyToOperation
 import com.anarsoft.race.detection.createdominatortreeevent.EventForSummary
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
@@ -17,6 +18,8 @@ trait VolatileFieldAccessEventStatic extends EventWithReadWrite[VolatileFieldAcc
   with EventForSummary[FieldId] {
 
   def fieldId: Int
+
+  var objectHashCodeToOperation: DominatorMemoryAccessKeyToOperation = null;
   
   override def addToContext(context: LoadedInterleaveActionContext): Unit = {
     context.staticVolatileAccessEvents.add(this);
@@ -34,8 +37,13 @@ trait VolatileFieldAccessEventStatic extends EventWithReadWrite[VolatileFieldAcc
     new FieldId(fieldId);
   }
 
-  override def setObjectHashCodeMap(objectHashCodeMap: ObjectHashCodeMap): Unit = {
-    // Nothing to do
+  override def isReadOnly : Boolean = objectHashCodeToOperation.isReadOnly(memoryAccessKey)
+
+  
+  override def setMapsForDominatorTree(objectHashCodeMap: ObjectHashCodeMap,
+                                       objectHashCodeToOperation: DominatorMemoryAccessKeyToOperation): Unit = {
+    this.objectHashCodeToOperation = objectHashCodeToOperation
+    objectHashCodeToOperation.add(memoryAccessKey, operation)
   }
 
   override def createUIStateElementSortKey(): Option[UIStateElementSortKey] = {

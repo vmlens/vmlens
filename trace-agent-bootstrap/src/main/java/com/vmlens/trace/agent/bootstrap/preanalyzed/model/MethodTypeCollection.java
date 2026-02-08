@@ -1,18 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.preanalyzed.model;
 
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.AbstractMethodType;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.NotYetImplementedMethod;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.ThreadJoin;
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.ThreadStart;
 import gnu.trove.map.hash.THashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.ArrayNonBlockingMethod.*;
-import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_WRITE_LOCK;
-import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.LockMethod.*;
-import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
-import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK;
-import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.NonBlockingMethod.*;
 
 public class MethodTypeCollection {
 

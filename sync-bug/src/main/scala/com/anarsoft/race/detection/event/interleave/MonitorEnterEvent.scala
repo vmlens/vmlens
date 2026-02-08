@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.event.interleave
 
+import com.anarsoft.race.detection.createdominatortreeevent.CreateDominatorTreeContext
 import com.anarsoft.race.detection.sortutil.MonitorContainer
 import com.anarsoft.race.detection.report.element.runelementtype.{LockOperation, ReportLockType, ReportOperation}
 import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationLockAccess
@@ -21,5 +22,8 @@ trait MonitorEnterEvent extends MonitorEvent {
   override def runElementType: ReportOperation = {
     new OperationLockAccess(LockOperation.LOCK_ENTER, ReportLockType.MONITOR ,  objectHashCode);
   }
-  
+
+  override def add(context: CreateDominatorTreeContext): Unit = {
+    context.stack.monitorEnter(context.objectHashCodeToInt.get(objectHashCode))
+  }
 }

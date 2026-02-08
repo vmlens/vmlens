@@ -17,33 +17,36 @@ class CreateSummaryEvent[MEMORY_ACCESS_KEY <: GenericDominatorMemoryAccessKey[ME
               context: BuildDominatorTreeContext): Unit = {
 
     val objectHashCodeMap = new ObjectHashCodeMap();
+    val  objectHashCodeToOperation = new  DominatorMemoryAccessKeyToOperation();
    // set the ObjectHashCodeMap
     for (event <- eventArray) {
-      event.setObjectHashCodeMap(objectHashCodeMap)
+      event.setMapsForDominatorTree(objectHashCodeMap,objectHashCodeToOperation)
     }
     
     eventArray.sort(new EventForSummaryOrdering[MEMORY_ACCESS_KEY]);
     var current: Option[SummaryEvent[MEMORY_ACCESS_KEY]] = None;
     for (event <- eventArray) {
-      event.createUIStateElementSortKey() match {
-        case None => {
-          // filtered
-        }
-        case Some(sortKey) => {
-          current match {
-            case Some(summary) => {
-              if (summary.threadIndex == event.threadIndex &&
-                summary.dominatorTreeCounter == event.dominatorTreeCounter &&
-                summary.memoryAccessKey == event.memoryAccessKey) {
-                summary.operationSet.add(event.operation);
-              } else {
-                context.eventList.append(summary)
-                current = Some(SummaryEvent(event,sortKey));
-              }
+      if(! event.isReadOnly) {
+        event.createUIStateElementSortKey() match {
+          case None => {
+            // filtered
+          }
+          case Some(sortKey) => {
+            current match {
+              case Some(summary) => {
+                if (summary.threadIndex == event.threadIndex &&
+                  summary.dominatorTreeCounter == event.dominatorTreeCounter &&
+                  summary.memoryAccessKey == event.memoryAccessKey) {
+                  summary.operationSet.add(event.operation);
+                } else {
+                  context.eventList.append(summary)
+                  current = Some(SummaryEvent(event, sortKey));
+                }
 
-            }
-            case None => {
-              current = Some(SummaryEvent(event,sortKey));
+              }
+              case None => {
+                current = Some(SummaryEvent(event, sortKey));
+              }
             }
           }
         }

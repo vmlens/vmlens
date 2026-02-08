@@ -1,6 +1,7 @@
 package com.anarsoft.race.detection.rundata
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
+import com.anarsoft.race.detection.event.automatictest.LoadedAutomaticTestEvent
 import com.anarsoft.race.detection.event.control.ControlEvent
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElement
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileElement
@@ -32,6 +33,14 @@ class RunDataListBuilderImpl extends RunDataListBuilder {
   def addNonVolatileElements(loopAndRunId: LoopAndRunId, nonVolatileElements: List[GroupNonVolatileElement]): Unit = {
     val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
     loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(nonVolatileElements = nonVolatileElements))
+  }
+
+  override def addAutomaticTestElements(loopAndRunId: LoopAndRunId, automaticTestList: util.List[LoadedAutomaticTestEvent]): Unit = {
+    val runData = loopAndRunIdToRunDataBuilder.getOrElseUpdate(loopAndRunId, RunData.forLoopAndRun(loopAndRunId));
+    loopAndRunIdToRunDataBuilder.put(loopAndRunId, runData.copy(automaticTestEvents =
+      EventArray[LoadedAutomaticTestEvent](automaticTestList)))
+    
+    
   }
 
   def build(): List[RunData] = {

@@ -43,8 +43,8 @@ public class ThreadPoolMap {
     private TLinkedList<TLinkableWrapper<Thread>> joinAll(Object pool) {
         TLinkedList<TLinkableWrapper<Runnable>> tasks = poolToTaskList.get(pool);
         if (tasks == null) {
-            System.err.println("Thread pool shutdown called but no tasks were ever submitted to this pool.");
-            System.err.println("Your test may not be testing the concurrent behavior you expect.");
+            //System.err.println("Thread pool shutdown called but no tasks were ever submitted to this pool.");
+            //System.err.println("Your test may not be testing the concurrent behavior you expect.");
             return TLinkableWrapper.emptyList();
         }
         TLinkedList<TLinkableWrapper<Thread>> toBeJoinedList = new TLinkedList<>();
@@ -61,23 +61,6 @@ public class ThreadPoolMap {
             return TLinkableWrapper.emptyList();
         }
         return TLinkableWrapper.singleton(thread);
-    }
-
-    private ParallelizeActionMultiJoin join(Run run, TLinkedList<TLinkableWrapper<Thread>> toBeJoinedList, JoinAction threadJoinedAction) {
-        TLongLinkedList joinedThreadIds = new TLongLinkedList();
-        for(TLinkableWrapper<Thread> toBeJoined : toBeJoinedList) {
-            if(toBeJoined.element().isAlive()) {
-                try {
-                    toBeJoined.element().join();
-                    joinedThreadIds.add(toBeJoined.element().getId());
-
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return new ParallelizeActionMultiJoin(run,joinedThreadIds,threadJoinedAction.inMethodId(),threadJoinedAction.position());
-
     }
 
     public void checkAllThreadsJoined() {

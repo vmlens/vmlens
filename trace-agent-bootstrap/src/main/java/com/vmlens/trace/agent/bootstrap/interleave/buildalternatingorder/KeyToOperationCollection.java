@@ -89,7 +89,7 @@ public class KeyToOperationCollection {
         node = lockAndConditions.process(context, node);
         node = barrier.process(context, node);
 
-        for(TLinkableWrapper<DeadlockOperation> op : deadlocks) {
+       for(TLinkableWrapper<DeadlockOperation> op : deadlocks) {
             node = op.element().addToAlternatingOrder(node);
         }
 

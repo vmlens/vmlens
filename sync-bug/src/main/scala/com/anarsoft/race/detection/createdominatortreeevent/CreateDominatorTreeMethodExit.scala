@@ -12,11 +12,8 @@ import scala.collection.mutable
 
 trait CreateDominatorTreeMethodExit  extends CreateDominatorTreeEvent {
 
-  override def add(stack: CreateGraphStack,
-                   alreadyAdded: mutable.HashSet[DominatorTreeVertex],
-                   memoryKeyToVertex : mutable.HashMap[DominatorMemoryAccessKey,VertexAtomicNonBlockingOrVolatile],
-                   graph: Graph[DominatorTreeVertex, DefaultEdge]): Unit = {
-    stack.methodExit()
+  override def add(context : CreateDominatorTreeContext): Unit = {
+    context.stack.methodExit()
   }
   
 }

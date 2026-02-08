@@ -94,10 +94,7 @@ object EventCodeGenerator {
       fieldMap.put("setJavaElement", "public void set" + Util.getCamelCase(field.name) + "(" + 
         field.typ.name + " " + field.name + ") { this." + field.name + " = " + field.name + "; }");
       fieldMap.put("writeJavaElement", String.format(field.typ.writeJavaElement, field.name));
-      fieldMap.put("writeToDataOutputStream", String.format(field.typ.writeToDataOutputStream, field.name));
       fieldMap.put("scalaFromByteBuffer", field.typ.scalaFromByteBuffer);
-      fieldMap.put("scalaToByteBuffer", String.format(field.typ.scalaToByteBuffer, "" + field.name));
-      fieldMap.put("compare", String.format(field.typ.compare, field.name, field.name));
 
       fieldList.append(fieldMap.asJava);
 

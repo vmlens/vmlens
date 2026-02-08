@@ -4,6 +4,8 @@ import com.anarsoft.race.detection.report.element.LoopRunAndThreadIndex
 import com.vmlens.api.AllInterleavingsBuilder
 import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, MethodDescription}
 
+import scala.collection.mutable
+
 class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection) extends  DescriptionContext  {
 
   override def threadName(key: LoopRunAndThreadIndex): String = {
@@ -17,7 +19,7 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
   }
 
   override def methodName(key: Int): String = {
-    containerMapCollection.methodNames.get(key).flatMap(  x => x.description )
+    containerMapCollection.methodNames.get(key).flatMap(  x => x.classAndMethod )
       .map( x => createMethodString(x)) match {
       case None => {
         notFound(key);
@@ -27,7 +29,7 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
   }
 
   override def classNameForMethodId(key: Int): String =  {
-    containerMapCollection.methodNames.get(key).flatMap(  x => x.description )
+    containerMapCollection.methodNames.get(key).flatMap(  x => x.classAndMethod )
       .map( x => createClassName(x)) match {
       case None => {
         notFound(key);
@@ -37,7 +39,7 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
   }
 
   override def methodNameWithoutSource(key: Int): String = {
-    containerMapCollection.methodNames.get(key).flatMap(  x => x.description )
+    containerMapCollection.methodNames.get(key).flatMap(  x => x.classAndMethod )
       .map( x =>  x._1.name().replace('/', '.') + "." + x._2.name() ) match {
       case None => {
         notFound(key);
@@ -47,7 +49,7 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
   }
 
   override def fieldName(key: Int): String = {
-    containerMapCollection.fieldNames.get(key).flatMap(  x => x.description )
+    containerMapCollection.fieldNames.get(key).flatMap(  x => x.fieldDescription )
       .map( x => x._1.name().replace('/','.') + "." + x._2.name() ) match {
       case None => {
         notFound(key);
@@ -76,11 +78,19 @@ class DescriptionContextImpl(val containerMapCollection : ContainerMapCollection
     }
   }
 
+  override def methodDescription(methodId: Int): Option[Tuple2[ClassDescription, MethodDescription]] = {
+   containerMapCollection.methodNames.get(methodId).flatMap( container => container.classAndMethod );
+  }
+
+
+  override def  idToAutomaticTestClassName :  mutable.HashMap[Int,String] = containerMapCollection.idToAutomaticTestClassName;
+
   private def createClassName(tuple: Tuple2[ClassDescription, MethodDescription]): String = {
     tuple._1.name().replace('/', '.') 
   }
-  
-  
+
+
+
   /*
      * see java.lang.StackTraceElement
      */

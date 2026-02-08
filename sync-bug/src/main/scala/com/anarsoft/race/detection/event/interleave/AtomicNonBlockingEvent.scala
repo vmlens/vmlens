@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.event.interleave
 
+import com.anarsoft.race.detection.createdominatortree.DominatorMemoryAccessKeyToOperation
 import com.anarsoft.race.detection.createdominatortreeevent.EventForSummary
 import com.anarsoft.race.detection.createpartialordersyncaction.SyncActionEventWithCompareType
 import com.anarsoft.race.detection.setstacktrace.WithSetStacktraceNode
@@ -19,6 +20,7 @@ trait AtomicNonBlockingEvent  extends EventWithReadWrite[AtomicNonBlockingEvent]
   with EventForSummary[AtomicNonBlockingKey] {
 
   var objectHashCodeMap: ObjectHashCodeMap = null;
+  var objectHashCodeToOperation: DominatorMemoryAccessKeyToOperation = null;
   
   def atomicMethodId: Int
   def objectHashCode: Long
@@ -38,10 +40,15 @@ trait AtomicNonBlockingEvent  extends EventWithReadWrite[AtomicNonBlockingEvent]
   override def memoryAccessKey: AtomicNonBlockingKey =
     new AtomicNonBlockingKey(atomicMethodId, objectHashCode)
 
-  override def setObjectHashCodeMap(objectHashCodeMap: ObjectHashCodeMap): Unit = {
+  override def setMapsForDominatorTree(objectHashCodeMap: ObjectHashCodeMap, 
+                                       objectHashCodeToOperation : DominatorMemoryAccessKeyToOperation): Unit = {
     this.objectHashCodeMap = objectHashCodeMap;
+    this.objectHashCodeToOperation = objectHashCodeToOperation
     objectHashCodeMap.add(objectHashCode, threadIndex);
+    objectHashCodeToOperation.add(memoryAccessKey,operation)
   }
+
+  override def isReadOnly : Boolean = objectHashCodeToOperation.isReadOnly(memoryAccessKey)
 
   override def createUIStateElementSortKey(): Option[UIStateElementSortKey] = {
     objectHashCodeMap.id(objectHashCode).map(id => new SortKeyAtomicObject(id, atomicMethodId))

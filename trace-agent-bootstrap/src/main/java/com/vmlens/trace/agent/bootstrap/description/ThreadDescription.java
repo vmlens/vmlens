@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-public class ThreadDescription implements SerializableEvent, ThreadOrLoopDescription {
+public class ThreadDescription implements SerializableEvent, ThreadLoopOrAutomaticTestDescription {
 
     private final int loopId;
     private final int runId;

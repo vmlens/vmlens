@@ -20,13 +20,10 @@ class SummaryEvent[MEMORY_ACCESS_KEY] (val threadIndex: Int,
 
   val operationSet = new mutable.HashSet[Int];
 
-  override def add(stack: CreateGraphStack, 
-                   alreadyAdded: mutable.HashSet[DominatorTreeVertex],
-                   memoryKeyToVertex : mutable.HashMap[DominatorMemoryAccessKey,VertexAtomicNonBlockingOrVolatile],
-                   graph: Graph[DominatorTreeVertex, DefaultEdge]): Unit = {
-    stack.addToGraph(graph, alreadyAdded);
-  
-    stack.addLeaf(memoryAccessKey , operationSet.toSet ,sortKey ,memoryKeyToVertex , graph);
+  override def add(context : CreateDominatorTreeContext): Unit = {
+    context.stack.addAllElementsOfStackToGraph(context.graph, context.alreadyAdded);
+
+    context.stack.addLeaf(memoryAccessKey , operationSet.toSet ,sortKey ,context.memoryKeyToVertex , context.graph);
   }
 }
 

@@ -2,7 +2,7 @@ package com.anarsoft.race.detection.report.description
 
 import com.anarsoft.race.detection.report.description.container.{ContainerForField, ContainerForMethod}
 import com.anarsoft.race.detection.report.element.LoopRunAndThreadIndex
-import com.vmlens.trace.agent.bootstrap.description.{ClassDescription, TestLoopDescription, ThreadDescription, ThreadOrLoopDescription, ThreadOrLoopDescriptionVisitor}
+import com.vmlens.trace.agent.bootstrap.description.{AutomaticTestDescription, ClassDescription, TestLoopDescription, ThreadDescription, ThreadLoopOrAutomaticTestDescription, ThreadOrLoopDescriptionVisitor}
 
 class DescriptionCallbackImpl extends DescriptionCallback with NeedsDescriptionCallback with ThreadOrLoopDescriptionVisitor  {
   
@@ -15,7 +15,7 @@ class DescriptionCallbackImpl extends DescriptionCallback with NeedsDescriptionC
         case None => {
         }
         case Some(x) => {
-          x.description = Some(Tuple2(classDescription,field));
+          x.fieldDescription = Some(Tuple2(classDescription,field));
         }
       }
     }
@@ -26,7 +26,7 @@ class DescriptionCallbackImpl extends DescriptionCallback with NeedsDescriptionC
         case None => {
         }
         case Some(x) => {
-          x.description = Some(Tuple2(classDescription, method));
+          x.classAndMethod = Some(Tuple2(classDescription, method));
         }
       }
     }
@@ -42,7 +42,11 @@ class DescriptionCallbackImpl extends DescriptionCallback with NeedsDescriptionC
 
   }
 
-  override def addThreadOrLoopDescription(threadOrLoopDescription: ThreadOrLoopDescription): Unit = {
+  override def visit(automaticTestDescription: AutomaticTestDescription): Unit = {
+    containerMapCollection.idToAutomaticTestClassName.put(automaticTestDescription.id(),automaticTestDescription.className())
+  }
+
+  override def addThreadOrLoopDescription(threadOrLoopDescription: ThreadLoopOrAutomaticTestDescription): Unit = {
     threadOrLoopDescription.accept(this);
   }
 

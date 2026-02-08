@@ -1,6 +1,7 @@
 package com.anarsoft.race.detection.rundata
 
 import com.anarsoft.race.detection.createstacktrace.MethodEvent
+import com.anarsoft.race.detection.event.automatictest.LoadedAutomaticTestEvent
 import com.anarsoft.race.detection.event.control.ControlEvent
 import com.anarsoft.race.detection.groupinterleave.GroupInterleaveElement
 import com.anarsoft.race.detection.groupnonvolatile.GroupNonVolatileElement
@@ -16,4 +17,7 @@ trait RunDataListBuilder {
   def addSyncActionElements(loopAndRunId: LoopAndRunId, syncActionElements: List[GroupInterleaveElement]): Unit;
 
   def addNonVolatileElements(loopAndRunId: LoopAndRunId, nonVolatileElements: List[GroupNonVolatileElement]): Unit;
+
+  def addAutomaticTestElements(loopAndRunId: LoopAndRunId, automaticTestList : util.List[LoadedAutomaticTestEvent]): Unit;
+  
 }

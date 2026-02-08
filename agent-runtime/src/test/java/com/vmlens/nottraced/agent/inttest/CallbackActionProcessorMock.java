@@ -27,6 +27,16 @@ public class CallbackActionProcessorMock implements CallbackActionProcessor {
     }
 
     @Override
+    public void automaticTestSuccess(int i, String s) {
+
+    }
+
+    @Override
+    public void automaticTestMethod(int i, int i1, int i2) {
+
+    }
+
+    @Override
     public boolean process(CallbackAction callbackAction) {
         add(callbackAction.getClass());
         return true;

@@ -17,9 +17,6 @@ trait CreateDominatorTreeEvent {
   def threadIndex: Int;
   def dominatorTreeCounter  : Int;
 
-  def add(stack : CreateGraphStack, 
-          alreadyAdded : mutable.HashSet[DominatorTreeVertex],
-          memoryKeyToVertex : mutable.HashMap[DominatorMemoryAccessKey,VertexAtomicNonBlockingOrVolatile],
-          graph : Graph[DominatorTreeVertex,DefaultEdge]) : Unit;
+  def add(context : CreateDominatorTreeContext) : Unit;
   
 }

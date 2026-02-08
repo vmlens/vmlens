@@ -9,4 +9,6 @@ case class VertexMethod(methodId : Int) extends InternalNode {
   override def addToNeedsDescription(needsDescriptionCallback: NeedsDescriptionCallback): Unit = {
     needsDescriptionCallback.needsMethod(methodId)
   }
+
+  override def isDominatorTreeLeaf: Boolean = false
 }

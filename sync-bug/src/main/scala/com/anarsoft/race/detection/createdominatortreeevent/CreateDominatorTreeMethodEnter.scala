@@ -14,10 +14,7 @@ trait CreateDominatorTreeMethodEnter extends CreateDominatorTreeEvent {
 
   def methodId: Int;
   
-  override def add(stack: CreateGraphStack, 
-                   alreadyAdded: mutable.HashSet[DominatorTreeVertex],
-                   memoryKeyToVertex : mutable.HashMap[DominatorMemoryAccessKey,VertexAtomicNonBlockingOrVolatile],
-                   graph: Graph[DominatorTreeVertex, DefaultEdge]): Unit = {
-    stack.methodEnter(methodId)
+  override def add(context : CreateDominatorTreeContext): Unit = {
+    context.stack.methodEnter(methodId)
   }
 }

@@ -16,7 +16,7 @@ public class TreeBuilder {
         NodeBuilder current = start.getNext();
         ListElement previous = null;
         ListElement startElement =  null;
-        while(current != null ) {
+        while(current != null) {
             ListElement currentListElement = current.build();
             if(startElement == null) {
                 startElement = currentListElement;

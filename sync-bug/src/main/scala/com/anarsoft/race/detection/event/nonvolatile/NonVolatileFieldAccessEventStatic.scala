@@ -6,8 +6,8 @@ import com.anarsoft.race.detection.sortnonvolatilememoryaccess.NonVolatileMemory
 import com.anarsoft.race.detection.report.element.runelementtype.ReportOperation
 import com.anarsoft.race.detection.report.element.runelementtype.operation.OperationNonVolatileAccess
 
-trait NonVolatileFieldAccessEventStatic extends LoadedNonVolatileEvent with
-  NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEventStatic]
+trait NonVolatileFieldAccessEventStatic extends LoadedNonVolatileEvent 
+  with NonVolatileMemoryAccessEvent[NonVolatileFieldAccessEventStatic]
   with WithSetStacktraceNode {
 
   def fieldId: Int

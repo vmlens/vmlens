@@ -2,6 +2,7 @@ package com.anarsoft.race.detection.event.gen;
 
 import java.io.DataInputStream;
 
+import com.anarsoft.race.detection.event.automatictest._
 import com.anarsoft.race.detection.event.method._
 import com.anarsoft.race.detection.event.control._;
 import com.anarsoft.race.detection.event.nonvolatile._;

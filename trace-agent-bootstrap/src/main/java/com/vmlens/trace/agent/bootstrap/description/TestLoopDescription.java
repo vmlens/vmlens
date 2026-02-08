@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-public class TestLoopDescription implements SerializableEvent, ThreadOrLoopDescription {
+public class TestLoopDescription implements SerializableEvent, ThreadLoopOrAutomaticTestDescription {
     private final int loopId;
     private final String name;
     private final int reportAsSummaryThreshold;

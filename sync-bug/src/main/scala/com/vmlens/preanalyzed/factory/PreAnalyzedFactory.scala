@@ -143,6 +143,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       atomicReferenceArray(),
 
       ThreadModel("java/lang/Thread"),
+      ThreadModel("java/lang/VirtualThread"),
       
       // Not sure if I need this,
       // anonymous classes are called
@@ -150,7 +151,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       FilterInnerIncludeAnonymousClass("java/lang/Thread$"),
 
       VMLensApi("com/vmlens/api/AllInterleavings"),
-      DoNotTraceIn("com/vmlens/api/TestResultMap"),
+
       
       atomicIntegerFieldUpdater(),
       

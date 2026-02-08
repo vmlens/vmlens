@@ -82,6 +82,7 @@ class CreateRunReport {
       }
 
     var startPosition : Option[Int] = Some(startPositionList.dequeue());
+    var found = false;
     position = 0;
     val uiRunElements = new util.LinkedList[UIRunElement]();
     for (runElement <- filtered) {
@@ -101,13 +102,15 @@ class CreateRunReport {
               linkAndFirstMethodName.firstMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex),
               linkAndFirstMethodName.link, false)
             uiRunElements.add(uiRunElement);
-          } else {
-            if(! startPositionList.isEmpty) {
-              startPosition   = Some(startPositionList.dequeue());
-            } else {
-              startPosition = None;
+            found = true;
+          } else if(found){
+            startPosition = None;
+            while(! startPositionList.isEmpty) {
+              val newPosition = startPositionList.dequeue()
+              if(newPosition > position)
+              startPosition = Some(newPosition);
             }
-
+            found = false
           }
         }
         case None => {
@@ -159,7 +162,14 @@ class CreateRunReport {
     }
 
     uiRunElements.sort(new UISummaryElementComparator());
-    createHtmlReport.createSummaryReport(uiRunElements, descriptionContext.loopName(runData.loopId), runData.runLink)
+
+    val shortened = new util.LinkedList[UISummaryElement]();
+    val iter = uiRunElements.iterator()
+    while(iter.hasNext && shortened.size() < 100 ) {
+      shortened.add(iter.next())
+    }
+
+    createHtmlReport.createSummaryReport(shortened, descriptionContext.loopName(runData.loopId), runData.runLink)
 
   }
 
@@ -171,17 +181,24 @@ class CreateRunReport {
     val uiRunElements = new util.LinkedList[UIRunElement]();
 
     for (runElement <- filtered) {
-      val linkAndFirstMethodName = createLinkAndFirstMethodName(runElement,
-        stacktraceToLink,
-        createHtmlReport,
-        descriptionContext);
-      val operation = runElement.operationTextFactory.operation
-      val element = runElement.operationTextFactory.element(descriptionContext)
-      val objectString = runElement.operationTextFactory.objectString(descriptionContext)
-      val uiRunElement = new UIRunElement(runElement.runPosition, operation, element, objectString,
-        linkAndFirstMethodName.firstMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex),
-        linkAndFirstMethodName.link, false)
-      uiRunElements.add(uiRunElement);
+      if(runElement.isNewRun) {
+        uiRunElements.add(UIRunElement.createNewRun(runElement.loopRunAndThreadIndex.runId));
+      } else {
+        val linkAndFirstMethodName = createLinkAndFirstMethodName(runElement,
+          stacktraceToLink,
+          createHtmlReport,
+          descriptionContext);
+        val operation = runElement.operationTextFactory.operation
+        val element = runElement.operationTextFactory.element(descriptionContext)
+        val objectString = runElement.operationTextFactory.objectString(descriptionContext)
+        val uiRunElement = new UIRunElement(runElement.runPosition, operation, element, objectString,
+          linkAndFirstMethodName.firstMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex),
+          linkAndFirstMethodName.link, false)
+        uiRunElements.add(uiRunElement);
+      }
+      
+      
+     
     }
 
       createHtmlReport.createRunReport(uiRunElements, descriptionContext.loopName(runData.loopId), runData.runLink)

@@ -8,9 +8,9 @@ import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.
 import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.GetReadWriteLockMethod.GET_READ_WRITE_LOCK;
 import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.LockMethod.*;
 import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodToStrategy.*;
+import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodToStrategy.NON_BLOCKING_WRITE;
 import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_READ_LOCK;
 import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.MethodWithLock.METHOD_WITH_WRITE_LOCK;
-import static com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.NonBlockingMethod.*;
 
 public class MethodTypeCollectionFactory {
 
@@ -78,6 +78,11 @@ public class MethodTypeCollectionFactory {
         add(NEW_REFERENCE_UPDATER);
 
         add(FUTURE_GET_STATE);
+
+        add(NON_BLOCKING_WITH_FILTER_READ);
+        add(NON_BLOCKING_WITH_FILTER_WRITE);
+        add(NON_BLOCKING_WITH_FILTER_READ_WRITE);
+
 
         return new MethodTypeCollection(methodTypeToId,idToMethodType);
     }

@@ -1,5 +1,6 @@
 package com.anarsoft.race.detection.main
 
+import com.anarsoft.race.detection.event.automatictest.{AutomaticTestContext, LoadedAutomaticTestEvent}
 import com.anarsoft.race.detection.event.distribute.EventWithLoopAndRunId
 import com.anarsoft.race.detection.event.gen.*
 import com.anarsoft.race.detection.event.load.DeserializeStrategy
@@ -8,10 +9,10 @@ import com.anarsoft.race.detection.event.interleave.{LoadedInterleaveActionConte
 import com.anarsoft.race.detection.event.method.{LoadedMethodEvent, LoadedMethodEventContext}
 import com.anarsoft.race.detection.event.nonvolatile.{LoadedNonVolatileEvent, LoadedNonVolatileEventContext}
 import com.anarsoft.race.detection.rundata.{LoopAndRunId, RunDataListBuilder}
-import com.anarsoft.race.detection.main.LoadRunsFactory.{control, interleave, method, nonVolatile}
+import com.anarsoft.race.detection.main.LoadRunsFactory.{automaticTest, control, interleave, method, nonVolatile}
 import com.anarsoft.race.detection.process.load.{EventFilter, EventFilterNoOp, LoadAndDistributeEvents, LoadAndDistributeEventsImpl, LoadAndDistributeEventsNoop, LoadRunsImpl}
 import com.anarsoft.race.detection.process.main.LoadRuns
-import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.{CONTROL, INTERLEAVE, METHOD_EVENTS, NON_VOLATILE}
+import com.vmlens.trace.agent.bootstrap.event.stream.StreamRepository.{CONTROL, INTERLEAVE, METHOD_EVENTS, NON_VOLATILE, AUTOMATIC_TEST}
 import com.vmlens.trace.agent.bootstrap.event.stream.StreamWrapperWithLoopIdAndRunId.EVENT_FILE_POSTFIX
 import com.anarsoft.race.detection.event.distribute.LoadedEventContext
 import com.anarsoft.race.detection.event.distribute.DistributeEvents
@@ -29,12 +30,12 @@ class LoadRunsFactory {
     arrayBuffer.append(method(getPath(dir, METHOD_EVENTS)));
     arrayBuffer.append(interleave(getPath(dir, INTERLEAVE)));
     arrayBuffer.append(control(getPath(dir, CONTROL)));
+    arrayBuffer.append(automaticTest(getPath(dir, AUTOMATIC_TEST)));
     new LoadRunsImpl(arrayBuffer.toList);
   }
 
   def getPath(dir : Path, fileName : String)  :  Path = dir.resolve(fileName + EVENT_FILE_POSTFIX);
-
-
+  
 }
 
 object LoadRunsFactory {
@@ -62,6 +63,12 @@ object LoadRunsFactory {
     new ControlDeSerializer(),
     () => {
       new LoadedControlContext()
+    });
+
+  def automaticTest(filePath: Path): LoadAndDistributeEvents = create[LoadedAutomaticTestEvent](filePath,
+    new AutomaticTestDeSerializer(),
+    () => {
+      new AutomaticTestContext()
     });
 
 

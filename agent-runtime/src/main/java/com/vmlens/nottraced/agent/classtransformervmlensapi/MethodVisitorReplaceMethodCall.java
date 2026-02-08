@@ -25,7 +25,10 @@ public class MethodVisitorReplaceMethodCall extends MethodVisitor {
          * we need to filter out the init call in the constructor therefore the check for the name
          */
 
-        if (opcode == INVOKESPECIAL && ( name.equals("hasNext") || name.equals("close")) ) {
+        if (opcode == INVOKESPECIAL && ( name.equals("hasNext") ||
+                name.equals("close") ||
+                name.equals("automaticTestSuccess") ||
+                name.equals("automaticTestMethod")) ) {
             super.visitMethodInsn(INVOKESTATIC, CALLBACK_CLASS, name, descriptor, false);
         } else {
             super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);

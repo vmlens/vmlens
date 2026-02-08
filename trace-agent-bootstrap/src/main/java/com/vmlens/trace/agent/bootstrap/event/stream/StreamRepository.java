@@ -15,18 +15,20 @@ public class StreamRepository {
     public static final String DIRECT_MEMORY = "directmemory";
     public static final String CONTROL = "control";
     public static final String LOOP_CONTROL = "loopcontrol";
-
+    public static final String AUTOMATIC_TEST = "automatictest";
 
     public final StreamWrapperWithoutLoopIdAndRunId threadName;
     public final StreamWrapperWithoutLoopIdAndRunId description;
     public final StreamWrapperWithoutLoopIdAndRunId agentLog;
     public final StreamWrapperWithoutLoopIdAndRunId loopControl;
-    public final StreamWrapperWithLoopIdAndRunId method;
+ 
 
+    public final StreamWrapperWithLoopIdAndRunId method;
     public final StreamWrapperWithLoopIdAndRunId interleave;
     public final StreamWrapperWithLoopIdAndRunId nonVolatile;
     public final StreamWrapperWithLoopIdAndRunId directMemory;
     public final StreamWrapperWithLoopIdAndRunId control;
+    public final StreamWrapperWithLoopIdAndRunId automaticTest;
 
     private final TLinkedList<AbstractStreamWrapper> streamList = new TLinkedList<AbstractStreamWrapper>();
 
@@ -35,6 +37,7 @@ public class StreamRepository {
         this.description = create(eventDir, DESCRIPTION, streamList);
         this.agentLog = create(eventDir, AGENTLOG, streamList);
         this.loopControl = create(eventDir, LOOP_CONTROL, streamList);
+        this.automaticTest = createWithLoopIdAndRunId(eventDir, AUTOMATIC_TEST, streamList);
 
         this.method = createWithLoopIdAndRunId(eventDir, METHOD_EVENTS, streamList);
         this.interleave = createWithLoopIdAndRunId(eventDir, INTERLEAVE, streamList);
@@ -43,12 +46,6 @@ public class StreamRepository {
         this.control = createWithLoopIdAndRunId(eventDir, CONTROL, streamList);
     }
 
-    public void flush() throws Exception {
-        Iterator<AbstractStreamWrapper> iterator = streamList.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().flush();
-        }
-    }
     public void close() throws Exception {
         Iterator<AbstractStreamWrapper> iterator = streamList.iterator();
         while (iterator.hasNext()) {
@@ -63,6 +60,7 @@ public class StreamRepository {
         streamList.add(stream);
         return stream;
     }
+
     private static StreamWrapperWithoutLoopIdAndRunId
     create(String eventDir, String name,
            TLinkedList<AbstractStreamWrapper> streamList) {

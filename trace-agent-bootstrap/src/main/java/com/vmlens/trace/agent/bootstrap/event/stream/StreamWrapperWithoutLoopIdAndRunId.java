@@ -23,7 +23,6 @@ public class StreamWrapperWithoutLoopIdAndRunId extends AbstractStreamWrapper {
             stream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(
                     eventDir + "/" + name + EVENT_FILE_POSTFIX)));
         }
-
         return stream;
     }
 
@@ -31,10 +30,6 @@ public class StreamWrapperWithoutLoopIdAndRunId extends AbstractStreamWrapper {
         if (stream != null) {
             stream.close();
         }
-    }
-
-    public void flush() {
-
     }
     
 }

@@ -33,8 +33,5 @@ public class StreamWrapperWithLoopIdAndRunId extends AbstractStreamWrapper {
         }
     }
 
-    public void flush() {
-
-    }
 
 }

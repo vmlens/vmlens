@@ -44,8 +44,6 @@ public class TestReentrant {
         expectedSet.add(true);
         expectedSet.add(false);
 
-
-
         Set<Boolean> actualMain = new HashSet<>();
         Set<Boolean> actualThread = new HashSet<>();
         try(AllInterleavings allInterleavings = new AllInterleavings("reentrantTryLock")) {
