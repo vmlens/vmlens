@@ -16,7 +16,6 @@ import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
 
-import static com.vmlens.trace.agent.bootstrap.TraceFlags.TRACE_INTERLEAVE_ACTIONS;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
 
 
@@ -59,7 +58,7 @@ public class InterleaveLoop implements IteratorQueue {
                              QueueIn queueIn) {
         containsLoop = actualRun.containsLoop() | containsLoop;
         TLinkedList<TLinkableWrapper<InterleaveAction>> withLoops = actualRun.run();
-        if(TRACE_INTERLEAVE_ACTIONS) {
+        if(interleaveLoopContext.isTraceInterleaveActions()) {
             String[] array = new String[withLoops.size() + 1];
             array[0] = "New Run " + loopId;
             int index = 1;
@@ -114,7 +113,7 @@ public class InterleaveLoop implements IteratorQueue {
         if(alreadyProcessed(orig))  {
             return;
         }
-        if(TRACE_INTERLEAVE_ACTIONS) {
+        if(interleaveLoopContext.isTraceInterleaveActions()) {
             queueIn.offer(new InfoMessageEvent(new String[]{"not alreadyProcessed"}));
         }
         alreadyProcessed.add(wrap(orig));

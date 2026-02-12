@@ -47,6 +47,11 @@ public class ParallelizeFacade {
     }
 
     public void close(ThreadLocalForParallelize threadLocalWrapperForParallelize, Object obj) {
+        if(currentLoop == null) {
+            System.err.println("currentLoop is null");
+            System.err.println("Have you called while(allInterleavings.hasNext())?");
+            return;
+        }
         currentLoop.loop().close(threadLocalWrapperForParallelize);
         parallelizeLoopRepository.remove(currentLoop.object());
         currentLoop = null;

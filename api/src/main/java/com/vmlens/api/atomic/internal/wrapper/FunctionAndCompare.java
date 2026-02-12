@@ -44,9 +44,6 @@ public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordRe
         return function.apply(classUnderTest);
     }
 
-    public boolean test(READ_VALUE readValue, READ_VALUE readValue2) {
-        return compare.test(readValue, readValue2);
-    }
 
     public String getLabel() {
         if(isReadOnly) {
@@ -70,5 +67,9 @@ public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordRe
 
     public int automaticTestType() {
         return automaticTestType;
+    }
+
+    public BiPredicate<READ_VALUE, READ_VALUE> getCompare() {
+        return compare;
     }
 }

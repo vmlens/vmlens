@@ -26,7 +26,7 @@ public class FinalFieldStrategy implements FieldStrategy {
     }
 
     @Override
-    public EitherVolatileOrNormalFieldAccessEvent create(Object forObject) {
+    public EitherVolatileOrNormalFieldAccessEvent create(Object forObject, int fieldId) {
         return null;
     }
 }

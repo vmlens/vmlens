@@ -13,6 +13,7 @@ public class AllInterleavingsBuilder {
     private int maximumIterations = MAXIMUM_ITERATIONS;
     private int removeCycleThreshold = REMOVE_CYCLE_THRESHOLD;
     private int reportAsSummaryThreshold = REPORT_AS_SUMMARY_THRESHOLD;
+    private boolean traceInterleaveActions;
     private final List<AbstractMap.SimpleImmutableEntry<String,String>> intentionalDataRaces =
             new LinkedList<>();
 
@@ -36,6 +37,13 @@ public class AllInterleavingsBuilder {
         return this;
     }
 
+    public AllInterleavingsBuilder withTraceInterleaveActions() {
+        traceInterleaveActions = true;
+        return this;
+    }
+
+
+
     public AllInterleavings build(String name) {
         return new AllInterleavings(name , false,
                 maximumIterations,
@@ -43,6 +51,7 @@ public class AllInterleavingsBuilder {
                 50,
                 100,
                 reportAsSummaryThreshold,
+                traceInterleaveActions,
                 intentionalDataRaces);
     }
 

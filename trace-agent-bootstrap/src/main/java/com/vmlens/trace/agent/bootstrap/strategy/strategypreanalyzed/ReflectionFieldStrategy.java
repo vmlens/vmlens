@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteAfter
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteRunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.SetExecuteAfterOperation;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.EitherVolatileOrNormalFieldAccessEvent;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdAndStrategy;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldOwnerAndName;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.methodtransformerbuilder.MethodTransformerBuilder;
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
@@ -42,7 +43,7 @@ public class ReflectionFieldStrategy  implements StrategyPreAnalyzed{
         String className = field.getDeclaringClass().getName().replace('.','/');
         String fieldName = field.getName();
         FieldOwnerAndName fieldOwnerAndName = new FieldOwnerAndName(className,fieldName);
-        FieldStrategy strategy = context.fieldUpdaterRepository().get(fieldOwnerAndName);
+        FieldIdAndStrategy strategy = context.fieldUpdaterRepository().get(fieldOwnerAndName);
         EitherVolatileOrNormalFieldAccessEvent event = strategy.create(context.objectParam());
         if(event != null) {
             event.setOperation(operation);

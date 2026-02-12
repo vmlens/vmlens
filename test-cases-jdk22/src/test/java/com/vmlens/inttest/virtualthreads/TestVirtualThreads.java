@@ -15,7 +15,6 @@ public class TestVirtualThreads {
 
     private volatile int j = 0;
 
-    @Disabled
     @Test
     public void testWrite() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();

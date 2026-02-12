@@ -73,58 +73,49 @@ class CreateRunReport {
                            createHtmlReport : CreateHtmlReport,runData : ReportLoopData): Unit = {
 
     var position = 0;
-    val startPositionList = new mutable.Queue[Int]()
+    val startPositionList = new mutable.ArrayBuffer[Interval]()
     for (runElement <- filtered) {
       if(runElement.operationTextFactory.isDataRace) {
-        startPositionList.enqueue( math.max( 0 , position - 5 ) )
+        startPositionList.append( Interval ( math.max( 0 , position - 5 ), position + 5 ))
       }
         position = position + 1
       }
 
-    var startPosition : Option[Int] = Some(startPositionList.dequeue());
-    var found = false;
+   
+    val intervalList = new CreateOverlappingIntervals().createOverlappingIntervals(startPositionList);
+    
+    var currentIndex = 0;
+    var currentInterval = intervalList(0);
     position = 0;
     val uiRunElements = new util.LinkedList[UIRunElement]();
     for (runElement <- filtered) {
 
-      startPosition match {
-
-        case Some(x) => {
-          if(x <= position && position < x + 10  ) {
-            val linkAndFirstMethodName = createLinkAndFirstMethodName(runElement,
-              stacktraceToLink,
-              createHtmlReport,
-              descriptionContext);
-            val operation = runElement.operationTextFactory.operation
-            val element = runElement.operationTextFactory.element(descriptionContext)
-            val objectString = runElement.operationTextFactory.objectString(descriptionContext)
-            val uiRunElement = new UIRunElement(runElement.runPosition, operation, element, objectString,
-              linkAndFirstMethodName.firstMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex),
-              linkAndFirstMethodName.link, false)
-            uiRunElements.add(uiRunElement);
-            found = true;
-          } else if(found){
-            startPosition = None;
-            while(! startPositionList.isEmpty) {
-              val newPosition = startPositionList.dequeue()
-              if(newPosition > position)
-              startPosition = Some(newPosition);
-            }
-            found = false
-          }
+      if( position < currentInterval.start) {
+        // Nothing To Do
+      } else if( position < currentInterval.end) {
+        val linkAndFirstMethodName = createLinkAndFirstMethodName(runElement,
+          stacktraceToLink,
+          createHtmlReport,
+          descriptionContext);
+        val operation = runElement.operationTextFactory.operation
+        val element = runElement.operationTextFactory.element(descriptionContext)
+        val objectString = runElement.operationTextFactory.objectString(descriptionContext)
+        val uiRunElement = new UIRunElement(runElement.runPosition, operation, element, objectString,
+          linkAndFirstMethodName.firstMethodName, descriptionContext.threadName(runElement.loopRunAndThreadIndex),
+          linkAndFirstMethodName.link, false)
+        uiRunElements.add(uiRunElement);
+      } else {
+        if(currentIndex + 1 < intervalList.size) {
+          currentIndex = currentIndex + 1;
+          currentInterval = intervalList(currentIndex);
         }
-        case None => {
-
-        }
-
       }
       position = position + 1
     }
     createHtmlReport.createRunReport(uiRunElements, descriptionContext.loopName(runData.loopId), runData.runLink)
 
   }
-
-
+  
   def createSummaryReport(filtered : ArrayBuffer[RunElement],descriptionContext : DescriptionContext,
                           stacktraceToLink : mutable.HashMap[StacktraceLeaf,LinkAndFirstMethodName],
                           createHtmlReport : CreateHtmlReport,runData : ReportLoopData): Unit = {

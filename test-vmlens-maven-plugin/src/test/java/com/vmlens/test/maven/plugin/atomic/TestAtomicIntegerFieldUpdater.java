@@ -18,7 +18,6 @@ public class TestAtomicIntegerFieldUpdater {
     public volatile int j;
 
     @Test
-    @Disabled
     public void update() {
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(3);
@@ -26,6 +25,32 @@ public class TestAtomicIntegerFieldUpdater {
 
         Set<Integer> countSet = new HashSet<>();
         try(AllInterleavings allInterleavings = new AllInterleavings("testAtomicIntegerFieldUpdater")) {
+            while (allInterleavings.hasNext()) {
+                j = 0;
+                AtomicIntegerFieldUpdater<TestAtomicIntegerFieldUpdater> updater =
+                        AtomicIntegerFieldUpdater.newUpdater(TestAtomicIntegerFieldUpdater.class, "j");
+
+                runParallel( () -> {
+                    updater.set(this,7);
+                }, () -> {
+                    updater.set(this,3);
+                } );
+
+                countSet.add(j);
+
+            }
+        }
+        assertThat(countSet,is(expectedSet));
+    }
+
+    @Test
+    public void updateDirect() {
+        Set<Integer> expectedSet = new HashSet<>();
+        expectedSet.add(3);
+        expectedSet.add(7);
+
+        Set<Integer> countSet = new HashSet<>();
+        try(AllInterleavings allInterleavings = new AllInterleavings("testAtomicIntegerFieldUpdater.updateDirect")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
                 AtomicIntegerFieldUpdater<TestAtomicIntegerFieldUpdater> updater =

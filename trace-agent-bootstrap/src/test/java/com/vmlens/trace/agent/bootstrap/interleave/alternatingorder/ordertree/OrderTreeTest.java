@@ -56,7 +56,7 @@ public class OrderTreeTest {
 
     private InterleaveLoopContext  interleaveLoopContext() {
         InterleaveLoopMessageFactory loopMessageFactory = mock(InterleaveLoopMessageFactory.class);
-        return new InterleaveLoopContext(-1, 50 , -1 , -1,loopMessageFactory);
+        return new InterleaveLoopContext(-1, 50 , -1 , -1,false,loopMessageFactory);
     }
 
     private List<List<LeftBeforeRight>> process(OrderTree tree) {

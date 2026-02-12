@@ -96,7 +96,7 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
     @Override
     public void initialize(InitializationAction initializationAction) {
         ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
-        if(canProcess(threadLocal)) {
+        if(canProcessInitialize(threadLocal)) {
             try{
                 threadLocal.incrementInsideVMLens();
                 initializationAction.initialize();
@@ -162,6 +162,10 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
 
     boolean canProcess(ThreadLocalForCallbackAction threadLocalForCallbackAction) {
         return threadLocalForCallbackAction.canProcess();
+    }
+
+    boolean canProcessInitialize(ThreadLocalForCallbackAction threadLocalForCallbackAction) {
+        return threadLocalForCallbackAction.canProcessInitalize();
     }
 
 

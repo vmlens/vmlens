@@ -217,6 +217,11 @@
                 <version>3.2</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.pulsar</groupId>
+                <artifactId>pulsar-common</artifactId>
+                <version>4.1.2</version>
+            </dependency>
+            <dependency>
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
                 <version>3.0.8</version>

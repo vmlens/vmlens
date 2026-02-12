@@ -44,7 +44,9 @@ public class VolatileFieldStrategy implements FieldStrategy {
     }
 
     @Override
-    public EitherVolatileOrNormalFieldAccessEvent create(Object forObject) {
-        return new VolatileFieldAccessEvent(forObject);
+    public EitherVolatileOrNormalFieldAccessEvent create(Object forObject, int fieldId) {
+        VolatileFieldAccessEvent volatileFieldAccessEvent = new VolatileFieldAccessEvent(forObject);
+        volatileFieldAccessEvent.setFieldId(fieldId);
+        return volatileFieldAccessEvent ;
     }
 }

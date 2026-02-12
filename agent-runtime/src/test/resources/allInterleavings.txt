@@ -14,12 +14,13 @@ method:<init>(Ljava/lang/String;Z)V
   SIPUSH
   SIPUSH
   SIPUSH
+  ICONST_0
   NEW  java/util/LinkedList
   DUP
   INVOKESPECIAL  java/util/LinkedList.<init>:()V
-  INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;ZIIIIILjava/util/List;)V
+  INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;ZIIIIIZLjava/util/List;)V
   RETURN
-method:<init>(Ljava/lang/String;ZIIIIILjava/util/List;)V
+method:<init>(Ljava/lang/String;ZIIIIIZLjava/util/List;)V
   ALOAD_0
   INVOKESPECIAL  java/lang/Object.<init>:()V
   ALOAD_0
@@ -44,7 +45,10 @@ method:<init>(Ljava/lang/String;ZIIIIILjava/util/List;)V
   ILOAD_7
   PUTFIELD  com/vmlens/api/AllInterleavings.reportAsSummaryThreshold:I
   ALOAD_0
-  ALOAD_8
+  ILOAD_8
+  PUTFIELD  com/vmlens/api/AllInterleavings.traceInterleaveActions:Z
+  ALOAD_0
+  ALOAD_9
   PUTFIELD  com/vmlens/api/AllInterleavings.intentionalDataRaces:Ljava/util/List;
   RETURN
 method:hasNext()Z

@@ -33,8 +33,8 @@ public class FieldUpdaterRepositoryTest {
                 Runner.runParallel(
                         () -> fieldRepositoryImpl.getIdAndSetFieldIsVolatile(fieldOwnerAndName),
                         () -> fieldUpdaterRepository.set(updater,fieldOwnerAndName),
-                        () -> { FieldStrategy strategy = fieldUpdaterRepository.get(updater);
-                                assertThat( strategy ,
+                        () -> { FieldIdAndStrategy strategy = fieldUpdaterRepository.get(updater);
+                                assertThat( strategy.getStrategy() ,
                                         either( is(NO_OP_FIELD_STRATEGY)).or(
                                                 is(VOLATILE_FIELD_STRATEGY)));
                         }

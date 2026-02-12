@@ -244,9 +244,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       
       MethodToMethodType("tryOptimisticRead", "()J",GET_LOCK_STATE),
       MethodToMethodType("validate", "(J)Z", GET_LOCK_STATE),
-      MethodToMethodType("unlockWrite", "(J)Z", EXIT_STAMPED_LOCK),
-      MethodToMethodType("unlockRead", "(J)Z", EXIT_STAMPED_LOCK),
-      MethodToMethodType("unlock", "(J)Z", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unlockWrite", "(J)V", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unlockRead", "(J)V", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unlock", "(J)V", EXIT_STAMPED_LOCK),
     //  MethodToMethodType("tryConvertToWriteLock", "(J)J", LockEnter()),
     //  MethodToMethodType("tryConvertToReadLock", "(J)J", LockEnter()),
     //  MethodToMethodType("tryConvertToOptimisticRead", "(J)J", LockEnter()),

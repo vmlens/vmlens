@@ -43,6 +43,7 @@ public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, 
 	public final int synchronizationActionsLoopThreshold;
 	public final int unsynchronizedOperationsLoopThreshold;
 	public final int reportAsSummaryThreshold;
+	public final boolean traceInterleaveActions;
 	private int index;
 
 	public final List<AbstractMap.SimpleImmutableEntry<String,String>> intentionalDataRaces;
@@ -72,6 +73,7 @@ public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, 
 				500 ,
 				5000,
 				REPORT_AS_SUMMARY_THRESHOLD,
+				false,
 				new LinkedList<>());
 	}
 
@@ -83,7 +85,8 @@ public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, 
                      int synchronizationActionsLoopThreshold,
                      int unsynchronizedOperationsLoopThreshold,
                      int reportAsSummaryThreshold,
-					 List<AbstractMap.SimpleImmutableEntry<String, String>> intentionalDataRaces) {
+					 boolean traceInterleaveActions,
+                     List<AbstractMap.SimpleImmutableEntry<String, String>> intentionalDataRaces) {
         this.name = name;
 		this.throwExceptionWhenNoAgent = throwExceptionWhenNoAgent;
         this.maximumIterations = maximumIterations;
@@ -91,6 +94,7 @@ public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, 
         this.synchronizationActionsLoopThreshold = synchronizationActionsLoopThreshold;
         this.unsynchronizedOperationsLoopThreshold = unsynchronizedOperationsLoopThreshold;
         this.reportAsSummaryThreshold = reportAsSummaryThreshold;
+        this.traceInterleaveActions = traceInterleaveActions;
         this.intentionalDataRaces = intentionalDataRaces;
     }
 

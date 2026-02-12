@@ -3,6 +3,10 @@ package com.vmlens.api.atomic.internal.wrapper;
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.api.atomic.internal.concurrent.CheckAfterJoin;
 import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
+import com.vmlens.api.atomic.internal.value.ExceptionValue;
+import com.vmlens.api.atomic.internal.value.NullValue;
+import com.vmlens.api.atomic.internal.value.ObjectValue;
+import com.vmlens.api.atomic.internal.value.Value;
 
 import java.util.List;
 
@@ -10,19 +14,33 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
         CheckAfterJoin<CLASS_UNDER_TEST>, ConcurrentCall<CLASS_UNDER_TEST>  {
 
     private final FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> functionAndCompare;
-    private final List<READ_VALUE> expectedResult;
+    private final List<Value<READ_VALUE>> expectedResult;
 
     public FunctionCompareAndExpectedResult(FunctionAndCompare<CLASS_UNDER_TEST, READ_VALUE> functionAndCompare,
-                                            List<READ_VALUE> expectedResult) {
+                                            List<Value<READ_VALUE>> expectedResult) {
         this.functionAndCompare = functionAndCompare;
         this.expectedResult = expectedResult;
     }
 
+    public static <CLASS_UNDER_TEST,READ_VALUE> Value<READ_VALUE> process(FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> function,
+                                                                          CLASS_UNDER_TEST classUnderTest) {
+        try {
+            READ_VALUE value = function.apply(classUnderTest);
+            if(value == null) {
+                return new NullValue<>();
+            }
+            return new ObjectValue<>(value);
+        }
+        catch(Throwable exp) {
+            return new ExceptionValue<>(exp);
+        }
+    }
+
     @Override
     public boolean readAndCheck(CLASS_UNDER_TEST classUnderTest) {
-        READ_VALUE value = functionAndCompare.apply(classUnderTest);
-        for(READ_VALUE expected : expectedResult) {
-            if(functionAndCompare.test(value,expected)) {
+        Value<READ_VALUE> value = process(functionAndCompare,classUnderTest);
+        for(Value<READ_VALUE> expected : expectedResult) {
+            if(value.test(expected,functionAndCompare.getCompare())) {
                 return true;
             }
         }
@@ -34,9 +52,9 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
         allInterleavings.automaticTestMethod(functionAndCompare.automaticTestId(),
                 functionAndCompare.automaticTestMethodId(),
                 functionAndCompare.automaticTestType());
-        READ_VALUE value = functionAndCompare.apply(classUnderTest);
-        for(READ_VALUE expected : expectedResult) {
-            if(functionAndCompare.test(value,expected)) {
+        Value<READ_VALUE> value = process(functionAndCompare,classUnderTest);
+        for(Value<READ_VALUE> expected : expectedResult) {
+            if(value.test(expected,functionAndCompare.getCompare())) {
                 return true;
             }
         }
@@ -47,6 +65,5 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
     public String getLabel() {
         return functionAndCompare.getLabel();
     }
-
 
 }

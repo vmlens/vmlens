@@ -39,14 +39,12 @@ class OperationVolatileAccess(val memoryAccessKey: MemoryAccessKey, val memoryAc
 
       }
     }
-
   }
 
   override def take(): Boolean = memoryAccessKey.objectHashCodeOption match {
     case Some(x) => {
       !objectHashCodeMap.isSingleThreaded(x)
     }
-
     case None => {
       true;
     }

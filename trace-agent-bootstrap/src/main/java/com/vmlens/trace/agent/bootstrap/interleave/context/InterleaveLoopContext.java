@@ -10,17 +10,19 @@ public class InterleaveLoopContext {
     private final int removeCycleThreshold;
     private final int synchronizationActionsLoopThreshold;
     private final int unsynchronizedOperationsLoopThreshold;
+    private final boolean traceInterleaveActions;
     private final InterleaveLoopMessageFactory loopMessageFactory;
 
     public InterleaveLoopContext(int maximumIterations,
                                  int removeCycleThreshold,
                                  int synchronizationActionsLoopThreshold,
-                                 int unsynchronizedOperationsLoopThreshold,
+                                 int unsynchronizedOperationsLoopThreshold, boolean traceInterleaveActions,
                                  InterleaveLoopMessageFactory loopMessageFactory) {
         this.maximumIterations = maximumIterations;
         this.removeCycleThreshold = removeCycleThreshold;
         this.synchronizationActionsLoopThreshold = synchronizationActionsLoopThreshold;
         this.unsynchronizedOperationsLoopThreshold = unsynchronizedOperationsLoopThreshold;
+        this.traceInterleaveActions = traceInterleaveActions;
         this.loopMessageFactory = loopMessageFactory;
     }
 
@@ -42,6 +44,10 @@ public class InterleaveLoopContext {
 
     public void cyclesRemoved(int orderTreeLength) {
         loopMessageFactory.cyclesRemoved(orderTreeLength);
+    }
+
+    public boolean isTraceInterleaveActions() {
+        return traceInterleaveActions;
     }
 
     public void maximumIterationsReached(int orderTreeLength) {

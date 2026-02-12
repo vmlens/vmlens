@@ -3,7 +3,6 @@ package com.anarsoft.race.detection.automatictest
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
 import com.vmlens.preanalyzed.model.classmodel.ClassWithMethodToMethodType
 import com.vmlens.preanalyzed.model.{ClassModel, MethodToMethodType}
-
 import java.io.PrintWriter
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer

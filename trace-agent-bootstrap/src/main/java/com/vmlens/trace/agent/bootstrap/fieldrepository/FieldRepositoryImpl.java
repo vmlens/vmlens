@@ -26,16 +26,16 @@ public class FieldRepositoryImpl implements FieldRepositoryForCallback, FieldRep
     }
 
     @Override
-    public synchronized FieldStrategy get(FieldOwnerAndName fieldOwnerAndName) {
+    public synchronized FieldIdAndStrategy get(FieldOwnerAndName fieldOwnerAndName) {
         if (! fieldIdIdToInt.contains(fieldOwnerAndName)) {
-            return NO_OP_FIELD_STRATEGY;
+            return new FieldIdAndStrategy(0, NO_OP_FIELD_STRATEGY);
         }
         int fieldId = fieldIdIdToInt.get(fieldOwnerAndName);
         FieldStrategy strategy = idToStrategy.get(fieldId);
         if (strategy == null) {
-            return  NO_OP_FIELD_STRATEGY;
+            return new FieldIdAndStrategy(fieldId, NO_OP_FIELD_STRATEGY);
         }
-        return strategy;
+        return  new FieldIdAndStrategy(fieldId,strategy);
     }
 
     @Override
