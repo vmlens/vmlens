@@ -2,7 +2,7 @@ package com.vmlens.inttest.projects.pulsar;
 
 import com.vmlens.api.AllInterleavings;
 import org.apache.pulsar.common.util.collections.GrowableArrayBlockingQueue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static com.vmlens.api.Runner.runParallel;
 
