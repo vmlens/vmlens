@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderList;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 
@@ -15,16 +15,16 @@ public class AlternatingOrderContainer  {
 
     private ThreadIndexToElementList<Position> actualRun;
     private LeftBeforeRight[] fixedOrderArray;
-    private OrderTree orderTree;
+    private OrderList orderList;
     private final InterleaveLoopContext interleaveLoopContext;
 
     public AlternatingOrderContainer(ThreadIndexToElementList<Position> actualRun,
                                      LeftBeforeRight[] fixedOrderArray,
-                                     OrderTree orderTree,
+                                     OrderList orderList,
                                      InterleaveLoopContext interleaveLoopContext) {
         this.actualRun = actualRun;
         this.fixedOrderArray = fixedOrderArray;
-        this.orderTree = orderTree;
+        this.orderList = orderList;
         this.interleaveLoopContext = interleaveLoopContext;
     }
 
@@ -32,8 +32,8 @@ public class AlternatingOrderContainer  {
         return actualRun;
     }
 
-    public OrderTree orderTree() {
-        return orderTree;
+    public OrderList orderTree() {
+        return orderList;
     }
 
     public LeftBeforeRight[] fixedOrderArray() {
@@ -43,7 +43,7 @@ public class AlternatingOrderContainer  {
     public void setFieldsToNull() {
         actualRun = null;
         fixedOrderArray = null;
-        orderTree = null;
+        orderList = null;
     }
 
     /**

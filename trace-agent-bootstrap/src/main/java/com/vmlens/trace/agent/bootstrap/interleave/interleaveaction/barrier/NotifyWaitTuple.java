@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeTwoOrders;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderAlternative;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeOneOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeTwoOrders;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderAlternative;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
 
@@ -21,7 +21,7 @@ public class NotifyWaitTuple implements AddToAlternatingOrder {
     }
 
     @Override
-    public TreeBuilderNode addToAlternatingOrder(BuildAlternatingOrderContext context, TreeBuilderNode treeBuilderNode) {
+    public ListBuilderNode addToAlternatingOrder(BuildAlternatingOrderContext context, ListBuilderNode listBuilderNode) {
         AlternativeOneOrder alternativeOneOrder = new AlternativeOneOrder(lbr(notify.position(),wait.position()));
 
         /*
@@ -30,6 +30,6 @@ public class NotifyWaitTuple implements AddToAlternatingOrder {
         OrderAlternative second =  new AlternativeTwoOrders(lbr(wait.position(),notify.position()),
                     lbr(notify.position(),wait.position().increment()));
 
-        return treeBuilderNode.either(alternativeOneOrder,second);
+        return listBuilderNode.either(alternativeOneOrder,second);
     }
 }

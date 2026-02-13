@@ -21,7 +21,7 @@ object AtomicIntegerFieldUpdaterImpl {
     new MethodToMethodType("decrementAndGet", "(Ljava/lang/Object;)I",  ATOMIC_FIELD_READ_WRITE  ),
     new MethodToMethodType("getAndDecrement", "(Ljava/lang/Object;)I",  ATOMIC_FIELD_READ_WRITE  ),
     new MethodToMethodType("getAndAdd", "(Ljava/lang/Object;I)I",  ATOMIC_FIELD_READ_WRITE  ),
-    new MethodToMethodType("compareAndSet", "(Ljava/lang/Object;II)Z", NotYetImplementedMethod.SINGLETON ),
+    new MethodToMethodType("compareAndSet", "(Ljava/lang/Object;II)Z", ATOMIC_FIELD_READ_WRITE ),
     new MethodToMethodType("lazySet", "(Ljava/lang/Object;I)V",    NotYetImplementedMethod.SINGLETON ),
     new MethodToMethodType("weakCompareAndSet", "(Ljava/lang/Object;II)Z",    NotYetImplementedMethod.SINGLETON )
   );

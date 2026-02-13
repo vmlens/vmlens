@@ -3,10 +3,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.d
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.LockStartOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeTwoOrders;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.Choice;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.EitherInChoice;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeTwoOrders;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.Choice;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.EitherInChoice;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.DeadlockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer.BlockBlockTuple;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -76,7 +76,7 @@ public class DeadlockOperationImpl implements DeadlockOperation {
     }
 
     @Override
-    public TreeBuilderNode addToAlternatingOrder(TreeBuilderNode node) {
+    public ListBuilderNode addToAlternatingOrder(ListBuilderNode node) {
         AlternativeTwoOrders alternativeA = new AlternativeTwoOrders(lbr(first.parent(),second.parent()),
                 lbr(second.parent(),first.child()));
         AlternativeTwoOrders alternativeB = new AlternativeTwoOrders(lbr(second.parent(),first.parent()),

@@ -4,8 +4,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayList;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.Permutation;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.PermutationIterator;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.CreateOrderContext;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTreeIterator;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.CreateOrderContext;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderListIterator;
 
 /**
  * to make the OrderTree testable
@@ -26,13 +26,13 @@ public class OrderArrayListFactory {
     /**
      * can return null
      */
-    public OrderArrayList create(OrderTreeIterator orderTreeIterator,
+    public OrderArrayList create(OrderListIterator orderListIterator,
                                  PermutationIterator permutationIterator) {
         orderArrayList.reset();
         Permutation current =  permutationIterator.next();
 
         CreateOrderContext createOrderContext = new CreateOrderContext(orderArrayList);
-        OrderTreeIterator iter = orderTreeIterator;
+        OrderListIterator iter = orderListIterator;
         int position = 0;
         while(iter.hasNext()) {
             if(! iter.advanceAndAddToOrder(createOrderContext,current.at(position))) {

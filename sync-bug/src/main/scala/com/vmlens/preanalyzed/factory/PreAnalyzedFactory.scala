@@ -224,7 +224,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
   }
 
   private def lockMethods(): List[LockMethod] =
-    List[LockMethod](LockMethod("lock", "()V", LockEnter()),
+    List[LockMethod](
+      LockMethod("lock", "()V", LockEnter()),
+      LockMethod("lockInterruptibly", "()V", LockEnter()),
       LockMethod("tryLock", "()Z", LockEnter()),
       LockMethod("tryLock", "(JLjava/util/concurrent/TimeUnit;)Z ", LockEnter()),
       LockMethod("unlock", "()V", LockExit()),

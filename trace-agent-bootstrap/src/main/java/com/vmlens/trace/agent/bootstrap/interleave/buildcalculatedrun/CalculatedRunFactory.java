@@ -6,8 +6,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayList;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.PermutationIterator;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.cycle.OrderCycle;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderList;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.OrderCycle;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -21,23 +21,23 @@ public class CalculatedRunFactory {
     private final TwoEdgesCycleFilter twoEdgesCycleFilter = new TwoEdgesCycleFilter();
     private final THashSet<Pair<LeftBeforeRight, LeftBeforeRight>> alreadyProcessed = new THashSet<>();
     private final InterleaveLoopContext interleaveLoopContext;
-    private OrderTree orderTree;
+    private OrderList orderList;
     private boolean messageSend = false;
 
     public CalculatedRunFactory(OrderArrayListFactory orderArrayListFactory,
                                 ThreadIndexToElementList<Position> actualRun, InterleaveLoopContext interleaveLoopContext,
-                                OrderTree orderTree) {
+                                OrderList orderList) {
         this.orderArrayListFactory = orderArrayListFactory;
         this.cycleDetectionAdapter =  new CycleDetectionAdapter(new CalculatedRunBuilder(actualRun));
         this.interleaveLoopContext = interleaveLoopContext;
-        this.orderTree = orderTree;
+        this.orderList = orderList;
     }
 
     /**
      * can return null
      */
     public CalculatedRun create(PermutationIterator permutationIterator) {
-        OrderArrayList orderArrayList = orderArrayListFactory.create(orderTree.createIteratorAndResetOrderCycles(), permutationIterator);
+        OrderArrayList orderArrayList = orderArrayListFactory.create(orderList.createIteratorAndResetOrderCycles(), permutationIterator);
         if(orderArrayList == null) {
            return null;
         }
@@ -56,15 +56,15 @@ public class CalculatedRunFactory {
                     array[index] = new OrderCycle(pair.element().getLeft(), pair.element().getRight());
                     index++;
                 }
-                orderTree.avoidCycles(array);
+                orderList.avoidCycles(array);
             }
-            if(orderTree.length() >= interleaveLoopContext.removeCycleThreshold()) {
+            if(orderList.length() >= interleaveLoopContext.removeCycleThreshold()) {
                 if(! messageSend) {
-                    interleaveLoopContext.cyclesRemoved(orderTree.length());
+                    interleaveLoopContext.cyclesRemoved(orderList.length());
                     messageSend = true;
                 }
-                orderTree = orderTree.removeCycles();
-                permutationIterator.setNewLength(orderTree.length());
+                orderList = orderList.removeCycles();
+                permutationIterator.setNewLength(orderList.length());
 
             }
 
@@ -75,7 +75,7 @@ public class CalculatedRunFactory {
     }
 
     public int length() {
-        return orderTree.length();
+        return orderList.length();
     }
 
 }

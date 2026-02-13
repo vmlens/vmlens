@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.BarrierOperationVisitor;
@@ -33,16 +33,16 @@ public abstract class Barrier implements BarrierOperation , DependentOperation, 
     }
 
     @Override
-    public final TreeBuilderNode addToAlternatingOrder(Position myPosition,
-                                                 Object otherObj,
-                                                 BuildAlternatingOrderContext context,
-                                                 TreeBuilderNode treeBuilderNode) {
+    public final ListBuilderNode addToAlternatingOrder(Position myPosition,
+                                                       Object otherObj,
+                                                       BuildAlternatingOrderContext context,
+                                                       ListBuilderNode listBuilderNode) {
         DependentOperationAndPosition<Barrier> other = (DependentOperationAndPosition<Barrier>) otherObj;
         AddToAlternatingOrder tuple = other.element().accept(this, myPosition, other.position());
         if(tuple != null) {
-            return tuple.addToAlternatingOrder(context,treeBuilderNode);
+            return tuple.addToAlternatingOrder(context, listBuilderNode);
         }
-        return treeBuilderNode;
+        return listBuilderNode;
     }
 
 }

@@ -1,9 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeTwoOrders;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeOneOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeTwoOrders;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.Barrier;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify;
@@ -43,16 +43,16 @@ public class BarrierOperationTest {
         BuildAlternatingOrderContext context = mock(BuildAlternatingOrderContext.class);
         when(context.getLastPositionForThreadIndex(eq(0))).thenReturn(5);
 
-        TreeBuilderNode treeBuilderNode = mock(TreeBuilderNode.class);
+        ListBuilderNode listBuilderNode = mock(ListBuilderNode.class);
 
         // When
         firstBarrier.addToAlternatingOrder(firstPosition,
                 new DependentOperationAndPosition<>(secondPosition,secondBarrier),
                 context,
-                treeBuilderNode);
+                listBuilderNode);
 
         // Then
-        verify(treeBuilderNode).either(eq(alternativeOneOrder),eq(alternativeTwoOrders));
+        verify(listBuilderNode).either(eq(alternativeOneOrder),eq(alternativeTwoOrders));
     }
 
 
