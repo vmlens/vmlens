@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeOneOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.EitherInChoice;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.EitherInChoiceAlternative;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
@@ -41,7 +41,7 @@ public class BlockBlockTuple implements AddToAlternatingOrder {
         return second;
     }
 
-    public EitherInChoice addWhenInDeadlock(EitherInChoice treeBuilderNode ) {
+    public EitherInChoiceAlternative addWhenInDeadlock(EitherInChoiceAlternative treeBuilderNode ) {
         return treeBuilderNode.either(new AlternativeOneOrder(lbr(first.end().position(),second.start().position())),
                 new AlternativeOneOrder(lbr(second.end().position(),first.start().position())) );
     }

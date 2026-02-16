@@ -2,10 +2,10 @@ package com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayList;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.Permutation;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.PermutationIterator;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderList;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderListElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.CreateOrderContext;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderListIterator;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 
 /**
  * to make the OrderTree testable
@@ -26,20 +26,13 @@ public class OrderArrayListFactory {
     /**
      * can return null
      */
-    public OrderArrayList create(OrderListIterator orderListIterator,
-                                 PermutationIterator permutationIterator) {
+    public OrderArrayList create(OrderList orderList, int[] current, CycleFoundCallback cycleFoundCallback) {
         orderArrayList.reset();
-        Permutation current =  permutationIterator.next();
-
         CreateOrderContext createOrderContext = new CreateOrderContext(orderArrayList);
-        OrderListIterator iter = orderListIterator;
         int position = 0;
-        while(iter.hasNext()) {
-            if(! iter.advanceAndAddToOrder(createOrderContext,current.at(position))) {
-                return null;
-            }
+        for(TLinkableWrapper<OrderListElement>  element : orderList) {
+            element.element().addOrder(createOrderContext,current[position]);
             position++;
-
         }
         return orderArrayList;
     }

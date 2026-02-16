@@ -14,13 +14,17 @@ public abstract class StartOrEither implements ListBuilderNode {
     }
 
     public Choice choice() {
-       return new Choice(nodeBuilderList);
+        Choice choice =  new Choice(nodeBuilderList);
+        nodeBuilderList.add(TLinkableWrapper.wrap(choice));
+        return choice;
 
     }
 
 
     public Either either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
-        return new Either(nodeBuilderList,orderAlternativeA,orderAlternativeB);
+        Either either =  new Either(nodeBuilderList,orderAlternativeA,orderAlternativeB);
+        nodeBuilderList.add(TLinkableWrapper.wrap(either));
+        return either;
 
     }
 

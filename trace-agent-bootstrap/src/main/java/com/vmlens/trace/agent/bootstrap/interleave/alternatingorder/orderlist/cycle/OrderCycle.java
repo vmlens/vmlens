@@ -2,6 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.c
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 
+import java.util.Objects;
+
 public class OrderCycle {
 
     private final LeftBeforeRight first;
@@ -40,4 +42,15 @@ public class OrderCycle {
         return firstActivated && secondActivated;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderCycle that = (OrderCycle) o;
+        return Objects.equals(first, that.first) && Objects.equals(second, that.second);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(first, second);
+    }
 }

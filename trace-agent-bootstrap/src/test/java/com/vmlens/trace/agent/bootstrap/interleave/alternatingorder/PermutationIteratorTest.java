@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.Permutation;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.PermutationIterator;
 import org.junit.Test;
 
 import java.util.HashSet;

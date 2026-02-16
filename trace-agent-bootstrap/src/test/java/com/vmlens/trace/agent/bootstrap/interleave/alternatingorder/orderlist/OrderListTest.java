@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayList;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.PermutationIterator;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.PermutationIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.OrderCycle;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.OrderArrayListFactory;

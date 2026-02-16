@@ -1,4 +1,4 @@
-package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder;
 
 public class Permutation {
 

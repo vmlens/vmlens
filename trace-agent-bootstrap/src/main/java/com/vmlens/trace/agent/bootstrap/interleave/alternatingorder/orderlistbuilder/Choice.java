@@ -1,7 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.ListElement;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.ListElementChoice;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.*;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -9,28 +8,40 @@ import static java.lang.Math.max;
 
 public class Choice extends StartOrEither implements NodeBuilder  {
 
-    private final ChoiceAlternative alternativeA =  new ChoiceAlternative();
-    private final ChoiceAlternative alternativeB =  new ChoiceAlternative();
+    private final TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> alternativeA =  new TLinkedList<>();
+    private final TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> alternativeB =  new TLinkedList<>();
 
     public Choice(TLinkedList<TLinkableWrapper<NodeBuilder>> nodeBuilderList) {
         super(nodeBuilderList);
     }
 
     public ChoiceAlternative alternativeA() {
-        return alternativeA;
+        return new ChoiceAlternative(alternativeA);
     }
     public ChoiceAlternative alternativeB() {
-        return alternativeB;
+        return new ChoiceAlternative(alternativeB);
     }
 
     @Override
-    public ListElement build() {
-        // First fill both alternatives so that they have the same size
-        int length = max(alternativeA.getLength(),alternativeB.getLength());
-        alternativeA.fill(length);
-        alternativeB.fill(length);
+    public OrderListElement build() {
+        TLinkedList<TLinkableWrapper<OrderAlternative>> alternatives = new TLinkedList<>();
+        processAlternative(alternativeA,alternatives);
+        processAlternative(alternativeB,alternatives);
 
-        return  ListElementChoice.create(alternativeA,alternativeB);
+        return new OrderListElement(alternatives);
+    }
+
+    private static void processAlternative(TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> eitherInChoiceList,
+                                           TLinkedList<TLinkableWrapper<OrderAlternative>> result) {
+        PermutationIterator permutationIterator = new PermutationIterator(eitherInChoiceList.size());
+        while (permutationIterator.hasNext()) {
+            TLinkedList<TLinkableWrapper<OrderAlternative>> combinedAlternatives = new TLinkedList<>();
+            result.add(TLinkableWrapper.wrap(new AlternativeMultipleOrders(combinedAlternatives)));
+            Permutation permutation = permutationIterator.next();
+            for(int i=0;i<eitherInChoiceList.size();i++) {
+                combinedAlternatives.add(TLinkableWrapper.wrap(eitherInChoiceList.get(i).element().build(permutation.at(i))));
+            }
+        }
     }
 
 }

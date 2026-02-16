@@ -1,58 +1,24 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeNoOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderAlternative;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 
-public class ChoiceAlternative implements EitherInChoice {
+public class ChoiceAlternative  {
 
-    private EitherInChoiceAlternative next;
+    private final TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> eitherList;
 
-    public EitherInChoice either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
-        EitherInChoiceAlternative temp = new EitherInChoiceAlternative(orderAlternativeA,orderAlternativeB);
-        next = temp;
+    public ChoiceAlternative(TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> eitherList) {
+        this.eitherList = eitherList;
+    }
+
+    public EitherInChoiceAlternative either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
+        EitherInChoiceAlternative temp = new EitherInChoiceAlternative(eitherList,orderAlternativeA,orderAlternativeB);
+        eitherList.add(TLinkableWrapper.wrap(temp));
         return temp;
     }
 
-    public EitherInChoiceAlternative next() {
-        return next;
+    public int size() {
+        return eitherList.size();
     }
-
-
-
-    public int getLength() {
-        ChoiceElement firstLast = next();
-        ChoiceElement first = next();
-        int firstCount = 0;
-        while(first != null)  {
-            firstLast = first;
-            firstCount++;
-            first = first.getNext();
-        }
-        return firstCount;
-    }
-
-    public void fill(int length) {
-        int myLength = 0;
-        ChoiceElement secondLast = next();
-        ChoiceElement second = next();
-        while(second != null)  {
-            secondLast = second;
-            myLength++;
-            second = second.getNext();
-        }
-        if( length == myLength ) {
-            return;
-        }
-        if(secondLast == null) {
-            next = new EitherInChoiceAlternative(new AlternativeNoOrder(true),new AlternativeNoOrder(false));
-            secondLast = next;
-            myLength++;
-        }
-        for(int i = myLength; i < length; i++  ) {
-            secondLast.fill();
-            secondLast = secondLast.getNext();
-        }
-    }
-
-
 }

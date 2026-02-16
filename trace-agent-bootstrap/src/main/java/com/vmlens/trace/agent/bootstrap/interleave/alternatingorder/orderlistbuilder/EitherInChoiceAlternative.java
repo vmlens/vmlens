@@ -1,41 +1,37 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.*;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 
-public class EitherInChoiceAlternative implements ChoiceElement , EitherInChoice {
+public class EitherInChoiceAlternative {
 
+    private final TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> eitherList;
     private final OrderAlternative orderAlternativeA;
     private final OrderAlternative orderAlternativeB;
-    private EitherInChoiceAlternative next;
 
 
-    public EitherInChoiceAlternative(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
+    public EitherInChoiceAlternative(TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> eitherList,
+                                     OrderAlternative orderAlternativeA,
+                                     OrderAlternative orderAlternativeB) {
+        this.eitherList = eitherList;
         this.orderAlternativeA = orderAlternativeA;
         this.orderAlternativeB = orderAlternativeB;
     }
 
-    public EitherInChoice either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
-        EitherInChoiceAlternative temp = new EitherInChoiceAlternative(orderAlternativeA,orderAlternativeB);
-        next = temp;
+    public EitherInChoiceAlternative either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
+        EitherInChoiceAlternative temp = new EitherInChoiceAlternative(eitherList,orderAlternativeA,orderAlternativeB);
+        eitherList.add(TLinkableWrapper.wrap(temp));
         return temp;
     }
 
-    @Override
-    public EitherInChoiceAlternative getNext() {
-        return next;
-    }
 
-    @Override
-    public void fill() {
-        if(next != null) {
-            throw new RuntimeException("next != null");
+
+    public OrderAlternative build(boolean first) {
+        if(first) {
+            return orderAlternativeA;
         }
-        next = new EitherInChoiceAlternative(new AlternativeNoOrder(true),new AlternativeNoOrder(false));
-    }
-
-    @Override
-    public ListElementChoiceAlternative build() {
-        return new ListElementChoiceAlternative(orderAlternativeA,orderAlternativeB);
+        return orderAlternativeB;
     }
 
 }

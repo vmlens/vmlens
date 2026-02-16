@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbu
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.ListElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.ListElementEither;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderAlternative;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderListElement;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -20,7 +21,10 @@ public class Either extends StartOrEither implements NodeBuilder {
     }
 
     @Override
-    public ListElement build() {
-        return new ListElementEither(orderAlternativeA,orderAlternativeB);
+    public OrderListElement build() {
+        TLinkedList<TLinkableWrapper<OrderAlternative>> alternatives = new TLinkedList<>();
+        alternatives.add(TLinkableWrapper.wrap(orderAlternativeA));
+        alternatives.add(TLinkableWrapper.wrap(orderAlternativeB));
+        return new OrderListElement(alternatives);
     }
 }

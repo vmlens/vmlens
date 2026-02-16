@@ -4,6 +4,9 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.ArrayList;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.ForEachCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.OrderCycle;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.NodeBuilder;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Iterator;
 
@@ -17,46 +20,41 @@ import java.util.Iterator;
  *      foreach takes all paths used for cycle adapter
  *
  */
-public class OrderList {
+public class OrderList implements Iterable<TLinkableWrapper<OrderListElement>> {
 
-    // can be null, when only fixed orders exist
-    private final ListElement start;
-    private final int length;
+    // can be empty, when only fixed orders exist
+    private final TLinkedList<TLinkableWrapper<OrderListElement>> list;
+
     private ArrayList<OrderCycle>  orderCycleList = null;
 
-    public OrderList(ListElement start) {
-        this.start = start;
-        this.length = calculateLength(start);
+    public OrderList(TLinkedList<TLinkableWrapper<OrderListElement>> list) {
+        this.list = list;
     }
 
-    private static int calculateLength(OrderListNode start) {
-        int size = 0;
-        OrderListNode current = start;
-        while(current != null) {
-            size++;
-            current = current.nextLeft();
-        }
-        return size;
+    public Iterator<TLinkableWrapper<OrderListElement>> iterator() {
+        return list.iterator();
     }
 
-    public OrderListIterator createIteratorAndResetOrderCycles() {
-        if(orderCycleList != null) {
-            Iterator<OrderCycle> iter = orderCycleList.iterator();
-            while(iter.hasNext()) {
-                iter.next().reset();
+    /*
+        public OrderListIterator createIteratorAndResetOrderCycles() {
+            if(orderCycleList != null) {
+                Iterator<OrderCycle> iter = orderCycleList.iterator();
+                while(iter.hasNext()) {
+                    iter.next().reset();
+                }
             }
+            //return new OrderListIteratorImpl(start);
+            return null;
         }
-        return new OrderListIteratorImpl(start);
+    */
+    public int[] numberOfAlternativeArray() {
+        int[] array = new int[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            array[i] = list.get(i).element().numberOfAlternatives();
+        }
+        return array;
     }
 
-    public int length() {
-        return length;
-    }
-
-    // To test the builder
-    public OrderListNode start() {
-        return start;
-    }
 
 
     public void avoidCycles(OrderCycle[] array) {
@@ -65,11 +63,11 @@ public class OrderList {
         } else {
             orderCycleList.addAll(array);
         }
-        start.foreach(new ForEachCallback(array));
+        //start.foreach(new ForEachCallback(array));
     }
 
     public OrderList removeCycles() {
-        ListElement newStart = null;
+ /*       ListElement newStart = null;
         ListElement previous = null;
         ListElement current = start;
         while(current != null) {
@@ -86,6 +84,8 @@ public class OrderList {
         }
         previous.setNext(null);
         return new OrderList(newStart);
+  */
+        return null;
     }
 
 }

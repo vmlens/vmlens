@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist;
 
 public interface OrderListNode {
 
-    NextNodeAndProcessFlag nextAndAddToOrder(CreateOrderContext context, boolean firstAlternative);
+    OrderListNode nextAndAddToOrder(CreateOrderContext context, boolean firstAlternative);
 
     OrderListNode nextLeft();
 

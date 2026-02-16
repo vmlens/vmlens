@@ -32,15 +32,9 @@ public class AlternatingOrderContainer  {
         return actualRun;
     }
 
-    public OrderList orderTree() {
-        return orderList;
-    }
 
-    public LeftBeforeRight[] fixedOrderArray() {
-        return fixedOrderArray;
-    }
 
-    public void setFieldsToNull() {
+    void setFieldsToNull() {
         actualRun = null;
         fixedOrderArray = null;
         orderList = null;
@@ -53,8 +47,20 @@ public class AlternatingOrderContainer  {
         return new AlternatingOrderContainerIterator(this);
     }
 
-
-    public InterleaveLoopContext interleaveLoopContext() {
+    InterleaveLoopContext interleaveLoopContext() {
         return interleaveLoopContext;
     }
+
+    OrderList orderList() {
+        return orderList;
+    }
+
+    LeftBeforeRight[] fixedOrderArray() {
+        return fixedOrderArray;
+    }
+
+    void  resetOrderList(OrderList orderList) {
+        this.orderList = orderList;
+    }
+
 }

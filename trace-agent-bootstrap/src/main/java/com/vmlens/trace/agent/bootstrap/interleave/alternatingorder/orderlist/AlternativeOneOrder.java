@@ -1,6 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
 
 import java.util.Objects;
 
@@ -12,10 +14,18 @@ public class AlternativeOneOrder implements OrderAlternative {
         this.leftBeforeRight = leftBeforeRight;
     }
 
+    public LeftBeforeRight getLeftBeforeRight() {
+        return leftBeforeRight;
+    }
+
     @Override
-    public boolean process(CreateOrderContext context) {
+    public void process(CreateOrderContext context) {
         context.addOrder(leftBeforeRight);
-        return true;
+    }
+
+    @Override
+    public void addToCombinedAlternatives(TLinkedList<TLinkableWrapper<AlternativeOneOrder>> combinedAlternatives) {
+        combinedAlternatives.add(TLinkableWrapper.wrap(this));
     }
 
     @Override
@@ -31,8 +41,4 @@ public class AlternativeOneOrder implements OrderAlternative {
         return Objects.hashCode(leftBeforeRight);
     }
 
-    @Override
-    public boolean createOrder(LeftBeforeRight orderInCycle) {
-        return orderInCycle.equals(leftBeforeRight);
-    }
 }

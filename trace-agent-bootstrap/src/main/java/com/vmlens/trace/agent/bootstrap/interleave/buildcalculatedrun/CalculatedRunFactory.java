@@ -5,7 +5,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.CalculatedRun;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.OrderArrayList;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.PermutationIterator;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.PermutationIterator;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderList;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.OrderCycle;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
@@ -36,8 +36,8 @@ public class CalculatedRunFactory {
     /**
      * can return null
      */
-    public CalculatedRun create(PermutationIterator permutationIterator) {
-        OrderArrayList orderArrayList = orderArrayListFactory.create(orderList.createIteratorAndResetOrderCycles(), permutationIterator);
+    public CalculatedRun create(int[] current, CycleFoundCallback cycleFoundCallback) {
+        OrderArrayList orderArrayList = orderArrayListFactory.create(orderList, current, cycleFoundCallback);
         if(orderArrayList == null) {
            return null;
         }
@@ -58,6 +58,7 @@ public class CalculatedRunFactory {
                 }
                 orderList.avoidCycles(array);
             }
+            /*
             if(orderList.length() >= interleaveLoopContext.removeCycleThreshold()) {
                 if(! messageSend) {
                     interleaveLoopContext.cyclesRemoved(orderList.length());
@@ -67,15 +68,11 @@ public class CalculatedRunFactory {
                 permutationIterator.setNewLength(orderList.length());
 
             }
-
+            */
             return null;
         }
 
         return cycleDetectionAdapter.build(orderArrayList);
-    }
-
-    public int length() {
-        return orderList.length();
     }
 
 }
