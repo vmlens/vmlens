@@ -28,7 +28,7 @@ public class BarrierOperationTest {
     private final BarrierNotify notify = new BarrierNotify(threadIndex(1),futureKey);
     private final BarrierWaitEnter wait = new BarrierWaitEnter(threadIndex(1),futureKey);
 
-   // @Test
+    @Test
     public void testAsymmetricWaitNotify() {
         runTestAsymmetricWaitNotify(wait,waitPosition,notify,notifyPosition);
         runTestAsymmetricWaitNotify(notify,notifyPosition,wait,waitPosition);

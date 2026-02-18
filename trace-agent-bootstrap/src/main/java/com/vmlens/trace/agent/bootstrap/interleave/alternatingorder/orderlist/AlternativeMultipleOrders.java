@@ -5,6 +5,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cy
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
+import java.util.Objects;
+
 public class AlternativeMultipleOrders implements OrderAlternative {
 
     private final TLinkedList<TLinkableWrapper<AlternativeOneOrder>> combinedAlternatives;
@@ -75,4 +77,22 @@ public class AlternativeMultipleOrders implements OrderAlternative {
         return false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        AlternativeMultipleOrders that = (AlternativeMultipleOrders) o;
+        return Objects.equals(combinedAlternatives, that.combinedAlternatives);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(combinedAlternatives);
+    }
+
+    @Override
+    public String toString() {
+        return "AlternativeMultipleOrders{" +
+                "combinedAlternatives=" + combinedAlternatives +
+                '}';
+    }
 }

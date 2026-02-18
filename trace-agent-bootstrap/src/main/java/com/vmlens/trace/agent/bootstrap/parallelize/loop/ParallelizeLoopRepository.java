@@ -64,8 +64,6 @@ public class ParallelizeLoopRepository {
                 InterleaveLoopContextBuilder builder = new InterleaveLoopContextBuilder();
                 builder.withMaximumIterations(getValue(config,"maximumIterations" ,
                         AllInterleavingsBuilder.MAXIMUM_ITERATIONS,queueIn));
-                builder.withRemoveCycleThreshold(getValue(config,"removeCycleThreshold" ,
-                        AllInterleavingsBuilder.REMOVE_CYCLE_THRESHOLD,queueIn));
                 builder.withTraceInterleaveActions(getBooleanValue(config,"traceInterleaveActions" ,
                         false,queueIn));
 

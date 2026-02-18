@@ -7,11 +7,9 @@ import java.util.List;
 public class AllInterleavingsBuilder {
 
     public static final int MAXIMUM_ITERATIONS = 100;
-    public static final int REMOVE_CYCLE_THRESHOLD = 10;
     public static final int REPORT_AS_SUMMARY_THRESHOLD = 200;
 
     private int maximumIterations = MAXIMUM_ITERATIONS;
-    private int removeCycleThreshold = REMOVE_CYCLE_THRESHOLD;
     private int reportAsSummaryThreshold = REPORT_AS_SUMMARY_THRESHOLD;
     private boolean traceInterleaveActions;
     private final List<AbstractMap.SimpleImmutableEntry<String,String>> intentionalDataRaces =
@@ -19,11 +17,6 @@ public class AllInterleavingsBuilder {
 
     public AllInterleavingsBuilder withMaximumIterations(int newValue) {
         maximumIterations = newValue;
-        return this;
-    }
-
-    public AllInterleavingsBuilder withRemoveCycleThreshold(int newValue) {
-        removeCycleThreshold = newValue;
         return this;
     }
 
@@ -47,7 +40,6 @@ public class AllInterleavingsBuilder {
     public AllInterleavings build(String name) {
         return new AllInterleavings(name , false,
                 maximumIterations,
-                removeCycleThreshold,
                 50,
                 100,
                 reportAsSummaryThreshold,

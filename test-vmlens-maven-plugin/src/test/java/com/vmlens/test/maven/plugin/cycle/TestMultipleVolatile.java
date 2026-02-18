@@ -47,7 +47,6 @@ public class TestMultipleVolatile {
 
         Set<Integer> countSet = new HashSet<>();
         try(AllInterleavings allInterleavings = new AllInterleavingsBuilder()
-                .withRemoveCycleThreshold(30)
                 .build("testMultipleVolatileTwoThreads")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
@@ -74,7 +73,6 @@ public class TestMultipleVolatile {
         Set<Integer> countSet = new HashSet<>();
         try(AllInterleavings allInterleavings = new AllInterleavingsBuilder()
                 .withTraceInterleaveActions()
-                .withRemoveCycleThreshold(5)
                 .build("testSmallCycle")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
