@@ -1,11 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.deadlock;
 
 
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeMultipleOrders;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ChoiceAlternative;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ChoiceEither;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.activelock.LockStartOperation;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeTwoOrders;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.Choice;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.EitherInChoice;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.DeadlockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer.BlockBlockTuple;
@@ -15,6 +17,7 @@ import gnu.trove.map.hash.THashMap;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 import static com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper.wrap;
+import static com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeMultipleOrders.alternativeTwoOrders;
 
 /**
  * A deadlock consists of 4 monitor enter operations
@@ -77,16 +80,16 @@ public class DeadlockOperationImpl implements DeadlockOperation {
 
     @Override
     public ListBuilderNode addToAlternatingOrder(ListBuilderNode node) {
-        AlternativeTwoOrders alternativeA = new AlternativeTwoOrders(lbr(first.parent(),second.parent()),
-                lbr(second.parent(),first.child()));
-        AlternativeTwoOrders alternativeB = new AlternativeTwoOrders(lbr(second.parent(),first.parent()),
-                lbr(first.parent(),second.child()));
+        AlternativeMultipleOrders alternativeA =  alternativeTwoOrders(lbr(first.parent(), second.parent()),
+                lbr(second.parent(), first.child()));
+        AlternativeMultipleOrders alternativeB = alternativeTwoOrders(lbr(second.parent(), first.parent()),
+                lbr(first.parent(), second.child()));
 
         Choice choice = node.choice();
 
         choice.alternativeA().either(alternativeA,alternativeB);
 
-        EitherInChoice nextNode = choice.alternativeB();
+        ChoiceEither nextNode = choice.alternativeB();
         for(TLinkableWrapper<BlockBlockTuple> block: alternativeBlocks) {
             nextNode = block.element().addWhenInDeadlock(nextNode);
         }

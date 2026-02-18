@@ -1,10 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist;
 
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.ArrayList;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.ForEachCallback;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.OrderCycle;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.NodeBuilder;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -25,7 +21,6 @@ public class OrderList implements Iterable<TLinkableWrapper<OrderListElement>> {
     // can be empty, when only fixed orders exist
     private final TLinkedList<TLinkableWrapper<OrderListElement>> list;
 
-    private ArrayList<OrderCycle>  orderCycleList = null;
 
     public OrderList(TLinkedList<TLinkableWrapper<OrderListElement>> list) {
         this.list = list;
@@ -35,57 +30,12 @@ public class OrderList implements Iterable<TLinkableWrapper<OrderListElement>> {
         return list.iterator();
     }
 
-    /*
-        public OrderListIterator createIteratorAndResetOrderCycles() {
-            if(orderCycleList != null) {
-                Iterator<OrderCycle> iter = orderCycleList.iterator();
-                while(iter.hasNext()) {
-                    iter.next().reset();
-                }
-            }
-            //return new OrderListIteratorImpl(start);
-            return null;
-        }
-    */
     public int[] numberOfAlternativeArray() {
         int[] array = new int[list.size()];
         for(int i = 0; i < list.size(); i++) {
             array[i] = list.get(i).element().numberOfAlternatives();
         }
         return array;
-    }
-
-
-
-    public void avoidCycles(OrderCycle[] array) {
-        if(orderCycleList == null) {
-            orderCycleList = new ArrayList<>(array);
-        } else {
-            orderCycleList.addAll(array);
-        }
-        //start.foreach(new ForEachCallback(array));
-    }
-
-    public OrderList removeCycles() {
- /*       ListElement newStart = null;
-        ListElement previous = null;
-        ListElement current = start;
-        while(current != null) {
-            if( ! current.removeBecauseOfCycle()) {
-                if(newStart == null) {
-                    newStart = current;
-                }
-                if(previous!= null) {
-                    previous.setNext(current);
-                }
-                previous = current;
-            }
-            current = current.getNextListElement();
-        }
-        previous.setNext(null);
-        return new OrderList(newStart);
-  */
-        return null;
     }
 
 }

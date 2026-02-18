@@ -26,7 +26,7 @@ public class OrderArrayListFactory {
     /**
      * can return null
      */
-    public OrderArrayList create(OrderList orderList, int[] current, CycleFoundCallback cycleFoundCallback) {
+    public OrderArrayList create(OrderList orderList, int[] current) {
         orderArrayList.reset();
         CreateOrderContext createOrderContext = new CreateOrderContext(orderArrayList);
         int position = 0;

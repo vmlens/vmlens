@@ -31,15 +31,19 @@ public class Choice extends StartOrEither implements NodeBuilder  {
         return new OrderListElement(alternatives);
     }
 
+    public ListBuilderNode next() {
+        return this;
+    }
+
     private static void processAlternative(TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> eitherInChoiceList,
                                            TLinkedList<TLinkableWrapper<OrderAlternative>> result) {
         PermutationIterator permutationIterator = new PermutationIterator(eitherInChoiceList.size());
         while (permutationIterator.hasNext()) {
-            TLinkedList<TLinkableWrapper<OrderAlternative>> combinedAlternatives = new TLinkedList<>();
+            TLinkedList<TLinkableWrapper<AlternativeOneOrder>> combinedAlternatives = new TLinkedList<>();
             result.add(TLinkableWrapper.wrap(new AlternativeMultipleOrders(combinedAlternatives)));
             Permutation permutation = permutationIterator.next();
             for(int i=0;i<eitherInChoiceList.size();i++) {
-                combinedAlternatives.add(TLinkableWrapper.wrap(eitherInChoiceList.get(i).element().build(permutation.at(i))));
+                eitherInChoiceList.get(i).element().addToCombinedAlternatives(combinedAlternatives,permutation.at(i));
             }
         }
     }

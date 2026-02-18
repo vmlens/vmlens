@@ -1,6 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.cycle.OrderCycle;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
@@ -26,6 +27,14 @@ public class AlternativeOneOrder implements OrderAlternative {
     @Override
     public void addToCombinedAlternatives(TLinkedList<TLinkableWrapper<AlternativeOneOrder>> combinedAlternatives) {
         combinedAlternatives.add(TLinkableWrapper.wrap(this));
+    }
+
+    @Override
+    public boolean isPartOfCycle(OrderCycle orderCycle) {
+        if(orderCycle.first().equals(leftBeforeRight)) {
+            return true;
+        }
+        return orderCycle.second().equals(leftBeforeRight);
     }
 
     @Override

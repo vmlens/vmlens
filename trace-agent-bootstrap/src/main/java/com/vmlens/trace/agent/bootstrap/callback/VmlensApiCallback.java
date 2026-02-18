@@ -23,6 +23,14 @@ public class VmlensApiCallback {
         callbackActionProcessor.automaticTestMethod(id,automaticTestMethodId, automaticTestType);
     }
 
+    public static void startDoNotTrace() {
+        callbackActionProcessor.startDoNotTrace();
+    }
+
+    public static void stopDoNotTrace() {
+        callbackActionProcessor.endDoNotTrace();
+    }
+
     // Visible for Test
 
     public static void setCallbackActionProcessor(CallbackActionProcessor callbackActionProcessor) {

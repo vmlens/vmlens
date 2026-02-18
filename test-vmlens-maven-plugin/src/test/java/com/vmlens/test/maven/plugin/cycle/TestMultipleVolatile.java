@@ -67,8 +67,8 @@ public class TestMultipleVolatile {
     public void testSmallCycle() throws InterruptedException {
         Set<Integer> expectedSet = new HashSet<>();
 
-       // expectedSet.add(2);
-       // expectedSet.add(3);
+        expectedSet.add(2);
+        expectedSet.add(3);
         expectedSet.add(4);
 
         Set<Integer> countSet = new HashSet<>();

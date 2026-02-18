@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.Or
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
 import gnu.trove.list.linked.TLinkedList;
 
-public class ChoiceAlternative  {
+public class ChoiceAlternative  implements ChoiceEither{
 
     private final TLinkedList<TLinkableWrapper<EitherInChoiceAlternative>> eitherList;
 
@@ -12,7 +12,7 @@ public class ChoiceAlternative  {
         this.eitherList = eitherList;
     }
 
-    public EitherInChoiceAlternative either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
+    public ChoiceEither either(OrderAlternative orderAlternativeA, OrderAlternative orderAlternativeB) {
         EitherInChoiceAlternative temp = new EitherInChoiceAlternative(eitherList,orderAlternativeA,orderAlternativeB);
         eitherList.add(TLinkableWrapper.wrap(temp));
         return temp;

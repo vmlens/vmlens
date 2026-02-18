@@ -2,12 +2,11 @@ package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderList;
 import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.CalculatedRunFactory;
-import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.CycleFoundCallback;
 import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.OrderArrayListFactory;
 
 import java.util.Iterator;
 
-public class AlternatingOrderContainerIterator implements  Iterator<CalculatedRun>  {
+public class AlternatingOrderContainerIterator implements  Iterator<CalculatedRun> , AlternatingOrderContainerForCycleFound {
 
     private final AlternatingOrderContainer alternatingOrderContainer;
     private MixedRadixIterator mixedRadixIterator;
@@ -20,8 +19,7 @@ public class AlternatingOrderContainerIterator implements  Iterator<CalculatedRu
         this.calculatedRunFactory = new CalculatedRunFactory(new OrderArrayListFactory(
                 alternatingOrderContainer.fixedOrderArray()),
                 alternatingOrderContainer.actualRun(),
-                alternatingOrderContainer.interleaveLoopContext(),
-                alternatingOrderContainer.orderList());
+                alternatingOrderContainer.interleaveLoopContext());
     }
 
     @Override
@@ -44,17 +42,22 @@ public class AlternatingOrderContainerIterator implements  Iterator<CalculatedRu
     @Override
     public CalculatedRun next() {
         int[] current = mixedRadixIterator.next();
-        return calculatedRunFactory.create(current,new CycleFoundCallbackImpl(this));
+        return calculatedRunFactory.create(current,orderList(),new CycleFoundCallbackImpl(this));
     }
 
-    OrderList orderList() {
+    public int numberOfAlternatives() {
+        return mixedRadixIterator.numberOfAlternatives();
+    }
+
+    @Override
+    public OrderList orderList() {
         return alternatingOrderContainer.orderList();
     }
 
-    void resetOrderList(OrderList orderList) {
+    @Override
+    public void resetOrderList(OrderList orderList) {
         mixedRadixIterator = new MixedRadixIterator(orderList.numberOfAlternativeArray());
         alternatingOrderContainer.resetOrderList(orderList);
-
     }
 
 }

@@ -59,7 +59,7 @@ public class AlternatingOrderContainer  {
         return fixedOrderArray;
     }
 
-    void  resetOrderList(OrderList orderList) {
+    void resetOrderList(OrderList orderList) {
         this.orderList = orderList;
     }
 

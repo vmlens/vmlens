@@ -51,6 +51,17 @@ method:<init>(Ljava/lang/String;ZIIIIIZLjava/util/List;)V
   ALOAD_9
   PUTFIELD  com/vmlens/api/AllInterleavings.intentionalDataRaces:Ljava/util/List;
   RETURN
+method:doNotTrace(Ljava/lang/Runnable;)V
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.startDoNotTrace:()V
+  ALOAD_0
+  INVOKEINTERFACE  java/lang/Runnable.run:()V
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.stopDoNotTrace:()V
+  GOTO
+  ASTORE_1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.stopDoNotTrace:()V
+  ALOAD_1
+  ATHROW
+  RETURN
 method:hasNext()Z
   ALOAD_0
   ALOAD_0
@@ -93,6 +104,10 @@ method:automaticTestMethod(III)V
   ILOAD_2
   ILOAD_3
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.automaticTestMethod:(Ljava/lang/Object;III)V
+  RETURN
+method:startDoNotTrace()V
+  RETURN
+method:stopDoNotTrace()V
   RETURN
 method:hasNext(Ljava/lang/Object;)Z
   ALOAD_0

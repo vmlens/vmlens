@@ -44,6 +44,14 @@ public class MixedRadixIterator implements Iterator<int[]> {
         return result;
     }
 
+    public int numberOfAlternatives()  {
+        int result = 0;
+        for(int i = 0; i < bases.length; i++) {
+            result += bases[i];
+        }
+        return result;
+    }
+
     private void increment() {
         int i = bases.length - 1;
 

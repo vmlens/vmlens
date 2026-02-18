@@ -97,6 +97,18 @@ public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, 
         this.traceInterleaveActions = traceInterleaveActions;
         this.intentionalDataRaces = intentionalDataRaces;
     }
+	
+	public static void doNotTrace(Runnable runnable) {
+		startDoNotTrace();
+		try{
+			runnable.run();
+		}
+		finally {
+			stopDoNotTrace();
+		}
+		
+	}
+
 
 	/**
 	 * Return true if there are still thread interleaving to be executed and select the next thread interleaving,
@@ -133,6 +145,12 @@ public class AllInterleavings implements AutoCloseable, Iterable<Interleaving>, 
 
 	public void automaticTestMethod(int id, int automaticTestMethodId, int automaticTestType) {
 		automaticTestMethod(this,id,automaticTestMethodId, automaticTestType);
+	}
+
+	private static void startDoNotTrace() {
+	}
+
+	private static void stopDoNotTrace() {
 	}
 
 	private boolean hasNext(Object object) {

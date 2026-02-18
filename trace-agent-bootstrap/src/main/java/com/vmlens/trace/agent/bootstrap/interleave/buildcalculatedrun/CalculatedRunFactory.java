@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun;
 
+import com.vmlens.api.atomic.internal.recording.RecordReadOnly;
 import com.vmlens.trace.agent.bootstrap.Pair;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
@@ -21,23 +22,20 @@ public class CalculatedRunFactory {
     private final TwoEdgesCycleFilter twoEdgesCycleFilter = new TwoEdgesCycleFilter();
     private final THashSet<Pair<LeftBeforeRight, LeftBeforeRight>> alreadyProcessed = new THashSet<>();
     private final InterleaveLoopContext interleaveLoopContext;
-    private OrderList orderList;
     private boolean messageSend = false;
 
     public CalculatedRunFactory(OrderArrayListFactory orderArrayListFactory,
-                                ThreadIndexToElementList<Position> actualRun, InterleaveLoopContext interleaveLoopContext,
-                                OrderList orderList) {
+                                ThreadIndexToElementList<Position> actualRun, InterleaveLoopContext interleaveLoopContext) {
         this.orderArrayListFactory = orderArrayListFactory;
         this.cycleDetectionAdapter =  new CycleDetectionAdapter(new CalculatedRunBuilder(actualRun));
         this.interleaveLoopContext = interleaveLoopContext;
-        this.orderList = orderList;
     }
 
     /**
      * can return null
      */
-    public CalculatedRun create(int[] current, CycleFoundCallback cycleFoundCallback) {
-        OrderArrayList orderArrayList = orderArrayListFactory.create(orderList, current, cycleFoundCallback);
+    public CalculatedRun create(int[] current, OrderList orderList, CycleFoundCallback cycleFoundCallback) {
+        OrderArrayList orderArrayList = orderArrayListFactory.create(orderList, current);
         if(orderArrayList == null) {
            return null;
         }
@@ -56,19 +54,8 @@ public class CalculatedRunFactory {
                     array[index] = new OrderCycle(pair.element().getLeft(), pair.element().getRight());
                     index++;
                 }
-                orderList.avoidCycles(array);
+                cycleFoundCallback.found(array);
             }
-            /*
-            if(orderList.length() >= interleaveLoopContext.removeCycleThreshold()) {
-                if(! messageSend) {
-                    interleaveLoopContext.cyclesRemoved(orderList.length());
-                    messageSend = true;
-                }
-                orderList = orderList.removeCycles();
-                permutationIterator.setNewLength(orderList.length());
-
-            }
-            */
             return null;
         }
 

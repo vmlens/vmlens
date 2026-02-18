@@ -1,11 +1,9 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.ListElement;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderList;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderListElement;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContext;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
-import gnu.trove.list.TLinkable;
 import gnu.trove.list.linked.TLinkedList;
 
 public class ListBuilder {
