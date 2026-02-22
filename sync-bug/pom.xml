@@ -109,7 +109,7 @@
                 <!-- see http://davidb.github.com/scala-maven-plugin -->
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>4.9.2</version>
+                <version>4.9.9</version>
                 <configuration>
                     <args>
                         <arg>-Xtarget:8</arg>
