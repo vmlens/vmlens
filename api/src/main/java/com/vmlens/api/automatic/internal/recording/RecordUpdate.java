@@ -1,6 +1,6 @@
-package com.vmlens.api.atomic.internal.recording;
+package com.vmlens.api.automatic.internal.recording;
 
-import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
+import com.vmlens.api.automatic.internal.concurrent.ConcurrentCall;
 
 public interface RecordUpdate<CLASS_UNDER_TEST> {
 

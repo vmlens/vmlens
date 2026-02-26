@@ -1,4 +1,4 @@
-package com.vmlens.api.atomic.internal.value;
+package com.vmlens.api.automatic.internal.value;
 
 import java.util.function.BiPredicate;
 

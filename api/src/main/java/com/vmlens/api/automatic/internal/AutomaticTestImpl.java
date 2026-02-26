@@ -1,30 +1,30 @@
-package com.vmlens.api.atomic.internal;
+package com.vmlens.api.automatic.internal;
 
 import com.vmlens.api.AllInterleavings;
-import com.vmlens.api.atomic.internal.concurrent.CheckAfterJoin;
-import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
-import com.vmlens.api.atomic.internal.concurrent.ConcurrentTestCase;
-import com.vmlens.api.atomic.internal.recording.RecordReadOnly;
-import com.vmlens.api.atomic.internal.recording.RecordReadOnlyFactory;
-import com.vmlens.api.atomic.internal.recording.RecordUpdate;
-import com.vmlens.api.atomic.internal.recording.RecordUpdateFactory;
+import com.vmlens.api.automatic.internal.concurrent.CheckAfterJoin;
+import com.vmlens.api.automatic.internal.concurrent.ConcurrentCall;
+import com.vmlens.api.automatic.internal.concurrent.ConcurrentTestCase;
+import com.vmlens.api.automatic.internal.recording.RecordReadOnly;
+import com.vmlens.api.automatic.internal.recording.RecordReadOnlyFactory;
+import com.vmlens.api.automatic.internal.recording.RecordUpdate;
+import com.vmlens.api.automatic.internal.recording.RecordUpdateFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
 
-public class AtomicTestImpl<CLASS_UNDER_TEST>  {
+public class AutomaticTestImpl<CLASS_UNDER_TEST>  {
 
     private final Supplier<CLASS_UNDER_TEST> createClassUnderTest;
     private final List<RecordUpdateFactory<CLASS_UNDER_TEST>> writeList;
     private final List<RecordReadOnlyFactory<CLASS_UNDER_TEST>> readOnlyList;
     private final int atomicTestId;
 
-    public AtomicTestImpl(Supplier<CLASS_UNDER_TEST> createClassUnderTest,
-                          List<RecordUpdateFactory<CLASS_UNDER_TEST>> writeList,
-                          List<RecordReadOnlyFactory<CLASS_UNDER_TEST>> readOnlyList,
-                          int atomicTestId) {
+    public AutomaticTestImpl(Supplier<CLASS_UNDER_TEST> createClassUnderTest,
+                             List<RecordUpdateFactory<CLASS_UNDER_TEST>> writeList,
+                             List<RecordReadOnlyFactory<CLASS_UNDER_TEST>> readOnlyList,
+                             int atomicTestId) {
         this.createClassUnderTest = createClassUnderTest;
         this.writeList = writeList;
         this.readOnlyList = readOnlyList;

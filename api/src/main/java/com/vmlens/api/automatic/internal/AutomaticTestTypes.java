@@ -1,4 +1,4 @@
-package com.vmlens.api.atomic.internal;
+package com.vmlens.api.automatic.internal;
 
 public class AutomaticTestTypes {
     

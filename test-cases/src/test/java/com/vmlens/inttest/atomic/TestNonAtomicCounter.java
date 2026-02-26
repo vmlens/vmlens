@@ -1,6 +1,6 @@
 package com.vmlens.inttest.atomic;
 
-import com.vmlens.api.atomic.AtomicTestBuilder;
+import com.vmlens.api.automatic.AutomaticTestBuilder;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -12,7 +12,7 @@ public class TestNonAtomicCounter {
     public void testUpdate() throws InterruptedException {
         RuntimeException actualException = null;
         try {
-            new AtomicTestBuilder<>(NonAtomicCounter::new)
+            new AutomaticTestBuilder<>(NonAtomicCounter::new)
                     .addUpdate(NonAtomicCounter::incrementAndGet)
                     .addWrite(NonAtomicCounter::increment)
                     .addReadOnly(NonAtomicCounter::getCount)

@@ -1,4 +1,4 @@
-package com.vmlens.api.atomic.internal.recording;
+package com.vmlens.api.automatic.internal.recording;
 
 public interface RecordUpdateFactory<CLASS_UNDER_TEST> {
 

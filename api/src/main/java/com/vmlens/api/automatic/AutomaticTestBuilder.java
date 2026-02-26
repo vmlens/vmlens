@@ -1,11 +1,11 @@
-package com.vmlens.api.atomic;
+package com.vmlens.api.automatic;
 
-import com.vmlens.api.atomic.internal.AtomicTestImpl;
-import com.vmlens.api.atomic.internal.recording.RecordReadOnlyFactory;
-import com.vmlens.api.atomic.internal.recording.RecordUpdateFactory;
-import com.vmlens.api.atomic.internal.wrapper.CompareWithEquals;
-import com.vmlens.api.atomic.internal.wrapper.ConsumerWrapper;
-import com.vmlens.api.atomic.internal.wrapper.FunctionAndCompare;
+import com.vmlens.api.automatic.internal.AutomaticTestImpl;
+import com.vmlens.api.automatic.internal.recording.RecordReadOnlyFactory;
+import com.vmlens.api.automatic.internal.recording.RecordUpdateFactory;
+import com.vmlens.api.automatic.internal.wrapper.CompareWithEquals;
+import com.vmlens.api.automatic.internal.wrapper.ConsumerWrapper;
+import com.vmlens.api.automatic.internal.wrapper.FunctionAndCompare;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,10 +14,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static com.vmlens.api.atomic.internal.AutomaticTestTypes.READ;
-import static com.vmlens.api.atomic.internal.AutomaticTestTypes.WRITE;
+import static com.vmlens.api.automatic.internal.AutomaticTestTypes.READ;
+import static com.vmlens.api.automatic.internal.AutomaticTestTypes.WRITE;
 
-public class AtomicTestBuilder<CLASS_UNDER_TEST> {
+public class AutomaticTestBuilder<CLASS_UNDER_TEST> {
 
     private static final AtomicInteger AUTOMATIC_TEST_ID = new AtomicInteger();
 
@@ -30,12 +30,12 @@ public class AtomicTestBuilder<CLASS_UNDER_TEST> {
     private int addReadOnlyPosition = 0;
     private int automaticTestMethodId = 0;
 
-    public AtomicTestBuilder(Supplier<CLASS_UNDER_TEST> createClassUnderTest) {
+    public AutomaticTestBuilder(Supplier<CLASS_UNDER_TEST> createClassUnderTest) {
         this.createClassUnderTest = createClassUnderTest;
         this.atomicTestId =  AUTOMATIC_TEST_ID.getAndIncrement();
     }
 
-    public <READ_VALUE> AtomicTestBuilder<CLASS_UNDER_TEST> addReadOnly(Function<CLASS_UNDER_TEST,READ_VALUE> function) {
+    public <READ_VALUE> AutomaticTestBuilder<CLASS_UNDER_TEST> addReadOnly(Function<CLASS_UNDER_TEST,READ_VALUE> function) {
 
         readOnlyList.add(new FunctionAndCompare<>(function,
                 new CompareWithEquals<>(),
@@ -48,7 +48,7 @@ public class AtomicTestBuilder<CLASS_UNDER_TEST> {
         return this;
     }
 
-    public AtomicTestBuilder<CLASS_UNDER_TEST> addWrite(Consumer<CLASS_UNDER_TEST> consumer) {
+    public AutomaticTestBuilder<CLASS_UNDER_TEST> addWrite(Consumer<CLASS_UNDER_TEST> consumer) {
 
         writeList.add(new ConsumerWrapper<>(consumer,addWritePosition, atomicTestId, automaticTestMethodId));
         automaticTestMethodId++;
@@ -56,7 +56,7 @@ public class AtomicTestBuilder<CLASS_UNDER_TEST> {
         return this;
     }
 
-    public <READ_VALUE> AtomicTestBuilder<CLASS_UNDER_TEST> addUpdate(Function<CLASS_UNDER_TEST,READ_VALUE> function) {
+    public <READ_VALUE> AutomaticTestBuilder<CLASS_UNDER_TEST> addUpdate(Function<CLASS_UNDER_TEST,READ_VALUE> function) {
 
         writeList.add(new FunctionAndCompare<>(function,
                 new CompareWithEquals<>(),
@@ -70,7 +70,7 @@ public class AtomicTestBuilder<CLASS_UNDER_TEST> {
     }
 
     public void runTests() {
-        new AtomicTestImpl<>(createClassUnderTest,writeList,readOnlyList,atomicTestId).runTests();
+        new AutomaticTestImpl<>(createClassUnderTest,writeList,readOnlyList,atomicTestId).runTests();
     }
 
 }

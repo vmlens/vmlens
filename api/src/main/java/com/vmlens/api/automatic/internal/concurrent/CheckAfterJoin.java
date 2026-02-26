@@ -1,4 +1,4 @@
-package com.vmlens.api.atomic.internal.concurrent;
+package com.vmlens.api.automatic.internal.concurrent;
 
 public interface CheckAfterJoin<CLASS_UNDER_TEST> {
 

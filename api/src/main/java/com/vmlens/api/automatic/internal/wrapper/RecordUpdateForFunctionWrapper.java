@@ -1,15 +1,15 @@
-package com.vmlens.api.atomic.internal.wrapper;
+package com.vmlens.api.automatic.internal.wrapper;
 
-import com.vmlens.api.atomic.internal.concurrent.CheckAfterJoin;
-import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
-import com.vmlens.api.atomic.internal.recording.RecordReadOnly;
-import com.vmlens.api.atomic.internal.recording.RecordUpdate;
-import com.vmlens.api.atomic.internal.value.Value;
+import com.vmlens.api.automatic.internal.concurrent.CheckAfterJoin;
+import com.vmlens.api.automatic.internal.concurrent.ConcurrentCall;
+import com.vmlens.api.automatic.internal.recording.RecordReadOnly;
+import com.vmlens.api.automatic.internal.recording.RecordUpdate;
+import com.vmlens.api.automatic.internal.value.Value;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.vmlens.api.atomic.internal.wrapper.FunctionCompareAndExpectedResult.process;
+import static com.vmlens.api.automatic.internal.wrapper.FunctionCompareAndExpectedResult.process;
 
 public class RecordUpdateForFunctionWrapper<CLASS_UNDER_TEST,READ_VALUE> implements RecordUpdate<CLASS_UNDER_TEST> ,
         RecordReadOnly<CLASS_UNDER_TEST> {

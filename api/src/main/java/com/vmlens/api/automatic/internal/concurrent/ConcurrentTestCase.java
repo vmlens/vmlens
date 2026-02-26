@@ -1,4 +1,4 @@
-package com.vmlens.api.atomic.internal.concurrent;
+package com.vmlens.api.automatic.internal.concurrent;
 
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.api.AllInterleavingsBuilder;

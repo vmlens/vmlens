@@ -1,14 +1,14 @@
-package com.vmlens.api.atomic.internal.wrapper;
+package com.vmlens.api.automatic.internal.wrapper;
 
 import com.vmlens.api.AllInterleavings;
-import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
-import com.vmlens.api.atomic.internal.recording.RecordUpdate;
-import com.vmlens.api.atomic.internal.recording.RecordUpdateFactory;
+import com.vmlens.api.automatic.internal.concurrent.ConcurrentCall;
+import com.vmlens.api.automatic.internal.recording.RecordUpdate;
+import com.vmlens.api.automatic.internal.recording.RecordUpdateFactory;
 
 import java.util.function.Consumer;
 
-import static com.vmlens.api.atomic.internal.AutomaticTestTypes.WRITE;
-import static com.vmlens.api.atomic.internal.wrapper.CreateLabel.createLabel;
+import static com.vmlens.api.automatic.internal.AutomaticTestTypes.WRITE;
+import static com.vmlens.api.automatic.internal.wrapper.CreateLabel.createLabel;
 
 public class ConsumerWrapper<CLASS_UNDER_TEST> implements RecordUpdateFactory<CLASS_UNDER_TEST> ,
         RecordUpdate<CLASS_UNDER_TEST> ,

@@ -1,13 +1,13 @@
-package com.vmlens.api.atomic.internal.wrapper;
+package com.vmlens.api.automatic.internal.wrapper;
 
-import com.vmlens.api.atomic.internal.recording.RecordReadOnly;
-import com.vmlens.api.atomic.internal.recording.RecordUpdate;
-import com.vmlens.api.atomic.internal.recording.RecordReadOnlyFactory;
+import com.vmlens.api.automatic.internal.recording.RecordReadOnly;
+import com.vmlens.api.automatic.internal.recording.RecordUpdate;
+import com.vmlens.api.automatic.internal.recording.RecordReadOnlyFactory;
 
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
-import static com.vmlens.api.atomic.internal.wrapper.CreateLabel.createLabel;
+import static com.vmlens.api.automatic.internal.wrapper.CreateLabel.createLabel;
 
 public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordReadOnlyFactory<CLASS_UNDER_TEST> {
 

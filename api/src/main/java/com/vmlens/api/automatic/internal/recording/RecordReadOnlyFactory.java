@@ -1,4 +1,4 @@
-package com.vmlens.api.atomic.internal.recording;
+package com.vmlens.api.automatic.internal.recording;
 
 public interface RecordReadOnlyFactory<CLASS_UNDER_TEST>  extends RecordUpdateFactory<CLASS_UNDER_TEST> {
 

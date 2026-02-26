@@ -1,12 +1,12 @@
-package com.vmlens.api.atomic.internal.wrapper;
+package com.vmlens.api.automatic.internal.wrapper;
 
 import com.vmlens.api.AllInterleavings;
-import com.vmlens.api.atomic.internal.concurrent.CheckAfterJoin;
-import com.vmlens.api.atomic.internal.concurrent.ConcurrentCall;
-import com.vmlens.api.atomic.internal.value.ExceptionValue;
-import com.vmlens.api.atomic.internal.value.NullValue;
-import com.vmlens.api.atomic.internal.value.ObjectValue;
-import com.vmlens.api.atomic.internal.value.Value;
+import com.vmlens.api.automatic.internal.concurrent.CheckAfterJoin;
+import com.vmlens.api.automatic.internal.concurrent.ConcurrentCall;
+import com.vmlens.api.automatic.internal.value.ExceptionValue;
+import com.vmlens.api.automatic.internal.value.NullValue;
+import com.vmlens.api.automatic.internal.value.ObjectValue;
+import com.vmlens.api.automatic.internal.value.Value;
 
 import java.util.List;
 
