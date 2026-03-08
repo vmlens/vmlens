@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin.automatictest;
 
-import com.vmlens.api.automatic.AutomaticTestBuilder;
+import com.vmlens.api.testbuilder.AtomicTestBuilder;
 import org.junit.Test;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -9,7 +9,7 @@ public class TestQueue {
 
     @Test
     public void testNullValues() {
-        new AutomaticTestBuilder<>(ConcurrentLinkedQueue::new)
+        new AtomicTestBuilder<>(ConcurrentLinkedQueue::new)
                 .addWrite((obj) -> obj.add("test") )
                 .addReadOnly(ConcurrentLinkedQueue::peek)
                 .runTests();
@@ -17,7 +17,7 @@ public class TestQueue {
 
     @Test
     public void testExceptions() {
-        new AutomaticTestBuilder<>(ConcurrentLinkedQueue::new)
+        new AtomicTestBuilder<>(ConcurrentLinkedQueue::new)
                 .addWrite((obj) -> obj.add("test") )
                 .addReadOnly(ConcurrentLinkedQueue::element)
                 .runTests();

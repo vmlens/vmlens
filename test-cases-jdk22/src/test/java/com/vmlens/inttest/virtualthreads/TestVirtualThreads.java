@@ -10,7 +10,6 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
 public class TestVirtualThreads {
 
     private volatile int j = 0;
@@ -24,7 +23,6 @@ public class TestVirtualThreads {
         try(AllInterleavings allInterleavings = new AllInterleavings("testVirtualThreads")) {
             while (allInterleavings.hasNext()) {
                 Thread.Builder builder = Thread.ofVirtual().name("worker-", 0);
-
                 j = 0;
                 Thread first = builder.unstarted(() -> j = 5);
                 first.start();
@@ -35,6 +33,5 @@ public class TestVirtualThreads {
             assertThat(countSet,is(expectedSet));
         }
     }
-
 
 }

@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.automatictest
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
-import com.vmlens.api.automatic.internal.AutomaticTestTypes
+import com.vmlens.api.testbuilder.internal.AutomaticTestTypes
 import com.vmlens.preanalyzed.model.MethodToMethodType
 import org.jgrapht.graph.{DefaultDirectedGraph, DefaultEdge}
 import org.jgrapht.traverse.BreadthFirstIterator

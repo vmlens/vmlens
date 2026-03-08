@@ -14,6 +14,7 @@ public class BarrierKeyTypeCollectionFactory {
     public BarrierKeyTypeCollection create() {
 
         add(BarrierKeyTypeFuture.SINGLETON);
+        add(BarrierKeyTypeCountDownLatch.SINGLETON);
 
 
         return new BarrierKeyTypeCollection(methodTypeToId,idToMethodType);

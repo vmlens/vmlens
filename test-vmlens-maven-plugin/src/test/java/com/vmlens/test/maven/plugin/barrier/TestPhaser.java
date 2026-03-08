@@ -6,7 +6,8 @@ import org.junit.Test;
 
 import java.util.concurrent.Phaser;
 
-import static com.vmlens.api.Runner.runParallelWithException;
+import static com.vmlens.api.Runner.runParallel;
+
 
 public class TestPhaser {
 
@@ -18,7 +19,7 @@ public class TestPhaser {
         try(AllInterleavings allInterleavings = new AllInterleavings("testPhaserBlocking")) {
             while (allInterleavings.hasNext()) {
                 Phaser phaser = new Phaser(2);
-                runParallelWithException(
+                runParallel(
                         () -> {
                             i = 9;
                             phaser.arriveAndAwaitAdvance();

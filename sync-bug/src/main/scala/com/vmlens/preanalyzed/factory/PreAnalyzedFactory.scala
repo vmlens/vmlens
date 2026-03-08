@@ -156,6 +156,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       atomicIntegerFieldUpdater(),
       
       Include("java/util/concurrent/FutureTask"),
+      Include("java/util/concurrent/CyclicBarrier"),
 
       Include("java/util/concurrent/Executors"),
       Include("java/util/concurrent/AbstractExecutorService"),

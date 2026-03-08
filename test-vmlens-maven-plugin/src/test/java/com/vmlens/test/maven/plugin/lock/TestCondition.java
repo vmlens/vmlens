@@ -6,7 +6,8 @@ import org.junit.Test;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.vmlens.api.Runner.runParallelWithException;
+import static com.vmlens.api.Runner.runParallel;
+
 
 public class TestCondition {
 
@@ -19,7 +20,7 @@ public class TestCondition {
                 flag = false;
                 final ReentrantLock lock = new ReentrantLock();
                 final Condition condition = lock.newCondition();
-                runParallelWithException(
+                runParallel(
                         () -> {
                             lock.lock();
                             flag = true;
@@ -29,7 +30,11 @@ public class TestCondition {
                         () -> {
                             lock.lock();
                             while(! flag) {
-                                condition.await();
+                                try {
+                                    condition.await();
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                             lock.unlock(); }
                 );

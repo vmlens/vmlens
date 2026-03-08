@@ -16,8 +16,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 public class TestGrowableArrayBlockingQueue {
 
     @Test
-    public void testWithResize() throws InterruptedException {
-
+    public void testWithResize()  {
         try (AllInterleavings allInterleavings = new AllInterleavingsBuilder()
                 .withMaximumIterations(200)
                 .build("testGrowableArrayBlockingQueueWithResize")) {
