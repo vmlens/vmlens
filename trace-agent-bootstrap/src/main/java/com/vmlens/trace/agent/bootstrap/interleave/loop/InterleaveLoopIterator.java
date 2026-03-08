@@ -25,7 +25,7 @@ public class InterleaveLoopIterator implements Iterator<CalculatedRun> {
     public boolean hasNext() {
 
         if(alreadyExecuted.size() > interleaveLoopContext.maximumIterations()) {
-            interleaveLoopContext.maximumIterationsReached(currentIterator.length());
+            interleaveLoopContext.maximumIterationsReached(currentIterator.numberOfAlternatives());
             return false;
         }
 

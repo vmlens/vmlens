@@ -4,6 +4,7 @@ public abstract class BarrierKey implements Comparable<BarrierKey> {
 
     protected static final int CATEGORY_FUTURE = 0;
     protected static final int CATEGORY_PHASER = 1;
+    protected static final int CATEGORY_COUNT_DOWN_LATCH = 2;
 
     public boolean equalsNormalized(BarrierKey other) {
         return getClass() == other.getClass();

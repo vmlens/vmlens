@@ -1,6 +1,6 @@
 package com.vmlens.test.maven.plugin.automatictest;
 
-import com.vmlens.api.atomic.AtomicTestBuilder;
+import com.vmlens.api.testbuilder.AtomicTestBuilder;
 import org.junit.Test;
 
 public class TestSynchronizedCounter {
@@ -12,6 +12,5 @@ public class TestSynchronizedCounter {
                 .addReadOnly(SynchronizedCounter::get)
                 .runTests();
     }
-
 
 }

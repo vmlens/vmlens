@@ -1,0 +1,41 @@
+package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist;
+
+
+import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
+import gnu.trove.list.linked.TLinkedList;
+
+import java.util.Iterator;
+
+/**
+ *  the order tree contains of a list of either single elements and two children elements
+ *  so iterating consists of going through the list of elements
+ *  when we reach a two children element the element takes over
+ *
+ *  we have two ways to iterate over:
+ *      OrderTreeIterator iterator() takes only one path based on permutation iterator
+ *      foreach takes all paths used for cycle adapter
+ *
+ */
+public class OrderList implements Iterable<TLinkableWrapper<OrderListElement>> {
+
+    // can be empty, when only fixed orders exist
+    private final TLinkedList<TLinkableWrapper<OrderListElement>> list;
+
+
+    public OrderList(TLinkedList<TLinkableWrapper<OrderListElement>> list) {
+        this.list = list;
+    }
+
+    public Iterator<TLinkableWrapper<OrderListElement>> iterator() {
+        return list.iterator();
+    }
+
+    public int[] numberOfAlternativeArray() {
+        int[] array = new int[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            array[i] = list.get(i).element().numberOfAlternatives();
+        }
+        return array;
+    }
+
+}

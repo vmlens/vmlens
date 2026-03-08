@@ -156,6 +156,7 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       atomicIntegerFieldUpdater(),
       
       Include("java/util/concurrent/FutureTask"),
+      Include("java/util/concurrent/CyclicBarrier"),
 
       Include("java/util/concurrent/Executors"),
       Include("java/util/concurrent/AbstractExecutorService"),
@@ -224,7 +225,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
   }
 
   private def lockMethods(): List[LockMethod] =
-    List[LockMethod](LockMethod("lock", "()V", LockEnter()),
+    List[LockMethod](
+      LockMethod("lock", "()V", LockEnter()),
+      LockMethod("lockInterruptibly", "()V", LockEnter()),
       LockMethod("tryLock", "()Z", LockEnter()),
       LockMethod("tryLock", "(JLjava/util/concurrent/TimeUnit;)Z ", LockEnter()),
       LockMethod("unlock", "()V", LockExit()),
@@ -244,9 +247,9 @@ at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives
       
       MethodToMethodType("tryOptimisticRead", "()J",GET_LOCK_STATE),
       MethodToMethodType("validate", "(J)Z", GET_LOCK_STATE),
-      MethodToMethodType("unlockWrite", "(J)Z", EXIT_STAMPED_LOCK),
-      MethodToMethodType("unlockRead", "(J)Z", EXIT_STAMPED_LOCK),
-      MethodToMethodType("unlock", "(J)Z", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unlockWrite", "(J)V", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unlockRead", "(J)V", EXIT_STAMPED_LOCK),
+      MethodToMethodType("unlock", "(J)V", EXIT_STAMPED_LOCK),
     //  MethodToMethodType("tryConvertToWriteLock", "(J)J", LockEnter()),
     //  MethodToMethodType("tryConvertToReadLock", "(J)J", LockEnter()),
     //  MethodToMethodType("tryConvertToOptimisticRead", "(J)J", LockEnter()),

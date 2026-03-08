@@ -2,8 +2,8 @@ package com.vmlens.trace.agent.bootstrap.interleave.interleaveaction;
 
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeOneOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.KeyToOperationCollection;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
@@ -78,17 +78,17 @@ public class VolatileAccess implements VolatileOperation, InterleaveAction {
     }
 
     @Override
-    public TreeBuilderNode addToAlternatingOrder(Position myPosition,
+    public ListBuilderNode addToAlternatingOrder(Position myPosition,
                                                  Object otherObj,
                                                  BuildAlternatingOrderContext context,
-                                                 TreeBuilderNode treeBuilderNode) {
+                                                 ListBuilderNode listBuilderNode) {
         DependentOperationAndPosition<VolatileOperation> other = (DependentOperationAndPosition<VolatileOperation>) otherObj;
         // if at least one interleaveoperation is a write
         if( operation > IS_READ || other.element().operation()  > IS_READ ) {
-            treeBuilderNode = treeBuilderNode.either(new AlternativeOneOrder(LeftBeforeRight.lbr(myPosition,other.position())),
+            listBuilderNode = listBuilderNode.either(new AlternativeOneOrder(LeftBeforeRight.lbr(myPosition,other.position())),
                     new AlternativeOneOrder(LeftBeforeRight.lbr(other.position(),myPosition)));
         }
-        return treeBuilderNode;
+        return listBuilderNode;
     }
 
     @Override

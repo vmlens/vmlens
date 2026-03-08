@@ -83,6 +83,9 @@ public class MethodTypeCollectionFactory {
         add(NON_BLOCKING_WITH_FILTER_WRITE);
         add(NON_BLOCKING_WITH_FILTER_READ_WRITE);
 
+        add(COUNT_DOWN_LATCH_AWAIT);
+        add(COUNT_DOWN_LATCH_COUNT_DOWN);
+        add(COUNT_DOWN_LATCH_GET_STATE);
 
         return new MethodTypeCollection(methodTypeToId,idToMethodType);
     }

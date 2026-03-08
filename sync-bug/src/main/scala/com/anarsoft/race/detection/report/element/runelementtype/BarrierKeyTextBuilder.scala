@@ -1,8 +1,6 @@
 package com.anarsoft.race.detection.report.element.runelementtype
 
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.BarrierKeyVisitor
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.FutureKey
-import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.PhaserKey
+import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrierkey.{BarrierKeyVisitor, CountDownLatchKey, FutureKey, PhaserKey}
 
 
 class BarrierKeyTextBuilder extends BarrierKeyVisitor {
@@ -14,6 +12,10 @@ class BarrierKeyTextBuilder extends BarrierKeyVisitor {
 
   override def visit(phaserKey: PhaserKey): Unit = {
     text = "Phaser"
+  }
+
+  override def visit(countDownLatchKey: CountDownLatchKey): Unit = {
+    text = "CountDownLatch"
   }
 
   def build: String = text

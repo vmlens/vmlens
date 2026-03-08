@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.DependentOperationAndPositionOrContainer;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 
@@ -26,10 +26,10 @@ public class DependentOperationAndPosition<ELEMENT extends DependentOperation>
 
 
     @Override
-    public TreeBuilderNode addToAlternatingOrder(DependentOperationAndPosition<ELEMENT> elementDependentOperationAndPosition,
+    public ListBuilderNode addToAlternatingOrder(DependentOperationAndPosition<ELEMENT> elementDependentOperationAndPosition,
                                                  BuildAlternatingOrderContext context,
-                                                 TreeBuilderNode treeBuilderNode) {
-        return element.addToAlternatingOrder(position,elementDependentOperationAndPosition,context,treeBuilderNode);
+                                                 ListBuilderNode listBuilderNode) {
+        return element.addToAlternatingOrder(position,elementDependentOperationAndPosition,context, listBuilderNode);
     }
 
     @Override

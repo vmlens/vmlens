@@ -47,13 +47,37 @@ public class TestMultipleVolatile {
 
         Set<Integer> countSet = new HashSet<>();
         try(AllInterleavings allInterleavings = new AllInterleavingsBuilder()
-                .withRemoveCycleThreshold(30)
                 .build("testMultipleVolatileTwoThreads")) {
             while (allInterleavings.hasNext()) {
                 j = 0;
                 Thread first = new Thread( () -> { j++;  j++; j++;});
                 first.start();
                 j++;
+                j++;
+                j++;
+                first.join();
+                countSet.add(j);
+            }
+            assertThat(countSet,is(expectedSet));
+        }
+    }
+
+    @Test
+    public void testSmallCycle() throws InterruptedException {
+        Set<Integer> expectedSet = new HashSet<>();
+
+        expectedSet.add(2);
+        expectedSet.add(3);
+        expectedSet.add(4);
+
+        Set<Integer> countSet = new HashSet<>();
+        try(AllInterleavings allInterleavings = new AllInterleavingsBuilder()
+                .withTraceInterleaveActions()
+                .build("testSmallCycle")) {
+            while (allInterleavings.hasNext()) {
+                j = 0;
+                Thread first = new Thread( () -> { j++;  j++; });
+                first.start();
                 j++;
                 j++;
                 first.join();

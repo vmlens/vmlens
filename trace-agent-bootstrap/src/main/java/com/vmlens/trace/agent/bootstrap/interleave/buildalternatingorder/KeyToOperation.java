@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.KeyToThreadIdToElementList;
 import com.vmlens.trace.agent.bootstrap.interleave.threadindexcollection.ThreadIndexToElementList;
 import com.vmlens.trace.agent.bootstrap.util.TLinkableWrapper;
@@ -16,19 +16,19 @@ public class KeyToOperation<KEY, ELEMENT extends DependentOperationAndPositionOr
         keyToList.put(key,element);
     }
 
-    public TreeBuilderNode process(BuildAlternatingOrderContext context,
-                                   TreeBuilderNode treeBuilderNode) {
-        TreeBuilderNode current = treeBuilderNode;
+    public ListBuilderNode process(BuildAlternatingOrderContext context,
+                                   ListBuilderNode listBuilderNode) {
+        ListBuilderNode current = listBuilderNode;
         for (ThreadIndexToElementList<ELEMENT> threadIndexToElementList : keyToList) {
             current = add(threadIndexToElementList,context, current);
         }
         return current;
     }
 
-    private  TreeBuilderNode add(ThreadIndexToElementList<ELEMENT> threadIndexToElementList,
-                      BuildAlternatingOrderContext context,
-                      TreeBuilderNode treeBuilderNode) {
-        TreeBuilderNode currentTreeBuilderNode = treeBuilderNode;
+    private ListBuilderNode add(ThreadIndexToElementList<ELEMENT> threadIndexToElementList,
+                                BuildAlternatingOrderContext context,
+                                ListBuilderNode listBuilderNode) {
+        ListBuilderNode currentListBuilderNode = listBuilderNode;
         for (TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>> oneThread : threadIndexToElementList) {
             for (TLinkableWrapper<ELEMENT> current : oneThread.element()) {
                 Iterator<TLinkableWrapper<TLinkedList<TLinkableWrapper<ELEMENT>>>> otherThreadBlocks =
@@ -37,15 +37,15 @@ public class KeyToOperation<KEY, ELEMENT extends DependentOperationAndPositionOr
                     TLinkedList<TLinkableWrapper<ELEMENT>> otherThread = otherThreadBlocks.next().element();
                     // ToDo we should probably stop when more than n elements were created
                     for (TLinkableWrapper<ELEMENT> otherBlock : otherThread) {
-                        TreeBuilderNode nextNode = current.element().addToAlternatingOrder(otherBlock.element(),
+                        ListBuilderNode nextNode = current.element().addToAlternatingOrder(otherBlock.element(),
                                 context,
-                                currentTreeBuilderNode);
-                        currentTreeBuilderNode = nextNode;
+                                currentListBuilderNode);
+                        currentListBuilderNode = nextNode;
                     }
                 }
             }
         }
-        return currentTreeBuilderNode;
+        return currentListBuilderNode;
     }
 
 }

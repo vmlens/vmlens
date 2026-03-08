@@ -69,6 +69,10 @@ public class ThreadLocalForCallbackAction {
         return doNotTraceSetAtStackTraceCount == null;
     }
 
+    boolean canProcessInitalize() {
+        return insideVMLens == 0;
+    }
+
     protected void resetDoNotTrace() {
         doNotTraceSetAtStackTraceCount = null;
     }

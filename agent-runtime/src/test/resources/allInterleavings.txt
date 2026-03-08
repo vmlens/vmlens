@@ -10,16 +10,16 @@ method:<init>(Ljava/lang/String;Z)V
   ALOAD_1
   ILOAD_2
   BIPUSH
-  BIPUSH
   SIPUSH
   SIPUSH
   SIPUSH
+  ICONST_0
   NEW  java/util/LinkedList
   DUP
   INVOKESPECIAL  java/util/LinkedList.<init>:()V
-  INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;ZIIIIILjava/util/List;)V
+  INVOKESPECIAL  com/vmlens/api/AllInterleavings.<init>:(Ljava/lang/String;ZIIIIZLjava/util/List;)V
   RETURN
-method:<init>(Ljava/lang/String;ZIIIIILjava/util/List;)V
+method:<init>(Ljava/lang/String;ZIIIIZLjava/util/List;)V
   ALOAD_0
   INVOKESPECIAL  java/lang/Object.<init>:()V
   ALOAD_0
@@ -33,19 +33,30 @@ method:<init>(Ljava/lang/String;ZIIIIILjava/util/List;)V
   PUTFIELD  com/vmlens/api/AllInterleavings.maximumIterations:I
   ALOAD_0
   ILOAD_4
-  PUTFIELD  com/vmlens/api/AllInterleavings.removeCycleThreshold:I
-  ALOAD_0
-  ILOAD_5
   PUTFIELD  com/vmlens/api/AllInterleavings.synchronizationActionsLoopThreshold:I
   ALOAD_0
-  ILOAD_6
+  ILOAD_5
   PUTFIELD  com/vmlens/api/AllInterleavings.unsynchronizedOperationsLoopThreshold:I
   ALOAD_0
-  ILOAD_7
+  ILOAD_6
   PUTFIELD  com/vmlens/api/AllInterleavings.reportAsSummaryThreshold:I
+  ALOAD_0
+  ILOAD_7
+  PUTFIELD  com/vmlens/api/AllInterleavings.traceInterleaveActions:Z
   ALOAD_0
   ALOAD_8
   PUTFIELD  com/vmlens/api/AllInterleavings.intentionalDataRaces:Ljava/util/List;
+  RETURN
+method:doNotTrace(Ljava/lang/Runnable;)V
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.startDoNotTrace:()V
+  ALOAD_0
+  INVOKEINTERFACE  java/lang/Runnable.run:()V
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.stopDoNotTrace:()V
+  GOTO
+  ASTORE_1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.stopDoNotTrace:()V
+  ALOAD_1
+  ATHROW
   RETURN
 method:hasNext()Z
   ALOAD_0
@@ -89,6 +100,10 @@ method:automaticTestMethod(III)V
   ILOAD_2
   ILOAD_3
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/VmlensApiCallback.automaticTestMethod:(Ljava/lang/Object;III)V
+  RETURN
+method:startDoNotTrace()V
+  RETURN
+method:stopDoNotTrace()V
   RETURN
 method:hasNext(Ljava/lang/Object;)Z
   ALOAD_0

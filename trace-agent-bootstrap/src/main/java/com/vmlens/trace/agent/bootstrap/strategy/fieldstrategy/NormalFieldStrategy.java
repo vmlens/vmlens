@@ -44,9 +44,10 @@ public class NormalFieldStrategy implements FieldStrategy {
     }
 
     @Override
-    public EitherVolatileOrNormalFieldAccessEvent create(Object forObject) {
+    public EitherVolatileOrNormalFieldAccessEvent create(Object forObject, int fieldId) {
         FieldAccessEvent fieldAccessEvent = new FieldAccessEvent();
         fieldAccessEvent.setObjectHashCode(System.identityHashCode(forObject));
+        fieldAccessEvent.setFieldId(fieldId);
         return fieldAccessEvent;
     }
 }

@@ -44,7 +44,7 @@ To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens p
 <dependency>
   <groupId>com.vmlens</groupId>
   <artifactId>api</artifactId>
-  <version>1.2.26</version>
+  <version>1.2.27</version>
   <scope>test</scope>
 </dependency>	
 	
@@ -54,7 +54,7 @@ To use vmlens with Maven, configure a plugin tag to tell Maven that the vmlens p
     <plugin>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens-maven-plugin</artifactId>
-        <version>1.2.26</version>
+        <version>1.2.27</version>
         <executions>
             <execution>
                 <id>test</id>
@@ -85,7 +85,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    testImplementation("com.vmlens:api:1.2.26")
+    testImplementation("com.vmlens:api:1.2.27")
     ...
 }
 buildscript {
@@ -93,7 +93,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.vmlens:standalone:1.2.26")
+        classpath("com.vmlens:standalone:1.2.27")
     }
 }
 tasks.register("vmlensReport") {
@@ -118,11 +118,11 @@ See [build.gradle.kts](https://github.com/vmlens/vmlens-examples/blob/master/bui
 
 To use VMLens as a standalone tool:
 
-1. Include com.vmlens.api from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/api/1.2.26/) as a test jar in your project.
-1. Download the jar standalone-1.2.26.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.26/) 
-1. Run java -jar standalone-1.2.26.jar install. This creates the agent directory and prints the vm parameter to System.out
+1. Include com.vmlens.api from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/api/1.2.27/) as a test jar in your project.
+1. Download the jar standalone-1.2.27.jar from the [Maven Repository](https://repo1.maven.org/maven2/com/vmlens/standalone/1.2.27/) 
+1. Run java -jar standalone-1.2.27.jar install. This creates the agent directory and prints the vm parameter to System.out
 1. Add this vm parameter when you run your test
-2. Run java -jar standalone-1.2.26.jar report. This checks for data races and creates the report
+2. Run java -jar standalone-1.2.27.jar report. This checks for data races and creates the report
 
 # Supported Java Versions
 

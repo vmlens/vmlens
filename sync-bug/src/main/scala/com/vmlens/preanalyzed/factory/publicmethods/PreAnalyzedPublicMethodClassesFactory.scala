@@ -7,6 +7,7 @@ import com.vmlens.preanalyzed.factory.publicmethods.AtomicLongLockedUpdater.atom
 import com.vmlens.preanalyzed.factory.publicmethods.AtomicMarkableReference.atomicMarkableReference
 import com.vmlens.preanalyzed.factory.publicmethods.AtomicReferenceFieldUpdater.atomicReferenceFieldUpdater
 import com.vmlens.preanalyzed.factory.publicmethods.AtomicReferenceFieldUpdaterImpl.atomicReferenceFieldUpdaterImpl
+import com.vmlens.preanalyzed.factory.publicmethods.CountDownLatchFactory.countDownLatchFactory
 import com.vmlens.preanalyzed.factory.publicmethods.ReflectField.reflectField
 import com.vmlens.preanalyzed.model.PreAnalyzedList
 import com.vmlens.preanalyzed.model.classmodel.ClassWithMethodToMethodType
@@ -23,7 +24,8 @@ object PreAnalyzedPublicMethodClassesFactory {
       atomicLongFieldUpdater(),
       atomicReferenceFieldUpdater(),
       atomicReferenceFieldUpdaterImpl(),
-      atomicMarkableReference()
+      atomicMarkableReference(),
+      countDownLatchFactory()
     )
   }
   

@@ -5,6 +5,7 @@ import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteAfter
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.ExecuteRunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.state.SetExecuteAfterOperation;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.EitherVolatileOrNormalFieldAccessEvent;
+import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldIdAndStrategy;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.methodtransformerbuilder.MethodTransformerBuilder;
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 import com.vmlens.trace.agent.bootstrap.strategy.fieldstrategy.FieldStrategy;
@@ -35,7 +36,7 @@ public class AtomicFieldUpdaterStrategy implements StrategyPreAnalyzed {
 
     @Override
     public void methodExit(EnterExitContext context) {
-        FieldStrategy strategy = context.fieldUpdaterRepository().get(context.object());
+        FieldIdAndStrategy strategy = context.fieldUpdaterRepository().get(context.object());
         EitherVolatileOrNormalFieldAccessEvent event = strategy.create(context.objectParam());
         if(event != null) {
             event.setOperation(operation);

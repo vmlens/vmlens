@@ -1,8 +1,8 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.lockcontainer;
 
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeOneOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 
@@ -24,15 +24,15 @@ public class BlockSingleOperationTuple implements AddToAlternatingOrder  {
      *
      */
     @Override
-    public TreeBuilderNode addToAlternatingOrder(BuildAlternatingOrderContext context,
-                                                 TreeBuilderNode treeBuilderNode) {
-        TreeBuilderNode current =  buildEither(treeBuilderNode,block.start().position());
+    public ListBuilderNode addToAlternatingOrder(BuildAlternatingOrderContext context,
+                                                 ListBuilderNode listBuilderNode) {
+        ListBuilderNode current =  buildEither(listBuilderNode,block.start().position());
         return  buildEither(current,block.end().position());
 
     }
 
-    public TreeBuilderNode buildEither(TreeBuilderNode treeBuilderNode, Position blockPosition) {
-        return treeBuilderNode.either(new AlternativeOneOrder(lbr(singleOperation.position(), blockPosition)),
+    public ListBuilderNode buildEither(ListBuilderNode listBuilderNode, Position blockPosition) {
+        return listBuilderNode.either(new AlternativeOneOrder(lbr(singleOperation.position(), blockPosition)),
                 new AlternativeOneOrder( lbr(blockPosition, singleOperation.position())));
     }
 

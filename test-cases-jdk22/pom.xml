@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.vmlens</groupId>
         <artifactId>vmlens</artifactId>
-        <version>1.2.26</version>
+        <version>1.2.27</version>
     </parent>
 
     <name>test-cases-jdk22</name>
@@ -58,6 +58,11 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pulsar</groupId>
+            <artifactId>pulsar-common</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

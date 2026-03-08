@@ -29,7 +29,6 @@ public class FactoryCollectionThreadPool implements FactoryCollection {
        if(context.nameAndDescriptor().equals(startThreadMethod)) {
            return TLinkableWrapper.singleton(ThreadPoolThreadStart.factory());
        }
-
        if(shutdownMethod.contains(context.nameAndDescriptor())) {
            return TLinkableWrapper.singleton(ThreadPoolJoin.factory());
        }

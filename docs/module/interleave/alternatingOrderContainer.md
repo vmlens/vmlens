@@ -3,6 +3,6 @@
 # Structure
 
 AlternatingOrderContainer -> {  fixedOrderArray,
-                                orderTree,
+                                orderList,
                                 loopArrays
                                 }

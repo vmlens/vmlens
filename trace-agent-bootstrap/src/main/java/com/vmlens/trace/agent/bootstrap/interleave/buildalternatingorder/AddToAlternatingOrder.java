@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 
 /**
  *
@@ -9,5 +9,5 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebui
  */
 
 public interface AddToAlternatingOrder {
-    TreeBuilderNode addToAlternatingOrder(BuildAlternatingOrderContext context, TreeBuilderNode treeBuilderNode);
+    ListBuilderNode addToAlternatingOrder(BuildAlternatingOrderContext context, ListBuilderNode listBuilderNode);
 }

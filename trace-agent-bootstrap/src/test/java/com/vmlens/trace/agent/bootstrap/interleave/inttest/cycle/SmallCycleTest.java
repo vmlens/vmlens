@@ -3,6 +3,7 @@ package com.vmlens.trace.agent.bootstrap.interleave.inttest.cycle;
 import com.vmlens.trace.agent.bootstrap.interleave.context.InterleaveLoopContextBuilder;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.performance.QueueInNoOp;
 import com.vmlens.trace.agent.bootstrap.interleave.inttest.util.IntTestRunner;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SmallCycleTest {
@@ -11,14 +12,22 @@ public class SmallCycleTest {
     public void monitorAndVolatileSmall() {
         MonitorAndVolatileSmall monitorAndVolatileSmall = new MonitorAndVolatileSmall();
         new IntTestRunner().runTest(monitorAndVolatileSmall.build(),monitorAndVolatileSmall.expectedBuilder().buildExpected(),
-                new InterleaveLoopContextBuilder().withRemoveCycleThreshold(20).build(new QueueInNoOp(),0));
+                new InterleaveLoopContextBuilder().build(new QueueInNoOp(),0));
     }
 
     @Test
     public void multipleVolatileSmall() {
         MultipleVolatileSmall multipleVolatileSmall = new MultipleVolatileSmall();
         new IntTestRunner().runTest(multipleVolatileSmall.build(),multipleVolatileSmall.expectedBuilder().buildExpected(),
-                new InterleaveLoopContextBuilder().withRemoveCycleThreshold(20).build(new QueueInNoOp(),0));
+                new InterleaveLoopContextBuilder().build(new QueueInNoOp(),0));
+    }
+
+
+    @Test
+    public void multipleVolatileSmallCycle() {
+        MultipleVolatileSmallCycle multipleVolatileSmall = new MultipleVolatileSmallCycle();
+        new IntTestRunner().runTest(multipleVolatileSmall.build(),multipleVolatileSmall.expectedBuilder().buildExpected(),
+                new InterleaveLoopContextBuilder().build(new QueueInNoOp(),0));
     }
 
 }

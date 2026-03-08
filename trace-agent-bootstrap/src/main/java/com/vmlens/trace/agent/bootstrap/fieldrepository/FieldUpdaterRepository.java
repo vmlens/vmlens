@@ -21,15 +21,15 @@ public class FieldUpdaterRepository {
         }
     }
 
-    public FieldStrategy get(Object theUpdater) {
+    public FieldIdAndStrategy get(Object theUpdater) {
         FieldOwnerAndName fieldOwnerAndName = getFieldOwnerAndName(theUpdater);
         if(fieldOwnerAndName == null) {
-            return NO_OP_FIELD_STRATEGY;
+            return new FieldIdAndStrategy(0,NO_OP_FIELD_STRATEGY);
         }
         return fieldRepositoryForCallback.get(fieldOwnerAndName);
     }
 
-    public FieldStrategy get(FieldOwnerAndName fieldOwnerAndName) {
+    public FieldIdAndStrategy get(FieldOwnerAndName fieldOwnerAndName) {
         return fieldRepositoryForCallback.get(fieldOwnerAndName);
     }
 

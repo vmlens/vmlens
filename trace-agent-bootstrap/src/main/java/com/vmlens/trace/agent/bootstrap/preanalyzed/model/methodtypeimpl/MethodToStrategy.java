@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 
+import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeCountDownLatch;
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeFuture;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodTypeContext;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.*;
@@ -24,9 +25,7 @@ public class MethodToStrategy extends AbstractMethodType  {
 
     public static final AbstractMethodType NEW_UPDATER = new MethodToStrategy(NewAtomicIntegerFieldUpdaterStrategy.SINGLETON);
     public static final AbstractMethodType NEW_REFERENCE_UPDATER = new MethodToStrategy(NewAtomicReferenceFieldUpdaterStrategy.SINGLETON);
-
-
-
+    
     public static final AbstractMethodType ATOMIC_FIELD_READ = new MethodToStrategy(AtomicFieldUpdaterStrategy.ATOMIC_FIELD_READ);
     public static final AbstractMethodType ATOMIC_FIELD_WRITE = new MethodToStrategy(AtomicFieldUpdaterStrategy.ATOMIC_FIELD_WRITE);
     public static final AbstractMethodType ATOMIC_FIELD_READ_WRITE = new MethodToStrategy(AtomicFieldUpdaterStrategy.ATOMIC_FIELD_READ_WRITE);
@@ -38,6 +37,11 @@ public class MethodToStrategy extends AbstractMethodType  {
     public static final AbstractMethodType NON_BLOCKING_WITH_FILTER_READ = new MethodToStrategy(NonBlockingWithFilterStrategy.NON_BLOCKING_WITH_FILTER_READ);
     public static final AbstractMethodType NON_BLOCKING_WITH_FILTER_WRITE = new MethodToStrategy(NonBlockingWithFilterStrategy.NON_BLOCKING_WITH_FILTER_WRITE);
     public static final AbstractMethodType NON_BLOCKING_WITH_FILTER_READ_WRITE = new MethodToStrategy(NonBlockingWithFilterStrategy.NON_BLOCKING_WITH_FILTER_READ_WRITE);
+
+
+    public static final AbstractMethodType COUNT_DOWN_LATCH_AWAIT = new MethodToStrategy(new BarrierWaitStrategy(BarrierKeyTypeCountDownLatch.SINGLETON));
+    public static final AbstractMethodType COUNT_DOWN_LATCH_COUNT_DOWN = new MethodToStrategy(new BarrierNotifyStrategy(BarrierKeyTypeCountDownLatch.SINGLETON));
+    public static final AbstractMethodType COUNT_DOWN_LATCH_GET_STATE = new MethodToStrategy(new BarrierGetStateStrategy(BarrierKeyTypeCountDownLatch.SINGLETON));
 
 
 

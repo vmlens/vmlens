@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 
 import com.vmlens.trace.agent.bootstrap.interleave.WithThreadIndex;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 
 /**
  * this is either a block, e.g. start and end position
@@ -10,8 +10,8 @@ import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebui
  */
 public interface DependentOperationAndPositionOrContainer<OTHER> extends WithThreadIndex  {
 
-    TreeBuilderNode addToAlternatingOrder(OTHER other,
+    ListBuilderNode addToAlternatingOrder(OTHER other,
                                           BuildAlternatingOrderContext context,
-                                          TreeBuilderNode treeBuilderNode);
+                                          ListBuilderNode listBuilderNode);
 
 }

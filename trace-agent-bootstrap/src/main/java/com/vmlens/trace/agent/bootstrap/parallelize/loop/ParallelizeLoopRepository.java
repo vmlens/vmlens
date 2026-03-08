@@ -64,8 +64,8 @@ public class ParallelizeLoopRepository {
                 InterleaveLoopContextBuilder builder = new InterleaveLoopContextBuilder();
                 builder.withMaximumIterations(getValue(config,"maximumIterations" ,
                         AllInterleavingsBuilder.MAXIMUM_ITERATIONS,queueIn));
-                builder.withRemoveCycleThreshold(getValue(config,"removeCycleThreshold" ,
-                        AllInterleavingsBuilder.REMOVE_CYCLE_THRESHOLD,queueIn));
+                builder.withTraceInterleaveActions(getBooleanValue(config,"traceInterleaveActions" ,
+                        false,queueIn));
 
                 parallelizeLoop = parallelizeLoopFactory.create(maxLoopId, builder.build(queueIn,maxLoopId));
                 maxLoopId++;
@@ -97,6 +97,19 @@ public class ParallelizeLoopRepository {
         synchronized (lock) {
             object2ParallelizeLoop.remove(obj);
         }
+    }
+
+    private boolean getBooleanValue(Object config,
+                         String fieldName,
+                         boolean defaultValue,
+                         QueueIn queueIn) {
+        try {
+            Field field = config.getClass().getField(fieldName);
+            return field.getBoolean(config);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            queueIn.offer(fromException(maxLoopId, e));
+        }
+        return defaultValue;
     }
 
 

@@ -1,9 +1,10 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation;
 
+import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeOneOrder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.AlternativeTwoOrders;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeMultipleOrders;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeOneOrder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.Barrier;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.barrier.BarrierNotify;
@@ -13,6 +14,7 @@ import org.junit.Test;
 
 import static com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight.lbr;
 import static com.vmlens.trace.agent.bootstrap.interleave.Position.pos;
+import static com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.AlternativeMultipleOrders.alternativeTwoOrders;
 import static com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.MethodIdByteCodePositionAndThreadIndexFactory.threadIndex;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -36,23 +38,23 @@ public class BarrierOperationTest {
                                              Barrier secondBarrier,Position secondPosition) {
         // expected
         AlternativeOneOrder alternativeOneOrder = new AlternativeOneOrder(lbr(notifyPosition,waitPosition));
-        AlternativeTwoOrders alternativeTwoOrders = new AlternativeTwoOrders(lbr(waitPosition,notifyPosition),
-                lbr(notifyPosition,pos(0,1)));
+        AlternativeMultipleOrders alternativeTwoOrders =  alternativeTwoOrders(lbr(waitPosition, notifyPosition),
+                lbr(notifyPosition, pos(0, 1)));
 
         // Given
         BuildAlternatingOrderContext context = mock(BuildAlternatingOrderContext.class);
         when(context.getLastPositionForThreadIndex(eq(0))).thenReturn(5);
 
-        TreeBuilderNode treeBuilderNode = mock(TreeBuilderNode.class);
+        ListBuilderNode listBuilderNode = mock(ListBuilderNode.class);
 
         // When
         firstBarrier.addToAlternatingOrder(firstPosition,
                 new DependentOperationAndPosition<>(secondPosition,secondBarrier),
                 context,
-                treeBuilderNode);
+                listBuilderNode);
 
         // Then
-        verify(treeBuilderNode).either(eq(alternativeOneOrder),eq(alternativeTwoOrders));
+        verify(listBuilderNode).either(eq(alternativeOneOrder),eq(alternativeTwoOrders));
     }
 
 

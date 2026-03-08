@@ -1,36 +1,36 @@
 package com.vmlens.trace.agent.bootstrap.interleave.alternatingorder;
 
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderList;
 import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.CalculatedRunFactory;
 import com.vmlens.trace.agent.bootstrap.interleave.buildcalculatedrun.OrderArrayListFactory;
 
 import java.util.Iterator;
 
-public class AlternatingOrderContainerIterator implements  Iterator<CalculatedRun>  {
+public class AlternatingOrderContainerIterator implements  Iterator<CalculatedRun> , AlternatingOrderContainerForCycleFound {
 
     private final AlternatingOrderContainer alternatingOrderContainer;
-    private PermutationIterator permutationIterator;
+    private MixedRadixIterator mixedRadixIterator;
     private CalculatedRunFactory calculatedRunFactory;
 
 
     public AlternatingOrderContainerIterator(AlternatingOrderContainer alternatingOrderContainer) {
         this.alternatingOrderContainer = alternatingOrderContainer;
-        this.permutationIterator = new PermutationIterator(alternatingOrderContainer.orderTree().length());
+        this.mixedRadixIterator = new MixedRadixIterator(alternatingOrderContainer.orderList().numberOfAlternativeArray());
         this.calculatedRunFactory = new CalculatedRunFactory(new OrderArrayListFactory(
                 alternatingOrderContainer.fixedOrderArray()),
                 alternatingOrderContainer.actualRun(),
-                alternatingOrderContainer.interleaveLoopContext(),
-                alternatingOrderContainer.orderTree());
+                alternatingOrderContainer.interleaveLoopContext());
     }
 
     @Override
     public boolean hasNext() {
-        if(permutationIterator == null) {
+        if(mixedRadixIterator == null) {
             return false;
         }
 
-        boolean temp =  permutationIterator.hasNext();
+        boolean temp =  mixedRadixIterator.hasNext();
         if(!temp) {
-            permutationIterator = null;
+            mixedRadixIterator = null;
             calculatedRunFactory = null;
             alternatingOrderContainer.setFieldsToNull();
         }
@@ -41,10 +41,23 @@ public class AlternatingOrderContainerIterator implements  Iterator<CalculatedRu
      */
     @Override
     public CalculatedRun next() {
-        return calculatedRunFactory.create(permutationIterator);
+        int[] current = mixedRadixIterator.next();
+        return calculatedRunFactory.create(current,orderList(),new CycleFoundCallbackImpl(this));
     }
 
-    public int length() {
-        return calculatedRunFactory.length();
+    public int numberOfAlternatives() {
+        return mixedRadixIterator.numberOfAlternatives();
     }
+
+    @Override
+    public OrderList orderList() {
+        return alternatingOrderContainer.orderList();
+    }
+
+    @Override
+    public void resetOrderList(OrderList orderList) {
+        mixedRadixIterator = new MixedRadixIterator(orderList.numberOfAlternativeArray());
+        alternatingOrderContainer.resetOrderList(orderList);
+    }
+
 }

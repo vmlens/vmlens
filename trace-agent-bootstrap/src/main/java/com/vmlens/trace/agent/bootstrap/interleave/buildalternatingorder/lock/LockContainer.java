@@ -1,6 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock;
 
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.AddToAlternatingOrder;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.BuildAlternatingOrderContext;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.DependentOperationAndPositionOrContainer;
@@ -28,14 +28,14 @@ public abstract class LockContainer implements DependentOperationAndPositionOrCo
         LockContainerVisitor {
 
     @Override
-    public TreeBuilderNode addToAlternatingOrder(LockContainer lockOrConditionContainer,
+    public ListBuilderNode addToAlternatingOrder(LockContainer lockOrConditionContainer,
                                                  BuildAlternatingOrderContext context,
-                                                 TreeBuilderNode treeBuilderNode) {
+                                                 ListBuilderNode listBuilderNode) {
         AddToAlternatingOrder tuple = lockOrConditionContainer.accept(this);
         if(tuple != null) {
-            return tuple.addToAlternatingOrder(context,treeBuilderNode);
+            return tuple.addToAlternatingOrder(context, listBuilderNode);
         }
-      return treeBuilderNode;
+      return listBuilderNode;
     }
 
     public abstract AddToAlternatingOrder accept(LockContainerVisitor visitor);

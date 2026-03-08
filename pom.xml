@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.26</version>
+    <version>1.2.27</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -215,6 +215,11 @@
                 <groupId>org.apache.maven.plugin-tools</groupId>
                 <artifactId>maven-plugin-annotations</artifactId>
                 <version>3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.pulsar</groupId>
+                <artifactId>pulsar-common</artifactId>
+                <version>4.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>

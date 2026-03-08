@@ -29,14 +29,18 @@ public class VMLensMojo extends SurefireMojo {
 
     private File eventDirectory;
 
+
+    @Parameter(defaultValue = "true")
+    private boolean failOnError = true;
+
     /**
      * Agent directory
      */
     @Parameter(defaultValue = "${project.build.directory}/" + AGENT_DIRECTORY)
-    protected File agentDirectory;
+    private File agentDirectory;
 
     @Parameter(defaultValue = "${project.build.directory}/" + REPORT_DIRECTORY)
-    protected File reportDirectory;
+    private File reportDirectory;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -73,15 +77,26 @@ public class VMLensMojo extends SurefireMojo {
     }
 
     // Visible for Test
-    static void handleResult(ResultForVerify result,
+    private void handleResult(ResultForVerify result,
                              File reportDirectory,
                              MojoFailureException mojoFailureException,
                              Log log) throws MojoFailureException {
         if(mojoFailureException != null) {
-            log.error(String.format("See %s for the vmlens report.", reportDirectory.toString()));
+            if(result.dataRaceCount() > 0 ) {
+                log.error(dataRaces(result.dataRaceCount(),reportDirectory));
+            } else {
+                log.error(String.format("See %s for the vmlens report.", reportDirectory.toString()));
+            }
+            if(! failOnError) {
+                return;
+            }
+
             throw mojoFailureException;
         }
         if(result.dataRaceCount() > 0 ) {
+            if(! failOnError) {
+                return;
+            }
             throw new MojoFailureException(dataRaces(result.dataRaceCount(),reportDirectory));
         }
         log.info(String.format("See %s for the vmlens report.", reportDirectory.toString()));

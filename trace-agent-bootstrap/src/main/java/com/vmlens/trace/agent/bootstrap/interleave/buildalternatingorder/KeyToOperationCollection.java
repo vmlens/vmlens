@@ -3,9 +3,9 @@ package com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder;
 import com.vmlens.trace.agent.bootstrap.interleave.LeftBeforeRight;
 import com.vmlens.trace.agent.bootstrap.interleave.Position;
 import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ElementAndPosition;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertree.OrderTree;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilder;
-import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.ordertreebuilder.TreeBuilderNode;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlist.OrderList;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilder;
+import com.vmlens.trace.agent.bootstrap.interleave.alternatingorder.orderlistbuilder.ListBuilderNode;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.dependentoperation.DependentOperationAndPosition;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.DeadlockOperation;
 import com.vmlens.trace.agent.bootstrap.interleave.buildalternatingorder.lock.LockContainer;
@@ -83,9 +83,9 @@ public class KeyToOperationCollection {
         return toArray(LeftBeforeRight.class,fixedOrder);
     }
 
-    public OrderTree buildOrderTree(BuildAlternatingOrderContext context) {
-        TreeBuilder treeBuilder = new TreeBuilder();
-        TreeBuilderNode node = volatileAccess.process(context, treeBuilder.start());
+    public OrderList buildOrderTree(BuildAlternatingOrderContext context) {
+        ListBuilder listBuilder = new ListBuilder();
+        ListBuilderNode node = volatileAccess.process(context, listBuilder.start());
         node = lockAndConditions.process(context, node);
         node = barrier.process(context, node);
 
@@ -93,6 +93,6 @@ public class KeyToOperationCollection {
             node = op.element().addToAlternatingOrder(node);
         }
 
-        return treeBuilder.build(interleaveLoopContext);
+        return listBuilder.build(interleaveLoopContext);
     }
 }

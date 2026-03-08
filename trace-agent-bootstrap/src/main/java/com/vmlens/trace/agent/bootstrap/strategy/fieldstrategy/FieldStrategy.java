@@ -20,6 +20,6 @@ public interface FieldStrategy {
                         InTestActionProcessor inTestActionProcessor);
 
     // is null for no op and final
-    EitherVolatileOrNormalFieldAccessEvent create(Object forObject);
+    EitherVolatileOrNormalFieldAccessEvent create(Object forObject, int fieldId);
 
 }

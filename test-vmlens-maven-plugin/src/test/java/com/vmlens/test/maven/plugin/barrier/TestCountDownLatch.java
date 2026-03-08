@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static com.vmlens.api.Runner.runParallelWithException;
+import static com.vmlens.api.Runner.runParallel;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -19,18 +19,21 @@ public class TestCountDownLatch {
     private volatile int x = 0;
 
     @Test
-    @Ignore
     public void testBlocking() throws Throwable {
         try(AllInterleavings allInterleavings = new AllInterleavings("testCountDownLatchBlocking")) {
             while (allInterleavings.hasNext()) {
                 CountDownLatch latch = new CountDownLatch(1);
-                runParallelWithException(
+                runParallel(
                         () -> {
                             i = 9;
                             latch.countDown();
                             } ,
                         () -> {
-                            latch.await();
+                            try {
+                                latch.await();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                             int x = i;
                         }
                 );
@@ -39,7 +42,6 @@ public class TestCountDownLatch {
     }
 
     @Test
-    @Ignore
     public void testTimeout() throws Throwable {
         Set<Integer> expectedSet = new HashSet<>();
         expectedSet.add(0);
@@ -50,13 +52,17 @@ public class TestCountDownLatch {
             while (allInterleavings.hasNext()) {
                 CountDownLatch latch = new CountDownLatch(1);
                 x = 0;
-                runParallelWithException(
+                runParallel(
                         () -> {
                             x = 9;
                             latch.countDown();
                         } ,
                         () -> {
-                            latch.await(1, TimeUnit.MILLISECONDS);
+                            try {
+                                latch.await(1, TimeUnit.MILLISECONDS);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                             actual.add(x);
                         }
                 );
