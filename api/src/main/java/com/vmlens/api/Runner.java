@@ -7,7 +7,6 @@ import java.util.List;
  * Utility to run a runnable in a separate thread. Each runnable is run in a separate thread.
  * Example:
  * <pre>{@code
-@Test
 public void exampleTest()  {
     try (AllInterleavings allInterleavings = new AllInterleavings("exampleRunner")) {
         while (allInterleavings.hasNext()) {
