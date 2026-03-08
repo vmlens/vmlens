@@ -34,9 +34,8 @@ public class CycleFoundCallbackImpl implements CycleFoundCallback {
      * we create all combinations, and remove those alternatives which contain a
      * cycle
      * <p>
-     * OrderListElement -> n alternatives of OrderAlternative
+     * OrderListElement to n alternatives of OrderAlternative
      *
-     * @param array
      */
 
     public void found(OrderCycle[] array) {
