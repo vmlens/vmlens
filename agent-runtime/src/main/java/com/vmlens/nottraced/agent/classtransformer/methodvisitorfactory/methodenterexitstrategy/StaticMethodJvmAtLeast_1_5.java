@@ -3,7 +3,7 @@ package com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methode
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 
-public class StaticMethodJvmAtLeast_1_5  extends AbstractMethodEnterExitStrategy  {
+public class StaticMethodJvmAtLeast_1_5  implements CreateCalleeFactoryProvider  {
 
     private static class StaticMethodJvmAtLeast_1_5CalleeFactory implements CalleeFactory{
 
@@ -22,7 +22,7 @@ public class StaticMethodJvmAtLeast_1_5  extends AbstractMethodEnterExitStrategy
     }
 
     @Override
-    protected CalleeFactory createCalleeFactory(MethodVisitor methodVisitor, String className) {
+    public CalleeFactory createCalleeFactory(MethodVisitor methodVisitor, String className) {
         return new StaticMethodJvmAtLeast_1_5CalleeFactory(methodVisitor,className);
     }
 

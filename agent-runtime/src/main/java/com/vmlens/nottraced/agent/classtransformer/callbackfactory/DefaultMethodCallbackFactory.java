@@ -19,4 +19,5 @@ public abstract class DefaultMethodCallbackFactory extends MethodCallbackFactory
     public void methodExitWithObjectReturn(int inMethodId, CalleeFactory calleeFactory) {
         methodExit(inMethodId,calleeFactory);
     }
+
 }

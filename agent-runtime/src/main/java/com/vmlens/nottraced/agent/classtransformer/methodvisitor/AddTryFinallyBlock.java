@@ -4,7 +4,7 @@ import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbac
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactory;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.FactoryContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
-import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryForTransform;
+import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methodenterexitstrategy.CalleeFactory;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -61,6 +61,10 @@ public class AddTryFinallyBlock extends MethodVisitor  {
             } else {
                 super.visitFrame(Opcodes.F_NEW, 0,  null, 1, new Object[]{"java/lang/Throwable"});
             }
+        }
+        CalleeFactory calleeFactory = factoryContext.methodEnterExitStrategy().createCalleeFactory(mv, factoryContext.className());
+        if(calleeFactory != null) {
+            methodCallbackFactory.onFinally(factoryContext.methodId(),calleeFactory);
         }
         super.visitInsn(Opcodes.ATHROW);
 

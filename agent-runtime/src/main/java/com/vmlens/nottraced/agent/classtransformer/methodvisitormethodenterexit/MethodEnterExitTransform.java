@@ -3,6 +3,7 @@ package com.vmlens.nottraced.agent.classtransformer.methodvisitormethodenterexit
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactory;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactory;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.FactoryContext;
+import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methodenterexitstrategy.CalleeFactory;
 import org.objectweb.asm.MethodVisitor;
 
 import static com.vmlens.nottraced.agent.classtransformer.ASMConstants.ASM_API_VERSION;
@@ -25,10 +26,10 @@ public class MethodEnterExitTransform extends MethodVisitor {
     @Override
     public void visitCode() {
         super.visitCode();
-        factoryContext.methodEnterExitStrategy().createMethodEnter(mv,
-                methodCallbackFactory,
-                factoryContext.methodId(),
-                factoryContext.className());
+        CalleeFactory calleeFactory = factoryContext.methodEnterExitStrategy().createCalleeFactory(mv, factoryContext.className());
+        if(calleeFactory != null) {
+            methodCallbackFactory.methodEnter(factoryContext.methodId(),calleeFactory);
+        }
     }
 
     @Override
@@ -52,17 +53,17 @@ public class MethodEnterExitTransform extends MethodVisitor {
     }
 
     private void createMethodExitWithObjectReturnCall()  {
-        factoryContext.methodEnterExitStrategy().createMethodExitWithObjectReturn(mv,
-                methodCallbackFactory,
-                factoryContext.methodId(),
-                factoryContext.className());
+        CalleeFactory calleeFactory = factoryContext.methodEnterExitStrategy().createCalleeFactory(mv, factoryContext.className());
+        if(calleeFactory != null) {
+            methodCallbackFactory.methodExitWithObjectReturn(factoryContext.methodId(),calleeFactory);
+        }
     }
 
     private void createMethodExitCall() {
-        factoryContext.methodEnterExitStrategy().createMethodExit(mv,
-                methodCallbackFactory,
-                factoryContext.methodId(),
-                factoryContext.className());
+        CalleeFactory calleeFactory = factoryContext.methodEnterExitStrategy().createCalleeFactory(mv, factoryContext.className());
+        if(calleeFactory != null) {
+            methodCallbackFactory.methodExit(factoryContext.methodId(),calleeFactory);
+        }
     }
 
 }

@@ -62,6 +62,12 @@ public class PreAnalyzedCallback {
         callbackActionProcessor.process(methodEnterAction);
     }
 
+    public static void onFinally(Object object, int methodId) {
+        MethodExitAction methodEnterAction = methodExitAction(object,
+                methodId,methodStrategyAdapter);
+        callbackActionProcessor.process(methodEnterAction);
+    }
+
     public static void methodExitObjectReturn(Object returnValue, Object object, int methodId) {
         MethodExitAction methodEnterAction = methodExitActionWithReturnValue(object,
                 methodId,returnValue,methodStrategyAdapter,fieldUpdaterRepository);

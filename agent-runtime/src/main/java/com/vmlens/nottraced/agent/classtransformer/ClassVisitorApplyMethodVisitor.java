@@ -149,7 +149,7 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
         return major >= version;
     }
 
-    private MethodEnterExitStrategy createMethodEnterExitStrategy(boolean isStatic) {
+    private CreateCalleeFactoryProvider createMethodEnterExitStrategy(boolean isStatic) {
         // Fixme TraceConstructor check for constructor and return strategy for constructor
 
         if(! isStatic) {
