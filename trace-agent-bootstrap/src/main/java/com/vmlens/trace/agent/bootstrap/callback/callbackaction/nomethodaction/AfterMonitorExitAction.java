@@ -3,7 +3,9 @@ package com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.strategy.MonitorContext;
 
-import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.monitorExit;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.afterMonitorExit;
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.beforeMonitorExit;
+
 
 public class AfterMonitorExitAction extends NoMethodAction {
 
@@ -20,7 +22,8 @@ public class AfterMonitorExitAction extends NoMethodAction {
     @Override
     public void execute(InTestActionProcessor inTestActionProcessor) {
         MonitorContext methodContext = new MonitorContext(monitor,inMethod,inTestActionProcessor);
-        monitorExit(methodContext,position);
+        beforeMonitorExit(methodContext,position);
+        afterMonitorExit(methodContext);
     }
 
 }

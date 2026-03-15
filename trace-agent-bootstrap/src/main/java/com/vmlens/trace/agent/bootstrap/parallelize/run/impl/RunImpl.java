@@ -214,8 +214,6 @@ public class RunImpl implements Run {
         if(runStateMachine.activeThreadWasBlocked(new SendEvent(eventQueue,this))) {
             waitNotifyStrategy.wakeUpAllThreads(threadActiveCondition);
         }
-      //  runStateMachine.activeThreadWasBlocked(new SendEvent(eventQueue,this));
-      //  waitNotifyStrategy.wakeUpAllThreads(threadActiveCondition);
     }
 
     public boolean isEnded() {

@@ -14,6 +14,12 @@ public class MonitorCallback {
         callbackActionProcessor.process(afterMonitorEnterAction);
     }
 
+    /**
+     * ToDo: add beforeMonitorExit. And create the event for the data race detection inside the before call
+     * Hard to find a test to check that this actually leads to problems, is necessary
+     *
+     */
+
     public static void afterMonitorExit(Object monitor, int inMethod, int position) {
         AfterMonitorExitAction afterMonitorExitAction = new AfterMonitorExitAction(monitor,inMethod,position);
         callbackActionProcessor.process(afterMonitorExitAction);

@@ -37,11 +37,11 @@ public class ClassTransformer {
         if(factoryCollection.computeFrames()) {
             classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
         } else {
-            classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS  );
         }
 
         ClassVisitor classVisitorTransform = createTransform(classWriter, normalizedName,isInRetransform);
-        readerForTransform.accept(classVisitorTransform, 0);
+        readerForTransform.accept(classVisitorTransform, ClassReader.EXPAND_FRAMES);
         return classWriter.toByteArray();
     }
 

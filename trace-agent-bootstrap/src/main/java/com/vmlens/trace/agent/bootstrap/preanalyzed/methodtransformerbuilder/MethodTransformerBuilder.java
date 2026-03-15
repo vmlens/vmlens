@@ -12,5 +12,6 @@ public interface MethodTransformerBuilder {
     void setWithObjectParamAtReturn();
     void setWithObjectStringParamAtReturn();
     void setWithObjectPlaceHolderStringParamAtReturn();
+    void setWithoutParamForInitialize();
 
 }

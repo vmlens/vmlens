@@ -35,8 +35,11 @@ public abstract class MethodCallbackFactory {
         methodCall(calledMethodId, AFTER_METHOD_CALL, METHOD_DESCRIPTOR_INT_INT_INT_ARGUMENT);
     }
 
+    //public abstract void onFinally(int inMethodId, CalleeFactory calleeFactory);
+
     public abstract void methodExit(int inMethodId, CalleeFactory calleeFactory);
     public abstract void methodExitWithObjectReturn(int inMethodId, CalleeFactory calleeFactory);
+
     public abstract void methodEnter(int inMethodId, CalleeFactory calleeFactory);
 
     public abstract void methodCall(int calledMethodId,

@@ -2,7 +2,10 @@ package com.vmlens.trace.agent.bootstrap.callback;
 
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
-import com.vmlens.trace.agent.bootstrap.callback.callbackaction.InitializationAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.initializationaction.InitializationAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.initializationaction.InitializeBasedOnStrategy;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.initializationaction.InitializeFieldUpdaterRepository;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.initializationaction.StrategyInitializeContext;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodEnterAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.methodaction.MethodExitAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.AfterMethodCallAction;
@@ -10,6 +13,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.B
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldUpdaterRepository;
 import com.vmlens.trace.agent.bootstrap.fieldrepository.FieldUpdaterRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
+import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositoryForCallback;
 import com.vmlens.trace.agent.bootstrap.methodrepository.MethodRepositorySingleton;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapter;
 import com.vmlens.trace.agent.bootstrap.strategy.MethodStrategyAdapterPreAnalyzed;
@@ -23,8 +27,9 @@ public class PreAnalyzedCallback {
 
     private static volatile CallbackActionProcessor callbackActionProcessor = new CallbackActionProcessorImpl();
     private static final ReadWriteLockMap readWriteLockMap = ReadWriteLockMap.INSTANCE;
+    private static final MethodRepositoryForCallback methodRepositoryForCallback = MethodRepositorySingleton.INSTANCE;
     private static final MethodStrategyAdapter methodStrategyAdapter = new MethodStrategyAdapterPreAnalyzed(readWriteLockMap,
-            MethodRepositorySingleton.INSTANCE);
+            methodRepositoryForCallback);
     private static final FieldUpdaterRepository fieldUpdaterRepository =  FieldUpdaterRepositorySingleton.INSTANCE;
 
     public static void beforeMethodCall(int inMethodId, int position, int calledMethodId) {
@@ -72,10 +77,14 @@ public class PreAnalyzedCallback {
                                                            Object param,
                                                            Object stringParam,
                                                            int methodId) {
-        InitializationAction initializationAction = new InitializationAction(returnValue,param ,(String) stringParam,fieldUpdaterRepository);
+        InitializationAction initializationAction = new InitializeFieldUpdaterRepository(returnValue,param ,(String) stringParam,fieldUpdaterRepository);
         callbackActionProcessor.initialize(initializationAction);
+    }
 
-
+    public static void methodExitInitialize(Object returnValue, Object object, int methodId) {
+        StrategyInitializeContext strategyInitializeContext = new StrategyInitializeContext(returnValue,object,readWriteLockMap);
+        InitializationAction initializationAction = new InitializeBasedOnStrategy(strategyInitializeContext,methodRepositoryForCallback,methodId);
+        callbackActionProcessor.initialize(initializationAction);
     }
 
 

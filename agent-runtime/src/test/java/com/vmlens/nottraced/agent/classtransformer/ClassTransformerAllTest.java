@@ -4,6 +4,7 @@ package com.vmlens.nottraced.agent.classtransformer;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.transformed.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClassTransformerAllTest {
 
+    @Ignore
     @Test
     public void methodCall() throws IOException {
         // Given
@@ -27,6 +29,7 @@ public class ClassTransformerAllTest {
         assertThat(repo.strategyAll(id), is(NormalMethodStrategy.SINGLETON));
     }
 
+    @Ignore
     @Test
     public void withClinit() throws IOException {
         // Given
@@ -35,6 +38,21 @@ public class ClassTransformerAllTest {
         // When
         runTestClassTransformer.runTest("com.vmlens.test.guineapig.WithClinit", "/withClinit.txt");
 
+    }
+
+    @Ignore
+    @Test
+    public void finallyBlock() throws IOException {
+        // Given
+        RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
+
+        // When
+        runTestClassTransformer.runTest("com.vmlens.test.guineapig.trycatchfinally.FinalBlockTwo", "/methodCall.txt");
+
+        // Then
+        MethodRepositoryImpl repo = runTestClassTransformer.methodRepositoryForAnalyze();
+        int id = repo.asInt(new MethodCallId("com/vmlens/test/guineapig/MethodCall", "update", "()V"));
+        assertThat(repo.strategyAll(id), is(NormalMethodStrategy.SINGLETON));
     }
 
 

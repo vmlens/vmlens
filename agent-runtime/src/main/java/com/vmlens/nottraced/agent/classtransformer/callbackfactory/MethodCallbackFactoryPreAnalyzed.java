@@ -15,18 +15,23 @@ public class MethodCallbackFactoryPreAnalyzed extends MethodCallbackFactory {
 
     private final MethodEnterStrategy methodEnterStrategy;
     private final MethodExitStrategy methodExitStrategy;
+    private final boolean traceMethodEnter;
 
     public MethodCallbackFactoryPreAnalyzed(MethodEnterStrategy methodEnterStrategy,
                                             MethodExitStrategy methodExitStrategy,
-                                            MethodVisitor methodVisitor) {
+                                            MethodVisitor methodVisitor,
+                                            boolean traceMethodEnter) {
         super(methodVisitor);
         this.methodEnterStrategy = methodEnterStrategy;
         this.methodExitStrategy = methodExitStrategy;
+        this.traceMethodEnter = traceMethodEnter;
     }
 
     public void methodEnter(int inMethodId, CalleeFactory calleeFactory) {
-        calleeFactory.createCallee();
-        methodEnterStrategy.methodEnter(this,inMethodId);
+        if(traceMethodEnter) {
+            calleeFactory.createCallee();
+            methodEnterStrategy.methodEnter(this,inMethodId);
+        }
     }
 
     @Override

@@ -39,7 +39,6 @@ public class MethodEnterExitTransform extends MethodVisitor {
             case FRETURN:
             case LRETURN:
             case DRETURN:
-            case ATHROW:
                 createMethodExitCall();
                 break;
             case ARETURN:

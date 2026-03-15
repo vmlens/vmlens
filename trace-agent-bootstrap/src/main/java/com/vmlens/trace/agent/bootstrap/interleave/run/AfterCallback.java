@@ -17,12 +17,12 @@ public class AfterCallback {
     }
 
     public void onNonVolatileLoop() {
-        sendEvent.sendMessage(LoopWarningEvent.nonVolatileLoop());
+    //    sendEvent.sendMessage(LoopWarningEvent.nonVolatileLoop());
     }
 
     public void onSynchronizedActionLoop() {
         interleaveRun.setHasLoop();
-        sendEvent.sendMessage(LoopWarningEvent.syncActionLoop());
+       // sendEvent.sendMessage(LoopWarningEvent.syncActionLoop());
     }
 
     public void process(ProcessEventContext context, PluginEventOnly pluginEventOnly) {

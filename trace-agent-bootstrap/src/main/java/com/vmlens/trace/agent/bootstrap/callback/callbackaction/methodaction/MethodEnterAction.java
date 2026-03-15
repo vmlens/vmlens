@@ -63,4 +63,9 @@ public class MethodEnterAction implements CallbackAction {
     public RuntimeEvent isLastMethodInThread(ThreadLocalWhenInTest dataWhenInTest, int stackTraceDepth) {
         return null;
     }
+
+    // Visible for test
+    public int methodId() {
+        return methodId;
+    }
 }

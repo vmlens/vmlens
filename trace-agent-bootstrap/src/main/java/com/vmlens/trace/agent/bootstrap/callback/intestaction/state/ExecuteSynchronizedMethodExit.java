@@ -1,19 +1,22 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.state;
 
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunBeforeLockExitOrWait;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodExitEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorExitEvent;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
+import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.createAfterMonitorExit;
+
 public class ExecuteSynchronizedMethodExit implements ExecuteAfterOperation {
 
-    private final RunAfter<MonitorExitEvent> monitorExit;
+    private final RunBeforeLockExitOrWait<MonitorExitEvent> monitorExit;
     private final RunAfter<MethodExitEvent> methodExit;
 
-    public ExecuteSynchronizedMethodExit(RunAfter<MonitorExitEvent> monitorExit,
-            RunAfter<MethodExitEvent> methodExit
+    public ExecuteSynchronizedMethodExit(RunBeforeLockExitOrWait<MonitorExitEvent> monitorExit,
+                                         RunAfter<MethodExitEvent> methodExit
                                         ) {
         this.methodExit = methodExit;
         this.monitorExit = monitorExit;
@@ -26,5 +29,7 @@ public class ExecuteSynchronizedMethodExit implements ExecuteAfterOperation {
                         ReadWriteLockMap readWriteLockMap) {
         monitorExit.execute(threadLocalDataWhenInTest,queueIn);
         methodExit.execute(threadLocalDataWhenInTest,queueIn);
+        createAfterMonitorExit().execute(threadLocalDataWhenInTest,queueIn);
+
     }
 }

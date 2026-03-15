@@ -31,7 +31,7 @@ public class FactoryCollectionPreAnalyzedMethodEnterExitOnly implements FactoryC
                 preAnalyzedStrategyFactory.create(context.className(),context.nameAndDescriptor()));
         TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
         addEnterExitTransform(new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam(),
-                new DefaultMethodExitStrategy()),result);
+                new DefaultMethodExitStrategy(),true),result);
         return result;
     }
 

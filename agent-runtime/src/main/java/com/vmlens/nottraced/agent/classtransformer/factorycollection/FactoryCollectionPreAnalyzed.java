@@ -41,7 +41,7 @@ public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOr
             strategy.addToBuilder(builder);
             addEnterExitTransform(builder.build(),result);
             // Fixme MethodCallbackFactoryFactoryPreAnalyzed auftrennen
-            result.add(wrap(AddMethodCall.factory(methodCallIdMap, new MethodCallbackFactoryFactoryPreAnalyzed(null, null))));
+            result.add(wrap(AddMethodCall.factory(methodCallIdMap, new MethodCallbackFactoryFactoryPreAnalyzed(null, null,true))));
             return result;
         }
         switch (methodNotFoundAction) {

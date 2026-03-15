@@ -1,6 +1,7 @@
-package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed;
+package com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.initialize;
 
 import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
 
 
 /*

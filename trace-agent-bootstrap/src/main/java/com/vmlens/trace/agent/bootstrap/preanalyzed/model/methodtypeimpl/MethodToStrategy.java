@@ -4,6 +4,8 @@ import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeCountDownLa
 import com.vmlens.trace.agent.bootstrap.barrierkeytype.BarrierKeyTypeFuture;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodTypeContext;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.*;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.initialize.NewAtomicIntegerFieldUpdaterStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.initialize.NewAtomicReferenceFieldUpdaterStrategy;
 
 public class MethodToStrategy extends AbstractMethodType  {
 
