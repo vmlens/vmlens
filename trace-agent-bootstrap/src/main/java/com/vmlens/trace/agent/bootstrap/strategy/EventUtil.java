@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.strategy;
 
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfter;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfterLockExitWaitOrThreadStart;
@@ -31,8 +32,8 @@ public class EventUtil {
         context.inTestActionProcessor().process(createBeforeMonitorExit(context,position));
     }
 
-    public static void afterMonitorExit(EventContext context) {
-        context.inTestActionProcessor().process(createAfterMonitorExit());
+    public static void afterMonitorExit(InTestActionProcessor inTestActionProcessor) {
+        inTestActionProcessor.process(createAfterMonitorExit());
     }
 
     public static RunBeforeLockExitOrWait<MonitorExitEvent> createBeforeMonitorExit(EventContext context,int position) {

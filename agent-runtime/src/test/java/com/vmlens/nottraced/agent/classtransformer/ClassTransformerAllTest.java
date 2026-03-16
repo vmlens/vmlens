@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClassTransformerAllTest {
 
-    @Ignore
+
     @Test
     public void methodCall() throws IOException {
         // Given
@@ -29,7 +29,6 @@ public class ClassTransformerAllTest {
         assertThat(repo.strategyAll(id), is(NormalMethodStrategy.SINGLETON));
     }
 
-    @Ignore
     @Test
     public void withClinit() throws IOException {
         // Given
@@ -40,19 +39,15 @@ public class ClassTransformerAllTest {
 
     }
 
-    @Ignore
+
     @Test
     public void finallyBlock() throws IOException {
         // Given
         RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
 
         // When
-        runTestClassTransformer.runTest("com.vmlens.test.guineapig.trycatchfinally.FinalBlockTwo", "/methodCall.txt");
+        runTestClassTransformer.runTest("com.vmlens.test.guineapig.trycatchfinally.FinalBlockTwo", "/finallyBlock.txt");
 
-        // Then
-        MethodRepositoryImpl repo = runTestClassTransformer.methodRepositoryForAnalyze();
-        int id = repo.asInt(new MethodCallId("com/vmlens/test/guineapig/MethodCall", "update", "()V"));
-        assertThat(repo.strategyAll(id), is(NormalMethodStrategy.SINGLETON));
     }
 
 

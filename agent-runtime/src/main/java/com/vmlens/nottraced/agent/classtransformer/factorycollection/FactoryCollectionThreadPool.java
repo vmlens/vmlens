@@ -1,6 +1,7 @@
 package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.DoNotTraceType;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryDoNotTrace;
 import com.vmlens.nottraced.agent.classtransformer.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
@@ -33,10 +34,14 @@ public class FactoryCollectionThreadPool implements FactoryCollection {
            return TLinkableWrapper.singleton(ThreadPoolJoin.factory());
        }
        TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-       addEnterExitTransform(new MethodCallbackFactoryFactoryDoNotTrace(),result);
+       addEnterExitTransform(new MethodCallbackFactoryFactoryDoNotTrace(DoNotTraceType.EVERYWHERE),result);
        return result;
     }
 
+    /**
+     * High Risk, since it requires that all used classes are already
+     * loaded
+     */
     @Override
     public boolean computeFrames() {
         return true;

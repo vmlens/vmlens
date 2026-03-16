@@ -21,7 +21,7 @@ import com.vmlens.preanalyzed.factory.protectedmethods.PreAnalyzedProtectedMetho
 import com.vmlens.preanalyzed.factory.publicmethods.PreAnalyzedPublicMethodClassesFactory.classesWithPublicMethods
 import com.vmlens.preanalyzed.model.lockoperation.{LockEnter, LockExit, NewCondition}
 import com.vmlens.preanalyzed.model.classmodel.NotYetImplementedClass
-import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}
+import com.vmlens.trace.agent.bootstrap.preanalyzed.model.classtypeimpl.{DoNotTraceInClass, DoNotTraceInTestContainsClassName, DoNotTraceInTestStartsWithClassName}
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl.LockMethod.{ENTER_STAMPED_READ_LOCK, ENTER_STAMPED_WRITE_LOCK, EXIT_STAMPED_LOCK, GET_LOCK_STATE}
 
 import scala.collection.mutable.ArrayBuffer
@@ -51,7 +51,7 @@ class PreAnalyzedFactory {
 
     List[PreAnalyzedOrList](
 
-      DoNotTraceIn("java/lang/ClassLoader"),
+      NameToClassType("java/lang/ClassLoader",DoNotTraceInClass.SINGLETON),
 
       /* To avoid testing concurrent hash map inside varhandle:
 at com.vmlens.trace.agent.bootstrap.callback.MethodCallback.methodEnter(MethodCallback.java:46)
@@ -67,20 +67,20 @@ at java.lang.invoke.MethodTypeForm.findForm(MethodTypeForm.java:219)
 at java.lang.invoke.MethodType.makeImpl(MethodType.java:358)
 at java.lang.invoke.MethodHandleNatives.findMethodHandleType(MethodHandleNatives.java:399)
 */
-      DoNotTraceIn("java/lang/invoke/MethodType"),
+      NameToClassType("java/lang/invoke/MethodType",DoNotTraceInClass.SINGLETON),
 
       /*
        to avoid
        * java.lang.NoClassDefFoundError: Could not initialize class java.lang.StackTraceElement$HashedModules
        */
-      DoNotTraceIn("java/lang/StackTraceElement"),
+      NameToClassType("java/lang/StackTraceElement",DoNotTraceInClass.SINGLETON),
 
-      
-      DoNotTraceIn("com/vmlens/test/guineapig/DoNotTraceIn"),
+
+      NameToClassType("com/vmlens/test/guineapig/DoNotTraceIn",DoNotTraceInClass.SINGLETON),
       
       //ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/access/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
       //ClassModelWithoutMethodDescription("org/mockito/internal/creation/bytebuddy/MockMethodInterceptor", DoNotTraceInTestStartsWithClassName.SINGLETON),
-      ClassModelWithoutMethodDescription("MockitoMock", DoNotTraceInTestContainsClassName.SINGLETON),
+      NameToClassType("org/mockito", DoNotTraceInTestStartsWithClassName.SINGLETON),
 
 
       loadNotYetImplemented(),

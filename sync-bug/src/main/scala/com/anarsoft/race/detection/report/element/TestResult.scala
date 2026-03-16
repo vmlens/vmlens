@@ -14,7 +14,7 @@ class TestResult(var text: String) {
   }
 
   def addLargeWarning(largeWarning: UIWarning): Unit = {
-   //  largeWarningList.add(largeWarning)
+     largeWarningList.add(largeWarning)
   }
   
 }

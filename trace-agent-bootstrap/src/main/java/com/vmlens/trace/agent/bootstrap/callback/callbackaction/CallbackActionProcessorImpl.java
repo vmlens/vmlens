@@ -140,9 +140,6 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
                         }
                     }
 
-
-
-
                     return true;
                 }
             } finally {
@@ -169,6 +166,25 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
         return threadLocalForCallbackAction.canProcessInitalize();
     }
 
+    @Override
+    public void startDoNotTraceInTest() {
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
+        if(canProcess(threadLocal)) {
+            ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
+            if (dataWhenInTest != null) {
+                dataWhenInTest.startDoNotTrace();
+            }
+        }
+    }
 
-
+    @Override
+    public void endDoNotTraceInTest() {
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
+        if(canProcess(threadLocal)) {
+            ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
+            if (dataWhenInTest != null) {
+                dataWhenInTest.stopDoNotTrace();
+            }
+        }
+    }
 }

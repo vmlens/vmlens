@@ -14,4 +14,6 @@ public interface CallbackActionProcessor {
     void startDoNotTrace();
     void endDoNotTrace();
 
+    void startDoNotTraceInTest();
+    void endDoNotTraceInTest();
 }

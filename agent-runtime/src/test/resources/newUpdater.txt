@@ -24,3 +24,7 @@ method:newUpdater(Ljava/lang/Class;Ljava/lang/String;)Ljava/util/concurrent/atom
   load:1
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.methodObjectStringParamObjectReturn:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;I)V
   ARETURN
+  load:Lcom/vmlens/test/guineapig/NewUpdater;
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.onFinally:(Ljava/lang/Object;I)V
+  ATHROW

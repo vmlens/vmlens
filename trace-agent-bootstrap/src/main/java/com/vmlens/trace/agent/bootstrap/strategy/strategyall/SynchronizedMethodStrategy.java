@@ -21,6 +21,10 @@ public class SynchronizedMethodStrategy implements StrategyAll {
 
     @Override
     public void methodExit(MethodContext enterExitContext) {
+
+        beforeMonitorExit(enterExitContext,-1);
+        methodExitEvent(enterExitContext);
+
         ExecuteSynchronizedMethodExit executeSynchronizedMethodExit =
                 new ExecuteSynchronizedMethodExit(createBeforeMonitorExit(enterExitContext,-1),
                         createMethodExit(enterExitContext));

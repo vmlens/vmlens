@@ -11,3 +11,7 @@ method:update()V
   load:1
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
   RETURN
+  ALOAD_0
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.onFinally:(Ljava/lang/Object;I)V
+  ATHROW

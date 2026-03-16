@@ -12,7 +12,6 @@ public class MethodCallbackFactoryPreAnalyzed extends MethodCallbackFactory {
 
     private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback";
 
-
     private final MethodEnterStrategy methodEnterStrategy;
     private final MethodExitStrategy methodExitStrategy;
     private final boolean traceMethodEnter;

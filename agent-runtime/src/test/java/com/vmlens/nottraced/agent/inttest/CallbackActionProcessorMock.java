@@ -68,4 +68,13 @@ public class CallbackActionProcessorMock implements CallbackActionProcessor {
         return count;
     }
 
+    @Override
+    public void startDoNotTraceInTest() {
+
+    }
+
+    @Override
+    public void endDoNotTraceInTest() {
+
+    }
 }

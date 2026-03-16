@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionPr
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.CallbackActionProcessorImpl;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.AfterMonitorEnterAction;
 import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.AfterMonitorExitAction;
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.nomethodaction.BeforeMonitorExitAction;
 
 public class MonitorCallback {
 
@@ -14,15 +15,13 @@ public class MonitorCallback {
         callbackActionProcessor.process(afterMonitorEnterAction);
     }
 
-    /**
-     * ToDo: add beforeMonitorExit. And create the event for the data race detection inside the before call
-     * Hard to find a test to check that this actually leads to problems, is necessary
-     *
-     */
+    public static void beforeMonitorExit(Object monitor, int inMethod, int position) {
+        BeforeMonitorExitAction beforeMonitorExitAction = new BeforeMonitorExitAction(monitor,inMethod,position);
+        callbackActionProcessor.process(beforeMonitorExitAction);
+    }
 
-    public static void afterMonitorExit(Object monitor, int inMethod, int position) {
-        AfterMonitorExitAction afterMonitorExitAction = new AfterMonitorExitAction(monitor,inMethod,position);
-        callbackActionProcessor.process(afterMonitorExitAction);
+    public static void afterMonitorExit() {
+        callbackActionProcessor.process(new AfterMonitorExitAction());
     }
 
     // Visible for Test

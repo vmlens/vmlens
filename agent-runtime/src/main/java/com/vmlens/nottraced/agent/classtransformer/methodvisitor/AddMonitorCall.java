@@ -31,8 +31,9 @@ public class AddMonitorCall extends MethodVisitor {
                 break;
             case MONITOREXIT:
                 super.visitInsn(DUP);
+                monitorCallbackFactory.beforeMonitorExit(position);
                 super.visitInsn(inst);
-                monitorCallbackFactory.afterMonitorExit(position);
+                monitorCallbackFactory.afterMonitorExit();
                 position++;
                 break;
 

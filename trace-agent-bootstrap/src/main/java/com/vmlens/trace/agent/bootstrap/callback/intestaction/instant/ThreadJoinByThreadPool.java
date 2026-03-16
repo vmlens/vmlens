@@ -1,13 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionsInsideMethodStrategy;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.JoinAction;
 
-public class ThreadJoinByThreadPool extends AbstractInTestAction {
+public class ThreadJoinByThreadPool implements InTestAction {
 
     private final FilterActionsInsideMethodStrategy filterActionsInsideMethodStrategy = new WithoutFilterActions();
     private final Object taskOrPool;

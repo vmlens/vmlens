@@ -9,15 +9,11 @@ import scala.collection.mutable
 
 class FilterDominatorTree {
 
-  def filter(tree : Graph[DominatorTreeVertex, DefaultEdge],
-             root : VertexRoot) :
+  def filter(tree : Graph[DominatorTreeVertex, DefaultEdge], root : VertexRoot) :
         SimpleDirectedGraph[DominatorTreeVertex, DefaultEdge] = {
 
     val alreadyAdded = new mutable.HashSet[DominatorTreeVertex]
-
-
-    val filtered =
-      new SimpleDirectedGraph[DominatorTreeVertex, DefaultEdge](classOf[DefaultEdge])
+    val filtered = new SimpleDirectedGraph[DominatorTreeVertex, DefaultEdge](classOf[DefaultEdge])
       alreadyAdded.add(root);
       filtered.addVertex(root)
 

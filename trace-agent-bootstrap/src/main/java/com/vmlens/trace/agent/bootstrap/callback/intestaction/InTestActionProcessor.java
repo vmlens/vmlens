@@ -21,7 +21,7 @@ public class InTestActionProcessor {
     }
 
     public void process(InTestAction inTestAction) {
-        if(inTestAction.checkOrSetDoNotTrace(dataWhenInTest,stacktraceDepthProvider)) {
+        if(dataWhenInTest.processAction()) {
             if(inTestAction.takeAction(dataWhenInTest)) {
                 if(inTestAction instanceof RunAfter) {
                     RunAfter runAfter = (RunAfter) inTestAction;

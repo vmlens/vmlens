@@ -12,3 +12,7 @@ method:set(Ljava/lang/Object;Ljava/lang/Object;)V
   load:1
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.methodExitObjectParam:(Ljava/lang/Object;Ljava/lang/Object;I)V
   RETURN
+  ALOAD_0
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/PreAnalyzedCallback.onFinally:(Ljava/lang/Object;I)V
+  ATHROW

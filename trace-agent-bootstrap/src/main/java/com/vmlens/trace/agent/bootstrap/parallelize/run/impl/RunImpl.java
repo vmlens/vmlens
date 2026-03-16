@@ -7,6 +7,7 @@ import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.ExecuteBeforeEvent;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 import com.vmlens.trace.agent.bootstrap.event.specialevents.ParallelizeActionMultiJoin;
+import com.vmlens.trace.agent.bootstrap.event.warning.InfoMessageEvent;
 import com.vmlens.trace.agent.bootstrap.interleave.run.ActualRun;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.*;
 import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.ThreadLocalForParallelize;
@@ -48,7 +49,8 @@ public class RunImpl implements Run {
         try {
             afterContext.runtimeEvent().setRunId(runId);
             afterContext.runtimeEvent().setLoopId(loopId);
-            boolean change = runStateMachine.after(AfterContextForStateMachine.of(afterContext),SendEvent.create(afterContext,this));
+            SendEvent sendEvent = SendEvent.create(afterContext,this);
+            boolean change = runStateMachine.after(AfterContextForStateMachine.of(afterContext),sendEvent);
             if(change) {
                 waitNotifyStrategy.wakeUpAllThreads(threadActiveCondition);
             }

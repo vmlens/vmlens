@@ -321,6 +321,7 @@
      <module>vmlens-maven-plugin-integtest</module>
      <module>test-cases</module>
      <module>no-tests-vmlens-maven-plugin</module>
+     <module>test-mockito</module>
  </modules>
 
  <profiles>

@@ -1,13 +1,13 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionsInsideMethodStrategy;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.lock.ReadWriteLockMap;
 
-public class OnAfterMethodCall extends AbstractInTestAction {
+public class OnAfterMethodCall implements InTestAction {
 
     private final int inMethodId;
     private final int position;
