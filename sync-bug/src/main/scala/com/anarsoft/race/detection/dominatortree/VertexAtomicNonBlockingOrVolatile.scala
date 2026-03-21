@@ -1,9 +1,10 @@
 package com.anarsoft.race.detection.dominatortree
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
+import com.anarsoft.race.detection.report.dominatortree.ReportCallback
 import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.MemoryAccessKey
-import com.vmlens.report.dominatortree.UIStateElementSortKey
-import  com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
+import com.vmlens.report.dominatortree.{UIDominatorTreeElement, UIStateElementSortKey}
+import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
 
 import scala.collection.mutable
 
@@ -38,5 +39,9 @@ class VertexAtomicNonBlockingOrVolatile(val memoryAccessKey: DominatorMemoryAcce
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 
-  override def isDominatorTreeLeaf: Boolean = true
+  override def isMethodCall : Boolean = false;
+
+  override def addToReport(parent: Option[UIDominatorTreeElement], level: Int, reportCallback: ReportCallback): UIDominatorTreeElement = 
+    reportCallback.withReverseCallTree(this,parent,level)
+  
 }

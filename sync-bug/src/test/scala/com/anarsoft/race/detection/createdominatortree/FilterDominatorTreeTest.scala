@@ -1,16 +1,35 @@
 package com.anarsoft.race.detection.createdominatortree
 
-import com.anarsoft.race.detection.testfixture.dominatortree.DominatorTreeObjectMother
+import com.anarsoft.race.detection.dominatortree.DominatorTreeVertex
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class FilterDominatorTreeTest extends AnyFlatSpec with Matchers {
 
-  "FilterDominatorTree" should "filter branchs lading to non leaf nodes" in {
-    val filtered = new FilterDominatorTree().filter(DominatorTreeObjectMother.dominatorTreeOneLock(),
-      DominatorTreeObjectMother.ROOT);
+  "filter " should "filter branch with only method calls but not with sync block" in {
+    // Expected
+    val expectedContext = CreateGraphStackContext();
+    val expectedBuilder = TreeTestBuilder(expectedContext, 1);
 
-    CompareGraph.shouldBe(filtered, DominatorTreeObjectMother.filteredDominatorTreeOneLock())
+    expectedBuilder.method(1, () => {
+      expectedBuilder.syncBlock(3, () => {})
+    });
+    
+    // Given
+    val context = CreateGraphStackContext();
+    val builder = TreeTestBuilder(context,1);
 
+    builder.method(1, () => {
+      builder.syncBlock(3, () => {} )
+      builder.method(5, () => {})
+    }  );
+    val filter = new FilterDominatorTree(context.root,context.graph);
+
+    // When
+     val filteredGraph = filter.filter();
+
+    // Then
+    CompareGraph.shouldBe(filteredGraph,expectedContext.graph);
   }
+  
 }

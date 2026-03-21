@@ -4,64 +4,46 @@ import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexRoo
 import com.anarsoft.race.detection.util.Stack
 import org.jgrapht.{Graph, Graphs}
 import org.jgrapht.graph.{DefaultEdge, SimpleDirectedGraph}
+import org.jgrapht.traverse.DepthFirstIterator
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 
-class FilterDominatorTree {
+class FilterDominatorTree(root : VertexRoot,tree : Graph[DominatorTreeVertex, DefaultEdge]) {
 
-  def filter(tree : Graph[DominatorTreeVertex, DefaultEdge], root : VertexRoot) :
+  val alreadyAdded = new mutable.HashSet[DominatorTreeVertex]
+  val filtered = new SimpleDirectedGraph[DominatorTreeVertex, DefaultEdge](classOf[DefaultEdge])
+  alreadyAdded.add(root);
+  filtered.addVertex(root)
+
+  def filter() :
         SimpleDirectedGraph[DominatorTreeVertex, DefaultEdge] = {
 
-    val alreadyAdded = new mutable.HashSet[DominatorTreeVertex]
-    val filtered = new SimpleDirectedGraph[DominatorTreeVertex, DefaultEdge](classOf[DefaultEdge])
-      alreadyAdded.add(root);
-      filtered.addVertex(root)
-
-    val stack = new Stack[DominatorTreeVertex]
-    stack.push(root)
-
-    while (!stack.isEmpty) {
-      val vertex = stack.pop()
-
-      val children = Graphs.successorListOf(tree, vertex)
-      if(children.isEmpty) {
-        if(vertex.isDominatorTreeLeaf) {
-          var current: Option[DominatorTreeVertex] = Some(vertex);
-          if (!alreadyAdded.contains(vertex)) {
-            alreadyAdded.add(vertex)
-            filtered.addVertex(vertex)
-          }
-
-          while (!current.isEmpty) {
-            val set = tree.incomingEdgesOf(current.get)
-            if (set.size() > 1) {
-              throw new RuntimeException("not a tree");
-            }
-            if (!set.isEmpty) {
-              val parent = tree.getEdgeSource(set.iterator().next());
-              if (!alreadyAdded.contains(parent)) {
-                alreadyAdded.add(parent)
-                filtered.addVertex(parent)
-              }
-
-              filtered.addEdge(parent, current.get)
-              current = Some(parent)
-
-            } else {
-              current = None;
-            }
-          }
-        }
-      } else {
-        val it = children.iterator()
-        while (it.hasNext) {
-          val child = it.next()
-          stack.push(child)
-        }
-      }
-    }
+    val iter = new DepthFirstIterator[DominatorTreeVertex, DefaultEdge](tree, root)
+     while(iter.hasNext) {
+       val current = iter.next();
+       if(!current.isMethodCall) {
+         addToFiltered(current);
+       }
+     }
     filtered;
   }
 
-
+  def addToFiltered(node : DominatorTreeVertex): Unit = {
+    val path = new ArrayBuffer[DominatorTreeVertex]
+    var current = node;
+    while(current != root) {
+      path.append(current)
+      current =  Graphs.predecessorListOf(tree,current).get(0);
+    }
+    path.append(current)
+    
+    var parent : Option[DominatorTreeVertex] = None;
+    for(element <- path.reverse) {
+      filtered.addVertex(element)
+      parent.foreach( (p) => { filtered.addEdge(p,element)  }  )
+      parent = Some(element)
+    }
+  }
+  
 }

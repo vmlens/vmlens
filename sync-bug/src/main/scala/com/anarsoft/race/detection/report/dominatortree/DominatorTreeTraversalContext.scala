@@ -1,7 +1,8 @@
-package com.anarsoft.race.detection.report.run
+package com.anarsoft.race.detection.report.dominatortree
 
 import com.anarsoft.race.detection.dominatortree.DominatorTree
 import com.anarsoft.race.detection.report.description.DescriptionContext
+import com.anarsoft.race.detection.report.dominatortree.LevelToCSS
 import com.vmlens.report.createreport.CreateHtmlReport
 import com.vmlens.report.dominatortree.UIDominatorTreeElement
 import org.jgrapht.Graph

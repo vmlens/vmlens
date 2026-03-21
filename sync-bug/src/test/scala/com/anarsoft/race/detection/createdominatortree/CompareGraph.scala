@@ -9,7 +9,7 @@ import scala.collection.mutable
 object CompareGraph {
 
   def shouldBe( actual : Graph[DominatorTreeVertex, DefaultEdge],
-                expected : DefaultDirectedGraph[DominatorTreeVertex, DefaultEdge]): Unit = {
+                expected : Graph[DominatorTreeVertex, DefaultEdge]): Unit = {
 
     if( ! actual.vertexSet().equals(expected.vertexSet())) {
 
@@ -36,13 +36,8 @@ object CompareGraph {
         }
         
       }
-
       
-
-
     }
 
   }
-
-
 }

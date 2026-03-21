@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.dominatortree
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
-import com.anarsoft.race.detection.report.run.DominatorTreeTraversalContext
+import com.anarsoft.race.detection.report.dominatortree.{DominatorTreeTraversalContext, ReportCallback}
 import com.vmlens.report.dominatortree.UIDominatorTreeElement
 
 import java.util
@@ -22,11 +22,15 @@ trait DominatorTreeVertex {
   
   def addToReport(parent: Option[UIDominatorTreeElement] , 
                   level : Int,
-                  context : DominatorTreeTraversalContext): UIDominatorTreeElement
+                  reportCallback : ReportCallback): UIDominatorTreeElement
   def addToNeedsDescription(needsDescriptionCallback : NeedsDescriptionCallback) : Unit;
   
   def getLabel(descriptionContext: DescriptionContext): String
   
-  def isDominatorTreeLeaf : Boolean;
+  def isMethodCall : Boolean;
+  
+  // Used inside Dominator Tree calculation
+  var semi = 0;
+  
 
 }

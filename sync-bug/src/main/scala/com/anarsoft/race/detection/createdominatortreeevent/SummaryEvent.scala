@@ -21,9 +21,7 @@ class SummaryEvent[MEMORY_ACCESS_KEY] (val threadIndex: Int,
   val operationSet = new mutable.HashSet[Int];
 
   override def add(context : CreateDominatorTreeContext): Unit = {
-    context.stack.addAllElementsOfStackToGraph(context.graph, context.alreadyAdded);
-
-    context.stack.addLeaf(memoryAccessKey , operationSet.toSet ,sortKey ,context.memoryKeyToVertex , context.graph);
+    context.stack.addLeaf(memoryAccessKey , operationSet.toSet ,sortKey ,context.memoryKeyToVertex );
   }
 }
 

@@ -1,8 +1,7 @@
-package com.anarsoft.race.detection.report.run
+package com.anarsoft.race.detection.report.dominatortree
 
 import com.anarsoft.race.detection.dominatortree.LeafNode
-
-
+import com.anarsoft.race.detection.report.dominatortree.CallTreeTraversal
 
 
 class CreateReverseCallTreeReport {

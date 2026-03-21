@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.report.run
+package com.anarsoft.race.detection.report.dominatortree
 
 import com.anarsoft.race.detection.dominatortree.DominatorTreeVertex
 import com.anarsoft.race.detection.report.ReportLoopData
@@ -15,10 +15,7 @@ import java.util
 /**
  * we iterate over the the graph using a depth first algorithm tracking the level
  * We create a list containing inner nodes and leafs if any
- * 
- * 
- * 
- * 
+ *
  */
 class CreateDominatorTreeReport {
 
@@ -39,8 +36,12 @@ class CreateDominatorTreeReport {
           new LevelToCSS(),
           runData.dominatorTreePrefix ,  descriptionContext.loopName(runData.loopId) ,runData.dominatorTreeLink );
         
+        println(context.dominatorTree.graph);
+        println(context.dominatorTree.callGraph);
         
-        new DominatorTreeTraversal().traverse(context);
+        new DominatorTreeTraversal().traverse(new ReportCallbackImpl(context) ,
+          context.dominatorTree.graph,
+          context.dominatorTree.root );
         
         createHtmlReport.createDominatorTreeReport(context.result, 
           descriptionContext.loopName(runData.loopId) , 

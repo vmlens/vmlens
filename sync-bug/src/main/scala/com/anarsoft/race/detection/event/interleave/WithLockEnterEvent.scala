@@ -18,6 +18,6 @@ trait WithLockEnterEvent extends WithLockEventGeneric[WithLockEnterEvent] {
     lockContainer.exit.foreach(lockTypeClass(),f);
 
   override def add(context: CreateDominatorTreeContext): Unit = {
-    context.stack.lockEnter( lockTypeClass().reportLockType() , context.objectHashCodeToInt.get(objectHashCode));
+    context.stack.lockEnter(lockTypeClass().reportLockType() , context.objectHashCodeToInt.get(objectHashCode));
   }
 }

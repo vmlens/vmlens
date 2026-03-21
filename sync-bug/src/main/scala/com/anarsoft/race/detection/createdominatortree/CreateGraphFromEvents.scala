@@ -45,7 +45,7 @@ class CreateGraphFromEvents(val root: VertexRoot) {
     for (event <- eventList) {
       stack match {
         case None => {
-          val x = new CreateGraphStack(root, event.threadIndex);
+          val x = new CreateGraphStack(root, event.threadIndex, graph, alreadyAdded);
           addEvent(x, event);
           stack = Some(x)
         }
@@ -53,7 +53,7 @@ class CreateGraphFromEvents(val root: VertexRoot) {
           if (y.threadIndex == event.threadIndex) {
             addEvent(y, event);
           } else {
-            val x = new CreateGraphStack(root, event.threadIndex);
+            val x = new CreateGraphStack(root, event.threadIndex, graph, alreadyAdded);
             addEvent(x, event);
             stack = Some(x)
           }

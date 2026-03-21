@@ -19,9 +19,7 @@ trait WithLockExitEvent extends WithLockEventGeneric[WithLockExitEvent] {
 
   override def add(context: CreateDominatorTreeContext): Unit = {
     context.stack.lockExit(lockTypeClass().reportLockType(),
-      context.objectHashCodeToInt.get(objectHashCode),
-      context.graph,
-      context.alreadyAdded);
+      context.objectHashCodeToInt.get(objectHashCode));
   }
 
 }

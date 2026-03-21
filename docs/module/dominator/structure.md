@@ -39,3 +39,9 @@ monitor or atomiclock enter/exit
 Lock
 Volatile or atomic non blocking
 root
+
+# Test
+
+call(Name, next) 
+ -> next.call()
+

@@ -1,6 +1,8 @@
 package com.anarsoft.race.detection.dominatortree
 
 import com.anarsoft.race.detection.report.description.{DescriptionContext, NeedsDescriptionCallback}
+import com.anarsoft.race.detection.report.dominatortree.ReportCallback
+import com.vmlens.report.dominatortree.UIDominatorTreeElement
 
 class VertexRoot extends InternalNode {
 
@@ -22,5 +24,8 @@ class VertexRoot extends InternalNode {
    74
   }
 
-  override def isDominatorTreeLeaf: Boolean = false
+  override def isMethodCall  : Boolean = false
+
+  override def addToReport(parent: Option[UIDominatorTreeElement], level: Int, reportCallback: ReportCallback): UIDominatorTreeElement =
+    reportCallback.withOutReverseCallTree(this, parent, level)
 }

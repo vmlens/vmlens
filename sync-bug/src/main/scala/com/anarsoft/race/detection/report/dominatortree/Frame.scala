@@ -1,4 +1,4 @@
-package com.anarsoft.race.detection.report.run
+package com.anarsoft.race.detection.report.dominatortree
 
 import com.anarsoft.race.detection.dominatortree.DominatorTreeVertex
 import com.vmlens.report.dominatortree.UIDominatorTreeElement

@@ -1,15 +1,14 @@
-package com.anarsoft.race.detection.report.run
+package com.anarsoft.race.detection.report.dominatortree
 
 import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, LeafNode, VertexRoot}
 import com.anarsoft.race.detection.report.description.DescriptionContext
-import org.jgrapht.Graph
-
-import scala.collection.mutable
-import org.jgrapht.graph.DefaultEdge
 import com.anarsoft.race.detection.util.Stack
 import com.vmlens.report.dominatortree.UIReverseCallTree
+import org.jgrapht.Graph
+import org.jgrapht.graph.DefaultEdge
 
 import java.util
+import scala.collection.mutable
 
 
 class CallTreeTraversal(val graph: Graph[DominatorTreeVertex,DefaultEdge],
