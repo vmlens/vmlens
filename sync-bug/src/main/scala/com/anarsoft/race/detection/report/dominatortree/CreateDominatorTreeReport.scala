@@ -36,9 +36,6 @@ class CreateDominatorTreeReport {
           new LevelToCSS(),
           runData.dominatorTreePrefix ,  descriptionContext.loopName(runData.loopId) ,runData.dominatorTreeLink );
         
-        println(context.dominatorTree.graph);
-        println(context.dominatorTree.callGraph);
-        
         new DominatorTreeTraversal().traverse(new ReportCallbackImpl(context) ,
           context.dominatorTree.graph,
           context.dominatorTree.root );

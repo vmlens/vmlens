@@ -14,13 +14,13 @@ class FilterDominatorTreeAddToFilteredTest extends AnyFlatSpec with Matchers {
     builder.method(1, () => {
        vertex = builder.syncBlock(3, () => {} )
     }  );
-    val filter = new FilterDominatorTree(context.root,context.graph);
+    val filter = new FilterDominatorTree(context.normalizeVertex.root,context.normalizeVertex.graph);
 
     // When
     filter.addToFiltered(vertex);
     
     // Then
-    CompareGraph.shouldBe(filter.filtered,context.graph);
+    CompareGraph.shouldBe(filter.filtered,context.normalizeVertex.graph);
   }
 
   "addToFiltered " should "add all elements to the filtered graph with two branches" in {
@@ -33,14 +33,14 @@ class FilterDominatorTreeAddToFilteredTest extends AnyFlatSpec with Matchers {
       firstVertex = builder.syncBlock(3, () => {})
       secondVertex = builder.syncBlock(7, () => {})
     });
-    val filter = new FilterDominatorTree(context.root, context.graph);
+    val filter = new FilterDominatorTree(context.normalizeVertex.root, context.normalizeVertex.graph);
 
     // When
     filter.addToFiltered(firstVertex);
     filter.addToFiltered(secondVertex);
     
     // Then
-    CompareGraph.shouldBe(filter.filtered, context.graph);
+    CompareGraph.shouldBe(filter.filtered, context.normalizeVertex.graph);
   }
 
 }

@@ -1,7 +1,7 @@
 package com.anarsoft.race.detection.createdominatortree
 
 import com.anarsoft.race.detection.createdominatortreeevent.{BuildDominatorTreeContext, CreateDominatorTreeContext, CreateDominatorTreeEvent, CreateDominatorTreeEventOrdering, ObjectHashCodeToInt}
-import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexAtomicNonBlockingOrVolatile, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexState, VertexRoot, NormalizeVertex}
 import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
 import com.anarsoft.race.detection.rundata.RunData
 import org.jgrapht.Graph
@@ -11,11 +11,11 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 
-class CreateGraphFromEvents(val root: VertexRoot) {
+class CreateGraphFromEvents(val normalizeVertex: NormalizeVertex) {
 
   val alreadyAdded = new mutable.HashSet[DominatorTreeVertex]()
-  val graph = new DefaultDirectedGraph[DominatorTreeVertex, DefaultEdge](classOf[DefaultEdge]);
-  val memoryKeyToVertex =  new mutable.HashMap[DominatorMemoryAccessKey,VertexAtomicNonBlockingOrVolatile]()
+ 
+  val memoryKeyToVertex =  new mutable.HashMap[DominatorMemoryAccessKey,VertexState]()
   val objectHashCodeToInt = new ObjectHashCodeToInt();
 
   /**
@@ -38,14 +38,13 @@ class CreateGraphFromEvents(val root: VertexRoot) {
     }
 
     eventList.sortInPlace()(new CreateDominatorTreeEventOrdering());
-    graph.addVertex(root)
 
     var stack: Option[CreateGraphStack] = None;
 
     for (event <- eventList) {
       stack match {
         case None => {
-          val x = new CreateGraphStack(root, event.threadIndex, graph, alreadyAdded);
+          val x = new CreateGraphStack(normalizeVertex, event.threadIndex);
           addEvent(x, event);
           stack = Some(x)
         }
@@ -53,18 +52,18 @@ class CreateGraphFromEvents(val root: VertexRoot) {
           if (y.threadIndex == event.threadIndex) {
             addEvent(y, event);
           } else {
-            val x = new CreateGraphStack(root, event.threadIndex, graph, alreadyAdded);
+            val x = new CreateGraphStack(normalizeVertex, event.threadIndex);
             addEvent(x, event);
             stack = Some(x)
           }
         }
       }
     }
-    graph;
+    normalizeVertex.graph;
   }
 
   private def addEvent(stack: CreateGraphStack, event: CreateDominatorTreeEvent): Unit = {
-    val context = new CreateDominatorTreeContext(stack, alreadyAdded, memoryKeyToVertex, graph, objectHashCodeToInt);
+    val context = new CreateDominatorTreeContext(stack, memoryKeyToVertex, objectHashCodeToInt);
     event.add(context)
   }
 

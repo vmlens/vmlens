@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.report.dominatortree
 
-import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, LeafNode, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexRoot, VertexState}
 import com.anarsoft.race.detection.report.description.DescriptionContext
 import com.anarsoft.race.detection.util.Stack
 import com.vmlens.report.dominatortree.UIReverseCallTree
@@ -18,7 +18,7 @@ class CallTreeTraversal(val graph: Graph[DominatorTreeVertex,DefaultEdge],
   val result = new util.LinkedList[UIReverseCallTree]
   val levelToCSS = new LevelToCSS()
   
-   def traverse(start : LeafNode ): Unit = {
+   def traverse(start : VertexState ): Unit = {
      val stack = Stack[CallTreeTraversalFrame]
      stack.push(new CallTreeTraversalFrame(start,0))
      val visited = mutable.HashSet[DominatorTreeVertex]()

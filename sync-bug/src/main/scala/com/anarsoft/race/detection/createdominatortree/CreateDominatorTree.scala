@@ -12,7 +12,7 @@ class CreateDominatorTree(graph: Graph[DominatorTreeVertex, DefaultEdge],
 
   val forest = new DefaultDirectedGraph[DominatorTreeVertex, DefaultEdge](classOf[DefaultEdge])
 
-  def buildDominatorTree(): Unit = {
+  def buildDominatorTree(): Graph[DominatorTreeVertex, DefaultEdge] = {
     // The first is empty
     // The vertex whose number is i
     val vertex = Array.ofDim[DominatorTreeVertex](graph.vertexSet().size() + 1)
@@ -25,21 +25,23 @@ class CreateDominatorTree(graph: Graph[DominatorTreeVertex, DefaultEdge],
     stack.push(root)
 
     while (!stack.isEmpty) {
-      n = n + 1;
-
       val current = stack.pop()
-      current.semi = n;
-      vertex(n) = current;
+      if(current.semi == 0) {
+        n = n + 1;
+        current.semi = n;
+        vertex(n) = current;
 
-      val children = Graphs.successorListOf(graph, current)
-      val it = children.iterator()
-      while (it.hasNext) {
-        val child = it.next()
-        if (child.semi == 0) {
-          childToParent.put(child, current)
-          stack.push(child)
+        val children = Graphs.successorListOf(graph, current)
+        val it = children.iterator()
+        while (it.hasNext) {
+          val child = it.next()
+          if (child.semi == 0) {
+            childToParent.put(child, current)
+            stack.push(child)
+          }
         }
       }
+
     }
 
     val buckets = new SetMultimap[DominatorTreeVertex, DominatorTreeVertex]()
@@ -48,35 +50,45 @@ class CreateDominatorTree(graph: Graph[DominatorTreeVertex, DefaultEdge],
     for (i <- vertex.length - 1 to 2 by -1) {
       val current = vertex(i);
       val parentIter = Graphs.predecessorListOf(graph, current).iterator();
-      while(parentIter.hasNext) {
-      val parent = parentIter.next()
+      while (parentIter.hasNext) {
+        val parent = parentIter.next()
         val u = eval(parent);
-        if(u.semi < current.semi) {
-          current.semi = u.semi
+        if (u.semi < current.semi) {
+          current.semi =  u.semi
         }
         buckets.add(vertex(current.semi), current);
-        link(childToParent.get(current).get,current);
+        link(childToParent.get(current).get, current);
         val set = buckets.get(childToParent.get(current).get)
-        for(v <- set) {
+        for (v <- set) {
           val u = eval(v);
-          val dom = if( u.semi < v.semi) {
+          val dom = if (u.semi < v.semi) {
             u
           } else {
             childToParent.get(current).get
           }
-          dominator.put(v,dom)
+          dominator.put(v, dom)
         }
         set.clear()
       }
     }
-    for (i <-2 until vertex.length  ) {
+    for (i <- 2 until vertex.length) {
       val current = vertex(i);
-      if(dominator.get(current).get != vertex(current.semi)) {
+      if (dominator.get(current).get != vertex(current.semi)) {
         dominator.put(current, dominator.get(dominator.get(current).get).get)
       }
     }
 
+    val dominatorTree = new DefaultDirectedGraph[DominatorTreeVertex, DefaultEdge](classOf[DefaultEdge])
 
+    for (elem <- dominator) {
+      dominatorTree.addVertex(elem._1)
+      dominatorTree.addVertex(elem._2)
+      dominatorTree.addEdge(elem._2, elem._1)
+    }
+
+    // Add root for empty trees
+    dominatorTree.addVertex(root)
+    dominatorTree;
   }
 
 

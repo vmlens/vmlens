@@ -16,10 +16,10 @@ class CreateDominatorTreeTest extends AnyFlatSpec with Matchers {
     });
    
     // When 
-    val dominatorTree = CreateDominatorTreeFromRunData.dominatorTree(context.root,context.graph)
+     val dominatorTree = CreateDominatorTreeFromRunData.dominatorTree(context.normalizeVertex.root,context.normalizeVertex.graph)
     
     // Then
-    CompareGraph.shouldBe(dominatorTree, context.graph);
+    CompareGraph.shouldBe(dominatorTree, context.normalizeVertex.graph);
   }
   
   

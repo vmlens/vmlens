@@ -1,6 +1,6 @@
 package com.anarsoft.race.detection.testfixture.dominatortree
 
-import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexLock, VertexMethod, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexLockOrMonitor, VertexMethod, VertexRoot}
 import com.anarsoft.race.detection.report.element.runelementtype.ReportLockType.REENTRANT_LOCK
 import org.jgrapht.graph.{DefaultDirectedGraph, DefaultEdge}
 

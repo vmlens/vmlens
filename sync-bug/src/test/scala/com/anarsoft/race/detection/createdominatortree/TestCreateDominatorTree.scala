@@ -15,8 +15,11 @@ class TestCreateDominatorTree extends AnyFlatSpec with Matchers {
       })
     });
 
-    // When
-    new CreateDominatorTree(context.graph,context.root).buildDominatorTree();
+    // When 
+    val dominatorTree = new CreateDominatorTree(context.normalizeVertex.graph,context.normalizeVertex.root).buildDominatorTree();
+    
+    // Then
+     CompareGraph.shouldBe(dominatorTree, context.normalizeVertex.graph);
 
   }
 

@@ -6,7 +6,7 @@ import com.vmlens.report.dominatortree.UIDominatorTreeElement
 
 import java.util
 
-trait InternalNode extends DominatorTreeVertex {
+trait DefaultVertex extends DominatorTreeVertex {
 
   def getLabel(descriptionContext: DescriptionContext): String
 

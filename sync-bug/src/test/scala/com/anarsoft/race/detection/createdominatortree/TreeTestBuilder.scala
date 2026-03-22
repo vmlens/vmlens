@@ -5,12 +5,11 @@ import com.anarsoft.race.detection.dominatortree.DominatorTreeVertex
 
 class TreeTestBuilder(val createGraphStack : CreateGraphStack) {
 
-  def method(id : Int, inside : () => Unit  ): DominatorTreeVertex = {
+  def method(id : Int, inside : () => Unit  ): Unit = {
     val vertex = createGraphStack.methodEnter(id);
     inside();
     createGraphStack.addAllElementsOfStackToGraph()
     createGraphStack.methodExit();
-    vertex
   }
 
   def syncBlock(id : Int, inside : () => Unit  ): DominatorTreeVertex = {

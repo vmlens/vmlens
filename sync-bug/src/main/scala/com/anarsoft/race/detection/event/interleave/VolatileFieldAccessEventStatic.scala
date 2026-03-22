@@ -47,6 +47,6 @@ trait VolatileFieldAccessEventStatic extends EventWithReadWrite[VolatileFieldAcc
   }
 
   override def createUIStateElementSortKey(): Option[UIStateElementSortKey] = {
-    Some(new SortKeyStaticField(fieldId))
+    Some(new SortKeyStaticField())
   }
 }

@@ -51,6 +51,6 @@ trait AtomicNonBlockingEvent  extends EventWithReadWrite[AtomicNonBlockingEvent]
   override def isReadOnly : Boolean = objectHashCodeToOperation.isReadOnly(memoryAccessKey)
 
   override def createUIStateElementSortKey(): Option[UIStateElementSortKey] = {
-    objectHashCodeMap.id(objectHashCode).map(id => new SortKeyAtomicObject(id, atomicMethodId))
+    objectHashCodeMap.id(objectHashCode).map(id => new SortKeyAtomicObject(id))
   }
 }
