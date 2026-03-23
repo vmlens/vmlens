@@ -11,11 +11,11 @@ class ReportCallbackMock extends ReportCallback {
   
   override def withReverseCallTree(node: DominatorTreeVertex, parent: Option[UIDominatorTreeElement], level: Int): UIDominatorTreeElement = {
     result.append(node)
-    new UIDominatorTreeElement("", "");
+    new UIDominatorTreeElement("", "",null);
   }
 
   override def withOutReverseCallTree(node: DominatorTreeVertex, parent: Option[UIDominatorTreeElement], level: Int): UIDominatorTreeElement = {
     result.append(node)
-    new UIDominatorTreeElement("", "");
+    new UIDominatorTreeElement("", "",null);
   }
 }

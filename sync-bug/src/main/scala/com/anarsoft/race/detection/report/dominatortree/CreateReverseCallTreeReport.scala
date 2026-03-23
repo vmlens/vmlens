@@ -1,12 +1,12 @@
 package com.anarsoft.race.detection.report.dominatortree
 
-import com.anarsoft.race.detection.dominatortree.VertexState
+import com.anarsoft.race.detection.dominatortree.DominatorTreeVertex
 import com.anarsoft.race.detection.report.dominatortree.CallTreeTraversal
 
 
 class CreateReverseCallTreeReport {
   
-  def createReport(node : VertexState, 
+  def createReport(node : DominatorTreeVertex, 
                    dominatorTreeTraversalContext : DominatorTreeTraversalContext,
                    fileName : String): Unit = {
     
