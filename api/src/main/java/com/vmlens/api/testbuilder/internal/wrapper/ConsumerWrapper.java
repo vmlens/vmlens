@@ -1,6 +1,7 @@
 package com.vmlens.api.testbuilder.internal.wrapper;
 
 import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.testbuilder.internal.callkey.CallKey;
 import com.vmlens.api.testbuilder.internal.concurrent.ConcurrentCall;
 import com.vmlens.api.testbuilder.internal.recording.RecordUpdate;
 import com.vmlens.api.testbuilder.internal.recording.RecordUpdateFactory;
@@ -15,16 +16,17 @@ public class ConsumerWrapper<CLASS_UNDER_TEST> implements RecordUpdateFactory<CL
         ConcurrentCall<CLASS_UNDER_TEST>   {
 
     private final Consumer<CLASS_UNDER_TEST> consumer;
-    private final int addPosition;
+    private final CallKey callKey;
     private final int automaticTestId;
     private final int automaticTestMethodId;
 
     public ConsumerWrapper(Consumer<CLASS_UNDER_TEST> consumer,
-                           int addPosition,
+                           CallKey callKey,
                            int automaticTestId,
                            int automaticTestMethodId) {
         this.consumer = consumer;
-        this.addPosition = addPosition;
+        this.callKey = callKey;
+
         this.automaticTestId = automaticTestId;
         this.automaticTestMethodId = automaticTestMethodId;
     }
@@ -42,8 +44,8 @@ public class ConsumerWrapper<CLASS_UNDER_TEST> implements RecordUpdateFactory<CL
     }
 
     @Override
-    public String getLabel() {
-        return createLabel(" addWrite", addPosition );
+    public CallKey callKey() {
+        return callKey;
     }
 
     @Override

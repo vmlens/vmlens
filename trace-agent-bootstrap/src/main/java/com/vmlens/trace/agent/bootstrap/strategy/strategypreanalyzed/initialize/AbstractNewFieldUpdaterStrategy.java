@@ -4,7 +4,7 @@ import com.vmlens.trace.agent.bootstrap.strategy.EnterExitContext;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.StrategyPreAnalyzed;
 
 
-/*
+/**
  * the actual action is done through InitializationAction see PreAnalyzedCallback.methodObjectStringParamObjectReturn
  * I use a strategy so that i can reuse the transformation based on strategy
  *

@@ -47,11 +47,9 @@ public class WriteEventToFile implements Runnable {
     public void run() {
         // we never want tracing in this thread
         incrementInsideVMLens();
-
         long timerForDeadlockDetection = System.currentTimeMillis();
         long timerForDemonThreadDetection = System.currentTimeMillis();
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-        boolean deadlockLogged = false;
 
         testAndAddShutdownHook();
         long nothingReceivedFor = System.currentTimeMillis();
@@ -79,21 +77,21 @@ public class WriteEventToFile implements Runnable {
                             /*  If a thread of the given ID is a virtual thread, is not alive, or does not exist,
                              *  the corresponding element in the returned array will contain null.
                              */
-                            if(info != null) {
-                                if(! info.isDaemon() &&
+                            if (info != null) {
+                                if (!info.isDaemon() &&
                                         info.getThreadState() != Thread.State.TERMINATED &&
-                                        ! ThreadLocalForParallelize.ANARSOFT_THREAD_NAME.equals(info.getThreadName()) &&
-                                        ! info.getThreadName().startsWith("DestroyJavaVM"))  {
+                                        !ThreadLocalForParallelize.ANARSOFT_THREAD_NAME.equals(info.getThreadName()) &&
+                                        !info.getThreadName().startsWith("DestroyJavaVM")) {
                                     nonDemonThreadActive = true;
                                 }
                             }
                         }
-                        if(! nonDemonThreadActive) {
+                        if (!nonDemonThreadActive) {
                             pleaseStop = true;
                         }
                     }
-                    if(pleaseStop) {
-                        if(nothingReceivedFor > (System.currentTimeMillis() - 1000)) {
+                    if (pleaseStop) {
+                        if (nothingReceivedFor > (System.currentTimeMillis() - 1000)) {
                             close();
                             setPoisonedEventReceived();
                             return;
@@ -101,20 +99,24 @@ public class WriteEventToFile implements Runnable {
                     }
                 }
 
-                if (!deadlockLogged) {
-                    if ((timerForDeadlockDetection + 500) < System.currentTimeMillis()) {
-                        timerForDeadlockDetection = System.currentTimeMillis();
-                        long[] threadIds = bean.findDeadlockedThreads();
-                        if (threadIds != null) {
-                            ThreadInfo[] infos = bean.getThreadInfo(threadIds, Integer.MAX_VALUE);
-                            for (ThreadInfo info : infos) {
-                                System.err.println("Deadlock detected on thread: " + info.getThreadName());
-                                for (StackTraceElement element : info.getStackTrace()) {
-                                    System.err.println("   " + element.toString());
-                                }
+                if ((timerForDeadlockDetection + 500) < System.currentTimeMillis()) {
+                    timerForDeadlockDetection = System.currentTimeMillis();
+                    long[] threadIds = bean.findDeadlockedThreads();
+                    if (threadIds != null) {
+                        ThreadInfo[] infos = bean.getThreadInfo(threadIds, Integer.MAX_VALUE);
+                        for (ThreadInfo info : infos) {
+                            System.err.println("Deadlock detected on thread: " + info.getThreadName());
+                            for (StackTraceElement element : info.getStackTrace()) {
+                                System.err.println("   " + element.toString());
                             }
-                            deadlockLogged = true;
+
                         }
+                        System.err.println("calling Runtime.getRuntime().halt(-1) to shutdown the vm.");
+                        // Wait that the messages get displayed
+                        Thread.sleep(10*1000);
+                        // System.exit does not work
+                        // might be related to the shutdown hook?
+                        Runtime.getRuntime().halt(-1);
                     }
                 }
             } catch (Throwable e) {

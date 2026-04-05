@@ -1,5 +1,6 @@
 package com.vmlens.api.testbuilder.internal.wrapper;
 
+import com.vmlens.api.testbuilder.internal.callkey.CallKey;
 import com.vmlens.api.testbuilder.internal.recording.RecordReadOnly;
 import com.vmlens.api.testbuilder.internal.recording.RecordUpdate;
 import com.vmlens.api.testbuilder.internal.recording.RecordReadOnlyFactory;
@@ -13,26 +14,20 @@ public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordRe
 
     private final Function<CLASS_UNDER_TEST,READ_VALUE> function;
     private final BiPredicate<READ_VALUE,READ_VALUE> compare;
-    private final int addPosition;
-    private final boolean isReadOnly;
+    private final CallKey callKey;
     private final int automaticTestId;
     private final int automaticTestMethodId;
-    private final int automaticTestType;
 
     public FunctionAndCompare(Function<CLASS_UNDER_TEST, READ_VALUE> function,
                               BiPredicate<READ_VALUE, READ_VALUE> compare,
-                              int addPosition,
-                              boolean isReadOnly,
+                              CallKey callKey,
                               int automaticTestId,
-                              int automaticTestMethodId,
-                              int automaticTestType) {
+                              int automaticTestMethodId) {
         this.function = function;
         this.compare = compare;
-        this.addPosition = addPosition;
-        this.isReadOnly = isReadOnly;
+        this.callKey = callKey;
         this.automaticTestId = automaticTestId;
         this.automaticTestMethodId = automaticTestMethodId;
-        this.automaticTestType = automaticTestType;
     }
 
     @Override
@@ -42,14 +37,6 @@ public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordRe
 
     public READ_VALUE apply(CLASS_UNDER_TEST classUnderTest) {
         return function.apply(classUnderTest);
-    }
-
-
-    public String getLabel() {
-        if(isReadOnly) {
-            return createLabel(" addReadOnly", addPosition );
-        }
-        return createLabel(" addUpdate", addPosition );
     }
 
     @Override
@@ -65,11 +52,11 @@ public class FunctionAndCompare<CLASS_UNDER_TEST,READ_VALUE> implements RecordRe
         return automaticTestMethodId;
     }
 
-    public int automaticTestType() {
-        return automaticTestType;
-    }
-
     public BiPredicate<READ_VALUE, READ_VALUE> getCompare() {
         return compare;
+    }
+
+    public CallKey callKey() {
+        return callKey;
     }
 }

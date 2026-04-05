@@ -127,7 +127,7 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
                 }
                 ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
                 if (dataWhenInTest != null) {
-                    callbackAction.execute(new InTestActionProcessor(eventQueue,dataWhenInTest,threadLocal.stacktraceDepthProvider()));
+                    callbackAction.execute(new InTestActionProcessor(eventQueue,dataWhenInTest));
 
                     if(callbackAction.couldBeLastMethodInThread(dataWhenInTest)) {
                         int stackTraceDepth = threadLocalForParallelizeProvider

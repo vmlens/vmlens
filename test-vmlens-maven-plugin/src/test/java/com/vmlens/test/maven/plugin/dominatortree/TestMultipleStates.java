@@ -37,9 +37,9 @@ public class TestMultipleStates {
     }
 
     public void third() {
-       // atomicInteger.compareAndSet(0, 1);
+        atomicInteger.compareAndSet(0, 1);
         i++;
-       // secondInteger.incrementAndGet();
+        secondInteger.incrementAndGet();
     }
     
     

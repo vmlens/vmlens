@@ -7,6 +7,12 @@ import org.jgrapht.{Graph, Graphs}
 
 import scala.collection.mutable
 
+/**
+ * Based on A fast algorithm for finding dominators in a flowgraph
+ * https://dl.acm.org/doi/10.1145/357062.357071
+ *
+ */
+
 class CreateDominatorTree(graph: Graph[DominatorTreeVertex, DefaultEdge],
                           root: VertexRoot) {
 

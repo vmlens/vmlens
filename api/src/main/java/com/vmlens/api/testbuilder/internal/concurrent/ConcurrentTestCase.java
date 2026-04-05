@@ -2,6 +2,7 @@ package com.vmlens.api.testbuilder.internal.concurrent;
 
 import com.vmlens.api.AllInterleavings;
 import com.vmlens.api.AllInterleavingsBuilder;
+import com.vmlens.api.testbuilder.internal.runner.CallConcurrentCalls;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,47 +22,23 @@ public class ConcurrentTestCase<CLASS_UNDER_TEST> {
         this.checkAfterJoinList = checkAfterJoinList;
     }
 
-    public void run(String name) {
-        AllInterleavings all = new AllInterleavingsBuilder().withMaximumIterations(2000).build(name +  getLabel());
-        while (all.hasNext()) {
-            CLASS_UNDER_TEST classUnderTest = createClassUnderTest.get();
-            List<CallConcurrentCall<CLASS_UNDER_TEST>> callConcurrentCallList = new LinkedList<>();
-            List<Thread> threads = new LinkedList<>();
-            for (ConcurrentCall<CLASS_UNDER_TEST> task : concurrentCallList) {
-                CallConcurrentCall<CLASS_UNDER_TEST> call = new CallConcurrentCall<>(classUnderTest, task,all);
-                callConcurrentCallList.add(call);
-                Thread t = new Thread(call);
-                threads.add(t);
-                t.start();
-            }
-            for (Thread t : threads) {
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-
-            for (CallConcurrentCall<CLASS_UNDER_TEST> call : callConcurrentCallList) {
-                if (!call.isSuccess()) {
-                    throw new RuntimeException("");
-                }
-            }
-
-            for (CheckAfterJoin<CLASS_UNDER_TEST> check : checkAfterJoinList) {
-                if( ! check.readAndCheck(classUnderTest)) {
-                    throw new RuntimeException("");
-                }
-            }
-        }
-    }
-
-    private String getLabel() {
+    public String getLabel() {
         StringBuilder builder = new StringBuilder();
         for(ConcurrentCall<CLASS_UNDER_TEST> concurrentCall : concurrentCallList ) {
-            builder.append(concurrentCall.getLabel());
+            builder.append(concurrentCall.callKey().getLabel());
         }
         return builder.toString();
     }
 
+    public List<ConcurrentCall<CLASS_UNDER_TEST>> concurrentCallList() {
+        return concurrentCallList;
+    }
+
+    public Supplier<CLASS_UNDER_TEST> createClassUnderTest() {
+        return createClassUnderTest;
+    }
+
+    public List<CheckAfterJoin<CLASS_UNDER_TEST>> checkAfterJoinList() {
+        return checkAfterJoinList;
+    }
 }

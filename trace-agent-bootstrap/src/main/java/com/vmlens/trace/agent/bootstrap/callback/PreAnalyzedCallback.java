@@ -75,7 +75,7 @@ public class PreAnalyzedCallback {
     }
 
 
-    /*
+    /**
      * only used for AtomicIntegerFieldUpdater.newUpdater and AtomicReferenceFieldUpdater
      * newUpdater are static factory methods so we do not need the callee (object)
      */

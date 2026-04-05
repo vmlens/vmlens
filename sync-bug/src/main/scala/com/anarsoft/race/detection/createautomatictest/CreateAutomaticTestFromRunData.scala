@@ -74,5 +74,4 @@ class CreateAutomaticTestFromRunData {
   
   def build() : IdToAutomaticTest = new IdToAutomaticTest(idToAutomaticTest);
   
-
 }

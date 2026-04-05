@@ -1,4 +1,4 @@
-package com.vmlens.inttest.automatictest;
+package com.vmlens.inttest.automatictest.failure;
 
 import com.vmlens.api.testbuilder.AtomicTestBuilder;
 import com.vmlens.inttest.atomic.NonAtomicCounter;

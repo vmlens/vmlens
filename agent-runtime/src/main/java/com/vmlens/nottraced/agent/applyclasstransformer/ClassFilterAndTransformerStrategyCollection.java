@@ -29,6 +29,9 @@ public class ClassFilterAndTransformerStrategyCollection {
         if (name.indexOf('[') > -1) {
             return null;
         }
+        if (name.startsWith("com/vmlens/nottraced")) {
+            return null;
+        }
         if (name.startsWith("com/vmlens/shaded")) {
             return null;
         }
