@@ -3,7 +3,7 @@ package com.vmlens.api.testbuilder.internal.wrapper;
 public class CreateLabel {
 
     public static String createLabel(String builderMethod, int postion) {
-        return builderMethod + "(" + postion +")";
+        return " " + builderMethod + "(" + postion +")";
     }
 
 }

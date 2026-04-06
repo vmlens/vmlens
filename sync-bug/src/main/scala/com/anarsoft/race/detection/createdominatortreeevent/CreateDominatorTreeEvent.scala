@@ -4,11 +4,11 @@ import com.anarsoft.race.detection.createdominatortree.CreateGraphStack
 import com.anarsoft.race.detection.createstacktrace.WithMethodCounter
 import com.anarsoft.race.detection.dominatortree.DominatorTreeVertex
 import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
-import com.anarsoft.race.detection.dominatortree.VertexAtomicNonBlockingOrVolatile
+import com.anarsoft.race.detection.dominatortree.VertexState
 import org.jgrapht.Graph
 import org.jgrapht.graph.DefaultEdge
 import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
-import com.anarsoft.race.detection.dominatortree.VertexAtomicNonBlockingOrVolatile
+import com.anarsoft.race.detection.dominatortree.VertexState
 
 import scala.collection.mutable
 

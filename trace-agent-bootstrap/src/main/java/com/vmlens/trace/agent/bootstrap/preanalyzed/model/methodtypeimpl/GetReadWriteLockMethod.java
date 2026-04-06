@@ -2,7 +2,7 @@ package com.vmlens.trace.agent.bootstrap.preanalyzed.model.methodtypeimpl;
 
 
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodTypeContext;
-import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.GetReadWriteLockMethodStrategy;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.initialize.GetReadWriteLockMethodStrategy;
 
 /**
  *

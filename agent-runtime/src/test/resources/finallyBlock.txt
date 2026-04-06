@@ -1,0 +1,87 @@
+class:com/vmlens/test/guineapig/trycatchfinally/FinalBlockTwo
+method:<init>()V
+  ALOAD_0
+  INVOKESPECIAL  java/lang/Object.<init>:()V
+  ALOAD_0
+  ICONST_0
+  PUTFIELD  com/vmlens/test/guineapig/trycatchfinally/FinalBlockTwo.i:I
+  RETURN
+method:update()V
+  ALOAD_0
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodEnter:(Ljava/lang/Object;I)V
+  ALOAD_0
+  ICONST_5
+  load:1
+  load:0
+  load:2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.beforeMethodCall:(III)V
+  INVOKEVIRTUAL  com/vmlens/test/guineapig/trycatchfinally/FinalBlockTwo.callback:(I)Lcom/vmlens/test/guineapig/trycatchfinally/FinalBlockTwo;
+  load:1
+  load:0
+  load:2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.afterMethodCall:(III)V
+  POP
+  ALOAD_0
+  BIPUSH
+  DUP2
+  POP
+  load:0
+  load:0
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/FieldCallback.beforeFieldWrite:(Ljava/lang/Object;III)V
+  PUTFIELD  com/vmlens/test/guineapig/trycatchfinally/FinalBlockTwo.i:I
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/FieldCallback.afterFieldAccess:()V
+  ALOAD_0
+  BIPUSH
+  DUP2
+  POP
+  load:0
+  load:1
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/FieldCallback.beforeFieldWrite:(Ljava/lang/Object;III)V
+  PUTFIELD  com/vmlens/test/guineapig/trycatchfinally/FinalBlockTwo.i:I
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/FieldCallback.afterFieldAccess:()V
+  GOTO
+  ASTORE_1
+  ALOAD_0
+  BIPUSH
+  DUP2
+  POP
+  load:0
+  load:2
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/FieldCallback.beforeFieldWrite:(Ljava/lang/Object;III)V
+  PUTFIELD  com/vmlens/test/guineapig/trycatchfinally/FinalBlockTwo.i:I
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/FieldCallback.afterFieldAccess:()V
+  ALOAD_1
+  ATHROW
+  ALOAD_0
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
+  RETURN
+  ALOAD_0
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.onFinally:(Ljava/lang/Object;I)V
+  ATHROW
+method:callback(I)Lcom/vmlens/test/guineapig/trycatchfinally/FinalBlockTwo;
+  ALOAD_0
+  load:2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodEnter:(Ljava/lang/Object;I)V
+  ILOAD_1
+  BIPUSH
+  IF_ICMPNE
+  ALOAD_0
+  ALOAD_0
+  load:2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
+  ARETURN
+  ACONST_NULL
+  ALOAD_0
+  load:2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
+  ARETURN
+  ALOAD_0
+  load:2
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.onFinally:(Ljava/lang/Object;I)V
+  ATHROW

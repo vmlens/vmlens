@@ -1,5 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.initializationaction.InitializationAction;
+
 public interface CallbackActionProcessor {
 
     void vmlensApiClose(Object obj);
@@ -12,4 +14,6 @@ public interface CallbackActionProcessor {
     void startDoNotTrace();
     void endDoNotTrace();
 
+    void startDoNotTraceInTest();
+    void endDoNotTraceInTest();
 }

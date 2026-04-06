@@ -12,6 +12,10 @@ method:calculate()I
   load:1
   INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.methodExit:(Ljava/lang/Object;I)V
   IRETURN
+  load:Lcom/vmlens/test/guineapig/WithClinit;
+  load:1
+  INVOKESTATIC  com/vmlens/transformed/agent/bootstrap/callback/MethodCallback.onFinally:(Ljava/lang/Object;I)V
+  ATHROW
 method:<clinit>()V
   load:Lcom/vmlens/test/guineapig/WithClinit;
   load:2

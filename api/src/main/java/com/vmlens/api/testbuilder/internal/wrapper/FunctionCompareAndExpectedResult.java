@@ -1,6 +1,7 @@
 package com.vmlens.api.testbuilder.internal.wrapper;
 
 import com.vmlens.api.AllInterleavings;
+import com.vmlens.api.testbuilder.internal.callkey.CallKey;
 import com.vmlens.api.testbuilder.internal.concurrent.CheckAfterJoin;
 import com.vmlens.api.testbuilder.internal.concurrent.ConcurrentCall;
 import com.vmlens.api.testbuilder.internal.value.ExceptionValue;
@@ -51,7 +52,7 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
     public boolean execute(CLASS_UNDER_TEST classUnderTest, AllInterleavings allInterleavings) {
         allInterleavings.automaticTestMethod(functionAndCompare.automaticTestId(),
                 functionAndCompare.automaticTestMethodId(),
-                functionAndCompare.automaticTestType());
+                functionAndCompare.callKey().automaticTestType());
         Value<READ_VALUE> value = process(functionAndCompare,classUnderTest);
         for(Value<READ_VALUE> expected : expectedResult) {
             if(value.test(expected,functionAndCompare.getCompare())) {
@@ -61,9 +62,9 @@ public class FunctionCompareAndExpectedResult<CLASS_UNDER_TEST,READ_VALUE> imple
         return false;
     }
 
-    @Override
-    public String getLabel() {
-        return functionAndCompare.getLabel();
-    }
 
+    @Override
+    public CallKey callKey() {
+        return functionAndCompare.callKey();
+    }
 }

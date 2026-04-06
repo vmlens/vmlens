@@ -24,7 +24,7 @@ trait MonitorExitEvent extends LoadedInterleaveActionEvent with MonitorEvent {
   }
 
   override def add(context: CreateDominatorTreeContext): Unit = {
-    context.stack.monitorExit(context.graph,context.alreadyAdded)
+    context.stack.monitorExit()
   }
 
 }

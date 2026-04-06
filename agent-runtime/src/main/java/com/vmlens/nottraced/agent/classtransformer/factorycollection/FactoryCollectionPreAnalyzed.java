@@ -1,8 +1,10 @@
 package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryAll;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryPreAnalyzed;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitor.AddMethodCall;
+import com.vmlens.nottraced.agent.classtransformer.methodvisitor.AddTryFinallyBlock;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.shaded.gnu.trove.map.hash.THashMap;
@@ -41,7 +43,9 @@ public class FactoryCollectionPreAnalyzed extends FactoryCollectionPreAnalyzedOr
             strategy.addToBuilder(builder);
             addEnterExitTransform(builder.build(),result);
             // Fixme MethodCallbackFactoryFactoryPreAnalyzed auftrennen
-            result.add(wrap(AddMethodCall.factory(methodCallIdMap, new MethodCallbackFactoryFactoryPreAnalyzed(null, null))));
+            result.add(wrap(AddTryFinallyBlock.factory(new MethodCallbackFactoryFactoryPreAnalyzed(null, null,true))));
+            // Fixme MethodCallbackFactoryFactoryPreAnalyzed auftrennen
+            result.add(wrap(AddMethodCall.factory(methodCallIdMap, new MethodCallbackFactoryFactoryPreAnalyzed(null, null,true))));
             return result;
         }
         switch (methodNotFoundAction) {

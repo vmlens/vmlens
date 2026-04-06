@@ -4,6 +4,7 @@ import com.vmlens.transformed.agent.bootstrap.preanalyzed.model.PackageOrClass;
 import com.vmlens.transformed.agent.bootstrap.preanalyzed.model.PreAnalyzedMethod;
 import com.vmlens.transformed.agent.bootstrap.preanalyzed.model.classtypeimpl.PreAnalyzedAllMethods;
 import com.vmlens.transformed.agent.bootstrap.util.TLinkableWrapper;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class ClassTransformerPreAnalyzedTest {
        // When and Then
        runTestClassTransformer.runTest("com.vmlens.test.guineapig.ReflectField", "/reflectField.txt");
    }
+
 
     @Test
     public void newUpdater() throws IOException {

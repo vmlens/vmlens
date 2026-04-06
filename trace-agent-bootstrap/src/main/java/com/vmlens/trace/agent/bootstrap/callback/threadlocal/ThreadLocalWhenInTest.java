@@ -17,7 +17,7 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
     private int dominatorTreeCount;
     private InMethodIdAndPosition inMethodIdAndPosition;
     private ExecuteAfterOperation executeAfterOperation;
-    private Integer startDoNotTrace;
+    private int doNotTraceInTestCount;
 
     public ThreadLocalWhenInTest(RunForCallback run,
                                  int threadIndex,
@@ -69,21 +69,16 @@ public class ThreadLocalWhenInTest  implements ThreadLocalWhenInTestForParalleli
         this.inAtomicCount = inAtomicCount;
     }
 
-    public boolean processAction(StacktraceDepthProvider stacktraceDepthProvider) {
-        if(startDoNotTrace == null) {
-            return true;
-        }
-        if(stacktraceDepthProvider.getStacktraceDepth() <= startDoNotTrace) {
-            startDoNotTrace = null;
-            return true;
-        }
-        return false;
+    public boolean processAction() {
+        return doNotTraceInTestCount == 0;
     }
 
-    public void startDoNotTrace(StacktraceDepthProvider stacktraceDepthProvider) {
-        if(startDoNotTrace == null) {
-            startDoNotTrace = stacktraceDepthProvider.getStacktraceDepth();
-        }
+    public void startDoNotTrace() {
+        doNotTraceInTestCount++;
+    }
+
+    public void stopDoNotTrace() {
+        doNotTraceInTestCount--;
     }
 
     public FirstMethodInThread firstMethodInThread() {

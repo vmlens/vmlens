@@ -79,6 +79,9 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
 
         boolean isStatic = ((access & ACC_STATIC) == ACC_STATIC);
         context.setMethodEnterExitStrategy(createMethodEnterExitStrategy(isStatic));
+        context.setStatic(isStatic);
+
+        context.setNeedsVisitFrames(classVersionHigherOrEquals(Opcodes.V1_6));
 
         MethodVisitor current = previous;
         for (TLinkableWrapper<MethodVisitorFactory> element : factoryList) {
@@ -136,24 +139,24 @@ public class ClassVisitorApplyMethodVisitor extends ClassVisitor implements Need
         return className.replace('/' , '.');
     }
 
-    private boolean jvmAtLeast_1_5() {
+    private boolean classVersionHigherOrEquals(int version) {
         /*
         asm stores major version and minor version in one int
         & 0xFF makes sure we are only looking at the unsigned low 8 bits of the class file’s major version,
         ignoring the minor version and any higher bits.
          */
         int major = classVersion & 0xFF;
-        return major >= Opcodes.V1_5;
+        return major >= version;
     }
 
-    private MethodEnterExitStrategy createMethodEnterExitStrategy(boolean isStatic) {
+    private CreateCalleeFactoryProvider createMethodEnterExitStrategy(boolean isStatic) {
         // Fixme TraceConstructor check for constructor and return strategy for constructor
 
         if(! isStatic) {
             return new NormalMethod();
         }
 
-        if(jvmAtLeast_1_5()) {
+        if(classVersionHigherOrEquals(Opcodes.V1_5)) {
             return new StaticMethodJvmAtLeast_1_5();
         }
 

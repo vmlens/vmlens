@@ -40,6 +40,10 @@ public class DoNotTraceCallback {
         callbackActionProcessor.endDoNotTrace();
     }
 
+    public static void onFinally(Object object, int methodId) {
+        callbackActionProcessor.endDoNotTrace();
+    }
+
 
 
     // For Test

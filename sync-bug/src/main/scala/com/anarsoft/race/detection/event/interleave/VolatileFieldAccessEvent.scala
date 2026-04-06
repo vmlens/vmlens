@@ -55,6 +55,6 @@ trait VolatileFieldAccessEvent extends EventWithReadWrite[VolatileFieldAccessEve
 
 
   override def createUIStateElementSortKey(): Option[UIStateElementSortKey] = {
-    objectHashCodeMap.id(objectHashCode).map(  id => new SortKeyObjectField(id,fieldId)  )
+    objectHashCodeMap.id(objectHashCode).map(  id => new SortKeyObjectField(id)  )
   }
 }

@@ -8,18 +8,22 @@ public class MethodCallbackFactoryFactoryPreAnalyzed implements MethodCallbackFa
 
     private final MethodEnterStrategy methodEnterStrategy;
     private final MethodExitStrategy methodExitStrategy;
+    private final boolean traceMethodEnter;
 
     public MethodCallbackFactoryFactoryPreAnalyzed(MethodEnterStrategy methodEnterStrategy,
-                                                   MethodExitStrategy methodExitStrategy) {
+                                                   MethodExitStrategy methodExitStrategy,
+                                                   boolean traceMethodEnter) {
         this.methodEnterStrategy = methodEnterStrategy;
         this.methodExitStrategy = methodExitStrategy;
+        this.traceMethodEnter = traceMethodEnter;
     }
 
     @Override
     public MethodCallbackFactory create(MethodVisitor methodVisitor) {
         return new MethodCallbackFactoryPreAnalyzed(methodEnterStrategy,
                 methodExitStrategy,
-                methodVisitor);
+                methodVisitor,
+                traceMethodEnter);
     }
 
 }

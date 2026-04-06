@@ -7,16 +7,12 @@ public class UIDominatorTreeElement {
     
     private final String label;
     private final String css;
-    private final List<UIStateElement> state = new LinkedList<>();
-    
+    private final String link;
 
-    public UIDominatorTreeElement(String label, String css) {
+    public UIDominatorTreeElement(String label, String css, String link) {
         this.label = label;
         this.css = css;
-    }
-
-    public void add(UIStateElement uiStateElement) {
-        state.add(uiStateElement);
+        this.link = link;
     }
 
     public String label() {
@@ -27,7 +23,11 @@ public class UIDominatorTreeElement {
         return css;
     }
 
-    public List<UIStateElement> state() {
-        return state;
+    public String link() {
+        return link;
+    }
+
+    public boolean hasLink() {
+        return link != null;
     }
 }

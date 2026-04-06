@@ -2,12 +2,13 @@ package com.vmlens.nottraced.agent.classtransformer.callbackfactory.exitstrategy
 
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryPreAnalyzed;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methodenterexitstrategy.CalleeFactory;
+
+import static com.vmlens.nottraced.agent.classtransformer.callbackfactory.exitstrategy.ObjectPlaceHolderStringParamObjectReturnExitStrategy.METHOD_DESCRIPTOR_OBJECT_OBJECT_INT_ARGUMENT;
 import static org.objectweb.asm.Opcodes.DUP;
 
 public class ObjectReturnMethodExitStrategy implements MethodExitStrategy {
 
     private final String METHOD_EXIT_OBJECT_RETURN = "methodExitObjectReturn";
-    private final String METHOD_DESCRIPTOR_OBJECT_OBJECT_INT_ARGUMENT = "(Ljava/lang/Object;Ljava/lang/Object;I)V";
 
     @Override
     public void methodExitWithObjectReturn(MethodCallbackFactoryPreAnalyzed parent, int inMethodId, CalleeFactory calleeFactory) {

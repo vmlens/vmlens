@@ -3,8 +3,9 @@ package com.anarsoft.race.detection.report.builder
 import com.anarsoft.race.detection.automatictest.IdToAutomaticTest
 import com.anarsoft.race.detection.report.ReportLoopData
 import com.anarsoft.race.detection.report.description.DescriptionContext
+import com.anarsoft.race.detection.report.dominatortree.CreateDominatorTreeReport
 import com.anarsoft.race.detection.report.element.{StacktraceLeaf, TestResult}
-import com.anarsoft.race.detection.report.run.{CreateDominatorTreeReport, CreateRunReport}
+import com.anarsoft.race.detection.report.run.CreateRunReport
 import com.vmlens.report.ResultForVerify
 import com.vmlens.report.createreport.CreateHtmlReport
 import com.vmlens.report.overview.{UITestLoop, UITestLoopAndWarning}

@@ -1,11 +1,10 @@
 package com.anarsoft.race.detection.createdominatortree
 
-import com.anarsoft.race.detection.dominatortree.{DominatorTree, DominatorTreeVertex, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.{DominatorTree, DominatorTreeVertex, NormalizeVertex, VertexRoot}
 import com.anarsoft.race.detection.rundata.RunData
 import org.jgrapht.Graph
 import org.jgrapht.graph.DefaultEdge
 
-import java.util
 import scala.collection.mutable
 
 /**
@@ -25,14 +24,21 @@ class CreateDominatorTreeFromRunData {
     if( loopIdToAlreadyProcessed.contains(runData.loopAndRunId.loopId) ) {
       None
     } else {
-      val root = new VertexRoot()
-      val graph = new CreateGraphFromEvents(root).process(runData);
-      val dominatorTreeUnfiltered = Dominators[DominatorTreeVertex,DefaultEdge](graph,root).getDominatorTree
-
-      val dominatorTree = new FilterDominatorTree().filter(dominatorTreeUnfiltered,root);
-      Some(new DominatorTree(dominatorTree,root,graph));
+      val normalizeVertex = new NormalizeVertex();
+      val graph = new CreateGraphFromEvents(normalizeVertex).process(runData);
+      val dominatorTree = CreateDominatorTreeFromRunData.dominatorTree(normalizeVertex.root,graph)
+      Some(new  DominatorTree(dominatorTree,normalizeVertex.root,graph));
     }
-    
   }
 
+}
+
+object CreateDominatorTreeFromRunData {
+  
+  def dominatorTree(root :  VertexRoot,graph : Graph[DominatorTreeVertex, DefaultEdge]) :  
+     Graph[DominatorTreeVertex, DefaultEdge] = {
+    val dominatorTreeUnfiltered = new CreateDominatorTree(graph, root).buildDominatorTree()
+    new FilterDominatorTree(root, dominatorTreeUnfiltered).filter();
+  }
+  
 }

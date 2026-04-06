@@ -4,7 +4,7 @@
 
     <groupId>com.vmlens</groupId>
     <artifactId>vmlens</artifactId>
-    <version>1.2.27</version>
+    <version>1.2.28</version>
     <packaging>pom</packaging>
 
     <name>vmlens</name>
@@ -68,7 +68,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>24.1-jre</version>
+                <version>33.5.0-jre</version>
             </dependency>
             <dependency>
                 <groupId>org.jgrapht</groupId>
@@ -321,6 +321,7 @@
      <module>vmlens-maven-plugin-integtest</module>
      <module>test-cases</module>
      <module>no-tests-vmlens-maven-plugin</module>
+     <module>test-mockito</module>
  </modules>
 
  <profiles>

@@ -1,5 +1,6 @@
 package com.vmlens.nottraced.agent.applyclasstransformer.builder;
 
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.DoNotTraceType;
 import com.vmlens.transformed.agent.bootstrap.preanalyzed.builder.FactoryCollectionPreAnalyzedFactoryBuilder;
 import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategy;
 import com.vmlens.nottraced.agent.applyclasstransformer.TransformerStrategyNoOp;
@@ -55,8 +56,8 @@ public class TransformerStrategyFactory {
         return new FactoryCollectionPreAnalyzedFactoryBuilderImpl(methodRepositoryForAnalyze);
     }
 
-    public TransformerStrategy createDoNotTraceIn() {
-        return new TransformerStrategyForClassTransformer(new FactoryCollectionDoNotTraceFactory(),
+    public TransformerStrategy createDoNotTraceIn(DoNotTraceType doNotTraceType) {
+        return new TransformerStrategyForClassTransformer(new FactoryCollectionDoNotTraceFactory(doNotTraceType),
                 methodRepositoryForAnalyze, fieldRepositoryForAnalyze, writeClassDescription);
     }
 

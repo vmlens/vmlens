@@ -15,14 +15,16 @@ public class MethodTransformerBuilderImpl implements MethodTransformerBuilder {
     public void setWithoutParam() {
         methodCallbackFactoryFactory =
                 new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam(),
-                        new DefaultMethodExitStrategy());
+                        new DefaultMethodExitStrategy(),
+                        true);
     }
 
     @Override
     public void setWithIntParam() {
         methodCallbackFactoryFactory =
         new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithIntParam(),
-                new DefaultMethodExitStrategy());
+                new DefaultMethodExitStrategy(),
+                true);
 
     }
 
@@ -31,28 +33,40 @@ public class MethodTransformerBuilderImpl implements MethodTransformerBuilder {
     public void setWithoutParamAndWithObjectReturn() {
         methodCallbackFactoryFactory =
                 new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam(),
-                        new ObjectReturnMethodExitStrategy());
+                        new ObjectReturnMethodExitStrategy(),
+                        true);
     }
 
     @Override
     public void setWithObjectParamAtReturn() {
         methodCallbackFactoryFactory =
                 new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam(),
-                        new ObjectParamMethodExitStrategy());
+                        new ObjectParamMethodExitStrategy(),
+                        true);
     }
 
     @Override
     public void setWithObjectStringParamAtReturn() {
         methodCallbackFactoryFactory =
                 new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam(),
-                        new ObjectStringParamObjectReturnMethodExitStrategy());
+                        new ObjectStringParamObjectReturnMethodExitStrategy(),
+                        true);
     }
 
     @Override
     public void setWithObjectPlaceHolderStringParamAtReturn() {
         methodCallbackFactoryFactory =
                 new MethodCallbackFactoryFactoryPreAnalyzed(new MethodEnterStrategyWithoutParam(),
-                        new ObjectPlaceHolderStringParamObjectReturnExitStrategy());
+                        new ObjectPlaceHolderStringParamObjectReturnExitStrategy(),
+                        true);
+    }
+
+    @Override
+    public void setWithoutParamForInitialize() {
+        methodCallbackFactoryFactory =
+                new MethodCallbackFactoryFactoryPreAnalyzed(null,
+                        new ObjectReturnForInitializeMethodExitStrategy(),
+                        false);
     }
 
     public MethodCallbackFactoryFactory build() {

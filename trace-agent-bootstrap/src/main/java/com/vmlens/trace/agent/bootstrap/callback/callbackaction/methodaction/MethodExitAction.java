@@ -101,4 +101,8 @@ public class MethodExitAction implements CallbackAction  {
         return null;
     }
 
+    // visible for test
+    public int methodId() {
+        return methodId;
+    }
 }

@@ -11,7 +11,7 @@ import static com.vmlens.api.Runner.runParallel;
 public class CountDownLatchTest {
 
     @Test
-    public void testCountDownLatch() throws InterruptedException {
+    public void testCountDownLatch()  {
 
         try(AllInterleavings allInterleavings = new AllInterleavings("testCountDownLatch")) {
             while (allInterleavings.hasNext()) {

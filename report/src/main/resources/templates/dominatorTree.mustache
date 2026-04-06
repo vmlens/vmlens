@@ -7,7 +7,7 @@
         <table class="table table-striped text-start">
             <thead class="sticky-head">
                 <tr>
-                    <th colspan="2">
+                    <th colspan="1">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span><a href="index.html">Overview</a>/{{runName}}</span>
                             <span>State</span>
@@ -17,20 +17,11 @@
                 </tr>
                 <tr>
                     <th>Method or Lock</th>
-                    <th>State</th>
                 </tr>
             </thead>
             {{#elements}}
                 <tr>
-                    <td {{{css}}}>{{label}}</td>
-                    <td>
-                        <ul>
-                        {{#state}}
-                         <li><a href="{{link}}"> {{label}}{{idLabel}}</a></li>
-                        {{/state}}
-                        </ul>
-
-                    </td>
+                    <td {{{css}}}>{{#hasLink}}<a href="{{link}}">{{label}}</a>{{/hasLink}}{{^hasLink}}{{label}}{{/hasLink}}</td>
                 </tr>
             {{/elements}}
             <tfoot>

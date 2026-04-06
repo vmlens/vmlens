@@ -6,9 +6,6 @@ import com.vmlens.trace.agent.bootstrap.parallelize.run.thread.StacktraceDepthPr
 
 public interface InTestAction {
 
-    boolean checkOrSetDoNotTrace(ThreadLocalWhenInTest threadLocalDataWhenInTest, 
-                                 StacktraceDepthProvider stacktraceDepthProvider);
-
     void execute(ThreadLocalWhenInTest threadLocalDataWhenInTest,
                  QueueIn queueIn);
 

@@ -1,4 +1,0 @@
-package com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory;
-
-public interface AnalyzeFactory extends MethodVisitorFactory {
-}

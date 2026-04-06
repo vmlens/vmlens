@@ -1,6 +1,7 @@
 package com.vmlens.nottraced.agent.classtransformer.factorycollection;
 
 import com.vmlens.nottraced.agent.classtransformer.NameAndDescriptor;
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.DoNotTraceType;
 import com.vmlens.nottraced.agent.classtransformer.callbackfactory.MethodCallbackFactoryFactoryDoNotTrace;
 import com.vmlens.nottraced.agent.classtransformer.FactoryCollectionAdapterContext;
 import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.MethodVisitorFactory;
@@ -16,7 +17,7 @@ public abstract class FactoryCollectionPreAnalyzedOrAll  implements FactoryColle
     public final TLinkedList<TLinkableWrapper<MethodVisitorFactory>> getTransformAndSetStrategy(FactoryCollectionAdapterContext context) {
         if(doNotTraceIn(context.nameAndDescriptor())) {
             TLinkedList<TLinkableWrapper<MethodVisitorFactory>> result = TLinkableWrapper.emptyList();
-            addEnterExitTransform(new MethodCallbackFactoryFactoryDoNotTrace(),result);
+            addEnterExitTransform(new MethodCallbackFactoryFactoryDoNotTrace(DoNotTraceType.EVERYWHERE),result);
             return result;
         }
         return getTransformAndSetStrategyAfterFilter(context.nameAndDescriptor(),

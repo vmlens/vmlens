@@ -7,10 +7,11 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
 public class MethodCallbackFactoryDoNotTrace extends DefaultMethodCallbackFactory {
 
-    private final String CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/DoNotTraceCallback";
+    private final String CALLBACK_CLASS;
 
-    public MethodCallbackFactoryDoNotTrace(MethodVisitor methodVisitor) {
+    public MethodCallbackFactoryDoNotTrace(MethodVisitor methodVisitor,DoNotTraceType doNotTraceType) {
         super(methodVisitor);
+        this.CALLBACK_CLASS = "com/vmlens/transformed/agent/bootstrap/callback/" + doNotTraceType.callbackClassName();
     }
 
     @Override

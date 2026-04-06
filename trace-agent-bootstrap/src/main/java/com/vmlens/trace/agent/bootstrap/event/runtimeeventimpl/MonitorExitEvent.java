@@ -1,16 +1,16 @@
 package com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl;
 
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.event.PerThreadCounter;
 import com.vmlens.trace.agent.bootstrap.event.gen.MonitorExitEventGen;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.CreateInterleaveActionContext;
-import com.vmlens.trace.agent.bootstrap.event.runtimeevent.NoThreadOperationFactory;
+import com.vmlens.trace.agent.bootstrap.event.runtimeevent.*;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.InterleaveAction;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lock.LockExit;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.MethodIdByteCodePositionAndThreadIndex;
 import com.vmlens.trace.agent.bootstrap.interleave.interleaveaction.lockkey.MonitorKey;
 
 public class MonitorExitEvent extends MonitorExitEventGen implements
-        NoThreadOperationFactory, WithObjectHashCode {
+        ExecuteBeforeEvent, WithInMethodIdPositionObjectHashCode {
 
     public MonitorExitEvent(int methodId, int bytecodePosition) {
         this.methodId = methodId;
@@ -43,10 +43,6 @@ public class MonitorExitEvent extends MonitorExitEventGen implements
         return new LockExit(new MethodIdByteCodePositionAndThreadIndex(methodId, bytecodePosition, threadIndex), new MonitorKey(objectHashCode));
     }
 
-    @Override
-    public void setObjectHashCode(long objectHashCode) {
-        this.objectHashCode = objectHashCode;
-    }
 
     @Override
     public int loopId() {
@@ -58,4 +54,18 @@ public class MonitorExitEvent extends MonitorExitEventGen implements
         return runId;
     }
 
+    @Override
+    public void addToBuilder(NextStateBuilder nextStateBuilder) {
+        nextStateBuilder.addExitEvent();
+    }
+
+    @Override
+    public void update(ThreadCount threadCount) {
+
+    }
+
+    @Override
+    public void setInMethodIdPositionObjectHashCode(int inMethodId, int position, long objectHashCode) {
+        this.objectHashCode = objectHashCode;
+    }
 }

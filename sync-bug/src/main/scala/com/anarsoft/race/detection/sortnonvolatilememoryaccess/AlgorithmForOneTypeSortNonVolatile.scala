@@ -1,6 +1,5 @@
 package com.anarsoft.race.detection.sortnonvolatilememoryaccess
 
-import com.anarsoft.race.detection.event.gen.FieldAccessEventGen
 import com.anarsoft.race.detection.processeventbytype.AlgorithmForOneType
 import com.anarsoft.race.detection.sortutil.{NonVolatileEventContainer, ThreadIdToLastSortableEvent}
 
@@ -18,17 +17,7 @@ private class AlgorithmForOneTypeSortNonVolatile[EVENT <: NonVolatileMemoryAcces
 
   override def prozess(event: EVENT): Unit = {
     var sortable = true;
-
-    if(event.isInstanceOf[FieldAccessEventGen]) {
-      val e = event.asInstanceOf[FieldAccessEventGen];
-      if( e.fieldId == 7520 ) {
-        if(e.threadIndex != 0) {
-          val x = e;
-        }
-
-      }
-    }
-
+    
     threadIdToLastSortableEvent.foreachOpposite(event, previous => {
       if (!partialOrder.isLeftBeforeRight(previous, event)) {
         sortable = false;

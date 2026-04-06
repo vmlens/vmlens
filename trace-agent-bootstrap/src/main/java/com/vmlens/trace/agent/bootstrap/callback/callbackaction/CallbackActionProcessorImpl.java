@@ -1,5 +1,6 @@
 package com.vmlens.trace.agent.bootstrap.callback.callbackaction;
 
+import com.vmlens.trace.agent.bootstrap.callback.callbackaction.initializationaction.InitializationAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.FirstMethodInThread;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalForParallelizeProvider;
@@ -126,7 +127,7 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
                 }
                 ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
                 if (dataWhenInTest != null) {
-                    callbackAction.execute(new InTestActionProcessor(eventQueue,dataWhenInTest,threadLocal.stacktraceDepthProvider()));
+                    callbackAction.execute(new InTestActionProcessor(eventQueue,dataWhenInTest));
 
                     if(callbackAction.couldBeLastMethodInThread(dataWhenInTest)) {
                         int stackTraceDepth = threadLocalForParallelizeProvider
@@ -138,9 +139,6 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
                             dataWhenInTest.runAdapter().afterLastThreadAction(dataWhenInTest,eventQueue,lastAction);
                         }
                     }
-
-
-
 
                     return true;
                 }
@@ -168,6 +166,25 @@ public class CallbackActionProcessorImpl implements CallbackActionProcessor {
         return threadLocalForCallbackAction.canProcessInitalize();
     }
 
+    @Override
+    public void startDoNotTraceInTest() {
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
+        if(canProcess(threadLocal)) {
+            ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
+            if (dataWhenInTest != null) {
+                dataWhenInTest.startDoNotTrace();
+            }
+        }
+    }
 
-
+    @Override
+    public void endDoNotTraceInTest() {
+        ThreadLocalForParallelize threadLocal = threadLocalForParallelizeProvider.threadLocalForParallelize();
+        if(canProcess(threadLocal)) {
+            ThreadLocalWhenInTest dataWhenInTest = threadLocal.getThreadLocalWhenInTest();
+            if (dataWhenInTest != null) {
+                dataWhenInTest.stopDoNotTrace();
+            }
+        }
+    }
 }

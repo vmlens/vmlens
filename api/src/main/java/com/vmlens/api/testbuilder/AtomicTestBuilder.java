@@ -1,6 +1,9 @@
 package com.vmlens.api.testbuilder;
 
 import com.vmlens.api.testbuilder.internal.AutomaticTestImpl;
+import com.vmlens.api.testbuilder.internal.callkey.CallKeyReadOnly;
+import com.vmlens.api.testbuilder.internal.callkey.CallKeyUpdate;
+import com.vmlens.api.testbuilder.internal.callkey.CallKeyWrite;
 import com.vmlens.api.testbuilder.internal.recording.RecordReadOnlyFactory;
 import com.vmlens.api.testbuilder.internal.recording.RecordUpdateFactory;
 import com.vmlens.api.testbuilder.internal.wrapper.CompareWithEquals;
@@ -25,6 +28,9 @@ public class AtomicTestBuilder<CLASS_UNDER_TEST> {
     private final List<RecordUpdateFactory<CLASS_UNDER_TEST>> writeList = new LinkedList<>();
     private final List<RecordReadOnlyFactory<CLASS_UNDER_TEST>> readOnlyList = new LinkedList<>();
     private final int atomicTestId;
+    private int maximumIterations = 100;
+    private int parallelMethodCalls = 2;
+
     private int addWritePosition = 0;
     private int addUpdatePosition = 0;
     private int addReadOnlyPosition = 0;
@@ -36,40 +42,47 @@ public class AtomicTestBuilder<CLASS_UNDER_TEST> {
     }
 
     public <READ_VALUE> AtomicTestBuilder<CLASS_UNDER_TEST> addReadOnly(Function<CLASS_UNDER_TEST,READ_VALUE> function) {
-
         readOnlyList.add(new FunctionAndCompare<>(function,
                 new CompareWithEquals<>(),
-                addReadOnlyPosition,
-                true,
+                new CallKeyReadOnly(addReadOnlyPosition),
                 atomicTestId,
-                automaticTestMethodId,
-                READ));
+                automaticTestMethodId));
         addReadOnlyPosition++;
         return this;
     }
 
     public AtomicTestBuilder<CLASS_UNDER_TEST> addWrite(Consumer<CLASS_UNDER_TEST> consumer) {
-        writeList.add(new ConsumerWrapper<>(consumer,addWritePosition, atomicTestId, automaticTestMethodId));
+        writeList.add(new ConsumerWrapper<>(consumer,new CallKeyWrite(addWritePosition), atomicTestId, automaticTestMethodId));
         automaticTestMethodId++;
         addWritePosition++;
         return this;
     }
 
     public <READ_VALUE> AtomicTestBuilder<CLASS_UNDER_TEST> addUpdate(Function<CLASS_UNDER_TEST,READ_VALUE> function) {
-
         writeList.add(new FunctionAndCompare<>(function,
                 new CompareWithEquals<>(),
-                addUpdatePosition,
-                false,
+                new CallKeyUpdate(addUpdatePosition),
                 atomicTestId,
-                automaticTestMethodId,
-                WRITE));
+                automaticTestMethodId));
         addUpdatePosition++;
         return this;
     }
 
+    public AtomicTestBuilder<CLASS_UNDER_TEST> withMaxIterations(int maximumIterations) {
+        this.maximumIterations = maximumIterations;
+        return this;
+    }
+
+    public AtomicTestBuilder<CLASS_UNDER_TEST> withParallelMethodCalls(int parallelMethodCalls) {
+        if(parallelMethodCalls < 2) {
+            throw new IllegalArgumentException("parallelMethodCalls must be greater than or equal to 2");
+        }
+        this.parallelMethodCalls = parallelMethodCalls;
+        return this;
+    }
+
     public void runTests() {
-        new AutomaticTestImpl<>(createClassUnderTest,writeList,readOnlyList,atomicTestId).runTests();
+        new AutomaticTestImpl<>(createClassUnderTest,writeList,readOnlyList,atomicTestId,maximumIterations,parallelMethodCalls-1).runTests();
     }
 
 }

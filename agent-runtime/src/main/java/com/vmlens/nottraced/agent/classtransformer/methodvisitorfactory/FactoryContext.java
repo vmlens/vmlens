@@ -1,13 +1,15 @@
 package com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory;
 
-import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methodenterexitstrategy.MethodEnterExitStrategy;
+import com.vmlens.nottraced.agent.classtransformer.methodvisitorfactory.methodenterexitstrategy.CreateCalleeFactoryProvider;
 
 public class FactoryContext {
 
     private int methodId;
     private String className;
-    private MethodEnterExitStrategy methodEnterExitStrategy;
+    private CreateCalleeFactoryProvider createCalleeFactoryProvider;
     private boolean isConstructor;
+    private boolean needsVisitFrames;
+    private boolean isStatic;
 
     public int methodId() {
         return methodId;
@@ -25,12 +27,12 @@ public class FactoryContext {
         this.className = className;
     }
 
-    public MethodEnterExitStrategy methodEnterExitStrategy() {
-        return methodEnterExitStrategy;
+    public CreateCalleeFactoryProvider methodEnterExitStrategy() {
+        return createCalleeFactoryProvider;
     }
 
-    public void setMethodEnterExitStrategy(MethodEnterExitStrategy methodEnterExitStrategy) {
-        this.methodEnterExitStrategy = methodEnterExitStrategy;
+    public void setMethodEnterExitStrategy(CreateCalleeFactoryProvider createCalleeFactoryProvider) {
+        this.createCalleeFactoryProvider = createCalleeFactoryProvider;
     }
 
     public boolean isConstructor() {
@@ -39,5 +41,21 @@ public class FactoryContext {
 
     public void setIsConstructor(boolean isConstructor) {
         this.isConstructor = isConstructor;
+    }
+
+    public boolean needsVisitFrames() {
+        return needsVisitFrames;
+    }
+
+    public void setNeedsVisitFrames(boolean needsVisitFrames) {
+        this.needsVisitFrames = needsVisitFrames;
+    }
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public void setStatic(boolean aStatic) {
+        isStatic = aStatic;
     }
 }

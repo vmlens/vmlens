@@ -4,6 +4,7 @@ package com.vmlens.nottraced.agent.classtransformer;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodCallId;
 import com.vmlens.transformed.agent.bootstrap.methodrepository.MethodRepositoryImpl;
 import com.vmlens.transformed.agent.bootstrap.strategy.strategyall.NormalMethodStrategy;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClassTransformerAllTest {
+
 
     @Test
     public void methodCall() throws IOException {
@@ -34,6 +36,17 @@ public class ClassTransformerAllTest {
 
         // When
         runTestClassTransformer.runTest("com.vmlens.test.guineapig.WithClinit", "/withClinit.txt");
+
+    }
+
+
+    @Test
+    public void finallyBlock() throws IOException {
+        // Given
+        RunTestClassTransformer runTestClassTransformer =  RunTestClassTransformer.createFromLoaded();
+
+        // When
+        runTestClassTransformer.runTest("com.vmlens.test.guineapig.trycatchfinally.FinalBlockTwo", "/finallyBlock.txt");
 
     }
 

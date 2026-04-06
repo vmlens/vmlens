@@ -22,8 +22,7 @@ class AutomaticTestMethodBuilder(private val automaticTestMethodId : Int,
   def build() : Unit = {
     automaticTest.put(automaticTestMethodId, new AutomaticTestMethod(automaticTestType,graph,rootSet.toSet))
   }
-
-
+  
   def methodEnter(methodId : Int) : Unit = {
     val vertex = AutomaticTestMethodVertex(methodId);
     if(! alreadyAdded.contains(vertex)) {

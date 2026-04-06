@@ -10,8 +10,7 @@ import com.anarsoft.race.detection.util.EventArray
 class GroupNonVolatileElementImpl[EVENT <: NonVolatileMemoryAccessEvent[EVENT] 
   with WithSetStacktraceNode]
 (val eventArray: EventArray[EVENT]) extends GroupNonVolatileElement {
-
-
+  
   def addLastThreadPosition(lastThreadPositionMap: LastThreadPositionMap): Unit = {
     new CreateLastThreadPosition().process(eventArray, lastThreadPositionMap);
   }

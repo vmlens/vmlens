@@ -22,7 +22,7 @@ public class BarrierNotifyStrategy extends StrategyWithoutParam {
 
     @Override
     public void methodEnter(EnterExitContext context) {
-        /**
+        /*
          * notify is similar to monitor exit
          * we must send the event before the actual notification
          *

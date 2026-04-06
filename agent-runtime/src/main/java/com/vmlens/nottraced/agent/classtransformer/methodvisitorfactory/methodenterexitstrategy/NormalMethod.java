@@ -4,7 +4,7 @@ import org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.ALOAD;
 
-public class NormalMethod extends AbstractMethodEnterExitStrategy {
+public class NormalMethod implements CreateCalleeFactoryProvider {
 
     private static class NormalMethodCalleeFactory implements CalleeFactory{
 
@@ -21,7 +21,7 @@ public class NormalMethod extends AbstractMethodEnterExitStrategy {
     }
 
     @Override
-    protected CalleeFactory createCalleeFactory(MethodVisitor methodVisitor, String className) {
+    public CalleeFactory createCalleeFactory(MethodVisitor methodVisitor, String className) {
         return new NormalMethodCalleeFactory(methodVisitor);
     }
 

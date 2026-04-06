@@ -1,12 +1,14 @@
 package com.vmlens.trace.agent.bootstrap.strategy;
 
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestActionProcessor;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfter;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunAfterLockExitWaitOrThreadStart;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.instant.RunBeforeLockExitOrWait;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetFieldsNoOp;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetInMethodIdPositionObjectHashCode;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetObjectHashCode;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodEnterEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MethodExitEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorEnterEvent;
-import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.MonitorExitEvent;
+import com.vmlens.trace.agent.bootstrap.event.runtimeeventimpl.*;
 
 public class EventUtil {
 
@@ -26,14 +28,21 @@ public class EventUtil {
                 new SetObjectHashCode<>(context.object())));
     }
 
-    public static void monitorExit(EventContext context,int position) {
-        context.inTestActionProcessor().process(createMonitorExit(context,position));
+    public static void beforeMonitorExit(EventContext context,int position) {
+        context.inTestActionProcessor().process(createBeforeMonitorExit(context,position));
     }
 
-    public static RunAfter<MonitorExitEvent> createMonitorExit(EventContext context,int position) {
-        return new RunAfter<>(new MonitorExitEvent(
-                context.methodId(), position),
-                new SetObjectHashCode<>(context.object()));
+    public static void afterMonitorExit(InTestActionProcessor inTestActionProcessor) {
+        inTestActionProcessor.process(createAfterMonitorExit());
+    }
+
+    public static RunBeforeLockExitOrWait<MonitorExitEvent> createBeforeMonitorExit(EventContext context,int position) {
+        return new RunBeforeLockExitOrWait<>(new MonitorExitEvent(context.methodId(), position),
+                new SetInMethodIdPositionObjectHashCode<>(context.object()), new WithoutFilterActions());
+    }
+
+    public static RunAfterLockExitWaitOrThreadStart createAfterMonitorExit() {
+        return new RunAfterLockExitWaitOrThreadStart();
     }
 
     public static RunAfter<MethodExitEvent> createMethodExit(EventContext context) {

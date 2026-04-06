@@ -10,18 +10,15 @@ public class InTestActionProcessor {
 
     private final QueueIn eventQueueInternal;
     private final ThreadLocalWhenInTest dataWhenInTest;
-    private final StacktraceDepthProvider stacktraceDepthProvider;
 
     public InTestActionProcessor(QueueIn eventQueueInternal,
-                                 ThreadLocalWhenInTest dataWhenInTest,
-                                 StacktraceDepthProvider stacktraceDepthProvider) {
+                                 ThreadLocalWhenInTest dataWhenInTest) {
         this.eventQueueInternal = eventQueueInternal;
         this.dataWhenInTest = dataWhenInTest;
-        this.stacktraceDepthProvider = stacktraceDepthProvider;
     }
 
     public void process(InTestAction inTestAction) {
-        if(inTestAction.checkOrSetDoNotTrace(dataWhenInTest,stacktraceDepthProvider)) {
+        if(dataWhenInTest.processAction()) {
             if(inTestAction.takeAction(dataWhenInTest)) {
                 if(inTestAction instanceof RunAfter) {
                     RunAfter runAfter = (RunAfter) inTestAction;

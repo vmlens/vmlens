@@ -1,7 +1,7 @@
 package com.vmlens.nottraced.agent.applyclasstransformer.builder;
 
 import com.vmlens.nottraced.agent.applyclasstransformer.*;
-import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.DoNotTraceInTestStrategyFactory;
+import com.vmlens.nottraced.agent.classtransformer.callbackfactory.DoNotTraceType;
 import com.vmlens.nottraced.agent.classtransformer.factorycollection.factory.NotYetImplementedStrategyFactory;
 import com.vmlens.shaded.gnu.trove.list.linked.TLinkedList;
 import com.vmlens.transformed.agent.bootstrap.preanalyzed.builder.ClassTransformerListBuilder;
@@ -66,19 +66,19 @@ public class ClassTransformerListBuilderImpl implements ClassTransformerListBuil
     @Override
     public void addDoNotTraceIn(String name) {
         add(new ClassFilterEquals(name),
-                transformerStrategyFactory.createDoNotTraceIn());
+                transformerStrategyFactory.createDoNotTraceIn(DoNotTraceType.EVERYWHERE));
     }
 
     @Override
     public void addDoNotTraceInTestContainsClassName(String name) {
         add(new ClassFilterContains(name),
-                transformerStrategyFactory.createDoNotTraceIn());
+                transformerStrategyFactory.createDoNotTraceIn(DoNotTraceType.IN_TEST));
     }
 
     @Override
     public void addDoNotTraceInTestStartWithClassName(String name) {
         add(new ClassFilterStartsWith(name),
-                transformerStrategyFactory.createMethodEnterExitOnly(new DoNotTraceInTestStrategyFactory()));
+                transformerStrategyFactory.createDoNotTraceIn(DoNotTraceType.IN_TEST));
     }
 
     public ClassFilterAndTransformerStrategyCollection build() {

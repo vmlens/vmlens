@@ -1,7 +1,7 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.instant;
 
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.AfterContext;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionsInsideMethodStrategy;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.setfields.SetFields;
@@ -10,7 +10,7 @@ import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 import com.vmlens.trace.agent.bootstrap.event.runtimeevent.RuntimeEvent;
 
 
-public class RunAfter<EVENT extends RuntimeEvent> extends AbstractInTestAction  {
+public class RunAfter<EVENT extends RuntimeEvent> implements InTestAction {
 
     private final EVENT runtimeEvent;
     private final SetFields<EVENT> setFieldsStrategy;

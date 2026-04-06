@@ -4,6 +4,7 @@ import com.vmlens.trace.agent.bootstrap.lock.LockEnter;
 import com.vmlens.trace.agent.bootstrap.lock.LockTypes;
 import com.vmlens.trace.agent.bootstrap.preanalyzed.model.MethodTypeContext;
 import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.*;
+import com.vmlens.trace.agent.bootstrap.strategy.strategypreanalyzed.initialize.NewConditionStrategy;
 
 public class LockMethod  extends AbstractMethodType  {
 

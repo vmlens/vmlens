@@ -1,8 +1,8 @@
 package com.anarsoft.race.detection.createdominatortree
 
-import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, InternalNode, LeafNode, VertexAtomicNonBlockingOrVolatile, VertexLock, VertexMethod, VertexMonitor, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, NormalizeVertex, DefaultVertex, VertexState, VertexLockOrMonitor, VertexMethod, VertexRoot}
+import com.anarsoft.race.detection.dominatortree.key._
 import com.anarsoft.race.detection.report.element.runelementtype.ReportLockType
-import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.MemoryAccessKey
 import com.anarsoft.race.detection.util.Stack
 import com.vmlens.report.dominatortree.UIStateElementSortKey
 import org.jgrapht.Graph
@@ -11,14 +11,14 @@ import com.anarsoft.race.detection.report.element.runelementtype.dominatormemory
 
 import scala.collection.mutable
 
+class CreateGraphStack(val normalizeVertex : NormalizeVertex,
+                       val threadIndex : Int) {
 
+  private val stack = Stack[DefaultVertexKey]();
 
-class CreateGraphStack(val root :  VertexRoot, val threadIndex : Int) {
-
-  private val stack = Stack[InternalNode]();
-
-  def methodEnter(methodId: Int): Unit = {
-    stack.push( VertexMethod(methodId))
+  def methodEnter(methodId: Int) : Unit = {
+    val vertex = VertexKeyMethod(methodId);
+    stack.push(vertex)
   }
 
   def methodExit(): Unit = {
@@ -28,70 +28,56 @@ class CreateGraphStack(val root :  VertexRoot, val threadIndex : Int) {
     }
   }
   
-  def monitorEnter(monitorId : Int): Unit = {
-    stack.push(VertexMonitor(monitorId))
+  def monitorEnter(monitorId : Int): DominatorTreeVertex = {
+    val key = VertexKeyMonitor(monitorId);
+    stack.push(key)
+    addAllElementsOfStackToGraph();
+    normalizeVertex.addDefault(key);
   }
 
-  def monitorExit(graph : Graph[DominatorTreeVertex,DefaultEdge],
-                  alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
-    addAllElementsOfStackToGraph(graph,alreadyAdded);
+  def monitorExit(): Unit = {
     if (stack.nonEmpty) {
       stack.pop();
     }
   }
   
-  def lockEnter(lockType : ReportLockType, id : Int) : Unit = {
-    stack.push(VertexLock(lockType, id))
+  def lockEnter(lockType : ReportLockType, id : Int) : DominatorTreeVertex = {
+    val key = VertexKeyLock(lockType, id)
+    stack.push(key)
+    addAllElementsOfStackToGraph();
+    normalizeVertex.addDefault(key);
   }
 
   def lockExit(lockType : ReportLockType, 
-               id : Int,
-               graph : Graph[DominatorTreeVertex,DefaultEdge],
-               alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
-    addAllElementsOfStackToGraph(graph, alreadyAdded);
-    stack.removeFirst(VertexLock(lockType,id))
-  }
-  
-  def addAllElementsOfStackToGraph(graph : Graph[DominatorTreeVertex,DefaultEdge],
-                                   alreadyAdded : mutable.HashSet[DominatorTreeVertex]): Unit = {
-    var previous : InternalNode = root;
-    for(elem <- stack){
-      if(! alreadyAdded.contains(elem)) {
-        graph.addVertex(elem);
-        alreadyAdded.add(elem)
-      }
-      graph.addEdge(previous,elem);
-      previous = elem;
-    } 
+               id : Int): Unit = {
+    stack.removeFirst(VertexKeyLock(lockType,id))
   }
   
   def addLeaf(memoryAccessKey: DominatorMemoryAccessKey,
                operationSet : Set[Int],
-              sortKey : UIStateElementSortKey,
-              memoryKeyToVertex : mutable.HashMap[DominatorMemoryAccessKey,VertexAtomicNonBlockingOrVolatile],
-              graph : Graph[DominatorTreeVertex,DefaultEdge]) : Unit = {
-
-    val leaf = 
-    memoryKeyToVertex.get(memoryAccessKey) match {
-      case Some(x) => {
-        x.operationSet.addAll(operationSet)
-        x;
-      }
-      case None => {
-        val newLeaf =  new VertexAtomicNonBlockingOrVolatile(memoryAccessKey, sortKey);
-        newLeaf.operationSet.addAll(operationSet)
-        newLeaf;
-      }
-    }
+              sortKey : UIStateElementSortKey) : Unit = {
+    addAllElementsOfStackToGraph();
     
+    val leaf = normalizeVertex.addState(StateVertexKey(memoryAccessKey,sortKey));
+
+    leaf.operationSet.addAll(operationSet)
+
     if (stack.isEmpty) {
-      graph.addVertex(leaf)
-      graph.addEdge(root, leaf);
+      normalizeVertex.graph.addEdge(normalizeVertex.root, leaf);
     } else {
-      graph.addVertex(leaf)
-      graph.addEdge(stack.top , leaf);
+      normalizeVertex.graph.addEdge(normalizeVertex.addDefault(stack.top) , leaf);
     }
   }
   
+  // Visible for test
+  // Used in test builder
+  def addAllElementsOfStackToGraph(): Unit = {
+    var previous : DefaultVertex = normalizeVertex.root;
+    for(elem <- stack){
+      val vertex = normalizeVertex.addDefault(elem)
+      normalizeVertex.graph.addEdge(previous,vertex);
+      previous = vertex;
+    }
+  }
 
 }

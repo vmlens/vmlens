@@ -43,6 +43,12 @@ public class MethodCallback {
         callbackActionProcessor.process(methodEnterAction);
     }
 
+    public static void onFinally(Object object, int methodId) {
+        MethodExitAction methodEnterAction = methodExitAction(object,
+                methodId,methodStrategyAdapter);
+        callbackActionProcessor.process(methodEnterAction);
+    }
+
     public static void constructorMethodEnter(int methodId) {
 
     }

@@ -1,12 +1,12 @@
 package com.vmlens.trace.agent.bootstrap.callback.intestaction.state;
 
-import com.vmlens.trace.agent.bootstrap.callback.intestaction.AbstractInTestAction;
+import com.vmlens.trace.agent.bootstrap.callback.intestaction.InTestAction;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.FilterActionsInsideMethodStrategy;
 import com.vmlens.trace.agent.bootstrap.callback.intestaction.filteractions.WithoutFilterActions;
 import com.vmlens.trace.agent.bootstrap.callback.threadlocal.ThreadLocalWhenInTest;
 import com.vmlens.trace.agent.bootstrap.event.queue.QueueIn;
 
-public class SetExecuteAfterOperation extends AbstractInTestAction {
+public class SetExecuteAfterOperation implements InTestAction {
 
     private final ExecuteAfterOperation runtimeEventAndSetInMethodIdAndPosition;
     private final FilterActionsInsideMethodStrategy filterActionsInsideMethodStrategy;

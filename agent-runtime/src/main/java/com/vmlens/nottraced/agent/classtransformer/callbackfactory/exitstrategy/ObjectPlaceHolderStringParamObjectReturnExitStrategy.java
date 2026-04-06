@@ -10,7 +10,8 @@ public class ObjectPlaceHolderStringParamObjectReturnExitStrategy  implements Me
 
     public static final String METHOD_EXIT_RETURN_AND_PARAM = "methodObjectStringParamObjectReturn";
     public static final String METHOD_DESCRIPTOR_RETURN_AND_PARAM = "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;I)V";
-    
+    public static final String METHOD_DESCRIPTOR_OBJECT_OBJECT_INT_ARGUMENT = "(Ljava/lang/Object;Ljava/lang/Object;I)V";
+
     @Override
     public void methodExitWithObjectReturn(MethodCallbackFactoryPreAnalyzed parent, int inMethodId, CalleeFactory calleeFactory) {
         parent.methodVisitor().visitInsn(DUP);

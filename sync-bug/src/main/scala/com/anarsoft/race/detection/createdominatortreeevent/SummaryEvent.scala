@@ -1,10 +1,9 @@
 package com.anarsoft.race.detection.createdominatortreeevent
 
 import com.anarsoft.race.detection.createdominatortree.CreateGraphStack
-import com.anarsoft.race.detection.dominatortree.{DominatorTreeVertex, VertexMonitorOrAtomicWithLock}
 import com.anarsoft.race.detection.report.element.runelementtype.memoryaccesskey.MemoryAccessKey
 import com.anarsoft.race.detection.report.element.runelementtype.dominatormemoryaccesskey.DominatorMemoryAccessKey
-import com.anarsoft.race.detection.dominatortree.VertexAtomicNonBlockingOrVolatile
+import com.anarsoft.race.detection.dominatortree.VertexState
 
 import com.vmlens.report.dominatortree.UIStateElementSortKey
 import org.jgrapht.Graph
@@ -21,9 +20,7 @@ class SummaryEvent[MEMORY_ACCESS_KEY] (val threadIndex: Int,
   val operationSet = new mutable.HashSet[Int];
 
   override def add(context : CreateDominatorTreeContext): Unit = {
-    context.stack.addAllElementsOfStackToGraph(context.graph, context.alreadyAdded);
-
-    context.stack.addLeaf(memoryAccessKey , operationSet.toSet ,sortKey ,context.memoryKeyToVertex , context.graph);
+    context.stack.addLeaf(memoryAccessKey , operationSet.toSet ,sortKey);
   }
 }
 

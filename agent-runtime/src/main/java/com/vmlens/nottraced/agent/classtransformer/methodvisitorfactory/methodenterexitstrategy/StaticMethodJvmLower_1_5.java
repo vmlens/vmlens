@@ -4,7 +4,7 @@ import org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
-public class StaticMethodJvmLower_1_5 extends AbstractMethodEnterExitStrategy {
+public class StaticMethodJvmLower_1_5 implements CreateCalleeFactoryProvider  {
 
     private  class StaticMethodJvmLower_1_5CalleeFactory implements CalleeFactory{
 
@@ -34,7 +34,7 @@ public class StaticMethodJvmLower_1_5 extends AbstractMethodEnterExitStrategy {
     }
 
     @Override
-    protected CalleeFactory createCalleeFactory(MethodVisitor methodVisitor, String className) {
+    public CalleeFactory createCalleeFactory(MethodVisitor methodVisitor, String className) {
         return new  StaticMethodJvmLower_1_5CalleeFactory(methodVisitor,className);
     }
 

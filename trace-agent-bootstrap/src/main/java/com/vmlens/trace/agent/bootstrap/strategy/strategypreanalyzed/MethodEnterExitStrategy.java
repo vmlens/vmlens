@@ -9,7 +9,6 @@ import static com.vmlens.trace.agent.bootstrap.strategy.EventUtil.*;
  * for example future run
  *
  */
-
 public class MethodEnterExitStrategy extends StrategyWithoutParam {
 
     @Override
