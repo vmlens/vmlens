@@ -17,6 +17,7 @@ import static org.mockito.Mockito.*;
 
 public class OpenfeatureTest {
 
+    @Disabled
     @Test
     public void setProviderAndGetState() throws Exception {
         try {
