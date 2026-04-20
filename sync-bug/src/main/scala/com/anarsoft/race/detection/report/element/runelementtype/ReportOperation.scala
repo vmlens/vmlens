@@ -5,6 +5,7 @@ import com.anarsoft.race.detection.report.element.runelementtype.objecthashcodem
 
 
 trait ReportOperation {
+  
   def operation: String
 
   def element(context: DescriptionContext): String

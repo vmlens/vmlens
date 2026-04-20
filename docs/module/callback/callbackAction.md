@@ -15,7 +15,7 @@ For example: BeforeFieldAccessAction, AfterFieldAccessAction
 
 # Dynamic
 
-Callback -> new CallbackAction[X] -> 
+Callback -> new CallbackAction -> 
 CallbackActionProcessor(callbackAction) -> doubleDispatch( callbackAction , strategy )
 
 CallbackActionProcessor -> process[WithCheckThreadStarted]{
@@ -30,7 +30,14 @@ CallbackActionProcessor -> process[WithCheckThreadStarted]{
 
 Callback ->  CallbackActionProcessor
 Callback[X] -> Context[X]
-CallbackAction[X] -> Context[X]
+
+CallbackAction uses Delegation for three responsibilities:
+Creation and Execution of InTestAction
+Threadstart stop
+filter bei pre analyzed
+
+
+
 
 # Scenarios
 

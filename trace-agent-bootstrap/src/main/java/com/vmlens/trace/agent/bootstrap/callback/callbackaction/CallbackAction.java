@@ -9,8 +9,6 @@ public interface CallbackAction {
     void execute(InTestActionProcessor inTestActionProcessor);
     Integer isFirstMethodInThread(CheckIsThreadRun checkIsThreadRun);
     boolean couldBeLastMethodInThread(ThreadLocalWhenInTest dataWhenInTest);
-
-
     RuntimeEvent isLastMethodInThread(ThreadLocalWhenInTest dataWhenInTest, int stackTraceDepth);
 
 }

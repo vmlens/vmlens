@@ -5,13 +5,13 @@ When a pre-analyzed method enter gets called all following method calls except f
 # Solution
 
 extra method in CallbackAction
-executeAndCheckPreAnalyzedAction()
+executeAndCheckPreAnalyzedFilter()
 
 on enter:
 check and push on stack
 
 on exit:
-pop, anc check
+pop, and check
 
 
 check: only one atomic followed by calback
